@@ -1,4 +1,4 @@
-import 'package:appetizer/SplashScreen.dart';
+import 'package:appetizer/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'colors.dart';

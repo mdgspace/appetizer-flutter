@@ -1,4 +1,4 @@
-#Wed May 22 20:26:43 IST 2019
-base.0=/home/nitish/appetizer/build/app/intermediates/transforms/dexMerger/debug/0
+#Thu May 23 17:43:12 IST 2019
+base.0=/home/nitish/Appetizer-Flutter/build/app/intermediates/transforms/dexMerger/debug/0
 path.0=classes.dex
 renamed.0=classes.dex
