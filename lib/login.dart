@@ -13,10 +13,6 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Appetizer'),
-        backgroundColor: appiYellow,
-      ),
       body: Column(
         children: <Widget>[
           Expanded(flex: 1, child: FlareActor("flare_files/Login Appetizer (1).flr",
