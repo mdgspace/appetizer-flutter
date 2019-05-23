@@ -6,7 +6,7 @@ class SplashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         body: FlareActor(
-          "Flare/SplashScreen.flr",
+          "flare_files/SplashScreen.flr",
           fit: BoxFit.fill,
           animation: "SplashScreen",
         )

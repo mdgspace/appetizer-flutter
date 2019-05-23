@@ -19,7 +19,7 @@ class _LoginState extends State<Login> {
       ),
       body: Column(
         children: <Widget>[
-          Expanded(flex: 1, child: FlareActor("Flare/Login Appetizer (1).flr",
+          Expanded(flex: 1, child: FlareActor("flare_files/Login Appetizer (1).flr",
           animation: "idle",)),
           Expanded(
               flex: 1,
