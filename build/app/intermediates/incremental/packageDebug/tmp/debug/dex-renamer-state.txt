@@ -1,4 +1,0 @@
-#Thu May 23 22:11:16 IST 2019
-base.0=/home/nitish/Appetizer-Flutter/build/app/intermediates/transforms/dexMerger/debug/0
-path.0=classes.dex
-renamed.0=classes.dex
