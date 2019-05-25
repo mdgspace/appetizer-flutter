@@ -29,7 +29,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void initState() {
-    Future.delayed(Duration(seconds: 2), () {
+    Future.delayed(Duration(seconds: 3), () {
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Login()));
     });
     super.initState();
