@@ -64,7 +64,7 @@ class _MyHomeState extends State<Home> {
                         Padding(
                           padding: const EdgeInsets.only(top: 8),
                           child: Text(
-                            _username,
+                            _username.toUpperCase(),
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 24,
