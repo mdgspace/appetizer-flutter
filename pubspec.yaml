@@ -20,6 +20,7 @@ dependencies:
   flutter:
     sdk: flutter
   flare_flutter: ^1.0.0
+  http:
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -47,6 +48,7 @@ flutter:
     - flare_files/Login Appetizer (1).flr
     - flare_files/SplashScreen 2.0.flr
     - flare_files/SplashScreen 2.0 (1).flr
+    - flare_files/Appetizer splash screen.flr
 
   # To add assets to your application, add an assets section, like this:
   # assets:
