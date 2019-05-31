@@ -21,6 +21,7 @@ class Home extends StatefulWidget {
 class _MyHomeState extends State<Home> {
   String _username = "Abhishek";
   String _enrollment = "18114003";
+  String version = "v1.5.6r";
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +39,7 @@ class _MyHomeState extends State<Home> {
                 color: appiBrown,
                 image: new DecorationImage(
                   alignment: Alignment.topRight,
-                  image: AssetImage('lib/assets/iit roorkee 1.png'),
+                  image: AssetImage('assets/images/iit roorkee 1.png'),
                 ),
               ),
               child: Row(
@@ -96,7 +97,7 @@ class _MyHomeState extends State<Home> {
                     ),
                     ListTile(
                       leading: Image(
-                        image: AssetImage("assets/icons/leaves@1.png"),
+                        image: AssetImage("assets/icons/leaves@1x.png"),
                         width: 24,
                         height: 24,
                       ),
@@ -106,12 +107,13 @@ class _MyHomeState extends State<Home> {
                       leading: Icon(
                         Icons.attach_money,
                         color: appiYellow,
+                        size: 24,
                       ),
                       title: Text("Rebates"),
                     ),
                     ListTile(
                       leading: Image(
-                        image: AssetImage("assets/icons/notofication.png"),
+                        image: AssetImage("assets/icons/notification.png"),
                         width: 24,
                         height: 24,
                       ),
@@ -129,6 +131,7 @@ class _MyHomeState extends State<Home> {
                       leading: Icon(
                         Icons.help_outline,
                         color: appiYellow,
+                        size: 24,
                       ),
                       title: Text("FAQ"),
                     ),
@@ -136,6 +139,7 @@ class _MyHomeState extends State<Home> {
                       leading: Icon(
                         Icons.exit_to_app,
                         color: appiYellow,
+                        size: 24,
                       ),
                       title: Text("Log Out"),
                     ),
@@ -150,7 +154,7 @@ class _MyHomeState extends State<Home> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    "version",
+                    version,
                     style: TextStyle(
                       fontSize: 12,
                     ),
