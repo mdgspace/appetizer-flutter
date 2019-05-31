@@ -26,6 +26,7 @@ class _MyHomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       appBar: AppBar(
         title: Text("Mess Menu"),
       ),
@@ -195,53 +196,103 @@ class Menu extends StatefulWidget {
 class _MenuState extends State<Menu> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        MenuCard('Breakfast', ["item 1", "item 1", "item 1", "item 1"], "milk, tea, coffee, milk, tea, coffee milk, tea, coffee"),
-        MenuCard('Lunch', ["item 1", "item 1", "item 1", "item 1"], "milk, tea, coffee, milk, tea, coffee milk, tea, coffee"),
-        MenuCard('Dinner', ["item 1", "item 1", "item 1", "item 1"], "milk, tea, coffee, milk, tea, coffee milk, tea, coffee"),
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          MenuCard('Breakfast', ["item 1", "item 1", "item 1", "item 1"],
+              "milk, tea, coffee, milk, tea, coffee milk, tea, coffee"),
+          MenuCard('Lunch', ["item 1", "item 1", "item 1", "item 1"],
+              "milk, tea, coffee, milk, tea, coffee milk, tea, coffee"),
+          MenuCard('Dinner', ["item 1", "item 1", "item 1", "item 1"],
+              "milk, tea, coffee, milk, tea, coffee milk, tea, coffee"),
+          MenuCard('Dinner', ["item 1", "item 1", "item 1", "item 1"],
+              "milk, tea, coffee, milk, tea, coffee milk, tea, coffee"),
+        ],
+      ),
     );
   }
 }
 
-class MenuCard extends StatelessWidget {
+class MenuCard extends StatefulWidget {
   final String title;
   final List<String> menuItems;
   final String dailyItems;
 
+  bool enabled = true;
+  bool outdated = false;
+
   MenuCard(this.title, this.menuItems, this.dailyItems);
+
+  @override
+  _MenuCardState createState() => _MenuCardState();
+}
+
+class _MenuCardState extends State<MenuCard> {
+  List<Widget> _itemWidgetList() {
+    List<Widget> list = [];
+    widget.menuItems.forEach((item) {
+      list.add(_menuListItem(item));
+    });
+    return list;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Card(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Row(
                 children: <Widget>[
-                  Text(
-                    title,
-                    style: TextStyle(color: Colors.yellow[700], fontSize: 24),
+                  Expanded(
+                    child: Text(
+                      widget.title,
+                      style: TextStyle(color: Colors.yellow[700], fontSize: 24),
+                    ),
                   ),
-                  ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: menuItems?.length,
-                    itemBuilder: (context, index) {
-                      return Text(menuItems.elementAt(index));
-                    },
-                  ),
+                  widget.outdated ? Icon(Icons.comment): Switch(value: widget.enabled, onChanged: null),
                 ],
               ),
-            ),
-            Container(
-                color: Colors.grey[300],
-                child: Text('Daily Items: $dailyItems', textAlign: TextAlign.center,))
-          ],
-        ));
+              Column(
+                children: _itemWidgetList(),
+              ),
+            ],
+          ),
+        ),
+        Container(
+            color: Colors.grey[300],
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                'Daily Items: ${widget.dailyItems}',
+              ),
+            ))
+      ],
+    ));
+  }
+
+  Widget _menuListItem(String itemName) {
+    return Row(
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.fromLTRB(2.0, 2.0, 8.0, 2.0),
+          child: Icon(Icons.fastfood),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(2.0),
+          child: Column(
+            children: <Widget>[
+              Text(itemName),
+            ],
+          ),
+        ),
+      ],
+    );
   }
 }
