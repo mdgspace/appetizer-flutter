@@ -216,7 +216,7 @@ class _MenuState extends State<Menu> {
           MenuCard('Dinner', _testMap,
               _testDailyItems),
           MenuCard('Dinner', _testMap,
-              _testDailyItems),
+              "milk, tea, coffee, milk, tea, coffee milk, tea, coffee"),
         ],
       ),
     );
@@ -269,7 +269,11 @@ class _MenuCardState extends State<MenuCard> {
                       style: TextStyle(color: Colors.yellow[700], fontSize: 24),
                     ),
                   ),
-                  widget.outdated ? Icon(Icons.comment): Switch(value: widget.enabled, onChanged: null),
+                  widget.outdated ? Icon(Icons.comment): Switch(value: widget.enabled, onChanged: (value){
+                    setState(() {
+                      value = widget.enabled;
+                    });
+                  }),
                 ],
               ),
               Column(
