@@ -19,34 +19,26 @@ class Home extends StatefulWidget {
 }
 
 class _MyHomeState extends State<Home> {
-  String _username = "ABhishek";
+  String _username = "Abhishek";
   String _enrollment = "18114003";
-
-  
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       appBar: AppBar(
         title: Text("Mess Menu"),
       ),
       //body: null,// this is to be implemented
 
-
       drawer: Drawer(
-
-        child: ListView(
-          padding: EdgeInsets.zero,
+        child: Column(
           children: <Widget>[
             DrawerHeader(
               decoration: BoxDecoration(
                 color: appiBrown,
                 image: new DecorationImage(
                   alignment: Alignment.topRight,
-                  image: AssetImage('assets/images/iit roorkee 1.png',),
-                                    
-                  
+                  image: AssetImage('lib/assets/iit roorkee 1.png'),
                 ),
               ),
               child: Row(
@@ -70,7 +62,7 @@ class _MyHomeState extends State<Home> {
                         Padding(
                           padding: const EdgeInsets.only(top: 8),
                           child: Text(
-                            _username.toUpperCase(),
+                            _username,
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 24,
@@ -90,43 +82,99 @@ class _MyHomeState extends State<Home> {
                 ],
               ),
             ),
-            ListTile(
-              leading: Image(image: AssetImage("assets/icons/feedback.png"),width: 24,height: 24,),
-              title: Text("FeedBack"),
-            ),
-            ListTile(
-              leading: Image(image: AssetImage("assets/icons/leaves@1.png"),width: 24,height: 24,),
-              
-              title: Text("Leaves"),
-            ),
-            ListTile(
-              leading: Icon(
-                Icons.attach_money,
-                color: appiYellow,
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: <Widget>[
+                    ListTile(
+                      leading: Image(
+                        image: AssetImage("assets/icons/feedback.png"),
+                        width: 24,
+                        height: 24,
+                      ),
+                      title: Text("FeedBack"),
+                    ),
+                    ListTile(
+                      leading: Image(
+                        image: AssetImage("assets/icons/leaves@1.png"),
+                        width: 24,
+                        height: 24,
+                      ),
+                      title: Text("Leaves"),
+                    ),
+                    ListTile(
+                      leading: Icon(
+                        Icons.attach_money,
+                        color: appiYellow,
+                      ),
+                      title: Text("Rebates"),
+                    ),
+                    ListTile(
+                      leading: Image(
+                        image: AssetImage("assets/icons/notofication.png"),
+                        width: 24,
+                        height: 24,
+                      ),
+                      title: Text("Notification History"),
+                    ),
+                    ListTile(
+                      leading: Image(
+                        image: AssetImage("assets/icons/setting.png"),
+                        width: 24,
+                        height: 24,
+                      ),
+                      title: Text("Settings"),
+                    ),
+                    ListTile(
+                      leading: Icon(
+                        Icons.help_outline,
+                        color: appiYellow,
+                      ),
+                      title: Text("FAQ"),
+                    ),
+                    ListTile(
+                      leading: Icon(
+                        Icons.exit_to_app,
+                        color: appiYellow,
+                      ),
+                      title: Text("Log Out"),
+                    ),
+                  ],
+                ),
               ),
-              title: Text("Rebates"),
             ),
-            ListTile(
-              leading: Image(image: AssetImage("assets/icons/notofication.png"),width: 24,height: 24,),
-              title: Text("Notification History"),
-            ),
-            ListTile(
-              leading: Image(image: AssetImage("assets/icons/setting.png"),width: 24,height: 24,),
-              title: Text("Settings"),
-            ),
-            ListTile(
-              leading: Icon(
-                Icons.help_outline,
-                color: appiYellow,
+            Container(
+              padding: EdgeInsets.all(8),
+              alignment: Alignment.bottomLeft,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    "version",
+                    style: TextStyle(
+                      fontSize: 12,
+                    ),
+                    textAlign: TextAlign.left,
+                  ),
+                  Row(
+                    children: <Widget>[
+                      Text(
+                        "Made with ",
+                        style: TextStyle(fontSize: 12),
+                      ),
+                      Icon(
+                        Icons.favorite,
+                        color: appiRed,
+                        size: 12,
+                      ),
+                      Text(
+                        " by MDG",
+                        style: TextStyle(fontSize: 12),
+                      ),
+                    ],
+                  )
+                ],
               ),
-              title: Text("FAQ"),
-            ),
-            ListTile(
-              leading: Icon(
-                Icons.exit_to_app,
-                color: appiYellow,
-              ),
-              title: Text("Log Out"),
             ),
           ],
         ),
