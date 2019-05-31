@@ -68,7 +68,7 @@ class forgot_pass_state extends State<forgot_pass> {
                             bottom: 48, top: 8, right: 8, left: 8),
                         child: Image(
                           alignment: Alignment.bottomLeft,
-                          image: AssetImage('assets/sppedy_paper.png'),
+                          image: AssetImage('assets/images/sppedy_paper.png'),
                           width: (MediaQuery.of(context).size.width / 2) - 16,
                         ),
                       ),
@@ -78,7 +78,7 @@ class forgot_pass_state extends State<forgot_pass> {
                         padding: const EdgeInsets.all(8.0),
                         child: Image(
                           alignment: Alignment.topRight,
-                          image: AssetImage('assets/mailbox.png'),
+                          image: AssetImage('assets/images/mailbox.png'),
                           width: (MediaQuery.of(context).size.width / 2) - 16,
                         ),
                       ),

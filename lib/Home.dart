@@ -42,6 +42,12 @@ class _MyHomeState extends State<Home> {
             DrawerHeader(
               decoration: BoxDecoration(
                 color: appiBrown,
+                image: new DecorationImage(
+                  alignment: Alignment.topRight,
+                  image: AssetImage('assets/images/iit roorkee 1.png',),
+                                    
+                  
+                ),
               ),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
@@ -85,17 +91,12 @@ class _MyHomeState extends State<Home> {
               ),
             ),
             ListTile(
-              leading: Icon(
-                Icons.feedback,
-                color: appiYellow,
-              ),
+              leading: Image(image: AssetImage("assets/icons/feedback.png"),width: 24,height: 24,),
               title: Text("FeedBack"),
             ),
             ListTile(
-              leading: Icon(
-                Icons.do_not_disturb,
-                color: appiYellow,
-              ),
+              leading: Image(image: AssetImage("assets/icons/leaves@1.png"),width: 24,height: 24,),
+              
               title: Text("Leaves"),
             ),
             ListTile(
@@ -106,17 +107,11 @@ class _MyHomeState extends State<Home> {
               title: Text("Rebates"),
             ),
             ListTile(
-              leading: Icon(
-                Icons.notifications_none,
-                color: appiYellow,
-              ),
+              leading: Image(image: AssetImage("assets/icons/notofication.png"),width: 24,height: 24,),
               title: Text("Notification History"),
             ),
             ListTile(
-              leading: Icon(
-                Icons.settings,
-                color: appiYellow,
-              ),
+              leading: Image(image: AssetImage("assets/icons/setting.png"),width: 24,height: 24,),
               title: Text("Settings"),
             ),
             ListTile(
