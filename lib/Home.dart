@@ -29,7 +29,7 @@ class _MyHomeState extends State<Home> {
       appBar: AppBar(
         title: Text("Mess Menu"),
       ),
-      //body: null,// this is to be implemented
+      body: Menu(), // this is to be implemented
 
       drawer: Drawer(
         child: Column(
@@ -184,5 +184,64 @@ class _MyHomeState extends State<Home> {
         ),
       ),
     );
+  }
+}
+
+class Menu extends StatefulWidget {
+  @override
+  _MenuState createState() => _MenuState();
+}
+
+class _MenuState extends State<Menu> {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        MenuCard('Breakfast', ["item 1", "item 1", "item 1", "item 1"], "milk, tea, coffee, milk, tea, coffee milk, tea, coffee"),
+        MenuCard('Lunch', ["item 1", "item 1", "item 1", "item 1"], "milk, tea, coffee, milk, tea, coffee milk, tea, coffee"),
+        MenuCard('Dinner', ["item 1", "item 1", "item 1", "item 1"], "milk, tea, coffee, milk, tea, coffee milk, tea, coffee"),
+      ],
+    );
+  }
+}
+
+class MenuCard extends StatelessWidget {
+  final String title;
+  final List<String> menuItems;
+  final String dailyItems;
+
+  MenuCard(this.title, this.menuItems, this.dailyItems);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    title,
+                    style: TextStyle(color: Colors.yellow[700], fontSize: 24),
+                  ),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: menuItems?.length,
+                    itemBuilder: (context, index) {
+                      return Text(menuItems.elementAt(index));
+                    },
+                  ),
+                ],
+              ),
+            ),
+            Container(
+                color: Colors.grey[300],
+                child: Text('Daily Items: $dailyItems', textAlign: TextAlign.center,))
+          ],
+        ));
   }
 }
