@@ -194,20 +194,29 @@ class Menu extends StatefulWidget {
 }
 
 class _MenuState extends State<Menu> {
+
+  final _testMap = {
+    Icon(Icons.fastfood) : "item 1",
+    Icon(Icons.fastfood) : "item 1",
+    Icon(Icons.fastfood) : "item 1",
+    Icon(Icons.fastfood) : "item 1",
+  };
+
+  final _testDailyItems = "milk, tea, coffee, milk, tea, coffee milk, tea, coffee";
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          MenuCard('Breakfast', ["item 1", "item 1", "item 1", "item 1"],
-              "milk, tea, coffee, milk, tea, coffee milk, tea, coffee"),
-          MenuCard('Lunch', ["item 1", "item 1", "item 1", "item 1"],
-              "milk, tea, coffee, milk, tea, coffee milk, tea, coffee"),
-          MenuCard('Dinner', ["item 1", "item 1", "item 1", "item 1"],
-              "milk, tea, coffee, milk, tea, coffee milk, tea, coffee"),
-          MenuCard('Dinner', ["item 1", "item 1", "item 1", "item 1"],
-              "milk, tea, coffee, milk, tea, coffee milk, tea, coffee"),
+          MenuCard('Breakfast', _testMap,
+              _testDailyItems),
+          MenuCard('Lunch', _testMap,
+              _testDailyItems),
+          MenuCard('Dinner', _testMap,
+              _testDailyItems),
+          MenuCard('Dinner', _testMap,
+              _testDailyItems),
         ],
       ),
     );
@@ -216,7 +225,8 @@ class _MenuState extends State<Menu> {
 
 class MenuCard extends StatefulWidget {
   final String title;
-  final List<String> menuItems;
+  final Map<Icon, String> menuItems;
+  //final List<String> menuItems;
   final String dailyItems;
 
   bool enabled = true;
@@ -231,8 +241,11 @@ class MenuCard extends StatefulWidget {
 class _MenuCardState extends State<MenuCard> {
   List<Widget> _itemWidgetList() {
     List<Widget> list = [];
-    widget.menuItems.forEach((item) {
-      list.add(_menuListItem(item));
+    /*widget.menuItems.forEach((item) {
+      list.add(_menuListItem(item, Icon(Icons.)));
+    });*/
+    widget.menuItems.forEach((icon, string){
+      list.add(_menuListItem(string, icon));
     });
     return list;
   }
@@ -277,12 +290,12 @@ class _MenuCardState extends State<MenuCard> {
     ));
   }
 
-  Widget _menuListItem(String itemName) {
+  Widget _menuListItem(String itemName, Icon foodIcon) {
     return Row(
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.fromLTRB(2.0, 2.0, 8.0, 2.0),
-          child: Icon(Icons.fastfood),
+          child: foodIcon,
         ),
         Padding(
           padding: const EdgeInsets.all(2.0),
