@@ -12,9 +12,9 @@ class MealLeft extends StatelessWidget{
     return Container(
       decoration: BoxDecoration(
           border: Border(
-              top: BorderSide(
-                color: const Color.fromRGBO(00, 00, 00, 0.15),
-              )
+            bottom: BorderSide(
+              color: const Color.fromRGBO(00, 00, 00, 0.15),
+            ),
           )
       ),
       child: Row(

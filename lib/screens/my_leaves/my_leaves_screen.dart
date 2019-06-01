@@ -20,27 +20,44 @@ class MyLeaves extends StatelessWidget {
         title: Text("My Leaves"),
         backgroundColor: const Color.fromRGBO(121, 85, 72, 1),
       ),
-      body: Container(
-        height: MediaQuery
-            .of(context)
-            .size
-            .height,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            StatusCard2(24, true),
-            InfoMessage('Check-out to leave upcoming meals in sequence'),
-            ManageLeaveBanner(),
-            //TODO: USE MAP FOR THE MEALS LEFT
-            MealLeft('Dinner', 'July 16 2019'),
-            MealLeft('Lunch', 'July 18 2019'),
-            InfoMessage('You can cancel your leave 2-3 hours before the meal'),
-            SeeHistory(),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Container(
+            height: 262.0,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                StatusCard2(24, true),
+                InfoMessage('Check-out to leave upcoming meals in sequence'),
+                ManageLeaveBanner(),
+              ],
+            ),
+          ),
+          Expanded(
+            child: ListView(
+              children: <Widget>[
+                //TODO: USE MAP FOR THE MEALS LEFT
+                MealLeft('Dinner', 'July 16 2019'),
+                MealLeft('Dinner', 'July 16 2019'),
+                MealLeft('Dinner', 'July 16 2019'),
+              ],
+            ),
+          ),
+          Container(
+            height: 103.0,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                InfoMessage('You can cancel your leave 2-3 hours before the meal'),
+                SeeHistory(),
+              ],
+            ),
+          )
 //        }else{
 //    NoLeaves()
 //  }
-          ],
-        ),
+        ],
       ),
     );
   }
