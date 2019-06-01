@@ -1,8 +1,8 @@
 import 'dart:convert';
-import 'package:appetizer/models/check.dart';
-import 'package:appetizer/models/leave.dart';
-import 'package:appetizer/models/leaveList.dart';
-import 'package:appetizer/models/remainingLeaveCount.dart';
+import 'package:appetizer/models/Leaves/check.dart';
+import 'package:appetizer/models/Leaves/leave.dart';
+import 'package:appetizer/models/Leaves/leaveList.dart';
+import 'package:appetizer/models/Leaves/remainingLeaveCount.dart';
 import 'package:http/http.dart' as http;
 
 String url = "http://appetizer-mdg.herokuapp.com";
@@ -79,5 +79,4 @@ Future<Leave> leave(int id, String token) async {
     return null;
   }
 }
-
 
