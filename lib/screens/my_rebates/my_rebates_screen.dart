@@ -15,19 +15,13 @@ class MyRebates extends StatelessWidget {
         title: Text("My Rebates"),
         backgroundColor: const Color.fromRGBO(121, 85, 72, 1),
       ),
-      body: Container(
-        height: MediaQuery
-            .of(context)
-            .size
-            .height,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            //TODO: ENTER CORRECT VALUES FOR MONTHLY BALANCE
-            MonthlyBalance(1800, 403, 0, 'April', 2019),
-            SeeRebateHistory()
-          ],
-        ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          //TODO: ENTER CORRECT VALUES FOR MONTHLY BALANCE
+          MonthlyBalance(1800, 403, 0, 'April', 2019),
+          SeeRebateHistory()
+        ],
       ),
     );
   }
