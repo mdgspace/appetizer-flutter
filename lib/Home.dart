@@ -203,6 +203,7 @@ class _MenuState extends State<Menu> {
   };
 
   final _testDailyItems = "milk, tea, coffee, milk, tea, coffee milk, tea, coffee";
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -216,7 +217,7 @@ class _MenuState extends State<Menu> {
           MenuCard('Dinner', _testMap,
               _testDailyItems),
           MenuCard('Dinner', _testMap,
-              "milk, tea, coffee, milk, tea, coffee milk, tea, coffee"),
+              _testDailyItems),
         ],
       ),
     );
@@ -226,7 +227,6 @@ class _MenuState extends State<Menu> {
 class MenuCard extends StatefulWidget {
   final String title;
   final Map<Icon, String> menuItems;
-  //final List<String> menuItems;
   final String dailyItems;
 
   bool enabled = true;
@@ -241,9 +241,6 @@ class MenuCard extends StatefulWidget {
 class _MenuCardState extends State<MenuCard> {
   List<Widget> _itemWidgetList() {
     List<Widget> list = [];
-    /*widget.menuItems.forEach((item) {
-      list.add(_menuListItem(item, Icon(Icons.)));
-    });*/
     widget.menuItems.forEach((icon, string){
       list.add(_menuListItem(string, icon));
     });
@@ -296,16 +293,25 @@ class _MenuCardState extends State<MenuCard> {
 
   Widget _menuListItem(String itemName, Icon foodIcon) {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.fromLTRB(2.0, 2.0, 8.0, 2.0),
-          child: foodIcon,
-        ),
-        Padding(
-          padding: const EdgeInsets.all(2.0),
+        Container(
+          padding: EdgeInsets.only(right: 4.0),
           child: Column(
             children: <Widget>[
+              foodIcon,
+              SizedBox(height: 8.0,)
+            ],
+          ),
+        ),
+        Expanded(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
               Text(itemName),
+              Divider(height: 8.0,),
             ],
           ),
         ),
