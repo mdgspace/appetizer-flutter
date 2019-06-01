@@ -17,10 +17,12 @@ environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
+  http:
   flutter:
     sdk: flutter
   flare_flutter: ^1.0.0
-  http:
+  url_launcher: ^5.0.2
+
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -49,6 +51,8 @@ flutter:
     - flare_files/SplashScreen 2.0.flr
     - flare_files/SplashScreen 2.0 (1).flr
     - flare_files/Appetizer splash screen.flr
+    - assets/images/
+    - assets/icons/
 
   # To add assets to your application, add an assets section, like this:
   # assets:
@@ -66,12 +70,12 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
+  fonts:
+    - family: OpenSans
+      fonts:
+        - asset: assets/fonts/OpenSans/OpenSans-Regular.ttf
+        - asset: assets/fonts/OpenSans/OpenSans-italic.ttf
+          style: italic
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf
