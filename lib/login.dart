@@ -1,6 +1,8 @@
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'colors.dart';
+import 'Home.dart';
+import 'help.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -15,8 +17,12 @@ class _LoginState extends State<Login> {
     return Scaffold(
       body: Column(
         children: <Widget>[
-          Expanded(flex: 1, child: FlareActor("flare_files/Login Appetizer (1).flr",
-          animation: "idle",)),
+          Expanded(
+              flex: 1,
+              child: FlareActor(
+                "flare_files/Login Appetizer (1).flr",
+                animation: "idle",
+              )),
           Expanded(
               flex: 1,
               child: Padding(
@@ -154,7 +160,9 @@ class _LoginState extends State<Login> {
 
   void _channelILogin() {}
 
-  void _help() {}
+  void _help() {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => help()));
+  }
 
   void _forgotPassword() {}
 }
