@@ -1,8 +1,8 @@
 import 'dart:convert';
-import 'package:appetizer/models/Leaves/check.dart';
-import 'package:appetizer/models/Leaves/leave.dart';
-import 'package:appetizer/models/Leaves/leaveList.dart';
-import 'package:appetizer/models/Leaves/remainingLeaveCount.dart';
+import 'package:appetizer/models/leaves/check.dart';
+import 'package:appetizer/models/leaves/leave.dart';
+import 'package:appetizer/models/leaves/leaveList.dart';
+import 'package:appetizer/models/leaves/remainingLeaveCount.dart';
 import 'package:http/http.dart' as http;
 
 String url = "http://appetizer-mdg.herokuapp.com";

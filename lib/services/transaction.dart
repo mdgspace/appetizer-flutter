@@ -1,7 +1,7 @@
 import 'dart:convert';
-import 'package:appetizer/models/Transaction/currentMonthRebate.dart';
-import 'package:appetizer/models/Transaction/yearlyReabte.dart';
-import 'package:appetizer/models/Transaction/FAQ.dart';
+import 'package:appetizer/models/transaction/currentMonthRebate.dart';
+import 'package:appetizer/models/transaction/yearlyReabte.dart';
+import 'package:appetizer/models/transaction/FAQ.dart';
 import 'package:http/http.dart' as http;
 
 String url = "http://appetizer-mdg.herokuapp.com";

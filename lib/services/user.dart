@@ -1,13 +1,13 @@
 //TODO api/user/password/ all three api calls
 
 import 'dart:convert';
-import 'package:appetizer/model/menu/week.dart';
-import 'package:appetizer/model/user/image.dart';
-import 'package:appetizer/model/user/login.dart';
-import 'package:appetizer/model/user/logout.dart';
-import 'package:appetizer/model/user/me.dart';
-import 'package:appetizer/model/user/password.dart';
-import 'package:appetizer/model/user/reset.dart';
+import 'package:appetizer/models/menu/week.dart';
+import 'package:appetizer/models/user/image.dart';
+import 'package:appetizer/models/user/login.dart';
+import 'package:appetizer/models/user/logout.dart';
+import 'package:appetizer/models/user/me.dart';
+import 'package:appetizer/models/user/password.dart';
+import 'package:appetizer/models/user/reset.dart';
 import 'package:http/http.dart' as http;
 
 

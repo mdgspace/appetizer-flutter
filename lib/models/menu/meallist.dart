@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:appetizer/model/menu/week.dart';
+import 'package:appetizer/models/menu/week.dart';
 
 MealList mealListFromJson(String str) => MealList.fromJson(json.decode(str));
 
