@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import "colors.dart";
+import 'HorizontalDatePicker.dart';
+import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart' show CalendarCarousel;
 
 void main() => runApp(MyApp());
 
@@ -23,14 +25,33 @@ class _MyHomeState extends State<Home> {
   String _enrollment = "18114003";
   String version = "v1.5.6r";
 
+
+
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
-        title: Text("Mess Menu"),
+        title: Center(child: Text("Mess Menu")),
+        backgroundColor: Colors.brown,
+        elevation: 0,
+        actions: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Icon(Icons.calendar_today),
+          )
+        ],
       ),
-      body: Menu(), // this is to be implemented
+      body: Column(
+
+        children: <Widget>[
+          HorizontalDatePicker(),
+          Flexible(
+            child: SingleChildScrollView(child: Menu()),
+          ),
+        ],
+      ), // this is to be implemented
 
       drawer: Drawer(
         child: Column(
@@ -85,67 +106,65 @@ class _MyHomeState extends State<Home> {
               ),
             ),
             Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: <Widget>[
-                    ListTile(
-                      leading: Image(
-                        image: AssetImage("assets/icons/feedback.png"),
-                        width: 24,
-                        height: 24,
-                      ),
-                      title: Text("FeedBack"),
+              child: Column(
+                children: <Widget>[
+                  ListTile(
+                    leading: Image(
+                      image: AssetImage("assets/icons/feedback.png"),
+                      width: 24,
+                      height: 24,
                     ),
-                    ListTile(
-                      leading: Image(
-                        image: AssetImage("assets/icons/leaves@1x.png"),
-                        width: 24,
-                        height: 24,
-                      ),
-                      title: Text("Leaves"),
+                    title: Text("FeedBack"),
+                  ),
+                  ListTile(
+                    leading: Image(
+                      image: AssetImage("assets/icons/leaves@1x.png"),
+                      width: 24,
+                      height: 24,
                     ),
-                    ListTile(
-                      leading: Icon(
-                        Icons.attach_money,
-                        color: appiYellow,
-                        size: 24,
-                      ),
-                      title: Text("Rebates"),
+                    title: Text("Leaves"),
+                  ),
+                  ListTile(
+                    leading: Icon(
+                      Icons.attach_money,
+                      color: appiYellow,
+                      size: 24,
                     ),
-                    ListTile(
-                      leading: Image(
-                        image: AssetImage("assets/icons/notification.png"),
-                        width: 24,
-                        height: 24,
-                      ),
-                      title: Text("Notification History"),
+                    title: Text("Rebates"),
+                  ),
+                  ListTile(
+                    leading: Image(
+                      image: AssetImage("assets/icons/notification.png"),
+                      width: 24,
+                      height: 24,
                     ),
-                    ListTile(
-                      leading: Image(
-                        image: AssetImage("assets/icons/setting.png"),
-                        width: 24,
-                        height: 24,
-                      ),
-                      title: Text("Settings"),
+                    title: Text("Notification History"),
+                  ),
+                  ListTile(
+                    leading: Image(
+                      image: AssetImage("assets/icons/setting.png"),
+                      width: 24,
+                      height: 24,
                     ),
-                    ListTile(
-                      leading: Icon(
-                        Icons.help_outline,
-                        color: appiYellow,
-                        size: 24,
-                      ),
-                      title: Text("FAQ"),
+                    title: Text("Settings"),
+                  ),
+                  ListTile(
+                    leading: Icon(
+                      Icons.help_outline,
+                      color: appiYellow,
+                      size: 24,
                     ),
-                    ListTile(
-                      leading: Icon(
-                        Icons.exit_to_app,
-                        color: appiYellow,
-                        size: 24,
-                      ),
-                      title: Text("Log Out"),
+                    title: Text("FAQ"),
+                  ),
+                  ListTile(
+                    leading: Icon(
+                      Icons.exit_to_app,
+                      color: appiYellow,
+                      size: 24,
                     ),
-                  ],
-                ),
+                    title: Text("Log Out"),
+                  ),
+                ],
               ),
             ),
             Container(
@@ -206,20 +225,18 @@ class _MenuState extends State<Menu> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          MenuCard('Breakfast', _testMap,
-              _testDailyItems),
-          MenuCard('Lunch', _testMap,
-              _testDailyItems),
-          MenuCard('Dinner', _testMap,
-              _testDailyItems),
-          MenuCard('Dinner', _testMap,
-              _testDailyItems),
-        ],
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        MenuCard('Breakfast', _testMap,
+            _testDailyItems),
+        MenuCard('Lunch', _testMap,
+            _testDailyItems),
+        MenuCard('Dinner', _testMap,
+            _testDailyItems),
+        MenuCard('Dinner', _testMap,
+            _testDailyItems),
+      ],
     );
   }
 }
@@ -229,8 +246,7 @@ class MenuCard extends StatefulWidget {
   final Map<Icon, String> menuItems;
   final String dailyItems;
 
-  bool enabled = true;
-  bool outdated = false;
+
 
   MenuCard(this.title, this.menuItems, this.dailyItems);
 
@@ -239,6 +255,10 @@ class MenuCard extends StatefulWidget {
 }
 
 class _MenuCardState extends State<MenuCard> {
+
+  bool enabled = true;
+  bool outdated = false;
+
   List<Widget> _itemWidgetList() {
     List<Widget> list = [];
     widget.menuItems.forEach((icon, string){
@@ -266,9 +286,9 @@ class _MenuCardState extends State<MenuCard> {
                       style: TextStyle(color: Colors.yellow[700], fontSize: 24),
                     ),
                   ),
-                  widget.outdated ? Icon(Icons.comment): Switch(value: widget.enabled, onChanged: (value){
+                  outdated ? Icon(Icons.comment): Switch(value: enabled, onChanged: (value){
                     setState(() {
-                      value = widget.enabled;
+                      value = enabled;
                     });
                   }),
                 ],
