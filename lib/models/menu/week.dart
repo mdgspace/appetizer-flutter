@@ -75,6 +75,9 @@ class DailyItems {
     "snack": new List<dynamic>.from(snack.map((x) => x.toJson())),
   };
 }
+List<MealItem> mealItemFromJson(String str) => new List<MealItem>.from(json.decode(str).map((x) => MealItem.fromJson(x)));
+
+String mealItemToJson(List<MealItem> data) => json.encode(new List<dynamic>.from(data.map((x) => x.toJson())));
 
 class MealItem {
   int id;
