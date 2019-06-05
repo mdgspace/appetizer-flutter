@@ -1,3 +1,4 @@
+import 'package:appetizer/forgot_pass.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'colors.dart';
@@ -156,13 +157,17 @@ class _LoginState extends State<Login> {
         ));
   }
 
-  void _validateAndSubmit() {}
+  void _validateAndSubmit() {
+
+  }
 
   void _channelILogin() {}
 
   void _help() {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => help()));
+    Navigator.push(context, MaterialPageRoute(builder: (context) =>Help()));
   }
 
-  void _forgotPassword() {}
+  void _forgotPassword() {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => ForgotPass()));
+  }
 }
