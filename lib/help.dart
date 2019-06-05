@@ -3,21 +3,10 @@ import 'colors.dart';
 import 'strings.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-void main() => runApp(MyApp());
+class Help extends StatelessWidget {
 
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      home: help(),
-    );
-  }
-}
+  final String version = "Version 1.6.2r";
 
-class help extends StatelessWidget {
-  String version = "Version 1.6.2r";
   @override
   Widget build(BuildContext context) {
     AppBar appBar = AppBar(
@@ -142,7 +131,7 @@ class help extends StatelessWidget {
                                 width: 48,
                               ),
                             ),
-                            onTap: () => _launch_github_url(),
+                            onTap: () => launchGithubUrl(),
                           ),
                           GestureDetector(
                             child: Padding(
@@ -152,7 +141,7 @@ class help extends StatelessWidget {
                                 width: 48,
                               ),
                             ),
-                            onTap: () => _launch_fb_url(),
+                            onTap: () => launchFbUrl(),
                           ),
                           GestureDetector(
                             child: Padding(
@@ -162,7 +151,7 @@ class help extends StatelessWidget {
                                 width: 48,
                               ),
                             ),
-                            onTap: () => _launch_web_url(),
+                            onTap: () => launchWebUrl(),
                           ),
                         ],
                       ),
@@ -178,15 +167,15 @@ class help extends StatelessWidget {
   }
 }
 
-void _launch_fb_url() {
+void launchFbUrl() {
   launch('https://m.facebook.com/mdgiitr/');
 }
 
-void _launch_github_url() {
+void launchGithubUrl() {
   launch('https://github.com/mdg-iitr/');
 }
 
-void _launch_web_url() {
+void launchWebUrl() {
   launch('http://mdg.iitr.ac.in');
 }
 

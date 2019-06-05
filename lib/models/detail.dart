@@ -4,18 +4,18 @@
 
 import 'dart:convert';
 
-Confirm confirmFromJson(String str) => Confirm.fromJson(json.decode(str));
+Detail confirmFromJson(String str) => Detail.fromJson(json.decode(str));
 
-String confirmToJson(Confirm data) => json.encode(data.toJson());
+String confirmToJson(Detail data) => json.encode(data.toJson());
 
-class Confirm {
+class Detail {
   String detail;
 
-  Confirm({
+  Detail({
     this.detail,
   });
 
-  factory Confirm.fromJson(Map<String, dynamic> json) => new Confirm(
+  factory Detail.fromJson(Map<String, dynamic> json) => new Detail(
     detail: json["detail"],
   );
 

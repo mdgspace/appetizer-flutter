@@ -1,17 +1,10 @@
-//TODO use same class for the same json
-
 import 'dart:convert';
-import 'package:appetizer/models/menu/approve.dart';
-import 'package:appetizer/models/menu/week.dart';
-
+import 'package:appetizer/models/detail.dart';
 import 'package:http/http.dart' as http;
-
 import 'package:appetizer/models/user/image.dart';
 import 'package:appetizer/models/user/login.dart';
-import 'package:appetizer/models/user/logout.dart';
 import 'package:appetizer/models/user/me.dart';
-import 'package:appetizer/models/user/password.dart';
-import 'package:appetizer/models/user/reset.dart';
+
 String url = "http://appetizer-mdg.herokuapp.com";
 var header = {"Content-Type": "application/json"};
 http.Client client = new http.Client();
@@ -39,7 +32,7 @@ Future<Login> userLogin(String id, String pass) async {
   }
 }
 
-Future<Logout> userLogout(String token) async {
+Future<Detail> userLogout(String token) async {
   String endpoint = "/api/user/logout/";
   String uri = url + endpoint;
   var tokenAuth = {"Authorization": "Token " + token};
@@ -49,9 +42,9 @@ Future<Logout> userLogout(String token) async {
       headers: tokenAuth,
     );
     final jsonResponse = jsonDecode(response.body);
-    Logout logout = new Logout.fromJson(jsonResponse);
+    Detail detail= new Detail.fromJson(jsonResponse);
     print(response.body);
-    return logout;
+    return detail;
   } on Exception catch (e) {
     print(e);
     return null;
@@ -117,7 +110,7 @@ Future<Image> userImage(String token) async {
   }
 }
 
-Future<Password> userPassword(
+Future<Detail> userPassword(
     String token, String oldPass, String newPass) async {
   String endpoint = "/api/user/me/password/";
   String uri = url + endpoint;
@@ -134,65 +127,35 @@ Future<Password> userPassword(
       body: json,
     );
     final jsonResponse = jsonDecode(response.body);
-    Password pass = new Password.fromJson(jsonResponse);
+    Detail detail= new Detail.fromJson(jsonResponse);
     print(response.body);
-    return pass;
+    return detail;
   } on Exception catch (e) {
     print(e);
     return null;
   }
 }
 
-Future<Reset> userReset(String token, String email) async {
+Future<Detail> userReset(String email) async {
   String endpoint = "/api/user/me/password/reset/";
   String uri = url + endpoint;
   var json = {
     "email": email,
   };
-  var tokenAuth = {"Authorization": "Token " + token};
   try {
     var response = await client.post(
       uri,
-      headers: tokenAuth,
       body: json,
     );
     final jsonResponse = jsonDecode(response.body);
-    Reset reset = new Reset.fromJson(jsonResponse);
+    Detail detail= new Detail.fromJson(jsonResponse);
     print(response.body);
-    return reset;
+    return detail;
   } on Exception catch (e) {
     print(e);
     return null;
   }
 }
-
-Future<Reset> userConfirm(String token, String uidB64, String token1,
-    String newPass, String confirmPass) async {
-  String endpoint = "/api/user/me/password/reset/confirm/";
-  String uri = url + endpoint;
-  var json = {
-    "uidb64": uidB64,
-    "token": token1,
-    "new_password": newPass,
-    "confirm_password": confirmPass,
-  };
-  var tokenAuth = {"Authorization": "Token " + token};
-  try {
-    var response = await client.post(
-      uri,
-      headers: tokenAuth,
-      body: json,
-    );
-    final jsonResponse = jsonDecode(response.body);
-    Reset reset = new Reset.fromJson(jsonResponse);
-    print(response.body);
-    return reset;
-  } on Exception catch (e) {
-    print(e);
-    return null;
-  }
-}
-
 /*
 //TODO Find the return type of redirect and complete and create respective model files
 Future<Reset> oAuthRedirect(String token) async {

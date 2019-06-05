@@ -1,36 +1,20 @@
+import 'package:appetizer/models/detail.dart';
 import 'package:flutter/material.dart';
+import 'package:appetizer/services/user.dart';
 import 'colors.dart';
 import 'strings.dart';
 
-void main() => runApp(MyApp());
-
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Forgot Password',
-      theme: ThemeData(
-        // Define the default Brightness and Colors
-        brightness: Brightness.light,
-        primaryColor: appiBrown,
-        accentColor: appiYellow,
-      ),
-      home: forgot_pass(),
-    );
-  }
-}
-
-class forgot_pass extends StatefulWidget {
+class ForgotPass extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return forgot_pass_state();
+    return _ForgotPassState();
   }
 }
 
-class forgot_pass_state extends State<forgot_pass> {
-  String _email = "";
+class _ForgotPassState extends State<ForgotPass> {
+  var formKey = new GlobalKey<FormState>();
+  String _email;
 
   @override
   Widget build(BuildContext context) {
@@ -108,23 +92,30 @@ class forgot_pass_state extends State<forgot_pass> {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(24.0),
-                  child: TextFormField(
-                    initialValue: _email,
-                    decoration: InputDecoration(
-                      icon: Icon(
-                        Icons.mail,
-                        size: 36,
-                        color: appiYellow,
-                      ),
-                      labelText: "Email address",
-                      labelStyle: TextStyle(color: appiYellow),
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                            color: appiYellow, style: BorderStyle.solid),
-                      ),
-                    ),
-                    cursorColor: appiYellow,
-                    style: TextStyle(fontWeight: FontWeight.w400, fontSize: 16),
+                  child: Form(
+                    key: formKey,
+                    child: TextFormField(
+                        validator: validateEmail,
+                        initialValue: _email,
+                        decoration: InputDecoration(
+                          icon: Icon(
+                            Icons.mail,
+                            size: 36,
+                            color: appiYellow,
+                          ),
+                          labelText: "Email address",
+                          labelStyle: TextStyle(color: appiYellow),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                                color: appiYellow, style: BorderStyle.solid),
+                          ),
+                        ),
+                        cursorColor: appiYellow,
+                        style: TextStyle(
+                            fontWeight: FontWeight.w400, fontSize: 16),
+                        onSaved: (String value) {
+                          this._email = value;
+                        }),
                   ),
                 ),
                 Padding(
@@ -142,7 +133,12 @@ class forgot_pass_state extends State<forgot_pass> {
                         style: TextStyle(color: appiYellow),
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      formKey.currentState.save();
+                      if (formKey.currentState.validate()) {
+                        _sendInstruction();
+                      }
+                    },
                   ),
                 )
               ],
@@ -151,5 +147,69 @@ class forgot_pass_state extends State<forgot_pass> {
         ),
       ),
     );
+  }
+
+  String validateEmail(String value) {
+    Pattern pattern =
+        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+    RegExp regex = new RegExp(pattern);
+    if (!regex.hasMatch(value))
+      return 'Enter Valid Email';
+    else
+      return null;
+  }
+
+  _sendInstruction() async {
+    _showDialog();
+    Detail detail = await userReset(_email);
+    _popContext();
+    if (detail.detail != null) {
+      _showSnackBar(detail.detail);
+      if(detail.detail == "link has been emailed"){
+        Future.delayed(new Duration(milliseconds: 2000), _popContext);
+      }
+    }
+  }
+
+  void _showDialog() {
+    showDialog(
+      context: context,
+      child: new SimpleDialog(
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(18.0),
+            child: new Row(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(left: 15.0),
+                  child: new CircularProgressIndicator(
+                    valueColor: new AlwaysStoppedAnimation<Color>(appiYellow),
+                  ),
+                ),
+                new Expanded(child: new Container()),
+                Padding(
+                  padding: const EdgeInsets.only(right: 30.0),
+                  child: new Text(
+                    "Sending Email",
+                    style: new TextStyle(
+                      fontSize: 15,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _popContext() {
+    Navigator.pop(context);
+  }
+
+  void _showSnackBar(String detail) {
+    final snackBar = SnackBar(content: Text(detail));
+    Scaffold.of(formKey.currentContext).showSnackBar(snackBar);
   }
 }
