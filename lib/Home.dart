@@ -2,20 +2,27 @@ import 'package:flutter/material.dart';
 import "colors.dart";
 
 class Home extends StatefulWidget {
+  final String username;
+  final String enrollment;
+
+  const Home({Key key, this.username, this.enrollment}) : super(key: key);
+
   @override
   _HomeState createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
-  String _username = "Abhishek";
-  String _enrollment = "18114003";
   String version = "v1.5.6r";
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Mess Menu"),
+        centerTitle: true,
+        title: Text("Mess Menu",
+        style: TextStyle(color: Colors.white, fontSize: 25.0, fontFamily: 'Lobster_Two'),),
+        backgroundColor: appiBrown,
+        iconTheme: new IconThemeData(color: appiYellow),
       ),
       //body: null,// this is to be implemented
 
@@ -42,30 +49,34 @@ class _HomeState extends State<Home> {
                       color: appiYellow,
                     ),
                   ),
-                  Container(
-                    padding: EdgeInsets.only(bottom: 16, left: 8),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(top: 8),
-                          child: Text(
-                            _username,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 24,
+                  Flexible(
+                    child: Container(
+                      padding: EdgeInsets.only(bottom: 16, left: 8),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.only(top: 8),
+                            child: Text(
+                              widget.username,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 24,
+                              ),
                             ),
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 8, bottom: 4),
-                          child: Text(
-                            _enrollment,
-                            style: TextStyle(color: appiYellow, fontSize: 16),
-                          ),
-                        )
-                      ],
+                          Padding(
+                            padding: const EdgeInsets.only(top: 8, bottom: 4),
+                            child: Text(
+                              widget.enrollment,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(color: appiYellow, fontSize: 16),
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   )
                 ],
