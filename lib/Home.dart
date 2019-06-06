@@ -1,38 +1,37 @@
 import 'package:flutter/material.dart';
 import "colors.dart";
 import 'HorizontalDatePicker.dart';
-import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart' show CalendarCarousel;
+import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart'
+    show CalendarCarousel;
 
 class Home extends StatefulWidget {
+  final String username;
+  final String enrollment;
+
+  const Home({Key key, this.username, this.enrollment}) : super(key: key);
+
   @override
   _HomeState createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
-  String _username = "Abhishek";
-  String _enrollment = "18114003";
   String version = "v1.5.6r";
-
-
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
-        title: Center(child: Text("Mess Menu")),
-        backgroundColor: Colors.brown,
-        elevation: 0,
-        actions: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Icon(Icons.calendar_today),
-          )
-        ],
+        centerTitle: true,
+        title: Text(
+          "Mess Menu",
+          style: TextStyle(
+              color: Colors.white, fontSize: 25.0, fontFamily: 'Lobster_Two'),
+        ),
+        backgroundColor: appiBrown,
+        iconTheme: new IconThemeData(color: appiYellow),
       ),
       body: Column(
-
         children: <Widget>[
           HorizontalDatePicker(),
           Flexible(
@@ -64,30 +63,34 @@ class _HomeState extends State<Home> {
                       color: appiYellow,
                     ),
                   ),
-                  Container(
-                    padding: EdgeInsets.only(bottom: 16, left: 8),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(top: 8),
-                          child: Text(
-                            _username,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 24,
+                  Flexible(
+                    child: Container(
+                      padding: EdgeInsets.only(bottom: 16, left: 8),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.only(top: 8),
+                            child: Text(
+                              widget.username,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 24,
+                              ),
                             ),
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 8, bottom: 4),
-                          child: Text(
-                            _enrollment,
-                            style: TextStyle(color: appiYellow, fontSize: 16),
-                          ),
-                        )
-                      ],
+                          Padding(
+                            padding: const EdgeInsets.only(top: 8, bottom: 4),
+                            child: Text(
+                              widget.enrollment,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(color: appiYellow, fontSize: 16),
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   )
                 ],
@@ -201,29 +204,25 @@ class Menu extends StatefulWidget {
 }
 
 class _MenuState extends State<Menu> {
-
   final _testMap = {
-    Icon(Icons.fastfood) : "item 1",
-    Icon(Icons.fastfood) : "item 1",
-    Icon(Icons.fastfood) : "item 1",
-    Icon(Icons.fastfood) : "item 1",
+    Icon(Icons.fastfood): "item 1",
+    Icon(Icons.fastfood): "item 1",
+    Icon(Icons.fastfood): "item 1",
+    Icon(Icons.fastfood): "item 1",
   };
 
-  final _testDailyItems = "milk, tea, coffee, milk, tea, coffee milk, tea, coffee";
+  final _testDailyItems =
+      "milk, tea, coffee, milk, tea, coffee milk, tea, coffee";
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        MenuCard('Breakfast', _testMap,
-            _testDailyItems),
-        MenuCard('Lunch', _testMap,
-            _testDailyItems),
-        MenuCard('Dinner', _testMap,
-            _testDailyItems),
-        MenuCard('Dinner', _testMap,
-            _testDailyItems),
+        MenuCard('Breakfast', _testMap, _testDailyItems),
+        MenuCard('Lunch', _testMap, _testDailyItems),
+        MenuCard('Dinner', _testMap, _testDailyItems),
+        MenuCard('Dinner', _testMap, _testDailyItems),
       ],
     );
   }
@@ -234,8 +233,6 @@ class MenuCard extends StatefulWidget {
   final Map<Icon, String> menuItems;
   final String dailyItems;
 
-
-
   MenuCard(this.title, this.menuItems, this.dailyItems);
 
   @override
@@ -243,13 +240,12 @@ class MenuCard extends StatefulWidget {
 }
 
 class _MenuCardState extends State<MenuCard> {
-
   bool enabled = true;
   bool outdated = false;
 
   List<Widget> _itemWidgetList() {
     List<Widget> list = [];
-    widget.menuItems.forEach((icon, string){
+    widget.menuItems.forEach((icon, string) {
       list.add(_menuListItem(string, icon));
     });
     return list;
@@ -274,11 +270,15 @@ class _MenuCardState extends State<MenuCard> {
                       style: TextStyle(color: Colors.yellow[700], fontSize: 24),
                     ),
                   ),
-                  outdated ? Icon(Icons.comment): Switch(value: enabled, onChanged: (value){
-                    setState(() {
-                      value = enabled;
-                    });
-                  }),
+                  outdated
+                      ? Icon(Icons.comment)
+                      : Switch(
+                          value: enabled,
+                          onChanged: (value) {
+                            setState(() {
+                              value = enabled;
+                            });
+                          }),
                 ],
               ),
               Column(
@@ -308,7 +308,9 @@ class _MenuCardState extends State<MenuCard> {
           child: Column(
             children: <Widget>[
               foodIcon,
-              SizedBox(height: 8.0,)
+              SizedBox(
+                height: 8.0,
+              )
             ],
           ),
         ),
@@ -319,7 +321,9 @@ class _MenuCardState extends State<MenuCard> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(itemName),
-              Divider(height: 8.0,),
+              Divider(
+                height: 8.0,
+              ),
             ],
           ),
         ),

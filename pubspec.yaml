@@ -80,6 +80,16 @@ flutter:
         - asset: assets/fonts/OpenSans/OpenSans-Regular.ttf
         - asset: assets/fonts/OpenSans/OpenSans-Italic.ttf
           style: italic
+
+    - family: Lobster_Two
+      fonts:
+        - asset: assets/fonts/Lobster_Two/LobsterTwo-Regular.ttf
+        - asset: assets/fonts/Lobster_Two/LobsterTwo-Italic.ttf
+        - asset: assets/fonts/Lobster_Two/LobsterTwo-Bold.ttf
+        - asset: assets/fonts/Lobster_Two/LobsterTwo-BoldItalic.ttf
+          weight: 700
+
+
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf

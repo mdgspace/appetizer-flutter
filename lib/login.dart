@@ -188,7 +188,7 @@ class _LoginState extends State<Login> {
         if (loginCreds.enrNo.toString() == _enrollmentNo) {
           Navigator.pushReplacement(context,
               MaterialPageRoute(builder: (context) {
-            return Home();
+            return Home(enrollment: loginCreds.enrNo.toString(), username: loginCreds.name.toString());
           }));
         }
       });
