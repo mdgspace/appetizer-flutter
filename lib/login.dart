@@ -25,7 +25,6 @@ class _LoginState extends State<Login> {
     return false;
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -184,8 +183,15 @@ class _LoginState extends State<Login> {
   }
 
   void _validateAndSubmit() {
-    if(_validateAndSave()){
-      userLogin(_enrollmentNo, _password);
+    if (_validateAndSave()) {
+      userLogin(_enrollmentNo, _password).then((loginCreds) {
+        if (loginCreds.enrNo.toString() == _enrollmentNo) {
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) {
+            return Home();
+          }));
+        }
+      });
     }
   }
 
