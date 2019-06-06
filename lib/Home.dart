@@ -1,22 +1,12 @@
 import 'package:flutter/material.dart';
 import "colors.dart";
 
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(theme: ThemeData(primaryColor: appiBrown), home: Home());
-  }
-}
-
 class Home extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() {
-    return _MyHomeState();
-  }
+  _HomeState createState() => _HomeState();
 }
 
-class _MyHomeState extends State<Home> {
+class _HomeState extends State<Home> {
   String _username = "Abhishek";
   String _enrollment = "18114003";
   String version = "v1.5.6r";
