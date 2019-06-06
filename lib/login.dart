@@ -188,12 +188,12 @@ class _LoginState extends State<Login> {
         ));
   }
 
-  void _validateAndSubmit() async {
-    sharedPreferences = await SharedPreferences.getInstance();
+  void _validateAndSubmit() {
+    //sharedPreferences = await SharedPreferences.getInstance();
     if (_validateAndSave()) {
       userLogin(_enrollmentNo, _password).then((loginCreds) {
         if (loginCreds.enrNo.toString() == _enrollmentNo) {
-          sharedPreferences.setString("AuthToken", loginCreds.token.toString());
+          //sharedPreferences.setString("AuthToken", loginCreds.token.toString());
           Navigator.pushReplacement(context,
               MaterialPageRoute(builder: (context) {
             return Home(enrollment: loginCreds.enrNo.toString(), username: loginCreds.name.toString());
@@ -214,8 +214,8 @@ class _LoginState extends State<Login> {
         context, MaterialPageRoute(builder: (context) => ForgotPass()));
   }
 
-  Future<SharedPreferences> getSharedPrefs() async{
-    sharedPreferences = await SharedPreferences.getInstance();
-    return sharedPreferences;
-  }
+//  Future<SharedPreferences> getSharedPrefs() async{
+//    sharedPreferences = await SharedPreferences.getInstance();
+//    return sharedPreferences;
+//  }
 }

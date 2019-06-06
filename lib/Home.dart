@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import "colors.dart";
-import 'package:appetizer/services/user.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'login.dart';
 
 class Home extends StatefulWidget {
   final String username;
