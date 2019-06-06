@@ -9,7 +9,26 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'login.dart';
 import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart'
     show CalendarCarousel;
+import 'MainScreen.dart';
 
+import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart'
+    show CalendarCarousel;
+
+void main() => runApp(MyApp());
+
+class MyApp extends StatelessWidget {
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        theme: ThemeData(
+          primaryColor: appiPrimary,
+          accentColor: appiAccent,
+
+        ),
+        home: Home());
+  }
+}
 
 class Home extends StatefulWidget {
   final String username;
@@ -31,14 +50,15 @@ class _HomeState extends State<Home> {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
-        centerTitle: true,
-        title: Text(
-          "Mess Menu",
-          style: TextStyle(
-              color: Colors.white, fontSize: 25.0, fontFamily: 'Lobster_Two'),
-        ),
-        backgroundColor: appiBrown,
-        iconTheme: new IconThemeData(color: appiYellow),
+        title: Center(child: Text("Mess Menu")),
+
+        elevation: 0,
+        actions: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Icon(Icons.calendar_today),
+          )
+        ],
       ),
       body: Column(
         children: <Widget>[
