@@ -37,21 +37,24 @@ class _LoginState extends State<Login> {
             flex: 1,
             child: Stack(
               children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    "Appetizer",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontSize: 42.0,
-                        fontFamily: 'Lobster_Two',
-                        color: Colors.white),
-                  ),
-                ),
                 FlareActor(
                   "flare_files/Login Appetizer (1).flr",
                   animation: "idle",
-                )
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 0.0),
+                  child: Align(
+                    alignment: Alignment.topCenter,
+                    child: Text(
+                      "Appetizer",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontSize: 50.0,
+                          fontFamily: 'Lobster_Two',
+                          color: Colors.white),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
