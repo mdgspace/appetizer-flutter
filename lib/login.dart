@@ -42,7 +42,10 @@ class _LoginState extends State<Login> {
                   child: Text(
                     "Appetizer",
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 42.0, fontFamily: 'Lobster_Two', color: Colors.white),
+                    style: TextStyle(
+                        fontSize: 42.0,
+                        fontFamily: 'Lobster_Two',
+                        color: Colors.white),
                   ),
                 ),
                 FlareActor(
@@ -196,7 +199,11 @@ class _LoginState extends State<Login> {
           //sharedPreferences.setString("AuthToken", loginCreds.token.toString());
           Navigator.pushReplacement(context,
               MaterialPageRoute(builder: (context) {
-            return Home(enrollment: loginCreds.enrNo.toString(), username: loginCreds.name.toString());
+            return Home(
+              enrollment: loginCreds.enrNo.toString(),
+              username: loginCreds.name.toString(),
+              token: loginCreds.token,
+            );
           }));
         }
       });
