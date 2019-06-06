@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import "colors.dart";
+import 'package:appetizer/services/user.dart';
+import 'login.dart';
 
 import 'HorizontalDatePicker.dart';
 import 'package:appetizer/services/user.dart';
@@ -12,8 +14,10 @@ import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart'
 class Home extends StatefulWidget {
   final String username;
   final String enrollment;
+  final String token;
 
-  const Home({Key key, this.username, this.enrollment}) : super(key: key);
+  const Home({Key key, this.username, this.enrollment, this.token})
+      : super(key: key);
 
   @override
   _HomeState createState() => _HomeState();
@@ -183,14 +187,27 @@ class _HomeState extends State<Home> {
                                       "Are you sure you want to log out?"),
                                   actions: <Widget>[
                                     new FlatButton(
-                                      child: new Text(
-                                        "LOG OUT",
-                                        style: TextStyle(color: appiYellow),
-                                      ),
-                                      onPressed: () {},
-                                    ),
+                                        child: new Text(
+                                          "LOG OUT",
+                                          style: TextStyle(color: appiYellow),
+                                        ),
+                                        onPressed: () {
+                                          userLogout(widget.token)
+                                              .then((afterLogout) {
+                                            if (afterLogout.detail.toString() ==
+                                                "user logged out") {
+                                              Navigator.pushReplacement(context,
+                                                  MaterialPageRoute(builder:
+                                                      (BuildContext context) {
+                                                return Login();
+                                              }));
+                                            }
+                                          });
+                                        }),
                                     new FlatButton(
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
                                         child: new Text(
                                           "CANCEL",
                                           style: TextStyle(color: appiYellow),
