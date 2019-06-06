@@ -21,7 +21,11 @@ class _ForgotPassState extends State<ForgotPass> {
     // TODO: implement build
     AppBar appBar = AppBar(
       backgroundColor: appiBrown,
-      leading: Icon(Icons.arrow_back),
+      leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          }),
       iconTheme: IconThemeData(
         color: appiYellow,
       ),
@@ -165,7 +169,7 @@ class _ForgotPassState extends State<ForgotPass> {
     _popContext();
     if (detail.detail != null) {
       _showSnackBar(detail.detail);
-      if(detail.detail == "link has been emailed"){
+      if (detail.detail == "link has been emailed") {
         Future.delayed(new Duration(milliseconds: 2000), _popContext);
       }
     }
