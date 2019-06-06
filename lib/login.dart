@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'colors.dart';
 import 'Home.dart';
 import 'help.dart';
+import 'package:appetizer/services/user.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -11,7 +13,20 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  final _formKey = new GlobalKey<FormState>();
   String _enrollmentNo, _password;
+
+  SharedPreferences sharedPreferences;
+
+  // Check if form is valid before performing Login
+  bool _validateAndSave() {
+    final form = _formKey.currentState;
+    if (form.validate()) {
+      form.save();
+      return true;
+    }
+    return false;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,29 +34,45 @@ class _LoginState extends State<Login> {
       body: Column(
         children: <Widget>[
           Expanded(
-              flex: 1,
-              child: FlareActor(
-                "flare_files/Login Appetizer (1).flr",
-                animation: "idle",
-              )),
+            flex: 1,
+            child: Stack(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    "Appetizer",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 42.0, fontFamily: 'Lobster_Two', color: Colors.white),
+                  ),
+                ),
+                FlareActor(
+                  "flare_files/Login Appetizer (1).flr",
+                  animation: "idle",
+                )
+              ],
+            ),
+          ),
           Expanded(
               flex: 1,
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(20.0, 0, 20.0, 0),
-                child: ListView(
-                  children: <Widget>[
-                    _showEnrollmentInput(),
-                    _showPasswordInput(),
-                    _showLoginButton(),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        _helpButton(),
-                        _forgotPasswordButton(),
-                      ],
-                    ),
-                    _showChanneliButton(),
-                  ],
+                child: new Form(
+                  key: _formKey,
+                  child: ListView(
+                    children: <Widget>[
+                      _showEnrollmentInput(),
+                      _showPasswordInput(),
+                      _showLoginButton(),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          _helpButton(),
+                          _forgotPasswordButton(),
+                        ],
+                      ),
+                      _showChanneliButton(),
+                    ],
+                  ),
                 ),
               ))
         ],
@@ -116,26 +147,26 @@ class _LoginState extends State<Login> {
 
   Widget _helpButton() {
     return new Padding(
-        padding: EdgeInsets.fromLTRB(0.0, 25.0, 0.0, 0.0),
+        padding: EdgeInsets.fromLTRB(0.0, 25.0, 15.0, 0.0),
         child: SizedBox(
           height: 25.0,
-          child: new FlatButton(
+          child: new GestureDetector(
             child: new Text('Help',
                 style: new TextStyle(fontSize: 15.0, color: appiYellow)),
-            onPressed: _help,
+            onTap: _help,
           ),
         ));
   }
 
   Widget _forgotPasswordButton() {
     return new Padding(
-        padding: EdgeInsets.fromLTRB(0.0, 25.0, 0.0, 0.0),
+        padding: EdgeInsets.fromLTRB(15.0, 25.0, 0.0, 0.0),
         child: SizedBox(
           height: 25.0,
-          child: new FlatButton(
+          child: new GestureDetector(
             child: new Text('Forgot Password?',
                 style: new TextStyle(fontSize: 15.0, color: appiYellow)),
-            onPressed: _forgotPassword,
+            onTap: _forgotPassword,
           ),
         ));
   }
@@ -158,16 +189,33 @@ class _LoginState extends State<Login> {
   }
 
   void _validateAndSubmit() {
-
+    //sharedPreferences = await SharedPreferences.getInstance();
+    if (_validateAndSave()) {
+      userLogin(_enrollmentNo, _password).then((loginCreds) {
+        if (loginCreds.enrNo.toString() == _enrollmentNo) {
+          //sharedPreferences.setString("AuthToken", loginCreds.token.toString());
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) {
+            return Home(enrollment: loginCreds.enrNo.toString(), username: loginCreds.name.toString());
+          }));
+        }
+      });
+    }
   }
 
   void _channelILogin() {}
 
   void _help() {
-    Navigator.push(context, MaterialPageRoute(builder: (context) =>Help()));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => Help()));
   }
 
   void _forgotPassword() {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => ForgotPass()));
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => ForgotPass()));
   }
+
+//  Future<SharedPreferences> getSharedPrefs() async{
+//    sharedPreferences = await SharedPreferences.getInstance();
+//    return sharedPreferences;
+//  }
 }
