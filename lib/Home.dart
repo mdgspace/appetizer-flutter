@@ -171,6 +171,14 @@ class _HomeState extends State<Home> {
                                       "Are you sure you want to log out?"),
                                   actions: <Widget>[
                                     new FlatButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: new Text(
+                                          "CANCEL",
+                                          style: TextStyle(color: appiYellow),
+                                        )),
+                                    new FlatButton(
                                         child: new Text(
                                           "LOG OUT",
                                           style: TextStyle(color: appiYellow),
@@ -188,14 +196,6 @@ class _HomeState extends State<Home> {
                                             }
                                           });
                                         }),
-                                    new FlatButton(
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        },
-                                        child: new Text(
-                                          "CANCEL",
-                                          style: TextStyle(color: appiYellow),
-                                        ))
                                   ],
                                 );
                               });
