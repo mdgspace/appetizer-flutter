@@ -5,6 +5,7 @@ import 'colors.dart';
 import 'Home.dart';
 import 'help.dart';
 import 'package:appetizer/services/user.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -14,6 +15,8 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   final _formKey = new GlobalKey<FormState>();
   String _enrollmentNo, _password;
+
+  SharedPreferences sharedPreferences;
 
   // Check if form is valid before performing Login
   bool _validateAndSave() {
@@ -34,10 +37,13 @@ class _LoginState extends State<Login> {
             flex: 1,
             child: Stack(
               children: <Widget>[
-                Text(
-                  "Appetizer",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 42.0, fontFamily: 'Lobster_Two'),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    "Appetizer",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 42.0, fontFamily: 'Lobster_Two', color: Colors.white),
+                  ),
                 ),
                 FlareActor(
                   "flare_files/Login Appetizer (1).flr",
@@ -182,10 +188,12 @@ class _LoginState extends State<Login> {
         ));
   }
 
-  void _validateAndSubmit() {
+  void _validateAndSubmit() async {
+    sharedPreferences = await SharedPreferences.getInstance();
     if (_validateAndSave()) {
       userLogin(_enrollmentNo, _password).then((loginCreds) {
         if (loginCreds.enrNo.toString() == _enrollmentNo) {
+          sharedPreferences.setString("AuthToken", loginCreds.token.toString());
           Navigator.pushReplacement(context,
               MaterialPageRoute(builder: (context) {
             return Home(enrollment: loginCreds.enrNo.toString(), username: loginCreds.name.toString());
@@ -204,5 +212,10 @@ class _LoginState extends State<Login> {
   void _forgotPassword() {
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => ForgotPass()));
+  }
+
+  Future<SharedPreferences> getSharedPrefs() async{
+    sharedPreferences = await SharedPreferences.getInstance();
+    return sharedPreferences;
   }
 }

@@ -22,6 +22,7 @@ dependencies:
     sdk: flutter
   flare_flutter: ^1.0.0
   url_launcher: ^5.0.2
+  shared_preferences: 0.5.3
 
 
 

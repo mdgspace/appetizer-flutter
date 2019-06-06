@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import "colors.dart";
+import 'package:appetizer/services/user.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'login.dart';
 
 class Home extends StatefulWidget {
   final String username;
@@ -19,8 +22,11 @@ class _HomeState extends State<Home> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text("Mess Menu",
-        style: TextStyle(color: Colors.white, fontSize: 25.0, fontFamily: 'Lobster_Two'),),
+        title: Text(
+          "Mess Menu",
+          style: TextStyle(
+              color: Colors.white, fontSize: 25.0, fontFamily: 'Lobster_Two'),
+        ),
         backgroundColor: appiBrown,
         iconTheme: new IconThemeData(color: appiYellow),
       ),
@@ -86,61 +92,101 @@ class _HomeState extends State<Home> {
               child: SingleChildScrollView(
                 child: Column(
                   children: <Widget>[
-                    ListTile(
-                      leading: Image(
-                        image: AssetImage("assets/icons/feedback.png"),
-                        width: 24,
-                        height: 24,
+                    GestureDetector(
+                      child: ListTile(
+                        leading: Image(
+                          image: AssetImage("assets/icons/feedback.png"),
+                          width: 24,
+                          height: 24,
+                        ),
+                        title: Text("FeedBack"),
                       ),
-                      title: Text("FeedBack"),
                     ),
-                    ListTile(
-                      leading: Image(
-                        image: AssetImage("assets/icons/leaves@1x.png"),
-                        width: 24,
-                        height: 24,
+                    GestureDetector(
+                      child: ListTile(
+                        leading: Image(
+                          image: AssetImage("assets/icons/leaves@1x.png"),
+                          width: 24,
+                          height: 24,
+                        ),
+                        title: Text("Leaves"),
                       ),
-                      title: Text("Leaves"),
                     ),
-                    ListTile(
-                      leading: Icon(
-                        Icons.attach_money,
-                        color: appiYellow,
-                        size: 24,
+                    GestureDetector(
+                      child: ListTile(
+                        leading: Icon(
+                          Icons.attach_money,
+                          color: appiYellow,
+                          size: 24,
+                        ),
+                        title: Text("Rebates"),
                       ),
-                      title: Text("Rebates"),
                     ),
-                    ListTile(
-                      leading: Image(
-                        image: AssetImage("assets/icons/notification.png"),
-                        width: 24,
-                        height: 24,
+                    GestureDetector(
+                      child: ListTile(
+                        leading: Image(
+                          image: AssetImage("assets/icons/notification.png"),
+                          width: 24,
+                          height: 24,
+                        ),
+                        title: Text("Notification History"),
                       ),
-                      title: Text("Notification History"),
                     ),
-                    ListTile(
-                      leading: Image(
-                        image: AssetImage("assets/icons/setting.png"),
-                        width: 24,
-                        height: 24,
+                    GestureDetector(
+                      child: ListTile(
+                        leading: Image(
+                          image: AssetImage("assets/icons/setting.png"),
+                          width: 24,
+                          height: 24,
+                        ),
+                        title: Text("Settings"),
                       ),
-                      title: Text("Settings"),
                     ),
-                    ListTile(
-                      leading: Icon(
-                        Icons.help_outline,
-                        color: appiYellow,
-                        size: 24,
+                    GestureDetector(
+                      child: ListTile(
+                        leading: Icon(
+                          Icons.help_outline,
+                          color: appiYellow,
+                          size: 24,
+                        ),
+                        title: Text("FAQ"),
                       ),
-                      title: Text("FAQ"),
                     ),
-                    ListTile(
-                      leading: Icon(
-                        Icons.exit_to_app,
-                        color: appiYellow,
-                        size: 24,
+                    GestureDetector(
+                      child: ListTile(
+                        leading: Icon(
+                          Icons.exit_to_app,
+                          color: appiYellow,
+                          size: 24,
+                        ),
+                        title: Text("Log Out"),
+                        onTap: () {
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: new Text("Log Out"),
+                                  content: new Text(
+                                      "Are you sure you want to log out?"),
+                                  actions: <Widget>[
+                                    new FlatButton(
+                                      child: new Text(
+                                        "LOG OUT",
+                                        style: TextStyle(color: appiYellow),
+                                      ),
+                                      onPressed: () {},
+                                    ),
+                                    new FlatButton(
+                                        onPressed: () {},
+                                        child: new Text(
+                                          "CANCEL",
+                                          style: TextStyle(color: appiYellow),
+                                        ))
+                                  ],
+                                );
+                              });
+                        },
                       ),
-                      title: Text("Log Out"),
                     ),
                   ],
                 ),
