@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import "colors.dart";
 import 'HorizontalDatePicker.dart';
-import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart' show CalendarCarousel;
+import 'MainScreen.dart';
+
+import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart'
+    show CalendarCarousel;
 
 void main() => runApp(MyApp());
 
@@ -9,7 +12,13 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(theme: ThemeData(primaryColor: appiBrown), home: Home());
+    return MaterialApp(
+        theme: ThemeData(
+          primaryColor: appiPrimary,
+          accentColor: appiAccent,
+
+        ),
+        home: Home());
   }
 }
 
@@ -25,16 +34,13 @@ class _MyHomeState extends State<Home> {
   String _enrollment = "18114003";
   String version = "v1.5.6r";
 
-
-
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
         title: Center(child: Text("Mess Menu")),
-        backgroundColor: Colors.brown,
+
         elevation: 0,
         actions: <Widget>[
           Padding(
@@ -44,7 +50,6 @@ class _MyHomeState extends State<Home> {
         ],
       ),
       body: Column(
-
         children: <Widget>[
           HorizontalDatePicker(),
           Flexible(
@@ -207,135 +212,3 @@ class _MyHomeState extends State<Home> {
   }
 }
 
-class Menu extends StatefulWidget {
-  @override
-  _MenuState createState() => _MenuState();
-}
-
-class _MenuState extends State<Menu> {
-
-  final _testMap = {
-    Icon(Icons.fastfood) : "item 1",
-    Icon(Icons.fastfood) : "item 1",
-    Icon(Icons.fastfood) : "item 1",
-    Icon(Icons.fastfood) : "item 1",
-  };
-
-  final _testDailyItems = "milk, tea, coffee, milk, tea, coffee milk, tea, coffee";
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        MenuCard('Breakfast', _testMap,
-            _testDailyItems),
-        MenuCard('Lunch', _testMap,
-            _testDailyItems),
-        MenuCard('Dinner', _testMap,
-            _testDailyItems),
-        MenuCard('Dinner', _testMap,
-            _testDailyItems),
-      ],
-    );
-  }
-}
-
-class MenuCard extends StatefulWidget {
-  final String title;
-  final Map<Icon, String> menuItems;
-  final String dailyItems;
-
-
-
-  MenuCard(this.title, this.menuItems, this.dailyItems);
-
-  @override
-  _MenuCardState createState() => _MenuCardState();
-}
-
-class _MenuCardState extends State<MenuCard> {
-
-  bool enabled = true;
-  bool outdated = false;
-
-  List<Widget> _itemWidgetList() {
-    List<Widget> list = [];
-    widget.menuItems.forEach((icon, string){
-      list.add(_menuListItem(string, icon));
-    });
-    return list;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-        child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Row(
-                children: <Widget>[
-                  Expanded(
-                    child: Text(
-                      widget.title,
-                      style: TextStyle(color: Colors.yellow[700], fontSize: 24),
-                    ),
-                  ),
-                  outdated ? Icon(Icons.comment): Switch(value: enabled, onChanged: (value){
-                    setState(() {
-                      value = enabled;
-                    });
-                  }),
-                ],
-              ),
-              Column(
-                children: _itemWidgetList(),
-              ),
-            ],
-          ),
-        ),
-        Container(
-            color: Colors.grey[300],
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                'Daily Items: ${widget.dailyItems}',
-              ),
-            ))
-      ],
-    ));
-  }
-
-  Widget _menuListItem(String itemName, Icon foodIcon) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-        Container(
-          padding: EdgeInsets.only(right: 4.0),
-          child: Column(
-            children: <Widget>[
-              foodIcon,
-              SizedBox(height: 8.0,)
-            ],
-          ),
-        ),
-        Expanded(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(itemName),
-              Divider(height: 8.0,),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-}
