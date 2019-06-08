@@ -2,7 +2,6 @@ import 'package:appetizer/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'colors.dart';
-
 import 'login.dart';
 
 void main() => runApp(MaterialApp(
@@ -30,7 +29,8 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     Future.delayed(Duration(seconds: 3), () {
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Login()));
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => Login()));
     });
     super.initState();
   }
