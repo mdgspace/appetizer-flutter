@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import "colors.dart";
 import 'package:appetizer/services/user.dart';
-import 'login.dart';
 
 import 'HorizontalDatePicker.dart';
 import 'package:appetizer/services/user.dart';
@@ -224,11 +223,11 @@ class _HomeState extends State<Home> {
                                               .then((afterLogout) {
                                             if (afterLogout.detail.toString() ==
                                                 "user logged out") {
-                                              Navigator.pushReplacement(context,
-                                                  MaterialPageRoute(builder:
-                                                      (BuildContext context) {
-                                                return Login();
-                                              }));
+                                              Navigator.of(context)
+                                                  .pushNamedAndRemoveUntil(
+                                                      "/login",
+                                                      (Route<dynamic> route) =>
+                                                          false);
                                             }
                                           });
                                         }),
