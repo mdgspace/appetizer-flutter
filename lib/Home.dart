@@ -197,6 +197,7 @@ class _HomeState extends State<Home> {
                         ),
                         title: Text("Log Out"),
                         onTap: () {
+                          Navigator.pop(context);
                           showDialog(
                               context: context,
                               builder: (BuildContext context) {

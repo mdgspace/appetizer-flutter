@@ -6,14 +6,17 @@ import 'colors.dart';
 import 'login.dart';
 
 void main() => runApp(MaterialApp(
-  routes: {
-    "/home": (context) => Home(),
-    "/login": (context) => Login(),
-  },
+      routes: {
+        "/home": (context) => Home(),
+        "/login": (context) => Login(),
+      },
       debugShowCheckedModeBanner: false,
       title: 'Appetizer',
       theme: ThemeData(
         primaryColor: appiYellow,
+      ),
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
       ),
       home: MyApp(),
     ));

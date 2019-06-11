@@ -5,7 +5,6 @@ import 'colors.dart';
 import 'Home.dart';
 import 'help.dart';
 import 'package:appetizer/services/user.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -13,10 +12,14 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   final _formKey = new GlobalKey<FormState>();
   String _enrollmentNo, _password;
-
-  SharedPreferences sharedPreferences;
+  bool isLoading;
+  FlareActor flareActor = FlareActor(
+    "flare_files/Login Appetizer (1).flr",
+    animation: "idle",
+  );
 
   // Check if form is valid before performing Login
   bool _validateAndSave() {
@@ -31,16 +34,14 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       body: Column(
         children: <Widget>[
           Expanded(
             flex: 1,
             child: Stack(
               children: <Widget>[
-                FlareActor(
-                  "flare_files/Login Appetizer (1).flr",
-                  animation: "idle",
-                ),
+                getFlareAnimation(),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 0.0),
                   child: Align(
@@ -86,19 +87,19 @@ class _LoginState extends State<Login> {
     );
   }
 
+  Widget getFlareAnimation() {
+    return flareActor;
+  }
+
   Widget _showEnrollmentInput() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
+      padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
       child: new TextFormField(
         maxLines: 1,
         keyboardType: TextInputType.number,
         autofocus: false,
         decoration: new InputDecoration(
-            border: UnderlineInputBorder(
-                borderSide: BorderSide(
-                    color: Theme.of(context).primaryColor,
-                    style: BorderStyle.solid)),
-            hintText: 'Enrollment No',
+            labelText: "Enrollment No",
             icon: new Icon(
               Icons.account_circle,
               color: Colors.grey,
@@ -112,13 +113,13 @@ class _LoginState extends State<Login> {
 
   Widget _showPasswordInput() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0.0, 15.0, 0.0, 0.0),
+      padding: const EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 0.0),
       child: new TextFormField(
         maxLines: 1,
         obscureText: true,
         autofocus: false,
         decoration: new InputDecoration(
-            hintText: 'Password',
+            labelText: "Password",
             icon: new Icon(
               Icons.lock,
               color: Colors.grey,
@@ -153,7 +154,7 @@ class _LoginState extends State<Login> {
 
   Widget _helpButton() {
     return new Padding(
-        padding: EdgeInsets.fromLTRB(0.0, 25.0, 15.0, 0.0),
+        padding: EdgeInsets.fromLTRB(0.0, 15.0, 15.0, 0.0),
         child: SizedBox(
           height: 25.0,
           child: new GestureDetector(
@@ -166,7 +167,7 @@ class _LoginState extends State<Login> {
 
   Widget _forgotPasswordButton() {
     return new Padding(
-        padding: EdgeInsets.fromLTRB(15.0, 25.0, 0.0, 0.0),
+        padding: EdgeInsets.fromLTRB(15.0, 15.0, 0.0, 0.0),
         child: SizedBox(
           height: 25.0,
           child: new GestureDetector(
@@ -179,7 +180,7 @@ class _LoginState extends State<Login> {
 
   Widget _showChanneliButton() {
     return new Padding(
-        padding: EdgeInsets.fromLTRB(0.0, 25.0, 0.0, 0.0),
+        padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
         child: SizedBox(
           height: 40.0,
           child: new RaisedButton(
@@ -197,9 +198,15 @@ class _LoginState extends State<Login> {
   void _validateAndSubmit() {
     //sharedPreferences = await SharedPreferences.getInstance();
     if (_validateAndSave()) {
-      userLogin(_enrollmentNo, _password).then((loginCreds) {
+      FocusScope.of(context).requestFocus(new FocusNode());
+      userLogin(_enrollmentNo, _password).then((loginCreds) async {
         if (loginCreds.enrNo.toString() == _enrollmentNo) {
-          //sharedPreferences.setString("AuthToken", loginCreds.token.toString());
+          _showSnackBar(context, "Login Successful");
+          setState(() {
+            flareActor = FlareActor("flare_files/Login Appetizer (1).flr",
+                animation: "Initial To Right");
+          });
+          await new Future.delayed(const Duration(seconds: 5));
           Navigator.pushReplacement(context,
               MaterialPageRoute(builder: (context) {
             return Home(
@@ -208,6 +215,12 @@ class _LoginState extends State<Login> {
               token: loginCreds.token,
             );
           }));
+        } else {
+          _showSnackBar(context, "Incorrect authentication credentials.");
+          setState(() {
+            flareActor = FlareActor("flare_files/Login Appetizer (1).flr",
+                animation: "Initial To Wrong");
+          });
         }
       });
     }
@@ -224,8 +237,11 @@ class _LoginState extends State<Login> {
         context, MaterialPageRoute(builder: (context) => ForgotPass()));
   }
 
-//  Future<SharedPreferences> getSharedPrefs() async{
-//    sharedPreferences = await SharedPreferences.getInstance();
-//    return sharedPreferences;
-//  }
+  void _showSnackBar(BuildContext context, String message) {
+    _scaffoldKey.currentState.showSnackBar(SnackBar(
+      content: Text(message),
+      backgroundColor: Color.fromRGBO(0, 0, 0, .80),
+      duration: Duration(seconds: 3),
+    ));
+  }
 }
