@@ -4,14 +4,10 @@ import 'package:appetizer/services/user.dart';
 import 'HorizontalDatePicker.dart';
 import 'MainScreen.dart';
 
-import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart'
-    show CalendarCarousel;
-
 class Home extends StatefulWidget {
   final String username;
   final String enrollment;
   final String token;
-
 
   const Home({Key key, this.username, this.enrollment, this.token})
       : super(key: key);
@@ -26,9 +22,8 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
       appBar: AppBar(
-
+        elevation: 0,
         centerTitle: true,
         title: Text(
           "Mess Menu",
@@ -37,22 +32,16 @@ class _HomeState extends State<Home> {
         ),
         backgroundColor: appiBrown,
         iconTheme: new IconThemeData(color: appiYellow),
-        actions: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Icon(Icons.calendar_today),
-          )
-        ],
       ),
       body: Column(
         children: <Widget>[
           HorizontalDatePicker(),
           Flexible(
-            child: SingleChildScrollView(child: Menu()),
+            child: SingleChildScrollView(child: Menu(),
+            physics: BouncingScrollPhysics(),),
           ),
         ],
-      ), // this is to be implemented
-
+      ),
       drawer: Drawer(
         child: Column(
           children: <Widget>[
@@ -222,11 +211,9 @@ class _HomeState extends State<Home> {
                               });
                         },
                       ),
-
                     ),
-                    title: Text("Log Out"),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
             Container(
@@ -268,4 +255,3 @@ class _HomeState extends State<Home> {
     );
   }
 }
-
