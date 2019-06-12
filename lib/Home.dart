@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import "colors.dart";
+import 'HorizontalDatePicker.dart';
+import 'MainScreen.dart';
+
+import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart'
+    show CalendarCarousel;
 
 void main() => runApp(MyApp());
 
@@ -7,7 +12,13 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(theme: ThemeData(primaryColor: appiBrown), home: Home());
+    return MaterialApp(
+        theme: ThemeData(
+          primaryColor: appiPrimary,
+          accentColor: appiAccent,
+
+        ),
+        home: Home());
   }
 }
 
@@ -26,10 +37,26 @@ class _MyHomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       appBar: AppBar(
-        title: Text("Mess Menu"),
+        title: Center(child: Text("Mess Menu")),
+
+        elevation: 0,
+        actions: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Icon(Icons.calendar_today),
+          )
+        ],
       ),
-      //body: null,// this is to be implemented
+      body: Column(
+        children: <Widget>[
+          HorizontalDatePicker(),
+          Flexible(
+            child: SingleChildScrollView(child: Menu()),
+          ),
+        ],
+      ), // this is to be implemented
 
       drawer: Drawer(
         child: Column(
@@ -84,67 +111,65 @@ class _MyHomeState extends State<Home> {
               ),
             ),
             Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: <Widget>[
-                    ListTile(
-                      leading: Image(
-                        image: AssetImage("assets/icons/feedback.png"),
-                        width: 24,
-                        height: 24,
-                      ),
-                      title: Text("FeedBack"),
+              child: Column(
+                children: <Widget>[
+                  ListTile(
+                    leading: Image(
+                      image: AssetImage("assets/icons/feedback.png"),
+                      width: 24,
+                      height: 24,
                     ),
-                    ListTile(
-                      leading: Image(
-                        image: AssetImage("assets/icons/leaves@1x.png"),
-                        width: 24,
-                        height: 24,
-                      ),
-                      title: Text("Leaves"),
+                    title: Text("FeedBack"),
+                  ),
+                  ListTile(
+                    leading: Image(
+                      image: AssetImage("assets/icons/leaves@1x.png"),
+                      width: 24,
+                      height: 24,
                     ),
-                    ListTile(
-                      leading: Icon(
-                        Icons.attach_money,
-                        color: appiYellow,
-                        size: 24,
-                      ),
-                      title: Text("Rebates"),
+                    title: Text("Leaves"),
+                  ),
+                  ListTile(
+                    leading: Icon(
+                      Icons.attach_money,
+                      color: appiYellow,
+                      size: 24,
                     ),
-                    ListTile(
-                      leading: Image(
-                        image: AssetImage("assets/icons/notification.png"),
-                        width: 24,
-                        height: 24,
-                      ),
-                      title: Text("Notification History"),
+                    title: Text("Rebates"),
+                  ),
+                  ListTile(
+                    leading: Image(
+                      image: AssetImage("assets/icons/notification.png"),
+                      width: 24,
+                      height: 24,
                     ),
-                    ListTile(
-                      leading: Image(
-                        image: AssetImage("assets/icons/setting.png"),
-                        width: 24,
-                        height: 24,
-                      ),
-                      title: Text("Settings"),
+                    title: Text("Notification History"),
+                  ),
+                  ListTile(
+                    leading: Image(
+                      image: AssetImage("assets/icons/setting.png"),
+                      width: 24,
+                      height: 24,
                     ),
-                    ListTile(
-                      leading: Icon(
-                        Icons.help_outline,
-                        color: appiYellow,
-                        size: 24,
-                      ),
-                      title: Text("FAQ"),
+                    title: Text("Settings"),
+                  ),
+                  ListTile(
+                    leading: Icon(
+                      Icons.help_outline,
+                      color: appiYellow,
+                      size: 24,
                     ),
-                    ListTile(
-                      leading: Icon(
-                        Icons.exit_to_app,
-                        color: appiYellow,
-                        size: 24,
-                      ),
-                      title: Text("Log Out"),
+                    title: Text("FAQ"),
+                  ),
+                  ListTile(
+                    leading: Icon(
+                      Icons.exit_to_app,
+                      color: appiYellow,
+                      size: 24,
                     ),
-                  ],
-                ),
+                    title: Text("Log Out"),
+                  ),
+                ],
               ),
             ),
             Container(
@@ -186,3 +211,4 @@ class _MyHomeState extends State<Home> {
     );
   }
 }
+
