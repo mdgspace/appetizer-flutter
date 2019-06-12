@@ -9,6 +9,7 @@ import 'login.dart';
 import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart'
     show CalendarCarousel;
 import 'MainScreen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 void main() => runApp(MyApp());
@@ -53,6 +54,15 @@ class _HomeState extends State<Home> {
           style: TextStyle(
               color: Colors.white, fontSize: 25.0, fontFamily: 'Lobster_Two'),
         ),
+        actions: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: GestureDetector(
+              child: Icon(Icons.calendar_today),
+              onTap: () {},
+            ),
+          )
+        ],
         backgroundColor: appiBrown,
         iconTheme: new IconThemeData(color: appiYellow),
       ),
@@ -60,8 +70,10 @@ class _HomeState extends State<Home> {
         children: <Widget>[
           HorizontalDatePicker(),
           Flexible(
-            child: SingleChildScrollView(child: Menu(),
-            physics: BouncingScrollPhysics(),),
+            child: SingleChildScrollView(
+              child: Menu(),
+              physics: BouncingScrollPhysics(),
+            ),
           ),
         ],
       ),
@@ -204,31 +216,41 @@ class _HomeState extends State<Home> {
                                       "Are you sure you want to log out?"),
                                   actions: <Widget>[
                                     new FlatButton(
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        },
-                                        child: new Text(
-                                          "CANCEL",
-                                          style: TextStyle(color: appiYellow),
-                                        )),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: new Text(
+                                        "CANCEL",
+                                        style: TextStyle(color: appiYellow),
+                                      ),
+                                      highlightColor: Colors.transparent,
+                                      splashColor: Colors.transparent,
+                                    ),
                                     new FlatButton(
-                                        child: new Text(
-                                          "LOG OUT",
-                                          style: TextStyle(color: appiYellow),
-                                        ),
-                                        onPressed: () {
-                                          userLogout(widget.token)
-                                              .then((afterLogout) {
-                                            if (afterLogout.detail.toString() ==
-                                                "user logged out") {
-                                              Navigator.of(context)
-                                                  .pushNamedAndRemoveUntil(
-                                                      "/login",
-                                                      (Route<dynamic> route) =>
-                                                          false);
-                                            }
-                                          });
-                                        }),
+                                      child: new Text(
+                                        "LOG OUT",
+                                        style: TextStyle(color: appiYellow),
+                                      ),
+                                      onPressed: () {
+                                        userLogout(widget.token)
+                                            .then((afterLogout) async {
+                                          if (afterLogout.detail.toString() ==
+                                              "user logged out") {
+                                            SharedPreferences prefs =
+                                                await SharedPreferences
+                                                    .getInstance();
+                                            prefs.clear();
+                                            Navigator.of(context)
+                                                .pushNamedAndRemoveUntil(
+                                                    "/login",
+                                                    (Route<dynamic> route) =>
+                                                        false);
+                                          }
+                                        });
+                                      },
+                                      highlightColor: Colors.transparent,
+                                      splashColor: Colors.transparent,
+                                    ),
                                   ],
                                 );
                               });

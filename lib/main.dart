@@ -37,8 +37,18 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     Future.delayed(Duration(seconds: 3), () {
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => Login()));
+      getUserDetails().then((details) {
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (context) => (details.getString("token") != null)
+                    ? Home(
+                        username: details.getString("username"),
+                        enrollment: details.getString("enrNo"),
+                        token: details.getString("token"),
+                      )
+                    : Login()));
+      });
     });
     super.initState();
   }
