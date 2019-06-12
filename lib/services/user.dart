@@ -25,7 +25,10 @@ Future<Login> userLogin(String id, String pass) async {
     final jsonResponse = jsonDecode(response.body);
     Login login = new Login.fromJson(jsonResponse);
     print(response.body);
-    return login;
+    if(response.body.isNotEmpty){
+      return login;
+    }
+    return null;
   } on Exception catch (e) {
     print(e);
     return null;
