@@ -10,8 +10,6 @@ import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart'
     show CalendarCarousel;
 import 'MainScreen.dart';
 
-import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart'
-    show CalendarCarousel;
 
 void main() => runApp(MyApp());
 
@@ -47,27 +45,26 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
       appBar: AppBar(
-        title: Center(child: Text("Mess Menu")),
-
         elevation: 0,
-        actions: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Icon(Icons.calendar_today),
-          )
-        ],
+        centerTitle: true,
+        title: Text(
+          "Mess Menu",
+          style: TextStyle(
+              color: Colors.white, fontSize: 25.0, fontFamily: 'Lobster_Two'),
+        ),
+        backgroundColor: appiBrown,
+        iconTheme: new IconThemeData(color: appiYellow),
       ),
       body: Column(
         children: <Widget>[
           HorizontalDatePicker(),
           Flexible(
-            child: SingleChildScrollView(child: Menu()),
+            child: SingleChildScrollView(child: Menu(),
+            physics: BouncingScrollPhysics(),),
           ),
         ],
-      ), // this is to be implemented
-
+      ),
       drawer: Drawer(
         child: Column(
           children: <Widget>[

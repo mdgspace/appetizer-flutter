@@ -7,7 +7,11 @@ packages:
       name: async
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "2.2.0"
+=======
+    version: "2.1.0"
+>>>>>>> bfix: Add missing identifiers
   boolean_selector:
     dependency: transitive
     description:
@@ -183,7 +187,7 @@ packages:
       name: test_api
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.5"
+    version: "0.2.4"
   typed_data:
     dependency: transitive
     description:
