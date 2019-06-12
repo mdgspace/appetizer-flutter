@@ -109,7 +109,7 @@ class Help extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.all(8),
                     child: Text(
-                      mdg_full,
+                      mdgFull,
                       style: TextStyle(
                         fontFamily: 'OpenSans',
                         fontSize: 14,

@@ -5,6 +5,7 @@ import 'colors.dart';
 import 'Home.dart';
 import 'help.dart';
 import 'package:appetizer/services/user.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -196,25 +197,27 @@ class _LoginState extends State<Login> {
   }
 
   void _validateAndSubmit() {
-    //sharedPreferences = await SharedPreferences.getInstance();
     if (_validateAndSave()) {
       FocusScope.of(context).requestFocus(new FocusNode());
       userLogin(_enrollmentNo, _password).then((loginCreds) async {
         if (loginCreds.enrNo.toString() == _enrollmentNo) {
+          saveUserDetails(loginCreds.enrNo.toString(), loginCreds.name, loginCreds.token);
           _showSnackBar(context, "Login Successful");
           setState(() {
             flareActor = FlareActor("flare_files/Login Appetizer (1).flr",
                 animation: "Initial To Right");
           });
           await new Future.delayed(const Duration(seconds: 5));
-          Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) {
-            return Home(
-              enrollment: loginCreds.enrNo.toString(),
-              username: loginCreds.name.toString(),
-              token: loginCreds.token,
-            );
-          }));
+          getUserDetails().then((details) {
+            Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) {
+              return Home(
+                enrollment: details.getString("enrNo"),
+                username: details.getString("username"),
+                token: details.getString("token"),
+              );
+            }));
+          });
         } else {
           _showSnackBar(context, "Incorrect authentication credentials.");
           setState(() {
@@ -224,6 +227,14 @@ class _LoginState extends State<Login> {
         }
       });
     }
+  }
+
+  Future<bool> saveUserDetails(String enrNo, String username, String token) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString("token", token);
+    prefs.setString("enrNo", enrNo);
+    prefs.setString("username", username);
+    return prefs.commit();
   }
 
   void _channelILogin() {}
@@ -244,4 +255,9 @@ class _LoginState extends State<Login> {
       duration: Duration(seconds: 3),
     ));
   }
+}
+
+Future<SharedPreferences> getUserDetails() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  return prefs;
 }
