@@ -17,6 +17,7 @@ class _LoginState extends State<Login> {
   final _formKey = new GlobalKey<FormState>();
   String _enrollmentNo, _password;
   bool isLoading;
+  bool isLoginButtonTapped = false;
   FlareActor flareActor = FlareActor(
     "flare_files/Login Appetizer (1).flr",
     animation: "idle",
@@ -136,20 +137,31 @@ class _LoginState extends State<Login> {
         padding: EdgeInsets.fromLTRB(0.0, 45.0, 0.0, 0.0),
         child: SizedBox(
           height: 40.0,
-          child: new RaisedButton(
-            elevation: 5.0,
-            color: Colors.white,
-            shape: new RoundedRectangleBorder(
-                side: BorderSide(
+          child: (isLoginButtonTapped)
+              ? new RaisedButton(
+                  elevation: 5.0,
                   color: appiYellow,
-                  style: BorderStyle.solid,
-                  width: 2,
+                  shape: new RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(40.0)),
+                  child: new Text(
+                    "AUTHENTICATING...",
+                    style: new TextStyle(fontSize: 20.0, color: Colors.white),
+                  ),
+                  onPressed: () {})
+              : new RaisedButton(
+                  elevation: 5.0,
+                  color: Colors.white,
+                  shape: new RoundedRectangleBorder(
+                      side: BorderSide(
+                        color: appiYellow,
+                        style: BorderStyle.solid,
+                        width: 2,
+                      ),
+                      borderRadius: new BorderRadius.circular(40.0)),
+                  child: new Text('LOGIN',
+                      style: new TextStyle(fontSize: 25.0, color: appiYellow)),
+                  onPressed: _validateAndSubmit,
                 ),
-                borderRadius: new BorderRadius.circular(40.0)),
-            child: new Text('LOGIN',
-                style: new TextStyle(fontSize: 25.0, color: appiYellow)),
-            onPressed: _validateAndSubmit,
-          ),
         ));
   }
 
@@ -198,16 +210,22 @@ class _LoginState extends State<Login> {
 
   void _validateAndSubmit() {
     if (_validateAndSave()) {
+      setState(() {
+        isLoginButtonTapped = true;
+      });
       FocusScope.of(context).requestFocus(new FocusNode());
       userLogin(_enrollmentNo, _password).then((loginCreds) async {
         if (loginCreds.enrNo.toString() == _enrollmentNo) {
-          saveUserDetails(loginCreds.enrNo.toString(), loginCreds.name, loginCreds.token);
+          saveUserDetails(
+              loginCreds.enrNo.toString(), loginCreds.name, loginCreds.token);
           _showSnackBar(context, "Login Successful");
           setState(() {
+            isLoginButtonTapped = false;
             flareActor = FlareActor("flare_files/Login Appetizer (1).flr",
                 animation: "Initial To Right");
           });
           await new Future.delayed(const Duration(seconds: 5));
+
           getUserDetails().then((details) {
             Navigator.pushReplacement(context,
                 MaterialPageRoute(builder: (context) {
@@ -219,6 +237,9 @@ class _LoginState extends State<Login> {
             }));
           });
         } else {
+          setState(() {
+            isLoginButtonTapped = false;
+          });
           _showSnackBar(context, "Incorrect authentication credentials.");
           setState(() {
             flareActor = FlareActor("flare_files/Login Appetizer (1).flr",
@@ -229,12 +250,12 @@ class _LoginState extends State<Login> {
     }
   }
 
-  Future<bool> saveUserDetails(String enrNo, String username, String token) async {
+  Future<void> saveUserDetails(
+      String enrNo, String username, String token) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString("token", token);
     prefs.setString("enrNo", enrNo);
     prefs.setString("username", username);
-    return prefs.commit();
   }
 
   void _channelILogin() {}

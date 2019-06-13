@@ -18,15 +18,15 @@ void main() => runApp(MaterialApp(
       darkTheme: ThemeData(
         brightness: Brightness.dark,
       ),
-      home: MyApp(),
+      home: Appetizer(),
     ));
 
-class MyApp extends StatefulWidget {
+class Appetizer extends StatefulWidget {
   @override
-  _MyAppState createState() => _MyAppState();
+  _AppetizerState createState() => _AppetizerState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _AppetizerState extends State<Appetizer> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
