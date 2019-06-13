@@ -123,6 +123,7 @@ class _HomeState extends State<Home> {
                         ),
                         title: Text("FeedBack"),
                       ),
+                      onTap: (){},
                     ),
                     GestureDetector(
                       child: ListTile(
@@ -133,6 +134,7 @@ class _HomeState extends State<Home> {
                         ),
                         title: Text("Leaves"),
                       ),
+                      onTap: (){},
                     ),
                     GestureDetector(
                       child: ListTile(
@@ -143,6 +145,7 @@ class _HomeState extends State<Home> {
                         ),
                         title: Text("Rebates"),
                       ),
+                      onTap: (){},
                     ),
                     GestureDetector(
                       child: ListTile(
@@ -153,6 +156,7 @@ class _HomeState extends State<Home> {
                         ),
                         title: Text("Notification History"),
                       ),
+                      onTap: (){},
                     ),
                     GestureDetector(
                       child: ListTile(
@@ -163,6 +167,7 @@ class _HomeState extends State<Home> {
                         ),
                         title: Text("Settings"),
                       ),
+                      onTap: (){},
                     ),
                     GestureDetector(
                       child: ListTile(
@@ -173,6 +178,7 @@ class _HomeState extends State<Home> {
                         ),
                         title: Text("FAQ"),
                       ),
+                      onTap: (){},
                     ),
                     GestureDetector(
                       child: ListTile(
