@@ -17,7 +17,8 @@ class MyLeaves extends StatelessWidget {
           color: const Color.fromRGBO(255, 193, 7, 1),
           onPressed: () => Navigator.pop(context, false),
         ),
-        title: Text("My Leaves"),
+        title: Text("My Leaves",
+        style: TextStyle(color: Colors.white),),
         backgroundColor: const Color.fromRGBO(121, 85, 72, 1),
       ),
       body: Column(
@@ -35,13 +36,17 @@ class MyLeaves extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: ListView(
-              children: <Widget>[
-                //TODO: USE MAP FOR THE MEALS LEFT
-                MealLeft('Dinner', 'July 16 2019'),
-                MealLeft('Dinner', 'July 16 2019'),
-                MealLeft('Dinner', 'July 16 2019'),
-              ],
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ListView(
+                physics: BouncingScrollPhysics(),
+                children: <Widget>[
+                  //TODO: USE MAP FOR THE MEALS LEFT
+                  MealLeft('Dinner', 'July 16 2019'),
+                  MealLeft('Dinner', 'July 16 2019'),
+                  MealLeft('Dinner', 'July 16 2019'),
+                ],
+              ),
             ),
           ),
           Container(
@@ -50,7 +55,7 @@ class MyLeaves extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 InfoMessage('You can cancel your leave 2-3 hours before the meal'),
-                SeeHistory(),
+                SeeLeavesHistory(),
               ],
             ),
           )

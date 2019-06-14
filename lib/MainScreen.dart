@@ -1,7 +1,4 @@
-
 import 'package:flutter/material.dart';
-import "colors.dart";
-import 'HorizontalDatePicker.dart';
 
 class Menu extends StatefulWidget {
   @override
@@ -9,14 +6,13 @@ class Menu extends StatefulWidget {
 }
 
 class _MenuState extends State<Menu> {
-
   static final double _radius = 16;
 
   final _testMap = {
     CircleAvatar(
-      radius: _radius,
-      backgroundImage: AssetImage("assets/images/Group.png")
-    ): "Aloo Parantha",
+            radius: _radius,
+            backgroundImage: AssetImage("assets/images/Group.png")):
+        "Aloo Parantha",
     CircleAvatar(
       radius: _radius,
       backgroundImage: AssetImage("assets/images/yogurt-dahi.png"),
@@ -31,8 +27,7 @@ class _MenuState extends State<Menu> {
     ): "Dalia Upma",
   };
 
-  final _testDailyItems =
-      "milk, tea, coffee, milk, tea, coffee";
+  final _testDailyItems = "milk, tea, coffee, milk, tea, coffee";
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +36,6 @@ class _MenuState extends State<Menu> {
       children: <Widget>[
         MenuCard('Breakfast', _testMap, _testDailyItems),
         MenuCard('Lunch', _testMap, _testDailyItems),
-        MenuCard('Dinner', _testMap, _testDailyItems),
         MenuCard('Dinner', _testMap, _testDailyItems),
       ],
     );
@@ -74,7 +68,6 @@ class _MenuCardState extends State<MenuCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
-
         margin: EdgeInsets.fromLTRB(12, 4, 12, 4),
         elevation: 1,
         child: Column(
@@ -90,18 +83,19 @@ class _MenuCardState extends State<MenuCard> {
                       Expanded(
                         child: Text(
                           widget.title,
-                          style: TextStyle(color: Colors.yellow[700], fontSize: 24),
+                          style: TextStyle(
+                              color: Colors.yellow[700], fontSize: 24),
                         ),
                       ),
                       outdated
                           ? Icon(Icons.comment)
                           : Switch(
-                          value: enabled,
-                          onChanged: (value) {
-                            setState(() {
-                              value = enabled;
-                            });
-                          }),
+                              value: enabled,
+                              onChanged: (value) {
+                                setState(() {
+                                  value = enabled;
+                                });
+                              }),
                     ],
                   ),
                   Column(
@@ -118,8 +112,10 @@ class _MenuCardState extends State<MenuCard> {
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-
-                          'Daily Items: ${widget.dailyItems}', style: TextStyle(color: Color.fromRGBO(0, 0, 0, .54), fontFamily: "Roboto"),
+                          'Daily Items: ${widget.dailyItems}',
+                          style: TextStyle(
+                              color: Color.fromRGBO(0, 0, 0, .54),
+                              fontFamily: "Roboto"),
                         ),
                       )),
                 ),
@@ -152,9 +148,10 @@ class _MenuCardState extends State<MenuCard> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text(itemName, style: TextStyle(
-                  fontFamily: "Roboto"
-                ),),
+                Text(
+                  itemName,
+                  style: TextStyle(fontFamily: "Roboto"),
+                ),
                 Divider(
                   height: 8.0,
                 ),

@@ -25,10 +25,10 @@ class ManageLeaveBanner extends StatelessWidget{
                 Padding(
                   padding: const EdgeInsets.fromLTRB(10.0, 10.0, 0.0, 2.0),
                   child: Text(
-                    'Manage Your Leave',
+                    'Manage Your Leaves',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 25.0,
+                      fontSize: 24.0,
                     ),
                   ),
                 ),
@@ -38,7 +38,7 @@ class ManageLeaveBanner extends StatelessWidget{
                     'See upcoming meals you are leaving',
                     style: TextStyle(
                         color: const Color.fromRGBO(255, 193, 7, 1),
-                        fontSize: 15.0
+                        fontSize: 12.0
                     ),
                   ),
                 ),
