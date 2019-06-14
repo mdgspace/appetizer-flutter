@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:appetizer/models/user/image.dart';
 import 'package:appetizer/models/user/login.dart';
 import 'package:appetizer/models/user/me.dart';
+import 'package:appetizer/models/user/Notification.dart';
 
 String url = "http://appetizer-mdg.herokuapp.com";
 var header = {"Content-Type": "application/json"};
@@ -25,7 +26,7 @@ Future<Login> userLogin(String id, String pass) async {
     final jsonResponse = jsonDecode(response.body);
     Login login = new Login.fromJson(jsonResponse);
     print(response.body);
-    if(response.body.isNotEmpty){
+    if (response.body.isNotEmpty) {
       return login;
     }
     return null;
@@ -45,7 +46,7 @@ Future<Detail> userLogout(String token) async {
       headers: tokenAuth,
     );
     final jsonResponse = jsonDecode(response.body);
-    Detail detail= new Detail.fromJson(jsonResponse);
+    Detail detail = new Detail.fromJson(jsonResponse);
     print(response.body);
     return detail;
   } on Exception catch (e) {
@@ -72,6 +73,7 @@ Future<Me> userMeGet(String token) async {
     return null;
   }
 }
+
 /*
 Future<Me> userMePut(String token, Me me) async {
   String endpoint = "/api/user/me/";
@@ -130,7 +132,7 @@ Future<Detail> userPassword(
       body: json,
     );
     final jsonResponse = jsonDecode(response.body);
-    Detail detail= new Detail.fromJson(jsonResponse);
+    Detail detail = new Detail.fromJson(jsonResponse);
     print(response.body);
     return detail;
   } on Exception catch (e) {
@@ -151,7 +153,7 @@ Future<Detail> userReset(String email) async {
       body: json,
     );
     final jsonResponse = jsonDecode(response.body);
-    Detail detail= new Detail.fromJson(jsonResponse);
+    Detail detail = new Detail.fromJson(jsonResponse);
     print(response.body);
     return detail;
   } on Exception catch (e) {
@@ -201,3 +203,19 @@ Future<Reset> oAuthComplete(String token) async {
   }
 }
 */
+
+Future<Notification> getNotifications(String token) async {
+  String endpoint = "/api/user/message/list/";
+  String uri = url + endpoint;
+  var tokenAuth = {"Authorization": "Token " + token};
+  try {
+    var response = await client.get(uri, headers: tokenAuth);
+    final jsonResponse = jsonDecode(response.body);
+    Notification notification = new Notification.fromJson(jsonResponse);
+    print(response.body);
+    return notification;
+  } on Exception catch (e) {
+    print(e);
+    return null;
+  }
+}

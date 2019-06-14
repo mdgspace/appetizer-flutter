@@ -8,7 +8,7 @@ String url = "http://appetizer-mdg.herokuapp.com";
 var header = {"Content-Type": "application/json"};
 http.Client client = new http.Client();
 
-Future<MonthlyRebate> getMonthlyLeave(String token) async {
+Future<MonthlyRebate> getMonthlyRebate(String token) async {
   String endPoint = "/api/transaction/rebate/current/";
   String uri = url + endPoint;
 

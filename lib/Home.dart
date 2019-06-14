@@ -10,6 +10,9 @@ import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart'
     show CalendarCarousel;
 import 'MainScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'screens/my_leaves/my_leaves_screen.dart';
+import 'screens/my_rebates/my_rebates_screen.dart';
+import 'screens/notification_history/noti_history_screen.dart';
 
 
 void main() => runApp(MyApp());
@@ -146,7 +149,7 @@ class _HomeState extends State<Home> {
                         ),
                         title: Text("FeedBack"),
                       ),
-                      onTap: (){},
+                      onTap: () {},
                     ),
                     GestureDetector(
                       child: ListTile(
@@ -157,7 +160,13 @@ class _HomeState extends State<Home> {
                         ),
                         title: Text("Leaves"),
                       ),
-                      onTap: (){},
+                      onTap: () {
+                        Navigator.pop(context);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => MyLeaves()));
+                      },
                     ),
                     GestureDetector(
                       child: ListTile(
@@ -168,7 +177,13 @@ class _HomeState extends State<Home> {
                         ),
                         title: Text("Rebates"),
                       ),
-                      onTap: (){},
+                      onTap: () {
+                        Navigator.pop(context);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => MyRebates()));
+                      },
                     ),
                     GestureDetector(
                       child: ListTile(
@@ -179,7 +194,13 @@ class _HomeState extends State<Home> {
                         ),
                         title: Text("Notification History"),
                       ),
-                      onTap: (){},
+                      onTap: () {
+                        Navigator.pop(context);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => NotificationHistory()));
+                      },
                     ),
                     GestureDetector(
                       child: ListTile(
@@ -190,7 +211,7 @@ class _HomeState extends State<Home> {
                         ),
                         title: Text("Settings"),
                       ),
-                      onTap: (){},
+                      onTap: () {},
                     ),
                     GestureDetector(
                       child: ListTile(
@@ -201,7 +222,7 @@ class _HomeState extends State<Home> {
                         ),
                         title: Text("FAQ"),
                       ),
-                      onTap: (){},
+                      onTap: () {},
                     ),
                     GestureDetector(
                       child: ListTile(

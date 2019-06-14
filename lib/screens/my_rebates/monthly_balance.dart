@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-class MonthlyBalance extends StatelessWidget{
-
+class MonthlyBalance extends StatelessWidget {
   final int _balanceConsumed;
   final int _rebate;
   final int _additionalMeal;
   final int _year;
   final String _month;
 
-  MonthlyBalance(this._balanceConsumed, this._rebate, this._additionalMeal, this._month, this._year);
+  MonthlyBalance(this._balanceConsumed, this._rebate, this._additionalMeal,
+      this._month, this._year);
 
   @override
   Widget build(BuildContext context) {
@@ -22,10 +22,8 @@ class MonthlyBalance extends StatelessWidget{
               decoration: BoxDecoration(
                   border: Border(
                       bottom: BorderSide(
-                        color: const Color.fromRGBO(224, 224, 224, 1),
-                      )
-                  )
-              ),
+                color: const Color.fromRGBO(224, 224, 224, 1),
+              ))),
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Row(
@@ -39,13 +37,11 @@ class MonthlyBalance extends StatelessWidget{
                         color: const Color.fromRGBO(0, 0, 0, 0.87),
                       ),
                     ),
-                    Text(
-                        '$_month $_year',
+                    Text('$_month $_year',
                         style: TextStyle(
                           fontSize: 17.0,
                           color: const Color.fromRGBO(0, 0, 0, 0.87),
-                        )
-                    ),
+                        )),
                   ],
                 ),
               ),
@@ -54,10 +50,8 @@ class MonthlyBalance extends StatelessWidget{
               decoration: BoxDecoration(
                   border: Border(
                       bottom: BorderSide(
-                        color: const Color.fromRGBO(224, 224, 224, 1),
-                      )
-                  )
-              ),
+                color: const Color.fromRGBO(224, 224, 224, 1),
+              ))),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
@@ -96,7 +90,7 @@ class MonthlyBalance extends StatelessWidget{
                           ),
                         ),
                         Text(
-                          '+ Rs. $_rebate',
+                          (_rebate != null) ? '+ Rs. $_rebate' : '+ Rs. 0',
                           style: TextStyle(
                             fontSize: 16.0,
                             color: const Color.fromRGBO(39, 174, 96, 1),
@@ -117,22 +111,21 @@ class MonthlyBalance extends StatelessWidget{
                             color: const Color.fromRGBO(0, 0, 0, 0.54),
                           ),
                         ),
-                        (_additionalMeal==0)?
-                        Text(
-                          'Rs. $_additionalMeal',
-                          style: TextStyle(
-                            fontSize: 16.0,
-                            color: const Color.fromRGBO(0, 0, 0, 0.54),
-                          ),
-                        )
-                            :
-                        Text(
-                          '-Rs. $_additionalMeal',
-                          style: TextStyle(
-                            fontSize: 16.0,
-                            color: const Color.fromRGBO(235, 87, 87, 1),
-                          ),
-                        )
+                        (_additionalMeal == 0)
+                            ? Text(
+                                'Rs. $_additionalMeal',
+                                style: TextStyle(
+                                  fontSize: 16.0,
+                                  color: const Color.fromRGBO(0, 0, 0, 0.54),
+                                ),
+                              )
+                            : Text(
+                                '-Rs. $_additionalMeal',
+                                style: TextStyle(
+                                  fontSize: 16.0,
+                                  color: const Color.fromRGBO(235, 87, 87, 1),
+                                ),
+                              )
                       ],
                     ),
                   ),
@@ -145,7 +138,9 @@ class MonthlyBalance extends StatelessWidget{
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
                   Text(
-                    'Rs. '+ (_balanceConsumed+_additionalMeal-_rebate).toString(),
+                    'Rs. ' +
+                        (_balanceConsumed + _additionalMeal - _rebate)
+                            .toString(),
                     style: TextStyle(
                       fontSize: 17.0,
                       color: const Color.fromRGBO(0, 0, 0, 0.87),
