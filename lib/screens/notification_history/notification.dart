@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class MessNotification extends StatelessWidget{
+class MessNotification extends StatefulWidget{
 
   final String _heading;
   final String _message;
@@ -8,6 +8,11 @@ class MessNotification extends StatelessWidget{
 
   MessNotification(this._heading, this._message, this._dateAndTime);
 
+  @override
+  _MessNotificationState createState() => _MessNotificationState();
+}
+
+class _MessNotificationState extends State<MessNotification> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -26,7 +31,7 @@ class MessNotification extends StatelessWidget{
             Padding(
               padding: const EdgeInsets.all(2.0),
               child: Text(
-                '$_heading',
+                '${widget._heading}',
                 style: TextStyle(
                   fontSize: 19.0,
                 ),
@@ -35,7 +40,7 @@ class MessNotification extends StatelessWidget{
             Padding(
               padding: const EdgeInsets.fromLTRB(2.0, 4.0, 2.0, 2.0),
               child: Text(
-                  '$_message',
+                  '${widget._message}',
                   style: TextStyle(
                     fontSize: 16.0,
                     color: const Color.fromRGBO(0, 0, 0, 0.54),
@@ -45,7 +50,7 @@ class MessNotification extends StatelessWidget{
             Padding(
               padding: const EdgeInsets.all(2.0),
               child: Text(
-                '$_dateAndTime',
+                '${widget._dateAndTime}',
                 style: TextStyle(
                   color: const Color.fromRGBO(0, 0, 0, 0.54),
                   fontSize: 13,

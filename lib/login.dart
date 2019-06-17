@@ -68,6 +68,7 @@ class _LoginState extends State<Login> {
                 child: new Form(
                   key: _formKey,
                   child: ListView(
+                    physics: ClampingScrollPhysics(),
                     children: <Widget>[
                       _showEnrollmentInput(),
                       _showPasswordInput(),

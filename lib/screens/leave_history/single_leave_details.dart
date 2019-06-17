@@ -12,7 +12,7 @@ class SingleLeaveDetails extends StatelessWidget{
   Widget build(BuildContext context) {
     return Container(
       height: 53.0,
-      width: 334.0,
+      width: 320.0,
       decoration: BoxDecoration(
           color: Colors.white,
           border: Border(
