@@ -94,7 +94,7 @@ class Help extends StatelessWidget {
                   Text(
                     "Developed by",
                     style: TextStyle(
-                        color: appidarkgrey,
+                        color: appiDarkGrey,
                         fontFamily: 'OpenSans',
                         fontStyle: FontStyle.italic,
                         fontSize: 14),
@@ -113,7 +113,7 @@ class Help extends StatelessWidget {
                       style: TextStyle(
                         fontFamily: 'OpenSans',
                         fontSize: 14,
-                        color: appidarkgrey,
+                        color: appiDarkGrey,
                       ),
                     ),
                   ),

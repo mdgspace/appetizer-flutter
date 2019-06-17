@@ -22,6 +22,19 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   String version = "v1.5.6r";
+  bool isLoggingOut = false;
+
+  showOverlay(BuildContext context) {
+    OverlayState overlayState = Overlay.of(context);
+    OverlayEntry overlayEntry = OverlayEntry(
+        builder: (context) => showLoggingOutProgress());
+
+    overlayState.insert(overlayEntry);
+
+    if(!isLoggingOut){
+      overlayEntry.remove();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,15 +59,20 @@ class _HomeState extends State<Home> {
         backgroundColor: appiBrown,
         iconTheme: new IconThemeData(color: appiYellow),
       ),
-      body: Column(
+      body: Stack(
         children: <Widget>[
-          HorizontalDatePicker(),
-          Flexible(
-            child: SingleChildScrollView(
-              child: Menu(),
-              physics: BouncingScrollPhysics(),
-            ),
+          Column(
+            children: <Widget>[
+              HorizontalDatePicker(),
+              Flexible(
+                child: SingleChildScrollView(
+                  child: Menu(),
+                  physics: BouncingScrollPhysics(),
+                ),
+              ),
+            ],
           ),
+          showLoggingOutProgress(),
         ],
       ),
       drawer: Drawer(
@@ -236,6 +254,10 @@ class _HomeState extends State<Home> {
                                         style: TextStyle(color: appiYellow),
                                       ),
                                       onPressed: () {
+                                        setState(() {
+                                          isLoggingOut = true;
+                                        });
+                                        showOverlay(context);
                                         userLogout(widget.token)
                                             .then((afterLogout) async {
                                           if (afterLogout.detail.toString() ==
@@ -249,6 +271,9 @@ class _HomeState extends State<Home> {
                                                     "/login",
                                                     (Route<dynamic> route) =>
                                                         false);
+                                            setState(() {
+                                              isLoggingOut = false;
+                                            });
                                           }
                                         });
                                       },
@@ -301,6 +326,28 @@ class _HomeState extends State<Home> {
           ],
         ),
       ),
+    );
+  }
+
+  Widget showLoggingOutProgress() {
+    if (isLoggingOut) {
+      return new Stack(
+        children: [
+          new Opacity(
+            opacity: 0.7,
+            child: const ModalBarrier(dismissible: false, color: Colors.transparent),
+          ),
+          new Center(
+            child: new CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(appiYellow),
+            ),
+          ),
+        ],
+      );
+    }
+    return Container(
+      height: 0,
+      width: 0,
     );
   }
 }

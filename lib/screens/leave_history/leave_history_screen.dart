@@ -3,16 +3,18 @@ import 'package:flutter/material.dart';
 import 'leave_dropdown_filter.dart';
 import 'leave_timeline.dart';
 
-class MyLeaves extends StatelessWidget {
+class MyLeavesHistory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0.0,
         leading: IconButton(icon:Icon(Icons.arrow_back),
           color: const Color.fromRGBO(255, 193, 7, 1),
           onPressed:() => Navigator.pop(context, false),
         ),
-        title: Text("Leave History"),
+        title: Text("Leave History",
+        style: TextStyle(color: Colors.white),),
         backgroundColor: const Color.fromRGBO(121, 85, 72, 1),
       ),
       body: Container(

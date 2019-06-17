@@ -4,6 +4,7 @@ import 'monthly_balance.dart';
 import 'see_rebate_history.dart';
 import 'package:appetizer/services/transaction.dart';
 import 'package:appetizer/login.dart';
+import 'package:appetizer/monthIntToMonthString.dart';
 
 class MyRebates extends StatelessWidget {
   @override
@@ -24,10 +25,25 @@ class MyRebates extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          MonthlyBalance(1800, 400, 0, 'April', 2019),
+          //getMonthRebate(),
+          MonthlyBalance(1800, 400, 0, "April", 2019),
           SeeRebateHistory()
         ],
       ),
     );
   }
+}
+
+MonthlyBalance getMonthRebate() {
+  int currentMonthRebate;
+  getUserDetails().then(
+    (userDetails) {
+      getMonthlyRebate(userDetails.getString("token")).then((monthlyRebate) {
+        print(monthlyRebate.rebate);
+        currentMonthRebate = monthlyRebate.rebate;
+      });
+    },
+  );
+  return MonthlyBalance(1800, currentMonthRebate, 0,
+      monthIntToMonthString(DateTime.now().month), DateTime.now().year);
 }

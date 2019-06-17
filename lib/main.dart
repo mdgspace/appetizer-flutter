@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'colors.dart';
 import 'login.dart';
+import 'screens/notification_history/noti_history_screen.dart';
+import 'monthIntToMonthString.dart';
 
 void main() => runApp(MaterialApp(
       routes: {
@@ -14,6 +16,8 @@ void main() => runApp(MaterialApp(
       title: 'Appetizer',
       theme: ThemeData(
         primaryColor: appiYellow,
+        accentColor: appiGrey,
+        cursorColor: appiYellow
       ),
       darkTheme: ThemeData(
         brightness: Brightness.dark,
@@ -36,6 +40,11 @@ class _AppetizerState extends State<Appetizer> {
 
   @override
   void initState() {
+    print(monthIntToMonthString(2));
+    print(notificationList());
+    getToken().then((token){
+      print(token);
+    });
     Future.delayed(Duration(seconds: 3), () {
       getUserDetails().then((details) {
         Navigator.pushReplacement(

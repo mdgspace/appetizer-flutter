@@ -204,7 +204,7 @@ Future<Reset> oAuthComplete(String token) async {
 }
 */
 
-Future<Notification> getNotifications(String token) async {
+Future<List<Result>> getNotifications(String token) async {
   String endpoint = "/api/user/message/list/";
   String uri = url + endpoint;
   var tokenAuth = {"Authorization": "Token " + token};
@@ -213,7 +213,7 @@ Future<Notification> getNotifications(String token) async {
     final jsonResponse = jsonDecode(response.body);
     Notification notification = new Notification.fromJson(jsonResponse);
     print(response.body);
-    return notification;
+    return notification.results;
   } on Exception catch (e) {
     print(e);
     return null;

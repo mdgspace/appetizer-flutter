@@ -27,7 +27,7 @@ class _LeaveDropdownFilterState extends State<LeaveDropdownFilter> {
   Widget build(BuildContext context) {
     return Container(
       height: 140.0,
-      width: 412.0,
+      width: 395,
       color: const Color.fromRGBO(121, 85, 72, 1),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
