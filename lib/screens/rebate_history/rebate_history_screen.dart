@@ -1,18 +1,17 @@
-import 'package:appetizer/models/transaction/yearlyRebate.dart';
 import 'package:appetizer/services/transaction.dart';
 import 'package:flutter/material.dart';
+import 'package:appetizer/monthIntToMonthString.dart';
 
+import '../../colors.dart';
 import '../../login.dart';
 import 'rebate_history_card.dart';
 
 class RebateHistoryScreen extends StatefulWidget {
-
   @override
   _RebateHistoryScreenState createState() => _RebateHistoryScreenState();
 }
 
 class _RebateHistoryScreenState extends State<RebateHistoryScreen> {
-
   final _yearList = [
     DateTime.now().year,
     DateTime.now().year - 1,
@@ -44,23 +43,22 @@ class _RebateHistoryScreenState extends State<RebateHistoryScreen> {
             child: getDropdownFilter(),
           ),
           Expanded(
-            child: ListView(
+            child: getRebateHistoryList()
+            /*ListView(
               children: <Widget>[
-                //TODO: IMPLEMENT CHANGE IN LIST VIEW ON NEW SELECTION
-                //TODO: USE MAP FOR IMPLEMENTING HISTORY
                 RebateHistoryCard(1800, 403, 0, 'April', 2019),
                 RebateHistoryCard(1800, 403, 0, 'March', 2019),
                 RebateHistoryCard(1800, 403, 0, 'February', 2019),
                 RebateHistoryCard(1800, 403, 0, 'January', 2019),
               ],
-            ),
+            ),*/
           ),
         ],
       ),
     );
   }
 
-  Widget getDropdownFilter(){
+  Widget getDropdownFilter() {
     return Container(
       color: const Color.fromRGBO(121, 85, 72, 1),
       child: Padding(
@@ -98,7 +96,7 @@ class _RebateHistoryScreenState extends State<RebateHistoryScreen> {
                             border: Border(
                                 bottom: BorderSide(
                                     color:
-                                    const Color.fromRGBO(0, 0, 0, 0.15)))),
+                                        const Color.fromRGBO(0, 0, 0, 0.15)))),
                         child: DropdownButtonHideUnderline(
                           child: DropdownButton<int>(
                             value: currentItemSelected,
@@ -136,12 +134,38 @@ class _RebateHistoryScreenState extends State<RebateHistoryScreen> {
     });
   }
 
-  YearlyRebate getYearlyData(int currentItemSelected) {
-    getUserDetails().then((userDetails){
-      getYearlyRebate(userDetails.getString("token"), currentItemSelected).then((yearlyRebate){
-        return yearlyRebate;
-      });
+  Widget getRebateHistoryList() {
+    getUserDetails().then((userDetails) {
+      return FutureBuilder(
+        future: getYearlyRebate(
+            userDetails.getString("token"), currentItemSelected),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.data == null) {
+            return Container(
+              child: Center(
+                  child: CircularProgressIndicator(
+                valueColor: new AlwaysStoppedAnimation<Color>(appiYellow),
+              )),
+            );
+          } else {
+            return ListView.builder(
+                itemCount: snapshot.data.count,
+                itemBuilder: (BuildContext context, int index) {
+                  return RebateHistoryCard(
+                      null,
+                      snapshot.data.results[index].rebate,
+                      snapshot.data.results[index].expenses,
+                      monthIntToMonthString(
+                          snapshot.data.results[index].monthId),
+                      snapshot.data.results[index].year);
+                });
+          }
+        },
+      );
     });
-    return null;
+    return Container(
+      width: 0.0,
+      height: 0.0,
+    );
   }
 }
