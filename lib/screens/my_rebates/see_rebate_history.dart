@@ -15,37 +15,31 @@ class SeeRebateHistory extends StatelessWidget {
               ))),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            GestureDetector(
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(6.0, 0.0, 0.0, 0.0),
-                  child: Text(
-                    'See Rebate History',
-                    style: TextStyle(
-                      fontSize: 20.0,
-                    ),
+        child: GestureDetector(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.fromLTRB(6.0, 0.0, 0.0, 0.0),
+                child: Text(
+                  'See Rebate History',
+                  style: TextStyle(
+                    fontSize: 20.0,
                   ),
                 ),
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => RebateHistoryScreen()));
-                }),
-            IconButton(
-              icon: Icon(Icons.keyboard_arrow_right),
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => RebateHistoryScreen()));
-              },
-              iconSize: 40.0,
-            ),
-          ],
+              ),
+              IconButton(
+                icon: Icon(Icons.keyboard_arrow_right),
+                iconSize: 40.0,
+                onPressed: () {},
+              ),
+            ],
+          ),
+          onTap: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => RebateHistoryScreen()));
+          },
         ),
       ),
     );

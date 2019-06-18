@@ -32,7 +32,6 @@ Widget notificationList() {
         future: getNotifications(token),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.data == null) {
-            print(snapshot.data);
             return Container(
               child: Center(
                   child: CircularProgressIndicator(
