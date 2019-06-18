@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'screens/my_leaves/my_leaves_screen.dart';
 import 'screens/my_rebates/my_rebates_screen.dart';
 import 'screens/notification_history/noti_history_screen.dart';
+import 'customProgressIndicator.dart';
 
 class Home extends StatefulWidget {
   final String username;
@@ -334,13 +335,11 @@ class _HomeState extends State<Home> {
       return new Stack(
         children: [
           new Opacity(
-            opacity: 0.7,
-            child: const ModalBarrier(dismissible: false, color: Colors.transparent),
+            opacity: 0.8,
+            child: const ModalBarrier(dismissible: false, color: Colors.black45),
           ),
           new Center(
-            child: new CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(appiYellow),
-            ),
+            child: getCustomProgressLoader("Logging Out..")
           ),
         ],
       );
