@@ -1,24 +1,28 @@
 import 'package:flutter/material.dart';
 
-import 'status_card_1.dart';
-import 'status_card_2.dart';
+import 'leave_status_card.dart';
 import 'meal_left.dart';
 import 'info_message.dart';
 import 'manage_leaves_banner.dart';
 import 'no_leaves.dart';
 import 'see_history.dart';
+import 'package:appetizer/login.dart';
+import 'package:appetizer/services/leave.dart';
 
 class MyLeaves extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(icon: Icon(Icons.arrow_back),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
           color: const Color.fromRGBO(255, 193, 7, 1),
           onPressed: () => Navigator.pop(context, false),
         ),
-        title: Text("My Leaves",
-        style: TextStyle(color: Colors.white),),
+        title: Text(
+          "My Leaves",
+          style: TextStyle(color: Colors.white),
+        ),
         backgroundColor: const Color.fromRGBO(121, 85, 72, 1),
       ),
       body: Column(
@@ -29,7 +33,7 @@ class MyLeaves extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                StatusCard2(24, true),
+                LeaveStatusCard(getRemainingLeaves()),
                 InfoMessage('Check-out to leave upcoming meals in sequence'),
                 ManageLeaveBanner(),
               ],
@@ -39,7 +43,7 @@ class MyLeaves extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: ListView(
-                physics: BouncingScrollPhysics(),
+                physics: ClampingScrollPhysics(),
                 children: <Widget>[
                   //TODO: USE MAP FOR THE MEALS LEFT
                   MealLeft('Dinner', 'July 16 2019'),
@@ -54,7 +58,8 @@ class MyLeaves extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                InfoMessage('You can cancel your leave 2-3 hours before the meal'),
+                InfoMessage(
+                    'You can cancel your leave 2-3 hours before the meal'),
                 SeeLeavesHistory(),
               ],
             ),
@@ -66,4 +71,26 @@ class MyLeaves extends StatelessWidget {
       ),
     );
   }
+}
+
+bool isCheckoutIn() {
+  getUserDetails().then((userDetails) {
+    check(userDetails.getString("token")).then((checkInfo) {
+      if (checkInfo.isCheckedOut) {
+        return false;
+      } else {
+        return true;
+      }
+    });
+  });
+  return null;
+}
+
+int getRemainingLeaves(){
+  getUserDetails().then((userDetails){
+    remainingLeaves(userDetails.getString("token")).then((leaveCount){
+      return leaveCount.count;
+    });
+  });
+  return null;
 }
