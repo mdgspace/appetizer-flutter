@@ -4,15 +4,22 @@ import 'leave_status_card.dart';
 import 'meal_left.dart';
 import 'info_message.dart';
 import 'manage_leaves_banner.dart';
-import 'no_leaves.dart';
 import 'see_history.dart';
 import 'package:appetizer/login.dart';
 import 'package:appetizer/services/leave.dart';
 
-class MyLeaves extends StatelessWidget {
+class MyLeaves extends StatefulWidget {
+  @override
+  _MyLeavesState createState() => _MyLeavesState();
+}
+
+class _MyLeavesState extends State<MyLeaves> {
+  GlobalKey<ScaffoldState> _globalKey = new GlobalKey();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _globalKey,
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
@@ -64,9 +71,6 @@ class MyLeaves extends StatelessWidget {
               ],
             ),
           )
-//        }else{
-//    NoLeaves()
-//  }
         ],
       ),
     );
@@ -86,9 +90,9 @@ bool isCheckoutIn() {
   return null;
 }
 
-int getRemainingLeaves(){
-  getUserDetails().then((userDetails){
-    remainingLeaves(userDetails.getString("token")).then((leaveCount){
+int getRemainingLeaves() {
+  getUserDetails().then((userDetails) {
+    remainingLeaves(userDetails.getString("token")).then((leaveCount) {
       return leaveCount.count;
     });
   });

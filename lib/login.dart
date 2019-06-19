@@ -273,8 +273,6 @@ class _LoginState extends State<Login> {
   void _showSnackBar(BuildContext context, String message) {
     _scaffoldKey.currentState.showSnackBar(SnackBar(
       content: Text(message),
-      backgroundColor: Color.fromRGBO(0, 0, 0, .80),
-      duration: Duration(seconds: 3),
     ));
   }
 }

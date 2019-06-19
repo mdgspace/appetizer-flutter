@@ -65,7 +65,9 @@ class _LeaveStatusCardState extends State<LeaveStatusCard> {
                           child: Text(
                             (_isCheckedIn) ? 'CHECKED-IN' : 'CHECKED-OUT',
                             style: TextStyle(
-                              color: const Color.fromRGBO(39, 174, 96, 1),
+                              color: (!_isCheckedIn)
+                                  ? const Color.fromRGBO(235, 87, 87, 1)
+                                  : const Color.fromRGBO(34, 139, 34, 1),
                             ),
                           )),
                     ],
@@ -73,7 +75,9 @@ class _LeaveStatusCardState extends State<LeaveStatusCard> {
                   Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: RaisedButton(
-                      color: const Color.fromRGBO(235, 87, 87, 1),
+                      color: (_isCheckedIn)
+                          ? const Color.fromRGBO(235, 87, 87, 1)
+                          : const Color.fromRGBO(34, 139, 34, 1),
                       child: Padding(
                         padding: const EdgeInsets.all(10.0),
                         child: Text(
@@ -181,10 +185,16 @@ class _LeaveStatusCardState extends State<LeaveStatusCard> {
               setState(() {
                 _isCheckedIn = true;
               });
+              Scaffold.of(context)
+                  .showSnackBar(SnackBar(content: Text("You have checked in")));
             }
           });
         }
       });
     });
+    if (_isCheckedIn) {
+      Scaffold.of(context)
+          .showSnackBar(SnackBar(content: Text("You have checked out!")));
+    }
   }
 }
