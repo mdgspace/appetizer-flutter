@@ -7,7 +7,6 @@ import 'strings.dart';
 class ForgotPass extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _ForgotPassState();
   }
 }
@@ -18,7 +17,6 @@ class _ForgotPassState extends State<ForgotPass> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     AppBar appBar = AppBar(
       backgroundColor: appiBrown,
       leading: IconButton(
@@ -87,7 +85,7 @@ class _ForgotPassState extends State<ForgotPass> {
                 Padding(
                   padding: const EdgeInsets.only(left: 48, right: 48),
                   child: Text(
-                    pass_instruction,
+                    passInstruction,
                     style: TextStyle(
                       fontSize: 16,
                     ),

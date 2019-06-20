@@ -13,10 +13,16 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   final _formKey = new GlobalKey<FormState>();
   String _enrollmentNo, _password;
-
-  SharedPreferences sharedPreferences;
+  bool isLoading;
+  bool isLoginButtonTapped = false;
+  bool _isLoginSuccessful = false;
+  FlareActor flareActor = FlareActor(
+    "flare_files/Login Appetizer (1).flr",
+    animation: "idle",
+  );
 
   // Check if form is valid before performing Login
   bool _validateAndSave() {
@@ -31,24 +37,28 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       body: Column(
         children: <Widget>[
           Expanded(
             flex: 1,
             child: Stack(
               children: <Widget>[
+                getFlareAnimation(),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    "Appetizer",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 42.0, fontFamily: 'Lobster_Two', color: Colors.white),
+                  padding: const EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 0.0),
+                  child: Align(
+                    alignment: Alignment.topCenter,
+                    child: Text(
+                      "Appetizer",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontSize: 50.0,
+                          fontFamily: 'Lobster_Two',
+                          color: Colors.white),
+                    ),
                   ),
                 ),
-                FlareActor(
-                  "flare_files/Login Appetizer (1).flr",
-                  animation: "idle",
-                )
               ],
             ),
           ),
@@ -59,6 +69,7 @@ class _LoginState extends State<Login> {
                 child: new Form(
                   key: _formKey,
                   child: ListView(
+                    physics: ClampingScrollPhysics(),
                     children: <Widget>[
                       _showEnrollmentInput(),
                       _showPasswordInput(),
@@ -80,19 +91,19 @@ class _LoginState extends State<Login> {
     );
   }
 
+  Widget getFlareAnimation() {
+    return flareActor;
+  }
+
   Widget _showEnrollmentInput() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
+      padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
       child: new TextFormField(
         maxLines: 1,
         keyboardType: TextInputType.number,
         autofocus: false,
         decoration: new InputDecoration(
-            border: UnderlineInputBorder(
-                borderSide: BorderSide(
-                    color: Theme.of(context).primaryColor,
-                    style: BorderStyle.solid)),
-            hintText: 'Enrollment No',
+            labelText: "Enrollment No",
             icon: new Icon(
               Icons.account_circle,
               color: Colors.grey,
@@ -106,13 +117,13 @@ class _LoginState extends State<Login> {
 
   Widget _showPasswordInput() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0.0, 15.0, 0.0, 0.0),
+      padding: const EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 0.0),
       child: new TextFormField(
         maxLines: 1,
         obscureText: true,
         autofocus: false,
         decoration: new InputDecoration(
-            hintText: 'Password',
+            labelText: "Password",
             icon: new Icon(
               Icons.lock,
               color: Colors.grey,
@@ -128,79 +139,154 @@ class _LoginState extends State<Login> {
         padding: EdgeInsets.fromLTRB(0.0, 45.0, 0.0, 0.0),
         child: SizedBox(
           height: 40.0,
-          child: new RaisedButton(
-            elevation: 5.0,
-            color: Colors.white,
-            shape: new RoundedRectangleBorder(
-                side: BorderSide(
+          child: (isLoginButtonTapped)
+              ? new RaisedButton(
+                  elevation: 5.0,
                   color: appiYellow,
-                  style: BorderStyle.solid,
-                  width: 2,
-                ),
-                borderRadius: new BorderRadius.circular(40.0)),
-            child: new Text('LOGIN',
-                style: new TextStyle(fontSize: 25.0, color: appiYellow)),
-            onPressed: _validateAndSubmit,
-          ),
+                  shape: new RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(40.0)),
+                  child: new Text(
+                    "AUTHENTICATING...",
+                    style: new TextStyle(fontSize: 20.0, color: Colors.white),
+                  ),
+                  onPressed: () {})
+              : (_isLoginSuccessful)
+                  ? new RaisedButton(
+                      elevation: 5,
+                      color: appiYellow,
+                      shape: new RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(40.0)),
+                      child: new Text(
+                        "Logged In",
+                        style:
+                            new TextStyle(fontSize: 20.0, color: Colors.white),
+                      ),
+                      onPressed: () {})
+                  : new RaisedButton(
+                      elevation: 5.0,
+                      color: Colors.white,
+                      shape: new RoundedRectangleBorder(
+                          side: BorderSide(
+                            color: appiYellow,
+                            style: BorderStyle.solid,
+                            width: 2,
+                          ),
+                          borderRadius: new BorderRadius.circular(40.0)),
+                      child: new Text('LOGIN',
+                          style:
+                              new TextStyle(fontSize: 25.0, color: appiYellow)),
+                      onPressed: _validateAndSubmit,
+                    ),
         ));
   }
 
   Widget _helpButton() {
-    return new Padding(
-        padding: EdgeInsets.fromLTRB(0.0, 25.0, 15.0, 0.0),
-        child: SizedBox(
-          height: 25.0,
-          child: new GestureDetector(
-            child: new Text('Help',
-                style: new TextStyle(fontSize: 15.0, color: appiYellow)),
-            onTap: _help,
-          ),
-        ));
+    return (_isLoginSuccessful)
+        ? Container(
+            height: 0,
+            width: 0,
+          )
+        : new Padding(
+            padding: EdgeInsets.fromLTRB(0.0, 15.0, 15.0, 0.0),
+            child: SizedBox(
+              height: 25.0,
+              child: new GestureDetector(
+                child: new Text('Help',
+                    style: new TextStyle(fontSize: 15.0, color: appiYellow)),
+                onTap: _help,
+              ),
+            ));
   }
 
   Widget _forgotPasswordButton() {
-    return new Padding(
-        padding: EdgeInsets.fromLTRB(15.0, 25.0, 0.0, 0.0),
-        child: SizedBox(
-          height: 25.0,
-          child: new GestureDetector(
-            child: new Text('Forgot Password?',
-                style: new TextStyle(fontSize: 15.0, color: appiYellow)),
-            onTap: _forgotPassword,
-          ),
-        ));
+    return (_isLoginSuccessful)
+        ? Container(
+            height: 0,
+            width: 0,
+          )
+        : new Padding(
+            padding: EdgeInsets.fromLTRB(15.0, 15.0, 0.0, 0.0),
+            child: SizedBox(
+              height: 25.0,
+              child: new GestureDetector(
+                child: new Text('Forgot Password?',
+                    style: new TextStyle(fontSize: 15.0, color: appiYellow)),
+                onTap: _forgotPassword,
+              ),
+            ));
   }
 
   Widget _showChanneliButton() {
-    return new Padding(
-        padding: EdgeInsets.fromLTRB(0.0, 25.0, 0.0, 0.0),
-        child: SizedBox(
-          height: 40.0,
-          child: new RaisedButton(
-            elevation: 5.0,
-            shape: new RoundedRectangleBorder(
-                borderRadius: new BorderRadius.circular(40.0)),
-            color: appiYellow,
-            child: new Text('SIGNUP WITH CHANNEL-I',
-                style: new TextStyle(fontSize: 15.0, color: Colors.white)),
-            onPressed: _channelILogin,
-          ),
-        ));
+    return (_isLoginSuccessful)
+        ? Container(
+            height: 0,
+            width: 0,
+          )
+        : new Padding(
+            padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
+            child: SizedBox(
+              height: 40.0,
+              child: new RaisedButton(
+                elevation: 5.0,
+                shape: new RoundedRectangleBorder(
+                    borderRadius: new BorderRadius.circular(40.0)),
+                color: appiYellow,
+                child: new Text('SIGNUP WITH CHANNEL-I',
+                    style: new TextStyle(fontSize: 15.0, color: Colors.white)),
+                onPressed: _channelILogin,
+              ),
+            ));
   }
 
   void _validateAndSubmit() {
-    //sharedPreferences = await SharedPreferences.getInstance();
     if (_validateAndSave()) {
-      userLogin(_enrollmentNo, _password).then((loginCreds) {
+      setState(() {
+        isLoginButtonTapped = true;
+      });
+      FocusScope.of(context).requestFocus(new FocusNode());
+      userLogin(_enrollmentNo, _password).then((loginCreds) async {
         if (loginCreds.enrNo.toString() == _enrollmentNo) {
-          //sharedPreferences.setString("AuthToken", loginCreds.token.toString());
-          Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) {
-            return Home(enrollment: loginCreds.enrNo.toString(), username: loginCreds.name.toString());
-          }));
+          saveUserDetails(
+              loginCreds.enrNo.toString(), loginCreds.name, loginCreds.token);
+          _showSnackBar(context, "Login Successful");
+          setState(() {
+            _isLoginSuccessful = true;
+            isLoginButtonTapped = false;
+            flareActor = FlareActor("flare_files/Login Appetizer (1).flr",
+                animation: "Initial To Right");
+          });
+          await new Future.delayed(const Duration(seconds: 5));
+
+          getUserDetails().then((details) {
+            Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) {
+              return Home(
+                enrollment: details.getString("enrNo"),
+                username: details.getString("username"),
+                token: details.getString("token"),
+              );
+            }));
+          });
+        } else {
+          setState(() {
+            isLoginButtonTapped = false;
+          });
+          _showSnackBar(context, "Incorrect authentication credentials.");
+          setState(() {
+            flareActor = FlareActor("flare_files/Login Appetizer (1).flr",
+                animation: "Initial To Wrong");
+          });
         }
       });
     }
+  }
+
+  Future<void> saveUserDetails(
+      String enrNo, String username, String token) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString("token", token);
+    prefs.setString("enrNo", enrNo);
+    prefs.setString("username", username);
   }
 
   void _channelILogin() {}
@@ -214,8 +300,14 @@ class _LoginState extends State<Login> {
         context, MaterialPageRoute(builder: (context) => ForgotPass()));
   }
 
-//  Future<SharedPreferences> getSharedPrefs() async{
-//    sharedPreferences = await SharedPreferences.getInstance();
-//    return sharedPreferences;
-//  }
+  void _showSnackBar(BuildContext context, String message) {
+    _scaffoldKey.currentState.showSnackBar(SnackBar(
+      content: Text(message),
+    ));
+  }
+}
+
+Future<SharedPreferences> getUserDetails() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  return prefs;
 }

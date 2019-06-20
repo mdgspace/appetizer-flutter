@@ -1,11 +1,21 @@
 import 'package:flutter/material.dart';
 import "colors.dart";
+import 'package:appetizer/services/user.dart';
+import 'HorizontalDatePicker.dart';
+import 'MainScreen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'screens/my_leaves/my_leaves_screen.dart';
+import 'screens/my_rebates/my_rebates_screen.dart';
+import 'screens/notification_history/noti_history_screen.dart';
+import 'customProgressIndicator.dart';
 
 class Home extends StatefulWidget {
   final String username;
   final String enrollment;
+  final String token;
 
-  const Home({Key key, this.username, this.enrollment}) : super(key: key);
+  const Home({Key key, this.username, this.enrollment, this.token})
+      : super(key: key);
 
   @override
   _HomeState createState() => _HomeState();
@@ -13,22 +23,59 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   String version = "v1.5.6r";
+  bool isLoggingOut = false;
+
+  showOverlay(BuildContext context) {
+    OverlayState overlayState = Overlay.of(context);
+    OverlayEntry overlayEntry = OverlayEntry(
+        builder: (context) => showLoggingOutProgress());
+
+    overlayState.insert(overlayEntry);
+
+    if(!isLoggingOut){
+      overlayEntry.remove();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         centerTitle: true,
         title: Text(
           "Mess Menu",
           style: TextStyle(
               color: Colors.white, fontSize: 25.0, fontFamily: 'Lobster_Two'),
         ),
+        actions: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: GestureDetector(
+              child: Icon(Icons.calendar_today),
+              onTap: () {},
+            ),
+          )
+        ],
         backgroundColor: appiBrown,
         iconTheme: new IconThemeData(color: appiYellow),
       ),
-      //body: null,// this is to be implemented
-
+      body: Stack(
+        children: <Widget>[
+          Column(
+            children: <Widget>[
+              HorizontalDatePicker(),
+              Flexible(
+                child: SingleChildScrollView(
+                  child: Menu(),
+                  physics: BouncingScrollPhysics(),
+                ),
+              ),
+            ],
+          ),
+          showLoggingOutProgress(),
+        ],
+      ),
       drawer: Drawer(
         child: Column(
           children: <Widget>[
@@ -98,6 +145,7 @@ class _HomeState extends State<Home> {
                         ),
                         title: Text("FeedBack"),
                       ),
+                      onTap: () {},
                     ),
                     GestureDetector(
                       child: ListTile(
@@ -108,6 +156,13 @@ class _HomeState extends State<Home> {
                         ),
                         title: Text("Leaves"),
                       ),
+                      onTap: () {
+                        Navigator.pop(context);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => MyLeaves()));
+                      },
                     ),
                     GestureDetector(
                       child: ListTile(
@@ -118,6 +173,13 @@ class _HomeState extends State<Home> {
                         ),
                         title: Text("Rebates"),
                       ),
+                      onTap: () {
+                        Navigator.pop(context);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => MyRebates()));
+                      },
                     ),
                     GestureDetector(
                       child: ListTile(
@@ -128,6 +190,13 @@ class _HomeState extends State<Home> {
                         ),
                         title: Text("Notification History"),
                       ),
+                      onTap: () {
+                        Navigator.pop(context);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => NotificationHistory()));
+                      },
                     ),
                     GestureDetector(
                       child: ListTile(
@@ -138,6 +207,7 @@ class _HomeState extends State<Home> {
                         ),
                         title: Text("Settings"),
                       ),
+                      onTap: () {},
                     ),
                     GestureDetector(
                       child: ListTile(
@@ -148,6 +218,7 @@ class _HomeState extends State<Home> {
                         ),
                         title: Text("FAQ"),
                       ),
+                      onTap: () {},
                     ),
                     GestureDetector(
                       child: ListTile(
@@ -158,6 +229,7 @@ class _HomeState extends State<Home> {
                         ),
                         title: Text("Log Out"),
                         onTap: () {
+                          Navigator.pop(context);
                           showDialog(
                               context: context,
                               builder: (BuildContext context) {
@@ -167,18 +239,48 @@ class _HomeState extends State<Home> {
                                       "Are you sure you want to log out?"),
                                   actions: <Widget>[
                                     new FlatButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: new Text(
+                                        "CANCEL",
+                                        style: TextStyle(color: appiYellow),
+                                      ),
+                                      highlightColor: Colors.transparent,
+                                      splashColor: Colors.transparent,
+                                    ),
+                                    new FlatButton(
                                       child: new Text(
                                         "LOG OUT",
                                         style: TextStyle(color: appiYellow),
                                       ),
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        setState(() {
+                                          isLoggingOut = true;
+                                        });
+                                        showOverlay(context);
+                                        userLogout(widget.token)
+                                            .then((afterLogout) async {
+                                          if (afterLogout.detail.toString() ==
+                                              "user logged out") {
+                                            SharedPreferences prefs =
+                                                await SharedPreferences
+                                                    .getInstance();
+                                            prefs.clear();
+                                            Navigator.of(context)
+                                                .pushNamedAndRemoveUntil(
+                                                    "/login",
+                                                    (Route<dynamic> route) =>
+                                                        false);
+                                            setState(() {
+                                              isLoggingOut = false;
+                                            });
+                                          }
+                                        });
+                                      },
+                                      highlightColor: Colors.transparent,
+                                      splashColor: Colors.transparent,
                                     ),
-                                    new FlatButton(
-                                        onPressed: () {},
-                                        child: new Text(
-                                          "CANCEL",
-                                          style: TextStyle(color: appiYellow),
-                                        ))
                                   ],
                                 );
                               });
@@ -225,6 +327,26 @@ class _HomeState extends State<Home> {
           ],
         ),
       ),
+    );
+  }
+
+  Widget showLoggingOutProgress() {
+    if (isLoggingOut) {
+      return new Stack(
+        children: [
+          new Opacity(
+            opacity: 0.8,
+            child: const ModalBarrier(dismissible: false, color: Colors.black45),
+          ),
+          new Center(
+            child: getCustomProgressLoader("Logging Out..")
+          ),
+        ],
+      );
+    }
+    return Container(
+      height: 0,
+      width: 0,
     );
   }
 }
