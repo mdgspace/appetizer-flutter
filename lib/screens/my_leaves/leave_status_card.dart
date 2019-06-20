@@ -13,7 +13,8 @@ class LeaveStatusCard extends StatefulWidget {
   _LeaveStatusCardState createState() => _LeaveStatusCardState();
 }
 
-class _LeaveStatusCardState extends State<LeaveStatusCard> {
+class _LeaveStatusCardState extends State<LeaveStatusCard> with ChangeNotifier {
+
   bool _isCheckedIn;
 
   @override
