@@ -18,6 +18,7 @@ class _LoginState extends State<Login> {
   String _enrollmentNo, _password;
   bool isLoading;
   bool isLoginButtonTapped = false;
+  bool _isLoginSuccessful = false;
   FlareActor flareActor = FlareActor(
     "flare_files/Login Appetizer (1).flr",
     animation: "idle",
@@ -149,64 +150,92 @@ class _LoginState extends State<Login> {
                     style: new TextStyle(fontSize: 20.0, color: Colors.white),
                   ),
                   onPressed: () {})
-              : new RaisedButton(
-                  elevation: 5.0,
-                  color: Colors.white,
-                  shape: new RoundedRectangleBorder(
-                      side: BorderSide(
-                        color: appiYellow,
-                        style: BorderStyle.solid,
-                        width: 2,
+              : (_isLoginSuccessful)
+                  ? new RaisedButton(
+                      elevation: 5,
+                      color: appiYellow,
+                      shape: new RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(40.0)),
+                      child: new Text(
+                        "Logged In",
+                        style:
+                            new TextStyle(fontSize: 20.0, color: Colors.white),
                       ),
-                      borderRadius: new BorderRadius.circular(40.0)),
-                  child: new Text('LOGIN',
-                      style: new TextStyle(fontSize: 25.0, color: appiYellow)),
-                  onPressed: _validateAndSubmit,
-                ),
+                      onPressed: () {})
+                  : new RaisedButton(
+                      elevation: 5.0,
+                      color: Colors.white,
+                      shape: new RoundedRectangleBorder(
+                          side: BorderSide(
+                            color: appiYellow,
+                            style: BorderStyle.solid,
+                            width: 2,
+                          ),
+                          borderRadius: new BorderRadius.circular(40.0)),
+                      child: new Text('LOGIN',
+                          style:
+                              new TextStyle(fontSize: 25.0, color: appiYellow)),
+                      onPressed: _validateAndSubmit,
+                    ),
         ));
   }
 
   Widget _helpButton() {
-    return new Padding(
-        padding: EdgeInsets.fromLTRB(0.0, 15.0, 15.0, 0.0),
-        child: SizedBox(
-          height: 25.0,
-          child: new GestureDetector(
-            child: new Text('Help',
-                style: new TextStyle(fontSize: 15.0, color: appiYellow)),
-            onTap: _help,
-          ),
-        ));
+    return (_isLoginSuccessful)
+        ? Container(
+            height: 0,
+            width: 0,
+          )
+        : new Padding(
+            padding: EdgeInsets.fromLTRB(0.0, 15.0, 15.0, 0.0),
+            child: SizedBox(
+              height: 25.0,
+              child: new GestureDetector(
+                child: new Text('Help',
+                    style: new TextStyle(fontSize: 15.0, color: appiYellow)),
+                onTap: _help,
+              ),
+            ));
   }
 
   Widget _forgotPasswordButton() {
-    return new Padding(
-        padding: EdgeInsets.fromLTRB(15.0, 15.0, 0.0, 0.0),
-        child: SizedBox(
-          height: 25.0,
-          child: new GestureDetector(
-            child: new Text('Forgot Password?',
-                style: new TextStyle(fontSize: 15.0, color: appiYellow)),
-            onTap: _forgotPassword,
-          ),
-        ));
+    return (_isLoginSuccessful)
+        ? Container(
+            height: 0,
+            width: 0,
+          )
+        : new Padding(
+            padding: EdgeInsets.fromLTRB(15.0, 15.0, 0.0, 0.0),
+            child: SizedBox(
+              height: 25.0,
+              child: new GestureDetector(
+                child: new Text('Forgot Password?',
+                    style: new TextStyle(fontSize: 15.0, color: appiYellow)),
+                onTap: _forgotPassword,
+              ),
+            ));
   }
 
   Widget _showChanneliButton() {
-    return new Padding(
-        padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
-        child: SizedBox(
-          height: 40.0,
-          child: new RaisedButton(
-            elevation: 5.0,
-            shape: new RoundedRectangleBorder(
-                borderRadius: new BorderRadius.circular(40.0)),
-            color: appiYellow,
-            child: new Text('SIGNUP WITH CHANNEL-I',
-                style: new TextStyle(fontSize: 15.0, color: Colors.white)),
-            onPressed: _channelILogin,
-          ),
-        ));
+    return (_isLoginSuccessful)
+        ? Container(
+            height: 0,
+            width: 0,
+          )
+        : new Padding(
+            padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
+            child: SizedBox(
+              height: 40.0,
+              child: new RaisedButton(
+                elevation: 5.0,
+                shape: new RoundedRectangleBorder(
+                    borderRadius: new BorderRadius.circular(40.0)),
+                color: appiYellow,
+                child: new Text('SIGNUP WITH CHANNEL-I',
+                    style: new TextStyle(fontSize: 15.0, color: Colors.white)),
+                onPressed: _channelILogin,
+              ),
+            ));
   }
 
   void _validateAndSubmit() {
@@ -221,6 +250,7 @@ class _LoginState extends State<Login> {
               loginCreds.enrNo.toString(), loginCreds.name, loginCreds.token);
           _showSnackBar(context, "Login Successful");
           setState(() {
+            _isLoginSuccessful = true;
             isLoginButtonTapped = false;
             flareActor = FlareActor("flare_files/Login Appetizer (1).flr",
                 animation: "Initial To Right");

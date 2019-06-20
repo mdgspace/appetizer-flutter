@@ -1,6 +1,5 @@
 import 'package:appetizer/Home.dart';
 import 'package:flutter/material.dart';
-import 'dart:async';
 import 'colors.dart';
 import 'login.dart';
 
@@ -30,21 +29,23 @@ class _AppetizerState extends State<Appetizer> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Login(),
+      body: Container(),
     );
   }
 
-//  Widget getBody() {
-//    Widget firstScreen;
-//    getUserDetails().then((details) {
-//      firstScreen = (details.getString("token") != null)
-//          ? Home(
-//              username: details.getString("username"),
-//              enrollment: details.getString("enrNo"),
-//              token: details.getString("token"),
-//            )
-//          : Login();
-//    });
-//    return firstScreen;
-//  }
+  void initState() {
+    getUserDetails().then((details) {
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (context) => (details.getString("token") != null)
+                  ? Home(
+                      username: details.getString("username"),
+                      enrollment: details.getString("enrNo"),
+                      token: details.getString("token"),
+                    )
+                  : Login()));
+    });
+    super.initState();
+  }
 }

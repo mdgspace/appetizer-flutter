@@ -14,7 +14,6 @@ class LeaveStatusCard extends StatefulWidget {
 }
 
 class _LeaveStatusCardState extends State<LeaveStatusCard> with ChangeNotifier {
-
   bool _isCheckedIn;
 
   @override
@@ -193,9 +192,10 @@ class _LeaveStatusCardState extends State<LeaveStatusCard> with ChangeNotifier {
         }
       });
     });
-    if (_isCheckedIn) {
-      Scaffold.of(context)
-          .showSnackBar(SnackBar(content: Text("You have checked out!")));
-    }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 }
