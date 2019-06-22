@@ -42,17 +42,16 @@ Future<YearlyRebate> getYearlyRebate(String token , int year) async{
   }
 }
 
-Future<Faq> getFAQ(String token) async{
-  String endPoint = "/api/transaction/api/faqs/";
+Future<List<Faq>> getFAQ(String token) async{
+  String endPoint = "/api/faqs/";
   String uri = url + endPoint;
 
   var tokenAuth = {"Authorization": "Token " + token};
   try {
     var response = await client.get(uri, headers: tokenAuth);
-    final jsonResponse = jsonDecode(response.body);
-    Faq faq = new Faq.fromJson(jsonResponse);
+    List<Faq> faqList = faqFromJson(response.body);
     print(response.body);
-    return faq;
+    return faqList;
   } on Exception catch (e) {
     print(e);
     return null;

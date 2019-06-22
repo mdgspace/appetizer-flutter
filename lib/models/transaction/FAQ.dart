@@ -4,12 +4,12 @@
 
 import 'dart:convert';
 
-Faq faqFromJson(String str) => Faq.fromJson(json.decode(str));
+List<Faq> faqFromJson(String str) => new List<Faq>.from(json.decode(str).map((x) => Faq.fromJson(x)));
 
-String faqToJson(Faq data) => json.encode(data.toJson());
+String faqToJson(List<Faq> data) => json.encode(new List<dynamic>.from(data.map((x) => x.toJson())));
 
 class Faq {
-  String id;
+  int id;
   String question;
   String answer;
 

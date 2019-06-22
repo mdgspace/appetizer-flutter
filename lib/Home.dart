@@ -8,6 +8,7 @@ import 'screens/my_leaves/my_leaves_screen.dart';
 import 'screens/my_rebates/my_rebates_screen.dart';
 import 'screens/notification_history/noti_history_screen.dart';
 import 'customProgressIndicator.dart';
+import 'screens/FAQ/faq_screen.dart';
 
 class Home extends StatefulWidget {
   final String username;
@@ -68,7 +69,7 @@ class _HomeState extends State<Home> {
               Flexible(
                 child: SingleChildScrollView(
                   child: Menu(),
-                  physics: BouncingScrollPhysics(),
+                  physics: ClampingScrollPhysics(),
                 ),
               ),
             ],
@@ -218,7 +219,14 @@ class _HomeState extends State<Home> {
                         ),
                         title: Text("FAQ"),
                       ),
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.pop(context);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    FaqList(token: widget.token)));
+                      },
                     ),
                     GestureDetector(
                       child: ListTile(
