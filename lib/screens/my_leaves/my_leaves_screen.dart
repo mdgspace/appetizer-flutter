@@ -5,10 +5,13 @@ import 'meal_left.dart';
 import 'info_message.dart';
 import 'manage_leaves_banner.dart';
 import 'see_history.dart';
-import 'package:appetizer/login.dart';
 import 'package:appetizer/services/leave.dart';
 
 class MyLeaves extends StatefulWidget {
+  final String token;
+
+  const MyLeaves({Key key, this.token}) : super(key: key);
+
   @override
   _MyLeavesState createState() => _MyLeavesState();
 }
@@ -40,7 +43,7 @@ class _MyLeavesState extends State<MyLeaves> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                LeaveStatusCard(getRemainingLeaves()),
+                getRemainingLeaves(),
                 InfoMessage('Check-out to leave upcoming meals in sequence'),
                 ManageLeaveBanner(),
               ],
@@ -75,26 +78,16 @@ class _MyLeavesState extends State<MyLeaves> {
       ),
     );
   }
-}
 
-bool isCheckoutIn() {
-  getUserDetails().then((userDetails) {
-    check(userDetails.getString("token")).then((checkInfo) {
-      if (checkInfo.isCheckedOut) {
-        return false;
-      } else {
-        return true;
-      }
-    });
-  });
-  return null;
-}
-
-int getRemainingLeaves() {
-  getUserDetails().then((userDetails) {
-    remainingLeaves(userDetails.getString("token")).then((leaveCount) {
-      return leaveCount.count;
-    });
-  });
-  return null;
+  Widget getRemainingLeaves() {
+    return FutureBuilder(
+        future: remainingLeaves(widget.token),
+        builder: (context, snapshot) {
+          if (snapshot.data == null) {
+            return LeaveStatusCard(null);
+          } else {
+            return LeaveStatusCard(snapshot.data.count);
+          }
+        });
+  }
 }
