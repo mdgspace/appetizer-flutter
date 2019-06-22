@@ -41,11 +41,12 @@ class MyRebates extends StatelessWidget {
     return FutureBuilder(future: getMonthlyRebate(token),
         builder: (context, snapshot){
           if(snapshot.data == null){
-            return Container(
-              child: Center(
-                  child: CircularProgressIndicator(
-                    valueColor: new AlwaysStoppedAnimation<Color>(appiYellow),
-                  )),
+            return Center(
+              child: Container(
+                child: CircularProgressIndicator(
+                  valueColor: new AlwaysStoppedAnimation<Color>(appiYellow),
+                ),
+              ),
             );
           } else{
             return MonthlyBalance(1800, snapshot.data.rebate, 0,

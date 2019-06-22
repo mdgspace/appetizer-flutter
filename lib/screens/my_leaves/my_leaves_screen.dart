@@ -44,7 +44,6 @@ class _MyLeavesState extends State<MyLeaves> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 getRemainingLeaves(),
-                InfoMessage('Check-out to leave upcoming meals in sequence'),
                 ManageLeaveBanner(),
               ],
             ),

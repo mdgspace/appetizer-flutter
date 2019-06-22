@@ -36,13 +36,21 @@ class SeeRebateHistory extends StatelessWidget {
               IconButton(
                 icon: Icon(Icons.keyboard_arrow_right),
                 iconSize: 40.0,
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              RebateHistoryScreen(token: token)));
+                },
               ),
             ],
           ),
           onTap: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => RebateHistoryScreen(token: token)));
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => RebateHistoryScreen(token: token)));
           },
         ),
       ),
