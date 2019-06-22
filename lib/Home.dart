@@ -177,7 +177,7 @@ class _HomeState extends State<Home> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => MyRebates()));
+                                builder: (context) => MyRebates(token: widget.token,)));
                       },
                     ),
                     GestureDetector(

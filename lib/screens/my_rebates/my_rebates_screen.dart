@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 
+import '../../colors.dart';
 import 'monthly_balance.dart';
 import 'see_rebate_history.dart';
 import 'package:appetizer/services/transaction.dart';
-import 'package:appetizer/login.dart';
 import 'package:appetizer/monthIntToMonthString.dart';
 
 class MyRebates extends StatelessWidget {
+
+  final String token;
+
+  const MyRebates({Key key, this.token}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,25 +30,30 @@ class MyRebates extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          //getMonthRebate(),
-          MonthlyBalance(1800, 400, 0, "April", 2019),
-          SeeRebateHistory()
+          getMonthRebate(),
+          SeeRebateHistory(token: token)
         ],
       ),
     );
   }
+
+  Widget getMonthRebate() {
+    return FutureBuilder(future: getMonthlyRebate(token),
+        builder: (context, snapshot){
+          if(snapshot.data == null){
+            return Container(
+              child: Center(
+                  child: CircularProgressIndicator(
+                    valueColor: new AlwaysStoppedAnimation<Color>(appiYellow),
+                  )),
+            );
+          } else{
+            return MonthlyBalance(1800, snapshot.data.rebate, 0,
+                monthIntToMonthString(DateTime.now().month), DateTime.now().year);
+          }
+        });
+
+  }
 }
 
-MonthlyBalance getMonthRebate() {
-  int currentMonthRebate;
-  getUserDetails().then(
-    (userDetails) {
-      getMonthlyRebate(userDetails.getString("token")).then((monthlyRebate) {
-        print(monthlyRebate.rebate);
-        currentMonthRebate = monthlyRebate.rebate;
-      });
-    },
-  );
-  return MonthlyBalance(1800, currentMonthRebate, 0,
-      monthIntToMonthString(DateTime.now().month), DateTime.now().year);
-}
+

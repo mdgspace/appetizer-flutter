@@ -3,10 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:appetizer/monthIntToMonthString.dart';
 
 import '../../colors.dart';
-import '../../login.dart';
 import 'rebate_history_card.dart';
 
 class RebateHistoryScreen extends StatefulWidget {
+  final String token;
+
+  const RebateHistoryScreen({Key key, this.token}) : super(key: key);
+
   @override
   _RebateHistoryScreenState createState() => _RebateHistoryScreenState();
 }
@@ -42,17 +45,7 @@ class _RebateHistoryScreenState extends State<RebateHistoryScreen> {
             height: 150.0,
             child: getDropdownFilter(),
           ),
-          Expanded(
-            child: getRebateHistoryList()
-            /*ListView(
-              children: <Widget>[
-                RebateHistoryCard(1800, 403, 0, 'April', 2019),
-                RebateHistoryCard(1800, 403, 0, 'March', 2019),
-                RebateHistoryCard(1800, 403, 0, 'February', 2019),
-                RebateHistoryCard(1800, 403, 0, 'January', 2019),
-              ],
-            ),*/
-          ),
+          Expanded(child: getRebateHistoryList()),
         ],
       ),
     );
@@ -135,37 +128,29 @@ class _RebateHistoryScreenState extends State<RebateHistoryScreen> {
   }
 
   Widget getRebateHistoryList() {
-    getUserDetails().then((userDetails) {
-      return FutureBuilder(
-        future: getYearlyRebate(
-            userDetails.getString("token"), currentItemSelected),
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (snapshot.data == null) {
-            return Container(
-              child: Center(
-                  child: CircularProgressIndicator(
-                valueColor: new AlwaysStoppedAnimation<Color>(appiYellow),
-              )),
-            );
-          } else {
-            return ListView.builder(
-                itemCount: snapshot.data.count,
-                itemBuilder: (BuildContext context, int index) {
-                  return RebateHistoryCard(
-                      null,
-                      snapshot.data.results[index].rebate,
-                      snapshot.data.results[index].expenses,
-                      monthIntToMonthString(
-                          snapshot.data.results[index].monthId),
-                      snapshot.data.results[index].year);
-                });
-          }
-        },
-      );
-    });
-    return Container(
-      width: 0.0,
-      height: 0.0,
+    return FutureBuilder(
+      future: getYearlyRebate(widget.token, currentItemSelected),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.data == null) {
+          return Container(
+            child: Center(
+                child: CircularProgressIndicator(
+              valueColor: new AlwaysStoppedAnimation<Color>(appiYellow),
+            )),
+          );
+        } else {
+          return ListView.builder(
+              itemCount: snapshot.data.count,
+              itemBuilder: (BuildContext context, int index) {
+                return RebateHistoryCard(
+                    1800,
+                    snapshot.data.results[index].rebate,
+                    snapshot.data.results[index].expenses,
+                    monthIntToMonthString(snapshot.data.results[index].monthId),
+                    snapshot.data.results[index].year);
+              });
+        }
+      },
     );
   }
 }
