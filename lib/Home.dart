@@ -27,12 +27,12 @@ class _HomeState extends State<Home> {
 
   showOverlay(BuildContext context) {
     OverlayState overlayState = Overlay.of(context);
-    OverlayEntry overlayEntry = OverlayEntry(
-        builder: (context) => showLoggingOutProgress());
+    OverlayEntry overlayEntry =
+        OverlayEntry(builder: (context) => showLoggingOutProgress());
 
     overlayState.insert(overlayEntry);
 
-    if(!isLoggingOut){
+    if (!isLoggingOut) {
       overlayEntry.remove();
     }
   }
@@ -73,7 +73,6 @@ class _HomeState extends State<Home> {
               ),
             ],
           ),
-          showLoggingOutProgress(),
         ],
       ),
       drawer: Drawer(
@@ -195,7 +194,8 @@ class _HomeState extends State<Home> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => NotificationHistory()));
+                                builder: (context) =>
+                                    NotificationHistory(token: widget.token)));
                       },
                     ),
                     GestureDetector(
@@ -336,11 +336,10 @@ class _HomeState extends State<Home> {
         children: [
           new Opacity(
             opacity: 0.8,
-            child: const ModalBarrier(dismissible: false, color: Colors.black45),
+            child:
+                const ModalBarrier(dismissible: false, color: Colors.black45),
           ),
-          new Center(
-            child: getCustomProgressLoader("Logging Out..")
-          ),
+          new Center(child: getCustomProgressLoader("Logging Out..")),
         ],
       );
     }

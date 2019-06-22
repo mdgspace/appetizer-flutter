@@ -3,10 +3,13 @@ import 'package:flutter/material.dart';
 import 'notification.dart';
 import 'package:appetizer/services/user.dart';
 import 'package:appetizer/colors.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:appetizer/timestampToDateTime.dart';
 
 class NotificationHistory extends StatelessWidget {
+  final String token;
+
+  const NotificationHistory({Key key, this.token}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,10 +27,8 @@ class NotificationHistory extends StatelessWidget {
         ),
         body: notificationList());
   }
-}
 
-Widget notificationList() {
-  getToken().then((token) {
+  Widget notificationList() {
     return FutureBuilder(
         future: getNotifications(token),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -49,17 +50,5 @@ Widget notificationList() {
                 });
           }
         });
-  });
-
-  return Container(
-    height: 0.0,
-    width: 0.0,
-  );
-}
-
-Future<String> getToken() async {
-  String token;
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  token = prefs.getString("token");
-  return token;
+  }
 }
