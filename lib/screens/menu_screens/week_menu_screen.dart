@@ -109,14 +109,16 @@ class WeekMenu extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Colors.white,
                 shape: BoxShape.circle,
-                border: Border.all(),
+                border: Border.all(color: Color(0xfff6f6f6)),
               ),
-              child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Text(day),
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Center(child: Text(day, style: TextStyle(fontSize: 18, ),)),
+                ),
               ),
             ),
-            Text(date.toString()),
+            Text(date.toString(), style: TextStyle(color: Color(0xff333333), fontSize: 12),),
           ],
         ));
 
