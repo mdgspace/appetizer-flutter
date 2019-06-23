@@ -2,13 +2,16 @@ import 'package:flutter/material.dart';
 import "colors.dart";
 import 'package:appetizer/services/user.dart';
 import 'HorizontalDatePicker.dart';
-import 'MainScreen.dart';
+import 'package:appetizer/screens/menu_screens/daily_menu_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'screens/menu_screens/week_menu_screen.dart';
 import 'screens/my_leaves/my_leaves_screen.dart';
 import 'screens/my_rebates/my_rebates_screen.dart';
 import 'screens/notification_history/noti_history_screen.dart';
 import 'customProgressIndicator.dart';
 import 'screens/FAQ/faq_screen.dart';
+
+enum MenuLayout { DAILY_MENU, WEEK_MENU }
 
 class Home extends StatefulWidget {
   final String username;
@@ -23,8 +26,17 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+
+  MenuLayout _menuLayout;
   String version = "v1.5.6r";
   bool isLoggingOut = false;
+
+
+  @override
+  void initState() {
+    super.initState();
+    _menuLayout = MenuLayout.DAILY_MENU;
+  }
 
   showOverlay(BuildContext context) {
     OverlayState overlayState = Overlay.of(context);
@@ -40,6 +52,21 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+
+    Widget _dailyMenuLayout = Column(
+      children: <Widget>[
+        HorizontalDatePicker(),
+        Flexible(
+          child: SingleChildScrollView(
+            child: Menu(),
+            physics: ClampingScrollPhysics(),
+          ),
+        ),
+      ],
+    );
+
+    Widget _weekMenuLayout = WeekMenu();
+
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -53,8 +80,16 @@ class _HomeState extends State<Home> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: GestureDetector(
-              child: Icon(Icons.calendar_today),
-              onTap: () {},
+              child: ImageIcon(AssetImage("assets/icons/week_view.png")),
+              onTap: () {
+                setState(() {
+                  if(_menuLayout == MenuLayout.DAILY_MENU){
+                    _menuLayout = MenuLayout.WEEK_MENU;
+                  }else{
+                    _menuLayout = MenuLayout.DAILY_MENU;
+                  }
+                });
+              },
             ),
           )
         ],
@@ -63,17 +98,7 @@ class _HomeState extends State<Home> {
       ),
       body: Stack(
         children: <Widget>[
-          Column(
-            children: <Widget>[
-              HorizontalDatePicker(),
-              Flexible(
-                child: SingleChildScrollView(
-                  child: Menu(),
-                  physics: ClampingScrollPhysics(),
-                ),
-              ),
-            ],
-          ),
+          _menuLayout == MenuLayout.DAILY_MENU ? _dailyMenuLayout : _weekMenuLayout,
         ],
       ),
       drawer: Drawer(
@@ -161,7 +186,9 @@ class _HomeState extends State<Home> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => MyLeaves(token: widget.token,)));
+                                builder: (context) => MyLeaves(
+                                      token: widget.token,
+                                    )));
                       },
                     ),
                     GestureDetector(
@@ -178,7 +205,9 @@ class _HomeState extends State<Home> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => MyRebates(token: widget.token,)));
+                                builder: (context) => MyRebates(
+                                      token: widget.token,
+                                    )));
                       },
                     ),
                     GestureDetector(
