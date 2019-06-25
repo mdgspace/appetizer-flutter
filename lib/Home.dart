@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import "colors.dart";
 import 'package:appetizer/services/user.dart';
-import 'HorizontalDatePicker.dart';
+import 'package:appetizer/helper_methods/HorizontalDatePicker.dart';
 import 'MainScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'screens/my_leaves/my_leaves_screen.dart';
@@ -68,7 +68,7 @@ class _HomeState extends State<Home> {
               HorizontalDatePicker(),
               Flexible(
                 child: SingleChildScrollView(
-                  child: Menu(),
+                  child: Menu(token: widget.token),
                   physics: ClampingScrollPhysics(),
                 ),
               ),
@@ -161,7 +161,9 @@ class _HomeState extends State<Home> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => MyLeaves(token: widget.token,)));
+                                builder: (context) => MyLeaves(
+                                      token: widget.token,
+                                    )));
                       },
                     ),
                     GestureDetector(
@@ -178,7 +180,9 @@ class _HomeState extends State<Home> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => MyRebates(token: widget.token,)));
+                                builder: (context) => MyRebates(
+                                      token: widget.token,
+                                    )));
                       },
                     ),
                     GestureDetector(

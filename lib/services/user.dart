@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:appetizer/models/detail.dart';
+import 'package:appetizer/models/user/detail.dart';
 import 'package:http/http.dart' as http;
 import 'package:appetizer/models/user/image.dart';
 import 'package:appetizer/models/user/login.dart';
