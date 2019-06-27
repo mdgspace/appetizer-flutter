@@ -3,6 +3,8 @@ import "colors.dart";
 import 'package:appetizer/services/user.dart';
 import 'HorizontalDatePicker.dart';
 import 'package:appetizer/screens/menu_screens/daily_menu_screen.dart';
+import 'package:appetizer/helper_methods/HorizontalDatePicker.dart';
+import 'MainScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'screens/menu_screens/week_menu_screen.dart';
 import 'screens/my_leaves/my_leaves_screen.dart';
@@ -28,6 +30,8 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
 
   MenuLayout _menuLayout;
+  final horizontalDatePicker = new HorizontalDatePicker();
+
   String version = "v1.5.6r";
   bool isLoggingOut = false;
 

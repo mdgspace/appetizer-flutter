@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:appetizer/services/menu.dart';
+import 'colors.dart';
 
 class Menu extends StatefulWidget {
+  final String token;
+
+  const Menu({Key key, this.token}) : super(key: key);
+
   @override
   _MenuState createState() => _MenuState();
 }
@@ -27,18 +33,59 @@ class _MenuState extends State<Menu> {
     ): "Dalia Upma",
   };
 
-  final _testDailyItems = "milk, tea, coffee, milk, tea, coffee";
+  Widget getCurrentWeekMenu(String token) {
+    return FutureBuilder(
+        future: menuWeek(token),
+        builder: (context, snapshot) {
+          var data = snapshot.data;
+          String breakfastDailyItems = "";
+          String lunchDailyItems = "";
+          String dinnerDailyItems = "";
+          if (snapshot.data == null) {
+            return Container(
+              height: MediaQuery.of(context).size.height / 1.5,
+              width: MediaQuery.of(context).size.width,
+              child: Center(
+                  child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(appiYellow),
+              )),
+            );
+          } else {
+            List<String> breakfastDailyItemsList = [];
+            for (var i = 0; i < data.dailyItems.breakfast.length; i++) {
+              var name = data.dailyItems.breakfast[i].name;
+              breakfastDailyItemsList.add(name);
+              breakfastDailyItems = breakfastDailyItemsList.join(" , ");
+            }
+
+            List<String> lunchDailyItemsList = [];
+            for (var i = 0; i < data.dailyItems.lunch.length; i++) {
+              var name = data.dailyItems.lunch[i].name;
+              lunchDailyItemsList.add(name);
+              lunchDailyItems = lunchDailyItemsList.join(" , ");
+            }
+
+            List<String> dinnerDailyItemsList = [];
+            for (var i = 0; i < data.dailyItems.dinner.length; i++) {
+              var name = data.dailyItems.dinner[i].name;
+              dinnerDailyItemsList.add(name);
+              dinnerDailyItems = dinnerDailyItemsList.join(" , ");
+            }
+          }
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              MenuCard('Breakfast', _testMap, breakfastDailyItems),
+              MenuCard('Lunch', _testMap, lunchDailyItems),
+              MenuCard('Dinner', _testMap, dinnerDailyItems),
+            ],
+          );
+        });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        MenuCard('Breakfast', _testMap, _testDailyItems),
-        MenuCard('Lunch', _testMap, _testDailyItems),
-        MenuCard('Dinner', _testMap, _testDailyItems),
-      ],
-    );
+    return getCurrentWeekMenu(widget.token);
   }
 }
 
@@ -54,7 +101,7 @@ class MenuCard extends StatefulWidget {
 }
 
 class _MenuCardState extends State<MenuCard> {
-  bool enabled = true;
+  bool isSwitched = true;
   bool outdated = false;
 
   List<Widget> _itemWidgetList() {
@@ -90,10 +137,11 @@ class _MenuCardState extends State<MenuCard> {
                       outdated
                           ? Icon(Icons.comment)
                           : Switch(
-                              value: enabled,
+                              activeColor: appiYellow,
+                              value: isSwitched,
                               onChanged: (value) {
                                 setState(() {
-                                  value = enabled;
+                                  isSwitched = value;
                                 });
                               }),
                     ],

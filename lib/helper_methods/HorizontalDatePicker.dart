@@ -11,6 +11,9 @@ class HorizontalDatePicker extends StatefulWidget {
 class _HorizontalDatePickerState extends State<HorizontalDatePicker> {
   CalendarCarousel _calendarCarousel;
   DateTime _currentDate = DateTime.now();
+
+  DateTime get currentDate => _currentDate;
+
   double _fontSizeDate = 14.0;
   @override
   Widget build(BuildContext context) {
@@ -18,13 +21,11 @@ class _HorizontalDatePickerState extends State<HorizontalDatePicker> {
       onDayPressed: (DateTime date, List<Event> events) {
         this.setState(() {
           _currentDate = date;
-
         });
         events.forEach((event) => print(event.title));
       },
       weekendTextStyle: TextStyle(color: Colors.white, fontSize: _fontSizeDate),
       weekdayTextStyle: TextStyle(color: Colors.white),
-
       daysHaveCircularBorder: true,
       thisMonthDayBorderColor: Colors.white,
       daysTextStyle: TextStyle(color: Colors.white, fontSize: _fontSizeDate),
@@ -35,7 +36,6 @@ class _HorizontalDatePickerState extends State<HorizontalDatePicker> {
       showHeader: false,
       weekDayFormat: WeekdayFormat.standaloneNarrow,
       showWeekDays: true,
-
       height: 80.0,
       selectedDateTime: _currentDate,
       customGridViewPhysics: NeverScrollableScrollPhysics(),
@@ -49,7 +49,6 @@ class _HorizontalDatePickerState extends State<HorizontalDatePicker> {
       todayButtonColor: null,
       todayBorderColor: Colors.yellow[800],
       dayPadding: 8,
-
     );
 
     return Container(
