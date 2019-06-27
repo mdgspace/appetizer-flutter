@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:appetizer/services/menu.dart';
-import 'colors.dart';
+import '../../colors.dart';
 
 class Menu extends StatefulWidget {
   final String token;
