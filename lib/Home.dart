@@ -23,6 +23,8 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  final horizontalDatePicker = new HorizontalDatePicker();
+
   String version = "v1.5.6r";
   bool isLoggingOut = false;
 
@@ -65,7 +67,7 @@ class _HomeState extends State<Home> {
         children: <Widget>[
           Column(
             children: <Widget>[
-              HorizontalDatePicker(),
+              horizontalDatePicker,
               Flexible(
                 child: SingleChildScrollView(
                   child: Menu(token: widget.token),

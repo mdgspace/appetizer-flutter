@@ -45,7 +45,7 @@ Future<Week> menuWeekById(String token, String weekId, String year) async {
   }
 }
 
-Future<Day> menuDay(String token, String week, String dayOfWeek) async {
+Future<Day> menuDay(String token, int week, int dayOfWeek) async {
   String endpoint = "/api/menu/$week/$dayOfWeek";
   String uri = url + endpoint;
   var tokenAuth = {"Authorization": "Token " + token};
