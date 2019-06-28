@@ -1,6 +1,10 @@
+import 'package:appetizer/currentDateModel.dart';
 import 'package:flutter/material.dart';
 import 'package:appetizer/services/menu.dart';
+import 'package:provider/provider.dart';
 import 'colors.dart';
+import 'helper_methods/getDayIdforDjango.dart';
+import 'helper_methods/getWeekId.dart';
 
 class Menu extends StatefulWidget {
   final String token;
@@ -33,7 +37,7 @@ class _MenuState extends State<Menu> {
     ): "Dalia Upma",
   };
 
-  Widget getCurrentWeekMenu(String token) {
+  Widget getCurrentWeekMenu(String token, DateTime dateTime) {
     return FutureBuilder(
         future: menuWeek(token),
         builder: (context, snapshot) {
@@ -71,6 +75,7 @@ class _MenuState extends State<Menu> {
               dinnerDailyItemsList.add(name);
               dinnerDailyItems = dinnerDailyItemsList.join(" , ");
             }
+            menuDay(token, getWeekNumber(dateTime), getDayId(dateTime));
           }
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -85,7 +90,8 @@ class _MenuState extends State<Menu> {
 
   @override
   Widget build(BuildContext context) {
-    return getCurrentWeekMenu(widget.token);
+    final selectedDateTime = Provider.of<CurrentDateModel>(context);
+    return getCurrentWeekMenu(widget.token, selectedDateTime.dateTime);
   }
 }
 

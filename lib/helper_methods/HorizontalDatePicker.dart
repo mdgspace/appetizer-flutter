@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart'
     show CalendarCarousel, WeekdayFormat;
 import 'package:flutter_calendar_carousel/classes/event.dart';
+import 'package:provider/provider.dart';
+
+import '../currentDateModel.dart';
 
 class HorizontalDatePicker extends StatefulWidget {
   @override
@@ -11,17 +14,14 @@ class HorizontalDatePicker extends StatefulWidget {
 class _HorizontalDatePickerState extends State<HorizontalDatePicker> {
   CalendarCarousel _calendarCarousel;
   DateTime _currentDate = DateTime.now();
-
-  DateTime get currentDate => _currentDate;
-
   double _fontSizeDate = 14.0;
   @override
   Widget build(BuildContext context) {
+    final currentSelectedDate = Provider.of<CurrentDateModel>(context);
+
     _calendarCarousel = CalendarCarousel<Event>(
       onDayPressed: (DateTime date, List<Event> events) {
-        this.setState(() {
-          _currentDate = date;
-        });
+        currentSelectedDate.dateTime = date;
         events.forEach((event) => print(event.title));
       },
       weekendTextStyle: TextStyle(color: Colors.white, fontSize: _fontSizeDate),
