@@ -5,6 +5,8 @@ import 'package:provider/provider.dart';
 import 'colors.dart';
 import 'helper_methods/getDayIdforDjango.dart';
 import 'helper_methods/getWeekId.dart';
+import 'models/menu/week.dart';
+import 'dart:math' as math;
 
 class Menu extends StatefulWidget {
   final String token;
@@ -18,33 +20,58 @@ class Menu extends StatefulWidget {
 class _MenuState extends State<Menu> {
   static final double _radius = 16;
 
-  final _testMap = {
-    CircleAvatar(
-            radius: _radius,
-            backgroundImage: AssetImage("assets/images/Group.png")):
-        "Aloo Parantha",
-    CircleAvatar(
-      radius: _radius,
-      backgroundImage: AssetImage("assets/images/yogurt-dahi.png"),
-    ): "Dahi",
-    CircleAvatar(
-      radius: _radius,
-      backgroundImage: AssetImage("assets/images/alumatar.png"),
-    ): "Aloo Mater Curry",
-    CircleAvatar(
-      radius: _radius,
-      backgroundImage: AssetImage("assets/images/daliya-upma.png"),
-    ): "Dalia Upma",
-  };
-
   Widget getCurrentWeekMenu(String token, DateTime dateTime) {
-    return FutureBuilder(
-        future: menuWeek(token),
+    String breakfastDailyItems = "";
+    String lunchDailyItems = "";
+    String dinnerDailyItems = "";
+
+    var dayMenuFutureBuilder = FutureBuilder(
+        future: menuDay(token, getWeekNumber(dateTime), getDayId(dateTime)),
         builder: (context, snapshot) {
+          List<CircleAvatar> breakfastLeadingImageList = [];
+          List<CircleAvatar> lunchLeadingImageList = [];
+          List<CircleAvatar> snacksLeadingImageList = [];
+          List<CircleAvatar> dinnerLeadingImageList = [];
+
+          List<String> breakfastMealList = [];
+          List<String> lunchMealList = [];
+          List<String> snacksMealList = [];
+          List<String> dinnerMealList = [];
+
+          Map<CircleAvatar, String> breakfastMealMap = {};
+          Map<CircleAvatar, String> lunchMealMap = {};
+          Map<CircleAvatar, String> snacksMealMap = {};
+          Map<CircleAvatar, String> dinnerMealMap = {};
+
+          menuWeek(token).then((snapshot) {
+            var data = snapshot;
+            if (snapshot == null) {
+              return Container();
+            } else {
+              List<String> breakfastDailyItemsList = [];
+              for (var i = 0; i < data.dailyItems.breakfast.length; i++) {
+                var name = data.dailyItems.breakfast[i].name;
+                breakfastDailyItemsList.add(name);
+                breakfastDailyItems = breakfastDailyItemsList.join(" , ");
+              }
+
+              List<String> lunchDailyItemsList = [];
+              for (var i = 0; i < data.dailyItems.lunch.length; i++) {
+                var name = data.dailyItems.lunch[i].name;
+                lunchDailyItemsList.add(name);
+                lunchDailyItems = lunchDailyItemsList.join(" , ");
+              }
+
+              List<String> dinnerDailyItemsList = [];
+              for (var i = 0; i < data.dailyItems.dinner.length; i++) {
+                var name = data.dailyItems.dinner[i].name;
+                dinnerDailyItemsList.add(name);
+                dinnerDailyItems = dinnerDailyItemsList.join(" , ");
+              }
+            }
+          });
+
           var data = snapshot.data;
-          String breakfastDailyItems = "";
-          String lunchDailyItems = "";
-          String dinnerDailyItems = "";
           if (snapshot.data == null) {
             return Container(
               height: MediaQuery.of(context).size.height / 1.5,
@@ -55,37 +82,79 @@ class _MenuState extends State<Menu> {
               )),
             );
           } else {
-            List<String> breakfastDailyItemsList = [];
-            for (var i = 0; i < data.dailyItems.breakfast.length; i++) {
-              var name = data.dailyItems.breakfast[i].name;
-              breakfastDailyItemsList.add(name);
-              breakfastDailyItems = breakfastDailyItemsList.join(" , ");
+            var numberOfMeals = data.meals.length;
+            for (var i = 0; i < numberOfMeals; i++) {
+              if (data.meals[i].type == MealType.B) {
+                for (var j = 0; j < data.meals[i].items.length; j++) {
+                  var breakfastMealItem = data.meals[i].items[j].name;
+                  breakfastMealList.add(breakfastMealItem);
+                  var randomColor = Color(
+                          (math.Random().nextDouble() * 0xFFFFFF).toInt() << 0)
+                      .withOpacity(0.2);
+                  breakfastLeadingImageList.add(CircleAvatar(
+                    radius: _radius,
+                    backgroundColor: randomColor,
+                  ));
+                }
+              } else if (data.meals[i].type == MealType.L) {
+                for (var j = 0; j < data.meals[i].items.length; j++) {
+                  var lunchMealItem = data.meals[i].items[j].name;
+                  lunchMealList.add(lunchMealItem);
+                  var randomColor = Color(
+                          (math.Random().nextDouble() * 0xFFFFFF).toInt() << 0)
+                      .withOpacity(0.2);
+                  lunchLeadingImageList.add(CircleAvatar(
+                    radius: _radius,
+                    backgroundColor: randomColor,
+                  ));
+                }
+              } else if (data.meals[i].type == MealType.S) {
+                for (var j = 0; j < data.meals[i].items.length; j++) {
+                  var snacksMealItem = data.meals[i].items[j].name;
+                  snacksMealList.add(snacksMealItem);
+                  var randomColor = Color(
+                          (math.Random().nextDouble() * 0xFFFFFF).toInt() << 0)
+                      .withOpacity(0.2);
+                  snacksLeadingImageList.add(CircleAvatar(
+                    radius: _radius,
+                    backgroundColor: randomColor,
+                  ));
+                }
+              } else if (data.meals[i].type == MealType.D) {
+                for (var j = 0; j < data.meals[i].items.length; j++) {
+                  var dinnerMealItem = data.meals[i].items[j].name;
+                  dinnerMealList.add(dinnerMealItem);
+                  var randomColor = Color(
+                          (math.Random().nextDouble() * 0xFFFFFF).toInt() << 0)
+                      .withOpacity(0.2);
+                  dinnerLeadingImageList.add(CircleAvatar(
+                    radius: _radius,
+                    backgroundColor: randomColor,
+                  ));
+                }
+              }
             }
-
-            List<String> lunchDailyItemsList = [];
-            for (var i = 0; i < data.dailyItems.lunch.length; i++) {
-              var name = data.dailyItems.lunch[i].name;
-              lunchDailyItemsList.add(name);
-              lunchDailyItems = lunchDailyItemsList.join(" , ");
-            }
-
-            List<String> dinnerDailyItemsList = [];
-            for (var i = 0; i < data.dailyItems.dinner.length; i++) {
-              var name = data.dailyItems.dinner[i].name;
-              dinnerDailyItemsList.add(name);
-              dinnerDailyItems = dinnerDailyItemsList.join(" , ");
-            }
-            menuDay(token, getWeekNumber(dateTime), getDayId(dateTime));
+            breakfastMealMap =
+                Map.fromIterables(breakfastLeadingImageList, breakfastMealList);
+            lunchMealMap =
+                Map.fromIterables(lunchLeadingImageList, lunchMealList);
+            dinnerMealMap =
+                Map.fromIterables(dinnerLeadingImageList, dinnerMealList);
+            snacksMealMap =
+                Map.fromIterables(snacksLeadingImageList, snacksMealList);
           }
+
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              MenuCard('Breakfast', _testMap, breakfastDailyItems),
-              MenuCard('Lunch', _testMap, lunchDailyItems),
-              MenuCard('Dinner', _testMap, dinnerDailyItems),
+              MenuCard('Breakfast', breakfastMealMap, breakfastDailyItems),
+              MenuCard('Lunch', lunchMealMap, lunchDailyItems),
+              MenuCard('Dinner', dinnerMealMap, dinnerDailyItems),
             ],
           );
         });
+
+    return dayMenuFutureBuilder;
   }
 
   @override
