@@ -7,8 +7,8 @@ String url = "http://appetizer-mdg.herokuapp.com";
 var header = {"Content-Type": "application/json"};
 http.Client client = new http.Client();
 
-Future<Week> menuWeek(String token) async {
-  String endpoint = "/api/menu/week/";
+Future<Week> menuWeek(String token , int weekId) async {
+  String endpoint = "/api/menu/week/?week_id=$weekId";
   String uri = url + endpoint;
   var tokenAuth = {"Authorization": "Token " + token};
   try {

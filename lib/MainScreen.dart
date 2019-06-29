@@ -137,7 +137,7 @@ class _MenuState extends State<Menu> {
         });
 
     return FutureBuilder(
-        future: menuWeek(token),
+        future: menuWeek(token , getWeekNumber(dateTime)),
         builder: (context, snapshot) {
           var data = snapshot.data;
           if (data == null) {
