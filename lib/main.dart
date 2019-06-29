@@ -1,7 +1,5 @@
 import 'package:appetizer/Home.dart';
-import 'package:appetizer/splash_screen.dart';
 import 'package:flutter/material.dart';
-import 'dart:async';
 import 'colors.dart';
 import 'login.dart';
 
@@ -13,32 +11,40 @@ void main() => runApp(MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Appetizer',
       theme: ThemeData(
-        primaryColor: appiYellow,
-      ),
+          primaryColor: appiYellow,
+          accentColor: appiGrey,
+          cursorColor: appiYellow),
       darkTheme: ThemeData(
         brightness: Brightness.dark,
       ),
-      home: MyApp(),
+      home: Appetizer(),
     ));
 
-class MyApp extends StatefulWidget {
+class Appetizer extends StatefulWidget {
   @override
-  _MyAppState createState() => _MyAppState();
+  _AppetizerState createState() => _AppetizerState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _AppetizerState extends State<Appetizer> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SplashScreen(),
+      body: Container(),
     );
   }
 
-  @override
   void initState() {
-    Future.delayed(Duration(seconds: 3), () {
+    getUserDetails().then((details) {
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => Login()));
+          context,
+          MaterialPageRoute(
+              builder: (context) => (details.getString("token") != null)
+                  ? Home(
+                      username: details.getString("username"),
+                      enrollment: details.getString("enrNo"),
+                      token: details.getString("token"),
+                    )
+                  : Login()));
     });
     super.initState();
   }

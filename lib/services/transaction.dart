@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:appetizer/models/transaction/currentMonthRebate.dart';
-import 'package:appetizer/models/transaction/yearlyReabte.dart';
+import 'package:appetizer/models/transaction/yearlyRebate.dart';
 import 'package:appetizer/models/transaction/FAQ.dart';
 import 'package:http/http.dart' as http;
 
@@ -8,7 +8,7 @@ String url = "http://appetizer-mdg.herokuapp.com";
 var header = {"Content-Type": "application/json"};
 http.Client client = new http.Client();
 
-Future<MonthlyRebate> getMonthlyLeave(String token) async {
+Future<MonthlyRebate> getMonthlyRebate(String token) async {
   String endPoint = "/api/transaction/rebate/current/";
   String uri = url + endPoint;
 
@@ -42,17 +42,16 @@ Future<YearlyRebate> getYearlyRebate(String token , int year) async{
   }
 }
 
-Future<Faq> getFAQ(String token) async{
-  String endPoint = "/api/transaction/api/faqs/";
+Future<List<Faq>> getFAQ(String token) async{
+  String endPoint = "/api/faqs/";
   String uri = url + endPoint;
 
   var tokenAuth = {"Authorization": "Token " + token};
   try {
     var response = await client.get(uri, headers: tokenAuth);
-    final jsonResponse = jsonDecode(response.body);
-    Faq faq = new Faq.fromJson(jsonResponse);
+    List<Faq> faqList = faqFromJson(response.body);
     print(response.body);
-    return faq;
+    return faqList;
   } on Exception catch (e) {
     print(e);
     return null;

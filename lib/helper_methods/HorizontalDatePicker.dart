@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import "colors.dart";
 import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart'
     show CalendarCarousel, WeekdayFormat;
 import 'package:flutter_calendar_carousel/classes/event.dart';
+import 'package:provider/provider.dart';
+
+import '../currentDateModel.dart';
 
 class HorizontalDatePicker extends StatefulWidget {
   @override
@@ -15,17 +17,15 @@ class _HorizontalDatePickerState extends State<HorizontalDatePicker> {
   double _fontSizeDate = 14.0;
   @override
   Widget build(BuildContext context) {
+    final currentSelectedDate = Provider.of<CurrentDateModel>(context);
+
     _calendarCarousel = CalendarCarousel<Event>(
       onDayPressed: (DateTime date, List<Event> events) {
-        this.setState(() {
-          _currentDate = date;
-
-        });
+        currentSelectedDate.dateTime = date;
         events.forEach((event) => print(event.title));
       },
       weekendTextStyle: TextStyle(color: Colors.white, fontSize: _fontSizeDate),
       weekdayTextStyle: TextStyle(color: Colors.white),
-
       daysHaveCircularBorder: true,
       thisMonthDayBorderColor: Colors.white,
       daysTextStyle: TextStyle(color: Colors.white, fontSize: _fontSizeDate),
@@ -36,7 +36,6 @@ class _HorizontalDatePickerState extends State<HorizontalDatePicker> {
       showHeader: false,
       weekDayFormat: WeekdayFormat.standaloneNarrow,
       showWeekDays: true,
-
       height: 80.0,
       selectedDateTime: _currentDate,
       customGridViewPhysics: NeverScrollableScrollPhysics(),
@@ -50,7 +49,6 @@ class _HorizontalDatePickerState extends State<HorizontalDatePicker> {
       todayButtonColor: null,
       todayBorderColor: Colors.yellow[800],
       dayPadding: 8,
-
     );
 
     return Container(

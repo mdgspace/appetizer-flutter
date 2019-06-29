@@ -80,3 +80,14 @@ Future<Leave> leave(int id, String token) async {
   }
 }
 
+Future<void> cancelLeave(int id, String token) async {
+  String endPoint = "/api/leave/meal/$id";
+  String uri = url + endPoint;
+  var tokenAuth = {"Authorization": "Token " + token};
+  try {
+    client.delete(uri, headers: tokenAuth);
+  } on Exception catch (e) {
+    print(e);
+    return null;
+  }
+}
