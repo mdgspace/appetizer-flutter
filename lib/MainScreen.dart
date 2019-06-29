@@ -23,6 +23,7 @@ class _MenuState extends State<Menu> {
   Widget getCurrentWeekMenu(String token, DateTime dateTime) {
     String breakfastDailyItems = "";
     String lunchDailyItems = "";
+    String snacksDailyItems = "";
     String dinnerDailyItems = "";
 
     var dayMenuFutureBuilder = FutureBuilder(
@@ -42,34 +43,6 @@ class _MenuState extends State<Menu> {
           Map<CircleAvatar, String> lunchMealMap = {};
           Map<CircleAvatar, String> snacksMealMap = {};
           Map<CircleAvatar, String> dinnerMealMap = {};
-
-          menuWeek(token).then((snapshot) {
-            var data = snapshot;
-            if (snapshot == null) {
-              return Container();
-            } else {
-              List<String> breakfastDailyItemsList = [];
-              for (var i = 0; i < data.dailyItems.breakfast.length; i++) {
-                var name = data.dailyItems.breakfast[i].name;
-                breakfastDailyItemsList.add(name);
-                breakfastDailyItems = breakfastDailyItemsList.join(" , ");
-              }
-
-              List<String> lunchDailyItemsList = [];
-              for (var i = 0; i < data.dailyItems.lunch.length; i++) {
-                var name = data.dailyItems.lunch[i].name;
-                lunchDailyItemsList.add(name);
-                lunchDailyItems = lunchDailyItemsList.join(" , ");
-              }
-
-              List<String> dinnerDailyItemsList = [];
-              for (var i = 0; i < data.dailyItems.dinner.length; i++) {
-                var name = data.dailyItems.dinner[i].name;
-                dinnerDailyItemsList.add(name);
-                dinnerDailyItems = dinnerDailyItemsList.join(" , ");
-              }
-            }
-          });
 
           var data = snapshot.data;
           if (snapshot.data == null) {
@@ -147,14 +120,67 @@ class _MenuState extends State<Menu> {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              MenuCard('Breakfast', breakfastMealMap, breakfastDailyItems),
-              MenuCard('Lunch', lunchMealMap, lunchDailyItems),
-              MenuCard('Dinner', dinnerMealMap, dinnerDailyItems),
+              (breakfastMealMap.isNotEmpty)
+                  ? MenuCard('Breakfast', breakfastMealMap, breakfastDailyItems)
+                  : Container(),
+              (lunchMealMap.isNotEmpty)
+                  ? MenuCard('Lunch', lunchMealMap, lunchDailyItems)
+                  : Container(),
+              (snacksMealMap.isNotEmpty)
+                  ? MenuCard('Snacks', snacksMealMap, snacksDailyItems)
+                  : Container(),
+              (dinnerMealMap.isNotEmpty)
+                  ? MenuCard('Dinner', dinnerMealMap, dinnerDailyItems)
+                  : Container(),
             ],
           );
         });
 
-    return dayMenuFutureBuilder;
+    return FutureBuilder(
+        future: menuWeek(token),
+        builder: (context, snapshot) {
+          var data = snapshot.data;
+          if (data == null) {
+            return Container(
+              height: MediaQuery.of(context).size.height / 1.5,
+              width: MediaQuery.of(context).size.width,
+              child: Center(
+                  child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(appiYellow),
+              )),
+            );
+          } else {
+            List<String> breakfastDailyItemsList = [];
+            for (var i = 0; i < data.dailyItems.breakfast.length; i++) {
+              var name = data.dailyItems.breakfast[i].name;
+              breakfastDailyItemsList.add(name);
+              breakfastDailyItems = breakfastDailyItemsList.join(" , ");
+            }
+
+            List<String> lunchDailyItemsList = [];
+            for (var i = 0; i < data.dailyItems.lunch.length; i++) {
+              var name = data.dailyItems.lunch[i].name;
+              lunchDailyItemsList.add(name);
+              lunchDailyItems = lunchDailyItemsList.join(" , ");
+            }
+
+            List<String> snacksDailyItemsList = [];
+            for (var i = 0; i < data.dailyItems.snack.length; i++) {
+              var name = data.dailyItems.snack[i].name;
+              snacksDailyItemsList.add(name);
+              snacksDailyItems = snacksDailyItemsList.join(" , ");
+            }
+
+            List<String> dinnerDailyItemsList = [];
+            for (var i = 0; i < data.dailyItems.dinner.length; i++) {
+              var name = data.dailyItems.dinner[i].name;
+              dinnerDailyItemsList.add(name);
+              dinnerDailyItems = dinnerDailyItemsList.join(" , ");
+            }
+
+            return dayMenuFutureBuilder;
+          }
+        });
   }
 
   @override
