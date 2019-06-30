@@ -45,7 +45,8 @@ class _MenuState extends State<Menu> {
           Map<CircleAvatar, String> dinnerMealMap = {};
 
           var data = snapshot.data;
-          if (snapshot.data == null) {
+
+          if (snapshot.connectionState == ConnectionState.waiting) {
             return Container(
               height: MediaQuery.of(context).size.height / 1.5,
               width: MediaQuery.of(context).size.width,
@@ -54,7 +55,7 @@ class _MenuState extends State<Menu> {
                 valueColor: AlwaysStoppedAnimation<Color>(appiYellow),
               )),
             );
-          } else {
+          } else if (snapshot.connectionState == ConnectionState.done) {
             var numberOfMeals = data.meals.length;
             for (var i = 0; i < numberOfMeals; i++) {
               if (data.meals[i].type == MealType.B) {
@@ -137,7 +138,7 @@ class _MenuState extends State<Menu> {
         });
 
     return FutureBuilder(
-        future: menuWeek(token , getWeekNumber(dateTime)),
+        future: menuWeek(token, getWeekNumber(dateTime)),
         builder: (context, snapshot) {
           var data = snapshot.data;
           if (data == null) {

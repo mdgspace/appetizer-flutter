@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:appetizer/selectedYearAndMonthModelForLeaveHistory.dart';
+import 'package:provider/provider.dart';
 
-class LeaveDropdownFilter extends StatefulWidget{
-
+class LeaveDropdownFilter extends StatefulWidget {
   @override
   _LeaveDropdownFilterState createState() => _LeaveDropdownFilterState();
 }
@@ -9,22 +10,40 @@ class LeaveDropdownFilter extends StatefulWidget{
 class _LeaveDropdownFilterState extends State<LeaveDropdownFilter> {
   final _yearList = [
     DateTime.now().year,
-    DateTime.now().year-1,
-    DateTime.now().year-2,
-    DateTime.now().year-3,
-    DateTime.now().year-4,
+    DateTime.now().year - 1,
+    DateTime.now().year - 2,
+    DateTime.now().year - 3,
+    DateTime.now().year - 4,
   ];
 
   final _monthList = [
-    'All', 'January', 'February', 'March', 'April', 'May', 'June', 'July',
-    'August', 'September', 'October', 'November', 'December'
+    'All',
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December'
   ];
-
-  int _currentYearSelected = DateTime.now().year;
-  String _currentMonthSelected = 'All';
 
   @override
   Widget build(BuildContext context) {
+    final selectedMonthAndYear = Provider.of<YearAndMonthModel>(context);
+
+    void _onDropDownMonthSelected(String newMonthSelected) {
+      selectedMonthAndYear.currentMonthSelected = newMonthSelected;
+    }
+
+    void _onDropDownYearSelected(int newYearSelected) {
+      selectedMonthAndYear.currentYearSelected = newYearSelected;
+    }
+
     return Container(
       height: 140.0,
       width: 395,
@@ -51,31 +70,32 @@ class _LeaveDropdownFilterState extends State<LeaveDropdownFilter> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(16.0, 2.0, 16.0, 0.0),
+                        padding:
+                            const EdgeInsets.fromLTRB(16.0, 2.0, 16.0, 0.0),
                         child: Text(
                           'Month',
                           style: TextStyle(
                               color: const Color.fromRGBO(0, 0, 0, 0.54),
-                              fontSize: 16.5
-                          ),
+                              fontSize: 16.5),
                         ),
                       ),
                       Container(
                         width: 182.0,
                         child: Padding(
-                          padding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 8.0),
+                          padding:
+                              const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 8.0),
                           child: Container(
                             decoration: BoxDecoration(
                                 border: Border(
                                     bottom: BorderSide(
-                                        color: const Color.fromRGBO(0, 0, 0, 0.15)
-                                    )
-                                )
-                            ),
+                                        color: const Color.fromRGBO(
+                                            0, 0, 0, 0.15)))),
                             child: DropdownButtonHideUnderline(
                               child: DropdownButton<String>(
-                                value: _currentMonthSelected,
-                                items: _monthList.map((String dropDownMonthItem){
+                                value:
+                                    selectedMonthAndYear.currentMonthSelected,
+                                items:
+                                    _monthList.map((String dropDownMonthItem) {
                                   return DropdownMenuItem<String>(
                                     value: dropDownMonthItem,
                                     child: Text(
@@ -86,7 +106,7 @@ class _LeaveDropdownFilterState extends State<LeaveDropdownFilter> {
                                     ),
                                   );
                                 }).toList(),
-                                onChanged: (String newMonthSelected){
+                                onChanged: (String newMonthSelected) {
                                   _onDropDownMonthSelected(newMonthSelected);
                                 },
                               ),
@@ -100,31 +120,30 @@ class _LeaveDropdownFilterState extends State<LeaveDropdownFilter> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(16.0, 2.0, 16.0, 0.0),
+                        padding:
+                            const EdgeInsets.fromLTRB(16.0, 2.0, 16.0, 0.0),
                         child: Text(
                           'Year',
                           style: TextStyle(
                               color: const Color.fromRGBO(0, 0, 0, 0.54),
-                              fontSize: 16.5
-                          ),
+                              fontSize: 16.5),
                         ),
                       ),
                       Container(
                         width: 182.0,
                         child: Padding(
-                          padding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 8.0),
+                          padding:
+                              const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 8.0),
                           child: Container(
                             decoration: BoxDecoration(
                                 border: Border(
                                     bottom: BorderSide(
-                                        color: const Color.fromRGBO(0, 0, 0, 0.15)
-                                    )
-                                )
-                            ),
+                                        color: const Color.fromRGBO(
+                                            0, 0, 0, 0.15)))),
                             child: DropdownButtonHideUnderline(
                               child: DropdownButton<int>(
-                                value: _currentYearSelected,
-                                items: _yearList.map((int dropDownYearItem){
+                                value: selectedMonthAndYear.currentYearSelected,
+                                items: _yearList.map((int dropDownYearItem) {
                                   return DropdownMenuItem<int>(
                                     value: dropDownYearItem,
                                     child: Text(
@@ -135,7 +154,7 @@ class _LeaveDropdownFilterState extends State<LeaveDropdownFilter> {
                                     ),
                                   );
                                 }).toList(),
-                                onChanged: (int newYearSelected){
+                                onChanged: (int newYearSelected) {
                                   _onDropDownYearSelected(newYearSelected);
                                 },
                               ),
@@ -153,17 +172,4 @@ class _LeaveDropdownFilterState extends State<LeaveDropdownFilter> {
       ),
     );
   }
-
-  void _onDropDownMonthSelected(String newMonthSelected){
-    setState(() {
-      this._currentMonthSelected = newMonthSelected;
-    });
-  }
-
-  void _onDropDownYearSelected(int newYearSelected){
-    setState(() {
-      this._currentYearSelected = newYearSelected;
-    });
-  }
-
 }

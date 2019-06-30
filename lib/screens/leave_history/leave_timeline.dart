@@ -7,7 +7,7 @@ class LeaveTimeline extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return ListView(
-      physics: BouncingScrollPhysics(),
+      physics: ClampingScrollPhysics(),
       children: <Widget>[
         MonthTimeline(new TimelineData(2019, 'JAN', <LeaveDetailsData>[])),
         MonthTimeline(new TimelineData(2019, 'JAN', <LeaveDetailsData>[])),

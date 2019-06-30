@@ -4,10 +4,8 @@ import 'data_classes.dart';
 import 'multiple_leave_timeline_card.dart';
 import 'single_leave_timeline_card.dart';
 
-class MonthTimeline extends StatelessWidget{
-
+class MonthTimeline extends StatelessWidget {
   final TimelineData _monthData;
-
 
   MonthTimeline(this._monthData);
 
@@ -52,29 +50,14 @@ class MonthTimeline extends StatelessWidget{
             child: Column(
               children: <Widget>[
                 SingleLeaveTimelineCard('Breakfast', 'WED', 19),
-                MultipleLeaveTimelineCard('Breakfast','Dinner', 'FRI', 'WED', 19, 21, 9),
+                MultipleLeaveTimelineCard(
+                    'Breakfast', 'Dinner', 'FRI', 'WED', 19, 21, 8),
                 SingleLeaveTimelineCard('Breakfast', 'WED', 19),
               ],
-//            TODO: IMPLEMENT FUNCTION
-//                children: _builtLeaveList()
             ),
           )
         ],
       ),
     );
   }
-}
-
-List<Widget> _builtLeaveList() {
-  return null;
-//  (_leaveDetailsData.singleLeave)?
-//  SingleLeaveTimelineCard
-//    (_leaveDetailsData.meal, _leaveDetailsData.day, _leaveDetailsData.date)
-//      :
-//  MultipleLeaveTimelineCard(
-//      _leaveDetailsData.mealFrom, _leaveDetailsData.mealTo,
-//      _leaveDetailsData.dayFrom, _leaveDetailsData.dayTo,
-//      _leaveDetailsData.dateFrom, _leaveDetailsData.dateTo,
-//      _leaveDetailsData.consecutiveLeaves
-//  )
 }

@@ -7,7 +7,6 @@ import 'package:appetizer/services/transaction.dart';
 import 'package:appetizer/helper_methods/monthIntToMonthString.dart';
 
 class MyRebates extends StatelessWidget {
-
   final String token;
 
   const MyRebates({Key key, this.token}) : super(key: key);
@@ -29,32 +28,35 @@ class MyRebates extends StatelessWidget {
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          getMonthRebate(),
-          SeeRebateHistory(token: token)
-        ],
+        children: <Widget>[getMonthRebate(), SeeRebateHistory(token: token)],
       ),
     );
   }
 
   Widget getMonthRebate() {
-    return FutureBuilder(future: getMonthlyRebate(token),
-        builder: (context, snapshot){
-          if(snapshot.data == null){
+    return FutureBuilder(
+        future: getMonthlyRebate(token),
+        builder: (context, snapshot) {
+          if (snapshot.data == null) {
             return Center(
               child: Container(
-                child: CircularProgressIndicator(
-                  valueColor: new AlwaysStoppedAnimation<Color>(appiYellow),
+                height: MediaQuery.of(context).size.height / 1.25,
+                width: MediaQuery.of(context).size.width,
+                child: Center(
+                  child: CircularProgressIndicator(
+                    valueColor: new AlwaysStoppedAnimation<Color>(appiYellow),
+                  ),
                 ),
               ),
             );
-          } else{
-            return MonthlyBalance(1800, snapshot.data.rebate, 0,
-                monthIntToMonthString(DateTime.now().month), DateTime.now().year);
+          } else {
+            return MonthlyBalance(
+                1800,
+                snapshot.data.rebate,
+                0,
+                monthIntToMonthString(DateTime.now().month),
+                DateTime.now().year);
           }
         });
-
   }
 }
-
-
