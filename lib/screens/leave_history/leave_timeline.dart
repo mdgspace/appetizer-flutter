@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'data_classes.dart';
 import 'month_timeline.dart';
 
-class LeaveTimeline extends StatelessWidget{
+class LeaveTimeline extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
