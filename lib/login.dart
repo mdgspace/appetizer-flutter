@@ -1,13 +1,24 @@
+import 'dart:io';
+import 'package:appetizer/alertdialog.dart';
+import 'package:appetizer/choosenewpassword.dart';
 import 'package:appetizer/forgot_pass.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
 import 'colors.dart';
-import 'Home.dart';
 import 'help.dart';
 import 'package:appetizer/services/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_web_browser/flutter_web_browser.dart';
+
+import 'home.dart';
 
 class Login extends StatefulWidget {
+  final String code;
+
+  const Login({Key key, this.code}) : super(key: key);
+
   @override
   _LoginState createState() => _LoginState();
 }
@@ -15,6 +26,8 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   final _formKey = new GlobalKey<FormState>();
+  String url =
+      "http://people.iitr.ernet.in/oauth/?client_id=0a6fb094b8fe79ce0217&redirect_url=appetizer://mess.iitr.ac.in/oauth/";
   String _enrollmentNo, _password;
   bool isLoading;
   bool isLoginButtonTapped = false;
@@ -24,14 +37,13 @@ class _LoginState extends State<Login> {
     animation: "idle",
   );
 
-  // Check if form is valid before performing Login
-  bool _validateAndSave() {
-    final form = _formKey.currentState;
-    if (form.validate()) {
-      form.save();
-      return true;
+  @override
+  void initState() {
+    super.initState();
+    if (widget.code != null) {
+      SchedulerBinding.instance
+          .addPostFrameCallback((_) => verifyUser(context));
     }
-    return false;
   }
 
   @override
@@ -244,10 +256,10 @@ class _LoginState extends State<Login> {
         isLoginButtonTapped = true;
       });
       FocusScope.of(context).requestFocus(new FocusNode());
-      userLogin(_enrollmentNo, _password).then((loginCreds) async {
-        if (loginCreds.enrNo.toString() == _enrollmentNo) {
-          saveUserDetails(
-              loginCreds.enrNo.toString(), loginCreds.name, loginCreds.token);
+      userLogin(_enrollmentNo, _password).then((loginCredentials) async {
+        if (loginCredentials.enrNo.toString() == _enrollmentNo) {
+          saveUserDetails(loginCredentials.enrNo.toString(),
+              loginCredentials.name, loginCredentials.token);
           _showSnackBar(context, "Login Successful");
           setState(() {
             _isLoginSuccessful = true;
@@ -257,16 +269,14 @@ class _LoginState extends State<Login> {
           });
           await new Future.delayed(const Duration(seconds: 5));
 
-          getUserDetails().then((details) {
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) {
-              return Home(
-                enrollment: details.getString("enrNo"),
-                username: details.getString("username"),
-                token: details.getString("token"),
-              );
-            }));
-          });
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) {
+            return Home(
+              enrollment: loginCredentials.enrNo.toString(),
+              username: loginCredentials.name,
+              token: loginCredentials.token,
+            );
+          }));
         } else {
           setState(() {
             isLoginButtonTapped = false;
@@ -281,6 +291,16 @@ class _LoginState extends State<Login> {
     }
   }
 
+  // Check if form is valid before performing Login
+  bool _validateAndSave() {
+    final form = _formKey.currentState;
+    if (form.validate()) {
+      form.save();
+      return true;
+    }
+    return false;
+  }
+
   Future<void> saveUserDetails(
       String enrNo, String username, String token) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -289,7 +309,57 @@ class _LoginState extends State<Login> {
     prefs.setString("username", username);
   }
 
-  void _channelILogin() {}
+  void _channelILogin() {
+    FlutterWebBrowser.openWebPage(url: url);
+    exit(0);
+  }
+
+  Future verifyUser(BuildContext context) async {
+    showCustomDialog(context, "Fetching Details");
+    var oauthResponse = await oAuthRedirect(widget.code);
+    if (oauthResponse != null) {
+      if (oauthResponse.isNew) {
+        Navigator.pop(context);
+        showCustomDialog(context, "Redirecting");
+        await new Future.delayed(
+          new Duration(milliseconds: 500),
+        );
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) {
+          return ChooseNewPass(
+            name: oauthResponse.studentData.name,
+            enr: oauthResponse.studentData.enrNo,
+            email: oauthResponse.studentData.email,
+            contactNo: oauthResponse.studentData.contactNo,
+          );
+        }));
+      } else {
+        print(oauthResponse.isNew);
+        print(oauthResponse.token);
+        Navigator.pop(context);
+        showCustomDialog(context, "Logging You In");
+        saveUserDetails(
+          oauthResponse.studentData.enrNo.toString(),
+          oauthResponse.studentData.name,
+          oauthResponse.token,
+        );
+        setState(() {
+          _isLoginSuccessful = true;
+          isLoginButtonTapped = false;
+        });
+        await new Future.delayed(const Duration(milliseconds: 500));
+        Navigator.pop(context);
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) {
+          return Home(
+            enrollment: oauthResponse.studentData.enrNo.toString(),
+            username: oauthResponse.studentData.name,
+            token: oauthResponse.token,
+          );
+        }));
+      }
+    }
+  }
 
   void _help() {
     Navigator.push(context, MaterialPageRoute(builder: (context) => Help()));
@@ -306,7 +376,6 @@ class _LoginState extends State<Login> {
     ));
   }
 }
-
 Future<SharedPreferences> getUserDetails() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   return prefs;

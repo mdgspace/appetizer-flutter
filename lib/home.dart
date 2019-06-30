@@ -8,6 +8,7 @@ import 'screens/my_leaves/my_leaves_screen.dart';
 import 'screens/my_rebates/my_rebates_screen.dart';
 import 'screens/notification_history/noti_history_screen.dart';
 import 'customProgressIndicator.dart';
+import 'package:appetizer/screens/user_feedback/userfeedback.dart';
 
 class Home extends StatefulWidget {
   final String username;
@@ -27,12 +28,12 @@ class _HomeState extends State<Home> {
 
   showOverlay(BuildContext context) {
     OverlayState overlayState = Overlay.of(context);
-    OverlayEntry overlayEntry = OverlayEntry(
-        builder: (context) => showLoggingOutProgress());
+    OverlayEntry overlayEntry =
+        OverlayEntry(builder: (context) => showLoggingOutProgress());
 
     overlayState.insert(overlayEntry);
 
-    if(!isLoggingOut){
+    if (!isLoggingOut) {
       overlayEntry.remove();
     }
   }
@@ -145,7 +146,13 @@ class _HomeState extends State<Home> {
                         ),
                         title: Text("FeedBack"),
                       ),
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.pop(context);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => UserFeedback()));
+                      },
                     ),
                     GestureDetector(
                       child: ListTile(
@@ -254,12 +261,14 @@ class _HomeState extends State<Home> {
                                         "LOG OUT",
                                         style: TextStyle(color: appiYellow),
                                       ),
-                                      onPressed: () {
+                                      onPressed: () async {
                                         setState(() {
                                           isLoggingOut = true;
                                         });
                                         showOverlay(context);
-                                        userLogout(widget.token)
+
+                                        var prefs = await getUserDetails();
+                                        userLogout(prefs.getString("token"))
                                             .then((afterLogout) async {
                                           if (afterLogout.detail.toString() ==
                                               "user logged out") {
@@ -336,11 +345,10 @@ class _HomeState extends State<Home> {
         children: [
           new Opacity(
             opacity: 0.8,
-            child: const ModalBarrier(dismissible: false, color: Colors.black45),
+            child:
+                const ModalBarrier(dismissible: false, color: Colors.black45),
           ),
-          new Center(
-            child: getCustomProgressLoader("Logging Out..")
-          ),
+          new Center(child: getCustomProgressLoader("Logging Out..")),
         ],
       );
     }
@@ -348,5 +356,9 @@ class _HomeState extends State<Home> {
       height: 0,
       width: 0,
     );
+  }
+  Future<SharedPreferences> getUserDetails() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs;
   }
 }
