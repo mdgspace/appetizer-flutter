@@ -280,10 +280,6 @@ class _HomeState extends State<Home> {
                                               .then((afterLogout) async {
                                             if (afterLogout.detail.toString() ==
                                                 "user logged out") {
-                                              SharedPreferences prefs =
-                                                  await SharedPreferences
-                                                      .getInstance();
-                                              prefs.clear();
                                               Navigator.of(context)
                                                   .pushNamedAndRemoveUntil(
                                                       "/login",
@@ -292,6 +288,10 @@ class _HomeState extends State<Home> {
                                               setState(() {
                                                 isLoggingOut = false;
                                               });
+                                              SharedPreferences prefs =
+                                              await SharedPreferences
+                                                  .getInstance();
+                                              prefs.clear();
                                             }
                                           });
                                         },
