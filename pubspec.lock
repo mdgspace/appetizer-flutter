@@ -21,11 +21,7 @@ packages:
       name: async
       url: "https://pub.dartlang.org"
     source: hosted
-<<<<<<< HEAD
-    version: "2.2.0"
-=======
     version: "2.1.0"
->>>>>>> bfix: Add missing identifiers
   boolean_selector:
     dependency: transitive
     description:
@@ -113,6 +109,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_web_browser:
+    dependency: "direct main"
+    description:
+      name: flutter_web_browser
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.11.0"
   http:
     dependency: "direct main"
     description:
@@ -196,7 +199,7 @@ packages:
       name: shared_preferences
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.3"
+    version: "0.5.3"
   sky_engine:
     dependency: transitive
     description: flutter

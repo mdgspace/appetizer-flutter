@@ -28,6 +28,17 @@
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+            <intent-filter android:label="appetizer">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="mess.iitr.ac.in"
+                    android:pathPrefix="/oauth/"
+                    android:scheme="appetizer" />
+            </intent-filter>
         </activity>
     </application>
 </manifest>
