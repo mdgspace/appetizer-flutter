@@ -2,10 +2,10 @@ import 'package:appetizer/currentDateModel.dart';
 import 'package:flutter/material.dart';
 import 'package:appetizer/services/menu.dart';
 import 'package:provider/provider.dart';
-import 'colors.dart';
-import 'helper_methods/getDayIdforDjango.dart';
-import 'helper_methods/getWeekId.dart';
-import 'models/menu/week.dart';
+import '../../colors.dart';
+import '../../helper_methods/getDayIdforDjango.dart';
+import '../../helper_methods/getWeekId.dart';
+import '../../models/menu/week.dart';
 import 'dart:math' as math;
 
 class Menu extends StatefulWidget {
