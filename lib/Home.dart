@@ -72,7 +72,7 @@ class _HomeState extends State<Home> {
     );
 
 
-    Widget _weekMenuLayout = WeekMenu();
+    Widget _weekMenuLayout = WeekMenu(widget.token);
 /*
     return Scaffold(
       appBar: AppBar(
