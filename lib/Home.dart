@@ -2,15 +2,20 @@ import 'package:appetizer/currentDateModel.dart';
 import 'package:flutter/material.dart';
 import "colors.dart";
 import 'package:appetizer/services/user.dart';
+
+import 'package:appetizer/screens/menu_screens/daily_menu_screen.dart';
 import 'package:appetizer/helper_methods/HorizontalDatePicker.dart';
-import 'MainScreen.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
+import 'screens/menu_screens/week_menu_screen.dart';
 import 'screens/my_leaves/my_leaves_screen.dart';
 import 'screens/my_rebates/my_rebates_screen.dart';
 import 'screens/notification_history/noti_history_screen.dart';
 import 'customProgressIndicator.dart';
 import 'screens/FAQ/faq_screen.dart';
 import 'package:provider/provider.dart';
+
+enum MenuLayout { DAILY_MENU, WEEK_MENU }
 
 class Home extends StatefulWidget {
   final String username;
@@ -25,8 +30,19 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+
+  MenuLayout _menuLayout;
+  final horizontalDatePicker = new HorizontalDatePicker();
+
   String version = "v1.5.6r";
   bool isLoggingOut = false;
+
+
+  @override
+  void initState() {
+    super.initState();
+    _menuLayout = MenuLayout.DAILY_MENU;
+  }
 
   showOverlay(BuildContext context) {
     OverlayState overlayState = Overlay.of(context);
@@ -42,6 +58,22 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+
+    Widget _dailyMenuLayout = Column(
+      children: <Widget>[
+        HorizontalDatePicker(),
+        Flexible(
+          child: SingleChildScrollView(
+            child: Menu(token: widget.token),
+            physics: ClampingScrollPhysics(),
+          ),
+        ),
+      ],
+    );
+
+
+    Widget _weekMenuLayout = WeekMenu(widget.token);
+
     return ChangeNotifierProvider(
       builder: (context) => CurrentDateModel(),
       child: Scaffold(
@@ -58,7 +90,15 @@ class _HomeState extends State<Home> {
               padding: const EdgeInsets.all(8.0),
               child: GestureDetector(
                 child: Icon(Icons.calendar_today),
-                onTap: () {},
+                onTap: () {
+                  setState(() {
+                    if(_menuLayout == MenuLayout.DAILY_MENU){
+                      _menuLayout = MenuLayout.WEEK_MENU;
+                    }else{
+                      _menuLayout = MenuLayout.DAILY_MENU;
+                    }
+                  });
+                },
               ),
             )
           ],
@@ -67,17 +107,7 @@ class _HomeState extends State<Home> {
         ),
         body: Stack(
           children: <Widget>[
-            Column(
-              children: <Widget>[
-                HorizontalDatePicker(),
-                Flexible(
-                  child: SingleChildScrollView(
-                    child: Menu(token: widget.token),
-                    physics: ClampingScrollPhysics(),
-                  ),
-                ),
-              ],
-            ),
+            _menuLayout == MenuLayout.DAILY_MENU ? _dailyMenuLayout : _weekMenuLayout,
           ],
         ),
         drawer: Drawer(
