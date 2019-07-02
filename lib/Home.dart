@@ -64,7 +64,7 @@ class _HomeState extends State<Home> {
         HorizontalDatePicker(),
         Flexible(
           child: SingleChildScrollView(
-            child: Menu(),
+            child: Menu(token: widget.token),
             physics: ClampingScrollPhysics(),
           ),
         ),
@@ -385,7 +385,15 @@ class _HomeState extends State<Home> {
               padding: const EdgeInsets.all(8.0),
               child: GestureDetector(
                 child: Icon(Icons.calendar_today),
-                onTap: () {},
+                onTap: () {
+                  setState(() {
+                    if(_menuLayout == MenuLayout.DAILY_MENU){
+                      _menuLayout = MenuLayout.WEEK_MENU;
+                    }else{
+                      _menuLayout = MenuLayout.DAILY_MENU;
+                    }
+                  });
+                },
               ),
             )
           ],
@@ -394,17 +402,7 @@ class _HomeState extends State<Home> {
         ),
         body: Stack(
           children: <Widget>[
-            Column(
-              children: <Widget>[
-                HorizontalDatePicker(),
-                Flexible(
-                  child: SingleChildScrollView(
-                    child: Menu(token: widget.token),
-                    physics: ClampingScrollPhysics(),
-                  ),
-                ),
-              ],
-            ),
+            _menuLayout == MenuLayout.DAILY_MENU ? _dailyMenuLayout : _weekMenuLayout,
           ],
         ),
         drawer: Drawer(
