@@ -59,22 +59,6 @@ class WeekMenu extends StatelessWidget {
       ),
     );
 
-    final dummy = _buildTableRow("S", 21, [
-      "Fried Maggi",
-      "Veg. Sauce",
-      "Dalia",
-      "Chocoes",
-    ], [
-      "Fried Maggi",
-      "Veg. Sauce",
-      "Dalia",
-      "Chocoes",
-    ], [
-      "Fried Maggi",
-      "Veg. Sauce",
-      "Dalia",
-      "Chocoes",
-    ]);
 
     return Column(
       children: <Widget>[
@@ -123,7 +107,7 @@ class WeekMenu extends StatelessWidget {
                 print('B: $breakfast');
                 print('L: $lunch');
                 print('D: $dinner');
-                rows.add(_buildTableRow(weekDayIntToString(day.date.weekday), day.date.day, breakfast, lunch, dinner));
+                rows.add(_buildTableRow(weekDayIntToString(day.date.weekday), day.date.day, breakfast, lunch, dinner, context));
               });
 
               return Flexible(
@@ -140,8 +124,11 @@ class WeekMenu extends StatelessWidget {
   }
 
   _buildTableRow(String day, int date, List<String> breakfast,
-      List<String> lunch, List<String> dinner) {
+      List<String> lunch, List<String> dinner, context) {
+    final height = (MediaQuery.of(context).size.height-AppBar().preferredSize.height*2.5)/7;
+
     final dateWidget = Container(
+        height: height,
         padding: const EdgeInsets.all(8.0),
         decoration: BoxDecoration(
             color: Color(0xfff5f5f5),
@@ -177,20 +164,27 @@ class WeekMenu extends StatelessWidget {
 
     subMapper(List<String> list) {
       return Container(
+        height: height,
         decoration: BoxDecoration(
             color: Colors.white,
             border: Border(
                 bottom: BorderSide(color: Color(0xff828282)),
                 right: BorderSide(color: Color(0xff828282)))),
         padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: list
-              .map((str) => Text(
-                    str,
-                    style: TextStyle(fontSize: 12),
-                  ))
-              .toList(),
+        child: Align(
+          alignment: Alignment.centerLeft,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: list
+                  .map((str) => Text(
+                        str,
+                        style: TextStyle(fontSize: 12),
+                      ))
+                  .toList(),
+            ),
+          ),
         ),
       );
     }
