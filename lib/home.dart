@@ -1,3 +1,4 @@
+import 'package:appetizer/models/detail.dart';
 import 'package:flutter/material.dart';
 import "colors.dart";
 import 'package:appetizer/services/user.dart';
@@ -13,7 +14,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'screens/my_leaves/my_leaves_screen.dart';
 import 'screens/my_rebates/my_rebates_screen.dart';
 import 'screens/notification_history/noti_history_screen.dart';
-import 'customProgressIndicator.dart';
 import 'package:appetizer/screens/user_feedback/userfeedback.dart';
 
 
@@ -47,19 +47,6 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   String version = "v1.5.6r";
-  bool isLoggingOut = false;
-
-  showOverlay(BuildContext context) {
-    OverlayState overlayState = Overlay.of(context);
-    OverlayEntry overlayEntry =
-        OverlayEntry(builder: (context) => showLoggingOutProgress());
-
-    overlayState.insert(overlayEntry);
-
-    if (!isLoggingOut) {
-      overlayEntry.remove();
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,20 +71,15 @@ class _HomeState extends State<Home> {
         backgroundColor: appiBrown,
         iconTheme: new IconThemeData(color: appiYellow),
       ),
-      body: Stack(
+      body: Column(
         children: <Widget>[
-          Column(
-            children: <Widget>[
-              HorizontalDatePicker(),
-              Flexible(
-                child: SingleChildScrollView(
-                  child: Menu(),
-                  physics: BouncingScrollPhysics(),
-                ),
-              ),
-            ],
+          HorizontalDatePicker(),
+          Flexible(
+            child: SingleChildScrollView(
+              child: Menu(),
+              physics: BouncingScrollPhysics(),
+            ),
           ),
-          showLoggingOutProgress(),
         ],
       ),
       drawer: Drawer(
@@ -284,32 +266,7 @@ class _HomeState extends State<Home> {
                                         "LOG OUT",
                                         style: TextStyle(color: appiYellow),
                                       ),
-                                      onPressed: () async {
-                                        setState(() {
-                                          isLoggingOut = true;
-                                        });
-                                        showOverlay(context);
-
-                                        var prefs = await getUserDetails();
-                                        userLogout(prefs.getString("token"))
-                                            .then((afterLogout) async {
-                                          if (afterLogout.detail.toString() ==
-                                              "user logged out") {
-                                            SharedPreferences prefs =
-                                                await SharedPreferences
-                                                    .getInstance();
-                                            prefs.clear();
-                                            Navigator.of(context)
-                                                .pushNamedAndRemoveUntil(
-                                                    "/login",
-                                                    (Route<dynamic> route) =>
-                                                        false);
-                                            setState(() {
-                                              isLoggingOut = false;
-                                            });
-                                          }
-                                        });
-                                      },
+                                      onPressed: logOut,
                                       highlightColor: Colors.transparent,
                                       splashColor: Colors.transparent,
                                     ),
@@ -362,24 +319,19 @@ class _HomeState extends State<Home> {
     );
   }
 
-  Widget showLoggingOutProgress() {
-    if (isLoggingOut) {
-      return new Stack(
-        children: [
-          new Opacity(
-            opacity: 0.8,
-            child:
-                const ModalBarrier(dismissible: false, color: Colors.black45),
-          ),
-          new Center(child: getCustomProgressLoader("Logging Out..")),
-        ],
-      );
+  Future logOut() async {
+    var prefs = await getUserDetails();
+    String token = prefs.getString("token");
+    Detail response = await userLogout(token);
+    print(prefs.getString("token"));
+    if (response.detail == "user logged out") {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.clear();
+      Navigator.of(context)
+          .pushNamedAndRemoveUntil("/login", (Route<dynamic> route) => false);
     }
-    return Container(
-      height: 0,
-      width: 0,
-    );
   }
+
   Future<SharedPreferences> getUserDetails() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs;

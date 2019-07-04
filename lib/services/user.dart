@@ -50,7 +50,8 @@ Future<Detail> userLogout(String token) async {
     final jsonResponse = jsonDecode(response.body);
     Detail detail = new Detail.fromJson(jsonResponse);
     print(response.body);
-    return detail;
+    print(jsonEncode(tokenAuth));
+      return detail;
   } on Exception catch (e) {
     print(e);
     return null;
