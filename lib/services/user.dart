@@ -51,7 +51,7 @@ Future<Detail> userLogout(String token) async {
     Detail detail = new Detail.fromJson(jsonResponse);
     print(response.body);
     print(jsonEncode(tokenAuth));
-      return detail;
+    return detail;
   } on Exception catch (e) {
     print(e);
     return null;
@@ -151,8 +151,9 @@ Future oAuthRedirect(String code) async {
       uri,
     );
     final jsonResponse = jsonDecode(response.body);
-    OauthResponseNewUser newUserDetails = new OauthResponseNewUser.fromJson(jsonResponse);
-    if(!newUserDetails.isNew){
+    OauthResponseNewUser newUserDetails =
+        new OauthResponseNewUser.fromJson(jsonResponse);
+    if (!newUserDetails.isNew) {
       OauthResponse userDetails = new OauthResponse.fromJson(jsonResponse);
       return userDetails;
     }

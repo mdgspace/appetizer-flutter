@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 import 'package:appetizer/alertdialog.dart';
 import 'package:appetizer/choosenewpassword.dart';
@@ -26,8 +27,10 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   final _formKey = new GlobalKey<FormState>();
+
   String url =
       "http://people.iitr.ernet.in/oauth/?client_id=0a6fb094b8fe79ce0217&redirect_url=appetizer://mess.iitr.ac.in/oauth/";
+
   String _enrollmentNo, _password;
   bool isLoading;
   bool isLoginButtonTapped = false;
@@ -268,7 +271,6 @@ class _LoginState extends State<Login> {
                 animation: "Initial To Right");
           });
           await new Future.delayed(const Duration(seconds: 5));
-
           Navigator.pushReplacement(context,
               MaterialPageRoute(builder: (context) {
             return Home(
@@ -376,6 +378,7 @@ class _LoginState extends State<Login> {
     ));
   }
 }
+
 Future<SharedPreferences> getUserDetails() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   return prefs;

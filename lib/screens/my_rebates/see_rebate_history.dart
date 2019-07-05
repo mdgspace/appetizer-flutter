@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:appetizer/screens/rebate_history/rebate_history_screen.dart';
 
 class SeeRebateHistory extends StatelessWidget {
+  final String token;
+
+  const SeeRebateHistory({Key key, this.token}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -32,13 +36,21 @@ class SeeRebateHistory extends StatelessWidget {
               IconButton(
                 icon: Icon(Icons.keyboard_arrow_right),
                 iconSize: 40.0,
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              RebateHistoryScreen(token: token)));
+                },
               ),
             ],
           ),
           onTap: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => RebateHistoryScreen()));
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => RebateHistoryScreen(token: token)));
           },
         ),
       ),

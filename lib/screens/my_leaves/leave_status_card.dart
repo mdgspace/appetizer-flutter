@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../login.dart';
 import 'package:appetizer/services/user.dart';
 import 'package:appetizer/colors.dart';
+import 'info_message.dart';
 
 class LeaveStatusCard extends StatefulWidget {
   final int _remainingLeaves;
@@ -13,7 +14,7 @@ class LeaveStatusCard extends StatefulWidget {
   _LeaveStatusCardState createState() => _LeaveStatusCardState();
 }
 
-class _LeaveStatusCardState extends State<LeaveStatusCard> with ChangeNotifier {
+class _LeaveStatusCardState extends State<LeaveStatusCard> {
   bool _isCheckedIn;
 
   @override
@@ -116,6 +117,13 @@ class _LeaveStatusCardState extends State<LeaveStatusCard> with ChangeNotifier {
                           fontSize: 22.0,
                         ),
                       ),
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width - 8,
+                      child: (_isCheckedIn)
+                          ? InfoMessage(
+                              "Check-out to leave upcoming meals in sequence")
+                          : InfoMessage("Check-in to start taking meals again"),
                     )
                   ],
                 ),
@@ -126,7 +134,7 @@ class _LeaveStatusCardState extends State<LeaveStatusCard> with ChangeNotifier {
       );
     }
     return Container(
-      height: 155,
+      height: 183,
       child: Center(
         child: CircularProgressIndicator(
             valueColor: AlwaysStoppedAnimation<Color>(appiYellow)),

@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 
-import 'notification.dart';
-import 'package:appetizer/services/user.dart';
-import 'package:appetizer/colors.dart';
+import '../../colors.dart';
+import 'faq.dart';
+import 'package:appetizer/services/transaction.dart';
 
-import 'package:appetizer/helper_methods/timestampToDateTime.dart';
-
-class NotificationHistory extends StatelessWidget {
+class FaqList extends StatelessWidget {
   final String token;
 
-  const NotificationHistory({Key key, this.token}) : super(key: key);
+  const FaqList({Key key, this.token}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,17 +19,17 @@ class NotificationHistory extends StatelessWidget {
             onPressed: () => Navigator.pop(context, false),
           ),
           title: Text(
-            "Notification History",
+            "FAQs",
             style: TextStyle(color: Colors.white),
           ),
           backgroundColor: const Color.fromRGBO(121, 85, 72, 1),
         ),
-        body: notificationList());
+        body: faqs());
   }
 
-  Widget notificationList() {
+  Widget faqs() {
     return FutureBuilder(
-        future: getNotifications(token),
+        future: getFAQ(token),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.data == null) {
             return Container(
@@ -44,10 +42,10 @@ class NotificationHistory extends StatelessWidget {
             return ListView.builder(
                 itemCount: snapshot.data.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return MessNotification(
-                      snapshot.data[index].title,
-                      snapshot.data[index].message,
-                      dateTime(snapshot.data[index].dateCreated));
+                  return Faq(
+                    question: snapshot.data[index].question,
+                    answer: snapshot.data[index].answer,
+                  );
                 });
           }
         });
