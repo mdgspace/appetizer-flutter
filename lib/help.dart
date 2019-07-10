@@ -4,7 +4,6 @@ import 'strings.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Help extends StatelessWidget {
-
   final String version = "Version 1.6.2r";
 
   @override
@@ -28,7 +27,6 @@ class Help extends StatelessWidget {
       ),
       elevation: 0.0,
     );
-    // TODO: implement build
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: appBar,
@@ -178,4 +176,3 @@ void launchGithubUrl() {
 void launchWebUrl() {
   launch('http://mdg.iitr.ac.in');
 }
-

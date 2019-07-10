@@ -1,5 +1,6 @@
-import 'package:appetizer/Home.dart';
+import 'package:appetizer/home.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'colors.dart';
 import 'login.dart';
 
@@ -26,14 +27,16 @@ class Appetizer extends StatefulWidget {
 }
 
 class _AppetizerState extends State<Appetizer> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(),
-    );
-  }
+  static const platform = const MethodChannel('app.channel.shared.data');
+  String code;
 
   void initState() {
+    getIntent();
+    navigate();
+    super.initState();
+  }
+
+  void navigate() {
     getUserDetails().then((details) {
       Navigator.pushReplacement(
           context,
@@ -44,8 +47,22 @@ class _AppetizerState extends State<Appetizer> {
                       enrollment: details.getString("enrNo"),
                       token: details.getString("token"),
                     )
-                  : Login()));
+                  : Login(code: code)));
     });
-    super.initState();
+  }
+
+  getIntent() async {
+    var sharedData = await platform.invokeMethod("getCode");
+    if (sharedData != null) {
+      code = sharedData;
+    }
+    print("Code " + code);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: new Container(),
+    );
   }
 }

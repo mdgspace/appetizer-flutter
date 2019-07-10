@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'notification.dart';
 import 'package:appetizer/services/user.dart';
 import 'package:appetizer/colors.dart';
+
 import 'package:appetizer/helper_methods/timestampToDateTime.dart';
 
 class NotificationHistory extends StatelessWidget {
