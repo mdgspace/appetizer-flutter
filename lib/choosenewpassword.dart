@@ -57,68 +57,84 @@ class _ChooseNewPassState extends State<ChooseNewPass> {
         ),
         elevation: 0.0,
       ),
-      body: Padding(
-        padding: const EdgeInsets.only(left: 40, right: 40),
-        child: Form(
-          key: formKey,
-          child: new Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              new Expanded(child: new Container()),
-              new Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  new Text(
-                    "Hi ",
-                    style: TextStyle(
-                      fontSize: 16,
-                    ),
-                  ),
-                  new Text(
-                    widget.name.split(" ")[0],
-                    style: new TextStyle(
-                      color: appiYellow,
-                      fontSize: 16,
-                    ),
-                  ),
-                  new Text(
-                    ", Choose You Password",
-                    style: TextStyle(
-                      fontSize: 16,
-                    ),
-                  ),
-                ],
-              ),
-              new Expanded(child: new Container()),
-              new Text(
-                " Password should be of atleast 8 \n charecters",
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.red,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              new Expanded(child: new Container()),
-              _showNewPasswordInput(),
-              new Expanded(child: new Container()),
-              _showConfirmPasswordInput(),
-              new Expanded(child: new Container()),
-              _showEmailInput(),
-              new Expanded(child: new Container()),
-              _showContactNoInput(),
-              new Expanded(child: new Container()),
-              _showConfirmButton(),
-              new Expanded(child: new Container()),
-            ],
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.only(left: 40, right: 40),
+          child: Form(
+            key: formKey,
+            child: new Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                //new Expanded(child: new Container()),
+                _choosePassword(),
+                //new Expanded(child: new Container()),
+                _subTitle(),
+                //new Expanded(child: new Container()),
+                _showNewPasswordInput(),
+                //new Expanded(child: new Container()),
+                _showConfirmPasswordInput(),
+                //new Expanded(child: new Container()),
+                _showEmailInput(),
+                //new Expanded(child: new Container()),
+                _showContactNoInput(),
+                //new Expanded(child: new Container()),
+                _showConfirmButton(),
+                //new Expanded(child: new Container()),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 
+  Widget _choosePassword() {
+    return Padding(
+      padding: const EdgeInsets.only(top: 48),
+      child: new Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          new Text(
+            "Hi ",
+            style: TextStyle(
+              fontSize: 16,
+            ),
+          ),
+          new Text(
+            widget.name.split(" ")[0],
+            style: new TextStyle(
+              color: appiYellow,
+              fontSize: 16,
+            ),
+          ),
+          new Text(
+            ", Choose You Password",
+            style: TextStyle(
+              fontSize: 16,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _subTitle() {
+    return Padding(
+      padding: const EdgeInsets.only(top: 48),
+      child: new Text(
+        " Password should be of atleast 8 \n charecters",
+        style: TextStyle(
+          fontSize: 16,
+          color: Colors.red,
+        ),
+        textAlign: TextAlign.center,
+      ),
+    );
+  }
+
   Widget _showNewPasswordInput() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 0.0),
+      padding: const EdgeInsets.fromLTRB(0.0, 48.0, 0.0, 0.0),
       child: new TextFormField(
         controller: controller1,
         maxLines: 1,
@@ -145,7 +161,7 @@ class _ChooseNewPassState extends State<ChooseNewPass> {
 
   Widget _showConfirmPasswordInput() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 0.0),
+      padding: const EdgeInsets.fromLTRB(0.0, 48.0, 0.0, 0.0),
       child: new TextFormField(
         maxLines: 1,
         obscureText: true,
@@ -172,7 +188,7 @@ class _ChooseNewPassState extends State<ChooseNewPass> {
 
   Widget _showEmailInput() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
+      padding: const EdgeInsets.fromLTRB(0.0, 48.0, 0.0, 0.0),
       child: new TextFormField(
         initialValue: widget.email,
         maxLines: 1,
@@ -198,7 +214,7 @@ class _ChooseNewPassState extends State<ChooseNewPass> {
 
   Widget _showContactNoInput() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
+      padding: const EdgeInsets.fromLTRB(0.0, 48.0, 0.0, 0.0),
       child: new TextFormField(
         initialValue: widget.contactNo,
         maxLines: 1,
@@ -224,22 +240,25 @@ class _ChooseNewPassState extends State<ChooseNewPass> {
   }
 
   Widget _showConfirmButton() {
-    return new RaisedButton(
-      elevation: 5.0,
-      color: Colors.white,
-      shape: new RoundedRectangleBorder(
-          side: BorderSide(
-            color: appiYellow,
-            style: BorderStyle.solid,
-            width: 2,
-          ),
-          borderRadius: new BorderRadius.circular(40.0)),
-      child: Padding(
-        padding: const EdgeInsets.all(15.0),
-        child: new Text('CONFIRM',
-            style: new TextStyle(fontSize: 15.0, color: appiYellow)),
+    return Padding(
+      padding: const EdgeInsets.only(top: 48,bottom: 48),
+      child: new RaisedButton(
+        elevation: 5.0,
+        color: Colors.white,
+        shape: new RoundedRectangleBorder(
+            side: BorderSide(
+              color: appiYellow,
+              style: BorderStyle.solid,
+              width: 2,
+            ),
+            borderRadius: new BorderRadius.circular(40.0)),
+        child: Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: new Text('CONFIRM',
+              style: new TextStyle(fontSize: 15.0, color: appiYellow)),
+        ),
+        onPressed: _validateAndSave,
       ),
-      onPressed: _validateAndSave,
     );
   }
 

@@ -1,8 +1,8 @@
 import 'dart:convert';
-
+import 'package:appetizer/models/feed_back/feed_back.dart';
 import 'package:http/http.dart' as http;
 import 'package:appetizer/models/feed_back/submittedfeedbacks.dart';
-import 'package:appetizer/models/feed_back/feedbacktypes.dart';
+import 'package:appetizer/models/feed_back/responses.dart';
 
 String url = "http://appetizer-mdg.herokuapp.com";
 var header = {"Content-Type": "application/json"};
@@ -24,24 +24,43 @@ Future<List<Feedbacks>> submittedFeedBacks(String token) async {
     return null;
   }
 }
-
-/*
-Future<List<FeedbackType>> getFeedBackTypes(String token) async {
-  String endpoint = "/api/feedback/all/";
+Future<List<Response>> responseOfFeedBacks(String token) async {
+  String endpoint = "/api/feedback/response/list/";
   String uri = url + endpoint;
   var tokenAuth = {"Authorization": "Token " + token};
   try {
     var response = await client.get(uri, headers: tokenAuth);
-    //var jsonResponse = jsonDecode(response.body);
-    final feedbackType = feedbackTypeFromJson(response.body);
+    final jsonResponse = jsonDecode(response.body);
     print(response.body);
-    return feedbackType;
+    List<Response> list = responseFromJson(response.body);
+    return list;
   } on Exception catch (e) {
     print(e);
     return null;
   }
 }
-*/
+Future<Feedback> newFeedBack(String token, String type, String title,
+    String message, DateTime dateIssue) async {
+  String endpoint = "/api/feedback/";
+  String uri = url + endpoint;
+  var tokenAuth = {"Authorization": "Token " + token};
+  var json = {
+    "type": type,
+    "title": title,
+    "message": message,
+    "date_issue": dateIssue.millisecondsSinceEpoch.toString()
+  };
+  try {
+    var response = await client.post(uri, headers: tokenAuth, body: json);
+    final jsonResponse = jsonDecode(response.body);
+    Feedback feedback = new Feedback.fromJson(json);
+    print(response.body);
+    return feedback;
+  } on Exception catch (e) {
+    print(e);
+    return null;
+  }
+}
 
 resolveFeedbackTypeCode(String str) {
   switch (str) {

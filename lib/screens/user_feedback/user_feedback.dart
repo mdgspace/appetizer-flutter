@@ -1,7 +1,6 @@
+import 'package:appetizer/models/feed_back/responses.dart';
 import 'package:appetizer/models/feed_back/submittedfeedbacks.dart';
-import 'package:appetizer/models/feed_back/feedbacktypes.dart';
-import 'package:appetizer/screens/user_feedback/newfeedback.dart';
-import 'package:appetizer/timestampToDateTime.dart';
+import 'package:appetizer/screens/user_feedback/new_feedback.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:appetizer/services/feed_back.dart';
@@ -16,13 +15,18 @@ class UserFeedback extends StatefulWidget {
 class _UserFeedbackState extends State<UserFeedback> {
   Color color1 = Colors.black.withOpacity(0.7);
   Color color2 = Colors.black.withOpacity(0.7);
-  List<Feedbacks> inbox;
+  List<Response> inbox;
   List<Feedbacks> submitted;
+  List<Widget> submittedWidget;
   List<Widget> inboxWidget;
 
   @override
   void initState() {
     super.initState();
+    inbox = new List<Response>();
+    submitted = new List<Feedbacks>();
+    inboxWidget = new List<Widget>();
+    submittedWidget = new List<Widget>();
     getLists();
   }
 
@@ -41,15 +45,13 @@ class _UserFeedbackState extends State<UserFeedback> {
         ),
         backgroundColor: const Color.fromRGBO(121, 85, 72, 1),
       ),
-      body: new Column(
+      body: new ListView(
         children: <Widget>[
           new RaisedButton(
             onPressed: () {
               Navigator.pop(context);
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => NewFeedback()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => NewFeedback()));
             },
             color: Colors.white,
             child: new Row(
@@ -95,6 +97,14 @@ class _UserFeedbackState extends State<UserFeedback> {
                 ),
               ],
             ),
+            children: <Widget>[
+              Container(
+                height: inboxWidget.length * 60.toDouble(),
+                child: ListView(
+                  children: inboxWidget,
+                ),
+              ),
+            ],
           ),
           new ExpansionTile(
             onExpansionChanged: onExpansionChangedSubmit,
@@ -118,7 +128,14 @@ class _UserFeedbackState extends State<UserFeedback> {
                 ),
               ],
             ),
-            children: inboxWidget,
+            children: <Widget>[
+              Container(
+                height: submittedWidget.length * 60.toDouble() + 20,
+                child: ListView(
+                  children: submittedWidget,
+                ),
+              ),
+            ],
           ),
         ],
       ),
@@ -127,13 +144,42 @@ class _UserFeedbackState extends State<UserFeedback> {
 
   getLists() async {
     String token = await getToken();
-    inbox = new List<Feedbacks>();
-    inboxWidget = new List<Widget>();
-    inbox = await submittedFeedBacks(token);
-    inboxWidget = convertToWidget(inbox);
+    inbox = await responseOfFeedBacks(token);
+    submitted = await submittedFeedBacks(token);
+    setState(() {
+      inboxWidget = convertToWidgetResponse(inbox);
+      submittedWidget = convertToWidgetFeedBack(submitted);
+    });
   }
 
-  List<Widget> convertToWidget(List<Feedbacks> list) {
+  List<Widget> convertToWidgetResponse(List<Response> list) {
+    List<Widget> temp = new List<Widget>();
+    print(list);
+
+    for (int i = list.length - 1; i >= 0; i--) {
+      DateTime date =
+          DateTime.fromMillisecondsSinceEpoch(list[i].dateCreated).toLocal();
+      //String feedbackTypeName = resolveFeedbackTypeCode(list[i].type);
+      temp.add(new ListTile(
+        title: new Text(
+          list[i].message,
+          style: new TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        //subtitle: new Text(feedbackTypeName + " - #" + list[i].id.toString()),
+        trailing: new Text(date.day.toString() +
+            "/" +
+            date.month.toString() +
+            "/" +
+            date.year.toString().substring(2, 4)),
+      ));
+    }
+    print(temp);
+    return temp;
+  }
+
+  List<Widget> convertToWidgetFeedBack(List<Feedbacks> list) {
     List<Widget> temp = new List<Widget>();
     print(list);
 

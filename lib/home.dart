@@ -4,17 +4,11 @@ import "colors.dart";
 import 'package:appetizer/services/user.dart';
 
 import 'HorizontalDatePicker.dart';
-import 'package:appetizer/services/user.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'login.dart';
-import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart'
-    show CalendarCarousel;
-import 'MainScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'screens/my_leaves/my_leaves_screen.dart';
 import 'screens/my_rebates/my_rebates_screen.dart';
 import 'screens/notification_history/noti_history_screen.dart';
-import 'package:appetizer/screens/user_feedback/userfeedback.dart';
+import 'package:appetizer/screens/user_feedback/user_feedback.dart';
 
 
 void main() => runApp(MyApp());

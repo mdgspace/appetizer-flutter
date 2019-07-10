@@ -153,7 +153,7 @@ Future<List<MealItem>> allMealItems(String token) async {
   try {
     var response = await client.get(uri, headers: tokenAuth);
     final jsonResponse = jsonDecode(response.body);
-    List<MealItem> mealItems = new List<MealItem>.from(jsonResponse);
+      List<MealItem> mealItems = new List<MealItem>.from(jsonResponse);
     print(response.body);
     return mealItems;
   } on Exception catch (e) {
