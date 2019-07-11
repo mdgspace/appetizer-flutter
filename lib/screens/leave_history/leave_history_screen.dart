@@ -6,6 +6,9 @@ import 'leave_dropdown_filter.dart';
 import 'leave_timeline.dart';
 
 class MyLeavesHistory extends StatelessWidget {
+  final String token;
+
+  const MyLeavesHistory({Key key, this.token}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -66,7 +69,9 @@ class MyLeavesHistory extends StatelessWidget {
                         constraints: BoxConstraints(
                           maxHeight: 594.0,
                         ),
-                        child: LeaveTimeline()),
+                        child: LeaveTimeline(
+                          token: token,
+                        )),
                   ),
                 ),
               ),
