@@ -1,18 +1,18 @@
-import 'package:appetizer/services/menu.dart';
+import 'package:appetizer/currentDateModel.dart';
 import 'package:flutter/material.dart';
+import 'package:appetizer/services/menu.dart';
 import 'package:provider/provider.dart';
-
-import 'colors.dart';
-import 'currentDateModel.dart';
-import 'helper_methods/getDayIdforDjango.dart';
-import 'helper_methods/getWeekId.dart';
-import 'models/menu/week.dart';
+import '../../colors.dart';
+import '../../helper_methods/getDayIdforDjango.dart';
+import '../../helper_methods/getWeekId.dart';
+import '../../models/menu/week.dart';
 import 'dart:math' as math;
 
 class Menu extends StatefulWidget {
   final String token;
 
   const Menu({Key key, this.token}) : super(key: key);
+
   @override
   _MenuState createState() => _MenuState();
 }
@@ -45,8 +45,7 @@ class _MenuState extends State<Menu> {
           Map<CircleAvatar, String> dinnerMealMap = {};
 
           var data = snapshot.data;
-
-          if (snapshot.connectionState == ConnectionState.waiting) {
+          if (snapshot.data == null) {
             return Container(
               height: MediaQuery.of(context).size.height / 1.5,
               width: MediaQuery.of(context).size.width,
@@ -55,7 +54,7 @@ class _MenuState extends State<Menu> {
                 valueColor: AlwaysStoppedAnimation<Color>(appiYellow),
               )),
             );
-          } else if (snapshot.connectionState == ConnectionState.done) {
+          } else {
             var numberOfMeals = data.meals.length;
             for (var i = 0; i < numberOfMeals; i++) {
               if (data.meals[i].type == MealType.B) {
@@ -138,7 +137,7 @@ class _MenuState extends State<Menu> {
         });
 
     return FutureBuilder(
-        future: menuWeek(token, getWeekNumber(dateTime)),
+        future: menuWeek(token , getWeekNumber(dateTime)),
         builder: (context, snapshot) {
           var data = snapshot.data;
           if (data == null) {
@@ -184,7 +183,6 @@ class _MenuState extends State<Menu> {
         });
   }
 
-
   @override
   Widget build(BuildContext context) {
     final selectedDateTime = Provider.of<CurrentDateModel>(context);
@@ -204,7 +202,7 @@ class MenuCard extends StatefulWidget {
 }
 
 class _MenuCardState extends State<MenuCard> {
-  bool enabled = true;
+  bool isSwitched = true;
   bool outdated = false;
 
   List<Widget> _itemWidgetList() {
@@ -240,10 +238,11 @@ class _MenuCardState extends State<MenuCard> {
                       outdated
                           ? Icon(Icons.comment)
                           : Switch(
-                              value: enabled,
+                              activeColor: appiYellow,
+                              value: isSwitched,
                               onChanged: (value) {
                                 setState(() {
-                                  value = enabled;
+                                  isSwitched = value;
                                 });
                               }),
                     ],

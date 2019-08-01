@@ -1,5 +1,7 @@
 import 'dart:convert';
-import 'package:appetizer/models/user/detail.dart';
+import 'package:appetizer/models/detail.dart';
+import 'package:appetizer/models/user/oauth.dart';
+import 'package:appetizer/models/user/oauthnewuser.dart';
 import 'package:http/http.dart' as http;
 import 'package:appetizer/models/user/image.dart';
 import 'package:appetizer/models/user/login.dart';
@@ -48,6 +50,7 @@ Future<Detail> userLogout(String token) async {
     final jsonResponse = jsonDecode(response.body);
     Detail detail = new Detail.fromJson(jsonResponse);
     print(response.body);
+    print(jsonEncode(tokenAuth));
     return detail;
   } on Exception catch (e) {
     print(e);
@@ -74,28 +77,6 @@ Future<Me> userMeGet(String token) async {
   }
 }
 
-/*
-Future<Me> userMePut(String token, Me me) async {
-  String endpoint = "/api/user/me/";
-  String uri = url + endpoint;
-  var tokenAuth = {"Authorization": "Token " + token};
-  var json=me.toJson();
-  try {
-    var response = await client.put(
-      uri,
-      headers: tokenAuth,
-      body: json
-    );
-    final jsonResponse = jsonDecode(response.body);
-    Me me = new Me.fromJson(jsonResponse);
-    print(response.body);
-    return me;
-  } on Exception catch (e) {
-    print(e);
-    return null;
-  }
-}
-*/
 Future<Image> userImage(String token) async {
   String endpoint = "/api/user/me/image/";
   String uri = url + endpoint;
@@ -161,48 +142,56 @@ Future<Detail> userReset(String email) async {
     return null;
   }
 }
-/*
-//TODO Find the return type of redirect and complete and create respective model files
-Future<Reset> oAuthRedirect(String token) async {
-  String endpoint = "/api/user/oauth/redirect/";
-  String uri = url + endpoint;
-  var tokenAuth = {"Authorization": "Token " + token};
+
+Future oAuthRedirect(String code) async {
+  String endpoint = "/api/user/oauth/redirect/?code=$code";
+  String uri = "https://mess.iitr.ac.in" + endpoint;
   try {
-    var response = await client.post(
+    var response = await client.get(
       uri,
-      headers: tokenAuth,
-      body: json,
     );
     final jsonResponse = jsonDecode(response.body);
-    //  Reset reset = new Reset.fromJson(jsonResponse);
-    print(response.body);
-    //  return reset;
+    OauthResponseNewUser newUserDetails =
+        new OauthResponseNewUser.fromJson(jsonResponse);
+    if (!newUserDetails.isNew) {
+      OauthResponse userDetails = new OauthResponse.fromJson(jsonResponse);
+      return userDetails;
+    }
+    return newUserDetails;
   } on Exception catch (e) {
     print(e);
     return null;
   }
 }
 
-Future<Reset> oAuthComplete(String token) async {
+Future<OauthResponse> oAuthComplete(
+    int enrNo, String password, String email, int contactNo) async {
   String endpoint = "/api/user/oauth/complete/";
-  String uri = url + endpoint;
-  var tokenAuth = {"Authorization": "Token " + token};
+  String uri = "https://mess.iitr.ac.in" + endpoint;
+  print(url);
+  var json = {
+    "enr": enrNo,
+    "password": password,
+    "email": email,
+    "contact_no": contactNo,
+  };
+  print(jsonEncode(json));
   try {
     var response = await client.post(
       uri,
-      headers: tokenAuth,
-      body: json,
+      headers: header,
+      body: jsonEncode(json),
     );
     final jsonResponse = jsonDecode(response.body);
-    // Reset reset = new Reset.fromJson(jsonResponse);
     print(response.body);
-    //return reset;
+    OauthResponse userDetails = new OauthResponse.fromJson(jsonResponse);
+    print(userDetails.token);
+    return userDetails;
   } on Exception catch (e) {
     print(e);
     return null;
   }
 }
-*/
 
 Future<List<Result>> getNotifications(String token) async {
   String endpoint = "/api/user/message/list/";
