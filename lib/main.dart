@@ -1,4 +1,4 @@
-import 'package:appetizer/home.dart';
+import 'package:appetizer/Home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'colors.dart';
