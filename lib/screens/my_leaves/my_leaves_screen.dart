@@ -70,7 +70,9 @@ class _MyLeavesState extends State<MyLeaves> {
               children: <Widget>[
                 InfoMessage(
                     'You can cancel your leave 2-3 hours before the meal'),
-                SeeLeavesHistory(),
+                SeeLeavesHistory(
+                  token: widget.token,
+                ),
               ],
             ),
           )

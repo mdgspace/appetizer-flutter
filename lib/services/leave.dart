@@ -26,8 +26,13 @@ Future<LeaveCount> remainingLeaves(String token) async {
   }
 }
 
-Future<LeaveList> leaveList(String token) async {
-  String endPoint = "/api/leave/all/";
+Future<LeaveList> leaveList(String token, int year, int month) async {
+  String endPoint = "";
+  if (month == 0) {
+    endPoint = "/api/leave/all/?year=$year";
+  } else {
+    endPoint = "/api/leave/all/?year=$year&month=$month";
+  }
   String uri = url + endPoint;
   var tokenAuth = {"Authorization": "Token " + token};
 

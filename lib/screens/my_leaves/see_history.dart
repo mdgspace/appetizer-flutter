@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:appetizer/screens/leave_history/leave_history_screen.dart';
 
 class SeeLeavesHistory extends StatelessWidget {
+  final String token;
+
+  const SeeLeavesHistory({Key key, this.token}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -35,15 +39,21 @@ class SeeLeavesHistory extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => MyLeavesHistory()));
+                          builder: (context) => MyLeavesHistory(
+                                token: token,
+                              )));
                 },
                 iconSize: 40.0,
               ),
             ],
           ),
           onTap: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => MyLeavesHistory()));
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => MyLeavesHistory(
+                          token: token,
+                        )));
           },
         ),
       ),

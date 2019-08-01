@@ -40,8 +40,12 @@ class MyRebates extends StatelessWidget {
           if (snapshot.data == null) {
             return Center(
               child: Container(
-                child: CircularProgressIndicator(
-                  valueColor: new AlwaysStoppedAnimation<Color>(appiYellow),
+                height: MediaQuery.of(context).size.height / 1.25,
+                width: MediaQuery.of(context).size.width,
+                child: Center(
+                  child: CircularProgressIndicator(
+                    valueColor: new AlwaysStoppedAnimation<Color>(appiYellow),
+                  ),
                 ),
               ),
             );
