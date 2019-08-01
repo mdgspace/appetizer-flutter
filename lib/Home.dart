@@ -1,9 +1,10 @@
 import 'package:appetizer/currentDateModel.dart';
+import 'package:appetizer/screens/user_feedback/user_feedback.dart';
 import 'package:flutter/material.dart';
 import "colors.dart";
 import 'package:appetizer/services/user.dart';
 import 'package:appetizer/helper_methods/HorizontalDatePicker.dart';
-import 'MainScreen.dart';
+import 'mainScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'screens/my_leaves/my_leaves_screen.dart';
 import 'screens/my_rebates/my_rebates_screen.dart';
@@ -11,6 +12,20 @@ import 'screens/notification_history/noti_history_screen.dart';
 import 'customProgressIndicator.dart';
 import 'screens/FAQ/faq_screen.dart';
 import 'package:provider/provider.dart';
+
+class MyApp extends StatelessWidget {
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        theme: ThemeData(
+          primaryColor: appiPrimary,
+          accentColor: appiAccent,
+
+        ),
+        home: Home());
+  }
+}
 
 class Home extends StatefulWidget {
   final String username;
@@ -150,7 +165,13 @@ class _HomeState extends State<Home> {
                           ),
                           title: Text("FeedBack"),
                         ),
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.pop(context);
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => UserFeedback()));
+                        },
                       ),
                       GestureDetector(
                         child: ListTile(

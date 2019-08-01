@@ -1,9 +1,10 @@
 import 'dart:async';
-import 'package:appetizer/home.dart';
+import 'package:appetizer/Home.dart';
 import 'package:appetizer/models/user/oauth.dart';
 import 'package:flutter/material.dart';
 import 'package:appetizer/services/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'Home.dart';
 import 'alertdialog.dart';
 import 'colors.dart';
 

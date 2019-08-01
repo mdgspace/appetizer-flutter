@@ -1,9 +1,8 @@
-import 'package:appetizer/services/menu.dart';
+import 'package:appetizer/currentDateModel.dart';
 import 'package:flutter/material.dart';
+import 'package:appetizer/services/menu.dart';
 import 'package:provider/provider.dart';
-
 import 'colors.dart';
-import 'currentDateModel.dart';
 import 'helper_methods/getDayIdforDjango.dart';
 import 'helper_methods/getWeekId.dart';
 import 'models/menu/week.dart';
@@ -13,6 +12,7 @@ class Menu extends StatefulWidget {
   final String token;
 
   const Menu({Key key, this.token}) : super(key: key);
+
   @override
   _MenuState createState() => _MenuState();
 }
@@ -52,8 +52,8 @@ class _MenuState extends State<Menu> {
               width: MediaQuery.of(context).size.width,
               child: Center(
                   child: CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(appiYellow),
-              )),
+                    valueColor: AlwaysStoppedAnimation<Color>(appiYellow),
+                  )),
             );
           } else if (snapshot.connectionState == ConnectionState.done) {
             var numberOfMeals = data.meals.length;
@@ -63,7 +63,7 @@ class _MenuState extends State<Menu> {
                   var breakfastMealItem = data.meals[i].items[j].name;
                   breakfastMealList.add(breakfastMealItem);
                   var randomColor = Color(
-                          (math.Random().nextDouble() * 0xFFFFFF).toInt() << 0)
+                      (math.Random().nextDouble() * 0xFFFFFF).toInt() << 0)
                       .withOpacity(0.2);
                   breakfastLeadingImageList.add(CircleAvatar(
                     radius: _radius,
@@ -75,7 +75,7 @@ class _MenuState extends State<Menu> {
                   var lunchMealItem = data.meals[i].items[j].name;
                   lunchMealList.add(lunchMealItem);
                   var randomColor = Color(
-                          (math.Random().nextDouble() * 0xFFFFFF).toInt() << 0)
+                      (math.Random().nextDouble() * 0xFFFFFF).toInt() << 0)
                       .withOpacity(0.2);
                   lunchLeadingImageList.add(CircleAvatar(
                     radius: _radius,
@@ -87,7 +87,7 @@ class _MenuState extends State<Menu> {
                   var snacksMealItem = data.meals[i].items[j].name;
                   snacksMealList.add(snacksMealItem);
                   var randomColor = Color(
-                          (math.Random().nextDouble() * 0xFFFFFF).toInt() << 0)
+                      (math.Random().nextDouble() * 0xFFFFFF).toInt() << 0)
                       .withOpacity(0.2);
                   snacksLeadingImageList.add(CircleAvatar(
                     radius: _radius,
@@ -99,7 +99,7 @@ class _MenuState extends State<Menu> {
                   var dinnerMealItem = data.meals[i].items[j].name;
                   dinnerMealList.add(dinnerMealItem);
                   var randomColor = Color(
-                          (math.Random().nextDouble() * 0xFFFFFF).toInt() << 0)
+                      (math.Random().nextDouble() * 0xFFFFFF).toInt() << 0)
                       .withOpacity(0.2);
                   dinnerLeadingImageList.add(CircleAvatar(
                     radius: _radius,
@@ -147,8 +147,8 @@ class _MenuState extends State<Menu> {
               width: MediaQuery.of(context).size.width,
               child: Center(
                   child: CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(appiYellow),
-              )),
+                    valueColor: AlwaysStoppedAnimation<Color>(appiYellow),
+                  )),
             );
           } else {
             List<String> breakfastDailyItemsList = [];
@@ -184,7 +184,6 @@ class _MenuState extends State<Menu> {
         });
   }
 
-
   @override
   Widget build(BuildContext context) {
     final selectedDateTime = Provider.of<CurrentDateModel>(context);
@@ -204,7 +203,7 @@ class MenuCard extends StatefulWidget {
 }
 
 class _MenuCardState extends State<MenuCard> {
-  bool enabled = true;
+  bool isSwitched = true;
   bool outdated = false;
 
   List<Widget> _itemWidgetList() {
@@ -240,12 +239,13 @@ class _MenuCardState extends State<MenuCard> {
                       outdated
                           ? Icon(Icons.comment)
                           : Switch(
-                              value: enabled,
-                              onChanged: (value) {
-                                setState(() {
-                                  value = enabled;
-                                });
-                              }),
+                          activeColor: appiYellow,
+                          value: isSwitched,
+                          onChanged: (value) {
+                            setState(() {
+                              isSwitched = value;
+                            });
+                          }),
                     ],
                   ),
                   Column(
