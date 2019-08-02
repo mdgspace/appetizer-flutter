@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'data_classes.dart';
+import 'timeline_data.dart';
 import 'multiple_leave_timeline_card.dart';
 import 'single_leave_timeline_card.dart';
 

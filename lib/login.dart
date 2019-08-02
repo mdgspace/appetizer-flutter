@@ -14,8 +14,6 @@ import 'package:appetizer/services/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_web_browser/flutter_web_browser.dart';
 
-import 'Home.dart';
-
 class Login extends StatefulWidget {
   final String code;
 

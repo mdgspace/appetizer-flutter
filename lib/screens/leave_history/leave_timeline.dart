@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../../colors.dart';
-import '../../selectedYearAndMonthModelForLeaveHistory.dart';
-import 'data_classes.dart';
-import 'month_timeline.dart';
+import 'package:appetizer/screens/leave_history/multiple_leave_timeline_card.dart';
+import 'package:appetizer/screens/leave_history/single_leave_timeline_card.dart';
+import 'package:appetizer/helper_methods/weekday_int_to_week_day_name.dart';
+import 'package:appetizer/colors.dart';
+import 'package:appetizer/selectedYearAndMonthModelForLeaveHistory.dart';
 import 'package:appetizer/services/leave.dart';
 import 'package:appetizer/helper_methods/monthStringToMonthInt.dart';
 
@@ -15,7 +15,6 @@ class LeaveTimeline extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final currentMonthAndYear = Provider.of<YearAndMonthModel>(context);
 
     return FutureBuilder(
@@ -28,10 +27,45 @@ class LeaveTimeline extends StatelessWidget {
             valueColor: AlwaysStoppedAnimation<Color>(appiYellow),
           ));
         } else {
+          List leavesArray = [];
+          for (var leaves in snapshot.data.results) {
+            if (leaves.mealCount != 1) {
+              leavesArray.add(MultipleLeaveTimelineCard(
+                  leaves.startMealType,
+                  leaves.endMealType,
+                  weekDayIntToWeekDayName(
+                      DateTime.fromMillisecondsSinceEpoch(leaves.startDatetime)
+                          .toLocal()
+                          .weekday),
+                  weekDayIntToWeekDayName(
+                      DateTime.fromMillisecondsSinceEpoch(leaves.endDatetime)
+                          .toLocal()
+                          .weekday),
+                  DateTime.fromMillisecondsSinceEpoch(leaves.startDatetime)
+                      .toLocal()
+                      .day,
+                  DateTime.fromMillisecondsSinceEpoch(leaves.endDatetime)
+                      .toLocal()
+                      .day,
+                  leaves.mealCount));
+            } else {
+              leavesArray.add(SingleLeaveTimelineCard(
+                leaves.startMealType,
+                weekDayIntToWeekDayName(
+                    DateTime.fromMillisecondsSinceEpoch(leaves.startDatetime)
+                        .toLocal()
+                        .weekday),
+                DateTime.fromMillisecondsSinceEpoch(leaves.startDatetime)
+                    .toLocal()
+                    .day,
+              ));
+            }
+          }
           return ListView.builder(
-            itemCount: snapshot.data.count,
-            itemBuilder: (context, index) {},
-          );
+              itemCount: leavesArray.length,
+              itemBuilder: (context, index) {
+                return leavesArray[index];
+              });
         }
       },
     );

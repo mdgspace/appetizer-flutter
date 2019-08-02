@@ -18,18 +18,18 @@ class SeeLeavesHistory extends StatelessWidget {
                 color: const Color.fromRGBO(00, 00, 00, 0.15),
               ))),
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(2.0),
         child: GestureDetector(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
+            //crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.fromLTRB(6.0, 0.0, 0.0, 0.0),
                 child: Text(
                   'See Leave History',
                   style: TextStyle(
-                    fontSize: 20.0,
+                    fontSize: 18.0,
                   ),
                 ),
               ),
