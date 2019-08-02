@@ -4,7 +4,7 @@ import 'notification.dart';
 import 'package:appetizer/services/user.dart';
 import 'package:appetizer/colors.dart';
 
-import 'package:appetizer/helper_methods/timestampToDateTime.dart';
+import 'package:appetizer/utilities/timestampToDateTime.dart';
 
 class NotificationHistory extends StatelessWidget {
   final String token;

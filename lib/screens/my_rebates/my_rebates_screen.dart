@@ -4,7 +4,7 @@ import '../../colors.dart';
 import 'monthly_balance.dart';
 import 'see_rebate_history.dart';
 import 'package:appetizer/services/transaction.dart';
-import 'package:appetizer/helper_methods/monthIntToMonthString.dart';
+import 'package:appetizer/utilities/monthIntToMonthString.dart';
 
 class MyRebates extends StatelessWidget {
   final String token;
