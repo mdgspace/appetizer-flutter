@@ -55,7 +55,6 @@ class _MyLeavesState extends State<MyLeaves> {
               child: ListView(
                 physics: ClampingScrollPhysics(),
                 children: <Widget>[
-                  //TODO: USE MAP FOR THE MEALS LEFT
                   MealLeft('Dinner', 'July 16 2019'),
                   MealLeft('Dinner', 'July 16 2019'),
                   MealLeft('Dinner', 'July 16 2019'),
@@ -63,17 +62,19 @@ class _MyLeavesState extends State<MyLeaves> {
               ),
             ),
           ),
-          Container(
-            height: 103.0,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                InfoMessage(
-                    'You can cancel your leave 2-3 hours before the meal'),
-                SeeLeavesHistory(
-                  token: widget.token,
-                ),
-              ],
+          SafeArea(
+            child: Container(
+              height: 90.0,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  InfoMessage(
+                      'You can cancel your leave 2-3 hours before the meal'),
+                  SeeLeavesHistory(
+                    token: widget.token,
+                  ),
+                ],
+              ),
             ),
           )
         ],

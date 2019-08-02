@@ -9,6 +9,7 @@ Widget getCustomProgressLoader(String message){
         height:80,
         width: 400,
         child: Card(
+          shape: RoundedRectangleBorder(),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
