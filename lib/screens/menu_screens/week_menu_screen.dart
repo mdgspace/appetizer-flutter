@@ -1,5 +1,5 @@
-import 'package:appetizer/helper_methods/getWeekId.dart';
-import 'package:appetizer/helper_methods/weekdayIntToString.dart';
+import 'package:appetizer/utils/get_week_id.dart';
+import 'package:appetizer/utils/week_day_int_to_string.dart';
 import 'package:appetizer/models/menu/week.dart';
 import 'package:appetizer/services/menu.dart';
 import 'package:flutter/material.dart';

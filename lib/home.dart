@@ -3,13 +3,13 @@ import 'package:appetizer/screens/user_feedback/user_feedback.dart';
 import 'package:flutter/material.dart';
 import "colors.dart";
 import 'package:appetizer/services/user.dart';
-import 'package:appetizer/helper_methods/HorizontalDatePicker.dart';
+import 'package:appetizer/utils/horizontal_date_picker.dart';
 import 'mainScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'screens/my_leaves/my_leaves_screen.dart';
 import 'screens/my_rebates/my_rebates_screen.dart';
 import 'screens/notification_history/noti_history_screen.dart';
-import 'customProgressIndicator.dart';
+import 'alertdialog.dart';
 import 'screens/FAQ/faq_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -41,19 +41,6 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   String version = "v1.5.6r";
-  bool isLoggingOut = false;
-
-  showOverlay(BuildContext context) {
-    OverlayState overlayState = Overlay.of(context);
-    OverlayEntry overlayEntry =
-        OverlayEntry(builder: (context) => showLoggingOutProgress());
-
-    overlayState.insert(overlayEntry);
-
-    if (!isLoggingOut) {
-      overlayEntry.remove();
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -293,10 +280,7 @@ class _HomeState extends State<Home> {
                                           style: TextStyle(color: appiYellow),
                                         ),
                                         onPressed: () {
-                                          setState(() {
-                                            isLoggingOut = true;
-                                          });
-                                          showOverlay(context);
+                                          showCustomDialog(context,"Logging You Out");
                                           userLogout(widget.token)
                                               .then((afterLogout) async {
                                             if (afterLogout.detail.toString() ==
@@ -306,9 +290,6 @@ class _HomeState extends State<Home> {
                                                       "/login",
                                                       (Route<dynamic> route) =>
                                                           false);
-                                              setState(() {
-                                                isLoggingOut = false;
-                                              });
                                               SharedPreferences prefs =
                                               await SharedPreferences
                                                   .getInstance();
@@ -366,25 +347,6 @@ class _HomeState extends State<Home> {
           ),
         ),
       ),
-    );
-  }
-
-  Widget showLoggingOutProgress() {
-    if (isLoggingOut) {
-      return new Stack(
-        children: [
-          new Opacity(
-            opacity: 0.8,
-            child:
-                const ModalBarrier(dismissible: false, color: Colors.black45),
-          ),
-          new Center(child: getCustomProgressLoader("Logging Out..")),
-        ],
-      );
-    }
-    return Container(
-      height: 0,
-      width: 0,
     );
   }
 }

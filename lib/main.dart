@@ -1,4 +1,4 @@
-import 'package:appetizer/Home.dart';
+import 'package:appetizer/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'colors.dart';
@@ -12,9 +12,44 @@ void main() => runApp(MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Appetizer',
       theme: ThemeData(
-          primaryColor: appiYellow,
-          accentColor: appiGrey,
-          cursorColor: appiYellow),
+        primaryColor: appiYellow,
+        accentColor: appiGrey,
+        cursorColor: appiYellow,
+        primaryTextTheme: TextTheme(
+          //display1 theme is used for the Login Button
+          display1: new TextStyle(
+            fontWeight: FontWeight.w900,
+            fontSize: 22.0,
+            color: appiYellow,
+            fontFamily: "OpenSans",
+          ),
+          //display2 theme is used for the channel-I button
+          display2: new TextStyle(
+              fontWeight: FontWeight.w900,
+              fontSize: 14.0,
+              color: Colors.white,
+              fontFamily: "OpenSans"),
+          //display3 theme is used for the help and forgot password button
+          display3: new TextStyle(
+            fontSize: 15.0,
+            color: appiYellow,
+            decoration: TextDecoration.underline,
+            fontFamily: "OpenSans",
+          ),
+          //display4 theme is used for the "showDash function"
+          display4: new TextStyle(
+            fontSize: 15.0,
+            color: appiYellow,
+            fontFamily: "OpenSans",
+          ),
+          //subhead theme is used for the Enrollment No and Password Input field
+          subhead: new TextStyle(
+            fontSize: 17.0,
+            color: appiGreyIcon.withOpacity(0.8),
+            fontFamily: "OpenSans",
+          ),
+        ),
+      ),
       darkTheme: ThemeData(
         brightness: Brightness.dark,
       ),

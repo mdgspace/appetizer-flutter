@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:appetizer/services/menu.dart';
 import 'package:provider/provider.dart';
 import '../../colors.dart';
-import '../../helper_methods/getDayIdforDjango.dart';
-import '../../helper_methods/getWeekId.dart';
+import '../../utils/get_day_id_for_django.dart';
+import '../../utils/get_week_id.dart';
 import '../../models/menu/week.dart';
 import 'dart:math' as math;
 
