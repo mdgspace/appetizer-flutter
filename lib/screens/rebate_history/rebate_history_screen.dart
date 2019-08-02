@@ -1,6 +1,6 @@
 import 'package:appetizer/services/transaction.dart';
 import 'package:flutter/material.dart';
-import 'package:appetizer/utilities/monthIntToMonthString.dart';
+import 'package:appetizer/utils/month_int_to_month_string.dart';
 import '../../colors.dart';
 import 'rebate_history_card.dart';
 

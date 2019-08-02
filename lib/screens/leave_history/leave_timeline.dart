@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:appetizer/screens/leave_history/multiple_leave_timeline_card.dart';
 import 'package:appetizer/screens/leave_history/single_leave_timeline_card.dart';
-import 'package:appetizer/utilities/weekday_int_to_week_day_name.dart';
+import 'package:appetizer/utils/weekday_int_to_week_day_name.dart';
 import 'package:appetizer/colors.dart';
 import 'package:appetizer/selectedYearAndMonthModelForLeaveHistory.dart';
 import 'package:appetizer/services/leave.dart';
-import 'package:appetizer/utilities/monthStringToMonthInt.dart';
+import 'package:appetizer/utils/month_string_to_month_int.dart';
 
 class LeaveTimeline extends StatelessWidget {
   final String token;

@@ -3,7 +3,7 @@ import 'package:appetizer/screens/user_feedback/user_feedback.dart';
 import 'package:flutter/material.dart';
 import "colors.dart";
 import 'package:appetizer/services/user.dart';
-import 'package:appetizer/utilities/HorizontalDatePicker.dart';
+import 'package:appetizer/utils/horizontal_date_picker.dart';
 import 'mainScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'screens/my_leaves/my_leaves_screen.dart';
