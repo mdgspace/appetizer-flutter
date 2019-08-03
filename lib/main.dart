@@ -12,6 +12,7 @@ void main() => runApp(MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Appetizer',
       theme: ThemeData(
+        fontFamily: 'OpenSans',
         primaryColor: appiYellow,
         accentColor: appiGrey,
         cursorColor: appiYellow,
@@ -113,12 +114,12 @@ class _AppetizerState extends State<Appetizer> {
                       enrollment: details.getString("enrNo"),
                       token: details.getString("token"),
                     )
-              //    : Login(code: code)
-              :Home(
+                  : Login(code: code)));
+              /*:Home(
                 username: "Aseem",
                 enrollment: "18114013",
                 token: "3469128703928e",
-              )    ));
+              )    ));*/
     });
   }
 

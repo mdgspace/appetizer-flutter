@@ -38,6 +38,14 @@ class _LoginState extends State<Login> {
     "flare_files/Login Appetizer (1).flr",
     animation: "idle",
   );
+  bool _obscureText = true;
+
+  // Toggles the password show status
+  void _toggle() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
+  }
 
   @override
   void initState() {
@@ -142,9 +150,16 @@ class _LoginState extends State<Login> {
       padding: const EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 0.0),
       child: new TextFormField(
         maxLines: 1,
-        obscureText: true,
+        obscureText: _obscureText,
         autofocus: false,
         decoration: new InputDecoration(
+          suffixIcon: GestureDetector(
+            child: new Icon(
+              _obscureText ? Icons.visibility_off : Icons.visibility,
+              color: appiGreyIcon,
+            ),
+            onTap: _toggle,
+          ),
           labelText: "Password",
           labelStyle: Theme.of(context).primaryTextTheme.subhead,
           icon: new Icon(
@@ -171,7 +186,7 @@ class _LoginState extends State<Login> {
             ),
             child: new Text(
               'Authenticating...',
-              style: Theme.of(context).accentTextTheme.display1 ,
+              style: Theme.of(context).accentTextTheme.display1,
             ),
             onPressed: () {})
         : (_isLoginSuccessful)

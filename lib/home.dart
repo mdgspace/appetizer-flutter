@@ -1,7 +1,7 @@
 import 'package:appetizer/currentDateModel.dart';
 import 'package:appetizer/screens/user_feedback/user_feedback.dart';
 import 'package:flutter/material.dart';
-import "colors.dart";
+import 'colors.dart';
 import 'package:appetizer/services/user.dart';
 import 'package:appetizer/utils/horizontal_date_picker.dart';
 import 'mainScreen.dart';
@@ -319,6 +319,7 @@ class _HomeState extends State<Home> {
                       style: TextStyle(
                         fontSize: 12,
                         color: appiGreyIcon,
+
                       ),
                       textAlign: TextAlign.left,
                     ),
