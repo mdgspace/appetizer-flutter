@@ -21,7 +21,6 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primaryColor: appiPrimary,
           accentColor: appiAccent,
-
         ),
         home: Home());
   }
@@ -117,10 +116,8 @@ class _HomeState extends State<Home> {
                               child: Text(
                                 widget.username,
                                 overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 24,
-                                ),
+                                style:
+                                    Theme.of(context).accentTextTheme.display2,
                               ),
                             ),
                             Padding(
@@ -129,7 +126,7 @@ class _HomeState extends State<Home> {
                                 widget.enrollment,
                                 overflow: TextOverflow.ellipsis,
                                 style:
-                                    TextStyle(color: appiYellow, fontSize: 16),
+                                    Theme.of(context).accentTextTheme.display3,
                               ),
                             )
                           ],
@@ -280,7 +277,8 @@ class _HomeState extends State<Home> {
                                           style: TextStyle(color: appiYellow),
                                         ),
                                         onPressed: () {
-                                          showCustomDialog(context,"Logging You Out");
+                                          showCustomDialog(
+                                              context, "Logging You Out");
                                           userLogout(widget.token)
                                               .then((afterLogout) async {
                                             if (afterLogout.detail.toString() ==
@@ -291,8 +289,8 @@ class _HomeState extends State<Home> {
                                                       (Route<dynamic> route) =>
                                                           false);
                                               SharedPreferences prefs =
-                                              await SharedPreferences
-                                                  .getInstance();
+                                                  await SharedPreferences
+                                                      .getInstance();
                                               prefs.clear();
                                             }
                                           });
@@ -320,6 +318,7 @@ class _HomeState extends State<Home> {
                       version,
                       style: TextStyle(
                         fontSize: 12,
+                        color: appiGreyIcon,
                       ),
                       textAlign: TextAlign.left,
                     ),
@@ -327,7 +326,10 @@ class _HomeState extends State<Home> {
                       children: <Widget>[
                         Text(
                           "Made with ",
-                          style: TextStyle(fontSize: 12),
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: appiGreyIcon,
+                          ),
                         ),
                         Icon(
                           Icons.favorite,
@@ -336,7 +338,10 @@ class _HomeState extends State<Home> {
                         ),
                         Text(
                           " by MDG",
-                          style: TextStyle(fontSize: 12),
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: appiGreyIcon,
+                          ),
                         ),
                       ],
                     )

@@ -161,7 +161,19 @@ class _LoginState extends State<Login> {
 
   Widget _showLoginButton() {
     return (isLoginButtonTapped)
-        ? new FlatButton(onPressed: () {})
+        ? new FlatButton(
+            padding: EdgeInsets.all(8),
+            color: appiYellow,
+            shape: new Border.all(
+              width: 2,
+              color: appiYellow,
+              style: BorderStyle.solid,
+            ),
+            child: new Text(
+              'Authenticating...',
+              style: Theme.of(context).accentTextTheme.display1 ,
+            ),
+            onPressed: () {})
         : (_isLoginSuccessful)
             ? new FlatButton(
                 padding: EdgeInsets.all(8),
@@ -172,7 +184,7 @@ class _LoginState extends State<Login> {
                   style: BorderStyle.solid,
                 ),
                 child: new Text(
-                  'Authenticating..',
+                  'Logged In Successfully',
                   style: Theme.of(context).primaryTextTheme.display1,
                 ),
                 onPressed: () {})
