@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'single_leave_details.dart';
 import 'single_leave_timeline_icon.dart';
 
