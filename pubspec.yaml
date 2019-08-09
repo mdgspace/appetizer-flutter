@@ -30,6 +30,7 @@ dependencies:
   flutter_web_browser:
   provider: ^3.0.0+1
   flutter_launcher_icons: ^0.7.2
+  flutter_svg:
 
 
   # The following adds the Cupertino Icons font to your application.
