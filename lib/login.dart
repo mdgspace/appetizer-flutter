@@ -298,8 +298,15 @@ class _LoginState extends State<Login> {
       FocusScope.of(context).requestFocus(new FocusNode());
       userLogin(_enrollmentNo, _password).then((loginCredentials) async {
         if (loginCredentials.enrNo.toString() == _enrollmentNo) {
-          saveUserDetails(loginCredentials.enrNo.toString(),
-              loginCredentials.name, loginCredentials.token);
+          saveUserDetails(
+            loginCredentials.enrNo.toString(),
+            loginCredentials.name,
+            loginCredentials.token,
+            loginCredentials.branch,
+            loginCredentials.hostelName,
+            loginCredentials.roomNo,
+            loginCredentials.email,
+          );
           _showSnackBar(context, "Login Successful");
           setState(() {
             _isLoginSuccessful = true;
@@ -340,12 +347,16 @@ class _LoginState extends State<Login> {
     return false;
   }
 
-  Future<void> saveUserDetails(
-      String enrNo, String username, String token) async {
+  Future<void> saveUserDetails(String enrNo, String username, String token,
+      String branch, String hostelName, String roomNo, String email) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString("token", token);
     prefs.setString("enrNo", enrNo);
     prefs.setString("username", username);
+    prefs.setString("branch", branch);
+    prefs.setString("hostelName", hostelName);
+    prefs.setString("roomNo", roomNo);
+    prefs.setString("email", email);
   }
 
   void _channelILogin() {
@@ -356,6 +367,7 @@ class _LoginState extends State<Login> {
   Future verifyUser(BuildContext context) async {
     showCustomDialog(context, "Fetching Details");
     var oauthResponse = await oAuthRedirect(widget.code);
+    print("Code "+widget.code);
     if (oauthResponse != null) {
       if (oauthResponse.isNew) {
         Navigator.pop(context);
@@ -381,6 +393,10 @@ class _LoginState extends State<Login> {
           oauthResponse.studentData.enrNo.toString(),
           oauthResponse.studentData.name,
           oauthResponse.token,
+          oauthResponse.studentData.branch,
+          oauthResponse.studentData.hostelName,
+          oauthResponse.studentData.roomNo,
+          oauthResponse.studentData.email,
         );
         setState(() {
           _isLoginSuccessful = true;

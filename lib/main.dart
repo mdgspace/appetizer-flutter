@@ -33,6 +33,15 @@ void main() => runApp(MaterialApp(
             color: appiYellow,
             fontSize: 15,
           ),
+          title:  TextStyle(
+            color: appiLightGreyText,
+            fontSize: 14,
+          ),
+          subtitle: TextStyle(
+            color: appiLightGreyText,
+            fontSize: 16,
+            fontWeight: FontWeight.w500,
+          ),
         ),
         primaryTextTheme: TextTheme(
           //display1 theme is used for the Login Button
