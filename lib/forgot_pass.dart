@@ -45,7 +45,6 @@ class _ForgotPassState extends State<ForgotPass> {
                   color: appiBrown,
                   child: Row(
                     // image here
-
                     children: <Widget>[
                       Container(
                         height: (MediaQuery.of(context).size.height) / 2 -
@@ -76,9 +75,10 @@ class _ForgotPassState extends State<ForgotPass> {
                   child: Text(
                     "Forgot Password?",
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 24,
+                    style: new TextStyle(
+                      fontSize: 24.0,
                       color: Colors.black,
+                      fontFamily: "OpenSans",
                     ),
                   ),
                 ),
@@ -86,8 +86,10 @@ class _ForgotPassState extends State<ForgotPass> {
                   padding: const EdgeInsets.only(left: 48, right: 48),
                   child: Text(
                     passInstruction,
-                    style: TextStyle(
-                      fontSize: 16,
+                    style:  new TextStyle(
+                      fontSize: 14.0,
+                      color: appiGreyIcon.withOpacity(0.9),
+                      fontFamily: "OpenSans",
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -97,16 +99,18 @@ class _ForgotPassState extends State<ForgotPass> {
                   child: Form(
                     key: formKey,
                     child: TextFormField(
+                        autofocus: true,
                         validator: validateEmail,
                         initialValue: _email,
                         decoration: InputDecoration(
                           icon: Icon(
                             Icons.mail,
                             size: 36,
-                            color: appiYellow,
+                            color: appiGreyIcon,
                           ),
                           labelText: "Email address",
-                          labelStyle: TextStyle(color: appiYellow),
+                          labelStyle:
+                              Theme.of(context).primaryTextTheme.subhead,
                           focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
                                 color: appiYellow, style: BorderStyle.solid),
@@ -132,7 +136,7 @@ class _ForgotPassState extends State<ForgotPass> {
                       title: Text(
                         "SEND INSTRUCTIONS",
                         textAlign: TextAlign.center,
-                        style: TextStyle(color: appiYellow),
+                        style:  Theme.of(context).primaryTextTheme.caption,
                       ),
                     ),
                     onPressed: () {

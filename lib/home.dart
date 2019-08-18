@@ -1,7 +1,7 @@
 import 'package:appetizer/currentDateModel.dart';
 import 'package:appetizer/screens/user_feedback/user_feedback.dart';
 import 'package:flutter/material.dart';
-import "colors.dart";
+import 'colors.dart';
 import 'package:appetizer/services/user.dart';
 import 'package:appetizer/utils/horizontal_date_picker.dart';
 import 'mainScreen.dart';
@@ -13,6 +13,8 @@ import 'alertdialog.dart';
 import 'screens/FAQ/faq_screen.dart';
 import 'package:provider/provider.dart';
 
+import 'screens/settings/settings_screen.dart';
+
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
@@ -21,7 +23,6 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primaryColor: appiPrimary,
           accentColor: appiAccent,
-
         ),
         home: Home());
   }
@@ -117,10 +118,8 @@ class _HomeState extends State<Home> {
                               child: Text(
                                 widget.username,
                                 overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 24,
-                                ),
+                                style:
+                                    Theme.of(context).accentTextTheme.display2,
                               ),
                             ),
                             Padding(
@@ -129,7 +128,7 @@ class _HomeState extends State<Home> {
                                 widget.enrollment,
                                 overflow: TextOverflow.ellipsis,
                                 style:
-                                    TextStyle(color: appiYellow, fontSize: 16),
+                                    Theme.of(context).accentTextTheme.display3,
                               ),
                             )
                           ],
@@ -225,7 +224,13 @@ class _HomeState extends State<Home> {
                           ),
                           title: Text("Settings"),
                         ),
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.pop(context);
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Settings()));
+                        },
                       ),
                       GestureDetector(
                         child: ListTile(
@@ -259,7 +264,12 @@ class _HomeState extends State<Home> {
                                 context: context,
                                 builder: (BuildContext context) {
                                   return AlertDialog(
-                                    title: new Text("Log Out"),
+                                    title: new Text(
+                                      "Log Out",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
                                     content: new Text(
                                         "Are you sure you want to log out?"),
                                     actions: <Widget>[
@@ -279,23 +289,19 @@ class _HomeState extends State<Home> {
                                           "LOG OUT",
                                           style: TextStyle(color: appiYellow),
                                         ),
-                                        onPressed: () {
-                                          showCustomDialog(context,"Logging You Out");
-                                          userLogout(widget.token)
-                                              .then((afterLogout) async {
-                                            if (afterLogout.detail.toString() ==
-                                                "user logged out") {
-                                              Navigator.of(context)
-                                                  .pushNamedAndRemoveUntil(
-                                                      "/login",
-                                                      (Route<dynamic> route) =>
-                                                          false);
-                                              SharedPreferences prefs =
+                                        onPressed: () async {
+                                          showCustomDialog(
+                                              context, "Logging You Out");
+                                          userLogout(widget.token);
+                                          Navigator.of(context)
+                                              .pushNamedAndRemoveUntil(
+                                                  "/login",
+                                                  (Route<dynamic> route) =>
+                                                      false);
+                                          SharedPreferences prefs =
                                               await SharedPreferences
                                                   .getInstance();
-                                              prefs.clear();
-                                            }
-                                          });
+                                          prefs.clear();
                                         },
                                         highlightColor: Colors.transparent,
                                         splashColor: Colors.transparent,
@@ -320,6 +326,7 @@ class _HomeState extends State<Home> {
                       version,
                       style: TextStyle(
                         fontSize: 12,
+                        color: appiGreyIcon,
                       ),
                       textAlign: TextAlign.left,
                     ),
@@ -327,7 +334,10 @@ class _HomeState extends State<Home> {
                       children: <Widget>[
                         Text(
                           "Made with ",
-                          style: TextStyle(fontSize: 12),
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: appiGreyIcon,
+                          ),
                         ),
                         Icon(
                           Icons.favorite,
@@ -336,7 +346,10 @@ class _HomeState extends State<Home> {
                         ),
                         Text(
                           " by MDG",
-                          style: TextStyle(fontSize: 12),
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: appiGreyIcon,
+                          ),
                         ),
                       ],
                     )

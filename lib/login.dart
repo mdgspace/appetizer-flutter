@@ -38,6 +38,14 @@ class _LoginState extends State<Login> {
     "flare_files/Login Appetizer (1).flr",
     animation: "idle",
   );
+  bool _obscureText = true;
+
+  // Toggles the password show status
+  void _toggle() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
+  }
 
   @override
   void initState() {
@@ -142,9 +150,16 @@ class _LoginState extends State<Login> {
       padding: const EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 0.0),
       child: new TextFormField(
         maxLines: 1,
-        obscureText: true,
+        obscureText: _obscureText,
         autofocus: false,
         decoration: new InputDecoration(
+          suffixIcon: GestureDetector(
+            child: new Icon(
+              _obscureText ? Icons.visibility_off : Icons.visibility,
+              color: appiGreyIcon,
+            ),
+            onTap: _toggle,
+          ),
           labelText: "Password",
           labelStyle: Theme.of(context).primaryTextTheme.subhead,
           icon: new Icon(
@@ -161,7 +176,19 @@ class _LoginState extends State<Login> {
 
   Widget _showLoginButton() {
     return (isLoginButtonTapped)
-        ? new FlatButton(onPressed: () {})
+        ? new FlatButton(
+            padding: EdgeInsets.all(8),
+            color: appiYellow,
+            shape: new Border.all(
+              width: 2,
+              color: appiYellow,
+              style: BorderStyle.solid,
+            ),
+            child: new Text(
+              'Authenticating...',
+              style: Theme.of(context).accentTextTheme.display1,
+            ),
+            onPressed: () {})
         : (_isLoginSuccessful)
             ? new FlatButton(
                 padding: EdgeInsets.all(8),
@@ -172,7 +199,7 @@ class _LoginState extends State<Login> {
                   style: BorderStyle.solid,
                 ),
                 child: new Text(
-                  'Authenticating..',
+                  'Logged In Successfully',
                   style: Theme.of(context).primaryTextTheme.display1,
                 ),
                 onPressed: () {})
@@ -271,8 +298,15 @@ class _LoginState extends State<Login> {
       FocusScope.of(context).requestFocus(new FocusNode());
       userLogin(_enrollmentNo, _password).then((loginCredentials) async {
         if (loginCredentials.enrNo.toString() == _enrollmentNo) {
-          saveUserDetails(loginCredentials.enrNo.toString(),
-              loginCredentials.name, loginCredentials.token);
+          saveUserDetails(
+            loginCredentials.enrNo.toString(),
+            loginCredentials.name,
+            loginCredentials.token,
+            loginCredentials.branch,
+            loginCredentials.hostelName,
+            loginCredentials.roomNo,
+            loginCredentials.email,
+          );
           _showSnackBar(context, "Login Successful");
           setState(() {
             _isLoginSuccessful = true;
@@ -313,12 +347,16 @@ class _LoginState extends State<Login> {
     return false;
   }
 
-  Future<void> saveUserDetails(
-      String enrNo, String username, String token) async {
+  Future<void> saveUserDetails(String enrNo, String username, String token,
+      String branch, String hostelName, String roomNo, String email) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString("token", token);
     prefs.setString("enrNo", enrNo);
     prefs.setString("username", username);
+    prefs.setString("branch", branch);
+    prefs.setString("hostelName", hostelName);
+    prefs.setString("roomNo", roomNo);
+    prefs.setString("email", email);
   }
 
   void _channelILogin() {
@@ -329,6 +367,7 @@ class _LoginState extends State<Login> {
   Future verifyUser(BuildContext context) async {
     showCustomDialog(context, "Fetching Details");
     var oauthResponse = await oAuthRedirect(widget.code);
+    print("Code "+widget.code);
     if (oauthResponse != null) {
       if (oauthResponse.isNew) {
         Navigator.pop(context);
@@ -354,6 +393,10 @@ class _LoginState extends State<Login> {
           oauthResponse.studentData.enrNo.toString(),
           oauthResponse.studentData.name,
           oauthResponse.token,
+          oauthResponse.studentData.branch,
+          oauthResponse.studentData.hostelName,
+          oauthResponse.studentData.roomNo,
+          oauthResponse.studentData.email,
         );
         setState(() {
           _isLoginSuccessful = true;

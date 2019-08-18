@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../colors.dart';
+
 class UserDetails extends StatelessWidget{
 
   final String _name;
-  final int _enrollmentNo;
+  final String _enrollmentNo;
   final String _branch;
   final String _hostel;
   final String _roomNo;
@@ -15,7 +17,7 @@ class UserDetails extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 320.0,
+      height: 360.0,
       child: Padding(
         padding: const EdgeInsets.fromLTRB(16.0, 60.0, 16.0, 30.0),
         child: Card(
@@ -33,7 +35,7 @@ class UserDetails extends StatelessWidget{
                           "$_name",
                           style: TextStyle(
                             fontSize: 25.0,
-                            color: const Color.fromRGBO(79, 79, 79, 1),
+                            color: appiLightGreyText,
                           ),
                         ),
                       ),
@@ -42,7 +44,7 @@ class UserDetails extends StatelessWidget{
                         child: Text(
                           "INDIAN INSTITUTE OF TECHNOLOGY, ROORKEE",
                           style: TextStyle(
-                            color: const Color.fromRGBO(130, 130, 130, 1),
+                            color:appiDarkGreyText,
                             fontSize: 13.0,
                           ),
                         ),
@@ -79,10 +81,7 @@ class UserDetails extends StatelessWidget{
                           children: <Widget>[
                             Text(
                               "Enrollment No.: ",
-                              style: TextStyle(
-                                fontSize: 14.0,
-                                color: const Color.fromRGBO(130, 130, 130, 1),
-                              ),
+                              style: Theme.of(context).accentTextTheme.title,
                             ),
                             Text(
                               "$_enrollmentNo",
@@ -103,18 +102,11 @@ class UserDetails extends StatelessWidget{
                           children: <Widget>[
                             Text(
                               "Branch: ",
-                              style: TextStyle(
-                                fontSize: 14.0,
-                                color: const Color.fromRGBO(130, 130, 130, 1),
-                              ),
+                              style: Theme.of(context).accentTextTheme.title,
                             ),
                             Text(
                               "$_branch",
-                              style: TextStyle(
-                                  fontSize: 16.0,
-                                  color: const Color.fromRGBO(79, 79, 79, 1),
-                                  fontWeight: FontWeight.w500
-                              ),
+                              style: Theme.of(context).accentTextTheme.subtitle,
                             ),
                           ],
                         ),
@@ -127,18 +119,11 @@ class UserDetails extends StatelessWidget{
                           children: <Widget>[
                             Text(
                               "Hostel: ",
-                              style: TextStyle(
-                                fontSize: 14.0,
-                                color: const Color.fromRGBO(130, 130, 130, 1),
-                              ),
+                              style: Theme.of(context).accentTextTheme.title,
                             ),
                             Text(
                               "$_hostel",
-                              style: TextStyle(
-                                  fontSize: 16.0,
-                                  color: const Color.fromRGBO(79, 79, 79, 1),
-                                  fontWeight: FontWeight.w500
-                              ),
+                              style: Theme.of(context).accentTextTheme.subtitle,
                             ),
                           ],
                         ),
@@ -151,18 +136,11 @@ class UserDetails extends StatelessWidget{
                           children: <Widget>[
                             Text(
                               "Room No.: ",
-                              style: TextStyle(
-                                fontSize: 14.0,
-                                color: const Color.fromRGBO(130, 130, 130, 1),
-                              ),
+                              style: Theme.of(context).accentTextTheme.title,
                             ),
                             Text(
                               "$_roomNo",
-                              style: TextStyle(
-                                  fontSize: 16.0,
-                                  color: const Color.fromRGBO(79, 79, 79, 1),
-                                  fontWeight: FontWeight.w500
-                              ),
+                              style: Theme.of(context).accentTextTheme.subtitle,
                             ),
                           ],
                         ),
@@ -175,18 +153,11 @@ class UserDetails extends StatelessWidget{
                           children: <Widget>[
                             Text(
                               "E-Mail: ",
-                              style: TextStyle(
-                                fontSize: 14.0,
-                                color: const Color.fromRGBO(130, 130, 130, 1),
-                              ),
+                              style: Theme.of(context).accentTextTheme.title,
                             ),
                             Text(
                               "$_email",
-                              style: TextStyle(
-                                  fontSize: 16.0,
-                                  color: const Color.fromRGBO(79, 79, 79, 1),
-                                  fontWeight: FontWeight.w500
-                              ),
+                              style: Theme.of(context).accentTextTheme.subtitle,
                             ),
                           ],
                         ),

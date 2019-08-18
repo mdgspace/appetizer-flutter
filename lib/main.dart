@@ -12,9 +12,37 @@ void main() => runApp(MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Appetizer',
       theme: ThemeData(
+        fontFamily: 'OpenSans',
         primaryColor: appiYellow,
         accentColor: appiGrey,
         cursorColor: appiYellow,
+        accentTextTheme: TextTheme(
+          //used for authenticating button
+          display1: new TextStyle(
+              fontWeight: FontWeight.w900,
+              fontSize: 19.0,
+              color: Colors.white,
+              fontFamily: "OpenSans"),
+          //used for username in nav drawer
+          display2: TextStyle(
+            color: Colors.white,
+            fontSize: 22,
+          ),
+          //used for enrolment no in nav drawer
+          display3: TextStyle(
+            color: appiYellow,
+            fontSize: 15,
+          ),
+          title:  TextStyle(
+            color: appiLightGreyText,
+            fontSize: 14,
+          ),
+          subtitle: TextStyle(
+            color: appiLightGreyText,
+            fontSize: 16,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
         primaryTextTheme: TextTheme(
           //display1 theme is used for the Login Button
           display1: new TextStyle(
@@ -46,6 +74,19 @@ void main() => runApp(MaterialApp(
           subhead: new TextStyle(
             fontSize: 17.0,
             color: appiGreyIcon.withOpacity(0.8),
+            fontFamily: "OpenSans",
+          ),
+          //headline used for forgot password title
+          headline: new TextStyle(
+            fontSize: 24.0,
+            color: appiGreyIcon,
+            fontFamily: "OpenSans",
+          ),
+          //caption used for sub-Text
+          caption: new TextStyle(
+            fontWeight: FontWeight.w900,
+            fontSize: 16.0,
+            color: appiYellow,
             fontFamily: "OpenSans",
           ),
         ),
@@ -83,6 +124,11 @@ class _AppetizerState extends State<Appetizer> {
                       token: details.getString("token"),
                     )
                   : Login(code: code)));
+              /*:Home(
+                username: "Aseem",
+                enrollment: "18114013",
+                token: "3469128703928e",
+              )    ));*/
     });
   }
 
