@@ -12,3 +12,5 @@ final appiGrey = const Color(0xFFBDBDBD);
 final appiYellowLogo = const Color(0xffF6BA18);
 final appiMenuText = const Color(0xff333333);
 final appiGreyIcon = const Color.fromRGBO(85,85,85,0.74);
+final appiLightGreyText= const Color.fromRGBO(79, 79, 79, 1);
+final appiDarkGreyText= const Color.fromRGBO(130, 130,130, 1);
