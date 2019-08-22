@@ -233,86 +233,90 @@ class _MenuCardState extends State<MenuCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-        margin: EdgeInsets.fromLTRB(12, 4, 12, 4),
-        elevation: 1,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: Text(
-                          widget.title,
-                          style: TextStyle(
-                              color: Colors.yellow[700], fontSize: 24),
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(0.0 , 4.0 , 0.0 , 4.0),
+      child: Card(
+          margin: EdgeInsets.fromLTRB(12, 4, 12, 4),
+          elevation: 2,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.only(bottom: 24.0),
+                            child: Text(
+                              widget.title,
+                              style:
+                                  new TextStyle(color: appiYellow, fontSize: 24),
+                            ),
+                          ),
                         ),
-                      ),
-                      outdated
-                          ? Icon(Icons.comment)
-                          : Switch(
-                              activeColor: appiYellow,
-                              value: isSwitched,
-                              onChanged: (value) async {
-                                if (value) {
-                                  cancelLeave(widget.id, widget.token)
-                                      .then((leave) {
-                                    setState(() {
-                                      isSwitched = value;
-                                    });
-                                  });
-                                } else {
-                                  leave(widget.id, widget.token)
-                                      .then((leaveResult) {
-                                    if (leaveResult.status == "P") {
-                                      menuScaffoldKey.currentState.showSnackBar(
-                                          SnackBar(
-                                              content: Text(
-                                                  "Your leave has been created!!")));
+                        outdated
+                            ? Icon(Icons.comment)
+                            : Switch(
+                                activeColor: appiYellow,
+                                value: isSwitched,
+                                onChanged: (value) async {
+                                  if (value) {
+                                    cancelLeave(widget.id, widget.token)
+                                        .then((leave) {
                                       setState(() {
                                         isSwitched = value;
                                       });
-                                    } else {
-                                      menuScaffoldKey.currentState.showSnackBar(
-                                          SnackBar(
-                                              content: Text(
-                                                  "Time for creating leave has passed")));
-                                    }
-                                  });
-                                }
-                              }),
-                    ],
-                  ),
-                  Column(
-                    children: _itemWidgetList(),
+                                    });
+                                  } else {
+                                    leave(widget.id, widget.token)
+                                        .then((leaveResult) {
+                                      if (leaveResult.status == "P") {
+                                        menuScaffoldKey.currentState.showSnackBar(
+                                            SnackBar(
+                                                content: Text(
+                                                    "Your leave has been created!!")));
+                                        setState(() {
+                                          isSwitched = value;
+                                        });
+                                      } else {
+                                        menuScaffoldKey.currentState.showSnackBar(
+                                            SnackBar(
+                                                content: Text(
+                                                    "Time for creating leave has passed")));
+                                      }
+                                    });
+                                  }
+                                }),
+                      ],
+                    ),
+                    Column(
+                      children: _itemWidgetList(),
+                    ),
+                  ],
+                ),
+              ),
+              Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Container(
+                        color: Color(0xffF4F4F4),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            'Daily Items: ${widget.dailyItems}',
+                            style: TextStyle(color: Color.fromRGBO(0, 0, 0, .54)),
+                          ),
+                        )),
                   ),
                 ],
-              ),
-            ),
-            Row(
-              children: <Widget>[
-                Expanded(
-                  child: Container(
-                      color: Color(0xffF4F4F4),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          'Daily Items: ${widget.dailyItems}',
-                          style: TextStyle(
-                              color: Color.fromRGBO(0, 0, 0, .54),
-                              fontFamily: "Roboto"),
-                        ),
-                      )),
-                ),
-              ],
-            )
-          ],
-        ));
+              )
+            ],
+          )),
+    );
   }
 
   Widget _menuListItem(String itemName, CircleAvatar foodIcon) {
@@ -340,7 +344,6 @@ class _MenuCardState extends State<MenuCard> {
               children: <Widget>[
                 Text(
                   itemName,
-                  style: TextStyle(fontFamily: "Roboto"),
                 ),
                 Divider(
                   height: 8.0,

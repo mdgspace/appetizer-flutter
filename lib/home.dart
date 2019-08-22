@@ -57,7 +57,7 @@ class _HomeState extends State<Home> {
           centerTitle: true,
           title: Text(
             "Mess Menu",
-            style: TextStyle(
+            style: new TextStyle(
                 color: Colors.white, fontSize: 25.0, fontFamily: 'Lobster_Two'),
           ),
           actions: <Widget>[
