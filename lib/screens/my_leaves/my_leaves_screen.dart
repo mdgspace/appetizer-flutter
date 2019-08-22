@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'leave_status_card.dart';
 import 'meal_left.dart';
-import 'info_message.dart';
 import 'manage_leaves_banner.dart';
 import 'see_history.dart';
 
@@ -40,7 +39,6 @@ class _MyLeavesState extends State<MyLeaves> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Container(
-            height: 262.0,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -63,17 +61,17 @@ class _MyLeavesState extends State<MyLeaves> {
             ),
           ),
           SafeArea(
-            child: Container(
-              height: 90.0,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  InfoMessage(
-                      'You can cancel your leave 2-3 hours before the meal'),
-                  SeeLeavesHistory(
-                    token: widget.token,
-                  ),
-                ],
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    SeeLeavesHistory(
+                      token: widget.token,
+                    ),
+                  ],
+                ),
               ),
             ),
           )
