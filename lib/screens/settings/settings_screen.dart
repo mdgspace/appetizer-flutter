@@ -8,9 +8,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:share/share.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../alertdialog.dart';
-import '../../colors.dart';
-import '../../help.dart';
+import 'package:appetizer/alertDialog.dart';
+import 'package:appetizer/colors.dart';
+import 'package:appetizer/help.dart';
 
 class Settings extends StatefulWidget {
   @override
