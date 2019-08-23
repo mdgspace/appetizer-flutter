@@ -34,8 +34,9 @@ void main() => runApp(MaterialApp(
             fontSize: 15,
           ),
           title:  TextStyle(
+            fontWeight: FontWeight.bold,
             color: appiLightGreyText,
-            fontSize: 14,
+            fontSize: 16,
           ),
           subtitle: TextStyle(
             color: appiLightGreyText,
