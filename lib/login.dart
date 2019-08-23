@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:io';
-import 'package:appetizer/alertdialog.dart';
-import 'package:appetizer/choosenewpassword.dart';
-import 'package:appetizer/forgot_pass.dart';
+import 'package:appetizer/alertDialog.dart';
+import 'package:appetizer/chooseNewPassword.dart';
+import 'package:appetizer/forgotPassword.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';

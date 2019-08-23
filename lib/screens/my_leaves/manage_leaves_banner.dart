@@ -17,7 +17,7 @@ class ManageLeaveBanner extends StatelessWidget{
       child: Padding(
         padding: const EdgeInsets.all(6.0),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,

@@ -1,6 +1,6 @@
-import 'package:appetizer/alertdialog.dart';
+import 'package:appetizer/alertDialog.dart';
 import 'package:flutter/material.dart';
-import 'package:appetizer/services/feed_back.dart';
+import 'package:appetizer/services/feedback.dart';
 import 'package:appetizer/monthIntToMonthString.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../colors.dart';

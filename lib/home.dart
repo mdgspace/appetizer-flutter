@@ -1,17 +1,20 @@
+import 'package:flutter/material.dart';
+
 import 'package:appetizer/currentDateModel.dart';
 import 'package:appetizer/screens/user_feedback/user_feedback.dart';
-import 'package:flutter/material.dart';
-import 'colors.dart';
+import 'package:appetizer/colors.dart';
 import 'package:appetizer/services/user.dart';
 import 'package:appetizer/utils/horizontal_date_picker.dart';
-import 'mainScreen.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'screens/my_leaves/my_leaves_screen.dart';
-import 'screens/my_rebates/my_rebates_screen.dart';
-import 'screens/notification_history/noti_history_screen.dart';
-import 'alertdialog.dart';
-import 'screens/FAQ/faq_screen.dart';
+import 'package:appetizer/menu.dart';
+import 'package:appetizer/screens/my_leaves/my_leaves_screen.dart';
+import 'package:appetizer/screens/my_rebates/my_rebates_screen.dart';
+import 'package:appetizer/screens/notification_history/noti_history_screen.dart';
+import 'package:appetizer/alertDialog.dart';
+import 'package:appetizer/screens/FAQ/faq_screen.dart';
+import 'package:appetizer/globals.dart';
+
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'screens/settings/settings_screen.dart';
 
@@ -48,12 +51,13 @@ class _HomeState extends State<Home> {
     return ChangeNotifierProvider(
       builder: (context) => CurrentDateModel(),
       child: Scaffold(
+        key: menuScaffoldKey,
         appBar: AppBar(
           elevation: 0,
           centerTitle: true,
           title: Text(
             "Mess Menu",
-            style: TextStyle(
+            style: new TextStyle(
                 color: Colors.white, fontSize: 25.0, fontFamily: 'Lobster_Two'),
           ),
           actions: <Widget>[
@@ -76,7 +80,6 @@ class _HomeState extends State<Home> {
                 Flexible(
                   child: SingleChildScrollView(
                     child: Menu(token: widget.token),
-                    physics: ClampingScrollPhysics(),
                   ),
                 ),
               ],
