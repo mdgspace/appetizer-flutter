@@ -59,7 +59,10 @@ class _SettingsState extends State<Settings> {
               color: const Color.fromRGBO(255, 193, 7, 1),
               onPressed: () => Navigator.pop(context, false),
             ),
-            title: Text("Settings"),
+            title: Text(
+              "Settings",
+              style: new TextStyle(color: Colors.white),
+            ),
             backgroundColor: const Color.fromRGBO(121, 85, 72, 1),
             elevation: 0.0,
           ),
@@ -67,8 +70,8 @@ class _SettingsState extends State<Settings> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Container(
-                  height: 320.0,
-                  width: 412.0,
+                  height: MediaQuery.of(context).size.height /2.5,
+                  width: MediaQuery.of(context).size.width,
                   color: const Color.fromRGBO(121, 85, 72, 1)),
               Expanded(
                 child: ListView(
@@ -172,8 +175,8 @@ class _SettingsState extends State<Settings> {
         ),
         Positioned(
           child: UserDetails(name, enr, branch, hostel, room, email),
-          top: 85.0,
-          left: 5.0,
+          top: 50.0,
+          left: 0.0,
         )
       ],
     );
