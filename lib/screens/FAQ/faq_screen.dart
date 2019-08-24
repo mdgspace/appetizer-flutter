@@ -24,7 +24,7 @@ class FaqList extends StatelessWidget {
           ),
           backgroundColor: const Color.fromRGBO(121, 85, 72, 1),
         ),
-        body: faqs());
+        body: SafeArea(child: faqs()));
   }
 
   Widget faqs() {

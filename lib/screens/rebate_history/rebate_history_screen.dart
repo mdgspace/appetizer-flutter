@@ -37,15 +37,17 @@ class _RebateHistoryScreenState extends State<RebateHistoryScreen> {
         title: Text("Rebate History", style: TextStyle(color: Colors.white)),
         backgroundColor: const Color.fromRGBO(121, 85, 72, 1),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Container(
-            height: 150.0,
-            child: getDropdownFilter(),
-          ),
-          Expanded(child: getRebateHistoryList()),
-        ],
+      body: SafeArea(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Container(
+              height: 150.0,
+              child: getDropdownFilter(),
+            ),
+            Expanded(child: getRebateHistoryList()),
+          ],
+        ),
       ),
     );
   }

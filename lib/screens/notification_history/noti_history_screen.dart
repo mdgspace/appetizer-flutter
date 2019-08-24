@@ -26,7 +26,7 @@ class NotificationHistory extends StatelessWidget {
           ),
           backgroundColor: const Color.fromRGBO(121, 85, 72, 1),
         ),
-        body: notificationList());
+        body: SafeArea(child: notificationList()));
   }
 
   Widget notificationList() {

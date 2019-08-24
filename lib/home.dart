@@ -17,6 +17,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'screens/settings/settings_screen.dart';
+import 'package:appetizer/screens/menu_screens/week_menu_screen.dart';
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -65,26 +66,33 @@ class _HomeState extends State<Home> {
               padding: const EdgeInsets.all(8.0),
               child: GestureDetector(
                 child: Icon(Icons.calendar_today),
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => WeekMenu(widget.token)));
+                },
               ),
             )
           ],
           backgroundColor: appiBrown,
           iconTheme: new IconThemeData(color: appiYellow),
         ),
-        body: Stack(
-          children: <Widget>[
-            Column(
-              children: <Widget>[
-                HorizontalDatePicker(),
-                Flexible(
-                  child: SingleChildScrollView(
-                    child: Menu(token: widget.token),
+        body: SafeArea(
+          child: Stack(
+            children: <Widget>[
+              Column(
+                children: <Widget>[
+                  HorizontalDatePicker(),
+                  Flexible(
+                    child: SingleChildScrollView(
+                      child: Menu(token: widget.token),
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
         drawer: Drawer(
           child: Column(

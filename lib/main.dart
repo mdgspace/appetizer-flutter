@@ -125,11 +125,6 @@ class _AppetizerState extends State<Appetizer> {
                       token: details.getString("token"),
                     )
                   : Login(code: code)));
-              /*:Home(
-                username: "Aseem",
-                enrollment: "18114013",
-                token: "3469128703928e",
-              )    ));*/
     });
   }
 

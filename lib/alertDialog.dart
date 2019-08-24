@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'colors.dart';
 
 void showCustomDialog(BuildContext context, String message) {
@@ -20,10 +19,12 @@ void showCustomDialog(BuildContext context, String message) {
               new Expanded(child: new Container()),
               Padding(
                 padding: const EdgeInsets.only(right: 30.0),
-                child: new Text(
-                  message,
-                  style: new TextStyle(
-                    fontSize: 15,
+                child: Center(
+                  child: new Text(
+                    message,
+                    style: new TextStyle(
+                      fontSize: 15,
+                    ),
                   ),
                 ),
               ),
