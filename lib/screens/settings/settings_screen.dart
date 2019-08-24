@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:share/share.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:appetizer/resetPassword.dart';
 import 'package:appetizer/alertDialog.dart';
 import 'package:appetizer/colors.dart';
 import 'package:appetizer/help.dart';
@@ -71,22 +71,31 @@ class _SettingsState extends State<Settings> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Container(
-                    height: MediaQuery.of(context).size.height /2.5,
+                    height: MediaQuery.of(context).size.height / 2.5,
                     width: MediaQuery.of(context).size.width,
                     color: const Color.fromRGBO(121, 85, 72, 1)),
                 Expanded(
                   child: ListView(
                     children: <Widget>[
                       SettingsPageListItems(Icons.person, "Account"),
-                      SettingsPageListItems(Icons.lock, "Reset Password"),
+                      GestureDetector(
+                        child:
+                            SettingsPageListItems(Icons.lock, "Reset Password"),
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ResetPassword()));
+                        },
+                      ),
                       GestureDetector(
                         child: SettingsPageListItems(Icons.help, "FAQ"),
                         onTap: () {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>
-                                      FaqList(token: prefs.getString("token"))));
+                                  builder: (context) => FaqList(
+                                      token: prefs.getString("token"))));
                         },
                       ),
                       GestureDetector(
@@ -146,8 +155,10 @@ class _SettingsState extends State<Settings> {
 
                                         userLogout(prefs.getString("token"));
                                         Navigator.of(context)
-                                            .pushNamedAndRemoveUntil("/login",
-                                                (Route<dynamic> route) => false);
+                                            .pushNamedAndRemoveUntil(
+                                                "/login",
+                                                (Route<dynamic> route) =>
+                                                    false);
                                         prefs.clear();
                                       },
                                       highlightColor: Colors.transparent,

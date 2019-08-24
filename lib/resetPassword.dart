@@ -2,22 +2,12 @@ import 'package:flutter/material.dart';
 import 'colors.dart';
 import 'strings.dart';
 
-
-
 class ResetPassword extends StatefulWidget {
   @override
   _ResetPasswordState createState() => _ResetPasswordState();
 }
 
 class _ResetPasswordState extends State<ResetPassword> {
-  AppBar appBar = AppBar(
-    backgroundColor: appiBrown,
-    leading: IconButton(icon: Icon(Icons.arrow_back), onPressed: () {}),
-    iconTheme: IconThemeData(
-      color: appiYellow,
-    ),
-    elevation: 0.0,
-  );
   bool _obscureText = true;
 
   void _toggle() {
@@ -28,6 +18,20 @@ class _ResetPasswordState extends State<ResetPassword> {
 
   @override
   Widget build(BuildContext context) {
+    AppBar appBar = AppBar(
+      backgroundColor: appiBrown,
+      leading: IconButton(
+          splashColor: Colors.transparent,
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          }),
+      iconTheme: IconThemeData(
+        color: appiYellow,
+      ),
+      elevation: 0.0,
+    );
+
     return Scaffold(
       resizeToAvoidBottomInset: true,
       body: SingleChildScrollView(
@@ -45,35 +49,34 @@ class _ResetPasswordState extends State<ResetPassword> {
                   child: Image(
                     alignment: Alignment.centerRight,
                     image: AssetImage('assets/images/reset_password.png'),
-                    width: (MediaQuery.of(context).size.width)*0.8,
+                    width: (MediaQuery.of(context).size.width) * 0.8,
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(16.0),
-                  child: Text(
-                    "Reset Password",
-                    textAlign: TextAlign.center,
-                    style: new TextStyle(
-                      fontSize: 24.0,
-                      color: Colors.black,
-                      fontFamily: "OpenSans",
-                    ),
-                  ),
+                  child: Text("Reset Password",
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context)
+                          .primaryTextTheme
+                          .display1
+                          .copyWith(
+                              color: Colors.black,
+                              fontWeight: FontWeight.w500)),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 48, right: 48),
                   child: Text(
                     forgotInstruction,
                     style: new TextStyle(
-                      fontSize: 14.0,
-                      color: appiGreyIcon.withOpacity(0.9),
+                      fontSize: 16.0,
+                      color: appiRed.withOpacity(0.9),
                       fontFamily: "OpenSans",
                     ),
                     textAlign: TextAlign.center,
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 0.0),
+                  padding: const EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 0.0),
                   child: new TextFormField(
                     maxLines: 1,
                     obscureText: _obscureText,
@@ -93,7 +96,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                       icon: new Icon(
                         Icons.lock,
                         color: appiGreyIcon,
-                        size: 39,
+                        size: 30,
                       ),
                     ),
                     validator: (value) =>
@@ -102,7 +105,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 0.0),
+                  padding: const EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 0.0),
                   child: new TextFormField(
                     maxLines: 1,
                     obscureText: _obscureText,
@@ -122,7 +125,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                       icon: new Icon(
                         Icons.lock,
                         color: appiGreyIcon,
-                        size: 39,
+                        size: 30,
                       ),
                     ),
                     validator: (value) =>
@@ -133,16 +136,17 @@ class _ResetPasswordState extends State<ResetPassword> {
                 Padding(
                   padding: const EdgeInsets.all(24.0),
                   child: OutlineButton(
+                    highlightedBorderColor: appiYellow,
                     borderSide: BorderSide(
                       color: appiYellow,
                       width: 2,
                     ),
-                    splashColor: appiYellow,
+                    splashColor: Colors.transparent,
                     child: ListTile(
                       title: Text(
                         "RESET PASSWORD",
                         textAlign: TextAlign.center,
-                        style: Theme.of(context).primaryTextTheme.caption,
+                        style: Theme.of(context).primaryTextTheme.display1,
                       ),
                     ),
                     onPressed: () {},
