@@ -96,7 +96,7 @@ Future<Image> userImage(String token) async {
   }
 }
 
-Future<Detail> userPassword(
+Future<Detail> userPasswordReset(
     String token, String oldPass, String newPass) async {
   String endpoint = "/api/user/me/password/";
   String uri = url + endpoint;

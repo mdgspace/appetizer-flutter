@@ -85,7 +85,9 @@ class _SettingsState extends State<Settings> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => ResetPassword()));
+                                  builder: (context) => ResetPassword(
+                                    token: prefs.getString("token")
+                                  )));
                         },
                       ),
                       GestureDetector(
