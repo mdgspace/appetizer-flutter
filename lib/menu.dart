@@ -9,6 +9,7 @@ import 'utils/get_week_id.dart';
 import 'models/menu/week.dart';
 import 'dart:math' as math;
 import 'package:appetizer/globals.dart';
+import 'package:appetizer/noMeals.dart';
 
 class Menu extends StatefulWidget {
   final String token;
@@ -63,70 +64,78 @@ class _MenuState extends State<Menu> {
               )),
             );
           } else if (snapshot.connectionState == ConnectionState.done) {
-            var numberOfMeals = data.meals.length;
-            for (var i = 0; i < numberOfMeals; i++) {
-              if (data.meals[i].type == MealType.B) {
-                breakfastId = data.meals[i].id;
-                for (var j = 0; j < data.meals[i].items.length; j++) {
-                  var breakfastMealItem = data.meals[i].items[j].name;
-                  breakfastMealList.add(breakfastMealItem);
-                  var randomColor = Color(
-                          (math.Random().nextDouble() * 0xFFFFFF).toInt() << 0)
-                      .withOpacity(0.2);
-                  breakfastLeadingImageList.add(CircleAvatar(
-                    radius: _radius,
-                    backgroundColor: randomColor,
-                  ));
-                }
-              } else if (data.meals[i].type == MealType.L) {
-                lunchId = data.meals[i].id;
-                for (var j = 0; j < data.meals[i].items.length; j++) {
-                  var lunchMealItem = data.meals[i].items[j].name;
-                  lunchMealList.add(lunchMealItem);
-                  var randomColor = Color(
-                          (math.Random().nextDouble() * 0xFFFFFF).toInt() << 0)
-                      .withOpacity(0.2);
-                  lunchLeadingImageList.add(CircleAvatar(
-                    radius: _radius,
-                    backgroundColor: randomColor,
-                  ));
-                }
-              } else if (data.meals[i].type == MealType.S) {
-                snacksId = data.meals[i].id;
-                for (var j = 0; j < data.meals[i].items.length; j++) {
-                  var snacksMealItem = data.meals[i].items[j].name;
-                  snacksMealList.add(snacksMealItem);
-                  var randomColor = Color(
-                          (math.Random().nextDouble() * 0xFFFFFF).toInt() << 0)
-                      .withOpacity(0.2);
-                  snacksLeadingImageList.add(CircleAvatar(
-                    radius: _radius,
-                    backgroundColor: randomColor,
-                  ));
-                }
-              } else if (data.meals[i].type == MealType.D) {
-                dinnerId = data.meals[i].id;
-                for (var j = 0; j < data.meals[i].items.length; j++) {
-                  var dinnerMealItem = data.meals[i].items[j].name;
-                  dinnerMealList.add(dinnerMealItem);
-                  var randomColor = Color(
-                          (math.Random().nextDouble() * 0xFFFFFF).toInt() << 0)
-                      .withOpacity(0.2);
-                  dinnerLeadingImageList.add(CircleAvatar(
-                    radius: _radius,
-                    backgroundColor: randomColor,
-                  ));
+            if (snapshot.data == null) {
+              return NoMealsScreen();
+            } else {
+              var numberOfMeals = data.meals.length;
+              for (var i = 0; i < numberOfMeals; i++) {
+                if (data.meals[i].type == MealType.B) {
+                  breakfastId = data.meals[i].id;
+                  for (var j = 0; j < data.meals[i].items.length; j++) {
+                    var breakfastMealItem = data.meals[i].items[j].name;
+                    breakfastMealList.add(breakfastMealItem);
+                    var randomColor = Color(
+                            (math.Random().nextDouble() * 0xFFFFFF).toInt() <<
+                                0)
+                        .withOpacity(0.2);
+                    breakfastLeadingImageList.add(CircleAvatar(
+                      radius: _radius,
+                      backgroundColor: randomColor,
+                    ));
+                  }
+                } else if (data.meals[i].type == MealType.L) {
+                  lunchId = data.meals[i].id;
+                  for (var j = 0; j < data.meals[i].items.length; j++) {
+                    var lunchMealItem = data.meals[i].items[j].name;
+                    lunchMealList.add(lunchMealItem);
+                    var randomColor = Color(
+                            (math.Random().nextDouble() * 0xFFFFFF).toInt() <<
+                                0)
+                        .withOpacity(0.2);
+                    lunchLeadingImageList.add(CircleAvatar(
+                      radius: _radius,
+                      backgroundColor: randomColor,
+                    ));
+                  }
+                } else if (data.meals[i].type == MealType.S) {
+                  snacksId = data.meals[i].id;
+                  for (var j = 0; j < data.meals[i].items.length; j++) {
+                    var snacksMealItem = data.meals[i].items[j].name;
+                    snacksMealList.add(snacksMealItem);
+                    var randomColor = Color(
+                            (math.Random().nextDouble() * 0xFFFFFF).toInt() <<
+                                0)
+                        .withOpacity(0.2);
+                    snacksLeadingImageList.add(CircleAvatar(
+                      radius: _radius,
+                      backgroundColor: randomColor,
+                    ));
+                  }
+                } else if (data.meals[i].type == MealType.D) {
+                  dinnerId = data.meals[i].id;
+                  for (var j = 0; j < data.meals[i].items.length; j++) {
+                    var dinnerMealItem = data.meals[i].items[j].name;
+                    dinnerMealList.add(dinnerMealItem);
+                    var randomColor = Color(
+                            (math.Random().nextDouble() * 0xFFFFFF).toInt() <<
+                                0)
+                        .withOpacity(0.2);
+                    dinnerLeadingImageList.add(CircleAvatar(
+                      radius: _radius,
+                      backgroundColor: randomColor,
+                    ));
+                  }
                 }
               }
+              breakfastMealMap = Map.fromIterables(
+                  breakfastLeadingImageList, breakfastMealList);
+              lunchMealMap =
+                  Map.fromIterables(lunchLeadingImageList, lunchMealList);
+              dinnerMealMap =
+                  Map.fromIterables(dinnerLeadingImageList, dinnerMealList);
+              snacksMealMap =
+                  Map.fromIterables(snacksLeadingImageList, snacksMealList);
             }
-            breakfastMealMap =
-                Map.fromIterables(breakfastLeadingImageList, breakfastMealList);
-            lunchMealMap =
-                Map.fromIterables(lunchLeadingImageList, lunchMealList);
-            dinnerMealMap =
-                Map.fromIterables(dinnerLeadingImageList, dinnerMealList);
-            snacksMealMap =
-                Map.fromIterables(snacksLeadingImageList, snacksMealList);
           }
 
           return Column(
@@ -234,7 +243,7 @@ class _MenuCardState extends State<MenuCard> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0.0 , 4.0 , 0.0 , 4.0),
+      padding: const EdgeInsets.fromLTRB(0.0, 4.0, 0.0, 4.0),
       child: Card(
           margin: EdgeInsets.fromLTRB(12, 4, 12, 4),
           elevation: 2,
@@ -253,8 +262,8 @@ class _MenuCardState extends State<MenuCard> {
                             padding: const EdgeInsets.only(bottom: 24.0),
                             child: Text(
                               widget.title,
-                              style:
-                                  new TextStyle(color: appiYellow, fontSize: 24),
+                              style: new TextStyle(
+                                  color: appiYellow, fontSize: 24),
                             ),
                           ),
                         ),
@@ -275,16 +284,16 @@ class _MenuCardState extends State<MenuCard> {
                                     leave(widget.id, widget.token)
                                         .then((leaveResult) {
                                       if (leaveResult.status == "P") {
-                                        menuScaffoldKey.currentState.showSnackBar(
-                                            SnackBar(
+                                        menuScaffoldKey.currentState
+                                            .showSnackBar(SnackBar(
                                                 content: Text(
                                                     "Your leave has been created!!")));
                                         setState(() {
                                           isSwitched = value;
                                         });
                                       } else {
-                                        menuScaffoldKey.currentState.showSnackBar(
-                                            SnackBar(
+                                        menuScaffoldKey.currentState
+                                            .showSnackBar(SnackBar(
                                                 content: Text(
                                                     "Time for creating leave has passed")));
                                       }
@@ -308,7 +317,8 @@ class _MenuCardState extends State<MenuCard> {
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
                             'Daily Items: ${widget.dailyItems}',
-                            style: TextStyle(color: Color.fromRGBO(0, 0, 0, .54)),
+                            style:
+                                TextStyle(color: Color.fromRGBO(0, 0, 0, .54)),
                           ),
                         )),
                   ),

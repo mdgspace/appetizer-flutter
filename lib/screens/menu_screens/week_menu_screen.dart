@@ -14,118 +14,133 @@ class WeekMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     final _headerTextStyle = TextStyle(color: Color(0xffFFC107), fontSize: 16);
 
-    final _headerRow = Container(
-      padding: EdgeInsets.all(8.0),
-      decoration: BoxDecoration(
-        color: appiBrown,
+    return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        centerTitle: true,
+        title: Text(
+          "Mess Menu",
+          style: new TextStyle(
+              color: Colors.white, fontSize: 25.0, fontFamily: 'Lobster_Two'),
+        ),
+        backgroundColor: appiBrown,
+        iconTheme: new IconThemeData(color: appiYellow),
       ),
-      child: Row(
+      body: Column(
         children: <Widget>[
-          Expanded(
-            flex: 1,
-            child: Text(
-              'Day'.toUpperCase(),
-              style: _headerTextStyle,
+          Container(
+            padding: EdgeInsets.all(8.0),
+            decoration: BoxDecoration(
+              color: appiBrown,
+            ),
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  flex: 1,
+                  child: Text(
+                    'Day'.toUpperCase(),
+                    style: _headerTextStyle,
+                  ),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: Center(
+                    child: Text(
+                      'Breakfast'.toUpperCase(),
+                      style: _headerTextStyle,
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: Center(
+                    child: Text(
+                      'Lunch'.toUpperCase(),
+                      style: _headerTextStyle,
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: Center(
+                    child: Text(
+                      'Dinner'.toUpperCase(),
+                      style: _headerTextStyle,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
-          Expanded(
-            flex: 2,
-            child: Center(
-              child: Text(
-                'Breakfast'.toUpperCase(),
-                style: _headerTextStyle,
-              ),
-            ),
-          ),
-          Expanded(
-            flex: 2,
-            child: Center(
-              child: Text(
-                'Lunch'.toUpperCase(),
-                style: _headerTextStyle,
-              ),
-            ),
-          ),
-          Expanded(
-            flex: 2,
-            child: Center(
-              child: Text(
-                'Dinner'.toUpperCase(),
-                style: _headerTextStyle,
-              ),
-            ),
-          ),
+          FutureBuilder(
+            future: menuWeek(token, getWeekNumber(DateTime.now())),
+            builder: (context, snapshot) {
+              Week data = snapshot.data;
+
+              if (snapshot.data == null) {
+                return Container(
+                  height: MediaQuery.of(context).size.height / 1.5,
+                  width: MediaQuery.of(context).size.width,
+                  child: Center(
+                      child: CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(appiYellow),
+                  )),
+                );
+              } else {
+                print(snapshot.data);
+                List<Widget> rows = [];
+                data.days.forEach((day) {
+                  List<String> breakfast = [];
+                  List<String> lunch = [];
+                  List<String> dinner = [];
+
+                  day.meals.forEach(
+                    (meal) {
+                      meal.items
+                          .forEach((f) => print("item ${f.name} ${meal.type}"));
+                      switch (meal.type) {
+                        case MealType.B:
+                          meal.items
+                              .forEach((item) => breakfast.add(item.name));
+                          print(breakfast);
+                          break;
+                        case MealType.L:
+                          meal.items.forEach((item) => lunch.add(item.name));
+                          break;
+                        case MealType.S:
+                          break;
+                        case MealType.D:
+                          meal.items.forEach((item) => dinner.add(item.name));
+                          break;
+                      }
+                    },
+                  );
+                  print('B: $breakfast');
+                  print('L: $lunch');
+                  print('D: $dinner');
+                  rows.add(_buildTableRow(weekDayIntToString(day.date.weekday),
+                      day.date.day, breakfast, lunch, dinner, context));
+                });
+
+                return Flexible(
+                  child: ListView(
+                    shrinkWrap: true,
+                    children: rows,
+                  ),
+                );
+              }
+            },
+          )
         ],
       ),
-    );
-
-
-    return Column(
-      children: <Widget>[
-        _headerRow,
-        FutureBuilder(
-          future: menuWeek(token, getWeekNumber(DateTime.now())),
-          builder: (context, snapshot) {
-            Week data = snapshot.data;
-
-            if (snapshot.data == null) {
-              return Container(
-                height: MediaQuery.of(context).size.height / 1.5,
-                width: MediaQuery.of(context).size.width,
-                child: Center(
-                    child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(appiYellow),
-                )),
-              );
-            } else {
-              print(snapshot.data);
-              List<Widget> rows = [];
-              data.days.forEach((day) {
-                List<String> breakfast = [];
-                List<String> lunch = [];
-                List<String> dinner = [];
-
-                day.meals.forEach(
-                  (meal) {
-                    meal.items.forEach((f) => print("item ${f.name} ${meal.type}"));
-                    switch (meal.type) {
-                      case MealType.B:
-                        meal.items.forEach((item) => breakfast.add(item.name));
-                        print(breakfast);
-                        break;
-                      case MealType.L:
-                        meal.items.forEach((item) => lunch.add(item.name));
-                        break;
-                      case MealType.S:
-                        break;
-                      case MealType.D:
-                        meal.items.forEach((item) => dinner.add(item.name));
-                        break;
-                    }
-                  },
-                );
-                print('B: $breakfast');
-                print('L: $lunch');
-                print('D: $dinner');
-                rows.add(_buildTableRow(weekDayIntToString(day.date.weekday), day.date.day, breakfast, lunch, dinner, context));
-              });
-
-              return Flexible(
-                child: ListView(
-                  shrinkWrap: true,
-                  children: rows,
-                ),
-              );
-            }
-          },
-        )
-      ],
     );
   }
 
   _buildTableRow(String day, int date, List<String> breakfast,
       List<String> lunch, List<String> dinner, context) {
-    final height = (MediaQuery.of(context).size.height-AppBar().preferredSize.height*2.5)/7;
+    final height = (MediaQuery.of(context).size.height -
+            AppBar().preferredSize.height * 2.5) /
+        7;
 
     final dateWidget = Container(
         height: height,
