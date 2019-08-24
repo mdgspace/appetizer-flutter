@@ -66,102 +66,104 @@ class _SettingsState extends State<Settings> {
             backgroundColor: const Color.fromRGBO(121, 85, 72, 1),
             elevation: 0.0,
           ),
-          body: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                  height: MediaQuery.of(context).size.height /2.5,
-                  width: MediaQuery.of(context).size.width,
-                  color: const Color.fromRGBO(121, 85, 72, 1)),
-              Expanded(
-                child: ListView(
-                  children: <Widget>[
-                    SettingsPageListItems(Icons.person, "Account"),
-                    SettingsPageListItems(Icons.lock, "Reset Password"),
-                    GestureDetector(
-                      child: SettingsPageListItems(Icons.help, "FAQ"),
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    FaqList(token: prefs.getString("token"))));
-                      },
-                    ),
-                    GestureDetector(
-                      child: SettingsPageListItems(Icons.info, "About"),
-                      onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => Help()));
-                      },
-                    ),
-                    GestureDetector(
-                      child: SettingsPageListItems(
-                          Icons.share, "Share/Tell a friend"),
-                      onTap: () {
-                        final RenderBox box = context.findRenderObject();
-                        Share.share(shareText,
-                            sharePositionOrigin:
-                                box.localToGlobal(Offset.zero) & box.size);
-                      },
-                    ),
-                    GestureDetector(
-                      child:
-                          SettingsPageListItems(Icons.exit_to_app, "Log Out"),
-                      onTap: () async {
-                        //Navigator.pop(context);
-                        showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: new Text(
-                                  "Log Out",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                content: new Text(
-                                    "Are you sure you want to log out?"),
-                                actions: <Widget>[
-                                  new FlatButton(
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                    child: new Text(
-                                      "CANCEL",
-                                      style: TextStyle(color: appiYellow),
+          body: SafeArea(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                    height: MediaQuery.of(context).size.height /2.5,
+                    width: MediaQuery.of(context).size.width,
+                    color: const Color.fromRGBO(121, 85, 72, 1)),
+                Expanded(
+                  child: ListView(
+                    children: <Widget>[
+                      SettingsPageListItems(Icons.person, "Account"),
+                      SettingsPageListItems(Icons.lock, "Reset Password"),
+                      GestureDetector(
+                        child: SettingsPageListItems(Icons.help, "FAQ"),
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      FaqList(token: prefs.getString("token"))));
+                        },
+                      ),
+                      GestureDetector(
+                        child: SettingsPageListItems(Icons.info, "About"),
+                        onTap: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) => Help()));
+                        },
+                      ),
+                      GestureDetector(
+                        child: SettingsPageListItems(
+                            Icons.share, "Share/Tell a friend"),
+                        onTap: () {
+                          final RenderBox box = context.findRenderObject();
+                          Share.share(shareText,
+                              sharePositionOrigin:
+                                  box.localToGlobal(Offset.zero) & box.size);
+                        },
+                      ),
+                      GestureDetector(
+                        child:
+                            SettingsPageListItems(Icons.exit_to_app, "Log Out"),
+                        onTap: () async {
+                          //Navigator.pop(context);
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: new Text(
+                                    "Log Out",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
                                     ),
-                                    highlightColor: Colors.transparent,
-                                    splashColor: Colors.transparent,
                                   ),
-                                  new FlatButton(
-                                    child: new Text(
-                                      "LOG OUT",
-                                      style: TextStyle(color: appiYellow),
+                                  content: new Text(
+                                      "Are you sure you want to log out?"),
+                                  actions: <Widget>[
+                                    new FlatButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: new Text(
+                                        "CANCEL",
+                                        style: TextStyle(color: appiYellow),
+                                      ),
+                                      highlightColor: Colors.transparent,
+                                      splashColor: Colors.transparent,
                                     ),
-                                    onPressed: () async {
-                                      showCustomDialog(
-                                          context, "Logging You Out");
+                                    new FlatButton(
+                                      child: new Text(
+                                        "LOG OUT",
+                                        style: TextStyle(color: appiYellow),
+                                      ),
+                                      onPressed: () async {
+                                        showCustomDialog(
+                                            context, "Logging You Out");
 
-                                      userLogout(prefs.getString("token"));
-                                      Navigator.of(context)
-                                          .pushNamedAndRemoveUntil("/login",
-                                              (Route<dynamic> route) => false);
-                                      prefs.clear();
-                                    },
-                                    highlightColor: Colors.transparent,
-                                    splashColor: Colors.transparent,
-                                  ),
-                                ],
-                              );
-                            });
-                      },
-                    ),
-                  ],
+                                        userLogout(prefs.getString("token"));
+                                        Navigator.of(context)
+                                            .pushNamedAndRemoveUntil("/login",
+                                                (Route<dynamic> route) => false);
+                                        prefs.clear();
+                                      },
+                                      highlightColor: Colors.transparent,
+                                      splashColor: Colors.transparent,
+                                    ),
+                                  ],
+                                );
+                              });
+                        },
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              SettingsPageFooter(),
-            ],
+                SettingsPageFooter(),
+              ],
+            ),
           ),
         ),
         Positioned(

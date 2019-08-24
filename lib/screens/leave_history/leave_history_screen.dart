@@ -26,53 +26,55 @@ class MyLeavesHistory extends StatelessWidget {
           ),
           backgroundColor: const Color.fromRGBO(121, 85, 72, 1),
         ),
-        body: Container(
-          child: Stack(
-            children: <Widget>[
-              Container(),
-              Positioned(
-                top: 0.0,
-                bottom: 0.0,
-                left: 0.0,
-                child: Container(
-                  height: MediaQuery.of(context).size.height,
-                  width: MediaQuery.of(context).size.width,
-                  color: const Color.fromRGBO(241, 241, 241, 1),
-                ),
-              ),
-              Positioned(
-                top: 0.0,
-                bottom: 0.0,
-                left: 79,
-                child: Container(
-                  height: MediaQuery.of(context).size.height,
-                  width: 1.0,
-                  color: const Color.fromRGBO(0, 0, 0, 0.20),
-                ),
-              ),
-              Positioned(
-                top: 0.0,
-                left: 0.0,
-                child: LeaveDropdownFilter(),
-              ),
-              Positioned(
-                top: 147.0,
-                left: 0.0,
-                child: Container(
-                  height: MediaQuery.of(context).size.height,
-                  width: MediaQuery.of(context).size.width,
-                  child: SingleChildScrollView(
-                    child: ConstrainedBox(
-                        constraints: BoxConstraints(
-                          maxHeight: 594.0,
-                        ),
-                        child: LeaveTimeline(
-                          token: token,
-                        )),
+        body: SafeArea(
+          child: Container(
+            child: Stack(
+              children: <Widget>[
+                Container(),
+                Positioned(
+                  top: 0.0,
+                  bottom: 0.0,
+                  left: 0.0,
+                  child: Container(
+                    height: MediaQuery.of(context).size.height,
+                    width: MediaQuery.of(context).size.width,
+                    color: const Color.fromRGBO(241, 241, 241, 1),
                   ),
                 ),
-              ),
-            ],
+                Positioned(
+                  top: 0.0,
+                  bottom: 0.0,
+                  left: 79,
+                  child: Container(
+                    height: MediaQuery.of(context).size.height,
+                    width: 1.0,
+                    color: const Color.fromRGBO(0, 0, 0, 0.20),
+                  ),
+                ),
+                Positioned(
+                  top: 0.0,
+                  left: 0.0,
+                  child: LeaveDropdownFilter(),
+                ),
+                Positioned(
+                  top: 147.0,
+                  left: 0.0,
+                  child: Container(
+                    height: MediaQuery.of(context).size.height,
+                    width: MediaQuery.of(context).size.width,
+                    child: SingleChildScrollView(
+                      child: ConstrainedBox(
+                          constraints: BoxConstraints(
+                            maxHeight: 594.0,
+                          ),
+                          child: LeaveTimeline(
+                            token: token,
+                          )),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

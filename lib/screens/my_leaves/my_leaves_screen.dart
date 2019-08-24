@@ -35,47 +35,49 @@ class _MyLeavesState extends State<MyLeaves> {
         ),
         backgroundColor: const Color.fromRGBO(121, 85, 72, 1),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Container(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                getRemainingLeaves(),
-                ManageLeaveBanner(),
-              ],
-            ),
-          ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ListView(
-                physics: ClampingScrollPhysics(),
+      body: SafeArea(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Container(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  MealLeft('Dinner', 'July 16 2019'),
-                  MealLeft('Dinner', 'July 16 2019'),
-                  MealLeft('Dinner', 'July 16 2019'),
+                  getRemainingLeaves(),
+                  ManageLeaveBanner(),
                 ],
               ),
             ),
-          ),
-          SafeArea(
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: Container(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ListView(
+                  physics: ClampingScrollPhysics(),
                   children: <Widget>[
-                    SeeLeavesHistory(
-                      token: widget.token,
-                    ),
+                    MealLeft('Dinner', 'July 16 2019'),
+                    MealLeft('Dinner', 'July 16 2019'),
+                    MealLeft('Dinner', 'July 16 2019'),
                   ],
                 ),
               ),
             ),
-          )
-        ],
+            SafeArea(
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      SeeLeavesHistory(
+                        token: widget.token,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

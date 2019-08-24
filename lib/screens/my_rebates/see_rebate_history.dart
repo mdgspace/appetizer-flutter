@@ -18,33 +18,40 @@ class SeeRebateHistory extends StatelessWidget {
                 color: const Color.fromRGBO(00, 00, 00, 0.15),
               ))),
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(2.0),
         child: GestureDetector(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.fromLTRB(6.0, 0.0, 0.0, 0.0),
-                child: Text(
-                  'See Rebate History',
-                  style: TextStyle(
-                    fontSize: 20.0,
+          child: GestureDetector(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => RebateHistoryScreen(token: token)));
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(6.0, 0.0, 0.0, 0.0),
+                  child: Text(
+                    'See Rebate History',
+                    style: TextStyle(
+                      fontSize: 18.0,
+                    ),
                   ),
                 ),
-              ),
-              IconButton(
-                icon: Icon(Icons.keyboard_arrow_right),
-                iconSize: 40.0,
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              RebateHistoryScreen(token: token)));
-                },
-              ),
-            ],
+                IconButton(
+                  icon: Icon(Icons.keyboard_arrow_right),
+                  iconSize: 40.0,
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                RebateHistoryScreen(token: token)));
+                  },
+                ),
+              ],
+            ),
           ),
           onTap: () {
             Navigator.push(

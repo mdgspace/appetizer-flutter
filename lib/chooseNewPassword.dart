@@ -58,30 +58,32 @@ class _ChooseNewPassState extends State<ChooseNewPass> {
         ),
         elevation: 0.0,
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.only(left: 40, right: 40),
-          child: Form(
-            key: formKey,
-            child: new Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                //new Expanded(child: new Container()),
-                _choosePassword(),
-                //new Expanded(child: new Container()),
-                _subTitle(),
-                //new Expanded(child: new Container()),
-                _showNewPasswordInput(),
-                //new Expanded(child: new Container()),
-                _showConfirmPasswordInput(),
-                //new Expanded(child: new Container()),
-                _showEmailInput(),
-                //new Expanded(child: new Container()),
-                _showContactNoInput(),
-                //new Expanded(child: new Container()),
-                _showConfirmButton(),
-                //new Expanded(child: new Container()),
-              ],
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.only(left: 40, right: 40),
+            child: Form(
+              key: formKey,
+              child: new Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  //new Expanded(child: new Container()),
+                  _choosePassword(),
+                  //new Expanded(child: new Container()),
+                  _subTitle(),
+                  //new Expanded(child: new Container()),
+                  _showNewPasswordInput(),
+                  //new Expanded(child: new Container()),
+                  _showConfirmPasswordInput(),
+                  //new Expanded(child: new Container()),
+                  _showEmailInput(),
+                  //new Expanded(child: new Container()),
+                  _showContactNoInput(),
+                  //new Expanded(child: new Container()),
+                  _showConfirmButton(),
+                  //new Expanded(child: new Container()),
+                ],
+              ),
             ),
           ),
         ),

@@ -72,19 +72,21 @@ class _HomeState extends State<Home> {
           backgroundColor: appiBrown,
           iconTheme: new IconThemeData(color: appiYellow),
         ),
-        body: Stack(
-          children: <Widget>[
-            Column(
-              children: <Widget>[
-                HorizontalDatePicker(),
-                Flexible(
-                  child: SingleChildScrollView(
-                    child: Menu(token: widget.token),
+        body: SafeArea(
+          child: Stack(
+            children: <Widget>[
+              Column(
+                children: <Widget>[
+                  HorizontalDatePicker(),
+                  Flexible(
+                    child: SingleChildScrollView(
+                      child: Menu(token: widget.token),
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
         drawer: Drawer(
           child: Column(

@@ -26,9 +26,11 @@ class MyRebates extends StatelessWidget {
         ),
         backgroundColor: const Color.fromRGBO(121, 85, 72, 1),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[getMonthRebate(), SeeRebateHistory(token: token)],
+      body: SafeArea(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[getMonthRebate(), SeeRebateHistory(token: token)],
+        ),
       ),
     );
   }
