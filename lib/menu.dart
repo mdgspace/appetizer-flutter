@@ -26,36 +26,11 @@ class _MenuState extends State<Menu> {
     final selectedDateTime = Provider.of<CurrentDateModel>(context);
 
     Widget getWeekMenu(String token, DateTime dateTime) {
-      int breakfastId;
-      int lunchId;
-      int snacksId;
-      int dinnerId;
-
-      String breakfastDailyItems = "";
-      String lunchDailyItems = "";
-      String snacksDailyItems = "";
-      String dinnerDailyItems = "";
-
-      List<CircleAvatar> breakfastLeadingImageList = [];
-      List<CircleAvatar> lunchLeadingImageList = [];
-      List<CircleAvatar> snacksLeadingImageList = [];
-      List<CircleAvatar> dinnerLeadingImageList = [];
-
-      List<String> breakfastMealList = [];
-      List<String> lunchMealList = [];
-      List<String> snacksMealList = [];
-      List<String> dinnerMealList = [];
-
-      Map<CircleAvatar, String> breakfastMealMap = {};
-      Map<CircleAvatar, String> lunchMealMap = {};
-      Map<CircleAvatar, String> snacksMealMap = {};
-      Map<CircleAvatar, String> dinnerMealMap = {};
-
       return FutureBuilder(
           future: menuWeek(token, getWeekNumber(dateTime)),
           builder: (context, snapshot) {
             var data = snapshot.data;
-            if (data == null) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
               return Container(
                 height: MediaQuery.of(context).size.height / 1.5,
                 width: MediaQuery.of(context).size.width,
@@ -65,6 +40,31 @@ class _MenuState extends State<Menu> {
                 )),
               );
             } else {
+              int breakfastId;
+              int lunchId;
+              int snacksId;
+              int dinnerId;
+
+              String breakfastDailyItems = "";
+              String lunchDailyItems = "";
+              String snacksDailyItems = "";
+              String dinnerDailyItems = "";
+
+              List<CircleAvatar> breakfastLeadingImageList = [];
+              List<CircleAvatar> lunchLeadingImageList = [];
+              List<CircleAvatar> snacksLeadingImageList = [];
+              List<CircleAvatar> dinnerLeadingImageList = [];
+
+              List<String> breakfastMealList = [];
+              List<String> lunchMealList = [];
+              List<String> snacksMealList = [];
+              List<String> dinnerMealList = [];
+
+              Map<CircleAvatar, String> breakfastMealMap = {};
+              Map<CircleAvatar, String> lunchMealMap = {};
+              Map<CircleAvatar, String> snacksMealMap = {};
+              Map<CircleAvatar, String> dinnerMealMap = {};
+
               //Daily Items fetch
               List<String> breakfastDailyItemsList = [];
               for (var i = 0; i < data.dailyItems.breakfast.length; i++) {
@@ -200,7 +200,25 @@ class _MenuState extends State<Menu> {
           });
     }
 
-    return getWeekMenu(widget.token, selectedDateTime.dateTime);
+    return Stack(
+      children: <Widget>[
+        getWeekMenu(widget.token, selectedDateTime.dateTime),
+        Visibility(
+          visible: false,
+          child: Center(
+            child: Container(
+              height: MediaQuery.of(context).size.height / 1.5,
+              width: MediaQuery.of(context).size.width,
+              child: Center(
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(appiYellow),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
   }
 }
 
