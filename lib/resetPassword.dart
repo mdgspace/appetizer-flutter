@@ -15,15 +15,22 @@ class ResetPassword extends StatefulWidget {
 class _ResetPasswordState extends State<ResetPassword> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
 
-  bool _obscureText = true;
+  bool _obscureText1 = true;
+  bool _obscureText2 = true;
   String oldPassword = "";
   String newPassword = "";
 
   final _formKey = new GlobalKey<FormState>();
 
-  void _toggle() {
+  void _toggle1() {
     setState(() {
-      _obscureText = !_obscureText;
+      _obscureText1 = !_obscureText1;
+    });
+  }
+
+  void _toggle2() {
+    setState(() {
+      _obscureText2 = !_obscureText2;
     });
   }
 
@@ -108,17 +115,17 @@ class _ResetPasswordState extends State<ResetPassword> {
                                 const EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 0.0),
                             child: new TextFormField(
                               maxLines: 1,
-                              obscureText: _obscureText,
+                              obscureText: _obscureText1,
                               autofocus: false,
                               decoration: new InputDecoration(
                                 suffixIcon: GestureDetector(
                                   child: new Icon(
-                                    _obscureText
+                                    _obscureText1
                                         ? Icons.visibility_off
                                         : Icons.visibility,
                                     color: appiGreyIcon,
                                   ),
-                                  onTap: _toggle,
+                                  onTap: _toggle1,
                                 ),
                                 labelText: "Old Password",
                                 labelStyle:
@@ -140,17 +147,17 @@ class _ResetPasswordState extends State<ResetPassword> {
                                 const EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 0.0),
                             child: new TextFormField(
                               maxLines: 1,
-                              obscureText: _obscureText,
+                              obscureText: _obscureText2,
                               autofocus: false,
                               decoration: new InputDecoration(
                                 suffixIcon: GestureDetector(
                                   child: new Icon(
-                                    _obscureText
+                                    _obscureText2
                                         ? Icons.visibility_off
                                         : Icons.visibility,
                                     color: appiGreyIcon,
                                   ),
-                                  onTap: _toggle,
+                                  onTap: _toggle2,
                                 ),
                                 labelText: "New Password",
                                 labelStyle:
@@ -187,7 +194,8 @@ class _ResetPasswordState extends State<ResetPassword> {
                               ),
                               onPressed: () async {
                                 if (_validateAndSave()) {
-                                  showCustomDialog(context, "Updating Password");
+                                  showCustomDialog(
+                                      context, "Updating Password");
                                   await userPasswordReset(widget.token,
                                           oldPassword, newPassword)
                                       .then((detail) {

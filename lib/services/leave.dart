@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:appetizer/models/leaves/cancelLeave.dart';
 import 'package:appetizer/models/leaves/check.dart';
 import 'package:appetizer/models/leaves/leave.dart';
 import 'package:appetizer/models/leaves/leaveList.dart';
@@ -65,7 +66,7 @@ Future<Check> check(String token) async {
   }
 }
 
-Future<Leave> leave(int id, String token) async {
+Future<CancelLeave> leave(String id, String token) async {
   String endPoint = "/api/leave/";
   String uri = url + endPoint;
   var json = {
@@ -76,7 +77,7 @@ Future<Leave> leave(int id, String token) async {
   try {
     var response = await client.post(uri, headers: tokenAuth, body: json);
     final jsonResponse = jsonDecode(response.body);
-    Leave leave = new Leave.fromJson(jsonResponse);
+    CancelLeave leave = new CancelLeave.fromJson(jsonResponse);
     print(response.body);
     return leave;
   } on Exception catch (e) {

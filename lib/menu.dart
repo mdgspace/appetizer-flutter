@@ -68,6 +68,11 @@ class _MenuState extends State<Menu> {
               Map<CircleAvatar, String> snacksMealMap = {};
               Map<CircleAvatar, String> dinnerMealMap = {};
 
+              bool breakfastIsSwitched;
+              bool lunchIsSwitched;
+              bool snacksIsSwitched;
+              bool dinnerIsSwitched;
+
               //Daily Items fetch
               List<String> breakfastDailyItemsList = [];
               for (var i = 0; i < data.dailyItems.breakfast.length; i++) {
@@ -104,6 +109,10 @@ class _MenuState extends State<Menu> {
               for (var i = 0; i < numberOfMeals; i++) {
                 if (currentDayMeal.meals[i].type == MealType.B) {
                   breakfastId = currentDayMeal.meals[i].id;
+                  breakfastIsSwitched =
+                      currentDayMeal.meals[i].leaveStatus == LeaveStatus.N
+                          ? true
+                          : false;
                   for (var j = 0;
                       j < currentDayMeal.meals[i].items.length;
                       j++) {
@@ -121,6 +130,10 @@ class _MenuState extends State<Menu> {
                   }
                 } else if (currentDayMeal.meals[i].type == MealType.L) {
                   lunchId = currentDayMeal.meals[i].id;
+                  lunchIsSwitched =
+                      currentDayMeal.meals[i].leaveStatus == LeaveStatus.N
+                          ? true
+                          : false;
                   for (var j = 0;
                       j < currentDayMeal.meals[i].items.length;
                       j++) {
@@ -137,6 +150,10 @@ class _MenuState extends State<Menu> {
                   }
                 } else if (currentDayMeal.meals[i].type == MealType.S) {
                   snacksId = currentDayMeal.meals[i].id;
+                  snacksIsSwitched =
+                      currentDayMeal.meals[i].leaveStatus == LeaveStatus.N
+                          ? true
+                          : false;
                   for (var j = 0;
                       j < currentDayMeal.meals[i].items.length;
                       j++) {
@@ -153,6 +170,10 @@ class _MenuState extends State<Menu> {
                   }
                 } else if (currentDayMeal.meals[i].type == MealType.D) {
                   dinnerId = currentDayMeal.meals[i].id;
+                  dinnerIsSwitched =
+                      currentDayMeal.meals[i].leaveStatus == LeaveStatus.N
+                          ? true
+                          : false;
                   for (var j = 0;
                       j < currentDayMeal.meals[i].items.length;
                       j++) {
@@ -182,20 +203,25 @@ class _MenuState extends State<Menu> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   (breakfastMealMap.isNotEmpty)
-                      ? MenuCard('Breakfast', breakfastMealMap,
-                          breakfastDailyItems, breakfastId, widget.token)
+                      ? MenuCard(
+                          'Breakfast',
+                          breakfastMealMap,
+                          breakfastDailyItems,
+                          breakfastId,
+                          widget.token,
+                          breakfastIsSwitched)
                       : Container(),
                   (lunchMealMap.isNotEmpty)
                       ? MenuCard('Lunch', lunchMealMap, lunchDailyItems,
-                          lunchId, widget.token)
+                          lunchId, widget.token, lunchIsSwitched)
                       : Container(),
                   (snacksMealMap.isNotEmpty)
                       ? MenuCard('Snacks', snacksMealMap, snacksDailyItems,
-                          snacksId, widget.token)
+                          snacksId, widget.token, snacksIsSwitched)
                       : Container(),
                   (dinnerMealMap.isNotEmpty)
                       ? MenuCard('Dinner', dinnerMealMap, dinnerDailyItems,
-                          dinnerId, widget.token)
+                          dinnerId, widget.token, dinnerIsSwitched)
                       : Container(),
                 ],
               );
@@ -213,15 +239,17 @@ class MenuCard extends StatefulWidget {
   final String title;
   final Map<CircleAvatar, String> menuItems;
   final String dailyItems;
+  final bool isSwitched;
 
-  MenuCard(this.title, this.menuItems, this.dailyItems, this.id, this.token);
+  MenuCard(this.title, this.menuItems, this.dailyItems, this.id, this.token,
+      this.isSwitched);
 
   @override
   _MenuCardState createState() => _MenuCardState();
 }
 
 class _MenuCardState extends State<MenuCard> {
-  bool isSwitched = true;
+  bool isSwitched;
   bool outdated = false;
 
   List<Widget> _itemWidgetList() {
@@ -234,6 +262,8 @@ class _MenuCardState extends State<MenuCard> {
 
   @override
   Widget build(BuildContext context) {
+    isSwitched = widget.isSwitched;
+
     return Padding(
       padding: const EdgeInsets.fromLTRB(0.0, 4.0, 0.0, 4.0),
       child: Card(
@@ -269,19 +299,23 @@ class _MenuCardState extends State<MenuCard> {
                                     cancelLeave(widget.id, widget.token)
                                         .then((leave) {
                                       setState(() {
-                                        isSwitched = value;
+                                        isSwitched = true;
+                                        menuScaffoldKey.currentState
+                                            .showSnackBar(SnackBar(
+                                                content:
+                                                    Text("Leave cancelled")));
                                       });
                                     });
                                   } else {
-                                    leave(widget.id, widget.token)
+                                    leave(widget.id.toString(), widget.token)
                                         .then((leaveResult) {
-                                      if (leaveResult.status == "P") {
+                                      if (leaveResult.meal == widget.id) {
                                         menuScaffoldKey.currentState
                                             .showSnackBar(SnackBar(
                                                 content: Text(
                                                     "Your leave has been created!!")));
                                         setState(() {
-                                          isSwitched = value;
+                                          isSwitched = false;
                                         });
                                       } else {
                                         menuScaffoldKey.currentState
