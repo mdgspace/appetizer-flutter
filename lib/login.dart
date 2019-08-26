@@ -306,6 +306,7 @@ class _LoginState extends State<Login> {
             loginCredentials.hostelName,
             loginCredentials.roomNo,
             loginCredentials.email,
+            loginCredentials.contactNo,
           );
           _showSnackBar(context, "Login Successful");
           setState(() {
@@ -348,7 +349,7 @@ class _LoginState extends State<Login> {
   }
 
   Future<void> saveUserDetails(String enrNo, String username, String token,
-      String branch, String hostelName, String roomNo, String email) async {
+      String branch, String hostelName, String roomNo, String email, String contactNo) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString("token", token);
     prefs.setString("enrNo", enrNo);
@@ -357,6 +358,7 @@ class _LoginState extends State<Login> {
     prefs.setString("hostelName", hostelName);
     prefs.setString("roomNo", roomNo);
     prefs.setString("email", email);
+    prefs.setString("contactNo", contactNo);
   }
 
   void _channelILogin() {
@@ -397,6 +399,7 @@ class _LoginState extends State<Login> {
           oauthResponse.studentData.hostelName,
           oauthResponse.studentData.roomNo,
           oauthResponse.studentData.email,
+          oauthResponse.studentData.contactNo,
         );
         setState(() {
           _isLoginSuccessful = true;
