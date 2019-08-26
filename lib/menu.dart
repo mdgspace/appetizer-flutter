@@ -1,4 +1,5 @@
 import 'package:appetizer/currentDateModel.dart';
+import 'package:appetizer/noMeals.dart';
 import 'package:appetizer/services/leave.dart';
 import 'package:flutter/material.dart';
 import 'package:appetizer/services/menu.dart';
@@ -39,6 +40,8 @@ class _MenuState extends State<Menu> {
                   valueColor: AlwaysStoppedAnimation<Color>(appiYellow),
                 )),
               );
+            } else if (data == null) {
+              return NoMealsScreen();
             } else {
               int breakfastId;
               int lunchId;
@@ -200,25 +203,7 @@ class _MenuState extends State<Menu> {
           });
     }
 
-    return Stack(
-      children: <Widget>[
-        getWeekMenu(widget.token, selectedDateTime.dateTime),
-        Visibility(
-          visible: false,
-          child: Center(
-            child: Container(
-              height: MediaQuery.of(context).size.height / 1.5,
-              width: MediaQuery.of(context).size.width,
-              child: Center(
-                child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(appiYellow),
-                ),
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
+    return getWeekMenu(widget.token, selectedDateTime.dateTime);
   }
 }
 
