@@ -243,25 +243,22 @@ class _ChooseNewPassState extends State<ChooseNewPass> {
   }
 
   Widget _showConfirmButton() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 48,bottom: 48),
-      child: new RaisedButton(
-        elevation: 5.0,
-        color: Colors.white,
-        shape: new RoundedRectangleBorder(
-            side: BorderSide(
-              color: appiYellow,
-              style: BorderStyle.solid,
-              width: 2,
-            ),
-            borderRadius: new BorderRadius.circular(40.0)),
-        child: Padding(
-          padding: const EdgeInsets.all(15.0),
-          child: new Text('CONFIRM',
-              style: new TextStyle(fontSize: 15.0, color: appiYellow)),
-        ),
-        onPressed: _validateAndSave,
+    return new RaisedButton(
+      elevation: 5.0,
+      color: Colors.white,
+      shape: new RoundedRectangleBorder(
+          side: BorderSide(
+            color: appiYellow,
+            style: BorderStyle.solid,
+            width: 2,
+          ),
+          borderRadius: new BorderRadius.circular(40.0)),
+      child: Padding(
+        padding: const EdgeInsets.all(15.0),
+        child: new Text('CONFIRM',
+            style: new TextStyle(fontSize: 15.0, color: appiYellow)),
       ),
+      onPressed: _validateAndSave,
     );
   }
 

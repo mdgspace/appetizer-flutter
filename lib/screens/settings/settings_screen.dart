@@ -12,6 +12,8 @@ import 'package:appetizer/alertDialog.dart';
 import 'package:appetizer/colors.dart';
 import 'package:appetizer/help.dart';
 
+import 'edit_profile.dart';
+
 class Settings extends StatefulWidget {
   @override
   _SettingsState createState() => _SettingsState();
@@ -77,7 +79,15 @@ class _SettingsState extends State<Settings> {
                 Expanded(
                   child: ListView(
                     children: <Widget>[
-                      SettingsPageListItems(Icons.person, "Account"),
+                      GestureDetector(
+                        child: SettingsPageListItems(Icons.person, "Edit Profile"),
+                        onTap: (){
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => EditProfile()));
+                        },
+                      ),
                       GestureDetector(
                         child:
                             SettingsPageListItems(Icons.lock, "Reset Password"),
@@ -86,8 +96,7 @@ class _SettingsState extends State<Settings> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) => ResetPassword(
-                                    token: prefs.getString("token")
-                                  )));
+                                      token: prefs.getString("token"))));
                         },
                       ),
                       GestureDetector(
