@@ -4,7 +4,10 @@ import 'package:flutter/services.dart';
 import 'colors.dart';
 import 'login.dart';
 
-void main() => runApp(MaterialApp(
+Future main() async {
+
+    await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+    runApp(MaterialApp(
       routes: {
         "/home": (context) => Home(),
         "/login": (context) => Login(),
@@ -97,6 +100,7 @@ void main() => runApp(MaterialApp(
       ),
       home: Appetizer(),
     ));
+}
 
 class Appetizer extends StatefulWidget {
   @override
@@ -106,6 +110,7 @@ class Appetizer extends StatefulWidget {
 class _AppetizerState extends State<Appetizer> {
   static const platform = const MethodChannel('app.channel.shared.data');
   String code;
+  var sharedData;
 
   void initState() {
     getIntent();
@@ -129,7 +134,11 @@ class _AppetizerState extends State<Appetizer> {
   }
 
   getIntent() async {
-    var sharedData = await platform.invokeMethod("getCode");
+    try{
+      sharedData = await platform.invokeMethod("getCode");
+    } on Exception catch (e) {
+    print(e);
+    }
     if (sharedData != null) {
       code = sharedData;
     }
