@@ -3,12 +3,12 @@ import 'package:appetizer/noMeals.dart';
 import 'package:appetizer/services/leave.dart';
 import 'package:flutter/material.dart';
 import 'package:appetizer/services/menu.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'colors.dart';
 import 'utils/get_week_id.dart';
 import 'models/menu/week.dart';
 import 'dart:math' as math;
-import 'package:appetizer/globals.dart';
 
 class Menu extends StatefulWidget {
   final String token;
@@ -301,34 +301,45 @@ class _MenuCardState extends State<MenuCard> {
                                       if (leaveBool) {
                                         setState(() {
                                           isSwitched = true;
-                                          menuScaffoldKey.currentState
-                                              .showSnackBar(SnackBar(
-                                                  content:
-                                                      Text("Leave cancelled")));
+                                          Fluttertoast.showToast(
+                                              msg: "Leave Cancelled",
+                                              toastLength: Toast.LENGTH_SHORT,
+                                              gravity: ToastGravity.BOTTOM,
+                                              timeInSecForIos: 1,
+                                              backgroundColor:
+                                                  Color.fromRGBO(0, 0, 0, 0.7),
+                                              textColor: Colors.white,
+                                              fontSize: 14.0);
                                         });
-                                      } else {
-                                        menuScaffoldKey.currentState
-                                            .showSnackBar(SnackBar(
-                                                content: Text(
-                                                    "The time for leave cancellation has passed")));
                                       }
                                     });
                                   } else {
                                     leave(widget.id.toString(), widget.token)
                                         .then((leaveResult) {
                                       if (leaveResult.meal == widget.id) {
-                                        menuScaffoldKey.currentState
-                                            .showSnackBar(SnackBar(
-                                                content: Text(
-                                                    "Your leave has been created!!")));
+                                        Fluttertoast.showToast(
+                                            msg: "Meal Skipped",
+                                            toastLength: Toast.LENGTH_SHORT,
+                                            gravity: ToastGravity.BOTTOM,
+                                            timeInSecForIos: 1,
+                                            backgroundColor:
+                                                Color.fromRGBO(0, 0, 0, 0.7),
+                                            textColor: Colors.white,
+                                            fontSize: 14.0);
                                         setState(() {
                                           isSwitched = false;
                                         });
                                       } else {
-                                        menuScaffoldKey.currentState
-                                            .showSnackBar(SnackBar(
-                                                content: Text(
-                                                    "Time for creating leave has passed")));
+                                        Fluttertoast.showToast(
+                                            msg:
+                                                "Leave status cannot be changed less than 12 hours before the meal time",
+                                            toastLength: Toast.LENGTH_SHORT,
+                                            gravity: ToastGravity.BOTTOM,
+                                            timeInSecForIos: 1,
+                                            backgroundColor:
+                                                Color.fromRGBO(0, 0, 0, 0.7),
+                                            textColor: Colors.white,
+                                            fontSize: 14.0);
                                       }
                                     });
                                   }
