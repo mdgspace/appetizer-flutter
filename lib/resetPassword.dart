@@ -185,7 +185,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                               splashColor: Colors.transparent,
                               child: ListTile(
                                 title: Text(
-                                  "RESET PASSWORD",
+                                  "Reset Password",
                                   textAlign: TextAlign.center,
                                   style: Theme.of(context)
                                       .primaryTextTheme

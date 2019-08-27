@@ -297,14 +297,21 @@ class _MenuCardState extends State<MenuCard> {
                                 onChanged: (value) async {
                                   if (value) {
                                     cancelLeave(widget.id, widget.token)
-                                        .then((leave) {
-                                      setState(() {
-                                        isSwitched = true;
+                                        .then((leaveBool) {
+                                      if (leaveBool) {
+                                        setState(() {
+                                          isSwitched = true;
+                                          menuScaffoldKey.currentState
+                                              .showSnackBar(SnackBar(
+                                                  content:
+                                                      Text("Leave cancelled")));
+                                        });
+                                      } else {
                                         menuScaffoldKey.currentState
                                             .showSnackBar(SnackBar(
-                                                content:
-                                                    Text("Leave cancelled")));
-                                      });
+                                                content: Text(
+                                                    "The time for leave cancellation has passed")));
+                                      }
                                     });
                                   } else {
                                     leave(widget.id.toString(), widget.token)

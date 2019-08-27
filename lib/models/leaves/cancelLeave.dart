@@ -9,17 +9,17 @@ CancelLeave cancelLeaveFromJson(String str) => CancelLeave.fromJson(json.decode(
 String cancelLeaveToJson(CancelLeave data) => json.encode(data.toJson());
 
 class CancelLeave {
-  int meal;
+  String detail;
 
   CancelLeave({
-    this.meal,
+    this.detail,
   });
 
   factory CancelLeave.fromJson(Map<String, dynamic> json) => new CancelLeave(
-    meal: json["meal"],
+    detail: json["detail"],
   );
 
   Map<String, dynamic> toJson() => {
-    "meal": meal,
+    "detail": detail,
   };
 }

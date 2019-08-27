@@ -1,7 +1,6 @@
 import 'dart:convert';
-import 'package:appetizer/models/leaves/cancelLeave.dart';
+import 'package:appetizer/models/leaves/createLeave.dart';
 import 'package:appetizer/models/leaves/check.dart';
-import 'package:appetizer/models/leaves/leave.dart';
 import 'package:appetizer/models/leaves/leaveList.dart';
 import 'package:appetizer/models/leaves/remainingLeaveCount.dart';
 import 'package:http/http.dart' as http;
@@ -66,7 +65,7 @@ Future<Check> check(String token) async {
   }
 }
 
-Future<CancelLeave> leave(String id, String token) async {
+Future<CreateLeave> leave(String id, String token) async {
   String endPoint = "/api/leave/";
   String uri = url + endPoint;
   var json = {
@@ -77,7 +76,7 @@ Future<CancelLeave> leave(String id, String token) async {
   try {
     var response = await client.post(uri, headers: tokenAuth, body: json);
     final jsonResponse = jsonDecode(response.body);
-    CancelLeave leave = new CancelLeave.fromJson(jsonResponse);
+    CreateLeave leave = new CreateLeave.fromJson(jsonResponse);
     print(response.body);
     return leave;
   } on Exception catch (e) {
@@ -86,12 +85,16 @@ Future<CancelLeave> leave(String id, String token) async {
   }
 }
 
-Future<void> cancelLeave(int id, String token) async {
+Future<bool> cancelLeave(int id, String token) async {
   String endPoint = "/api/leave/meal/$id";
   String uri = url + endPoint;
   var tokenAuth = {"Authorization": "Token " + token};
   try {
-    client.delete(uri, headers: tokenAuth);
+    final response = await client.delete(uri, headers: tokenAuth);
+    if (response.statusCode >= 200 && response.statusCode < 210) {
+      return true;
+    }
+    return false;
   } on Exception catch (e) {
     print(e);
     return null;
