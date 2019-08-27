@@ -33,7 +33,7 @@ void main() => runApp(MaterialApp(
             color: appiYellow,
             fontSize: 15,
           ),
-          title:  TextStyle(
+          title: TextStyle(
             fontWeight: FontWeight.bold,
             color: appiLightGreyText,
             fontSize: 16,
