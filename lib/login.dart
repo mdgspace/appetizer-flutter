@@ -13,6 +13,7 @@ import 'help.dart';
 import 'package:appetizer/services/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_web_browser/flutter_web_browser.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class Login extends StatefulWidget {
   final String code;
@@ -53,6 +54,25 @@ class _LoginState extends State<Login> {
     if (widget.code != null) {
       SchedulerBinding.instance
           .addPostFrameCallback((_) => verifyUser(context));
+    }
+    showConnectivityStatus();
+  }
+
+  Future showConnectivityStatus() async {
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        print('connected');
+      }
+    } on SocketException catch (_) {
+      print('not connected');
+      Fluttertoast.showToast(
+        msg: "Please check your connection!",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIos: 7,
+        fontSize: 12.0,
+      );
     }
   }
 
@@ -175,6 +195,8 @@ class _LoginState extends State<Login> {
   }
 
   Widget _showLoginButton() {
+    showConnectivityStatus();
+
     return (isLoginButtonTapped)
         ? new FlatButton(
             padding: EdgeInsets.all(8),
@@ -348,8 +370,15 @@ class _LoginState extends State<Login> {
     return false;
   }
 
-  Future<void> saveUserDetails(String enrNo, String username, String token,
-      String branch, String hostelName, String roomNo, String email, String contactNo) async {
+  Future<void> saveUserDetails(
+      String enrNo,
+      String username,
+      String token,
+      String branch,
+      String hostelName,
+      String roomNo,
+      String email,
+      String contactNo) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString("token", token);
     prefs.setString("enrNo", enrNo);
@@ -369,7 +398,7 @@ class _LoginState extends State<Login> {
   Future verifyUser(BuildContext context) async {
     showCustomDialog(context, "Fetching Details");
     var oauthResponse = await oAuthRedirect(widget.code);
-    print("Code "+widget.code);
+    print("Code " + widget.code);
     if (oauthResponse != null) {
       if (oauthResponse.isNew) {
         Navigator.pop(context);

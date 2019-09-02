@@ -43,6 +43,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.14.11"
+  connectivity:
+    dependency: transitive
+    description:
+      name: connectivity
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.4.4"
   convert:
     dependency: transitive
     description:
@@ -90,6 +97,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.7.2+1"
+  flutter_offline:
+    dependency: "direct main"
+    description:
+      name: flutter_offline
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.4+1"
   flutter_svg:
     dependency: "direct main"
     description:
@@ -115,7 +129,7 @@ packages:
       name: fluttertoast
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.1.0"
+    version: "3.1.2"
   http:
     dependency: "direct main"
     description:
