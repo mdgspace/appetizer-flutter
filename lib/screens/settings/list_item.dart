@@ -28,7 +28,7 @@ class SettingsPageListItems extends StatelessWidget{
               "$_title",
               style: TextStyle(
                 color: const Color.fromRGBO(94, 94, 94, 1),
-                fontSize: 19.0,
+                fontSize: 16.0,
               ),
             ),
           )
