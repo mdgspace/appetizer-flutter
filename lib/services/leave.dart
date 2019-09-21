@@ -5,7 +5,7 @@ import 'package:appetizer/models/leaves/leaveList.dart';
 import 'package:appetizer/models/leaves/remainingLeaveCount.dart';
 import 'package:http/http.dart' as http;
 
-String url = "http://appetizer-mdg.herokuapp.com";
+String url = "https://mess.iitr.ac.in";
 var header = {"Content-Type": "application/json"};
 http.Client client = new http.Client();
 
