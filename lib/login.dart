@@ -13,7 +13,7 @@ import 'colors.dart';
 import 'help.dart';
 import 'package:appetizer/services/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter_web_browser/flutter_web_browser.dart';
+//import 'package:flutter_web_browser/flutter_web_browser.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class Login extends StatefulWidget {
@@ -53,7 +53,7 @@ class _LoginState extends State<Login> {
   void initState() {
     super.initState();
     print(widget.code);
-    if (widget.code != null) {
+    if (widget.code != null && widget.code != "") {
       SchedulerBinding.instance
           .addPostFrameCallback((_) => verifyUser(context));
     }
@@ -153,8 +153,7 @@ class _LoginState extends State<Login> {
       keyboardType: TextInputType.number,
       autofocus: false,
       decoration: new InputDecoration(
-        //labelText: "Enrollment No.",
-        labelText: widget.code,
+        labelText: "Enrollment No.",
         labelStyle: Theme.of(context).primaryTextTheme.subhead,
         icon: new Icon(
           Icons.person,
