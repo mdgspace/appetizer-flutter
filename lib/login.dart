@@ -7,6 +7,7 @@ import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'home.dart';
 import 'colors.dart';
 import 'help.dart';
@@ -51,6 +52,7 @@ class _LoginState extends State<Login> {
   @override
   void initState() {
     super.initState();
+    print(widget.code);
     if (widget.code != null) {
       SchedulerBinding.instance
           .addPostFrameCallback((_) => verifyUser(context));
@@ -151,7 +153,8 @@ class _LoginState extends State<Login> {
       keyboardType: TextInputType.number,
       autofocus: false,
       decoration: new InputDecoration(
-        labelText: "Enrollment No.",
+        //labelText: "Enrollment No.",
+        labelText: widget.code,
         labelStyle: Theme.of(context).primaryTextTheme.subhead,
         icon: new Icon(
           Icons.person,
@@ -391,8 +394,9 @@ class _LoginState extends State<Login> {
   }
 
   void _channelILogin() {
-    FlutterWebBrowser.openWebPage(url: url);
-    exit(0);
+    //FlutterWebBrowser.openWebPage(url: url);
+    launch(url);
+    //exit(0);
   }
 
   Future verifyUser(BuildContext context) async {
