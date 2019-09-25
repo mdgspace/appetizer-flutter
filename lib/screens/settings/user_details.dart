@@ -1,3 +1,4 @@
+import 'package:appetizer/models/user/me.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -18,6 +19,7 @@ class UserDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height / 2.35,
       child: Padding(
         padding: const EdgeInsets.fromLTRB(16.0, 60.0, 16.0, 30.0),
         child: Card(

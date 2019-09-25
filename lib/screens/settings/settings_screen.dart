@@ -1,3 +1,4 @@
+import 'package:appetizer/models/user/me.dart';
 import 'package:appetizer/screens/FAQ/faq_screen.dart';
 import 'package:appetizer/screens/settings/list_item.dart';
 import 'package:appetizer/screens/settings/page_footer.dart';
@@ -25,22 +26,29 @@ class _SettingsState extends State<Settings> {
       "Let me recommend you this application:\n https://play.google.com/store/apps/details?id=co.sdslabs.mdg.appetizer&hl=en";
   String name, branch, hostel, room, email;
   String enr;
+  bool isLoading = false;
 
   @override
   void initState() {
-    getUserDetails();
     super.initState();
+    getUserDetails();
   }
 
   Future getUserDetails() async {
-    prefs = await SharedPreferences.getInstance();
     setState(() {
-      name = prefs.getString("username");
-      enr = prefs.getString("enrNo");
-      branch = prefs.getString("branch");
-      hostel = prefs.getString("hostelName");
-      room = prefs.getString("roomNo");
-      email = prefs.getString("email");
+      isLoading = true;
+    });
+    prefs = await SharedPreferences.getInstance();
+    Me me = await userMeGet(prefs.getString("token"));
+
+    setState(() {
+      name = me.name;
+      enr = me.enrNo.toString();
+      branch = me.branch;
+      hostel = me.hostelName;
+      room = me.roomNo;
+      email = me.email;
+      isLoading = false;
     });
     print(name);
     print(enr.toString());
@@ -80,8 +88,9 @@ class _SettingsState extends State<Settings> {
                   child: ListView(
                     children: <Widget>[
                       GestureDetector(
-                        child: SettingsPageListItems(Icons.person, "Edit Profile"),
-                        onTap: (){
+                        child:
+                            SettingsPageListItems(Icons.person, "Edit Profile"),
+                        onTap: () {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -197,11 +206,29 @@ class _SettingsState extends State<Settings> {
           left: 192.0,
           top: 30.0,
         ),
-        Positioned(
-          child: UserDetails(name, enr, branch, hostel, room, email),
-          top: 50.0,
-          left: 0.0,
-        )
+        (!isLoading)
+            ? Positioned(
+                child: UserDetails(name, enr, branch, hostel, room, email),
+                top: 50.0,
+                left: 0.0,
+              )
+            : Positioned(
+                top: 50.0,
+                left: 0.0,
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height / 2.35,
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(16.0, 60.0, 16.0, 30.0),
+                    child: Center(
+                      child: CircularProgressIndicator(
+                        valueColor:
+                            new AlwaysStoppedAnimation<Color>(appiYellow),
+                      ),
+                    ),
+                  ),
+                ),
+              )
       ],
     );
   }
