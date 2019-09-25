@@ -29,6 +29,7 @@ dependencies:
   flutter_svg:
   share: 0.5.2
   fluttertoast: ^3.1.2
+  uni_links:
 
 
   # The following adds the Cupertino Icons font to your application.

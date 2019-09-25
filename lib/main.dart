@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'colors.dart';
 import 'login.dart';
 
-Future main() async {
+void main() async {
 
     await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     runApp(MaterialApp(

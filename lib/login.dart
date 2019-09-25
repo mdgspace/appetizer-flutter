@@ -395,7 +395,7 @@ class _LoginState extends State<Login> {
   void _channelILogin() {
     //FlutterWebBrowser.openWebPage(url: url);
     launch(url);
-    //exit(0);
+    exit(0);
   }
 
   Future verifyUser(BuildContext context) async {
