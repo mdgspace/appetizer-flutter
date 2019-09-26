@@ -60,7 +60,7 @@ class Utils {
 
     /// Weekday is on a 1-7 scale Monday - Sunday,
     /// This Calendar works from Sunday - Monday
-    var decreaseNum = day.weekday % 7;
+    var decreaseNum = day.weekday-1 % 7;
     return day.subtract(new Duration(days: decreaseNum));
   }
 
@@ -71,7 +71,7 @@ class Utils {
 
     /// Weekday is on a 1-7 scale Monday - Sunday,
     /// This Calendar's Week starts on Sunday
-    var increaseNum = day.weekday % 7;
+    var increaseNum = day.weekday-1 % 7;
     return day.add(new Duration(days: 7 - increaseNum));
   }
 
