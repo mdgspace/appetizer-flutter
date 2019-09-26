@@ -405,7 +405,16 @@ class _MenuCardState extends State<MenuCard> {
                           ),
                         ),
                         widget.isOutdated
-                            ? Icon(Icons.comment)
+                            ? Padding(
+                                padding: const EdgeInsets.all(8),
+                                child: InkWell(
+                                  child: Image.asset(
+                                    "assets/icons/feedback_button.png",
+                                    height: 25,
+                                    width: 25,
+                                  ),
+                                  onTap: () {},
+                                ))
                             : Switch(
                                 activeColor: appiYellow,
                                 value: isSwitched,
