@@ -1,3 +1,4 @@
+import 'package:appetizer/colors.dart';
 import 'package:appetizer/models/menu/week.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +14,7 @@ Color getLeaveColorFromLeaveStatus(LeaveStatus ls) {
       return Colors.red;
       break;
     case LeaveStatus.P:
-      return Colors.yellow;
+      return appiYellow;
       break;
     case LeaveStatus.U:
       return Colors.blue;

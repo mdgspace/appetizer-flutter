@@ -1,9 +1,11 @@
 import 'package:appetizer/currentDateModel.dart';
 import 'package:appetizer/noMeals.dart';
 import 'package:appetizer/services/leave.dart';
+import 'package:appetizer/utils/get_leave_color_from_leave_status.dart';
 import 'package:flutter/material.dart';
 import 'package:appetizer/services/menu.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'colors.dart';
 import 'utils/get_week_id.dart';
@@ -21,6 +23,7 @@ class Menu extends StatefulWidget {
 
 class _MenuState extends State<Menu> {
   static final double _radius = 16;
+  DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
 
   @override
   Widget build(BuildContext context) {
@@ -73,6 +76,16 @@ class _MenuState extends State<Menu> {
               bool snacksIsSwitched;
               bool dinnerIsSwitched;
 
+              bool isBreakfastOutdated = false;
+              bool isLunchOutdated = false;
+              bool isSnacksOutdated = false;
+              bool isDinnerOutdated = false;
+
+              LeaveStatus breakfastLeaveStatus;
+              LeaveStatus lunchLeaveStatus;
+              LeaveStatus snacksLeaveStatus;
+              LeaveStatus dinnerLeaveStatus;
+
               //Daily Items fetch
               List<String> breakfastDailyItemsList = [];
               for (var i = 0; i < data.dailyItems.breakfast.length; i++) {
@@ -108,6 +121,18 @@ class _MenuState extends State<Menu> {
               var numberOfMeals = currentDayMeal.meals.length;
               for (var i = 0; i < numberOfMeals; i++) {
                 if (currentDayMeal.meals[i].type == MealType.B) {
+                  breakfastLeaveStatus = currentDayMeal.meals[i].leaveStatus;
+                  String breakfastDateTimeString =
+                      currentDayMeal.date.toString() +
+                          " " +
+                          currentDayMeal.meals[i].startTime;
+                  DateTime breakfastStartDateTime =
+                      dateFormat.parse(breakfastDateTimeString);
+                  if (!breakfastStartDateTime.isAfter(DateTime.now())) {
+                    isBreakfastOutdated = true;
+                  } else {
+                    isBreakfastOutdated = false;
+                  }
                   breakfastId = currentDayMeal.meals[i].id;
                   breakfastIsSwitched =
                       currentDayMeal.meals[i].leaveStatus == LeaveStatus.N
@@ -129,6 +154,17 @@ class _MenuState extends State<Menu> {
                     ));
                   }
                 } else if (currentDayMeal.meals[i].type == MealType.L) {
+                  lunchLeaveStatus = currentDayMeal.meals[i].leaveStatus;
+                  String lunchDateTimeString = currentDayMeal.date.toString() +
+                      " " +
+                      currentDayMeal.meals[i].startTime;
+                  DateTime lunchStartDateTime =
+                      dateFormat.parse(lunchDateTimeString);
+                  if (!lunchStartDateTime.isAfter(DateTime.now())) {
+                    isLunchOutdated = true;
+                  } else {
+                    isLunchOutdated = false;
+                  }
                   lunchId = currentDayMeal.meals[i].id;
                   lunchIsSwitched =
                       currentDayMeal.meals[i].leaveStatus == LeaveStatus.N
@@ -149,6 +185,17 @@ class _MenuState extends State<Menu> {
                     ));
                   }
                 } else if (currentDayMeal.meals[i].type == MealType.S) {
+                  snacksLeaveStatus = currentDayMeal.meals[i].leaveStatus;
+                  String snacksDateTimeString = currentDayMeal.date.toString() +
+                      " " +
+                      currentDayMeal.meals[i].startTime;
+                  DateTime snacksStartDateTime =
+                      dateFormat.parse(snacksDateTimeString);
+                  if (!snacksStartDateTime.isAfter(DateTime.now())) {
+                    isSnacksOutdated = true;
+                  } else {
+                    isSnacksOutdated = false;
+                  }
                   snacksId = currentDayMeal.meals[i].id;
                   snacksIsSwitched =
                       currentDayMeal.meals[i].leaveStatus == LeaveStatus.N
@@ -169,6 +216,17 @@ class _MenuState extends State<Menu> {
                     ));
                   }
                 } else if (currentDayMeal.meals[i].type == MealType.D) {
+                  dinnerLeaveStatus = currentDayMeal.meals[i].leaveStatus;
+                  String dinnerDateTimeString = currentDayMeal.date.toString() +
+                      " " +
+                      currentDayMeal.meals[i].startTime;
+                  DateTime dinnerStartDateTime =
+                      dateFormat.parse(dinnerDateTimeString);
+                  if (!dinnerStartDateTime.isAfter(DateTime.now())) {
+                    isDinnerOutdated = true;
+                  } else {
+                    isDinnerOutdated = false;
+                  }
                   dinnerId = currentDayMeal.meals[i].id;
                   dinnerIsSwitched =
                       currentDayMeal.meals[i].leaveStatus == LeaveStatus.N
@@ -209,19 +267,42 @@ class _MenuState extends State<Menu> {
                           breakfastDailyItems,
                           breakfastId,
                           widget.token,
-                          breakfastIsSwitched)
+                          breakfastIsSwitched,
+                          isBreakfastOutdated,
+                          breakfastLeaveStatus)
                       : Container(),
                   (lunchMealMap.isNotEmpty)
-                      ? MenuCard('Lunch', lunchMealMap, lunchDailyItems,
-                          lunchId, widget.token, lunchIsSwitched)
+                      ? MenuCard(
+                          'Lunch',
+                          lunchMealMap,
+                          lunchDailyItems,
+                          lunchId,
+                          widget.token,
+                          lunchIsSwitched,
+                          isLunchOutdated,
+                          lunchLeaveStatus)
                       : Container(),
                   (snacksMealMap.isNotEmpty)
-                      ? MenuCard('Snacks', snacksMealMap, snacksDailyItems,
-                          snacksId, widget.token, snacksIsSwitched)
+                      ? MenuCard(
+                          'Snacks',
+                          snacksMealMap,
+                          snacksDailyItems,
+                          snacksId,
+                          widget.token,
+                          snacksIsSwitched,
+                          isSnacksOutdated,
+                          snacksLeaveStatus)
                       : Container(),
                   (dinnerMealMap.isNotEmpty)
-                      ? MenuCard('Dinner', dinnerMealMap, dinnerDailyItems,
-                          dinnerId, widget.token, dinnerIsSwitched)
+                      ? MenuCard(
+                          'Dinner',
+                          dinnerMealMap,
+                          dinnerDailyItems,
+                          dinnerId,
+                          widget.token,
+                          dinnerIsSwitched,
+                          isDinnerOutdated,
+                          dinnerLeaveStatus)
                       : Container(),
                 ],
               );
@@ -240,9 +321,11 @@ class MenuCard extends StatefulWidget {
   final Map<CircleAvatar, String> menuItems;
   final String dailyItems;
   final bool isSwitched;
+  final bool isOutdated;
+  final LeaveStatus leaveStatus;
 
   MenuCard(this.title, this.menuItems, this.dailyItems, this.id, this.token,
-      this.isSwitched);
+      this.isSwitched, this.isOutdated, this.leaveStatus);
 
   @override
   _MenuCardState createState() => _MenuCardState();
@@ -250,7 +333,6 @@ class MenuCard extends StatefulWidget {
 
 class _MenuCardState extends State<MenuCard> {
   bool isSwitched;
-  bool outdated = false;
 
   List<Widget> _itemWidgetList() {
     List<Widget> list = [];
@@ -282,14 +364,47 @@ class _MenuCardState extends State<MenuCard> {
                         Expanded(
                           child: Padding(
                             padding: const EdgeInsets.only(bottom: 24.0),
-                            child: Text(
-                              widget.title,
-                              style: new TextStyle(
-                                  color: appiYellow, fontSize: 24),
+                            child: Row(
+                              children: <Widget>[
+                                Text(
+                                  widget.title,
+                                  style: new TextStyle(
+                                      color: appiYellow, fontSize: 24),
+                                ),
+                                (!(getLeaveColorFromLeaveStatus(
+                                                widget.leaveStatus) ==
+                                            Colors.white) &&
+                                        widget.isOutdated)
+                                    ? Padding(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            30, 5, 30, 5),
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                              color:
+                                                  getLeaveColorFromLeaveStatus(
+                                                      widget.leaveStatus),
+                                              borderRadius:
+                                                  BorderRadius.circular(4)),
+                                          child: Padding(
+                                            padding: const EdgeInsets.fromLTRB(
+                                                12, 1, 12, 1),
+                                            child: Text(
+                                              "Skipped".toUpperCase(),
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  letterSpacing: .5,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 12),
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                    : Container()
+                              ],
                             ),
                           ),
                         ),
-                        outdated
+                        widget.isOutdated
                             ? Icon(Icons.comment)
                             : Switch(
                                 activeColor: appiYellow,
