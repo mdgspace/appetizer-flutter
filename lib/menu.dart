@@ -125,7 +125,7 @@ class _MenuState extends State<Menu> {
                 if (currentDayMeal.meals[i].type == MealType.B) {
                   breakfastLeaveStatus = currentDayMeal.meals[i].leaveStatus;
                   String breakfastDateTimeString =
-                      currentDayMeal.date.toString() +
+                      currentDayMeal.date.toString().substring(0, 10) +
                           " " +
                           currentDayMeal.meals[i].startTime;
                   DateTime breakfastStartDateTime =
@@ -157,9 +157,10 @@ class _MenuState extends State<Menu> {
                   }
                 } else if (currentDayMeal.meals[i].type == MealType.L) {
                   lunchLeaveStatus = currentDayMeal.meals[i].leaveStatus;
-                  String lunchDateTimeString = currentDayMeal.date.toString() +
-                      " " +
-                      currentDayMeal.meals[i].startTime;
+                  String lunchDateTimeString =
+                      currentDayMeal.date.toString().substring(0, 10) +
+                          " " +
+                          currentDayMeal.meals[i].startTime;
                   DateTime lunchStartDateTime =
                       dateFormat.parse(lunchDateTimeString);
                   if (!lunchStartDateTime.isAfter(DateTime.now())) {
@@ -188,9 +189,10 @@ class _MenuState extends State<Menu> {
                   }
                 } else if (currentDayMeal.meals[i].type == MealType.S) {
                   snacksLeaveStatus = currentDayMeal.meals[i].leaveStatus;
-                  String snacksDateTimeString = currentDayMeal.date.toString() +
-                      " " +
-                      currentDayMeal.meals[i].startTime;
+                  String snacksDateTimeString =
+                      currentDayMeal.date.toString().substring(0, 10) +
+                          " " +
+                          currentDayMeal.meals[i].startTime;
                   DateTime snacksStartDateTime =
                       dateFormat.parse(snacksDateTimeString);
                   if (!snacksStartDateTime.isAfter(DateTime.now())) {
@@ -219,9 +221,10 @@ class _MenuState extends State<Menu> {
                   }
                 } else if (currentDayMeal.meals[i].type == MealType.D) {
                   dinnerLeaveStatus = currentDayMeal.meals[i].leaveStatus;
-                  String dinnerDateTimeString = currentDayMeal.date.toString() +
-                      " " +
-                      currentDayMeal.meals[i].startTime;
+                  String dinnerDateTimeString =
+                      currentDayMeal.date.toString().substring(0, 10) +
+                          " " +
+                          currentDayMeal.meals[i].startTime;
                   DateTime dinnerStartDateTime =
                       dateFormat.parse(dinnerDateTimeString);
                   if (!dinnerStartDateTime.isAfter(DateTime.now())) {
