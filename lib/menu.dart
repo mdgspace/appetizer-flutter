@@ -3,6 +3,7 @@ import 'package:appetizer/globals.dart';
 import 'package:appetizer/noMeals.dart';
 import 'package:appetizer/screens/my_leaves/my_leaves_screen.dart';
 import 'package:appetizer/services/leave.dart';
+import 'package:appetizer/services/user.dart';
 import 'package:appetizer/utils/get_leave_color_from_leave_status.dart';
 import 'package:flutter/material.dart';
 import 'package:appetizer/services/menu.dart';
@@ -26,6 +27,16 @@ class Menu extends StatefulWidget {
 class _MenuState extends State<Menu> {
   static final double _radius = 16;
   DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
+
+  @override
+  void initState() {
+    super.initState();
+    userMeGet(widget.token).then((me) {
+      setState(() {
+        isCheckedOut = me.isCheckedOut;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
