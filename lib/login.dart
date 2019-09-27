@@ -8,12 +8,13 @@ import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'home.dart';
 import 'colors.dart';
 import 'help.dart';
 import 'package:appetizer/services/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter_web_browser/flutter_web_browser.dart';
+//import 'package:flutter_web_browser/flutter_web_browser.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class Login extends StatefulWidget {
@@ -52,7 +53,8 @@ class _LoginState extends State<Login> {
   @override
   void initState() {
     super.initState();
-    if (widget.code != null) {
+    print(widget.code);
+    if (widget.code != null && widget.code != "") {
       SchedulerBinding.instance
           .addPostFrameCallback((_) => verifyUser(context));
     }
@@ -393,7 +395,8 @@ class _LoginState extends State<Login> {
   }
 
   void _channelILogin() {
-    FlutterWebBrowser.openWebPage(url: url);
+    //FlutterWebBrowser.openWebPage(url: url);
+    launch(url);
     exit(0);
   }
 

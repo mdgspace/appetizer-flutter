@@ -29,7 +29,13 @@ class MyRebates extends StatelessWidget {
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[getMonthRebate(), SeeRebateHistory(token: token)],
+          children: <Widget>[
+            getMonthRebate(),
+            Container(
+              height: MediaQuery.of(context).size.height * 0.07,
+              child: SeeRebateHistory(token: token),
+            )
+          ],
         ),
       ),
     );
@@ -40,10 +46,9 @@ class MyRebates extends StatelessWidget {
         future: getMonthlyRebate(token),
         builder: (context, snapshot) {
           if (snapshot.data == null) {
-            return Center(
-              child: Container(
-                height: MediaQuery.of(context).size.height / 1.25,
-                width: MediaQuery.of(context).size.width,
+            return Container(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 200),
                 child: Center(
                   child: CircularProgressIndicator(
                     valueColor: new AlwaysStoppedAnimation<Color>(appiYellow),
