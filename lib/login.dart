@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:appetizer/alertDialog.dart';
 import 'package:appetizer/chooseNewPassword.dart';
 import 'package:appetizer/forgotPassword.dart';
+import 'package:appetizer/globals.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -322,6 +323,7 @@ class _LoginState extends State<Login> {
       FocusScope.of(context).requestFocus(new FocusNode());
       userLogin(_enrollmentNo, _password).then((loginCredentials) async {
         if (loginCredentials.enrNo.toString() == _enrollmentNo) {
+          //isCheckedOut = loginCredentials.isCheckedOut;
           saveUserDetails(
             loginCredentials.enrNo.toString(),
             loginCredentials.name,

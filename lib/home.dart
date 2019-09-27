@@ -86,7 +86,9 @@ class _HomeState extends State<Home> {
                   HorizontalDatePicker(),
                   Flexible(
                     child: SingleChildScrollView(
-                      child: Menu(token: widget.token),
+                      child: Menu(
+                        token: widget.token,
+                      ),
                     ),
                   ),
                 ],
