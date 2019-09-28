@@ -325,7 +325,7 @@ class _LoginState extends State<Login> {
       FocusScope.of(context).requestFocus(new FocusNode());
       userLogin(_enrollmentNo, _password).then((loginCredentials) async {
         if (loginCredentials.enrNo.toString() == _enrollmentNo) {
-          //isCheckedOut = loginCredentials.isCheckedOut;
+          isCheckedOut = loginCredentials.isCheckedOut;
           saveUserDetails(
             loginCredentials.enrNo.toString(),
             loginCredentials.name,
