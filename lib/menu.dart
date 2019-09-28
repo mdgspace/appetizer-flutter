@@ -11,6 +11,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'colors.dart';
+import 'screens/user_feedback/new_feedback.dart';
 import 'utils/get_week_id.dart';
 import 'models/menu/week.dart';
 import 'dart:math' as math;
@@ -333,7 +334,8 @@ class _MenuState extends State<Menu> {
     return Column(
       children: <Widget>[
         isCheckedOut
-            ? Container(
+          //true
+          ? Container(
                 width: MediaQuery.of(context).size.width,
                 color: appiRed,
                 child: Row(
@@ -478,7 +480,10 @@ class _MenuCardState extends State<MenuCard> {
                                     height: 25,
                                     width: 25,
                                   ),
-                                  onTap: () {},
+                                  onTap: () {
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (context) => NewFeedback()));
+                                  },
                                 ))
                             : !widget.isCheckedOut
                                 ? Switch(
