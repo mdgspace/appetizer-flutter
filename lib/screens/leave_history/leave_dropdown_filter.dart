@@ -45,8 +45,7 @@ class _LeaveDropdownFilterState extends State<LeaveDropdownFilter> {
     }
 
     return Container(
-      height: 140.0,
-      width: 395,
+      width: MediaQuery.of(context).size.width,
       color: const Color.fromRGBO(121, 85, 72, 1),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -80,7 +79,7 @@ class _LeaveDropdownFilterState extends State<LeaveDropdownFilter> {
                         ),
                       ),
                       Container(
-                        width: 182.0,
+                        width: MediaQuery.of(context).size.width / 2.2,
                         child: Padding(
                           padding:
                               const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 8.0),
@@ -130,7 +129,7 @@ class _LeaveDropdownFilterState extends State<LeaveDropdownFilter> {
                         ),
                       ),
                       Container(
-                        width: 182.0,
+                        width: MediaQuery.of(context).size.width / 2.2,
                         child: Padding(
                           padding:
                               const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 8.0),

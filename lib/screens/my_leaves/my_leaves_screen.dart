@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'leave_status_card.dart';
 import 'meal_left.dart';
-import 'info_message.dart';
 import 'manage_leaves_banner.dart';
 import 'see_history.dart';
 
@@ -36,48 +35,49 @@ class _MyLeavesState extends State<MyLeaves> {
         ),
         backgroundColor: const Color.fromRGBO(121, 85, 72, 1),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Container(
-            height: 262.0,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                getRemainingLeaves(),
-                ManageLeaveBanner(),
-              ],
-            ),
-          ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ListView(
-                physics: ClampingScrollPhysics(),
-                children: <Widget>[
-                  MealLeft('Dinner', 'July 16 2019'),
-                  MealLeft('Dinner', 'July 16 2019'),
-                  MealLeft('Dinner', 'July 16 2019'),
-                ],
-              ),
-            ),
-          ),
-          SafeArea(
-            child: Container(
-              height: 90.0,
+      body: SafeArea(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Container(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  InfoMessage(
-                      'You can cancel your leave 2-3 hours before the meal'),
-                  SeeLeavesHistory(
-                    token: widget.token,
-                  ),
+                  getRemainingLeaves(),
+                  ManageLeaveBanner(),
                 ],
               ),
             ),
-          )
-        ],
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ListView(
+                  physics: ClampingScrollPhysics(),
+                  children: <Widget>[
+                    MealLeft('Dinner', 'July 16 2019'),
+                    MealLeft('Dinner', 'July 16 2019'),
+                    MealLeft('Dinner', 'July 16 2019'),
+                  ],
+                ),
+              ),
+            ),
+            SafeArea(
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      SeeLeavesHistory(
+                        token: widget.token,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

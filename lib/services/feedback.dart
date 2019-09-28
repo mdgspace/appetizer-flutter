@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:appetizer/models/feed_back/submittedfeedbacks.dart';
 import 'package:appetizer/models/feed_back/responses.dart';
 
-String url = "http://appetizer-mdg.herokuapp.com";
+String url = "https://mess.iitr.ac.in";
 var header = {"Content-Type": "application/json"};
 http.Client client = new http.Client();
 

@@ -1,17 +1,23 @@
+import 'package:flutter/material.dart';
+
 import 'package:appetizer/currentDateModel.dart';
 import 'package:appetizer/screens/user_feedback/user_feedback.dart';
-import 'package:flutter/material.dart';
-import "colors.dart";
+import 'package:appetizer/colors.dart';
 import 'package:appetizer/services/user.dart';
 import 'package:appetizer/utils/horizontal_date_picker.dart';
-import 'mainScreen.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'screens/my_leaves/my_leaves_screen.dart';
-import 'screens/my_rebates/my_rebates_screen.dart';
-import 'screens/notification_history/noti_history_screen.dart';
-import 'alertdialog.dart';
-import 'screens/FAQ/faq_screen.dart';
+import 'package:appetizer/menu.dart';
+import 'package:appetizer/screens/my_leaves/my_leaves_screen.dart';
+import 'package:appetizer/screens/my_rebates/my_rebates_screen.dart';
+import 'package:appetizer/screens/notification_history/noti_history_screen.dart';
+import 'package:appetizer/alertDialog.dart';
+import 'package:appetizer/screens/FAQ/faq_screen.dart';
+import 'package:appetizer/globals.dart';
+
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'screens/settings/settings_screen.dart';
+import 'package:appetizer/screens/menu_screens/week_menu_screen.dart';
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -21,7 +27,6 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primaryColor: appiPrimary,
           accentColor: appiAccent,
-
         ),
         home: Home());
   }
@@ -47,12 +52,13 @@ class _HomeState extends State<Home> {
     return ChangeNotifierProvider(
       builder: (context) => CurrentDateModel(),
       child: Scaffold(
+        key: menuScaffoldKey,
         appBar: AppBar(
           elevation: 0,
           centerTitle: true,
           title: Text(
             "Mess Menu",
-            style: TextStyle(
+            style: new TextStyle(
                 color: Colors.white, fontSize: 25.0, fontFamily: 'Lobster_Two'),
           ),
           actions: <Widget>[
@@ -60,27 +66,35 @@ class _HomeState extends State<Home> {
               padding: const EdgeInsets.all(8.0),
               child: GestureDetector(
                 child: Icon(Icons.calendar_today),
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => WeekMenu(widget.token)));
+                },
               ),
             )
           ],
           backgroundColor: appiBrown,
           iconTheme: new IconThemeData(color: appiYellow),
         ),
-        body: Stack(
-          children: <Widget>[
-            Column(
-              children: <Widget>[
-                HorizontalDatePicker(),
-                Flexible(
-                  child: SingleChildScrollView(
-                    child: Menu(token: widget.token),
-                    physics: ClampingScrollPhysics(),
+        body: SafeArea(
+          child: Stack(
+            children: <Widget>[
+              Column(
+                children: <Widget>[
+                  HorizontalDatePicker(),
+                  Flexible(
+                    child: SingleChildScrollView(
+                      child: Menu(
+                        token: widget.token,
+                      ),
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
         drawer: Drawer(
           child: Column(
@@ -117,10 +131,8 @@ class _HomeState extends State<Home> {
                               child: Text(
                                 widget.username,
                                 overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 24,
-                                ),
+                                style:
+                                    Theme.of(context).accentTextTheme.display2,
                               ),
                             ),
                             Padding(
@@ -129,7 +141,7 @@ class _HomeState extends State<Home> {
                                 widget.enrollment,
                                 overflow: TextOverflow.ellipsis,
                                 style:
-                                    TextStyle(color: appiYellow, fontSize: 16),
+                                    Theme.of(context).accentTextTheme.display3,
                               ),
                             )
                           ],
@@ -225,7 +237,13 @@ class _HomeState extends State<Home> {
                           ),
                           title: Text("Settings"),
                         ),
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.pop(context);
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Settings()));
+                        },
                       ),
                       GestureDetector(
                         child: ListTile(
@@ -259,7 +277,12 @@ class _HomeState extends State<Home> {
                                 context: context,
                                 builder: (BuildContext context) {
                                   return AlertDialog(
-                                    title: new Text("Log Out"),
+                                    title: new Text(
+                                      "Log Out",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
                                     content: new Text(
                                         "Are you sure you want to log out?"),
                                     actions: <Widget>[
@@ -279,23 +302,19 @@ class _HomeState extends State<Home> {
                                           "LOG OUT",
                                           style: TextStyle(color: appiYellow),
                                         ),
-                                        onPressed: () {
-                                          showCustomDialog(context,"Logging You Out");
-                                          userLogout(widget.token)
-                                              .then((afterLogout) async {
-                                            if (afterLogout.detail.toString() ==
-                                                "user logged out") {
-                                              Navigator.of(context)
-                                                  .pushNamedAndRemoveUntil(
-                                                      "/login",
-                                                      (Route<dynamic> route) =>
-                                                          false);
-                                              SharedPreferences prefs =
+                                        onPressed: () async {
+                                          showCustomDialog(
+                                              context, "Logging You Out");
+                                          userLogout(widget.token);
+                                          Navigator.of(context)
+                                              .pushNamedAndRemoveUntil(
+                                                  "/login",
+                                                  (Route<dynamic> route) =>
+                                                      false);
+                                          SharedPreferences prefs =
                                               await SharedPreferences
                                                   .getInstance();
-                                              prefs.clear();
-                                            }
-                                          });
+                                          prefs.clear();
                                         },
                                         highlightColor: Colors.transparent,
                                         splashColor: Colors.transparent,
@@ -320,6 +339,7 @@ class _HomeState extends State<Home> {
                       version,
                       style: TextStyle(
                         fontSize: 12,
+                        color: appiGreyIcon,
                       ),
                       textAlign: TextAlign.left,
                     ),
@@ -327,7 +347,10 @@ class _HomeState extends State<Home> {
                       children: <Widget>[
                         Text(
                           "Made with ",
-                          style: TextStyle(fontSize: 12),
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: appiGreyIcon,
+                          ),
                         ),
                         Icon(
                           Icons.favorite,
@@ -336,7 +359,10 @@ class _HomeState extends State<Home> {
                         ),
                         Text(
                           " by MDG",
-                          style: TextStyle(fontSize: 12),
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: appiGreyIcon,
+                          ),
                         ),
                       ],
                     )

@@ -8,7 +8,7 @@ import 'package:appetizer/models/user/login.dart';
 import 'package:appetizer/models/user/me.dart';
 import 'package:appetizer/models/user/Notification.dart';
 
-String url = "http://appetizer-mdg.herokuapp.com";
+String url = "https://mess.iitr.ac.in";
 var header = {"Content-Type": "application/json"};
 http.Client client = new http.Client();
 
@@ -77,6 +77,33 @@ Future<Me> userMeGet(String token) async {
   }
 }
 
+Future<Me> userMePatch(String token, String email, String contactNo) async {
+  String endpoint = "/api/user/me/";
+  String uri = url + endpoint;
+  var json = {
+    "email": email,
+    "contactNo": contactNo,
+  };
+  var tokenAuth = {
+    "Authorization": "Token " + token,
+    "Content-Type": "application/json"
+  };
+  try {
+    var response = await client.patch(
+      uri,
+      headers: tokenAuth,
+      body: jsonEncode(json),
+    );
+    final jsonResponse = jsonDecode(response.body);
+    Me me = new Me.fromJson(jsonResponse);
+    print(response.body);
+    return me;
+  } on Exception catch (e) {
+    print(e);
+    return null;
+  }
+}
+
 Future<Image> userImage(String token) async {
   String endpoint = "/api/user/me/image/";
   String uri = url + endpoint;
@@ -96,7 +123,7 @@ Future<Image> userImage(String token) async {
   }
 }
 
-Future<Detail> userPassword(
+Future<Detail> userPasswordReset(
     String token, String oldPass, String newPass) async {
   String endpoint = "/api/user/me/password/";
   String uri = url + endpoint;

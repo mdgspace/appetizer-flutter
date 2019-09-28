@@ -1,3 +1,4 @@
+import 'package:appetizer/globals.dart';
 import 'package:appetizer/services/leave.dart';
 import 'package:flutter/material.dart';
 import '../../login.dart';
@@ -149,48 +150,51 @@ class _LeaveStatusCardState extends State<LeaveStatusCard> {
           showDialog(
             context: context,
             builder: (context) => AlertDialog(
-                  title: Text("Check Out"),
-                  content: Text("Are you sure you would like to Check-Out?"),
-                  actions: <Widget>[
-                    FlatButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: Text(
-                          "CANCEL",
-                          style: TextStyle(fontSize: 15, color: appiYellow),
-                        )),
-                    FlatButton(
-                        onPressed: () {
-                          check(userDetails.getString("token"))
-                              .then((checkInfo) {
-                            if (checkInfo.isCheckedOut) {
-                              setState(() {
-                                _isCheckedIn = false;
-                              });
-                            } else {
-                              setState(() {
-                                _isCheckedIn = true;
-                              });
-                            }
+              title: Text("Check Out"),
+              content: Text("Are you sure you would like to Check-Out?"),
+              actions: <Widget>[
+                FlatButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text(
+                      "CANCEL",
+                      style: TextStyle(fontSize: 15, color: appiYellow),
+                    )),
+                FlatButton(
+                    onPressed: () {
+                      check(userDetails.getString("token")).then((checkInfo) {
+                        if (checkInfo.isCheckedOut) {
+                          setState(() {
+                            isCheckedOut = true;
+                            _isCheckedIn = false;
                           });
-                          Navigator.pop(context);
-                        },
-                        child: Text(
-                          "CHECK OUT",
-                          style: TextStyle(fontSize: 15, color: appiYellow),
-                        )),
-                  ],
-                ),
+                        } else {
+                          setState(() {
+                            isCheckedOut = false;
+                            _isCheckedIn = true;
+                          });
+                        }
+                      });
+                      Navigator.pop(context);
+                    },
+                    child: Text(
+                      "CHECK OUT",
+                      style: TextStyle(fontSize: 15, color: appiYellow),
+                    )),
+              ],
+            ),
           );
         } else {
           check(userDetails.getString("token")).then((checkInfo) {
             if (checkInfo.isCheckedOut) {
               setState(() {
+                isCheckedOut = true;
                 _isCheckedIn = false;
               });
             } else {
               setState(() {
+                isCheckedOut = false;
                 _isCheckedIn = true;
               });
               Scaffold.of(context)

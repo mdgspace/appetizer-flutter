@@ -3,7 +3,7 @@ import 'package:appetizer/models/feed_back/submittedfeedbacks.dart';
 import 'package:appetizer/screens/user_feedback/new_feedback.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:appetizer/services/feed_back.dart';
+import 'package:appetizer/services/feedback.dart';
 
 import '../../colors.dart';
 
@@ -45,99 +45,101 @@ class _UserFeedbackState extends State<UserFeedback> {
         ),
         backgroundColor: const Color.fromRGBO(121, 85, 72, 1),
       ),
-      body: new ListView(
-        children: <Widget>[
-          new RaisedButton(
-            onPressed: () {
-              Navigator.pop(context);
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => NewFeedback()));
-            },
-            color: Colors.white,
-            child: new Row(
-              children: <Widget>[
-                new Icon(
-                  Icons.edit,
-                  color: appiYellow,
-                  size: 24,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                      left: 30.0, right: 25, top: 20, bottom: 20),
-                  child: new Text(
-                    "New Feedback",
-                    style: new TextStyle(
-                      color: Colors.black.withOpacity(0.7),
-                      fontSize: 18,
+      body: SafeArea(
+        child: new ListView(
+          children: <Widget>[
+            new RaisedButton(
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => NewFeedback()));
+              },
+              color: Colors.white,
+              child: new Row(
+                children: <Widget>[
+                  new Icon(
+                    Icons.edit,
+                    color: appiYellow,
+                    size: 24,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        left: 30.0, right: 25, top: 20, bottom: 20),
+                    child: new Text(
+                      "New Feedback",
+                      style: new TextStyle(
+                        color: Colors.black.withOpacity(0.7),
+                        fontSize: 18,
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
-          ),
-          new ExpansionTile(
-            onExpansionChanged: onExpansionChangedInbox,
-            title: new Row(
-              children: <Widget>[
-                new Image.asset(
-                  "assets/icons/inbox_logo.png",
-                  height: 24,
-                  width: 24,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                      left: 30.0, right: 25, top: 15, bottom: 15),
-                  child: new Text(
-                    "Inbox",
-                    style: new TextStyle(
-                      color: color1,
-                      fontSize: 18,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            children: <Widget>[
-              Container(
-                height: inboxWidget.length * 60.toDouble(),
-                child: ListView(
-                  children: inboxWidget,
-                ),
+                ],
               ),
-            ],
-          ),
-          new ExpansionTile(
-            onExpansionChanged: onExpansionChangedSubmit,
-            title: new Row(
-              children: <Widget>[
-                new Icon(
-                  Icons.send,
-                  size: 24,
-                  color: appiYellow,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                      left: 30.0, right: 25, top: 15, bottom: 15),
-                  child: new Text(
-                    "Submitted",
-                    style: new TextStyle(
-                      color: color2,
-                      fontSize: 18,
+            ),
+            new ExpansionTile(
+              onExpansionChanged: onExpansionChangedInbox,
+              title: new Row(
+                children: <Widget>[
+                  new Image.asset(
+                    "assets/icons/inbox_logo.png",
+                    height: 24,
+                    width: 24,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        left: 30.0, right: 25, top: 15, bottom: 15),
+                    child: new Text(
+                      "Inbox",
+                      style: new TextStyle(
+                        color: color1,
+                        fontSize: 18,
+                      ),
                     ),
+                  ),
+                ],
+              ),
+              children: <Widget>[
+                Container(
+                  height: inboxWidget.length * 60.toDouble(),
+                  child: ListView(
+                    children: inboxWidget,
                   ),
                 ),
               ],
             ),
-            children: <Widget>[
-              Container(
-                height: submittedWidget.length * 60.toDouble() + 20,
-                child: ListView(
-                  children: submittedWidget,
-                ),
+            new ExpansionTile(
+              onExpansionChanged: onExpansionChangedSubmit,
+              title: new Row(
+                children: <Widget>[
+                  new Icon(
+                    Icons.send,
+                    size: 24,
+                    color: appiYellow,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        left: 30.0, right: 25, top: 15, bottom: 15),
+                    child: new Text(
+                      "Submitted",
+                      style: new TextStyle(
+                        color: color2,
+                        fontSize: 18,
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
-        ],
+              children: <Widget>[
+                Container(
+                  height: submittedWidget.length * 60.toDouble() + 20,
+                  child: ListView(
+                    children: submittedWidget,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -4,7 +4,10 @@ import 'package:flutter/services.dart';
 import 'colors.dart';
 import 'login.dart';
 
-void main() => runApp(MaterialApp(
+void main() async {
+
+    await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+    runApp(MaterialApp(
       routes: {
         "/home": (context) => Home(),
         "/login": (context) => Login(),
@@ -12,9 +15,38 @@ void main() => runApp(MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Appetizer',
       theme: ThemeData(
+        fontFamily: 'OpenSans',
         primaryColor: appiYellow,
         accentColor: appiGrey,
         cursorColor: appiYellow,
+        accentTextTheme: TextTheme(
+          //used for authenticating button
+          display1: new TextStyle(
+              fontWeight: FontWeight.w900,
+              fontSize: 19.0,
+              color: Colors.white,
+              fontFamily: "OpenSans"),
+          //used for username in nav drawer
+          display2: TextStyle(
+            color: Colors.white,
+            fontSize: 22,
+          ),
+          //used for enrolment no in nav drawer
+          display3: TextStyle(
+            color: appiYellow,
+            fontSize: 15,
+          ),
+          title: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: appiLightGreyText,
+            fontSize: 16,
+          ),
+          subtitle: TextStyle(
+            color: appiLightGreyText,
+            fontSize: 16,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
         primaryTextTheme: TextTheme(
           //display1 theme is used for the Login Button
           display1: new TextStyle(
@@ -48,13 +80,27 @@ void main() => runApp(MaterialApp(
             color: appiGreyIcon.withOpacity(0.8),
             fontFamily: "OpenSans",
           ),
+          //headline used for forgot password title
+          headline: new TextStyle(
+            fontSize: 24.0,
+            color: appiGreyIcon,
+            fontFamily: "OpenSans",
+          ),
+          //caption used for sub-Text
+          caption: new TextStyle(
+            fontWeight: FontWeight.w900,
+            fontSize: 16.0,
+            color: appiYellow,
+            fontFamily: "OpenSans",
+          ),
         ),
       ),
-      darkTheme: ThemeData(
-        brightness: Brightness.dark,
-      ),
+//      darkTheme: ThemeData(
+//        brightness: Brightness.dark,
+//      ),
       home: Appetizer(),
     ));
+}
 
 class Appetizer extends StatefulWidget {
   @override
@@ -64,6 +110,7 @@ class Appetizer extends StatefulWidget {
 class _AppetizerState extends State<Appetizer> {
   static const platform = const MethodChannel('app.channel.shared.data');
   String code;
+  var sharedData;
 
   void initState() {
     getIntent();
@@ -87,7 +134,11 @@ class _AppetizerState extends State<Appetizer> {
   }
 
   getIntent() async {
-    var sharedData = await platform.invokeMethod("getCode");
+    try{
+      sharedData = await platform.invokeMethod("getCode");
+    } on Exception catch (e) {
+    print(e);
+    }
     if (sharedData != null) {
       code = sharedData;
     }

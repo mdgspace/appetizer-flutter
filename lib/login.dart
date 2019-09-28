@@ -1,18 +1,21 @@
 import 'dart:async';
 import 'dart:io';
-import 'package:appetizer/alertdialog.dart';
-import 'package:appetizer/choosenewpassword.dart';
-import 'package:appetizer/forgot_pass.dart';
+import 'package:appetizer/alertDialog.dart';
+import 'package:appetizer/chooseNewPassword.dart';
+import 'package:appetizer/forgotPassword.dart';
+import 'package:appetizer/globals.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'home.dart';
 import 'colors.dart';
 import 'help.dart';
 import 'package:appetizer/services/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter_web_browser/flutter_web_browser.dart';
+//import 'package:flutter_web_browser/flutter_web_browser.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class Login extends StatefulWidget {
   final String code;
@@ -38,13 +41,41 @@ class _LoginState extends State<Login> {
     "flare_files/Login Appetizer (1).flr",
     animation: "idle",
   );
+  bool _obscureText = true;
+
+  // Toggles the password show status
+  void _toggle() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
+  }
 
   @override
   void initState() {
     super.initState();
-    if (widget.code != null) {
+    print(widget.code);
+    if (widget.code != null && widget.code != "") {
       SchedulerBinding.instance
           .addPostFrameCallback((_) => verifyUser(context));
+    }
+    showConnectivityStatus();
+  }
+
+  Future showConnectivityStatus() async {
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        print('connected');
+      }
+    } on SocketException catch (_) {
+      print('not connected');
+      Fluttertoast.showToast(
+        msg: "Please check your connection!",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIos: 7,
+        fontSize: 12.0,
+      );
     }
   }
 
@@ -142,9 +173,16 @@ class _LoginState extends State<Login> {
       padding: const EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 0.0),
       child: new TextFormField(
         maxLines: 1,
-        obscureText: true,
+        obscureText: _obscureText,
         autofocus: false,
         decoration: new InputDecoration(
+          suffixIcon: GestureDetector(
+            child: new Icon(
+              _obscureText ? Icons.visibility_off : Icons.visibility,
+              color: appiGreyIcon,
+            ),
+            onTap: _toggle,
+          ),
           labelText: "Password",
           labelStyle: Theme.of(context).primaryTextTheme.subhead,
           icon: new Icon(
@@ -160,8 +198,22 @@ class _LoginState extends State<Login> {
   }
 
   Widget _showLoginButton() {
+    showConnectivityStatus();
+
     return (isLoginButtonTapped)
-        ? new FlatButton(onPressed: () {})
+        ? new FlatButton(
+            padding: EdgeInsets.all(8),
+            color: appiYellow,
+            shape: new Border.all(
+              width: 2,
+              color: appiYellow,
+              style: BorderStyle.solid,
+            ),
+            child: new Text(
+              'Authenticating...',
+              style: Theme.of(context).accentTextTheme.display1,
+            ),
+            onPressed: () {})
         : (_isLoginSuccessful)
             ? new FlatButton(
                 padding: EdgeInsets.all(8),
@@ -172,7 +224,7 @@ class _LoginState extends State<Login> {
                   style: BorderStyle.solid,
                 ),
                 child: new Text(
-                  'Authenticating..',
+                  'Logged In Successfully',
                   style: Theme.of(context).primaryTextTheme.display1,
                 ),
                 onPressed: () {})
@@ -271,8 +323,17 @@ class _LoginState extends State<Login> {
       FocusScope.of(context).requestFocus(new FocusNode());
       userLogin(_enrollmentNo, _password).then((loginCredentials) async {
         if (loginCredentials.enrNo.toString() == _enrollmentNo) {
-          saveUserDetails(loginCredentials.enrNo.toString(),
-              loginCredentials.name, loginCredentials.token);
+          //isCheckedOut = loginCredentials.isCheckedOut;
+          saveUserDetails(
+            loginCredentials.enrNo.toString(),
+            loginCredentials.name,
+            loginCredentials.token,
+            loginCredentials.branch,
+            loginCredentials.hostelName,
+            loginCredentials.roomNo,
+            loginCredentials.email,
+            loginCredentials.contactNo,
+          );
           _showSnackBar(context, "Login Successful");
           setState(() {
             _isLoginSuccessful = true;
@@ -314,21 +375,35 @@ class _LoginState extends State<Login> {
   }
 
   Future<void> saveUserDetails(
-      String enrNo, String username, String token) async {
+      String enrNo,
+      String username,
+      String token,
+      String branch,
+      String hostelName,
+      String roomNo,
+      String email,
+      String contactNo) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString("token", token);
     prefs.setString("enrNo", enrNo);
     prefs.setString("username", username);
+    prefs.setString("branch", branch);
+    prefs.setString("hostelName", hostelName);
+    prefs.setString("roomNo", roomNo);
+    prefs.setString("email", email);
+    prefs.setString("contactNo", contactNo);
   }
 
   void _channelILogin() {
-    FlutterWebBrowser.openWebPage(url: url);
+    //FlutterWebBrowser.openWebPage(url: url);
+    launch(url);
     exit(0);
   }
 
   Future verifyUser(BuildContext context) async {
     showCustomDialog(context, "Fetching Details");
     var oauthResponse = await oAuthRedirect(widget.code);
+    print("Code " + widget.code);
     if (oauthResponse != null) {
       if (oauthResponse.isNew) {
         Navigator.pop(context);
@@ -354,6 +429,11 @@ class _LoginState extends State<Login> {
           oauthResponse.studentData.enrNo.toString(),
           oauthResponse.studentData.name,
           oauthResponse.token,
+          oauthResponse.studentData.branch,
+          oauthResponse.studentData.hostelName,
+          oauthResponse.studentData.roomNo,
+          oauthResponse.studentData.email,
+          oauthResponse.studentData.contactNo,
         );
         setState(() {
           _isLoginSuccessful = true;

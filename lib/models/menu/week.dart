@@ -26,22 +26,22 @@ class Week {
   });
 
   factory Week.fromJson(Map<String, dynamic> json) => new Week(
-    weekId: json["week_id"],
-    year: json["year"],
-    name: json["name"],
-    dailyItems: DailyItems.fromJson(json["daily_items"]),
-    days: new List<Day>.from(json["days"].map((x) => Day.fromJson(x))),
-    isApproved: json["is_approved"],
-  );
+        weekId: json["week_id"],
+        year: json["year"],
+        name: json["name"],
+        dailyItems: DailyItems.fromJson(json["daily_items"]),
+        days: new List<Day>.from(json["days"].map((x) => Day.fromJson(x))),
+        isApproved: json["is_approved"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "week_id": weekId,
-    "year": year,
-    "name": name,
-    "daily_items": dailyItems.toJson(),
-    "days": new List<dynamic>.from(days.map((x) => x.toJson())),
-    "is_approved": isApproved,
-  };
+        "week_id": weekId,
+        "year": year,
+        "name": name,
+        "daily_items": dailyItems.toJson(),
+        "days": new List<dynamic>.from(days.map((x) => x.toJson())),
+        "is_approved": isApproved,
+      };
 }
 
 class DailyItems {
@@ -60,24 +60,31 @@ class DailyItems {
   });
 
   factory DailyItems.fromJson(Map<String, dynamic> json) => new DailyItems(
-    id: json["id"],
-    breakfast: new List<MealItem>.from(json["breakfast"].map((x) => MealItem.fromJson(x))),
-    lunch: new List<MealItem>.from(json["lunch"].map((x) => MealItem.fromJson(x))),
-    dinner: new List<MealItem>.from(json["dinner"].map((x) => MealItem.fromJson(x))),
-    snack: new List<MealItem>.from(json["snack"].map((x) => MealItem.fromJson(x))),
-  );
+        id: json["id"],
+        breakfast: new List<MealItem>.from(
+            json["breakfast"].map((x) => MealItem.fromJson(x))),
+        lunch: new List<MealItem>.from(
+            json["lunch"].map((x) => MealItem.fromJson(x))),
+        dinner: new List<MealItem>.from(
+            json["dinner"].map((x) => MealItem.fromJson(x))),
+        snack: new List<MealItem>.from(
+            json["snack"].map((x) => MealItem.fromJson(x))),
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "breakfast": new List<dynamic>.from(breakfast.map((x) => x.toJson())),
-    "lunch": new List<dynamic>.from(lunch.map((x) => x.toJson())),
-    "dinner": new List<dynamic>.from(dinner.map((x) => x.toJson())),
-    "snack": new List<dynamic>.from(snack.map((x) => x.toJson())),
-  };
+        "id": id,
+        "breakfast": new List<dynamic>.from(breakfast.map((x) => x.toJson())),
+        "lunch": new List<dynamic>.from(lunch.map((x) => x.toJson())),
+        "dinner": new List<dynamic>.from(dinner.map((x) => x.toJson())),
+        "snack": new List<dynamic>.from(snack.map((x) => x.toJson())),
+      };
 }
-List<MealItem> mealItemFromJson(String str) => new List<MealItem>.from(json.decode(str).map((x) => MealItem.fromJson(x)));
 
-String mealItemToJson(List<MealItem> data) => json.encode(new List<dynamic>.from(data.map((x) => x.toJson())));
+List<MealItem> mealItemFromJson(String str) =>
+    new List<MealItem>.from(json.decode(str).map((x) => MealItem.fromJson(x)));
+
+String mealItemToJson(List<MealItem> data) =>
+    json.encode(new List<dynamic>.from(data.map((x) => x.toJson())));
 
 class MealItem {
   int id;
@@ -91,16 +98,16 @@ class MealItem {
   });
 
   factory MealItem.fromJson(Map<String, dynamic> json) => new MealItem(
-    id: json["id"],
-    type: breakfastTypeValues.map[json["type"]],
-    name: json["name"],
-  );
+        id: json["id"],
+        type: breakfastTypeValues.map[json["type"]],
+        name: json["name"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "type": breakfastTypeValues.reverse[type],
-    "name": name,
-  };
+        "id": id,
+        "type": breakfastTypeValues.reverse[type],
+        "name": name,
+      };
 }
 
 enum MealItemType { MCL, SLD, EXT, MCD, STR, SNK }
@@ -128,18 +135,19 @@ class Day {
   });
 
   factory Day.fromJson(Map<String, dynamic> json) => new Day(
-    id: json["id"],
-    dayId: json["day_id"],
-    date: DateTime.parse(json["date"]),
-    meals: new List<Meal>.from(json["meals"].map((x) => Meal.fromJson(x))),
-  );
+        id: json["id"],
+        dayId: json["day_id"],
+        date: DateTime.parse(json["date"]),
+        meals: new List<Meal>.from(json["meals"].map((x) => Meal.fromJson(x))),
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "day_id": dayId,
-    "date": "${date.year.toString().padLeft(4, '0')}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}",
-    "meals": new List<dynamic>.from(meals.map((x) => x.toJson())),
-  };
+        "id": id,
+        "day_id": dayId,
+        "date":
+            "${date.year.toString().padLeft(4, '0')}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}",
+        "meals": new List<dynamic>.from(meals.map((x) => x.toJson())),
+      };
 }
 
 class Meal {
@@ -162,40 +170,41 @@ class Meal {
   });
 
   factory Meal.fromJson(Map<String, dynamic> json) => new Meal(
-    id: json["id"],
-    type: mealTypeValues.map[json["type"]],
-    items: new List<MealItem>.from(json["items"].map((x) => MealItem.fromJson(x))),
-    startTime: json["start_time"],
-    endTime: json["end_time"],
-    leaveStatus: leaveStatusValues.map[json["leave_status"]],
-    wastage: json["wastage"],
-  );
+        id: json["id"],
+        type: mealTypeValues.map[json["type"]],
+        items: new List<MealItem>.from(
+            json["items"].map((x) => MealItem.fromJson(x))),
+        startTime: json["start_time"],
+        endTime: json["end_time"],
+        leaveStatus: leaveStatusValues.map[json["leave_status"]],
+        wastage: json["wastage"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "type": mealTypeValues.reverse[type],
-    "items": new List<dynamic>.from(items.map((x) => x.toJson())),
-    "start_time": startTime,
-    "end_time": endTime,
-    "leave_status": leaveStatusValues.reverse[leaveStatus],
-    "wastage": wastage,
-  };
+        "id": id,
+        "type": mealTypeValues.reverse[type],
+        "items": new List<dynamic>.from(items.map((x) => x.toJson())),
+        "start_time": startTime,
+        "end_time": endTime,
+        "leave_status": leaveStatusValues.reverse[leaveStatus],
+        "wastage": wastage,
+      };
 }
 
-enum LeaveStatus { N }
+enum LeaveStatus { N, A, D, P, U }
 
 final leaveStatusValues = new EnumValues({
-  "N": LeaveStatus.N
+  "N": LeaveStatus.N,
+  "A": LeaveStatus.A,
+  "D": LeaveStatus.D,
+  "P": LeaveStatus.P,
+  "U": LeaveStatus.U
 });
 
 enum MealType { B, L, S, D }
 
-final mealTypeValues = new EnumValues({
-  "B": MealType.B,
-  "D": MealType.D,
-  "L": MealType.L,
-  "S": MealType.S
-});
+final mealTypeValues = new EnumValues(
+    {"B": MealType.B, "D": MealType.D, "L": MealType.L, "S": MealType.S});
 
 class EnumValues<T> {
   Map<String, T> map;

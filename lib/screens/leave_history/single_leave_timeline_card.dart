@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'single_leave_details.dart';
 import 'single_leave_timeline_icon.dart';
 
@@ -15,7 +14,7 @@ class SingleLeaveTimelineCard extends StatelessWidget{
   Widget build(BuildContext context) {
     return Container(
       height: 53.0,
-      width: 412.0,
+      width: MediaQuery.of(context).size.width,
       child: Stack(
         children: <Widget>[
           Positioned(

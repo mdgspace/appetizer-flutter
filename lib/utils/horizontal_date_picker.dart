@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart'
+import '../flutter_calendar_carousel/flutter_calendar_carousel.dart'
     show CalendarCarousel, WeekdayFormat;
-import 'package:flutter_calendar_carousel/classes/event.dart';
+import '../flutter_calendar_carousel/classes/event.dart';
 import 'package:provider/provider.dart';
 
 import '../currentDateModel.dart';
@@ -35,6 +35,7 @@ class _HorizontalDatePickerState extends State<HorizontalDatePicker> {
       weekFormat: true,
       showHeader: false,
       weekDayFormat: WeekdayFormat.standaloneNarrow,
+      firstDayOfWeek: 1,
       showWeekDays: true,
       height: 80.0,
       selectedDateTime: _currentDate,
