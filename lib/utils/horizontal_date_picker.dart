@@ -1,3 +1,6 @@
+import 'package:appetizer/colors.dart';
+import 'package:appetizer/globals.dart';
+import 'package:appetizer/screens/my_leaves/my_leaves_screen.dart';
 import 'package:flutter/material.dart';
 import '../flutter_calendar_carousel/flutter_calendar_carousel.dart'
     show CalendarCarousel, WeekdayFormat;
@@ -7,6 +10,9 @@ import 'package:provider/provider.dart';
 import '../currentDateModel.dart';
 
 class HorizontalDatePicker extends StatefulWidget {
+  final String token;
+
+  const HorizontalDatePicker({Key key, this.token}) : super(key: key);
   @override
   _HorizontalDatePickerState createState() => _HorizontalDatePickerState();
 }
@@ -52,10 +58,54 @@ class _HorizontalDatePickerState extends State<HorizontalDatePicker> {
       dayPadding: 8,
     );
 
-    return Container(
-      padding: EdgeInsets.all(8.0),
-      color: Colors.brown,
-      child: _calendarCarousel,
+    return Column(
+      children: <Widget>[
+        Container(
+          padding: EdgeInsets.all(8.0),
+          color: Colors.brown,
+          child: _calendarCarousel,
+        ),
+        isCheckedOut
+            ? Container(
+                width: MediaQuery.of(context).size.width,
+                color: appiRed,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
+                      child: Center(
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            "You are currently Checked-Out",
+                            style: TextStyle(color: Colors.white, fontSize: 14),
+                          ),
+                        ),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => MyLeaves(
+                                      token: widget.token,
+                                    )));
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
+                        child: Text(
+                          "CHECK-IN",
+                          style: TextStyle(color: Colors.white, fontSize: 14),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              )
+            : Container(),
+      ],
     );
   }
 }

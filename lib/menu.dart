@@ -1,7 +1,6 @@
 import 'package:appetizer/currentDateModel.dart';
 import 'package:appetizer/globals.dart';
 import 'package:appetizer/noMeals.dart';
-import 'package:appetizer/screens/my_leaves/my_leaves_screen.dart';
 import 'package:appetizer/services/leave.dart';
 import 'package:appetizer/services/user.dart';
 import 'package:appetizer/utils/get_leave_color_from_leave_status.dart';
@@ -330,51 +329,7 @@ class _MenuState extends State<Menu> {
           });
     }
 
-    return Column(
-      children: <Widget>[
-        isCheckedOut
-            ? Container(
-                width: MediaQuery.of(context).size.width,
-                color: appiRed,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
-                      child: Center(
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            "You are currently Checked-Out",
-                            style: TextStyle(color: Colors.white, fontSize: 14),
-                          ),
-                        ),
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => MyLeaves(
-                                      token: widget.token,
-                                    )));
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
-                        child: Text(
-                          "CHECK-IN",
-                          style: TextStyle(color: Colors.white, fontSize: 14),
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              )
-            : Container(),
-        getWeekMenu(widget.token, selectedDateTime.dateTime),
-      ],
-    );
+    return getWeekMenu(widget.token, selectedDateTime.dateTime);
   }
 }
 

@@ -83,7 +83,7 @@ class _HomeState extends State<Home> {
             children: <Widget>[
               Column(
                 children: <Widget>[
-                  HorizontalDatePicker(),
+                  HorizontalDatePicker(token: widget.token),
                   Flexible(
                     child: SingleChildScrollView(
                       child: Menu(
