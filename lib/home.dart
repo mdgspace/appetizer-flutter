@@ -63,9 +63,13 @@ class _HomeState extends State<Home> {
           ),
           actions: <Widget>[
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.fromLTRB(8, 8, 16, 8),
               child: GestureDetector(
-                child: Icon(Icons.calendar_today),
+                child: Container(
+                  height: 23,
+                  width: 23,
+                  child: Image.asset("assets/icons/week_menu.png"),
+                ),
                 onTap: () {
                   Navigator.push(
                       context,

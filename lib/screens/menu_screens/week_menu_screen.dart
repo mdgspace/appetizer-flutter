@@ -36,14 +36,14 @@ class WeekMenu extends StatelessWidget {
             child: Row(
               children: <Widget>[
                 Expanded(
-                  flex: 1,
+                  flex: 5,
                   child: Text(
                     'Day'.toUpperCase(),
                     style: _headerTextStyle,
                   ),
                 ),
                 Expanded(
-                  flex: 2,
+                  flex: 12,
                   child: Center(
                     child: Text(
                       'Breakfast'.toUpperCase(),
@@ -52,7 +52,7 @@ class WeekMenu extends StatelessWidget {
                   ),
                 ),
                 Expanded(
-                  flex: 2,
+                  flex: 12,
                   child: Center(
                     child: Text(
                       'Lunch'.toUpperCase(),
@@ -61,7 +61,7 @@ class WeekMenu extends StatelessWidget {
                   ),
                 ),
                 Expanded(
-                  flex: 2,
+                  flex: 12,
                   child: Center(
                     child: Text(
                       'Dinner'.toUpperCase(),
@@ -172,7 +172,9 @@ class WeekMenu extends StatelessWidget {
             ),
             Text(
               date.toString(),
-              style: TextStyle(color: Color(0xff333333), fontSize: screenHeight<600?0.0:12.0),
+              style: TextStyle(
+                  color: Color(0xff333333),
+                  fontSize: screenHeight < 600 ? 0.0 : 12.0),
             ),
           ],
         ));
@@ -185,7 +187,7 @@ class WeekMenu extends StatelessWidget {
             border: Border(
                 bottom: BorderSide(color: Color(0xff828282)),
                 right: BorderSide(color: Color(0xff828282)))),
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(0.0),
         child: Align(
           alignment: Alignment.centerLeft,
           child: SingleChildScrollView(
@@ -193,9 +195,12 @@ class WeekMenu extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: list
-                  .map((str) => Text(
-                        str,
-                        style: TextStyle(fontSize: 12),
+                  .map((str) => Center(
+                        child: Text(
+                          str,
+                          style: TextStyle(fontSize: 10),
+                          textAlign: TextAlign.center,
+                        ),
                       ))
                   .toList(),
             ),
@@ -205,10 +210,10 @@ class WeekMenu extends StatelessWidget {
     }
 
     final List<Widget> _rowEntries = [
-      Expanded(flex: 1, child: dateWidget),
-      Expanded(flex: 2, child: subMapper(breakfast)),
-      Expanded(flex: 2, child: subMapper(lunch)),
-      Expanded(flex: 2, child: subMapper(dinner))
+      Expanded(flex: 5, child: dateWidget),
+      Expanded(flex: 12, child: subMapper(breakfast)),
+      Expanded(flex: 12, child: subMapper(lunch)),
+      Expanded(flex: 12, child: subMapper(dinner))
     ];
 
     return Row(
