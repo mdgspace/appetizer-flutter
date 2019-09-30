@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:appetizer/alertDialog.dart';
 import 'package:appetizer/chooseNewPassword.dart';
 import 'package:appetizer/forgotPassword.dart';
-import 'package:appetizer/globals.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -14,7 +13,6 @@ import 'colors.dart';
 import 'help.dart';
 import 'package:appetizer/services/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-//import 'package:flutter_web_browser/flutter_web_browser.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class Login extends StatefulWidget {
@@ -38,7 +36,7 @@ class _LoginState extends State<Login> {
   bool isLoginButtonTapped = false;
   bool _isLoginSuccessful = false;
   FlareActor flareActor = FlareActor(
-    "flare_files/Login Appetizer (1).flr",
+    "flare_files/login_appetizer.flr",
     animation: "idle",
   );
   bool _obscureText = true;
@@ -87,24 +85,29 @@ class _LoginState extends State<Login> {
         children: <Widget>[
           Expanded(
             flex: 1,
-            child: Stack(
-              children: <Widget>[
-                getFlareAnimation(),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 0.0),
-                  child: Align(
-                    alignment: Alignment.topCenter,
-                    child: Text(
-                      "Appetizer",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontSize: 50.0,
-                          fontFamily: 'Lobster_Two',
-                          color: Colors.white),
-                    ),
+            child: Container(
+              color: appiBrown,
+              child: SafeArea(
+                child: Container(
+                  color: appiBrown,
+                  child: Stack(
+                    children: <Widget>[
+                      getFlareAnimation(),
+                      Align(
+                        alignment: Alignment.topCenter,
+                        child: Text(
+                          "Appetizer",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontSize: 50.0,
+                              fontFamily: 'Lobster_Two',
+                              color: Colors.white),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              ],
+              ),
             ),
           ),
           Expanded(
@@ -114,7 +117,6 @@ class _LoginState extends State<Login> {
               child: new Form(
                 key: _formKey,
                 child: ListView(
-                  physics: ClampingScrollPhysics(),
                   children: <Widget>[
                     _showEnrollmentInput(),
                     _showPasswordInput(),
@@ -338,7 +340,7 @@ class _LoginState extends State<Login> {
           setState(() {
             _isLoginSuccessful = true;
             isLoginButtonTapped = false;
-            flareActor = FlareActor("flare_files/Login Appetizer (1).flr",
+            flareActor = FlareActor("flare_files/login_appetizer.flr",
                 animation: "Initial To Right");
           });
           await new Future.delayed(const Duration(seconds: 5));
@@ -356,7 +358,7 @@ class _LoginState extends State<Login> {
           });
           _showSnackBar(context, "Incorrect authentication credentials.");
           setState(() {
-            flareActor = FlareActor("flare_files/Login Appetizer (1).flr",
+            flareActor = FlareActor("flare_files/login_appetizer.flr",
                 animation: "Initial To Wrong");
           });
         }
