@@ -3,10 +3,6 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import 'colors.dart';
 import 'login.dart';
 
-double w;
-double h;
-
-
 class OnBoarding extends StatefulWidget {
   @override
   _OnBoarding createState() => _OnBoarding();
@@ -21,18 +17,19 @@ class _OnBoarding extends State<OnBoarding> {
         actions: <Widget>[
           new GestureDetector(
             child: Container(
-              child: Text(
-                "SKIP",
-                style: Theme.of(context).accentTextTheme.skip,
-              ),
+              child: Text("SKIP",
+                  style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead
+                      .copyWith(fontSize: 17, color: appiYellow)),
               alignment: Alignment.centerRight,
               padding: EdgeInsets.all(16),
             ),
             onTap: () {
 //              navigate from here
               Navigator.pop(context);
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => Login()));
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => Login()));
             },
           ),
         ],
@@ -51,7 +48,10 @@ class _OnBoarding extends State<OnBoarding> {
                   child: new Text(
                     "Legible display of mess menu",
                     textAlign: TextAlign.center,
-                    style: Theme.of(context).primaryTextTheme.onBoardingInfoBold,
+                    style: Theme.of(context)
+                        .primaryTextTheme
+                        .display2
+                        .copyWith(fontWeight: FontWeight.bold, fontSize: 20),
                   ),
                 ),
                 Padding(
@@ -66,7 +66,13 @@ class _OnBoarding extends State<OnBoarding> {
                     child: new Text(
                       "Switch between Day and Week view of mess menu",
                       textAlign: TextAlign.center,
-                      style: Theme.of(context).primaryTextTheme.onBoardingInfoLight,
+                      style: Theme.of(context)
+                          .primaryTextTheme
+                          .display2
+                          .copyWith(
+                              fontSize: 18,
+                              fontFamily: "OpenSans-Light.ttf",
+                              fontWeight: FontWeight.normal),
                     ),
                   ),
                 )
@@ -83,7 +89,10 @@ class _OnBoarding extends State<OnBoarding> {
                   child: new Text(
                     "Check-in/Check-out whenever you want",
                     textAlign: TextAlign.center,
-                    style: Theme.of(context).primaryTextTheme.onBoardingInfoBold,
+                    style: Theme.of(context)
+                        .primaryTextTheme
+                        .display2
+                        .copyWith(fontWeight: FontWeight.bold, fontSize: 20),
                   ),
                 ),
                 Padding(
@@ -98,7 +107,13 @@ class _OnBoarding extends State<OnBoarding> {
                     child: new Text(
                       "One-button check-Out feature to leave mess in sequence",
                       textAlign: TextAlign.center,
-                      style: Theme.of(context).primaryTextTheme.onBoardingInfoLight,
+                      style: Theme.of(context)
+                          .primaryTextTheme
+                          .display2
+                          .copyWith(
+                              fontSize: 18,
+                              fontFamily: "OpenSans-Light.ttf",
+                              fontWeight: FontWeight.normal),
                     ),
                   ),
                 )
@@ -115,7 +130,10 @@ class _OnBoarding extends State<OnBoarding> {
                   child: new Text(
                     "Skip a Particular meal",
                     textAlign: TextAlign.center,
-                    style: Theme.of(context).primaryTextTheme.onBoardingInfoBold,
+                    style: Theme.of(context)
+                        .primaryTextTheme
+                        .display2
+                        .copyWith(fontWeight: FontWeight.bold, fontSize: 20),
                   ),
                 ),
                 Padding(
@@ -130,7 +148,13 @@ class _OnBoarding extends State<OnBoarding> {
                     child: new Text(
                       "Not excited about the meal leave it and get rebate",
                       textAlign: TextAlign.center,
-                      style: Theme.of(context).primaryTextTheme.onBoardingInfoLight,
+                      style: Theme.of(context)
+                          .primaryTextTheme
+                          .display2
+                          .copyWith(
+                              fontSize: 18,
+                              fontFamily: "OpenSans-Light.ttf",
+                              fontWeight: FontWeight.normal),
                     ),
                   ),
                 )
@@ -147,7 +171,10 @@ class _OnBoarding extends State<OnBoarding> {
                   child: new Text(
                     "A self-sustained system for feedback and suggestions",
                     textAlign: TextAlign.center,
-                    style: Theme.of(context).primaryTextTheme.onBoardingInfoBold,
+                    style: Theme.of(context)
+                        .primaryTextTheme
+                        .display2
+                        .copyWith(fontWeight: FontWeight.bold, fontSize: 20),
                   ),
                 ),
                 Padding(
@@ -162,7 +189,13 @@ class _OnBoarding extends State<OnBoarding> {
                     child: new Text(
                       "One place to manage all your feedback",
                       textAlign: TextAlign.center,
-                      style: Theme.of(context).primaryTextTheme.onBoardingInfoLight,
+                      style: Theme.of(context)
+                          .primaryTextTheme
+                          .display2
+                          .copyWith(
+                              fontSize: 18,
+                              fontFamily: "OpenSans-Light.ttf",
+                              fontWeight: FontWeight.normal),
                     ),
                   ),
                 )
