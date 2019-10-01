@@ -3,7 +3,7 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import 'colors.dart';
 import 'login.dart';
 
-void main() => runApp(OnBoarding());
+//void main() => runApp(OnBoarding());
 double w;
 double h;
 
