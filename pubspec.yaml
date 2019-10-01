@@ -60,11 +60,7 @@ flutter:
   uses-material-design: true
 
   assets:
-    - flare_files/SplashScreen.flr
-    - flare_files/Login Appetizer (1).flr
-    - flare_files/SplashScreen 2.0.flr
-    - flare_files/SplashScreen 2.0 (1).flr
-    - flare_files/Appetizer splash screen.flr
+    - flare_files/login_appetizer.flr
     - assets/images/
     - assets/icons/
 
