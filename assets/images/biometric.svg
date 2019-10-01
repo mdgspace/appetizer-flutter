@@ -1,0 +1,34 @@
+<svg width="663" height="534" viewBox="0 0 663 534" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="FingerprintScannner">
+<rect id="Rectangle 6" x="426.404" y="31.5" width="183.821" height="9" fill="#BDBDBD"/>
+<rect id="Rectangle 6_2" x="426.404" y="70.5" width="183.821" height="9" fill="#BDBDBD"/>
+<rect id="Rectangle 6_3" x="426.404" y="109.5" width="183.821" height="9" fill="#BDBDBD"/>
+<rect id="Rectangle 5" width="656.934" height="534" fill="#4F4F4F"/>
+<g id="Ellipse" style="mix-blend-mode:color-dodge">
+<ellipse cx="219.982" cy="276" rx="174.781" ry="174" fill="#F2F2F2"/>
+</g>
+<ellipse id="Ellipse 2" cx="518.315" cy="297" rx="96.4306" ry="96" fill="#828282"/>
+<ellipse id="Ellipse 3" cx="521.328" cy="321" rx="72.323" ry="72" fill="#4F4F4F"/>
+<rect id="Rectangle 7" x="491.194" y="282" width="60.2692" height="78" fill="#BDBDBD"/>
+<g id="Vector 3" filter="url(#filter0_d)">
+<path d="M549.995 343.002C551.011 307.273 534.434 297.633 524.381 301.002C503.889 295.002 499.771 326.502 500.273 343.002V449.372V534H549.995H663V524.502C660.489 521.002 655.466 511.902 655.466 503.502C655.466 495.102 637.386 492.502 628.345 492.252V481.002C625.934 467.802 603.233 470.502 592.184 473.502V467.502C592.184 448.302 564.058 449.502 549.995 452.502V388.002V376.002C549.995 372.402 548.979 378.73 549.995 343.002Z" fill="#FAC597"/>
+</g>
+<path id="Vector 4" d="M530.982 306H514.408C508.381 313.2 508.884 329 509.888 336H535.503C539.119 328.8 533.996 313 530.982 306Z" fill="#FBE9B1"/>
+<path id="Vector 5" d="M509.45 369H538.078" stroke="#D8BA62"/>
+<path id="Vector 6" d="M516.983 375H529.037" stroke="#D8BA62"/>
+<path id="Vector 7" d="M509.45 427.5H539.584" stroke="#D8BA62"/>
+<path id="Vector 8" d="M515.477 435H536.571" stroke="#D8BA62"/>
+<path id="Vector 9" d="M441.472 487.5C455.936 487.5 481.651 518.5 492.7 534H427.911L421.884 523.5L411.337 504C405.31 482.4 428.916 484 441.472 487.5Z" fill="#FAC597"/>
+</g>
+<defs>
+<filter id="filter0_d" x="473.234" y="273.252" width="189.766" height="260.748" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"/>
+<feOffset dx="-5" dy="-5"/>
+<feGaussianBlur stdDeviation="2"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
+</filter>
+</defs>
+</svg>
