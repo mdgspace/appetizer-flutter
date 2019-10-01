@@ -34,7 +34,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
   Animation _chefWrongAnimation;
   Animation _chefCorrectAnimation;
 
-  bool areCredentialsCorrect = false;
+  bool areCredentialsCorrect;
 
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   final _formKey = new GlobalKey<FormState>();
@@ -384,11 +384,6 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
       FocusScope.of(context).requestFocus(new FocusNode());
       userLogin(_enrollmentNo, _password).then((loginCredentials) async {
         if (loginCredentials.enrNo.toString() == _enrollmentNo) {
-          setState(() {
-            _chefWrongController.reset();
-            _chefCorrectController.reset();
-            areCredentialsCorrect = true;
-          });
           isCheckedOut = loginCredentials.isCheckedOut;
           saveUserDetails(
             loginCredentials.enrNo.toString(),
@@ -400,13 +395,30 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
             loginCredentials.email,
             loginCredentials.contactNo,
           );
-          _chefCorrectController.forward();
+          if (areCredentialsCorrect == null) {
+            _chefCorrectController.forward();
+            setState(() {
+              flareActor = FlareActor("flare_files/login_appetizer.flr",
+                  animation: "Initial To Right");
+            });
+          } else {
+            _chefWrongController.duration = Duration(milliseconds: 600);
+            _chefCorrectController.duration = Duration(milliseconds: 1200);
+            _chefWrongController.reverse();
+            await Future.delayed(Duration(milliseconds: 100));
+            _chefCorrectController.forward();
+            setState(() {
+              flareActor = FlareActor("flare_files/login_appetizer.flr",
+                  animation: "Wrong To Right");
+            });
+          }
+          setState(() {
+            areCredentialsCorrect = true;
+          });
           _showSnackBar(context, "Login Successful");
           setState(() {
             _isLoginSuccessful = true;
             isLoginButtonTapped = false;
-            flareActor = FlareActor("flare_files/login_appetizer.flr",
-                animation: "Initial To Right");
           });
           await new Future.delayed(const Duration(seconds: 5));
           Navigator.pushReplacement(context,
