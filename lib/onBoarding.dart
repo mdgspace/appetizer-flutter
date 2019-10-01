@@ -38,11 +38,7 @@ class _MyOnBoardingPage extends State<MyOnBoardingPage> {
             child: Container(
               child: Text(
                 "SKIP",
-                style: TextStyle(
-                    color: appiYellow,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: "OpenSans-Bold.ttf",
-                    fontSize: 18),
+                style: Theme.of(context).accentTextTheme.skip,
               ),
               alignment: Alignment.centerRight,
               padding: EdgeInsets.all(16),
@@ -70,11 +66,7 @@ class _MyOnBoardingPage extends State<MyOnBoardingPage> {
                   child: new Text(
                     "Legible display of mess menu",
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: "OpenSans-Bold.ttf",
-                        fontSize: 20),
+                    style: Theme.of(context).primaryTextTheme.onBoardingInfoBold,
                   ),
                 ),
                 Padding(
@@ -89,10 +81,7 @@ class _MyOnBoardingPage extends State<MyOnBoardingPage> {
                     child: new Text(
                       "Switch between Day and Week view of mess menu",
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontFamily: "OpenSans-Light.ttf"),
+                      style: Theme.of(context).primaryTextTheme.onBoardingInfoLight,
                     ),
                   ),
                 )
@@ -109,11 +98,7 @@ class _MyOnBoardingPage extends State<MyOnBoardingPage> {
                   child: new Text(
                     "Check-in/Check-out whenever you want",
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: "OpenSans-Bold.ttf",
-                        fontSize: 20),
+                    style: Theme.of(context).primaryTextTheme.onBoardingInfoBold,
                   ),
                 ),
                 Padding(
@@ -128,10 +113,7 @@ class _MyOnBoardingPage extends State<MyOnBoardingPage> {
                     child: new Text(
                       "One-button check-Out feature to leave mess in sequence",
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontFamily: "OpenSans-Light.ttf"),
+                      style: Theme.of(context).primaryTextTheme.onBoardingInfoLight,
                     ),
                   ),
                 )
@@ -148,11 +130,7 @@ class _MyOnBoardingPage extends State<MyOnBoardingPage> {
                   child: new Text(
                     "Skip a Particular meal",
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: "OpenSans-Bold.ttf",
-                        fontSize: 20),
+                    style: Theme.of(context).primaryTextTheme.onBoardingInfoBold,
                   ),
                 ),
                 Padding(
@@ -167,10 +145,7 @@ class _MyOnBoardingPage extends State<MyOnBoardingPage> {
                     child: new Text(
                       "Not excited about the meal leave it and get rebate",
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontFamily: "OpenSans-Light.ttf"),
+                      style: Theme.of(context).primaryTextTheme.onBoardingInfoLight,
                     ),
                   ),
                 )
@@ -187,11 +162,7 @@ class _MyOnBoardingPage extends State<MyOnBoardingPage> {
                   child: new Text(
                     "A self-sustained system for feedback and suggestions",
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: "OpenSans-Bold.ttf",
-                        fontSize: 20),
+                    style: Theme.of(context).primaryTextTheme.onBoardingInfoBold,
                   ),
                 ),
                 Padding(
@@ -206,10 +177,7 @@ class _MyOnBoardingPage extends State<MyOnBoardingPage> {
                     child: new Text(
                       "One place to manage all your feedback",
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontFamily: "OpenSans-Light.ttf"),
+                      style: Theme.of(context).primaryTextTheme.onBoardingInfoLight,
                     ),
                   ),
                 )

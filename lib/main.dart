@@ -46,6 +46,7 @@ void main() async {
             fontSize: 16,
             fontWeight: FontWeight.w500,
           ),
+
         ),
         primaryTextTheme: TextTheme(
           //display1 theme is used for the Login Button
@@ -92,6 +93,26 @@ void main() async {
             fontSize: 16.0,
             color: appiYellow,
             fontFamily: "OpenSans",
+          ),
+          /// used for skip button in onBoarding screen
+          skip: new TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 18,
+            color : appiYellow,
+            fontFamily: "OpenSans"
+          ),
+          /// for heading in onBoarding Screen
+          onBoardingInfoBold:new TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontFamily: "OpenSans-Bold.ttf",
+              fontSize: 20
+          ),
+          ///for description in onBoarding Screen
+          onBoardingInfoLight: new TextStyle(
+              color: Colors.white,
+              fontSize: 18,
+              fontFamily: "OpenSans-Light.ttf"
           ),
         ),
       ),
