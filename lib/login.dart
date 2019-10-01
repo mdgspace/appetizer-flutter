@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'globals.dart';
 import 'home.dart';
 import 'colors.dart';
 import 'help.dart';
@@ -325,7 +326,7 @@ class _LoginState extends State<Login> {
       FocusScope.of(context).requestFocus(new FocusNode());
       userLogin(_enrollmentNo, _password).then((loginCredentials) async {
         if (loginCredentials.enrNo.toString() == _enrollmentNo) {
-          //isCheckedOut = loginCredentials.isCheckedOut;
+          isCheckedOut = loginCredentials.isCheckedOut;
           saveUserDetails(
             loginCredentials.enrNo.toString(),
             loginCredentials.name,
