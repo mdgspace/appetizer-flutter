@@ -65,46 +65,50 @@ class _HorizontalDatePickerState extends State<HorizontalDatePicker> {
           color: Colors.brown,
           child: _calendarCarousel,
         ),
-        isCheckedOut
-            ? Container(
-                width: MediaQuery.of(context).size.width,
-                color: appiRed,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
-                      child: Center(
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            "You are currently Checked-Out",
-                            style: TextStyle(color: Colors.white, fontSize: 14),
+        isCheckedOut == null
+            ? Container()
+            : isCheckedOut
+                ? Container(
+                    width: MediaQuery.of(context).size.width,
+                    color: appiRed,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
+                          child: Center(
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                "You are currently Checked-Out",
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 14),
+                              ),
+                            ),
                           ),
                         ),
-                      ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => MyLeaves(
+                                          token: widget.token,
+                                        )));
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
+                            child: Text(
+                              "CHECK-IN",
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 14),
+                            ),
+                          ),
+                        )
+                      ],
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => MyLeaves(
-                                      token: widget.token,
-                                    )));
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
-                        child: Text(
-                          "CHECK-IN",
-                          style: TextStyle(color: Colors.white, fontSize: 14),
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              )
-            : Container(),
+                  )
+                : Container(),
       ],
     );
   }

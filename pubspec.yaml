@@ -21,6 +21,7 @@ dependencies:
   flutter:
     sdk: flutter
   flare_flutter: ^1.0.0
+  smart_flare:
   flutter_swiper: ^1.1.6
   intl: any
   url_launcher: ^5.0.2

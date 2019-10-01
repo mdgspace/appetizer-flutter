@@ -3,10 +3,12 @@ import 'dart:io';
 import 'package:appetizer/alertDialog.dart';
 import 'package:appetizer/chooseNewPassword.dart';
 import 'package:appetizer/forgotPassword.dart';
+import 'package:appetizer/globals.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'home.dart';
 import 'colors.dart';
@@ -14,6 +16,7 @@ import 'help.dart';
 import 'package:appetizer/services/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter/animation.dart';
 
 class Login extends StatefulWidget {
   final String code;
@@ -24,7 +27,15 @@ class Login extends StatefulWidget {
   _LoginState createState() => _LoginState();
 }
 
-class _LoginState extends State<Login> {
+class _LoginState extends State<Login> with TickerProviderStateMixin {
+  AnimationController _chefWrongController;
+  AnimationController _chefCorrectController;
+
+  Animation _chefWrongAnimation;
+  Animation _chefCorrectAnimation;
+
+  bool areCredentialsCorrect = false;
+
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   final _formKey = new GlobalKey<FormState>();
 
@@ -57,6 +68,22 @@ class _LoginState extends State<Login> {
           .addPostFrameCallback((_) => verifyUser(context));
     }
     showConnectivityStatus();
+
+    _chefCorrectController =
+        AnimationController(vsync: this, duration: Duration(seconds: 3));
+    _chefWrongController =
+        AnimationController(vsync: this, duration: Duration(seconds: 3));
+
+    _chefCorrectAnimation =
+        Tween(begin: 1.0, end: 0.21).animate(CurvedAnimation(
+      parent: _chefCorrectController,
+      curve: Curves.fastOutSlowIn,
+    ));
+
+    _chefWrongAnimation = Tween(begin: 1.0, end: 0.21).animate(CurvedAnimation(
+      parent: _chefWrongController,
+      curve: Curves.fastOutSlowIn,
+    ));
   }
 
   Future showConnectivityStatus() async {
@@ -78,40 +105,72 @@ class _LoginState extends State<Login> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    _chefWrongController.dispose();
+    _chefCorrectController.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+
     return Scaffold(
       key: _scaffoldKey,
       body: Column(
         children: <Widget>[
           Expanded(
-            flex: 1,
-            child: Container(
-              color: appiBrown,
-              child: SafeArea(
-                child: Container(
+            child: AnimatedBuilder(
+              animation: areCredentialsCorrect == null
+                  ? _chefWrongAnimation
+                  : areCredentialsCorrect
+                      ? _chefCorrectAnimation
+                      : _chefWrongAnimation,
+              builder: (BuildContext context, Widget child) {
+                return Container(
                   color: appiBrown,
-                  child: Stack(
-                    children: <Widget>[
-                      getFlareAnimation(),
-                      Align(
-                        alignment: Alignment.topCenter,
-                        child: Text(
-                          "Appetizer",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontSize: 50.0,
-                              fontFamily: 'Lobster_Two',
-                              color: Colors.white),
-                        ),
+                  child: SafeArea(
+                    child: Container(
+                      color: appiBrown,
+                      child: Stack(
+                        children: <Widget>[
+                          flareActor,
+                          Transform(
+                            transform: Matrix4.translationValues(
+                                _chefCorrectAnimation.value * width, 0, 0),
+                            child: Align(
+                                alignment: Alignment.bottomCenter,
+                                child: SvgPicture.asset(
+                                    "assets/images/happyChef.svg")),
+                          ),
+                          Transform(
+                            transform: Matrix4.translationValues(
+                                _chefWrongAnimation.value * width, 0, 0),
+                            child: Align(
+                                alignment: Alignment.bottomCenter,
+                                child: SvgPicture.asset(
+                                    "assets/images/sadChef.svg")),
+                          ),
+                          Align(
+                            alignment: Alignment.topCenter,
+                            child: Text(
+                              "Appetizer",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontSize: 50.0,
+                                  fontFamily: 'Lobster_Two',
+                                  color: Colors.white),
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
-                ),
-              ),
+                );
+              },
             ),
           ),
           Expanded(
-            flex: 1,
             child: Padding(
               padding: const EdgeInsets.fromLTRB(20.0, 0, 20.0, 0),
               child: new Form(
@@ -325,7 +384,12 @@ class _LoginState extends State<Login> {
       FocusScope.of(context).requestFocus(new FocusNode());
       userLogin(_enrollmentNo, _password).then((loginCredentials) async {
         if (loginCredentials.enrNo.toString() == _enrollmentNo) {
-          //isCheckedOut = loginCredentials.isCheckedOut;
+          setState(() {
+            _chefWrongController.reset();
+            _chefCorrectController.reset();
+            areCredentialsCorrect = true;
+          });
+          isCheckedOut = loginCredentials.isCheckedOut;
           saveUserDetails(
             loginCredentials.enrNo.toString(),
             loginCredentials.name,
@@ -336,6 +400,7 @@ class _LoginState extends State<Login> {
             loginCredentials.email,
             loginCredentials.contactNo,
           );
+          _chefCorrectController.forward();
           _showSnackBar(context, "Login Successful");
           setState(() {
             _isLoginSuccessful = true;
@@ -354,8 +419,12 @@ class _LoginState extends State<Login> {
           }));
         } else {
           setState(() {
+            _chefWrongController.reset();
+            _chefCorrectController.reset();
+            areCredentialsCorrect = false;
             isLoginButtonTapped = false;
           });
+          _chefWrongController.forward();
           _showSnackBar(context, "Incorrect authentication credentials.");
           setState(() {
             flareActor = FlareActor("flare_files/login_appetizer.flr",
@@ -455,11 +524,11 @@ class _LoginState extends State<Login> {
     }
   }
 
-  void _help() {
+  Future _help() async {
     Navigator.push(context, MaterialPageRoute(builder: (context) => Help()));
   }
 
-  void _forgotPassword() {
+  Future _forgotPassword() async {
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => ForgotPass()));
   }
