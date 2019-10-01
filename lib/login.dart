@@ -8,12 +8,14 @@ import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'home.dart';
 import 'colors.dart';
 import 'help.dart';
 import 'package:appetizer/services/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter_web_browser/flutter_web_browser.dart';
+//import 'package:flutter_web_browser/flutter_web_browser.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class Login extends StatefulWidget {
   final String code;
@@ -51,9 +53,29 @@ class _LoginState extends State<Login> {
   @override
   void initState() {
     super.initState();
-    if (widget.code != null) {
+    print(widget.code);
+    if (widget.code != null && widget.code != "") {
       SchedulerBinding.instance
           .addPostFrameCallback((_) => verifyUser(context));
+    }
+    showConnectivityStatus();
+  }
+
+  Future showConnectivityStatus() async {
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        print('connected');
+      }
+    } on SocketException catch (_) {
+      print('not connected');
+      Fluttertoast.showToast(
+        msg: "Please check your connection!",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIos: 7,
+        fontSize: 12.0,
+      );
     }
   }
 
@@ -176,6 +198,8 @@ class _LoginState extends State<Login> {
   }
 
   Widget _showLoginButton() {
+    showConnectivityStatus();
+
     return (isLoginButtonTapped)
         ? new FlatButton(
             padding: EdgeInsets.all(8),
@@ -299,7 +323,7 @@ class _LoginState extends State<Login> {
       FocusScope.of(context).requestFocus(new FocusNode());
       userLogin(_enrollmentNo, _password).then((loginCredentials) async {
         if (loginCredentials.enrNo.toString() == _enrollmentNo) {
-          isCheckedOut = loginCredentials.isCheckedOut;
+          //isCheckedOut = loginCredentials.isCheckedOut;
           saveUserDetails(
             loginCredentials.enrNo.toString(),
             loginCredentials.name,
@@ -371,7 +395,8 @@ class _LoginState extends State<Login> {
   }
 
   void _channelILogin() {
-    FlutterWebBrowser.openWebPage(url: url);
+    //FlutterWebBrowser.openWebPage(url: url);
+    launch(url);
     exit(0);
   }
 

@@ -721,6 +721,7 @@ class _CalendarState<T> extends State<CalendarCarousel<T>> {
 
     _startWeekday = date1.weekday - firstDayOfWeek;
     _endWeekday = date2.weekday - firstDayOfWeek;
+
     this._dates = [
       date0,
       date1,
@@ -789,7 +790,8 @@ class _CalendarState<T> extends State<CalendarCarousel<T>> {
         setState(() {
           _isReloadSelectedDate = false;
           _startWeekday = dates[page].weekday - firstDayOfWeek;
-          _endWeekday = dates[page + 1].weekday - firstDayOfWeek;
+          _endWeekday = dates[page + 1].weekday -firstDayOfWeek;
+
           this._dates = dates;
         });
 

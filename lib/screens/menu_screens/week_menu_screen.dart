@@ -141,7 +141,7 @@ class WeekMenu extends StatelessWidget {
     final height = (MediaQuery.of(context).size.height -
             AppBar().preferredSize.height * 2.5) /
         7;
-
+    final screenHeight = MediaQuery.of(context).size.height;
     final dateWidget = Container(
         height: height,
         padding: const EdgeInsets.all(8.0),
@@ -164,7 +164,7 @@ class WeekMenu extends StatelessWidget {
                       child: Text(
                     day,
                     style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 12,
                     ),
                   )),
                 ),
@@ -172,7 +172,7 @@ class WeekMenu extends StatelessWidget {
             ),
             Text(
               date.toString(),
-              style: TextStyle(color: Color(0xff333333), fontSize: 12),
+              style: TextStyle(color: Color(0xff333333), fontSize: screenHeight<600?0.0:12.0),
             ),
           ],
         ));
