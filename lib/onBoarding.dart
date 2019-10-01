@@ -3,31 +3,16 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import 'colors.dart';
 import 'login.dart';
 
-//void main() => runApp(OnBoarding());
 double w;
 double h;
 
-class OnBoarding extends StatelessWidget {
-  // This widget is the root of your application.
+
+class OnBoarding extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'OnBoarding',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      debugShowCheckedModeBanner: false,
-      home: MyOnBoardingPage(),
-    );
-  }
+  _OnBoarding createState() => _OnBoarding();
 }
 
-class MyOnBoardingPage extends StatefulWidget {
-  @override
-  _MyOnBoardingPage createState() => _MyOnBoardingPage();
-}
-
-class _MyOnBoardingPage extends State<MyOnBoardingPage> {
+class _OnBoarding extends State<OnBoarding> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
