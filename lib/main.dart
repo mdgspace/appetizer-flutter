@@ -1,8 +1,10 @@
 import 'package:appetizer/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'colors.dart';
 import 'login.dart';
+import 'onBoarding.dart';
 
 void main() async {
 
@@ -109,10 +111,22 @@ class _AppetizerState extends State<Appetizer> {
   static const platform = const MethodChannel('app.channel.shared.data');
   String code;
   var sharedData;
+  Future CheckfirstSeen() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool _seen = (prefs.getBool('seen') ?? false);
+
+    if (_seen) {
+      navigate();
+    } else {
+      prefs.setBool('seen', true);
+      Navigator.of(context).pushReplacement(
+          new MaterialPageRoute(builder: (context) => new OnBoarding()));
+    }
+  }
 
   void initState() {
     getIntent();
-    navigate();
+    CheckfirstSeen();
     super.initState();
   }
 
