@@ -7,20 +7,20 @@ void showCustomDialog(BuildContext context, String message) {
     child: new SimpleDialog(
       children: <Widget>[
         Padding(
-          padding: const EdgeInsets.all(18.0),
+          padding: const EdgeInsets.fromLTRB(36, 10, 36, 10),
           child: new Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               new CircularProgressIndicator(
                 valueColor: new AlwaysStoppedAnimation<Color>(appiYellow),
               ),
-              new Expanded(child: new Container()),
               Padding(
-                padding: const EdgeInsets.only(right: 30.0),
+                padding: const EdgeInsets.only(left: 20, right: 20),
                 child: Center(
                   child: new Text(
                     message,
                     style: new TextStyle(
-                      fontSize: 15,
+                      fontSize: 18,
                     ),
                   ),
                 ),
