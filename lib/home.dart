@@ -1,3 +1,4 @@
+import 'package:appetizer/services/leave.dart';
 import 'package:flutter/material.dart';
 
 import 'package:appetizer/currentDateModel.dart';
@@ -48,10 +49,81 @@ class _HomeState extends State<Home> {
   String version = "v1.5.6r";
 
   @override
+  void initState() {
+    super.initState();
+    userMeGet(widget.token).then((me) {
+      setState(() {
+        isCheckedOut = me.isCheckedOut;
+      });
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       builder: (context) => CurrentDateModel(),
       child: Scaffold(
+        floatingActionButton: !isCheckedOut
+            ? FloatingActionButton(
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)),
+                          title: new Text(
+                            "Check Out",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          content: new Text(
+                              "Are you sure you would like to check out?"),
+                          actions: <Widget>[
+                            new FlatButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: new Text(
+                                "CANCEL",
+                                style: TextStyle(
+                                    color: appiYellow,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              highlightColor: Colors.transparent,
+                              splashColor: Colors.transparent,
+                            ),
+                            new FlatButton(
+                              child: new Text(
+                                "CHECK OUT",
+                                style: TextStyle(
+                                    color: appiYellow,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              onPressed: () async {
+                                Navigator.pop(context);
+                                check(widget.token).then((check) {
+                                  setState(() {
+                                    isCheckedOut = check.isCheckedOut;
+                                  });
+                                });
+                              },
+                              highlightColor: Colors.transparent,
+                              splashColor: Colors.transparent,
+                            ),
+                          ],
+                        );
+                      });
+                },
+                backgroundColor: appiYellowLogo,
+                child: Image.asset(
+                  "assets/images/checkOut.png",
+                  height: 25,
+                  width: 25,
+                ),
+              )
+            : null,
         key: menuScaffoldKey,
         appBar: AppBar(
           elevation: 0,
