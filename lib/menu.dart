@@ -418,6 +418,9 @@ class _MenuCardState extends State<MenuCard> {
               context: context,
               builder: (BuildContext dialogContext) {
                 return AlertDialog(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
                   title: new Text(
                     "Cancel Leave",
                     style: TextStyle(
@@ -433,7 +436,8 @@ class _MenuCardState extends State<MenuCard> {
                       },
                       child: new Text(
                         "CANCEL",
-                        style: TextStyle(color: appiYellow),
+                        style: TextStyle(
+                            color: appiYellow, fontWeight: FontWeight.bold),
                       ),
                       highlightColor: Colors.transparent,
                       splashColor: Colors.transparent,
@@ -441,7 +445,8 @@ class _MenuCardState extends State<MenuCard> {
                     new FlatButton(
                       child: new Text(
                         "CANCEL LEAVE",
-                        style: TextStyle(color: appiYellow),
+                        style: TextStyle(
+                            color: appiYellow, fontWeight: FontWeight.bold),
                       ),
                       onPressed: () async {
                         Navigator.pop(context);
@@ -496,6 +501,9 @@ class _MenuCardState extends State<MenuCard> {
               context: context,
               builder: (BuildContext dialogContext) {
                 return AlertDialog(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
                   title: new Text(
                     "Leave Meal",
                     style: TextStyle(
@@ -511,7 +519,8 @@ class _MenuCardState extends State<MenuCard> {
                       },
                       child: new Text(
                         "CANCEL",
-                        style: TextStyle(color: appiYellow),
+                        style: TextStyle(
+                            color: appiYellow, fontWeight: FontWeight.bold),
                       ),
                       highlightColor: Colors.transparent,
                       splashColor: Colors.transparent,
@@ -519,7 +528,8 @@ class _MenuCardState extends State<MenuCard> {
                     new FlatButton(
                       child: new Text(
                         "SKIP MEAL",
-                        style: TextStyle(color: appiYellow),
+                        style: TextStyle(
+                            color: appiYellow, fontWeight: FontWeight.bold),
                       ),
                       onPressed: () async {
                         Navigator.pop(context);

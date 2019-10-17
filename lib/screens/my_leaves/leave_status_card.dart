@@ -150,6 +150,9 @@ class _LeaveStatusCardState extends State<LeaveStatusCard> {
           showDialog(
             context: context,
             builder: (context) => AlertDialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
               title: Text("Check Out"),
               content: Text("Are you sure you would like to Check-Out?"),
               actions: <Widget>[

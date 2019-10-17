@@ -353,6 +353,9 @@ class _HomeState extends State<Home> {
                                 context: context,
                                 builder: (BuildContext context) {
                                   return AlertDialog(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
                                     title: new Text(
                                       "Log Out",
                                       style: TextStyle(
@@ -368,7 +371,9 @@ class _HomeState extends State<Home> {
                                         },
                                         child: new Text(
                                           "CANCEL",
-                                          style: TextStyle(color: appiYellow),
+                                          style: TextStyle(
+                                              color: appiYellow,
+                                              fontWeight: FontWeight.bold),
                                         ),
                                         highlightColor: Colors.transparent,
                                         splashColor: Colors.transparent,
@@ -376,7 +381,9 @@ class _HomeState extends State<Home> {
                                       new FlatButton(
                                         child: new Text(
                                           "LOG OUT",
-                                          style: TextStyle(color: appiYellow),
+                                          style: TextStyle(
+                                              color: appiYellow,
+                                              fontWeight: FontWeight.bold),
                                         ),
                                         onPressed: () async {
                                           showCustomDialog(

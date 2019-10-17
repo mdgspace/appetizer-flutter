@@ -144,6 +144,9 @@ class _SettingsState extends State<Settings> {
                               context: context,
                               builder: (BuildContext context) {
                                 return AlertDialog(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
                                   title: new Text(
                                     "Log Out",
                                     style: TextStyle(
@@ -159,7 +162,7 @@ class _SettingsState extends State<Settings> {
                                       },
                                       child: new Text(
                                         "CANCEL",
-                                        style: TextStyle(color: appiYellow),
+                                        style: TextStyle(color: appiYellow, fontWeight: FontWeight.bold),
                                       ),
                                       highlightColor: Colors.transparent,
                                       splashColor: Colors.transparent,
@@ -167,7 +170,7 @@ class _SettingsState extends State<Settings> {
                                     new FlatButton(
                                       child: new Text(
                                         "LOG OUT",
-                                        style: TextStyle(color: appiYellow),
+                                        style: TextStyle(color: appiYellow, fontWeight: FontWeight.bold),
                                       ),
                                       onPressed: () async {
                                         showCustomDialog(
