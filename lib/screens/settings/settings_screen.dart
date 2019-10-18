@@ -4,6 +4,7 @@ import 'package:appetizer/screens/settings/list_item.dart';
 import 'package:appetizer/screens/settings/page_footer.dart';
 import 'package:appetizer/screens/settings/user_details.dart';
 import 'package:appetizer/services/user.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:share/share.dart';
@@ -32,6 +33,9 @@ class _SettingsState extends State<Settings> {
   void initState() {
     super.initState();
     getUserDetails();
+    SharedPreferences.getInstance().then((sharedPrefs) {
+      prefs = sharedPrefs;
+    });
   }
 
   Future getUserDetails() async {
@@ -142,7 +146,7 @@ class _SettingsState extends State<Settings> {
                           //Navigator.pop(context);
                           showDialog(
                               context: context,
-                              builder: (BuildContext context) {
+                              builder: (BuildContext alertContext) {
                                 return AlertDialog(
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(8),
@@ -158,11 +162,13 @@ class _SettingsState extends State<Settings> {
                                   actions: <Widget>[
                                     new FlatButton(
                                       onPressed: () {
-                                        Navigator.pop(context);
+                                        Navigator.pop(alertContext);
                                       },
                                       child: new Text(
                                         "CANCEL",
-                                        style: TextStyle(color: appiYellow, fontWeight: FontWeight.bold),
+                                        style: TextStyle(
+                                            color: appiYellow,
+                                            fontWeight: FontWeight.bold),
                                       ),
                                       highlightColor: Colors.transparent,
                                       splashColor: Colors.transparent,
@@ -170,19 +176,32 @@ class _SettingsState extends State<Settings> {
                                     new FlatButton(
                                       child: new Text(
                                         "LOG OUT",
-                                        style: TextStyle(color: appiYellow, fontWeight: FontWeight.bold),
+                                        style: TextStyle(
+                                            color: appiYellow,
+                                            fontWeight: FontWeight.bold),
                                       ),
                                       onPressed: () async {
+                                        Navigator.pop(alertContext);
                                         showCustomDialog(
                                             context, "Logging You Out");
-
-                                        userLogout(prefs.getString("token"));
-                                        Navigator.of(context)
-                                            .pushNamedAndRemoveUntil(
-                                                "/login",
-                                                (Route<dynamic> route) =>
-                                                    false);
-                                        prefs.clear();
+                                        FirebaseMessaging fcm =
+                                            FirebaseMessaging();
+                                        SharedPreferences.getInstance()
+                                            .then((prefs) {
+                                          userMeGet(prefs.getString("token"))
+                                              .then((me) async {
+                                            fcm.unsubscribeFromTopic(
+                                                "release-" + me.hostelCode);
+                                            userLogout(
+                                                prefs.getString("token"));
+                                            Navigator.of(context)
+                                                .pushNamedAndRemoveUntil(
+                                                    "/login",
+                                                    (Route<dynamic> route) =>
+                                                        false);
+                                            prefs.clear();
+                                          });
+                                        });
                                       },
                                       highlightColor: Colors.transparent,
                                       splashColor: Colors.transparent,

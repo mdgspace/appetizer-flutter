@@ -424,9 +424,10 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
           });
           FirebaseMessaging fcm = FirebaseMessaging();
           fcm.getToken().then((fcmToken) {
+            print(fcmToken);
             userMePatchFCM(loginCredentials.token, fcmToken).then((me) {
               userMeGet(loginCredentials.token).then((me) {
-                fcm.subscribeToTopic("debug-" + me.hostelCode);
+                fcm.subscribeToTopic("release-" + me.hostelCode);
               });
             });
           });
