@@ -1,4 +1,5 @@
 import 'package:appetizer/services/leave.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
 import 'package:appetizer/currentDateModel.dart';
@@ -47,6 +48,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   String version = "v1.5.6r";
+  FirebaseMessaging _fcm = FirebaseMessaging();
 
   @override
   void initState() {
@@ -56,6 +58,24 @@ class _HomeState extends State<Home> {
         isCheckedOut = me.isCheckedOut;
       });
     });
+  }
+
+  void firebaseCloudMessagingListeners() {
+    _fcm.getToken().then((token) {
+      print(token);
+    });
+
+    _fcm.configure(
+      onMessage: (Map<String, dynamic> message) async {
+        print('on message $message');
+      },
+      onResume: (Map<String, dynamic> message) async {
+        print('on resume $message');
+      },
+      onLaunch: (Map<String, dynamic> message) async {
+        print('on launch $message');
+      },
+    );
   }
 
   @override
