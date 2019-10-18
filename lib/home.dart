@@ -53,6 +53,7 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
+    firebaseCloudMessagingListeners();
     userMeGet(widget.token).then((me) {
       setState(() {
         isCheckedOut = me.isCheckedOut;
