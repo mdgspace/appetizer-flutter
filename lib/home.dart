@@ -62,10 +62,6 @@ class _HomeState extends State<Home> {
   }
 
   void firebaseCloudMessagingListeners() {
-    _fcm.getToken().then((token) {
-      print(token);
-    });
-
     _fcm.configure(
       onMessage: (Map<String, dynamic> message) async {
         print('on message $message');
@@ -372,7 +368,7 @@ class _HomeState extends State<Home> {
                             Navigator.pop(context);
                             showDialog(
                                 context: context,
-                                builder: (BuildContext context) {
+                                builder: (BuildContext alertContext) {
                                   return AlertDialog(
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(8),
@@ -388,7 +384,7 @@ class _HomeState extends State<Home> {
                                     actions: <Widget>[
                                       new FlatButton(
                                         onPressed: () {
-                                          Navigator.pop(context);
+                                          Navigator.pop(alertContext);
                                         },
                                         child: new Text(
                                           "CANCEL",
@@ -407,18 +403,26 @@ class _HomeState extends State<Home> {
                                               fontWeight: FontWeight.bold),
                                         ),
                                         onPressed: () async {
+                                          Navigator.pop(alertContext);
                                           showCustomDialog(
                                               context, "Logging You Out");
-                                          userLogout(widget.token);
-                                          Navigator.of(context)
-                                              .pushNamedAndRemoveUntil(
-                                                  "/login",
-                                                  (Route<dynamic> route) =>
-                                                      false);
-                                          SharedPreferences prefs =
-                                              await SharedPreferences
-                                                  .getInstance();
-                                          prefs.clear();
+                                          FirebaseMessaging fcm =
+                                              FirebaseMessaging();
+                                          userMeGet(widget.token)
+                                              .then((me) async {
+                                            fcm.unsubscribeFromTopic(
+                                                "debug-" + me.hostelCode);
+                                            userLogout(widget.token);
+                                            Navigator.of(context)
+                                                .pushNamedAndRemoveUntil(
+                                                    "/login",
+                                                    (Route<dynamic> route) =>
+                                                        false);
+                                            SharedPreferences prefs =
+                                                await SharedPreferences
+                                                    .getInstance();
+                                            prefs.clear();
+                                          });
                                         },
                                         highlightColor: Colors.transparent,
                                         splashColor: Colors.transparent,

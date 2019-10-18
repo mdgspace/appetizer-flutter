@@ -104,6 +104,30 @@ Future<Me> userMePatch(String token, String email, String contactNo) async {
   }
 }
 
+Future<Me> userMePatchFCM(String token, String fcmToken) async {
+  String endpoint = "/api/user/me/";
+  String uri = url + endpoint;
+  var json = {"fcm_token": fcmToken};
+  var tokenAuth = {
+    "Authorization": "Token " + token,
+    "Content-Type": "application/json"
+  };
+  try {
+    var response = await client.patch(
+      uri,
+      headers: tokenAuth,
+      body: jsonEncode(json),
+    );
+    final jsonResponse = jsonDecode(response.body);
+    Me me = new Me.fromJson(jsonResponse);
+    print(response.body);
+    return me;
+  } on Exception catch (e) {
+    print(e);
+    return null;
+  }
+}
+
 Future<Image> userImage(String token) async {
   String endpoint = "/api/user/me/image/";
   String uri = url + endpoint;
