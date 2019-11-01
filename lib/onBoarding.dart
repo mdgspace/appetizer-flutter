@@ -26,9 +26,7 @@ class _OnBoarding extends State<OnBoarding> {
               padding: EdgeInsets.all(16),
             ),
             onTap: () {
-//              navigate from here
-              Navigator.pop(context);
-              Navigator.push(
+              Navigator.pushReplacement(
                   context, MaterialPageRoute(builder: (context) => Login()));
             },
           ),

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'leave_status_card.dart';
-import 'meal_left.dart';
-import 'manage_leaves_banner.dart';
 import 'see_history.dart';
 
 import 'package:appetizer/services/leave.dart';
@@ -44,21 +42,7 @@ class _MyLeavesState extends State<MyLeaves> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   getRemainingLeaves(),
-                  ManageLeaveBanner(),
                 ],
-              ),
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ListView(
-                  physics: ClampingScrollPhysics(),
-                  children: <Widget>[
-                    MealLeft('Dinner', 'July 16 2019'),
-                    MealLeft('Dinner', 'July 16 2019'),
-                    MealLeft('Dinner', 'July 16 2019'),
-                  ],
-                ),
               ),
             ),
             SafeArea(

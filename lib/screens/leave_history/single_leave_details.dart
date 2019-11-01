@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-class SingleLeaveDetails extends StatelessWidget{
-
+class SingleLeaveDetails extends StatelessWidget {
   final String _meal;
   final String _day;
   final int _date;
@@ -17,10 +16,8 @@ class SingleLeaveDetails extends StatelessWidget{
           color: Colors.white,
           border: Border(
               bottom: BorderSide(
-                color: const Color.fromRGBO(0, 0, 0, 0.37),
-              )
-          )
-      ),
+            color: const Color.fromRGBO(0, 0, 0, 0.37),
+          ))),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

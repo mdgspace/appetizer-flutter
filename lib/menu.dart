@@ -1,3 +1,4 @@
+import 'package:appetizer/alertDialog.dart';
 import 'package:appetizer/currentDateModel.dart';
 import 'package:appetizer/globals.dart';
 import 'package:appetizer/noMeals.dart';
@@ -94,6 +95,11 @@ class _MenuState extends State<Menu> {
               bool isSnacksOutdated = false;
               bool isDinnerOutdated = false;
 
+              bool isBreakfastLeaveToggleOutdated = false;
+              bool isLunchLeaveToggleOutdated = false;
+              bool isSnacksLeaveToggleOutdated = false;
+              bool isDinnerLeaveToggleOutdated = false;
+
               LeaveStatus breakfastLeaveStatus;
               LeaveStatus lunchLeaveStatus;
               LeaveStatus snacksLeaveStatus;
@@ -141,6 +147,11 @@ class _MenuState extends State<Menu> {
                           currentDayMeal.meals[i].startTime;
                   DateTime breakfastStartDateTime =
                       dateFormat.parse(breakfastDateTimeString);
+                  if (!breakfastStartDateTime
+                      .subtract(Duration(hours: 12))
+                      .isAfter(DateTime.now())) {
+                    isBreakfastLeaveToggleOutdated = true;
+                  }
                   if (!breakfastStartDateTime.isAfter(DateTime.now())) {
                     isBreakfastOutdated = true;
                   } else {
@@ -174,6 +185,11 @@ class _MenuState extends State<Menu> {
                           currentDayMeal.meals[i].startTime;
                   DateTime lunchStartDateTime =
                       dateFormat.parse(lunchDateTimeString);
+                  if (!lunchStartDateTime
+                      .subtract(Duration(hours: 12))
+                      .isAfter(DateTime.now())) {
+                    isLunchLeaveToggleOutdated = true;
+                  }
                   if (!lunchStartDateTime.isAfter(DateTime.now())) {
                     isLunchOutdated = true;
                   } else {
@@ -206,6 +222,11 @@ class _MenuState extends State<Menu> {
                           currentDayMeal.meals[i].startTime;
                   DateTime snacksStartDateTime =
                       dateFormat.parse(snacksDateTimeString);
+                  if (!snacksStartDateTime
+                      .subtract(Duration(hours: 12))
+                      .isAfter(DateTime.now())) {
+                    isSnacksLeaveToggleOutdated = true;
+                  }
                   if (!snacksStartDateTime.isAfter(DateTime.now())) {
                     isSnacksOutdated = true;
                   } else {
@@ -238,6 +259,11 @@ class _MenuState extends State<Menu> {
                           currentDayMeal.meals[i].startTime;
                   DateTime dinnerStartDateTime =
                       dateFormat.parse(dinnerDateTimeString);
+                  if (!dinnerStartDateTime
+                      .subtract(Duration(hours: 12))
+                      .isAfter(DateTime.now())) {
+                    isDinnerLeaveToggleOutdated = true;
+                  }
                   if (!dinnerStartDateTime.isAfter(DateTime.now())) {
                     isDinnerOutdated = true;
                   } else {
@@ -286,7 +312,8 @@ class _MenuState extends State<Menu> {
                           breakfastIsSwitched,
                           isBreakfastOutdated,
                           breakfastLeaveStatus,
-                          isCheckedOut)
+                          isCheckedOut,
+                          isBreakfastLeaveToggleOutdated)
                       : Container(),
                   (lunchMealMap.isNotEmpty)
                       ? MenuCard(
@@ -298,7 +325,8 @@ class _MenuState extends State<Menu> {
                           lunchIsSwitched,
                           isLunchOutdated,
                           lunchLeaveStatus,
-                          isCheckedOut)
+                          isCheckedOut,
+                          isLunchLeaveToggleOutdated)
                       : Container(),
                   (snacksMealMap.isNotEmpty)
                       ? MenuCard(
@@ -310,7 +338,8 @@ class _MenuState extends State<Menu> {
                           snacksIsSwitched,
                           isSnacksOutdated,
                           snacksLeaveStatus,
-                          isCheckedOut)
+                          isCheckedOut,
+                          isSnacksLeaveToggleOutdated)
                       : Container(),
                   (dinnerMealMap.isNotEmpty)
                       ? MenuCard(
@@ -322,7 +351,8 @@ class _MenuState extends State<Menu> {
                           dinnerIsSwitched,
                           isDinnerOutdated,
                           dinnerLeaveStatus,
-                          isCheckedOut)
+                          isCheckedOut,
+                          isDinnerLeaveToggleOutdated)
                       : Container(),
                 ],
               );
@@ -344,9 +374,19 @@ class MenuCard extends StatefulWidget {
   final bool isOutdated;
   final LeaveStatus leaveStatus;
   final bool isCheckedOut;
+  final bool isToggleOutdated;
 
-  MenuCard(this.title, this.menuItems, this.dailyItems, this.id, this.token,
-      this.isSwitched, this.isOutdated, this.leaveStatus, this.isCheckedOut);
+  MenuCard(
+      this.title,
+      this.menuItems,
+      this.dailyItems,
+      this.id,
+      this.token,
+      this.isSwitched,
+      this.isOutdated,
+      this.leaveStatus,
+      this.isCheckedOut,
+      this.isToggleOutdated);
 
   @override
   _MenuCardState createState() => _MenuCardState();
@@ -354,6 +394,12 @@ class MenuCard extends StatefulWidget {
 
 class _MenuCardState extends State<MenuCard> {
   bool isSwitched;
+
+  @override
+  void initState() {
+    super.initState();
+    isSwitched = widget.isSwitched;
+  }
 
   List<Widget> _itemWidgetList() {
     List<Widget> list = [];
@@ -365,7 +411,176 @@ class _MenuCardState extends State<MenuCard> {
 
   @override
   Widget build(BuildContext context) {
-    isSwitched = widget.isSwitched;
+    void onChangedCallback(bool value) {
+      if (value) {
+        if (!widget.isToggleOutdated) {
+          showDialog(
+              context: context,
+              builder: (BuildContext dialogContext) {
+                return AlertDialog(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  title: new Text(
+                    "Cancel Leave",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  content: new Text(
+                      "Are you sure you would like to cancel this leave?"),
+                  actions: <Widget>[
+                    new FlatButton(
+                      onPressed: () {
+                        Navigator.pop(dialogContext);
+                      },
+                      child: new Text(
+                        "CANCEL",
+                        style: TextStyle(
+                            color: appiYellow, fontWeight: FontWeight.bold),
+                      ),
+                      highlightColor: Colors.transparent,
+                      splashColor: Colors.transparent,
+                    ),
+                    new FlatButton(
+                      child: new Text(
+                        "CANCEL LEAVE",
+                        style: TextStyle(
+                            color: appiYellow, fontWeight: FontWeight.bold),
+                      ),
+                      onPressed: () async {
+                        Navigator.pop(context);
+                        showCustomDialog(context, "Cancelling Leave");
+                        cancelLeave(widget.id, widget.token).then((leaveBool) {
+                          if (leaveBool) {
+                            Navigator.pop(context);
+                            setState(() {
+                              isSwitched = true;
+                              Fluttertoast.showToast(
+                                  msg: "Leave Cancelled",
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.BOTTOM,
+                                  timeInSecForIos: 1,
+                                  backgroundColor: Color.fromRGBO(0, 0, 0, 0.7),
+                                  textColor: Colors.white,
+                                  fontSize: 14.0);
+                            });
+                          }
+                        }).catchError((e) {
+                          Navigator.pop(context);
+                          Fluttertoast.showToast(
+                              msg: "Something Wrong Occured",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.BOTTOM,
+                              timeInSecForIos: 1,
+                              backgroundColor: Color.fromRGBO(0, 0, 0, 0.7),
+                              textColor: Colors.white,
+                              fontSize: 14.0);
+                        });
+                      },
+                      highlightColor: Colors.transparent,
+                      splashColor: Colors.transparent,
+                    ),
+                  ],
+                );
+              });
+        } else {
+          Fluttertoast.showToast(
+              msg:
+                  "Leave status cannot be changed less than 12 hours before the meal time",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIos: 1,
+              backgroundColor: Color.fromRGBO(0, 0, 0, 0.7),
+              textColor: Colors.white,
+              fontSize: 14.0);
+        }
+      } else {
+        if (!widget.isToggleOutdated) {
+          showDialog(
+              context: context,
+              builder: (BuildContext dialogContext) {
+                return AlertDialog(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  title: new Text(
+                    "Leave Meal",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  content: new Text(
+                      "Are you sure you would like to leave this meal?"),
+                  actions: <Widget>[
+                    new FlatButton(
+                      onPressed: () {
+                        Navigator.pop(dialogContext);
+                      },
+                      child: new Text(
+                        "CANCEL",
+                        style: TextStyle(
+                            color: appiYellow, fontWeight: FontWeight.bold),
+                      ),
+                      highlightColor: Colors.transparent,
+                      splashColor: Colors.transparent,
+                    ),
+                    new FlatButton(
+                      child: new Text(
+                        "SKIP MEAL",
+                        style: TextStyle(
+                            color: appiYellow, fontWeight: FontWeight.bold),
+                      ),
+                      onPressed: () async {
+                        Navigator.pop(context);
+                        showCustomDialog(context, "Leaving Meal");
+                        leave(widget.id.toString(), widget.token)
+                            .then((leaveResult) {
+                          if (leaveResult.meal == widget.id) {
+                            Navigator.pop(context);
+                            Fluttertoast.showToast(
+                                msg: "Meal Skipped",
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.BOTTOM,
+                                timeInSecForIos: 1,
+                                backgroundColor: Color.fromRGBO(0, 0, 0, 0.7),
+                                textColor: Colors.white,
+                                fontSize: 14.0);
+                            setState(() {
+                              isSwitched = false;
+                            });
+                          }
+                        }).catchError((e) {
+                          Navigator.pop(context);
+                          Fluttertoast.showToast(
+                              msg: "Something Wrong Occured",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.BOTTOM,
+                              timeInSecForIos: 1,
+                              backgroundColor: Color.fromRGBO(0, 0, 0, 0.7),
+                              textColor: Colors.white,
+                              fontSize: 14.0);
+                        });
+                      },
+                      highlightColor: Colors.transparent,
+                      splashColor: Colors.transparent,
+                    ),
+                  ],
+                );
+              });
+        } else {
+          Fluttertoast.showToast(
+              msg:
+                  "Leave status cannot be changed less than 12 hours before the meal time",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIos: 1,
+              backgroundColor: Color.fromRGBO(0, 0, 0, 0.7),
+              textColor: Colors.white,
+              fontSize: 14.0);
+        }
+      }
+    }
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(0.0, 4.0, 0.0, 4.0),
@@ -447,57 +662,7 @@ class _MenuCardState extends State<MenuCard> {
                                     activeColor: appiYellow,
                                     value: isSwitched,
                                     onChanged: (value) async {
-                                      if (value) {
-                                        cancelLeave(widget.id, widget.token)
-                                            .then((leaveBool) {
-                                          if (leaveBool) {
-                                            setState(() {
-                                              isSwitched = true;
-                                              Fluttertoast.showToast(
-                                                  msg: "Leave Cancelled",
-                                                  toastLength:
-                                                      Toast.LENGTH_SHORT,
-                                                  gravity: ToastGravity.BOTTOM,
-                                                  timeInSecForIos: 1,
-                                                  backgroundColor:
-                                                      Color.fromRGBO(
-                                                          0, 0, 0, 0.7),
-                                                  textColor: Colors.white,
-                                                  fontSize: 14.0);
-                                            });
-                                          }
-                                        });
-                                      } else {
-                                        leave(widget.id.toString(),
-                                                widget.token)
-                                            .then((leaveResult) {
-                                          if (leaveResult.meal == widget.id) {
-                                            Fluttertoast.showToast(
-                                                msg: "Meal Skipped",
-                                                toastLength: Toast.LENGTH_SHORT,
-                                                gravity: ToastGravity.BOTTOM,
-                                                timeInSecForIos: 1,
-                                                backgroundColor: Color.fromRGBO(
-                                                    0, 0, 0, 0.7),
-                                                textColor: Colors.white,
-                                                fontSize: 14.0);
-                                            setState(() {
-                                              isSwitched = false;
-                                            });
-                                          } else {
-                                            Fluttertoast.showToast(
-                                                msg:
-                                                    "Leave status cannot be changed less than 12 hours before the meal time",
-                                                toastLength: Toast.LENGTH_SHORT,
-                                                gravity: ToastGravity.BOTTOM,
-                                                timeInSecForIos: 1,
-                                                backgroundColor: Color.fromRGBO(
-                                                    0, 0, 0, 0.7),
-                                                textColor: Colors.white,
-                                                fontSize: 14.0);
-                                          }
-                                        });
-                                      }
+                                      onChangedCallback(value);
                                     })
                                 : Container(),
                       ],

@@ -1,3 +1,5 @@
+import 'package:appetizer/services/leave.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
 import 'package:appetizer/currentDateModel.dart';
@@ -46,12 +48,99 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   String version = "v1.5.6r";
+  FirebaseMessaging _fcm = FirebaseMessaging();
+
+  @override
+  void initState() {
+    super.initState();
+    firebaseCloudMessagingListeners();
+    userMeGet(widget.token).then((me) {
+      setState(() {
+        isCheckedOut = me.isCheckedOut;
+      });
+    });
+  }
+
+  void firebaseCloudMessagingListeners() {
+    _fcm.configure(
+      onMessage: (Map<String, dynamic> message) async {
+        print('on message $message');
+      },
+      onResume: (Map<String, dynamic> message) async {
+        print('on resume $message');
+      },
+      onLaunch: (Map<String, dynamic> message) async {
+        print('on launch $message');
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       builder: (context) => CurrentDateModel(),
       child: Scaffold(
+        floatingActionButton: !isCheckedOut
+            ? FloatingActionButton(
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)),
+                          title: new Text(
+                            "Check Out",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          content: new Text(
+                              "Are you sure you would like to check out?"),
+                          actions: <Widget>[
+                            new FlatButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: new Text(
+                                "CANCEL",
+                                style: TextStyle(
+                                    color: appiYellow,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              highlightColor: Colors.transparent,
+                              splashColor: Colors.transparent,
+                            ),
+                            new FlatButton(
+                              child: new Text(
+                                "CHECK OUT",
+                                style: TextStyle(
+                                    color: appiYellow,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              onPressed: () async {
+                                Navigator.pop(context);
+                                check(widget.token).then((check) {
+                                  setState(() {
+                                    isCheckedOut = check.isCheckedOut;
+                                  });
+                                });
+                              },
+                              highlightColor: Colors.transparent,
+                              splashColor: Colors.transparent,
+                            ),
+                          ],
+                        );
+                      });
+                },
+                backgroundColor: appiYellowLogo,
+                child: Image.asset(
+                  "assets/images/checkOut.png",
+                  height: 25,
+                  width: 25,
+                ),
+              )
+            : null,
         key: menuScaffoldKey,
         appBar: AppBar(
           elevation: 0,
@@ -279,8 +368,11 @@ class _HomeState extends State<Home> {
                             Navigator.pop(context);
                             showDialog(
                                 context: context,
-                                builder: (BuildContext context) {
+                                builder: (BuildContext alertContext) {
                                   return AlertDialog(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
                                     title: new Text(
                                       "Log Out",
                                       style: TextStyle(
@@ -292,11 +384,13 @@ class _HomeState extends State<Home> {
                                     actions: <Widget>[
                                       new FlatButton(
                                         onPressed: () {
-                                          Navigator.pop(context);
+                                          Navigator.pop(alertContext);
                                         },
                                         child: new Text(
                                           "CANCEL",
-                                          style: TextStyle(color: appiYellow),
+                                          style: TextStyle(
+                                              color: appiYellow,
+                                              fontWeight: FontWeight.bold),
                                         ),
                                         highlightColor: Colors.transparent,
                                         splashColor: Colors.transparent,
@@ -304,21 +398,32 @@ class _HomeState extends State<Home> {
                                       new FlatButton(
                                         child: new Text(
                                           "LOG OUT",
-                                          style: TextStyle(color: appiYellow),
+                                          style: TextStyle(
+                                              color: appiYellow,
+                                              fontWeight: FontWeight.bold),
                                         ),
                                         onPressed: () async {
+                                          Navigator.pop(alertContext);
                                           showCustomDialog(
                                               context, "Logging You Out");
-                                          userLogout(widget.token);
-                                          Navigator.of(context)
-                                              .pushNamedAndRemoveUntil(
-                                                  "/login",
-                                                  (Route<dynamic> route) =>
-                                                      false);
-                                          SharedPreferences prefs =
-                                              await SharedPreferences
-                                                  .getInstance();
-                                          prefs.clear();
+                                          FirebaseMessaging fcm =
+                                              FirebaseMessaging();
+                                          userMeGet(widget.token)
+                                              .then((me) async {
+                                            fcm.unsubscribeFromTopic(
+                                                "debug-" + me.hostelCode);
+                                            userLogout(widget.token);
+                                            Navigator.of(context)
+                                                .pushNamedAndRemoveUntil(
+                                                    "/login",
+                                                    (Route<dynamic> route) =>
+                                                        false);
+                                            SharedPreferences prefs =
+                                                await SharedPreferences
+                                                    .getInstance();
+                                            prefs.clear();
+                                            prefs.setBool("seen", true);
+                                          });
                                         },
                                         highlightColor: Colors.transparent,
                                         splashColor: Colors.transparent,

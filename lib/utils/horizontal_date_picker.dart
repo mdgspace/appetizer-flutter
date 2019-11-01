@@ -1,6 +1,7 @@
 import 'package:appetizer/colors.dart';
 import 'package:appetizer/globals.dart';
 import 'package:appetizer/screens/my_leaves/my_leaves_screen.dart';
+import 'package:appetizer/services/user.dart';
 import 'package:flutter/material.dart';
 import '../flutter_calendar_carousel/flutter_calendar_carousel.dart'
     show CalendarCarousel, WeekdayFormat;
@@ -21,6 +22,17 @@ class _HorizontalDatePickerState extends State<HorizontalDatePicker> {
   CalendarCarousel _calendarCarousel;
   DateTime _currentDate = DateTime.now();
   double _fontSizeDate = 14.0;
+
+  @override
+  void initState() {
+    super.initState();
+    userMeGet(widget.token).then((me) {
+      setState(() {
+        isCheckedOut = me.isCheckedOut;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final currentSelectedDate = Provider.of<CurrentDateModel>(context);

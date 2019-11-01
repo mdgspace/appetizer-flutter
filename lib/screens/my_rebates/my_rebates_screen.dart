@@ -58,7 +58,7 @@ class MyRebates extends StatelessWidget {
             );
           } else {
             return MonthlyBalance(
-                1800,
+                0,
                 snapshot.data.rebate,
                 0,
                 monthIntToMonthString(DateTime.now().month),

@@ -1,4 +1,3 @@
-import 'package:appetizer/models/user/me.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -213,17 +212,16 @@ class UserDetails extends StatelessWidget {
                     ],
                   ),
                   Padding(
-                    padding: EdgeInsets.fromLTRB(20.0, 18.0, 20.0, 18.0),
+                    padding: EdgeInsets.all(8),
                     child: Container(
-                      decoration: new BoxDecoration(
-                        shape: BoxShape.circle,
-                      ),
-                      child: SvgPicture.asset(
-                        'assets/icons/accountIcon.svg',
-                        height: 90.0,
-                        width: 90.0,
-                      ),
-                    ),
+                        decoration: new BoxDecoration(
+                          shape: BoxShape.circle,
+                        ),
+                        child: Icon(
+                          Icons.account_circle,
+                          size: 110,
+                          color: appiBrown,
+                        )),
                   )
                 ],
               )

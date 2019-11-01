@@ -4,6 +4,7 @@ import 'package:appetizer/alertDialog.dart';
 import 'package:appetizer/chooseNewPassword.dart';
 import 'package:appetizer/forgotPassword.dart';
 import 'package:appetizer/globals.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -420,6 +421,15 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
           setState(() {
             _isLoginSuccessful = true;
             isLoginButtonTapped = false;
+          });
+          FirebaseMessaging fcm = FirebaseMessaging();
+          fcm.getToken().then((fcmToken) {
+            print(fcmToken);
+            userMePatchFCM(loginCredentials.token, fcmToken).then((me) {
+              userMeGet(loginCredentials.token).then((me) {
+                fcm.subscribeToTopic("release-" + me.hostelCode);
+              });
+            });
           });
           await new Future.delayed(const Duration(seconds: 5));
           Navigator.pushReplacement(context,
