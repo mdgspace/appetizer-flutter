@@ -144,7 +144,7 @@ class _RebateHistoryScreenState extends State<RebateHistoryScreen> {
               itemCount: snapshot.data.count,
               itemBuilder: (BuildContext context, int index) {
                 return RebateHistoryCard(
-                    1800,
+                    0,
                     snapshot.data.results[index].rebate,
                     snapshot.data.results[index].expenses,
                     monthIntToMonthString(snapshot.data.results[index].monthId),

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-class InfoMessage extends StatelessWidget{
-
+class InfoMessage extends StatelessWidget {
   final String _message;
 
   InfoMessage(this._message);
@@ -14,14 +13,15 @@ class InfoMessage extends StatelessWidget{
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.fromLTRB(18.0, 2.0, 4.0, 2.0),
+            padding: const EdgeInsets.all(2.0),
             child: Icon(
               Icons.info,
+              size: 20,
               color: const Color.fromRGBO(103, 103, 103, 1),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(4.0, 2.0, 2.0, 2.0),
+            padding: const EdgeInsets.all(2.0),
             child: Text(
               '$_message',
               style: TextStyle(
