@@ -200,6 +200,7 @@ class _SettingsState extends State<Settings> {
                                                     (Route<dynamic> route) =>
                                                         false);
                                             prefs.clear();
+                                            prefs.setBool("seen", true);
                                           });
                                         });
                                       },

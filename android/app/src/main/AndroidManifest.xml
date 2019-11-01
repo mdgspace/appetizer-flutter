@@ -11,6 +11,9 @@
         android:name="io.flutter.app.FlutterApplication"
         android:label="appetizer"
         android:icon="@mipmap/launcher_icon">
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@mipmap/launcher_icon" />
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

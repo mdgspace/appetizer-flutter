@@ -422,6 +422,7 @@ class _HomeState extends State<Home> {
                                                 await SharedPreferences
                                                     .getInstance();
                                             prefs.clear();
+                                            prefs.setBool("seen", true);
                                           });
                                         },
                                         highlightColor: Colors.transparent,
