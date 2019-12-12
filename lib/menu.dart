@@ -1,20 +1,24 @@
+import 'dart:math' as math;
+
 import 'package:appetizer/alertDialog.dart';
+import 'package:appetizer/app_database.dart';
 import 'package:appetizer/currentDateModel.dart';
 import 'package:appetizer/globals.dart';
 import 'package:appetizer/noMeals.dart';
 import 'package:appetizer/services/leave.dart';
+import 'package:appetizer/services/menu.dart';
 import 'package:appetizer/services/user.dart';
 import 'package:appetizer/utils/get_leave_color_from_leave_status.dart';
 import 'package:flutter/material.dart';
-import 'package:appetizer/services/menu.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:sembast/sembast.dart';
+
 import 'colors.dart';
+import 'models/menu/week.dart';
 import 'screens/user_feedback/new_feedback.dart';
 import 'utils/get_week_id.dart';
-import 'models/menu/week.dart';
-import 'dart:math' as math;
 
 class Menu extends StatefulWidget {
   final String token;
@@ -39,6 +43,21 @@ class _MenuState extends State<Menu> {
     });
   }
 
+  static const String MEAL_STORE_NAME = 'meals';
+
+  // A Store with int keys and Map<String, dynamic> values.
+  // This Store acts like a persistent map, values of which are Week objects converted to Map
+  final _mealStore = intMapStoreFactory.store(MEAL_STORE_NAME);
+
+  // Private getter to shorten the amount of code needed to get the
+  // singleton instance of an opened database.
+  Future<Database> get _db async => await AppDatabase.instance.database;
+
+  Future<int> insert(Week weekMenu) async {
+    int mealKey = await _mealStore.add(await _db, weekMenu.toJson());
+    return mealKey;
+  }
+
   @override
   Widget build(BuildContext context) {
     final selectedDateTime = Provider.of<CurrentDateModel>(context);
@@ -53,13 +72,18 @@ class _MenuState extends State<Menu> {
                 height: MediaQuery.of(context).size.height / 1.5,
                 width: MediaQuery.of(context).size.width,
                 child: Center(
-                    child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(appiYellow),
-                )),
+                  child: CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(appiYellow),
+                  ),
+                ),
               );
             } else if (data == null) {
               return NoMealsScreen();
             } else {
+              insert(data).then((mealKey) async {
+                var record = await _mealStore.record(mealKey).get(await _db);
+                print(record);
+              });
               int breakfastId;
               int lunchId;
               int snacksId;
