@@ -1,14 +1,11 @@
-import 'dart:math' as math;
-
 import 'package:appetizer/app_database.dart';
+import 'package:appetizer/components/day_menu.dart';
 import 'package:appetizer/currentDateModel.dart';
 import 'package:appetizer/globals.dart';
-import 'package:appetizer/menu_card.dart';
 import 'package:appetizer/noMeals.dart';
 import 'package:appetizer/services/menu.dart';
 import 'package:appetizer/services/user.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:sembast/sembast.dart';
 
@@ -26,9 +23,6 @@ class Menu extends StatefulWidget {
 }
 
 class _MenuState extends State<Menu> {
-  static final double _radius = 16;
-  DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
-
   @override
   void initState() {
     super.initState();
@@ -52,16 +46,6 @@ class _MenuState extends State<Menu> {
   Future<int> insert(Week weekMenu) async {
     int mealKey = await _mealStore.add(await _db, weekMenu.toJson());
     return mealKey;
-  }
-
-  void setLeadingMealImage(List<CircleAvatar> mealLeadingImageList) {
-    var randomColor =
-        Color((math.Random().nextDouble() * 0xFFFFFF).toInt() << 0)
-            .withOpacity(0.2);
-    mealLeadingImageList.add(CircleAvatar(
-      radius: _radius,
-      backgroundColor: randomColor,
-    ));
   }
 
   @override
@@ -90,50 +74,18 @@ class _MenuState extends State<Menu> {
                 var record = await _mealStore.record(mealKey).get(await _db);
                 print(record);
               });
-              int breakfastId;
-              int lunchId;
-              int snacksId;
-              int dinnerId;
 
               String breakfastDailyItems = "";
               String lunchDailyItems = "";
               String snacksDailyItems = "";
               String dinnerDailyItems = "";
 
-              List<CircleAvatar> breakfastLeadingImageList = [];
-              List<CircleAvatar> lunchLeadingImageList = [];
-              List<CircleAvatar> snacksLeadingImageList = [];
-              List<CircleAvatar> dinnerLeadingImageList = [];
-
-              List<String> breakfastItemsList = [];
-              List<String> lunchItemsList = [];
-              List<String> snacksItemsList = [];
-              List<String> dinnerItemsList = [];
-
-              Map<CircleAvatar, String> breakfastMealMap = {};
-              Map<CircleAvatar, String> lunchMealMap = {};
-              Map<CircleAvatar, String> snacksMealMap = {};
-              Map<CircleAvatar, String> dinnerMealMap = {};
-
-              bool isBreakfastSwitched;
-              bool isLunchSwitched;
-              bool isSnacksSwitched;
-              bool isDinnerSwitched;
-
-              bool isBreakfastOutdated = false;
-              bool isLunchOutdated = false;
-              bool isSnacksOutdated = false;
-              bool isDinnerOutdated = false;
-
-              bool isBreakfastLeaveToggleOutdated = false;
-              bool isLunchLeaveToggleOutdated = false;
-              bool isSnacksLeaveToggleOutdated = false;
-              bool isDinnerLeaveToggleOutdated = false;
-
-              LeaveStatus breakfastLeaveStatus;
-              LeaveStatus lunchLeaveStatus;
-              LeaveStatus snacksLeaveStatus;
-              LeaveStatus dinnerLeaveStatus;
+              Map<String, String> dailyItemsMap = {
+                "breakfast": breakfastDailyItems,
+                "lunch": lunchDailyItems,
+                "snacks": snacksDailyItems,
+                "dinner": dinnerDailyItems
+              };
 
               //Daily Items fetch
               List<String> breakfastDailyItemsList = [];
@@ -167,197 +119,10 @@ class _MenuState extends State<Menu> {
               //meal fetch
               Day currentDayMeal = data.days[dateTime.weekday - 1];
 
-              var numberOfMeals = currentDayMeal.meals.length;
-              for (var i = 0; i < numberOfMeals; i++) {
-                if (currentDayMeal.meals[i].type == MealType.B) {
-                  breakfastLeaveStatus = currentDayMeal.meals[i].leaveStatus;
-                  String breakfastDateTimeString =
-                      currentDayMeal.date.toString().substring(0, 10) +
-                          " " +
-                          currentDayMeal.meals[i].startTime;
-                  DateTime breakfastStartDateTime =
-                      dateFormat.parse(breakfastDateTimeString);
-                  if (!breakfastStartDateTime
-                      .subtract(Duration(hours: 12))
-                      .isAfter(DateTime.now())) {
-                    isBreakfastLeaveToggleOutdated = true;
-                  }
-                  if (!breakfastStartDateTime.isAfter(DateTime.now())) {
-                    isBreakfastOutdated = true;
-                  } else {
-                    isBreakfastOutdated = false;
-                  }
-                  breakfastId = currentDayMeal.meals[i].id;
-                  isBreakfastSwitched =
-                      currentDayMeal.meals[i].leaveStatus == LeaveStatus.N
-                          ? true
-                          : false;
-                  for (var j = 0;
-                      j < currentDayMeal.meals[i].items.length;
-                      j++) {
-                    var breakfastMealItem =
-                        currentDayMeal.meals[i].items[j].name;
-                    breakfastItemsList.add(breakfastMealItem);
-                    setLeadingMealImage(breakfastLeadingImageList);
-                  }
-                } else if (currentDayMeal.meals[i].type == MealType.L) {
-                  lunchLeaveStatus = currentDayMeal.meals[i].leaveStatus;
-                  String lunchDateTimeString =
-                      currentDayMeal.date.toString().substring(0, 10) +
-                          " " +
-                          currentDayMeal.meals[i].startTime;
-                  DateTime lunchStartDateTime =
-                      dateFormat.parse(lunchDateTimeString);
-                  if (!lunchStartDateTime
-                      .subtract(Duration(hours: 12))
-                      .isAfter(DateTime.now())) {
-                    isLunchLeaveToggleOutdated = true;
-                  }
-                  if (!lunchStartDateTime.isAfter(DateTime.now())) {
-                    isLunchOutdated = true;
-                  } else {
-                    isLunchOutdated = false;
-                  }
-                  lunchId = currentDayMeal.meals[i].id;
-                  isLunchSwitched =
-                      currentDayMeal.meals[i].leaveStatus == LeaveStatus.N
-                          ? true
-                          : false;
-                  for (var j = 0;
-                      j < currentDayMeal.meals[i].items.length;
-                      j++) {
-                    var lunchMealItem = currentDayMeal.meals[i].items[j].name;
-                    lunchItemsList.add(lunchMealItem);
-                    setLeadingMealImage(lunchLeadingImageList);
-                  }
-                } else if (currentDayMeal.meals[i].type == MealType.S) {
-                  snacksLeaveStatus = currentDayMeal.meals[i].leaveStatus;
-                  String snacksDateTimeString =
-                      currentDayMeal.date.toString().substring(0, 10) +
-                          " " +
-                          currentDayMeal.meals[i].startTime;
-                  DateTime snacksStartDateTime =
-                      dateFormat.parse(snacksDateTimeString);
-                  if (!snacksStartDateTime
-                      .subtract(Duration(hours: 12))
-                      .isAfter(DateTime.now())) {
-                    isSnacksLeaveToggleOutdated = true;
-                  }
-                  if (!snacksStartDateTime.isAfter(DateTime.now())) {
-                    isSnacksOutdated = true;
-                  } else {
-                    isSnacksOutdated = false;
-                  }
-                  snacksId = currentDayMeal.meals[i].id;
-                  isSnacksSwitched =
-                      currentDayMeal.meals[i].leaveStatus == LeaveStatus.N
-                          ? true
-                          : false;
-                  for (var j = 0;
-                      j < currentDayMeal.meals[i].items.length;
-                      j++) {
-                    var snacksMealItem = currentDayMeal.meals[i].items[j].name;
-                    snacksItemsList.add(snacksMealItem);
-                    setLeadingMealImage(snacksLeadingImageList);
-                  }
-                } else if (currentDayMeal.meals[i].type == MealType.D) {
-                  dinnerLeaveStatus = currentDayMeal.meals[i].leaveStatus;
-                  String dinnerDateTimeString =
-                      currentDayMeal.date.toString().substring(0, 10) +
-                          " " +
-                          currentDayMeal.meals[i].startTime;
-                  DateTime dinnerStartDateTime =
-                      dateFormat.parse(dinnerDateTimeString);
-                  if (!dinnerStartDateTime
-                      .subtract(Duration(hours: 12))
-                      .isAfter(DateTime.now())) {
-                    isDinnerLeaveToggleOutdated = true;
-                  }
-                  if (!dinnerStartDateTime.isAfter(DateTime.now())) {
-                    isDinnerOutdated = true;
-                  } else {
-                    isDinnerOutdated = false;
-                  }
-                  dinnerId = currentDayMeal.meals[i].id;
-                  isDinnerSwitched =
-                      currentDayMeal.meals[i].leaveStatus == LeaveStatus.N
-                          ? true
-                          : false;
-                  for (var j = 0;
-                      j < currentDayMeal.meals[i].items.length;
-                      j++) {
-                    var dinnerMealItem = currentDayMeal.meals[i].items[j].name;
-                    dinnerItemsList.add(dinnerMealItem);
-                    setLeadingMealImage(dinnerLeadingImageList);
-                  }
-                }
-              }
-              breakfastMealMap = Map.fromIterables(
-                  breakfastLeadingImageList, breakfastItemsList);
-              lunchMealMap =
-                  Map.fromIterables(lunchLeadingImageList, lunchItemsList);
-              dinnerMealMap =
-                  Map.fromIterables(dinnerLeadingImageList, dinnerItemsList);
-              snacksMealMap =
-                  Map.fromIterables(snacksLeadingImageList, snacksItemsList);
-
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  (breakfastMealMap.isNotEmpty)
-                      ? MenuCard(
-                          'Breakfast',
-                          breakfastMealMap,
-                          breakfastDailyItems,
-                          breakfastId,
-                          widget.token,
-                          isBreakfastSwitched,
-                          isBreakfastOutdated,
-                          breakfastLeaveStatus,
-                          isCheckedOut,
-                          isBreakfastLeaveToggleOutdated)
-                      : Container(),
-                  (lunchMealMap.isNotEmpty)
-                      ? MenuCard(
-                          'Lunch',
-                          lunchMealMap,
-                          lunchDailyItems,
-                          lunchId,
-                          widget.token,
-                          isLunchSwitched,
-                          isLunchOutdated,
-                          lunchLeaveStatus,
-                          isCheckedOut,
-                          isLunchLeaveToggleOutdated)
-                      : Container(),
-                  (snacksMealMap.isNotEmpty)
-                      ? MenuCard(
-                          'Snacks',
-                          snacksMealMap,
-                          snacksDailyItems,
-                          snacksId,
-                          widget.token,
-                          isSnacksSwitched,
-                          isSnacksOutdated,
-                          snacksLeaveStatus,
-                          isCheckedOut,
-                          isSnacksLeaveToggleOutdated)
-                      : Container(),
-                  (dinnerMealMap.isNotEmpty)
-                      ? MenuCard(
-                          'Dinner',
-                          dinnerMealMap,
-                          dinnerDailyItems,
-                          dinnerId,
-                          widget.token,
-                          isDinnerSwitched,
-                          isDinnerOutdated,
-                          dinnerLeaveStatus,
-                          isCheckedOut,
-                          isDinnerLeaveToggleOutdated)
-                      : Container(),
-                ],
-              );
+              return DayMenu(
+                  token: widget.token,
+                  currentDayMeal: currentDayMeal,
+                  dailyItemsMap: dailyItemsMap);
             }
           });
     }
