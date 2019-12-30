@@ -7,7 +7,7 @@ import 'login.dart';
 import 'onBoarding.dart';
 
 void main() async {
-  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  //await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(MaterialApp(
     routes: {
       "/home": (context) => Home(),

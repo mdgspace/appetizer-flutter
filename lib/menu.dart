@@ -54,6 +54,16 @@ class _MenuState extends State<Menu> {
     return mealKey;
   }
 
+  void setLeadingMealImage(List<CircleAvatar> mealLeadingImageList) {
+    var randomColor =
+        Color((math.Random().nextDouble() * 0xFFFFFF).toInt() << 0)
+            .withOpacity(0.2);
+    mealLeadingImageList.add(CircleAvatar(
+      radius: _radius,
+      backgroundColor: randomColor,
+    ));
+  }
+
   @override
   Widget build(BuildContext context) {
     final selectedDateTime = Provider.of<CurrentDateModel>(context);
@@ -95,20 +105,20 @@ class _MenuState extends State<Menu> {
               List<CircleAvatar> snacksLeadingImageList = [];
               List<CircleAvatar> dinnerLeadingImageList = [];
 
-              List<String> breakfastMealList = [];
-              List<String> lunchMealList = [];
-              List<String> snacksMealList = [];
-              List<String> dinnerMealList = [];
+              List<String> breakfastItemsList = [];
+              List<String> lunchItemsList = [];
+              List<String> snacksItemsList = [];
+              List<String> dinnerItemsList = [];
 
               Map<CircleAvatar, String> breakfastMealMap = {};
               Map<CircleAvatar, String> lunchMealMap = {};
               Map<CircleAvatar, String> snacksMealMap = {};
               Map<CircleAvatar, String> dinnerMealMap = {};
 
-              bool breakfastIsSwitched;
-              bool lunchIsSwitched;
-              bool snacksIsSwitched;
-              bool dinnerIsSwitched;
+              bool isBreakfastSwitched;
+              bool isLunchSwitched;
+              bool isSnacksSwitched;
+              bool isDinnerSwitched;
 
               bool isBreakfastOutdated = false;
               bool isLunchOutdated = false;
@@ -178,7 +188,7 @@ class _MenuState extends State<Menu> {
                     isBreakfastOutdated = false;
                   }
                   breakfastId = currentDayMeal.meals[i].id;
-                  breakfastIsSwitched =
+                  isBreakfastSwitched =
                       currentDayMeal.meals[i].leaveStatus == LeaveStatus.N
                           ? true
                           : false;
@@ -187,15 +197,8 @@ class _MenuState extends State<Menu> {
                       j++) {
                     var breakfastMealItem =
                         currentDayMeal.meals[i].items[j].name;
-                    breakfastMealList.add(breakfastMealItem);
-                    var randomColor = Color(
-                            (math.Random().nextDouble() * 0xFFFFFF).toInt() <<
-                                0)
-                        .withOpacity(0.2);
-                    breakfastLeadingImageList.add(CircleAvatar(
-                      radius: _radius,
-                      backgroundColor: randomColor,
-                    ));
+                    breakfastItemsList.add(breakfastMealItem);
+                    setLeadingMealImage(breakfastLeadingImageList);
                   }
                 } else if (currentDayMeal.meals[i].type == MealType.L) {
                   lunchLeaveStatus = currentDayMeal.meals[i].leaveStatus;
@@ -216,7 +219,7 @@ class _MenuState extends State<Menu> {
                     isLunchOutdated = false;
                   }
                   lunchId = currentDayMeal.meals[i].id;
-                  lunchIsSwitched =
+                  isLunchSwitched =
                       currentDayMeal.meals[i].leaveStatus == LeaveStatus.N
                           ? true
                           : false;
@@ -224,15 +227,8 @@ class _MenuState extends State<Menu> {
                       j < currentDayMeal.meals[i].items.length;
                       j++) {
                     var lunchMealItem = currentDayMeal.meals[i].items[j].name;
-                    lunchMealList.add(lunchMealItem);
-                    var randomColor = Color(
-                            (math.Random().nextDouble() * 0xFFFFFF).toInt() <<
-                                0)
-                        .withOpacity(0.2);
-                    lunchLeadingImageList.add(CircleAvatar(
-                      radius: _radius,
-                      backgroundColor: randomColor,
-                    ));
+                    lunchItemsList.add(lunchMealItem);
+                    setLeadingMealImage(lunchLeadingImageList);
                   }
                 } else if (currentDayMeal.meals[i].type == MealType.S) {
                   snacksLeaveStatus = currentDayMeal.meals[i].leaveStatus;
@@ -253,7 +249,7 @@ class _MenuState extends State<Menu> {
                     isSnacksOutdated = false;
                   }
                   snacksId = currentDayMeal.meals[i].id;
-                  snacksIsSwitched =
+                  isSnacksSwitched =
                       currentDayMeal.meals[i].leaveStatus == LeaveStatus.N
                           ? true
                           : false;
@@ -261,15 +257,8 @@ class _MenuState extends State<Menu> {
                       j < currentDayMeal.meals[i].items.length;
                       j++) {
                     var snacksMealItem = currentDayMeal.meals[i].items[j].name;
-                    snacksMealList.add(snacksMealItem);
-                    var randomColor = Color(
-                            (math.Random().nextDouble() * 0xFFFFFF).toInt() <<
-                                0)
-                        .withOpacity(0.2);
-                    snacksLeadingImageList.add(CircleAvatar(
-                      radius: _radius,
-                      backgroundColor: randomColor,
-                    ));
+                    snacksItemsList.add(snacksMealItem);
+                    setLeadingMealImage(snacksLeadingImageList);
                   }
                 } else if (currentDayMeal.meals[i].type == MealType.D) {
                   dinnerLeaveStatus = currentDayMeal.meals[i].leaveStatus;
@@ -290,7 +279,7 @@ class _MenuState extends State<Menu> {
                     isDinnerOutdated = false;
                   }
                   dinnerId = currentDayMeal.meals[i].id;
-                  dinnerIsSwitched =
+                  isDinnerSwitched =
                       currentDayMeal.meals[i].leaveStatus == LeaveStatus.N
                           ? true
                           : false;
@@ -298,26 +287,19 @@ class _MenuState extends State<Menu> {
                       j < currentDayMeal.meals[i].items.length;
                       j++) {
                     var dinnerMealItem = currentDayMeal.meals[i].items[j].name;
-                    dinnerMealList.add(dinnerMealItem);
-                    var randomColor = Color(
-                            (math.Random().nextDouble() * 0xFFFFFF).toInt() <<
-                                0)
-                        .withOpacity(0.2);
-                    dinnerLeadingImageList.add(CircleAvatar(
-                      radius: _radius,
-                      backgroundColor: randomColor,
-                    ));
+                    dinnerItemsList.add(dinnerMealItem);
+                    setLeadingMealImage(dinnerLeadingImageList);
                   }
                 }
               }
               breakfastMealMap = Map.fromIterables(
-                  breakfastLeadingImageList, breakfastMealList);
+                  breakfastLeadingImageList, breakfastItemsList);
               lunchMealMap =
-                  Map.fromIterables(lunchLeadingImageList, lunchMealList);
+                  Map.fromIterables(lunchLeadingImageList, lunchItemsList);
               dinnerMealMap =
-                  Map.fromIterables(dinnerLeadingImageList, dinnerMealList);
+                  Map.fromIterables(dinnerLeadingImageList, dinnerItemsList);
               snacksMealMap =
-                  Map.fromIterables(snacksLeadingImageList, snacksMealList);
+                  Map.fromIterables(snacksLeadingImageList, snacksItemsList);
 
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -329,7 +311,7 @@ class _MenuState extends State<Menu> {
                           breakfastDailyItems,
                           breakfastId,
                           widget.token,
-                          breakfastIsSwitched,
+                          isBreakfastSwitched,
                           isBreakfastOutdated,
                           breakfastLeaveStatus,
                           isCheckedOut,
@@ -342,7 +324,7 @@ class _MenuState extends State<Menu> {
                           lunchDailyItems,
                           lunchId,
                           widget.token,
-                          lunchIsSwitched,
+                          isLunchSwitched,
                           isLunchOutdated,
                           lunchLeaveStatus,
                           isCheckedOut,
@@ -355,7 +337,7 @@ class _MenuState extends State<Menu> {
                           snacksDailyItems,
                           snacksId,
                           widget.token,
-                          snacksIsSwitched,
+                          isSnacksSwitched,
                           isSnacksOutdated,
                           snacksLeaveStatus,
                           isCheckedOut,
@@ -368,7 +350,7 @@ class _MenuState extends State<Menu> {
                           dinnerDailyItems,
                           dinnerId,
                           widget.token,
-                          dinnerIsSwitched,
+                          isDinnerSwitched,
                           isDinnerOutdated,
                           dinnerLeaveStatus,
                           isCheckedOut,

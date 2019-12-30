@@ -32,10 +32,7 @@ dependencies:
   share: 0.5.2
   fluttertoast: ^3.1.2
   uni_links:
-  firebase_core: ^0.4.0+9
-  firebase_analytics:
-  firebase_messaging: ^5.1.6
-  cloud_firestore:
+  firebase_messaging: ^6.0.9
   sembast: ^2.1.2
   path_provider:
 
