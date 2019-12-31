@@ -48,6 +48,11 @@ class _MenuState extends State<Menu> {
     return mealKey;
   }
 
+  String breakfastDailyItems = "";
+  String lunchDailyItems = "";
+  String snacksDailyItems = "";
+  String dinnerDailyItems = "";
+
   @override
   Widget build(BuildContext context) {
     final selectedDateTime = Provider.of<CurrentDateModel>(context);
@@ -74,18 +79,6 @@ class _MenuState extends State<Menu> {
                 var record = await _mealStore.record(mealKey).get(await _db);
                 print(record);
               });
-
-              String breakfastDailyItems = "";
-              String lunchDailyItems = "";
-              String snacksDailyItems = "";
-              String dinnerDailyItems = "";
-
-              Map<String, String> dailyItemsMap = {
-                "breakfast": breakfastDailyItems,
-                "lunch": lunchDailyItems,
-                "snacks": snacksDailyItems,
-                "dinner": dinnerDailyItems
-              };
 
               //Daily Items fetch
               List<String> breakfastDailyItemsList = [];
@@ -115,6 +108,13 @@ class _MenuState extends State<Menu> {
                 dinnerDailyItemsList.add(name);
                 dinnerDailyItems = dinnerDailyItemsList.join(" , ");
               }
+
+              Map<String, String> dailyItemsMap = {
+                "breakfast": breakfastDailyItems,
+                "lunch": lunchDailyItems,
+                "snacks": snacksDailyItems,
+                "dinner": dinnerDailyItems
+              };
 
               //meal fetch
               Day currentDayMeal = data.days[dateTime.weekday - 1];
