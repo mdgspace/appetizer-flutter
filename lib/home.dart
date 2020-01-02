@@ -1,38 +1,24 @@
-import 'package:appetizer/services/leave.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/material.dart';
-
-import 'package:appetizer/currentDateModel.dart';
-import 'package:appetizer/screens/user_feedback/user_feedback.dart';
+import 'package:appetizer/alertDialog.dart';
 import 'package:appetizer/colors.dart';
-import 'package:appetizer/services/user.dart';
-import 'package:appetizer/utils/horizontal_date_picker.dart';
+import 'package:appetizer/connectivity_provider.dart';
+import 'package:appetizer/currentDateModel.dart';
+import 'package:appetizer/globals.dart';
 import 'package:appetizer/menu.dart';
+import 'package:appetizer/screens/FAQ/faq_screen.dart';
+import 'package:appetizer/screens/menu_screens/week_menu_screen.dart';
 import 'package:appetizer/screens/my_leaves/my_leaves_screen.dart';
 import 'package:appetizer/screens/my_rebates/my_rebates_screen.dart';
 import 'package:appetizer/screens/notification_history/noti_history_screen.dart';
-import 'package:appetizer/alertDialog.dart';
-import 'package:appetizer/screens/FAQ/faq_screen.dart';
-import 'package:appetizer/globals.dart';
-
+import 'package:appetizer/screens/user_feedback/user_feedback.dart';
+import 'package:appetizer/services/leave.dart';
+import 'package:appetizer/services/user.dart';
+import 'package:appetizer/utils/horizontal_date_picker.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'screens/settings/settings_screen.dart';
-import 'package:appetizer/screens/menu_screens/week_menu_screen.dart';
-
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-        theme: ThemeData(
-          primaryColor: appiPrimary,
-          accentColor: appiAccent,
-        ),
-        home: Home());
-  }
-}
 
 class Home extends StatefulWidget {
   final String username;
@@ -77,8 +63,11 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      builder: (context) => CurrentDateModel(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(builder: (context) => CurrentDateModel()),
+        ChangeNotifierProvider(builder: (context) => ConnectivityProvider())
+      ],
       child: Scaffold(
         floatingActionButton: !isCheckedOut
             ? FloatingActionButton(
