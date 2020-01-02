@@ -90,8 +90,6 @@ class _MenuState extends State<Menu> {
             } else if (data == null) {
               return NoMealsScreen();
             } else {
-              updateMealDb(data);
-
               //Daily Items fetch
               List<String> breakfastDailyItemsList = [];
               for (var i = 0; i < data.dailyItems.breakfast.length; i++) {
