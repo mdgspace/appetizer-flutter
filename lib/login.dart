@@ -1,24 +1,26 @@
 import 'dart:async';
 import 'dart:io';
+
 import 'package:appetizer/alertDialog.dart';
 import 'package:appetizer/chooseNewPassword.dart';
 import 'package:appetizer/forgotPassword.dart';
 import 'package:appetizer/globals.dart';
+import 'package:appetizer/services/user.dart';
+import 'package:appetizer/utils/check_connectivity.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flare_flutter/flare_actor.dart';
+import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'globals.dart';
-import 'home.dart';
-import 'colors.dart';
-import 'help.dart';
-import 'package:appetizer/services/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:flutter/animation.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+import 'colors.dart';
+import 'globals.dart';
+import 'help.dart';
+import 'home.dart';
 
 class Login extends StatefulWidget {
   final String code;
@@ -64,12 +66,11 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    print(widget.code);
+    showConnectivityStatus();
     if (widget.code != null && widget.code != "") {
       SchedulerBinding.instance
           .addPostFrameCallback((_) => verifyUser(context));
     }
-    showConnectivityStatus();
 
     _chefCorrectController =
         AnimationController(vsync: this, duration: Duration(seconds: 3));
@@ -86,24 +87,6 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
       parent: _chefWrongController,
       curve: Curves.fastOutSlowIn,
     ));
-  }
-
-  Future showConnectivityStatus() async {
-    try {
-      final result = await InternetAddress.lookup('google.com');
-      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-        print('connected');
-      }
-    } on SocketException catch (_) {
-      print('not connected');
-      Fluttertoast.showToast(
-        msg: "Please check your connection!",
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.CENTER,
-        timeInSecForIos: 7,
-        fontSize: 12.0,
-      );
-    }
   }
 
   @override
@@ -207,10 +190,6 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
     );
   }
 
-  Widget getFlareAnimation() {
-    return flareActor;
-  }
-
   Widget _showEnrollmentInput() {
     return new TextFormField(
       maxLines: 1,
@@ -262,7 +241,6 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
 
   Widget _showLoginButton() {
     showConnectivityStatus();
-
     return (isLoginButtonTapped)
         ? new FlatButton(
             padding: EdgeInsets.all(8),
@@ -309,7 +287,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
 
   Widget _helpButton() {
     return (_isLoginSuccessful)
-        ? emptyContainer()
+        ? Container()
         : SizedBox(
             height: 25.0,
             child: new GestureDetector(
@@ -324,7 +302,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
 
   Widget _showDash() {
     return (_isLoginSuccessful)
-        ? emptyContainer()
+        ? Container()
         : SizedBox(
             height: 25.0,
             child: new GestureDetector(
@@ -339,7 +317,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
 
   Widget _forgotPasswordButton() {
     return (_isLoginSuccessful)
-        ? emptyContainer()
+        ? Container()
         : SizedBox(
             height: 25.0,
             child: new GestureDetector(
@@ -354,7 +332,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
 
   Widget _showChannelIButton() {
     return (_isLoginSuccessful)
-        ? emptyContainer()
+        ? Container()
         : new FlatButton(
             padding: EdgeInsets.all(12),
             color: appiYellow,
@@ -369,13 +347,6 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
             ),
             onPressed: _channelILogin,
           );
-  }
-
-  Widget emptyContainer() {
-    return new Container(
-      height: 0,
-      width: 0,
-    );
   }
 
   void _validateAndSubmit() {
