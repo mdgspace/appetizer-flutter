@@ -1,6 +1,7 @@
 import 'package:appetizer/app_database.dart';
 import 'package:appetizer/components/day_menu.dart';
 import 'package:appetizer/currentDateModel.dart';
+import 'package:appetizer/enums/connectivity_status.dart';
 import 'package:appetizer/globals.dart';
 import 'package:appetizer/noMeals.dart';
 import 'package:appetizer/services/menu.dart';
@@ -8,6 +9,7 @@ import 'package:appetizer/services/user.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sembast/sembast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'colors.dart';
 import 'models/menu/week.dart';
@@ -31,6 +33,13 @@ class _MenuState extends State<Menu> {
         isCheckedOut = me.isCheckedOut;
       });
     });
+    SharedPreferences.getInstance().then((sharedPrefs) {
+      if (sharedPrefs.getInt("mealKey") == null) {
+        menuWeek(widget.token, getWeekNumber(DateTime.now())).then((menu) {
+          updateMealDb(menu);
+        });
+      }
+    });
   }
 
   static const String MEAL_STORE_NAME = 'meals';
@@ -43,9 +52,10 @@ class _MenuState extends State<Menu> {
   // singleton instance of an opened database.
   Future<Database> get _db async => await AppDatabase.instance.database;
 
-  Future<int> insert(Week weekMenu) async {
+  Future<void> updateMealDb(Week weekMenu) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     int mealKey = await _mealStore.add(await _db, weekMenu.toJson());
-    return mealKey;
+    prefs.setInt("mealKey", mealKey);
   }
 
   String breakfastDailyItems = "";
@@ -56,10 +66,13 @@ class _MenuState extends State<Menu> {
   @override
   Widget build(BuildContext context) {
     final selectedDateTime = Provider.of<CurrentDateModel>(context);
+    var connectionStatus = Provider.of<ConnectivityStatus>(context);
 
     Widget getWeekMenu(String token, DateTime dateTime) {
       return FutureBuilder(
-          future: menuWeek(token, getWeekNumber(dateTime)),
+          future: connectionStatus == ConnectivityStatus.Offline
+              ? menuWeekFromDb()
+              : menuWeek(token, getWeekNumber(dateTime)),
           builder: (context, snapshot) {
             var data = snapshot.data;
             if (snapshot.connectionState == ConnectionState.waiting) {
@@ -75,10 +88,7 @@ class _MenuState extends State<Menu> {
             } else if (data == null) {
               return NoMealsScreen();
             } else {
-              insert(data).then((mealKey) async {
-                var record = await _mealStore.record(mealKey).get(await _db);
-                print(record);
-              });
+              updateMealDb(data);
 
               //Daily Items fetch
               List<String> breakfastDailyItemsList = [];
