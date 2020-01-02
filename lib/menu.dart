@@ -71,7 +71,9 @@ class _MenuState extends State<Menu> {
     Widget getWeekMenu(String token, DateTime dateTime) {
       return FutureBuilder(
           future: connectionStatus == ConnectivityStatus.Offline
-              ? menuWeekFromDb()
+              ? getWeekNumber(dateTime) == getWeekNumber(DateTime.now())
+                  ? menuWeekFromDb()
+                  : menuWeek(token, getWeekNumber(dateTime))
               : menuWeek(token, getWeekNumber(dateTime)),
           builder: (context, snapshot) {
             var data = snapshot.data;
