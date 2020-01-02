@@ -1,13 +1,18 @@
 import 'dart:convert';
+
 import 'package:appetizer/models/menu/approve.dart';
 import 'package:appetizer/models/menu/week.dart';
 import 'package:http/http.dart' as http;
+import 'package:sembast/sembast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../app_database.dart';
 
 String url = "https://mess.iitr.ac.in";
 var header = {"Content-Type": "application/json"};
 http.Client client = new http.Client();
 
-Future<Week> menuWeek(String token , int weekId) async {
+Future<Week> menuWeek(String token, int weekId) async {
   String endpoint = "/api/menu/week/?week_id=$weekId";
   String uri = url + endpoint;
   var tokenAuth = {"Authorization": "Token " + token};
@@ -21,6 +26,27 @@ Future<Week> menuWeek(String token , int weekId) async {
     print(response.body);
     return week;
   } on Exception catch (e) {
+    print(e);
+    return null;
+  }
+}
+
+Future<Week> menuWeekFromDb() async {
+  const String MEAL_STORE_NAME = 'meals';
+
+  // A Store with int keys and Map<String, dynamic> values.
+  // This Store acts like a persistent map, values of which are Week objects converted to Map
+  final _mealStore = intMapStoreFactory.store(MEAL_STORE_NAME);
+
+  // Private getter to shorten the amount of code needed to get the
+  // singleton instance of an opened database.
+  Database _db = await AppDatabase.instance.database;
+
+  try {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var record = await _mealStore.record(prefs.getInt("mealKey")).get(_db);
+    return Week.fromJson(record);
+  } catch (e) {
     print(e);
     return null;
   }
@@ -153,7 +179,7 @@ Future<List<MealItem>> allMealItems(String token) async {
   try {
     var response = await client.get(uri, headers: tokenAuth);
     final jsonResponse = jsonDecode(response.body);
-      List<MealItem> mealItems = new List<MealItem>.from(jsonResponse);
+    List<MealItem> mealItems = new List<MealItem>.from(jsonResponse);
     print(response.body);
     return mealItems;
   } on Exception catch (e) {
