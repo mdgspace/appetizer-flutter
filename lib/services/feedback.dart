@@ -1,8 +1,9 @@
 import 'dart:convert';
+
 import 'package:appetizer/models/feed_back/feed_back.dart';
-import 'package:http/http.dart' as http;
-import 'package:appetizer/models/feed_back/submitted_feedbacks.dart';
 import 'package:appetizer/models/feed_back/responses.dart';
+import 'package:appetizer/models/feed_back/submitted_feedbacks.dart';
+import 'package:http/http.dart' as http;
 
 String url = "https://mess.iitr.ac.in";
 var header = {"Content-Type": "application/json"};
@@ -24,14 +25,13 @@ Future<List<Feedbacks>> submittedFeedBacks(String token) async {
     return null;
   }
 }
+
 Future<List<Response>> responseOfFeedBacks(String token) async {
   String endpoint = "/api/feedback/response/list/";
   String uri = url + endpoint;
   var tokenAuth = {"Authorization": "Token " + token};
   try {
     var response = await client.get(uri, headers: tokenAuth);
-    final jsonResponse = jsonDecode(response.body);
-    print(response.body);
     List<Response> list = responseFromJson(response.body);
     return list;
   } on Exception catch (e) {
@@ -39,6 +39,7 @@ Future<List<Response>> responseOfFeedBacks(String token) async {
     return null;
   }
 }
+
 Future<Feedback> newFeedBack(String token, String type, String title,
     String message, DateTime dateIssue) async {
   String endpoint = "/api/feedback/";
@@ -53,7 +54,7 @@ Future<Feedback> newFeedBack(String token, String type, String title,
   try {
     var response = await client.post(uri, headers: tokenAuth, body: json);
     final jsonResponse = jsonDecode(response.body);
-    Feedback feedback = new Feedback.fromJson(json);
+    Feedback feedback = new Feedback.fromJson(jsonResponse);
     print(response.body);
     return feedback;
   } on Exception catch (e) {
