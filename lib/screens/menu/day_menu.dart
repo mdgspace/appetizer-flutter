@@ -4,8 +4,8 @@ import 'package:appetizer/models/menu/week.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../globals.dart';
-import '../menu_card.dart';
+import '../../globals.dart';
+import 'menu_card.dart';
 
 class DayMenu extends StatefulWidget {
   final String token;

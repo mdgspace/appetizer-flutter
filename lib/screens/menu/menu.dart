@@ -1,9 +1,9 @@
-import 'package:appetizer/app_database.dart';
-import 'package:appetizer/components/day_menu.dart';
-import 'package:appetizer/currentDateModel.dart';
+import 'package:appetizer/database/app_database.dart';
+import 'package:appetizer/screens/menu/day_menu.dart';
+import 'package:appetizer/provider/current_date.dart';
 import 'package:appetizer/enums/connectivity_status.dart';
 import 'package:appetizer/globals.dart';
-import 'package:appetizer/noMeals.dart';
+import 'package:appetizer/screens/menu/no_meals.dart';
 import 'package:appetizer/services/menu.dart';
 import 'package:appetizer/services/user.dart';
 import 'package:flutter/material.dart';
@@ -11,9 +11,9 @@ import 'package:provider/provider.dart';
 import 'package:sembast/sembast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'colors.dart';
-import 'models/menu/week.dart';
-import 'utils/get_week_id.dart';
+import '../../colors.dart';
+import '../../models/menu/week.dart';
+import '../../utils/get_week_id.dart';
 
 class Menu extends StatefulWidget {
   final String token;

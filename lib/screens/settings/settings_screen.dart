@@ -9,10 +9,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:share/share.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:appetizer/resetPassword.dart';
-import 'package:appetizer/alertDialog.dart';
+import 'package:appetizer/screens/password/reset_password.dart';
+import 'package:appetizer/components/alert_dialog.dart';
 import 'package:appetizer/colors.dart';
-import 'package:appetizer/help.dart';
+import 'package:appetizer/screens/help/help.dart';
 
 import 'edit_profile.dart';
 

@@ -1,4 +1,4 @@
-import 'package:appetizer/currentDateModel.dart';
+import 'package:appetizer/provider/current_date.dart';
 import 'package:flutter/material.dart';
 import 'package:appetizer/services/menu.dart';
 import 'package:provider/provider.dart';

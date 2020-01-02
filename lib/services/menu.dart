@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:sembast/sembast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../app_database.dart';
+import '../database/app_database.dart';
 
 String url = "https://mess.iitr.ac.in";
 var header = {"Content-Type": "application/json"};

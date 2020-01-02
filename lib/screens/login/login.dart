@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:appetizer/alertDialog.dart';
-import 'package:appetizer/chooseNewPassword.dart';
-import 'package:appetizer/forgotPassword.dart';
+import 'package:appetizer/components/alert_dialog.dart';
+import 'package:appetizer/screens/password/choose_new_password.dart';
+import 'package:appetizer/screens/password/forgot_password.dart';
 import 'package:appetizer/globals.dart';
 import 'package:appetizer/services/user.dart';
 import 'package:appetizer/utils/check_connectivity.dart';
@@ -17,10 +17,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'colors.dart';
-import 'globals.dart';
-import 'help.dart';
-import 'home.dart';
+import '../../colors.dart';
+import '../../globals.dart';
+import '../help/help.dart';
+import '../menu/home.dart';
 
 class Login extends StatefulWidget {
   final String code;

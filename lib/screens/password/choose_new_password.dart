@@ -1,12 +1,12 @@
 import 'dart:async';
-import 'package:appetizer/home.dart';
+import 'package:appetizer/screens/menu/home.dart';
 import 'package:appetizer/models/user/oauth.dart';
 import 'package:flutter/material.dart';
 import 'package:appetizer/services/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'home.dart';
-import 'alertDialog.dart';
-import 'colors.dart';
+import '../menu/home.dart';
+import '../../components/alert_dialog.dart';
+import '../../colors.dart';
 
 class ChooseNewPass extends StatefulWidget {
   final String name;

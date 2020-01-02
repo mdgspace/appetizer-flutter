@@ -8,7 +8,7 @@ import '../flutter_calendar_carousel/flutter_calendar_carousel.dart'
 import '../flutter_calendar_carousel/classes/event.dart';
 import 'package:provider/provider.dart';
 
-import '../currentDateModel.dart';
+import '../provider/current_date.dart';
 
 class HorizontalDatePicker extends StatefulWidget {
   final String token;

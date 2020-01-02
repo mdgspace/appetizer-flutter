@@ -1,4 +1,4 @@
-import 'package:appetizer/alertDialog.dart';
+import 'package:appetizer/components/alert_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:appetizer/colors.dart';
 import 'package:appetizer/strings.dart';

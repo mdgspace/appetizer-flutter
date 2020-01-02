@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:appetizer/colors.dart';
-import 'package:appetizer/alertDialog.dart';
+import 'package:appetizer/components/alert_dialog.dart';
 
 class EditProfile extends StatefulWidget {
   final String contactNo;

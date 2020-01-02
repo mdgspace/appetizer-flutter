@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'colors.dart';
-import 'strings.dart';
+import '../../colors.dart';
+import '../../strings.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Help extends StatelessWidget {

@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:appetizer/models/feed_back/feed_back.dart';
 import 'package:http/http.dart' as http;
-import 'package:appetizer/models/feed_back/submittedfeedbacks.dart';
+import 'package:appetizer/models/feed_back/submitted_feedbacks.dart';
 import 'package:appetizer/models/feed_back/responses.dart';
 
 String url = "https://mess.iitr.ac.in";

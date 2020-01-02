@@ -1,8 +1,8 @@
 import 'package:appetizer/models/detail.dart';
 import 'package:flutter/material.dart';
 import 'package:appetizer/services/user.dart';
-import 'colors.dart';
-import 'strings.dart';
+import '../../colors.dart';
+import '../../strings.dart';
 
 class ForgotPass extends StatefulWidget {
   @override

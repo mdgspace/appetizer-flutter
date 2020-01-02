@@ -2,7 +2,7 @@ import 'package:appetizer/globals.dart';
 import 'package:appetizer/screens/my_leaves/info_message.dart';
 import 'package:appetizer/services/leave.dart';
 import 'package:flutter/material.dart';
-import '../../login.dart';
+import '../login/login.dart';
 import 'package:appetizer/services/user.dart';
 import 'package:appetizer/colors.dart';
 

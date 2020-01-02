@@ -1,4 +1,4 @@
-import 'package:appetizer/alertDialog.dart';
+import 'package:appetizer/components/alert_dialog.dart';
 import 'package:appetizer/colors.dart';
 import 'package:appetizer/models/menu/week.dart';
 import 'package:appetizer/screens/user_feedback/new_feedback.dart';

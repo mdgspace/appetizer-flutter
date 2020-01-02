@@ -1,9 +1,9 @@
-import 'package:appetizer/alertDialog.dart';
+import 'package:appetizer/components/alert_dialog.dart';
 import 'package:appetizer/colors.dart';
-import 'package:appetizer/currentDateModel.dart';
+import 'package:appetizer/provider/current_date.dart';
 import 'package:appetizer/enums/connectivity_status.dart';
 import 'package:appetizer/globals.dart';
-import 'package:appetizer/menu.dart';
+import 'package:appetizer/screens/menu/menu.dart';
 import 'package:appetizer/screens/FAQ/faq_screen.dart';
 import 'package:appetizer/screens/menu_screens/week_menu_screen.dart';
 import 'package:appetizer/screens/my_leaves/my_leaves_screen.dart';
@@ -19,7 +19,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'screens/settings/settings_screen.dart';
+import '../settings/settings_screen.dart';
 
 class Home extends StatefulWidget {
   final String username;

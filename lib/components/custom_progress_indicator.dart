@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'colors.dart';
+import '../colors.dart';
 
 Widget getCustomProgressLoader(String message){
   return Center(

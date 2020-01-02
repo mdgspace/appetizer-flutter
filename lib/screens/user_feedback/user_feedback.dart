@@ -1,5 +1,5 @@
 import 'package:appetizer/models/feed_back/responses.dart';
-import 'package:appetizer/models/feed_back/submittedfeedbacks.dart';
+import 'package:appetizer/models/feed_back/submitted_feedbacks.dart';
 import 'package:appetizer/screens/user_feedback/new_feedback.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
