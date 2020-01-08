@@ -158,6 +158,7 @@ class Meal {
   String endTime;
   LeaveStatus leaveStatus;
   dynamic wastage;
+  bool isSwitchable;
 
   Meal({
     this.id,
@@ -167,18 +168,19 @@ class Meal {
     this.endTime,
     this.leaveStatus,
     this.wastage,
+    this.isSwitchable,
   });
 
   factory Meal.fromJson(Map<String, dynamic> json) => new Meal(
-        id: json["id"],
-        type: mealTypeValues.map[json["type"]],
-        items: new List<MealItem>.from(
-            json["items"].map((x) => MealItem.fromJson(x))),
-        startTime: json["start_time"],
-        endTime: json["end_time"],
-        leaveStatus: leaveStatusValues.map[json["leave_status"]],
-        wastage: json["wastage"],
-      );
+      id: json["id"],
+      type: mealTypeValues.map[json["type"]],
+      items: new List<MealItem>.from(
+          json["items"].map((x) => MealItem.fromJson(x))),
+      startTime: json["start_time"],
+      endTime: json["end_time"],
+      leaveStatus: leaveStatusValues.map[json["leave_status"]],
+      wastage: json["wastage"],
+      isSwitchable: json["is_switchable"]);
 
   Map<String, dynamic> toJson() => {
         "id": id,
@@ -188,6 +190,7 @@ class Meal {
         "end_time": endTime,
         "leave_status": leaveStatusValues.reverse[leaveStatus],
         "wastage": wastage,
+        "is_switchable": isSwitchable,
       };
 }
 
