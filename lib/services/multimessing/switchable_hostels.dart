@@ -7,7 +7,7 @@ String url = "https://mess.iitr.ac.in";
 var header = {"Content-Type": "application/json"};
 http.Client client = new http.Client();
 
-Future switchableHostels(String token) async {
+Future<List<List<dynamic>>> switchableHostels(String token) async {
   String endPoint = "/api/user/multimessing/hostels";
   String uri = url + endPoint;
   var tokenAuth = {"Authorization": "Token " + token};

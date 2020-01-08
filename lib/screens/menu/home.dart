@@ -1,10 +1,10 @@
-import 'package:appetizer/components/alert_dialog.dart';
 import 'package:appetizer/colors.dart';
-import 'package:appetizer/provider/current_date.dart';
+import 'package:appetizer/components/alert_dialog.dart';
 import 'package:appetizer/enums/connectivity_status.dart';
 import 'package:appetizer/globals.dart';
-import 'package:appetizer/screens/menu/menu.dart';
+import 'package:appetizer/provider/current_date.dart';
 import 'package:appetizer/screens/FAQ/faq_screen.dart';
+import 'package:appetizer/screens/menu/menu.dart';
 import 'package:appetizer/screens/menu_screens/week_menu_screen.dart';
 import 'package:appetizer/screens/my_leaves/my_leaves_screen.dart';
 import 'package:appetizer/screens/my_rebates/my_rebates_screen.dart';
@@ -36,6 +36,9 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   String version = "v1.5.6r";
   FirebaseMessaging _fcm = FirebaseMessaging();
+
+  String selectedHostelName;
+  List<String> switchableHostelsList = [];
 
   @override
   void initState() {
@@ -137,10 +140,49 @@ class _HomeState extends State<Home> {
         appBar: AppBar(
           elevation: 0,
           centerTitle: true,
-          title: Text(
-            "Mess Menu",
-            style: new TextStyle(
-                color: Colors.white, fontSize: 25.0, fontFamily: 'Lobster_Two'),
+          title: Container(
+            width: MediaQuery.of(context).size.width / 1.5,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(50),
+                border: Border.all(color: Colors.black.withOpacity(0.25))),
+            child: Theme(
+              data: ThemeData(canvasColor: appiBrown),
+              child: Center(
+                child: DropdownButton<String>(
+                  underline: Container(),
+                  value: selectedHostelName,
+                  hint: Text(
+                    "Your Meals",
+                    style: new TextStyle(
+                        color: Colors.white,
+                        fontSize: 25.0,
+                        fontFamily: 'Lobster_Two'),
+                  ),
+                  items: switchableHostelsList.map((String hostelName) {
+                    return DropdownMenuItem<String>(
+                      value: hostelName,
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                          hostelName,
+                          overflow: TextOverflow.ellipsis,
+                          style: new TextStyle(
+                            color: Colors.white,
+                            fontSize: 25.0,
+                            fontFamily: 'Lobster_Two',
+                          ),
+                        ),
+                      ),
+                    );
+                  }).toList(),
+                  onChanged: (String _selectedHostelName) {
+                    setState(() {
+                      selectedHostelName = _selectedHostelName;
+                    });
+                  },
+                ),
+              ),
+            ),
           ),
           actions: <Widget>[
             Padding(
