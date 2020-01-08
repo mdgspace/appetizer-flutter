@@ -1,9 +1,7 @@
-import 'dart:convert';
-
 import 'package:appetizer/models/multimessing/switchable_hostels.dart';
 import 'package:http/http.dart' as http;
 
-String url = "https://mess.iitr.ac.in";
+String url = "https://appetizer-mdg.herokuapp.com";
 var header = {"Content-Type": "application/json"};
 http.Client client = new http.Client();
 
@@ -14,9 +12,8 @@ Future<List<List<dynamic>>> switchableHostels(String token) async {
 
   try {
     var response = await client.get(uri, headers: tokenAuth);
-    final jsonResponse = jsonDecode(response.body);
     List<List<dynamic>> switchableHostels =
-        switchableHostelsFromJson(jsonResponse);
+        switchableHostelsFromJson(response.body);
     print(response.body);
     return switchableHostels;
   } on Exception catch (e) {
