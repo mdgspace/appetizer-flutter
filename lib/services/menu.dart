@@ -31,8 +31,9 @@ Future<Week> menuWeek(String token, int weekId) async {
   }
 }
 
-Future<Week> menuWeekMultiMessing(String token) async {
-  String endpoint = "/api/menu/week/v2";
+Future<Week> menuWeekMultiMessing(
+    String token, int weekId, String hostelCode) async {
+  String endpoint = "/api/menu/week/v2?hostel=$hostelCode&week_id=$weekId";
   String uri = url + endpoint;
   var tokenAuth = {"Authorization": "Token " + token};
   try {

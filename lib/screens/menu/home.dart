@@ -14,6 +14,7 @@ import 'package:appetizer/services/connectivity_service.dart';
 import 'package:appetizer/services/leave.dart';
 import 'package:appetizer/services/multimessing/switchable_hostels.dart';
 import 'package:appetizer/services/user.dart';
+import 'package:appetizer/utils/get_hostel_code.dart';
 import 'package:appetizer/utils/horizontal_date_picker.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -40,14 +41,19 @@ class _HomeState extends State<Home> {
   FirebaseMessaging _fcm = FirebaseMessaging();
 
   String selectedHostelName;
+  String residingHostel;
   List<String> switchableHostelsList = [];
 
   @override
   void initState() {
     super.initState();
     firebaseCloudMessagingListeners();
-    switchableHostels(widget.token)
-        .then((hostelsList) {
+    SharedPreferences.getInstance().then((prefs) {
+      setState(() {
+        residingHostel = prefs.getString("hostelName");
+      });
+    });
+    switchableHostels(widget.token).then((hostelsList) {
       hostelsList.forEach((hostel) {
         switchableHostelsList.add(hostel[2].toString());
       });
@@ -82,69 +88,69 @@ class _HomeState extends State<Home> {
         ChangeNotifierProvider(builder: (context) => CurrentDateModel()),
         StreamProvider<ConnectivityStatus>(
             builder: (context) =>
-            ConnectivityService().connectionStatusController.stream)
+                ConnectivityService().connectionStatusController.stream)
       ],
       child: Scaffold(
         floatingActionButton: !isCheckedOut
             ? FloatingActionButton(
-          onPressed: () {
-            showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8)),
-                    title: new Text(
-                      "Check Out",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    content: new Text(
-                        "Are you sure you would like to check out?"),
-                    actions: <Widget>[
-                      new FlatButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: new Text(
-                          "CANCEL",
-                          style: TextStyle(
-                              color: appiYellow,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        highlightColor: Colors.transparent,
-                        splashColor: Colors.transparent,
-                      ),
-                      new FlatButton(
-                        child: new Text(
-                          "CHECK OUT",
-                          style: TextStyle(
-                              color: appiYellow,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        onPressed: () async {
-                          Navigator.pop(context);
-                          check(widget.token).then((check) {
-                            setState(() {
-                              isCheckedOut = check.isCheckedOut;
-                            });
-                          });
-                        },
-                        highlightColor: Colors.transparent,
-                        splashColor: Colors.transparent,
-                      ),
-                    ],
-                  );
-                });
-          },
-          backgroundColor: appiYellowLogo,
-          child: Image.asset(
-            "assets/images/checkOut.png",
-            height: 25,
-            width: 25,
-          ),
-        )
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)),
+                          title: new Text(
+                            "Check Out",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          content: new Text(
+                              "Are you sure you would like to check out?"),
+                          actions: <Widget>[
+                            new FlatButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: new Text(
+                                "CANCEL",
+                                style: TextStyle(
+                                    color: appiYellow,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              highlightColor: Colors.transparent,
+                              splashColor: Colors.transparent,
+                            ),
+                            new FlatButton(
+                              child: new Text(
+                                "CHECK OUT",
+                                style: TextStyle(
+                                    color: appiYellow,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              onPressed: () async {
+                                Navigator.pop(context);
+                                check(widget.token).then((check) {
+                                  setState(() {
+                                    isCheckedOut = check.isCheckedOut;
+                                  });
+                                });
+                              },
+                              highlightColor: Colors.transparent,
+                              splashColor: Colors.transparent,
+                            ),
+                          ],
+                        );
+                      });
+                },
+                backgroundColor: appiYellowLogo,
+                child: Image.asset(
+                  "assets/images/checkOut.png",
+                  height: 25,
+                  width: 25,
+                ),
+              )
             : null,
         key: menuScaffoldKey,
         appBar: AppBar(
@@ -231,6 +237,10 @@ class _HomeState extends State<Home> {
                     child: SingleChildScrollView(
                       child: Menu(
                         token: widget.token,
+                        selectedHostelCode: hostelCodeMap[
+                            selectedHostelName == null
+                                ? residingHostel
+                                : selectedHostelName],
                       ),
                     ),
                   ),
@@ -275,10 +285,7 @@ class _HomeState extends State<Home> {
                                 widget.username,
                                 overflow: TextOverflow.ellipsis,
                                 style:
-                                Theme
-                                    .of(context)
-                                    .accentTextTheme
-                                    .display2,
+                                    Theme.of(context).accentTextTheme.display2,
                               ),
                             ),
                             Padding(
@@ -287,10 +294,7 @@ class _HomeState extends State<Home> {
                                 widget.enrollment,
                                 overflow: TextOverflow.ellipsis,
                                 style:
-                                Theme
-                                    .of(context)
-                                    .accentTextTheme
-                                    .display3,
+                                    Theme.of(context).accentTextTheme.display3,
                               ),
                             )
                           ],
@@ -335,8 +339,7 @@ class _HomeState extends State<Home> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>
-                                      MyLeaves(
+                                  builder: (context) => MyLeaves(
                                         token: widget.token,
                                       )));
                         },
@@ -355,8 +358,7 @@ class _HomeState extends State<Home> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>
-                                      MyRebates(
+                                  builder: (context) => MyRebates(
                                         token: widget.token,
                                       )));
                         },
@@ -375,9 +377,8 @@ class _HomeState extends State<Home> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>
-                                      NotificationHistory(
-                                          token: widget.token)));
+                                  builder: (context) => NotificationHistory(
+                                      token: widget.token)));
                         },
                       ),
                       GestureDetector(
@@ -466,7 +467,7 @@ class _HomeState extends State<Home> {
                                           showCustomDialog(
                                               context, "Logging You Out");
                                           FirebaseMessaging fcm =
-                                          FirebaseMessaging();
+                                              FirebaseMessaging();
                                           userMeGet(widget.token)
                                               .then((me) async {
                                             fcm.unsubscribeFromTopic(
@@ -474,12 +475,12 @@ class _HomeState extends State<Home> {
                                             userLogout(widget.token);
                                             Navigator.of(context)
                                                 .pushNamedAndRemoveUntil(
-                                                "/login",
+                                                    "/login",
                                                     (Route<dynamic> route) =>
-                                                false);
+                                                        false);
                                             SharedPreferences prefs =
-                                            await SharedPreferences
-                                                .getInstance();
+                                                await SharedPreferences
+                                                    .getInstance();
                                             prefs.clear();
                                             prefs.setBool("seen", true);
                                           });
