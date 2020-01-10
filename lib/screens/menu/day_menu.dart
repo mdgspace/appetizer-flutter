@@ -209,7 +209,8 @@ class _DayMenuState extends State<DayMenu> {
                 isBreakfastOutdated,
                 breakfastLeaveStatus,
                 isCheckedOut,
-                isBreakfastLeaveToggleOutdated)
+                isBreakfastLeaveToggleOutdated,
+                true)
             : Container(),
         (lunchMealMap.isNotEmpty)
             ? MenuCard(
@@ -222,7 +223,8 @@ class _DayMenuState extends State<DayMenu> {
                 isLunchOutdated,
                 lunchLeaveStatus,
                 isCheckedOut,
-                isLunchLeaveToggleOutdated)
+                isLunchLeaveToggleOutdated,
+                true)
             : Container(),
         (snacksMealMap.isNotEmpty)
             ? MenuCard(
@@ -235,7 +237,8 @@ class _DayMenuState extends State<DayMenu> {
                 isSnacksOutdated,
                 snacksLeaveStatus,
                 isCheckedOut,
-                isSnacksLeaveToggleOutdated)
+                isSnacksLeaveToggleOutdated,
+                true)
             : Container(),
         (dinnerMealMap.isNotEmpty)
             ? MenuCard(
@@ -248,7 +251,8 @@ class _DayMenuState extends State<DayMenu> {
                 isDinnerOutdated,
                 dinnerLeaveStatus,
                 isCheckedOut,
-                isDinnerLeaveToggleOutdated)
+                isDinnerLeaveToggleOutdated,
+                true)
             : Container(),
       ],
     );

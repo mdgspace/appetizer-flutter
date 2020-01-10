@@ -1,8 +1,8 @@
 import 'package:appetizer/database/app_database.dart';
-import 'package:appetizer/screens/menu/day_menu.dart';
-import 'package:appetizer/provider/current_date.dart';
 import 'package:appetizer/enums/connectivity_status.dart';
 import 'package:appetizer/globals.dart';
+import 'package:appetizer/provider/current_date.dart';
+import 'package:appetizer/screens/menu/day_menu.dart';
 import 'package:appetizer/screens/menu/no_meals.dart';
 import 'package:appetizer/services/menu.dart';
 import 'package:appetizer/services/user.dart';
@@ -17,8 +17,9 @@ import '../../utils/get_week_id.dart';
 
 class Menu extends StatefulWidget {
   final String token;
+  final String selectedHostelCode;
 
-  const Menu({Key key, this.token}) : super(key: key);
+  const Menu({Key key, this.token, this.selectedHostelCode}) : super(key: key);
 
   @override
   _MenuState createState() => _MenuState();
@@ -73,8 +74,10 @@ class _MenuState extends State<Menu> {
           future: connectionStatus == ConnectivityStatus.Offline
               ? getWeekNumber(dateTime) == getWeekNumber(DateTime.now())
                   ? menuWeekFromDb()
-                  : menuWeek(token, getWeekNumber(dateTime))
-              : menuWeek(token, getWeekNumber(dateTime)),
+                  : menuWeekMultiMessing(
+                      token, getWeekNumber(dateTime), widget.selectedHostelCode)
+              : menuWeekMultiMessing(
+                  token, getWeekNumber(dateTime), widget.selectedHostelCode),
           builder: (context, snapshot) {
             var data = snapshot.data;
             if (snapshot.connectionState == ConnectionState.waiting) {

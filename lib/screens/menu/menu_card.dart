@@ -1,5 +1,5 @@
-import 'package:appetizer/components/alert_dialog.dart';
 import 'package:appetizer/colors.dart';
+import 'package:appetizer/components/alert_dialog.dart';
 import 'package:appetizer/models/menu/week.dart';
 import 'package:appetizer/screens/user_feedback/new_feedback.dart';
 import 'package:appetizer/services/leave.dart';
@@ -18,6 +18,7 @@ class MenuCard extends StatefulWidget {
   final LeaveStatus leaveStatus;
   final bool isCheckedOut;
   final bool isToggleOutdated;
+  final bool isSwitchable;
 
   MenuCard(
       this.title,
@@ -29,7 +30,8 @@ class MenuCard extends StatefulWidget {
       this.isOutdated,
       this.leaveStatus,
       this.isCheckedOut,
-      this.isToggleOutdated);
+      this.isToggleOutdated,
+      this.isSwitchable);
 
   @override
   _MenuCardState createState() => _MenuCardState();
@@ -282,6 +284,23 @@ class _MenuCardState extends State<MenuCard> {
                               ],
                             ),
                           ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 12),
+                          child: widget.isSwitchable
+                              ? InkWell(
+                                  radius: 10,
+                                  child: Image.asset(
+                                    widget.isOutdated
+                                        ? "assets/icons/switch_inactive.png"
+                                        : "assets/icons/switch_active.png",
+                                    width: 50,
+                                    scale: 2,
+                                  ),
+                                  borderRadius: BorderRadius.circular(25),
+                                  onTap: widget.isOutdated ? null : () {},
+                                )
+                              : Container(),
                         ),
                         widget.isOutdated
                             ? Padding(
