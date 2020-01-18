@@ -133,9 +133,11 @@ class _MenuState extends State<Menu> {
               Day currentDayMeal = data.days[dateTime.weekday - 1];
 
               return DayMenu(
-                  token: widget.token,
-                  currentDayMeal: currentDayMeal,
-                  dailyItemsMap: dailyItemsMap);
+                token: widget.token,
+                currentDayMeal: currentDayMeal,
+                dailyItemsMap: dailyItemsMap,
+                selectedDateTime: selectedDateTime.dateTime,
+              );
             }
           });
     }

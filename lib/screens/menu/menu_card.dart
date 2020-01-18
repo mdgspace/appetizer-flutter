@@ -1,6 +1,7 @@
 import 'package:appetizer/colors.dart';
 import 'package:appetizer/components/alert_dialog.dart';
 import 'package:appetizer/models/menu/week.dart';
+import 'package:appetizer/screens/multimessing/confirm_switch_popup_screen.dart';
 import 'package:appetizer/screens/user_feedback/new_feedback.dart';
 import 'package:appetizer/services/leave.dart';
 import 'package:appetizer/utils/get_leave_color_from_leave_status.dart';
@@ -19,19 +20,22 @@ class MenuCard extends StatefulWidget {
   final bool isCheckedOut;
   final bool isToggleOutdated;
   final bool isSwitchable;
+  final DateTime selectedDateTime;
 
   MenuCard(
-      this.title,
-      this.menuItems,
-      this.dailyItems,
-      this.id,
-      this.token,
-      this.isSwitched,
-      this.isOutdated,
-      this.leaveStatus,
-      this.isCheckedOut,
-      this.isToggleOutdated,
-      this.isSwitchable);
+    this.title,
+    this.menuItems,
+    this.dailyItems,
+    this.id,
+    this.token,
+    this.isSwitched,
+    this.isOutdated,
+    this.leaveStatus,
+    this.isCheckedOut,
+    this.isToggleOutdated,
+    this.isSwitchable,
+    this.selectedDateTime,
+  );
 
   @override
   _MenuCardState createState() => _MenuCardState();
@@ -298,7 +302,27 @@ class _MenuCardState extends State<MenuCard> {
                                     scale: 2,
                                   ),
                                   borderRadius: BorderRadius.circular(25),
-                                  onTap: widget.isOutdated ? null : () {},
+                                  onTap: widget.isOutdated
+                                      ? null
+                                      : () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ConfirmSwitchPopupScreen(
+                                                token: widget.token,
+                                                id: widget.id,
+                                                title: widget.title,
+                                                menuToWhichToBeSwitched:
+                                                    widget.menuItems,
+                                                dailyItemsToWhichToBeSwitched:
+                                                    widget.dailyItems,
+                                                selectedDateTime:
+                                                    widget.selectedDateTime,
+                                              ),
+                                            ),
+                                          );
+                                        },
                                 )
                               : Container(),
                         ),
