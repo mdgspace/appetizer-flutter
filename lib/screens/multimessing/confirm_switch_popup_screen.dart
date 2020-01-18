@@ -7,9 +7,12 @@ import 'package:flutter/material.dart';
 
 import 'dart:math' as math;
 
+import 'package:intl/intl.dart';
+
 class ConfirmSwitchPopupScreen extends StatefulWidget {
   final String token;
   final int id;
+  final DateTime mealStartDateTime;
   final String title;
   final Map<CircleAvatar, String> menuToWhichToBeSwitched;
   final String dailyItemsToWhichToBeSwitched;
@@ -19,6 +22,7 @@ class ConfirmSwitchPopupScreen extends StatefulWidget {
     Key key,
     this.token,
     this.id,
+    this.mealStartDateTime,
     this.title,
     this.menuToWhichToBeSwitched,
     this.dailyItemsToWhichToBeSwitched,
@@ -32,7 +36,7 @@ class ConfirmSwitchPopupScreen extends StatefulWidget {
 
 class _ConfirmSwitchPopupScreenState extends State<ConfirmSwitchPopupScreen> {
   static final double _radius = 16;
-  Meal mealFromWhichToBeSwitched;
+  DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
 
   List<CircleAvatar> mealFromWhichToBeSwitchedLeadingImageList = [];
   List<String> mealFromWhichToBeSwitchedItemsList = [];
@@ -49,13 +53,22 @@ class _ConfirmSwitchPopupScreenState extends State<ConfirmSwitchPopupScreen> {
     ));
   }
 
-  void setMealFromWhichToBeSwitchedComponents() {
+  void setMealFromWhichToBeSwitchedComponents(Meal mealFromWhichToBeSwitched) {
+    mealFromWhichToBeSwitchedItemsList = [];
+    mealFromWhichToBeSwitchedLeadingImageList = [];
     for (var j = 0; j < mealFromWhichToBeSwitched.items.length; j++) {
       var mealItem = mealFromWhichToBeSwitched.items[j].name;
       mealFromWhichToBeSwitchedItemsList.add(mealItem);
       setLeadingMealImage(mealFromWhichToBeSwitchedLeadingImageList);
     }
   }
+
+  Map<String, MealType> titleToMealTypeMap = {
+    "Breakfast": MealType.B,
+    "Lunch": MealType.L,
+    "Snacks": MealType.S,
+    "Dinner": MealType.D,
+  };
 
   @override
   void initState() {
@@ -80,35 +93,57 @@ class _ConfirmSwitchPopupScreenState extends State<ConfirmSwitchPopupScreen> {
             );
           } else {
             snapshot.data.days.forEach((dayMenu) {
+              String mealDateString = dayMenu.date.toString().substring(0, 10);
               dayMenu.meals.forEach((mealMenu) {
-                if (mealMenu.id == widget.id) {
-                  mealFromWhichToBeSwitched = mealMenu;
+                if (mealDateString ==
+                        widget.mealStartDateTime.toString().substring(0, 10) &&
+                    titleToMealTypeMap[widget.title] == mealMenu.type) {
+                  setMealFromWhichToBeSwitchedComponents(mealMenu);
+                  mealFromWhichToBeSwitchedMap = Map.fromIterables(
+                    mealFromWhichToBeSwitchedLeadingImageList,
+                    mealFromWhichToBeSwitchedItemsList,
+                  );
                 }
               });
             });
 
-            setMealFromWhichToBeSwitchedComponents();
-            mealFromWhichToBeSwitchedMap = Map.fromIterables(
-                mealFromWhichToBeSwitchedLeadingImageList,
-                mealFromWhichToBeSwitchedItemsList);
-
-            return Column(
-              children: <Widget>[
-                SwitchConfirmationMealCard(
-                  token: widget.token,
-                  id: widget.id,
-                  title: widget.title,
-                  menuItems: mealFromWhichToBeSwitchedMap,
-                  dailyItems: mealFromWhichToBeSwitchedDailyItems,
-                ),
-                SwitchConfirmationMealCard(
-                  token: widget.token,
-                  id: widget.id,
-                  title: widget.title,
-                  menuItems: widget.menuToWhichToBeSwitched,
-                  dailyItems: widget.dailyItemsToWhichToBeSwitched,
-                )
-              ],
+            return SafeArea(
+              child: Column(
+                children: <Widget>[
+                  Text("Switch From"),
+                  SwitchConfirmationMealCard(
+                    token: widget.token,
+                    id: widget.id,
+                    title: widget.title,
+                    menuItems: mealFromWhichToBeSwitchedMap,
+                    dailyItems: mealFromWhichToBeSwitchedDailyItems,
+                  ),
+                  Image.asset("assets/icons/switch_active.png"),
+                  Text("Switch To"),
+                  SwitchConfirmationMealCard(
+                    token: widget.token,
+                    id: widget.id,
+                    title: widget.title,
+                    menuItems: widget.menuToWhichToBeSwitched,
+                    dailyItems: widget.dailyItemsToWhichToBeSwitched,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      FlatButton(
+                        child: Text("CANCEL"),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                      ),
+                      FlatButton(
+                        child: Text("SWITCH"),
+                        onPressed: () {},
+                      )
+                    ],
+                  )
+                ],
+              ),
             );
           }
         },

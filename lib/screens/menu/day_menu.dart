@@ -69,6 +69,11 @@ class _DayMenuState extends State<DayMenu> {
   LeaveStatus snacksLeaveStatus;
   LeaveStatus dinnerLeaveStatus;
 
+  DateTime breakfastStartDateTime;
+  DateTime lunchStartDateTime;
+  DateTime snacksStartDateTime;
+  DateTime dinnerStartDateTime;
+
   void setLeadingMealImage(List<CircleAvatar> mealLeadingImageList) {
     var randomColor =
         Color((math.Random().nextDouble() * 0xFFFFFF).toInt() << 0)
@@ -89,8 +94,7 @@ class _DayMenuState extends State<DayMenu> {
             widget.currentDayMeal.date.toString().substring(0, 10) +
                 " " +
                 widget.currentDayMeal.meals[i].startTime;
-        DateTime breakfastStartDateTime =
-            dateFormat.parse(breakfastDateTimeString);
+        breakfastStartDateTime = dateFormat.parse(breakfastDateTimeString);
         if (!breakfastStartDateTime
             .subtract(Duration(hours: 12))
             .isAfter(DateTime.now())) {
@@ -117,7 +121,7 @@ class _DayMenuState extends State<DayMenu> {
             widget.currentDayMeal.date.toString().substring(0, 10) +
                 " " +
                 widget.currentDayMeal.meals[i].startTime;
-        DateTime lunchStartDateTime = dateFormat.parse(lunchDateTimeString);
+        lunchStartDateTime = dateFormat.parse(lunchDateTimeString);
         if (!lunchStartDateTime
             .subtract(Duration(hours: 12))
             .isAfter(DateTime.now())) {
@@ -144,7 +148,7 @@ class _DayMenuState extends State<DayMenu> {
             widget.currentDayMeal.date.toString().substring(0, 10) +
                 " " +
                 widget.currentDayMeal.meals[i].startTime;
-        DateTime snacksStartDateTime = dateFormat.parse(snacksDateTimeString);
+        snacksStartDateTime = dateFormat.parse(snacksDateTimeString);
         if (!snacksStartDateTime
             .subtract(Duration(hours: 12))
             .isAfter(DateTime.now())) {
@@ -171,7 +175,7 @@ class _DayMenuState extends State<DayMenu> {
             widget.currentDayMeal.date.toString().substring(0, 10) +
                 " " +
                 widget.currentDayMeal.meals[i].startTime;
-        DateTime dinnerStartDateTime = dateFormat.parse(dinnerDateTimeString);
+        dinnerStartDateTime = dateFormat.parse(dinnerDateTimeString);
         if (!dinnerStartDateTime
             .subtract(Duration(hours: 12))
             .isAfter(DateTime.now())) {
@@ -218,6 +222,7 @@ class _DayMenuState extends State<DayMenu> {
                 isBreakfastLeaveToggleOutdated,
                 true,
                 widget.selectedDateTime,
+                breakfastStartDateTime,
               )
             : Container(),
         (lunchMealMap.isNotEmpty)
@@ -234,6 +239,7 @@ class _DayMenuState extends State<DayMenu> {
                 isLunchLeaveToggleOutdated,
                 true,
                 widget.selectedDateTime,
+                lunchStartDateTime,
               )
             : Container(),
         (snacksMealMap.isNotEmpty)
@@ -250,6 +256,7 @@ class _DayMenuState extends State<DayMenu> {
                 isSnacksLeaveToggleOutdated,
                 true,
                 widget.selectedDateTime,
+                snacksStartDateTime,
               )
             : Container(),
         (dinnerMealMap.isNotEmpty)
@@ -266,6 +273,7 @@ class _DayMenuState extends State<DayMenu> {
                 isDinnerLeaveToggleOutdated,
                 true,
                 widget.selectedDateTime,
+                dinnerStartDateTime,
               )
             : Container(),
       ],

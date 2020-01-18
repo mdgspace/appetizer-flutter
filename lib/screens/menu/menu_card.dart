@@ -21,6 +21,7 @@ class MenuCard extends StatefulWidget {
   final bool isToggleOutdated;
   final bool isSwitchable;
   final DateTime selectedDateTime;
+  final DateTime mealStartDateTime;
 
   MenuCard(
     this.title,
@@ -35,6 +36,7 @@ class MenuCard extends StatefulWidget {
     this.isToggleOutdated,
     this.isSwitchable,
     this.selectedDateTime,
+    this.mealStartDateTime,
   );
 
   @override
@@ -312,6 +314,8 @@ class _MenuCardState extends State<MenuCard> {
                                                   ConfirmSwitchPopupScreen(
                                                 token: widget.token,
                                                 id: widget.id,
+                                                mealStartDateTime:
+                                                    widget.mealStartDateTime,
                                                 title: widget.title,
                                                 menuToWhichToBeSwitched:
                                                     widget.menuItems,
