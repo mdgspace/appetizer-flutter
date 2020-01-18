@@ -22,6 +22,7 @@ class MenuCard extends StatefulWidget {
   final bool isSwitchable;
   final DateTime selectedDateTime;
   final DateTime mealStartDateTime;
+  final String selectedHostelCode;
 
   MenuCard(
     this.title,
@@ -37,6 +38,7 @@ class MenuCard extends StatefulWidget {
     this.isSwitchable,
     this.selectedDateTime,
     this.mealStartDateTime,
+    this.selectedHostelCode,
   );
 
   @override
@@ -297,14 +299,14 @@ class _MenuCardState extends State<MenuCard> {
                               ? InkWell(
                                   radius: 10,
                                   child: Image.asset(
-                                    widget.isOutdated
+                                    widget.isToggleOutdated
                                         ? "assets/icons/switch_inactive.png"
                                         : "assets/icons/switch_active.png",
                                     width: 50,
                                     scale: 2,
                                   ),
                                   borderRadius: BorderRadius.circular(25),
-                                  onTap: widget.isOutdated
+                                  onTap: widget.isToggleOutdated
                                       ? null
                                       : () {
                                           Navigator.push(
@@ -323,6 +325,8 @@ class _MenuCardState extends State<MenuCard> {
                                                     widget.dailyItems,
                                                 selectedDateTime:
                                                     widget.selectedDateTime,
+                                                selectedHostelCode:
+                                                    widget.selectedHostelCode,
                                               ),
                                             ),
                                           );

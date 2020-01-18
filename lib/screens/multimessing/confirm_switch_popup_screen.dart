@@ -2,10 +2,13 @@ import 'package:appetizer/colors.dart';
 import 'package:appetizer/components/switch_confirmation_meal_card.dart';
 import 'package:appetizer/models/menu/week.dart';
 import 'package:appetizer/services/menu.dart';
+import 'package:appetizer/services/multimessing/switch_meals.dart';
 import 'package:appetizer/utils/get_week_id.dart';
 import 'package:flutter/material.dart';
 
 import 'dart:math' as math;
+
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ConfirmSwitchPopupScreen extends StatefulWidget {
   final String token;
@@ -15,6 +18,7 @@ class ConfirmSwitchPopupScreen extends StatefulWidget {
   final Map<CircleAvatar, String> menuToWhichToBeSwitched;
   final String dailyItemsToWhichToBeSwitched;
   final DateTime selectedDateTime;
+  final String selectedHostelCode;
 
   const ConfirmSwitchPopupScreen({
     Key key,
@@ -25,6 +29,7 @@ class ConfirmSwitchPopupScreen extends StatefulWidget {
     this.menuToWhichToBeSwitched,
     this.dailyItemsToWhichToBeSwitched,
     this.selectedDateTime,
+    this.selectedHostelCode,
   }) : super(key: key);
 
   @override
@@ -34,6 +39,7 @@ class ConfirmSwitchPopupScreen extends StatefulWidget {
 
 class _ConfirmSwitchPopupScreenState extends State<ConfirmSwitchPopupScreen> {
   static final double _radius = 16;
+  int currentHostelMealId;
 
   List<CircleAvatar> mealFromWhichToBeSwitchedLeadingImageList = [];
   List<String> mealFromWhichToBeSwitchedItemsList = [];
@@ -110,6 +116,7 @@ class _ConfirmSwitchPopupScreenState extends State<ConfirmSwitchPopupScreen> {
                 if (mealDateString ==
                         widget.mealStartDateTime.toString().substring(0, 10) &&
                     titleToMealTypeMap[widget.title] == mealMenu.type) {
+                  currentHostelMealId = mealMenu.id;
                   setMealFromWhichToBeSwitchedComponents(mealMenu);
                   mealFromWhichToBeSwitchedMap = Map.fromIterables(
                     mealFromWhichToBeSwitchedLeadingImageList,
@@ -188,7 +195,18 @@ class _ConfirmSwitchPopupScreenState extends State<ConfirmSwitchPopupScreen> {
                                 fontSize: 16,
                               ),
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              switchMeals(
+                                currentHostelMealId,
+                                widget.selectedHostelCode,
+                                widget.token,
+                              ).then((switchResponse) {
+                                SharedPreferences.getInstance().then((prefs) {
+                                  prefs.setString(
+                                      "secretKey", switchResponse.secretCode);
+                                });
+                              });
+                            },
                           )
                         ],
                       )

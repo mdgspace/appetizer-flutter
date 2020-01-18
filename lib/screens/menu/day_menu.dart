@@ -12,14 +12,16 @@ class DayMenu extends StatefulWidget {
   final Day currentDayMeal;
   final Map<String, String> dailyItemsMap;
   final DateTime selectedDateTime;
+  final String selectedHostelCode;
 
-  const DayMenu(
-      {Key key,
-      this.token,
-      this.currentDayMeal,
-      this.dailyItemsMap,
-      this.selectedDateTime})
-      : super(key: key);
+  const DayMenu({
+    Key key,
+    this.token,
+    this.currentDayMeal,
+    this.dailyItemsMap,
+    this.selectedDateTime,
+    this.selectedHostelCode,
+  }) : super(key: key);
 
   @override
   _DayMenuState createState() => _DayMenuState();
@@ -223,6 +225,7 @@ class _DayMenuState extends State<DayMenu> {
                 true,
                 widget.selectedDateTime,
                 breakfastStartDateTime,
+                widget.selectedHostelCode,
               )
             : Container(),
         (lunchMealMap.isNotEmpty)
@@ -240,6 +243,7 @@ class _DayMenuState extends State<DayMenu> {
                 true,
                 widget.selectedDateTime,
                 lunchStartDateTime,
+                widget.selectedHostelCode,
               )
             : Container(),
         (snacksMealMap.isNotEmpty)
@@ -257,6 +261,7 @@ class _DayMenuState extends State<DayMenu> {
                 true,
                 widget.selectedDateTime,
                 snacksStartDateTime,
+                widget.selectedHostelCode,
               )
             : Container(),
         (dinnerMealMap.isNotEmpty)
@@ -274,6 +279,7 @@ class _DayMenuState extends State<DayMenu> {
                 true,
                 widget.selectedDateTime,
                 dinnerStartDateTime,
+                widget.selectedHostelCode,
               )
             : Container(),
       ],

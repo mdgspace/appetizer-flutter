@@ -137,6 +137,7 @@ class _MenuState extends State<Menu> {
                 currentDayMeal: currentDayMeal,
                 dailyItemsMap: dailyItemsMap,
                 selectedDateTime: selectedDateTime.dateTime,
+                selectedHostelCode: widget.selectedHostelCode,
               );
             }
           });
