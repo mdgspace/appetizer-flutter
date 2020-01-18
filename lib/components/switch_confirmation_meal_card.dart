@@ -1,5 +1,8 @@
 import 'package:appetizer/colors.dart';
+import 'package:appetizer/utils/month_int_to_month_string.dart';
+import 'package:appetizer/utils/week_day_int_to_full_day_name.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class SwitchConfirmationMealCard extends StatefulWidget {
   final String token;
@@ -7,15 +10,17 @@ class SwitchConfirmationMealCard extends StatefulWidget {
   final String title;
   final Map<CircleAvatar, String> menuItems;
   final String dailyItems;
+  final DateTime mealStartDateTime;
 
-  const SwitchConfirmationMealCard(
-      {Key key,
-      this.token,
-      this.id,
-      this.title,
-      this.menuItems,
-      this.dailyItems})
-      : super(key: key);
+  const SwitchConfirmationMealCard({
+    Key key,
+    this.token,
+    this.id,
+    this.title,
+    this.menuItems,
+    this.dailyItems,
+    this.mealStartDateTime,
+  }) : super(key: key);
 
   @override
   _SwitchConfirmationMealCardState createState() =>
@@ -69,12 +74,39 @@ class _SwitchConfirmationMealCardState
     );
   }
 
+  Widget getDayAndDateForCard() {
+    DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
+    String mealDateTimeString =
+        widget.mealStartDateTime.toString().substring(0, 10) + ' 00:00:00';
+    DateTime mealDateTime = dateFormat.parse(mealDateTimeString);
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 8,
+      ),
+      child: Column(
+        children: <Widget>[
+          Text(
+            weekDayIntToWeekDayFullName(mealDateTime.weekday),
+          ),
+          Text(
+            monthIntToMonthString(mealDateTime.month) +
+                " " +
+                mealDateTime.day.toString() +
+                "," +
+                mealDateTime.year.toString(),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0.0, 4.0, 0.0, 4.0),
       child: Card(
-          margin: EdgeInsets.fromLTRB(12, 4, 12, 4),
+          margin: EdgeInsets.fromLTRB(16, 4, 16, 4),
           elevation: 2,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -90,12 +122,14 @@ class _SwitchConfirmationMealCardState
                           child: Padding(
                             padding: const EdgeInsets.only(bottom: 24.0),
                             child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
                                 Text(
                                   widget.title,
                                   style: new TextStyle(
                                       color: appiYellow, fontSize: 24),
                                 ),
+                                getDayAndDateForCard(),
                               ],
                             ),
                           ),

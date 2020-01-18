@@ -7,8 +7,6 @@ import 'package:flutter/material.dart';
 
 import 'dart:math' as math;
 
-import 'package:intl/intl.dart';
-
 class ConfirmSwitchPopupScreen extends StatefulWidget {
   final String token;
   final int id;
@@ -36,7 +34,6 @@ class ConfirmSwitchPopupScreen extends StatefulWidget {
 
 class _ConfirmSwitchPopupScreenState extends State<ConfirmSwitchPopupScreen> {
   static final double _radius = 16;
-  DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
 
   List<CircleAvatar> mealFromWhichToBeSwitchedLeadingImageList = [];
   List<String> mealFromWhichToBeSwitchedItemsList = [];
@@ -75,9 +72,24 @@ class _ConfirmSwitchPopupScreenState extends State<ConfirmSwitchPopupScreen> {
     super.initState();
   }
 
+  TextStyle getSwitchToOrFromStyle() {
+    return TextStyle(fontWeight: FontWeight.bold, fontSize: 18);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          "Confirm Meal Switch",
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+        leading: Container(),
+        backgroundColor: appiBrown,
+        centerTitle: true,
+      ),
       body: FutureBuilder(
         future: menuWeek(widget.token, getWeekNumber(widget.selectedDateTime)),
         builder: (context, snapshot) {
@@ -108,41 +120,81 @@ class _ConfirmSwitchPopupScreenState extends State<ConfirmSwitchPopupScreen> {
             });
 
             return SafeArea(
-              child: Column(
-                children: <Widget>[
-                  Text("Switch From"),
-                  SwitchConfirmationMealCard(
-                    token: widget.token,
-                    id: widget.id,
-                    title: widget.title,
-                    menuItems: mealFromWhichToBeSwitchedMap,
-                    dailyItems: mealFromWhichToBeSwitchedDailyItems,
-                  ),
-                  Image.asset("assets/icons/switch_active.png"),
-                  Text("Switch To"),
-                  SwitchConfirmationMealCard(
-                    token: widget.token,
-                    id: widget.id,
-                    title: widget.title,
-                    menuItems: widget.menuToWhichToBeSwitched,
-                    dailyItems: widget.dailyItemsToWhichToBeSwitched,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      FlatButton(
-                        child: Text("CANCEL"),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Text(
+                          "Switch From",
+                          style: getSwitchToOrFromStyle(),
+                        ),
                       ),
-                      FlatButton(
-                        child: Text("SWITCH"),
-                        onPressed: () {},
+                      SwitchConfirmationMealCard(
+                        token: widget.token,
+                        id: widget.id,
+                        title: widget.title,
+                        menuItems: mealFromWhichToBeSwitchedMap,
+                        dailyItems: mealFromWhichToBeSwitchedDailyItems,
+                        mealStartDateTime: widget.mealStartDateTime,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Center(
+                          child: Image.asset(
+                            "assets/icons/switch_active.png",
+                            scale: 1.5,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Text(
+                          "Switch To",
+                          style: getSwitchToOrFromStyle(),
+                        ),
+                      ),
+                      SwitchConfirmationMealCard(
+                        token: widget.token,
+                        id: widget.id,
+                        title: widget.title,
+                        menuItems: widget.menuToWhichToBeSwitched,
+                        dailyItems: widget.dailyItemsToWhichToBeSwitched,
+                        mealStartDateTime: widget.mealStartDateTime,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: <Widget>[
+                          FlatButton(
+                            child: Text(
+                              "CANCEL",
+                              style: TextStyle(
+                                color: appiYellow,
+                                fontSize: 16,
+                              ),
+                            ),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                          ),
+                          FlatButton(
+                            child: Text(
+                              "SWITCH",
+                              style: TextStyle(
+                                color: appiYellow,
+                                fontSize: 16,
+                              ),
+                            ),
+                            onPressed: () {},
+                          )
+                        ],
                       )
                     ],
-                  )
-                ],
+                  ),
+                ),
               ),
             );
           }
