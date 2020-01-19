@@ -159,6 +159,7 @@ class Meal {
   LeaveStatus leaveStatus;
   dynamic wastage;
   bool isSwitchable;
+  SwitchStatus switchStatus;
 
   Meal({
     this.id,
@@ -169,6 +170,7 @@ class Meal {
     this.leaveStatus,
     this.wastage,
     this.isSwitchable,
+    this.switchStatus,
   });
 
   factory Meal.fromJson(Map<String, dynamic> json) => new Meal(
@@ -180,7 +182,8 @@ class Meal {
       endTime: json["end_time"],
       leaveStatus: leaveStatusValues.map[json["leave_status"]],
       wastage: json["wastage"],
-      isSwitchable: json["is_switchable"]);
+      isSwitchable: json["is_switchable"],
+      switchStatus: json["switch_status"]);
 
   Map<String, dynamic> toJson() => {
         "id": id,
@@ -191,10 +194,13 @@ class Meal {
         "leave_status": leaveStatusValues.reverse[leaveStatus],
         "wastage": wastage,
         "is_switchable": isSwitchable,
+        "switch_status": switchStatus,
       };
 }
 
 enum LeaveStatus { N, A, D, P, U }
+
+enum SwitchStatus { N, A, D, P, U }
 
 final leaveStatusValues = new EnumValues({
   "N": LeaveStatus.N,
