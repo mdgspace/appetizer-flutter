@@ -4,6 +4,7 @@ import 'package:appetizer/models/menu/week.dart';
 import 'package:appetizer/screens/multimessing/confirm_switch_popup_screen.dart';
 import 'package:appetizer/screens/user_feedback/new_feedback.dart';
 import 'package:appetizer/services/leave.dart';
+import 'package:appetizer/services/multimessing/switch_meals.dart';
 import 'package:appetizer/utils/get_leave_color_from_leave_status.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -23,8 +24,11 @@ class MenuCard extends StatefulWidget {
   final DateTime selectedDateTime;
   final DateTime mealStartDateTime;
   final String selectedHostelCode;
+  final SwitchStatus switchStatus;
+  final String hostelName;
 
-  MenuCard(
+  MenuCard({
+    Key key,
     this.title,
     this.menuItems,
     this.dailyItems,
@@ -39,7 +43,9 @@ class MenuCard extends StatefulWidget {
     this.selectedDateTime,
     this.mealStartDateTime,
     this.selectedHostelCode,
-  );
+    this.switchStatus,
+    this.hostelName,
+  }) : super(key: key);
 
   @override
   _MenuCardState createState() => _MenuCardState();
@@ -52,340 +58,6 @@ class _MenuCardState extends State<MenuCard> {
   void initState() {
     super.initState();
     isSwitched = widget.isSwitched;
-  }
-
-  List<Widget> _itemWidgetList() {
-    List<Widget> list = [];
-    widget.menuItems.forEach((icon, string) {
-      list.add(_menuListItem(string, icon));
-    });
-    return list;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    void onChangedCallback(bool value) {
-      if (value) {
-        if (!widget.isToggleOutdated) {
-          showDialog(
-              context: context,
-              builder: (BuildContext dialogContext) {
-                return AlertDialog(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  title: new Text(
-                    "Cancel Leave",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  content: new Text(
-                      "Are you sure you would like to cancel this leave?"),
-                  actions: <Widget>[
-                    new FlatButton(
-                      onPressed: () {
-                        Navigator.pop(dialogContext);
-                      },
-                      child: new Text(
-                        "CANCEL",
-                        style: TextStyle(
-                            color: appiYellow, fontWeight: FontWeight.bold),
-                      ),
-                      highlightColor: Colors.transparent,
-                      splashColor: Colors.transparent,
-                    ),
-                    new FlatButton(
-                      child: new Text(
-                        "CANCEL LEAVE",
-                        style: TextStyle(
-                            color: appiYellow, fontWeight: FontWeight.bold),
-                      ),
-                      onPressed: () async {
-                        Navigator.pop(context);
-                        showCustomDialog(context, "Cancelling Leave");
-                        cancelLeave(widget.id, widget.token).then((leaveBool) {
-                          if (leaveBool) {
-                            Navigator.pop(context);
-                            setState(() {
-                              isSwitched = true;
-                              Fluttertoast.showToast(
-                                  msg: "Leave Cancelled",
-                                  toastLength: Toast.LENGTH_SHORT,
-                                  gravity: ToastGravity.BOTTOM,
-                                  timeInSecForIos: 1,
-                                  backgroundColor: Color.fromRGBO(0, 0, 0, 0.7),
-                                  textColor: Colors.white,
-                                  fontSize: 14.0);
-                            });
-                          }
-                        }).catchError((e) {
-                          Navigator.pop(context);
-                          Fluttertoast.showToast(
-                              msg: "Something Wrong Occured",
-                              toastLength: Toast.LENGTH_SHORT,
-                              gravity: ToastGravity.BOTTOM,
-                              timeInSecForIos: 1,
-                              backgroundColor: Color.fromRGBO(0, 0, 0, 0.7),
-                              textColor: Colors.white,
-                              fontSize: 14.0);
-                        });
-                      },
-                      highlightColor: Colors.transparent,
-                      splashColor: Colors.transparent,
-                    ),
-                  ],
-                );
-              });
-        } else {
-          Fluttertoast.showToast(
-              msg:
-                  "Leave status cannot be changed less than 12 hours before the meal time",
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.BOTTOM,
-              timeInSecForIos: 1,
-              backgroundColor: Color.fromRGBO(0, 0, 0, 0.7),
-              textColor: Colors.white,
-              fontSize: 14.0);
-        }
-      } else {
-        if (!widget.isToggleOutdated) {
-          showDialog(
-              context: context,
-              builder: (BuildContext dialogContext) {
-                return AlertDialog(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  title: new Text(
-                    "Leave Meal",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  content: new Text(
-                      "Are you sure you would like to leave this meal?"),
-                  actions: <Widget>[
-                    new FlatButton(
-                      onPressed: () {
-                        Navigator.pop(dialogContext);
-                      },
-                      child: new Text(
-                        "CANCEL",
-                        style: TextStyle(
-                            color: appiYellow, fontWeight: FontWeight.bold),
-                      ),
-                      highlightColor: Colors.transparent,
-                      splashColor: Colors.transparent,
-                    ),
-                    new FlatButton(
-                      child: new Text(
-                        "SKIP MEAL",
-                        style: TextStyle(
-                            color: appiYellow, fontWeight: FontWeight.bold),
-                      ),
-                      onPressed: () async {
-                        Navigator.pop(context);
-                        showCustomDialog(context, "Leaving Meal");
-                        leave(widget.id.toString(), widget.token)
-                            .then((leaveResult) {
-                          if (leaveResult.meal == widget.id) {
-                            Navigator.pop(context);
-                            Fluttertoast.showToast(
-                                msg: "Meal Skipped",
-                                toastLength: Toast.LENGTH_SHORT,
-                                gravity: ToastGravity.BOTTOM,
-                                timeInSecForIos: 1,
-                                backgroundColor: Color.fromRGBO(0, 0, 0, 0.7),
-                                textColor: Colors.white,
-                                fontSize: 14.0);
-                            setState(() {
-                              isSwitched = false;
-                            });
-                          }
-                        }).catchError((e) {
-                          Navigator.pop(context);
-                          Fluttertoast.showToast(
-                              msg: "Something Wrong Occured",
-                              toastLength: Toast.LENGTH_SHORT,
-                              gravity: ToastGravity.BOTTOM,
-                              timeInSecForIos: 1,
-                              backgroundColor: Color.fromRGBO(0, 0, 0, 0.7),
-                              textColor: Colors.white,
-                              fontSize: 14.0);
-                        });
-                      },
-                      highlightColor: Colors.transparent,
-                      splashColor: Colors.transparent,
-                    ),
-                  ],
-                );
-              });
-        } else {
-          Fluttertoast.showToast(
-              msg:
-                  "Leave status cannot be changed less than 12 hours before the meal time",
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.BOTTOM,
-              timeInSecForIos: 1,
-              backgroundColor: Color.fromRGBO(0, 0, 0, 0.7),
-              textColor: Colors.white,
-              fontSize: 14.0);
-        }
-      }
-    }
-
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(0.0, 4.0, 0.0, 4.0),
-      child: Card(
-          margin: EdgeInsets.fromLTRB(12, 4, 12, 4),
-          elevation: 2,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.only(bottom: 24.0),
-                            child: Row(
-                              children: <Widget>[
-                                Text(
-                                  widget.title,
-                                  style: new TextStyle(
-                                      color: appiYellow, fontSize: 24),
-                                ),
-                                (!(getLeaveColorFromLeaveStatus(
-                                                widget.leaveStatus) ==
-                                            Colors.white) &&
-                                        widget.isOutdated)
-                                    ? Padding(
-                                        padding: const EdgeInsets.fromLTRB(
-                                            30, 5, 30, 5),
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                              color:
-                                                  getLeaveColorFromLeaveStatus(
-                                                      widget.leaveStatus),
-                                              borderRadius:
-                                                  BorderRadius.circular(4)),
-                                          child: Padding(
-                                            padding: const EdgeInsets.fromLTRB(
-                                                12, 1, 12, 1),
-                                            child: Text(
-                                              "Skipped".toUpperCase(),
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  letterSpacing: .5,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 12),
-                                            ),
-                                          ),
-                                        ),
-                                      )
-                                    : Container()
-                              ],
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 12),
-                          child: widget.isSwitchable
-                              ? InkWell(
-                                  radius: 10,
-                                  child: Image.asset(
-                                    widget.isToggleOutdated
-                                        ? "assets/icons/switch_inactive.png"
-                                        : "assets/icons/switch_active.png",
-                                    width: 50,
-                                    scale: 2,
-                                  ),
-                                  borderRadius: BorderRadius.circular(25),
-                                  onTap: widget.isToggleOutdated
-                                      ? null
-                                      : () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  ConfirmSwitchPopupScreen(
-                                                token: widget.token,
-                                                id: widget.id,
-                                                mealStartDateTime:
-                                                    widget.mealStartDateTime,
-                                                title: widget.title,
-                                                menuToWhichToBeSwitched:
-                                                    widget.menuItems,
-                                                dailyItemsToWhichToBeSwitched:
-                                                    widget.dailyItems,
-                                                selectedDateTime:
-                                                    widget.selectedDateTime,
-                                                selectedHostelCode:
-                                                    widget.selectedHostelCode,
-                                              ),
-                                            ),
-                                          );
-                                        },
-                                )
-                              : Container(),
-                        ),
-                        widget.isOutdated
-                            ? Padding(
-                                padding: const EdgeInsets.all(8),
-                                child: InkWell(
-                                  child: Image.asset(
-                                    "assets/icons/feedback_button.png",
-                                    height: 25,
-                                    width: 25,
-                                  ),
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                NewFeedback()));
-                                  },
-                                ))
-                            : !widget.isCheckedOut
-                                ? Switch(
-                                    activeColor: appiYellow,
-                                    value: isSwitched,
-                                    onChanged: (value) async {
-                                      onChangedCallback(value);
-                                    })
-                                : Container(),
-                      ],
-                    ),
-                    Column(
-                      children: _itemWidgetList(),
-                    ),
-                  ],
-                ),
-              ),
-              Row(
-                children: <Widget>[
-                  Expanded(
-                    child: Container(
-                        color: Color(0xffF4F4F4),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            'Daily Items: ${widget.dailyItems}',
-                            style:
-                                TextStyle(color: Color.fromRGBO(0, 0, 0, .54)),
-                          ),
-                        )),
-                  ),
-                ],
-              )
-            ],
-          )),
-    );
   }
 
   Widget _menuListItem(String itemName, CircleAvatar foodIcon) {
@@ -422,6 +94,364 @@ class _MenuCardState extends State<MenuCard> {
           ),
         ),
       ],
+    );
+  }
+
+  List<Widget> _itemWidgetList() {
+    List<Widget> list = [];
+    widget.menuItems.forEach((icon, string) {
+      list.add(_menuListItem(string, icon));
+    });
+    return list;
+  }
+
+  Widget _titleAndBhawanNameComponent() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          widget.title,
+          style: new TextStyle(
+            color: appiYellow,
+            fontSize: 24,
+          ),
+        ),
+        Text(
+          widget.hostelName,
+          style: new TextStyle(
+            color: appiBrown,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _skippedFlagComponent() {
+    return (!(getLeaveColorFromLeaveStatus(widget.leaveStatus) ==
+                Colors.white) &&
+            widget.isOutdated)
+        ? Padding(
+            padding: const EdgeInsets.fromLTRB(30, 5, 30, 5),
+            child: Container(
+              decoration: BoxDecoration(
+                  color: getLeaveColorFromLeaveStatus(widget.leaveStatus),
+                  borderRadius: BorderRadius.circular(4)),
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(12, 1, 12, 1),
+                child: Text(
+                  "Skipped".toUpperCase(),
+                  style: TextStyle(
+                      color: Colors.white,
+                      letterSpacing: .5,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12),
+                ),
+              ),
+            ),
+          )
+        : Container();
+  }
+
+  Widget _showQRButton() {
+    return widget.switchStatus == SwitchStatus.A
+        ? Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 8,
+            ),
+            child: RaisedButton(
+              onPressed: () {},
+              color: appiYellow,
+              child: Text(
+                "Show QR",
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          )
+        : Container();
+  }
+
+  Widget _getSwitchIcon() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 12),
+      child: widget.isSwitchable
+          ? InkWell(
+              radius: 20,
+              child: Image.asset(
+                widget.isToggleOutdated
+                    ? "assets/icons/switch_inactive.png"
+                    : widget.switchStatus == SwitchStatus.N
+                        ? "assets/icons/switch_active.png"
+                        : "assets/icons/switch_crossed_active.png",
+                width: 50,
+                scale: 2,
+              ),
+              borderRadius: BorderRadius.circular(25),
+              onTap: widget.isToggleOutdated
+                  ? null
+                  : widget.switchStatus == SwitchStatus.N
+                      ? () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ConfirmSwitchPopupScreen(
+                                token: widget.token,
+                                id: widget.id,
+                                mealStartDateTime: widget.mealStartDateTime,
+                                title: widget.title,
+                                menuToWhichToBeSwitched: widget.menuItems,
+                                dailyItemsToWhichToBeSwitched:
+                                    widget.dailyItems,
+                                selectedDateTime: widget.selectedDateTime,
+                                selectedHostelCode: widget.selectedHostelCode,
+                              ),
+                            ),
+                          );
+                        }
+                      : widget.switchStatus == SwitchStatus.A
+                          ? () {
+                              cancelSwitch(widget.id, widget.token)
+                                  .then((switchCancelResponse) {
+                                if (switchCancelResponse) {
+                                  setState(() {});
+                                } else {
+                                  Fluttertoast.showToast(
+                                      msg: "Unable to cancel the switch");
+                                }
+                              });
+                            }
+                          : null,
+            )
+          : Container(),
+    );
+  }
+
+  Widget _feedbackOrToggleComponent(BuildContext context) {
+    return widget.isOutdated
+        ? Padding(
+            padding: const EdgeInsets.all(8),
+            child: InkWell(
+              child: Image.asset(
+                "assets/icons/feedback_button.png",
+                height: 25,
+                width: 25,
+              ),
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => NewFeedback()));
+              },
+            ),
+          )
+        : !widget.isCheckedOut
+            ? Switch(
+                activeColor: appiYellow,
+                value: isSwitched,
+                onChanged: (value) async {
+                  onChangedCallback(value, context);
+                })
+            : Container();
+  }
+
+  void onChangedCallback(bool value, BuildContext context) {
+    if (value) {
+      if (!widget.isToggleOutdated) {
+        showDialog(
+            context: context,
+            builder: (BuildContext dialogContext) {
+              return AlertDialog(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                title: new Text(
+                  "Cancel Leave",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                content: new Text(
+                    "Are you sure you would like to cancel this leave?"),
+                actions: <Widget>[
+                  new FlatButton(
+                    onPressed: () {
+                      Navigator.pop(dialogContext);
+                    },
+                    child: new Text(
+                      "CANCEL",
+                      style: TextStyle(
+                          color: appiYellow, fontWeight: FontWeight.bold),
+                    ),
+                    highlightColor: Colors.transparent,
+                    splashColor: Colors.transparent,
+                  ),
+                  new FlatButton(
+                    child: new Text(
+                      "CANCEL LEAVE",
+                      style: TextStyle(
+                          color: appiYellow, fontWeight: FontWeight.bold),
+                    ),
+                    onPressed: () async {
+                      Navigator.pop(context);
+                      showCustomDialog(context, "Cancelling Leave");
+                      cancelLeave(widget.id, widget.token).then((leaveBool) {
+                        if (leaveBool) {
+                          Navigator.pop(context);
+                          setState(() {
+                            isSwitched = true;
+                            Fluttertoast.showToast(
+                              msg: "Leave Cancelled",
+                            );
+                          });
+                        }
+                      }).catchError((e) {
+                        Navigator.pop(context);
+                        Fluttertoast.showToast(
+                          msg: "Something Wrong Occured",
+                        );
+                      });
+                    },
+                    highlightColor: Colors.transparent,
+                    splashColor: Colors.transparent,
+                  ),
+                ],
+              );
+            });
+      } else {
+        Fluttertoast.showToast(
+          msg:
+              "Leave status cannot be changed less than 12 hours before the meal time",
+        );
+      }
+    } else {
+      if (!widget.isToggleOutdated) {
+        showDialog(
+            context: context,
+            builder: (BuildContext dialogContext) {
+              return AlertDialog(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                title: new Text(
+                  "Leave Meal",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                content:
+                    new Text("Are you sure you would like to leave this meal?"),
+                actions: <Widget>[
+                  new FlatButton(
+                    onPressed: () {
+                      Navigator.pop(dialogContext);
+                    },
+                    child: new Text(
+                      "CANCEL",
+                      style: TextStyle(
+                          color: appiYellow, fontWeight: FontWeight.bold),
+                    ),
+                    highlightColor: Colors.transparent,
+                    splashColor: Colors.transparent,
+                  ),
+                  new FlatButton(
+                    child: new Text(
+                      "SKIP MEAL",
+                      style: TextStyle(
+                          color: appiYellow, fontWeight: FontWeight.bold),
+                    ),
+                    onPressed: () async {
+                      Navigator.pop(context);
+                      showCustomDialog(context, "Leaving Meal");
+                      leave(widget.id.toString(), widget.token)
+                          .then((leaveResult) {
+                        if (leaveResult.meal == widget.id) {
+                          Navigator.pop(context);
+                          Fluttertoast.showToast(
+                            msg: "Meal Skipped",
+                          );
+                          setState(() {
+                            isSwitched = false;
+                          });
+                        }
+                      }).catchError((e) {
+                        Navigator.pop(context);
+                        Fluttertoast.showToast(
+                          msg: "Something Wrong Occured",
+                        );
+                      });
+                    },
+                    highlightColor: Colors.transparent,
+                    splashColor: Colors.transparent,
+                  ),
+                ],
+              );
+            });
+      } else {
+        Fluttertoast.showToast(
+          msg:
+              "Leave status cannot be changed less than 12 hours before the meal time",
+        );
+      }
+    }
+  }
+
+  Widget _dailyItemsComponent() {
+    return Row(
+      children: <Widget>[
+        Expanded(
+          child: Container(
+              color: Color(0xffF4F4F4),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  'Daily Items: ${widget.dailyItems}',
+                  style: TextStyle(color: Color.fromRGBO(0, 0, 0, .54)),
+                ),
+              )),
+        ),
+      ],
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(0.0, 4.0, 0.0, 4.0),
+      child: Card(
+          margin: EdgeInsets.fromLTRB(12, 4, 12, 4),
+          elevation: 2,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.only(bottom: 24.0),
+                            child: Row(
+                              children: <Widget>[
+                                _titleAndBhawanNameComponent(),
+                                _skippedFlagComponent(),
+                              ],
+                            ),
+                          ),
+                        ),
+                        _showQRButton(),
+                        _getSwitchIcon(),
+                        _feedbackOrToggleComponent(context),
+                      ],
+                    ),
+                    Column(
+                      children: _itemWidgetList(),
+                    ),
+                  ],
+                ),
+              ),
+              _dailyItemsComponent(),
+            ],
+          )),
     );
   }
 }
