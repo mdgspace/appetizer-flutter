@@ -76,6 +76,16 @@ class _DayMenuState extends State<DayMenu> {
   DateTime snacksStartDateTime;
   DateTime dinnerStartDateTime;
 
+  bool isBreakfastSwitchable;
+  bool isLunchSwitchable;
+  bool isSnacksSwitchable;
+  bool isDinnerSwitchable;
+
+  SwitchStatus breakfastSwitchStatus;
+  SwitchStatus lunchSwitchStatus;
+  SwitchStatus snacksSwitchStatus;
+  SwitchStatus dinnerSwitchStatus;
+
   void setLeadingMealImage(List<CircleAvatar> mealLeadingImageList) {
     var randomColor =
         Color((math.Random().nextDouble() * 0xFFFFFF).toInt() << 0)
@@ -107,6 +117,8 @@ class _DayMenuState extends State<DayMenu> {
         } else {
           isBreakfastOutdated = false;
         }
+        isBreakfastSwitchable = widget.currentDayMeal.meals[i].isSwitchable;
+        breakfastSwitchStatus = widget.currentDayMeal.meals[i].switchStatus;
         breakfastId = widget.currentDayMeal.meals[i].id;
         isBreakfastSwitched =
             widget.currentDayMeal.meals[i].leaveStatus == LeaveStatus.N
@@ -134,6 +146,8 @@ class _DayMenuState extends State<DayMenu> {
         } else {
           isLunchOutdated = false;
         }
+        isLunchSwitchable = widget.currentDayMeal.meals[i].isSwitchable;
+        lunchSwitchStatus = widget.currentDayMeal.meals[i].switchStatus;
         lunchId = widget.currentDayMeal.meals[i].id;
         isLunchSwitched =
             widget.currentDayMeal.meals[i].leaveStatus == LeaveStatus.N
@@ -161,6 +175,8 @@ class _DayMenuState extends State<DayMenu> {
         } else {
           isSnacksOutdated = false;
         }
+        isSnacksSwitchable = widget.currentDayMeal.meals[i].isSwitchable;
+        snacksSwitchStatus = widget.currentDayMeal.meals[i].switchStatus;
         snacksId = widget.currentDayMeal.meals[i].id;
         isSnacksSwitched =
             widget.currentDayMeal.meals[i].leaveStatus == LeaveStatus.N
@@ -188,6 +204,8 @@ class _DayMenuState extends State<DayMenu> {
         } else {
           isDinnerOutdated = false;
         }
+        isDinnerSwitchable = widget.currentDayMeal.meals[i].isSwitchable;
+        dinnerSwitchStatus = widget.currentDayMeal.meals[i].switchStatus;
         dinnerId = widget.currentDayMeal.meals[i].id;
         isDinnerSwitched =
             widget.currentDayMeal.meals[i].leaveStatus == LeaveStatus.N
@@ -222,10 +240,11 @@ class _DayMenuState extends State<DayMenu> {
                 breakfastLeaveStatus,
                 isCheckedOut,
                 isBreakfastLeaveToggleOutdated,
-                true,
+                isBreakfastSwitchable,
                 widget.selectedDateTime,
                 breakfastStartDateTime,
                 widget.selectedHostelCode,
+                breakfastSwitchStatus,
               )
             : Container(),
         (lunchMealMap.isNotEmpty)
@@ -240,10 +259,11 @@ class _DayMenuState extends State<DayMenu> {
                 lunchLeaveStatus,
                 isCheckedOut,
                 isLunchLeaveToggleOutdated,
-                true,
+                isLunchSwitchable,
                 widget.selectedDateTime,
                 lunchStartDateTime,
                 widget.selectedHostelCode,
+                lunchSwitchStatus,
               )
             : Container(),
         (snacksMealMap.isNotEmpty)
@@ -258,10 +278,11 @@ class _DayMenuState extends State<DayMenu> {
                 snacksLeaveStatus,
                 isCheckedOut,
                 isSnacksLeaveToggleOutdated,
-                true,
+                isSnacksSwitchable,
                 widget.selectedDateTime,
                 snacksStartDateTime,
                 widget.selectedHostelCode,
+                snacksSwitchStatus,
               )
             : Container(),
         (dinnerMealMap.isNotEmpty)
@@ -276,10 +297,11 @@ class _DayMenuState extends State<DayMenu> {
                 dinnerLeaveStatus,
                 isCheckedOut,
                 isDinnerLeaveToggleOutdated,
-                true,
+                isDinnerSwitchable,
                 widget.selectedDateTime,
                 dinnerStartDateTime,
                 widget.selectedHostelCode,
+                dinnerSwitchStatus,
               )
             : Container(),
       ],
