@@ -12,6 +12,7 @@ class Week {
   int weekId;
   int year;
   dynamic name;
+  String hostelName;
   DailyItems dailyItems;
   List<Day> days;
   bool isApproved;
@@ -20,6 +21,7 @@ class Week {
     this.weekId,
     this.year,
     this.name,
+    this.hostelName,
     this.dailyItems,
     this.days,
     this.isApproved,
@@ -29,6 +31,7 @@ class Week {
         weekId: json["week_id"],
         year: json["year"],
         name: json["name"],
+        hostelName: json["hostel_name"],
         dailyItems: DailyItems.fromJson(json["daily_items"]),
         days: new List<Day>.from(json["days"].map((x) => Day.fromJson(x))),
         isApproved: json["is_approved"],
@@ -38,6 +41,7 @@ class Week {
         "week_id": weekId,
         "year": year,
         "name": name,
+        "hostel_name": hostelName,
         "daily_items": dailyItems.toJson(),
         "days": new List<dynamic>.from(days.map((x) => x.toJson())),
         "is_approved": isApproved,
