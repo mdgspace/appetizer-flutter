@@ -174,16 +174,17 @@ class Meal {
   });
 
   factory Meal.fromJson(Map<String, dynamic> json) => new Meal(
-      id: json["id"],
-      type: mealTypeValues.map[json["type"]],
-      items: new List<MealItem>.from(
-          json["items"].map((x) => MealItem.fromJson(x))),
-      startTime: json["start_time"],
-      endTime: json["end_time"],
-      leaveStatus: leaveStatusValues.map[json["leave_status"]],
-      wastage: json["wastage"],
-      isSwitchable: json["is_switchable"],
-      switchStatus: json["switch_status"]);
+        id: json["id"],
+        type: mealTypeValues.map[json["type"]],
+        items: new List<MealItem>.from(
+            json["items"].map((x) => MealItem.fromJson(x))),
+        startTime: json["start_time"],
+        endTime: json["end_time"],
+        leaveStatus: leaveStatusValues.map[json["leave_status"]],
+        wastage: json["wastage"],
+        isSwitchable: json["is_switchable"],
+        switchStatus: switchStatusValues.map[json["switch_status"]],
+      );
 
   Map<String, dynamic> toJson() => {
         "id": id,
@@ -194,7 +195,7 @@ class Meal {
         "leave_status": leaveStatusValues.reverse[leaveStatus],
         "wastage": wastage,
         "is_switchable": isSwitchable,
-        "switch_status": switchStatus,
+        "switch_status": switchStatusValues.reverse[switchStatus],
       };
 }
 
@@ -208,6 +209,14 @@ final leaveStatusValues = new EnumValues({
   "D": LeaveStatus.D,
   "P": LeaveStatus.P,
   "U": LeaveStatus.U
+});
+
+final switchStatusValues = new EnumValues({
+  "N": SwitchStatus.N,
+  "A": SwitchStatus.A,
+  "D": SwitchStatus.D,
+  "P": SwitchStatus.P,
+  "U": SwitchStatus.U
 });
 
 enum MealType { B, L, S, D }
