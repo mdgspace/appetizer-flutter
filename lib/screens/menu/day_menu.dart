@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:appetizer/models/menu/week.dart';
+import 'package:appetizer/screens/menu/other_meals_menu_card.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -14,6 +15,7 @@ class DayMenu extends StatefulWidget {
   final DateTime selectedDateTime;
   final String selectedHostelCode;
   final String hostelName;
+  final String residingHostel;
 
   const DayMenu({
     Key key,
@@ -23,6 +25,7 @@ class DayMenu extends StatefulWidget {
     this.selectedDateTime,
     this.selectedHostelCode,
     this.hostelName,
+    this.residingHostel,
   }) : super(key: key);
 
   @override
@@ -231,84 +234,156 @@ class _DayMenuState extends State<DayMenu> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         (breakfastMealMap.isNotEmpty)
-            ? YourMealsMenuCard(
-                title: 'Breakfast',
-                menuItems: breakfastMealMap,
-                dailyItems: widget.dailyItemsMap["breakfast"],
-                id: breakfastId,
-                token: widget.token,
-                isSwitched: isBreakfastSwitched,
-                isOutdated: isBreakfastOutdated,
-                leaveStatus: breakfastLeaveStatus,
-                isCheckedOut: isCheckedOut,
-                isToggleOutdated: isBreakfastLeaveToggleOutdated,
-                isSwitchable: isBreakfastSwitchable,
-                selectedDateTime: widget.selectedDateTime,
-                mealStartDateTime: breakfastStartDateTime,
-                selectedHostelCode: widget.selectedHostelCode,
-                switchStatus: breakfastSwitchStatus,
-                hostelName: widget.hostelName,
-              )
+            ? widget.residingHostel == widget.hostelName
+                ? YourMealsMenuCard(
+                    title: 'Breakfast',
+                    menuItems: breakfastMealMap,
+                    dailyItems: widget.dailyItemsMap["breakfast"],
+                    id: breakfastId,
+                    token: widget.token,
+                    isSwitched: isBreakfastSwitched,
+                    isOutdated: isBreakfastOutdated,
+                    leaveStatus: breakfastLeaveStatus,
+                    isCheckedOut: isCheckedOut,
+                    isToggleOutdated: isBreakfastLeaveToggleOutdated,
+                    isSwitchable: isBreakfastSwitchable,
+                    selectedDateTime: widget.selectedDateTime,
+                    mealStartDateTime: breakfastStartDateTime,
+                    selectedHostelCode: widget.selectedHostelCode,
+                    switchStatus: breakfastSwitchStatus,
+                    hostelName: widget.hostelName,
+                  )
+                : OtherMealsMenuCard(
+                    title: 'Breakfast',
+                    menuItems: breakfastMealMap,
+                    dailyItems: widget.dailyItemsMap["breakfast"],
+                    id: breakfastId,
+                    token: widget.token,
+                    isSwitched: isBreakfastSwitched,
+                    isOutdated: isBreakfastOutdated,
+                    isCheckedOut: isCheckedOut,
+                    isToggleOutdated: isBreakfastLeaveToggleOutdated,
+                    isSwitchable: isBreakfastSwitchable,
+                    selectedDateTime: widget.selectedDateTime,
+                    mealStartDateTime: breakfastStartDateTime,
+                    selectedHostelCode: widget.selectedHostelCode,
+                    switchStatus: breakfastSwitchStatus,
+                    hostelName: widget.hostelName,
+                  )
             : Container(),
         (lunchMealMap.isNotEmpty)
-            ? YourMealsMenuCard(
-                title: 'Lunch',
-                menuItems: lunchMealMap,
-                dailyItems: widget.dailyItemsMap["lunch"],
-                id: lunchId,
-                token: widget.token,
-                isSwitched: isLunchSwitched,
-                isOutdated: isLunchOutdated,
-                leaveStatus: lunchLeaveStatus,
-                isCheckedOut: isCheckedOut,
-                isToggleOutdated: isLunchLeaveToggleOutdated,
-                isSwitchable: isLunchSwitchable,
-                selectedDateTime: widget.selectedDateTime,
-                mealStartDateTime: lunchStartDateTime,
-                selectedHostelCode: widget.selectedHostelCode,
-                switchStatus: lunchSwitchStatus,
-                hostelName: widget.hostelName,
-              )
+            ? widget.residingHostel == widget.hostelName
+                ? YourMealsMenuCard(
+                    title: 'Lunch',
+                    menuItems: lunchMealMap,
+                    dailyItems: widget.dailyItemsMap["lunch"],
+                    id: lunchId,
+                    token: widget.token,
+                    isSwitched: isLunchSwitched,
+                    isOutdated: isLunchOutdated,
+                    leaveStatus: lunchLeaveStatus,
+                    isCheckedOut: isCheckedOut,
+                    isToggleOutdated: isLunchLeaveToggleOutdated,
+                    isSwitchable: isLunchSwitchable,
+                    selectedDateTime: widget.selectedDateTime,
+                    mealStartDateTime: lunchStartDateTime,
+                    selectedHostelCode: widget.selectedHostelCode,
+                    switchStatus: lunchSwitchStatus,
+                    hostelName: widget.hostelName,
+                  )
+                : OtherMealsMenuCard(
+                    title: 'Lunch',
+                    menuItems: lunchMealMap,
+                    dailyItems: widget.dailyItemsMap["lunch"],
+                    id: lunchId,
+                    token: widget.token,
+                    isSwitched: isLunchSwitched,
+                    isOutdated: isLunchOutdated,
+                    isCheckedOut: isCheckedOut,
+                    isToggleOutdated: isLunchLeaveToggleOutdated,
+                    isSwitchable: isLunchSwitchable,
+                    selectedDateTime: widget.selectedDateTime,
+                    mealStartDateTime: lunchStartDateTime,
+                    selectedHostelCode: widget.selectedHostelCode,
+                    switchStatus: lunchSwitchStatus,
+                    hostelName: widget.hostelName,
+                  )
             : Container(),
         (snacksMealMap.isNotEmpty)
-            ? YourMealsMenuCard(
-                title: 'Snacks',
-                menuItems: snacksMealMap,
-                dailyItems: widget.dailyItemsMap["snacks"],
-                id: snacksId,
-                token: widget.token,
-                isSwitched: isSnacksSwitched,
-                isOutdated: isSnacksOutdated,
-                leaveStatus: snacksLeaveStatus,
-                isCheckedOut: isCheckedOut,
-                isToggleOutdated: isSnacksLeaveToggleOutdated,
-                isSwitchable: isSnacksSwitchable,
-                selectedDateTime: widget.selectedDateTime,
-                mealStartDateTime: snacksStartDateTime,
-                selectedHostelCode: widget.selectedHostelCode,
-                switchStatus: snacksSwitchStatus,
-                hostelName: widget.hostelName,
-              )
+            ? widget.residingHostel == widget.hostelName
+                ? YourMealsMenuCard(
+                    title: 'Snacks',
+                    menuItems: snacksMealMap,
+                    dailyItems: widget.dailyItemsMap["snacks"],
+                    id: snacksId,
+                    token: widget.token,
+                    isSwitched: isSnacksSwitched,
+                    isOutdated: isSnacksOutdated,
+                    leaveStatus: snacksLeaveStatus,
+                    isCheckedOut: isCheckedOut,
+                    isToggleOutdated: isSnacksLeaveToggleOutdated,
+                    isSwitchable: isSnacksSwitchable,
+                    selectedDateTime: widget.selectedDateTime,
+                    mealStartDateTime: snacksStartDateTime,
+                    selectedHostelCode: widget.selectedHostelCode,
+                    switchStatus: snacksSwitchStatus,
+                    hostelName: widget.hostelName,
+                  )
+                : OtherMealsMenuCard(
+                    title: 'Snacks',
+                    menuItems: snacksMealMap,
+                    dailyItems: widget.dailyItemsMap["snacks"],
+                    id: snacksId,
+                    token: widget.token,
+                    isSwitched: isSnacksSwitched,
+                    isOutdated: isSnacksOutdated,
+                    isCheckedOut: isCheckedOut,
+                    isToggleOutdated: isSnacksLeaveToggleOutdated,
+                    isSwitchable: isSnacksSwitchable,
+                    selectedDateTime: widget.selectedDateTime,
+                    mealStartDateTime: snacksStartDateTime,
+                    selectedHostelCode: widget.selectedHostelCode,
+                    switchStatus: snacksSwitchStatus,
+                    hostelName: widget.hostelName,
+                  )
             : Container(),
         (dinnerMealMap.isNotEmpty)
-            ? YourMealsMenuCard(
-                title: 'Dinner',
-                menuItems: dinnerMealMap,
-                dailyItems: widget.dailyItemsMap["dinner"],
-                id: dinnerId,
-                token: widget.token,
-                isSwitched: isDinnerSwitched,
-                isOutdated: isDinnerOutdated,
-                leaveStatus: dinnerLeaveStatus,
-                isCheckedOut: isCheckedOut,
-                isToggleOutdated: isDinnerLeaveToggleOutdated,
-                isSwitchable: isDinnerSwitchable,
-                selectedDateTime: widget.selectedDateTime,
-                mealStartDateTime: dinnerStartDateTime,
-                selectedHostelCode: widget.selectedHostelCode,
-                switchStatus: dinnerSwitchStatus,
-                hostelName: widget.hostelName,
-              )
+            ? widget.residingHostel == widget.hostelName
+                ? YourMealsMenuCard(
+                    title: 'Dinner',
+                    menuItems: dinnerMealMap,
+                    dailyItems: widget.dailyItemsMap["dinner"],
+                    id: dinnerId,
+                    token: widget.token,
+                    isSwitched: isDinnerSwitched,
+                    isOutdated: isDinnerOutdated,
+                    leaveStatus: dinnerLeaveStatus,
+                    isCheckedOut: isCheckedOut,
+                    isToggleOutdated: isDinnerLeaveToggleOutdated,
+                    isSwitchable: isDinnerSwitchable,
+                    selectedDateTime: widget.selectedDateTime,
+                    mealStartDateTime: dinnerStartDateTime,
+                    selectedHostelCode: widget.selectedHostelCode,
+                    switchStatus: dinnerSwitchStatus,
+                    hostelName: widget.hostelName,
+                  )
+                : OtherMealsMenuCard(
+                    title: 'Dinner',
+                    menuItems: dinnerMealMap,
+                    dailyItems: widget.dailyItemsMap["dinner"],
+                    id: dinnerId,
+                    token: widget.token,
+                    isSwitched: isDinnerSwitched,
+                    isOutdated: isDinnerOutdated,
+                    isCheckedOut: isCheckedOut,
+                    isToggleOutdated: isDinnerLeaveToggleOutdated,
+                    isSwitchable: isDinnerSwitchable,
+                    selectedDateTime: widget.selectedDateTime,
+                    mealStartDateTime: dinnerStartDateTime,
+                    selectedHostelCode: widget.selectedHostelCode,
+                    switchStatus: dinnerSwitchStatus,
+                    hostelName: widget.hostelName,
+                  )
             : Container(),
       ],
     );

@@ -241,6 +241,7 @@ class _HomeState extends State<Home> {
                             selectedHostelName == null
                                 ? residingHostel
                                 : selectedHostelName],
+                        residingHostel: residingHostel,
                       ),
                     ),
                   ),

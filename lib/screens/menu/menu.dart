@@ -18,8 +18,14 @@ import '../../utils/get_week_id.dart';
 class Menu extends StatefulWidget {
   final String token;
   final String selectedHostelCode;
+  final String residingHostel;
 
-  const Menu({Key key, this.token, this.selectedHostelCode}) : super(key: key);
+  const Menu({
+    Key key,
+    this.token,
+    this.selectedHostelCode,
+    this.residingHostel,
+  }) : super(key: key);
 
   @override
   _MenuState createState() => _MenuState();
@@ -153,6 +159,7 @@ class _MenuState extends State<Menu> {
                   selectedDateTime: selectedDateTime.dateTime,
                   selectedHostelCode: widget.selectedHostelCode,
                   hostelName: hostelNameFromWeek,
+                  residingHostel: widget.residingHostel,
                 );
               }
             }
