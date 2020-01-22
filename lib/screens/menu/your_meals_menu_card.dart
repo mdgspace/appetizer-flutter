@@ -1,8 +1,8 @@
 import 'package:appetizer/colors.dart';
 import 'package:appetizer/components/alert_dialog.dart';
 import 'package:appetizer/models/menu/week.dart';
-import 'package:appetizer/screens/multimessing/confirm_switch_popup_screen.dart';
 import 'package:appetizer/screens/multimessing/qr_generator_widget.dart';
+import 'package:appetizer/screens/multimessing/switchable_meals_screen.dart';
 import 'package:appetizer/screens/user_feedback/new_feedback.dart';
 import 'package:appetizer/services/leave.dart';
 import 'package:appetizer/services/multimessing/switch_meals.dart';
@@ -203,20 +203,26 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
                   ? null
                   : widget.switchStatus == SwitchStatus.N
                       ? () {
+//                          Navigator.push(
+//                            context,
+//                            MaterialPageRoute(
+//                              builder: (context) => ConfirmSwitchPopupScreen(
+//                                token: widget.token,
+//                                id: widget.id,
+//                                mealStartDateTime: widget.mealStartDateTime,
+//                                title: widget.title,
+//                                menuToWhichToBeSwitched: widget.menuItems,
+//                                dailyItemsToWhichToBeSwitched:
+//                                    widget.dailyItems,
+//                                selectedDateTime: widget.selectedDateTime,
+//                                selectedHostelCode: widget.selectedHostelCode,
+//                              ),
+//                            ),
+//                          );
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => ConfirmSwitchPopupScreen(
-                                token: widget.token,
-                                id: widget.id,
-                                mealStartDateTime: widget.mealStartDateTime,
-                                title: widget.title,
-                                menuToWhichToBeSwitched: widget.menuItems,
-                                dailyItemsToWhichToBeSwitched:
-                                    widget.dailyItems,
-                                selectedDateTime: widget.selectedDateTime,
-                                selectedHostelCode: widget.selectedHostelCode,
-                              ),
+                              builder: (context) => SwitchableMealsScreen(),
                             ),
                           );
                         }

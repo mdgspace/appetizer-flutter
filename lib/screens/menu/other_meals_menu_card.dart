@@ -13,7 +13,6 @@ class OtherMealsMenuCard extends StatefulWidget {
   final String dailyItems;
   final bool isSwitched;
   final bool isOutdated;
-  final LeaveStatus leaveStatus;
   final bool isCheckedOut;
   final bool isToggleOutdated;
   final bool isSwitchable;
@@ -32,7 +31,6 @@ class OtherMealsMenuCard extends StatefulWidget {
     this.token,
     this.isSwitched,
     this.isOutdated,
-    this.leaveStatus,
     this.isCheckedOut,
     this.isToggleOutdated,
     this.isSwitchable,
