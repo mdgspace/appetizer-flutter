@@ -203,26 +203,13 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
                   ? null
                   : widget.switchStatus == SwitchStatus.N
                       ? () {
-//                          Navigator.push(
-//                            context,
-//                            MaterialPageRoute(
-//                              builder: (context) => ConfirmSwitchPopupScreen(
-//                                token: widget.token,
-//                                id: widget.id,
-//                                mealStartDateTime: widget.mealStartDateTime,
-//                                title: widget.title,
-//                                menuToWhichToBeSwitched: widget.menuItems,
-//                                dailyItemsToWhichToBeSwitched:
-//                                    widget.dailyItems,
-//                                selectedDateTime: widget.selectedDateTime,
-//                                selectedHostelCode: widget.selectedHostelCode,
-//                              ),
-//                            ),
-//                          );
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => SwitchableMealsScreen(),
+                              builder: (context) => SwitchableMealsScreen(
+                                id: widget.id,
+                                token: widget.token,
+                              ),
                             ),
                           );
                         }

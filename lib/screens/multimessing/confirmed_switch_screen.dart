@@ -39,7 +39,7 @@ class _ConfirmedSwitchScreenState extends State<ConfirmedSwitchScreen> {
   void initState() {
     super.initState();
     Future.delayed(Duration(seconds: 2), () {
-      Navigator.pop(context);
+      Navigator.of(context).popUntil((route) => route.isFirst);
     });
   }
 }
