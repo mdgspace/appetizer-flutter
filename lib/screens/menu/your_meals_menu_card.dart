@@ -2,14 +2,16 @@ import 'package:appetizer/colors.dart';
 import 'package:appetizer/components/alert_dialog.dart';
 import 'package:appetizer/models/menu/week.dart';
 import 'package:appetizer/screens/multimessing/confirm_switch_popup_screen.dart';
+import 'package:appetizer/screens/multimessing/qr_generator_widget.dart';
 import 'package:appetizer/screens/user_feedback/new_feedback.dart';
 import 'package:appetizer/services/leave.dart';
 import 'package:appetizer/services/multimessing/switch_meals.dart';
+import 'package:appetizer/utils/get_day_and_date_for_meal_card.dart';
 import 'package:appetizer/utils/get_leave_color_from_leave_status.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-class MenuCard extends StatefulWidget {
+class YourMealsMenuCard extends StatefulWidget {
   final String token;
   final int id;
   final String title;
@@ -27,7 +29,7 @@ class MenuCard extends StatefulWidget {
   final SwitchStatus switchStatus;
   final String hostelName;
 
-  MenuCard({
+  YourMealsMenuCard({
     Key key,
     this.title,
     this.menuItems,
@@ -48,11 +50,12 @@ class MenuCard extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _MenuCardState createState() => _MenuCardState();
+  _YourMealsMenuCardState createState() => _YourMealsMenuCardState();
 }
 
-class _MenuCardState extends State<MenuCard> {
+class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
   bool isSwitched;
+  String _secretCode;
 
   @override
   void initState() {
@@ -156,14 +159,26 @@ class _MenuCardState extends State<MenuCard> {
     return widget.switchStatus == SwitchStatus.A
         ? Padding(
             padding: const EdgeInsets.symmetric(
-              horizontal: 8,
+              horizontal: 4,
             ),
-            child: RaisedButton(
-              onPressed: () {},
-              color: appiYellow,
-              child: Text(
-                "Show QR",
-                style: TextStyle(color: Colors.white),
+            child: GestureDetector(
+              onTap: () {
+                getQRData(widget.id, widget.token).then((secretCode) {
+                  setState(() {
+                    _secretCode = secretCode;
+                  });
+                });
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  color: appiYellow,
+                  borderRadius: BorderRadius.circular(4),
+                ),
+                child: Image.asset(
+                  "assets/icons/qr_image.png",
+                  height: 40,
+                  width: 40,
+                ),
               ),
             ),
           )
@@ -174,18 +189,16 @@ class _MenuCardState extends State<MenuCard> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12),
       child: widget.isSwitchable
-          ? InkWell(
-              radius: 20,
+          ? GestureDetector(
               child: Image.asset(
                 widget.isToggleOutdated
                     ? "assets/icons/switch_inactive.png"
                     : widget.switchStatus == SwitchStatus.N
                         ? "assets/icons/switch_active.png"
                         : "assets/icons/switch_crossed_active.png",
-                width: 50,
+                width: 30,
                 scale: 2,
               ),
-              borderRadius: BorderRadius.circular(25),
               onTap: widget.isToggleOutdated
                   ? null
                   : widget.switchStatus == SwitchStatus.N
@@ -397,16 +410,87 @@ class _MenuCardState extends State<MenuCard> {
       children: <Widget>[
         Expanded(
           child: Container(
-              color: Color(0xffF4F4F4),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  'Daily Items: ${widget.dailyItems}',
-                  style: TextStyle(color: Color.fromRGBO(0, 0, 0, .54)),
-                ),
-              )),
+            color: Color(0xffF4F4F4),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                'Daily Items: ${widget.dailyItems}',
+                style: TextStyle(color: Color.fromRGBO(0, 0, 0, .54)),
+              ),
+            ),
+          ),
         ),
       ],
+    );
+  }
+
+  Widget _getQRCard(String secretCode) {
+    return Card(
+      margin: EdgeInsets.fromLTRB(12, 4, 12, 4),
+      elevation: 2,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                widget.title,
+                                style: new TextStyle(
+                                  color: appiYellow,
+                                  fontSize: 24,
+                                ),
+                              ),
+                              Text(
+                                widget.hostelName,
+                                style: TextStyle(
+                                  color: appiBrown,
+                                ),
+                              ),
+                            ],
+                          ),
+                          getDayAndDateForCard(widget.mealStartDateTime),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          QRWidget(
+            secretCode: secretCode,
+          ),
+          Row(
+            children: <Widget>[
+              Expanded(
+                child: Container(
+                    color: Color(0xffF4F4F4),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        'Scan this QR code at the mess reception and get delecious meal',
+                        style: TextStyle(
+                          color: Color.fromRGBO(0, 0, 0, .54),
+                        ),
+                      ),
+                    )),
+              ),
+            ],
+          )
+        ],
+      ),
     );
   }
 
@@ -414,44 +498,47 @@ class _MenuCardState extends State<MenuCard> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0.0, 4.0, 0.0, 4.0),
-      child: Card(
-          margin: EdgeInsets.fromLTRB(12, 4, 12, 4),
-          elevation: 2,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Row(
+      child: _secretCode == null
+          ? Card(
+              margin: EdgeInsets.fromLTRB(12, 4, 12, 4),
+              elevation: 2,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.only(bottom: 24.0),
-                            child: Row(
-                              children: <Widget>[
-                                _titleAndBhawanNameComponent(),
-                                _skippedFlagComponent(),
-                              ],
+                        Row(
+                          children: <Widget>[
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.only(bottom: 24.0),
+                                child: Row(
+                                  children: <Widget>[
+                                    _titleAndBhawanNameComponent(),
+                                    _skippedFlagComponent(),
+                                  ],
+                                ),
+                              ),
                             ),
-                          ),
+                            _showQRButton(),
+                            _getSwitchIcon(),
+                            _feedbackOrToggleComponent(context),
+                          ],
                         ),
-                        _showQRButton(),
-                        _getSwitchIcon(),
-                        _feedbackOrToggleComponent(context),
+                        Column(
+                          children: _itemWidgetList(),
+                        ),
                       ],
                     ),
-                    Column(
-                      children: _itemWidgetList(),
-                    ),
-                  ],
-                ),
+                  ),
+                  _dailyItemsComponent(),
+                ],
               ),
-              _dailyItemsComponent(),
-            ],
-          )),
+            )
+          : _getQRCard(_secretCode),
     );
   }
 }

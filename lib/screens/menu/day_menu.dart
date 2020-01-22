@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../../globals.dart';
-import 'menu_card.dart';
+import 'your_meals_menu_card.dart';
 
 class DayMenu extends StatefulWidget {
   final String token;
@@ -231,7 +231,7 @@ class _DayMenuState extends State<DayMenu> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         (breakfastMealMap.isNotEmpty)
-            ? MenuCard(
+            ? YourMealsMenuCard(
                 title: 'Breakfast',
                 menuItems: breakfastMealMap,
                 dailyItems: widget.dailyItemsMap["breakfast"],
@@ -251,7 +251,7 @@ class _DayMenuState extends State<DayMenu> {
               )
             : Container(),
         (lunchMealMap.isNotEmpty)
-            ? MenuCard(
+            ? YourMealsMenuCard(
                 title: 'Lunch',
                 menuItems: lunchMealMap,
                 dailyItems: widget.dailyItemsMap["lunch"],
@@ -271,7 +271,7 @@ class _DayMenuState extends State<DayMenu> {
               )
             : Container(),
         (snacksMealMap.isNotEmpty)
-            ? MenuCard(
+            ? YourMealsMenuCard(
                 title: 'Snacks',
                 menuItems: snacksMealMap,
                 dailyItems: widget.dailyItemsMap["snacks"],
@@ -291,7 +291,7 @@ class _DayMenuState extends State<DayMenu> {
               )
             : Container(),
         (dinnerMealMap.isNotEmpty)
-            ? MenuCard(
+            ? YourMealsMenuCard(
                 title: 'Dinner',
                 menuItems: dinnerMealMap,
                 dailyItems: widget.dailyItemsMap["dinner"],
