@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 
-class ConfirmedSwitchScreen extends StatelessWidget {
+class ConfirmedSwitchScreen extends StatefulWidget {
+  @override
+  _ConfirmedSwitchScreenState createState() => _ConfirmedSwitchScreenState();
+}
+
+class _ConfirmedSwitchScreenState extends State<ConfirmedSwitchScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,5 +33,13 @@ class ConfirmedSwitchScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration(seconds: 2), () {
+      Navigator.pop(context);
+    });
   }
 }

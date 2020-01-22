@@ -1,14 +1,14 @@
+import 'dart:math' as math;
+
 import 'package:appetizer/colors.dart';
 import 'package:appetizer/components/switch_confirmation_meal_card.dart';
 import 'package:appetizer/models/menu/week.dart';
+import 'package:appetizer/screens/multimessing/confirmed_switch_screen.dart';
 import 'package:appetizer/services/menu.dart';
 import 'package:appetizer/services/multimessing/switch_meals.dart';
 import 'package:appetizer/utils/get_week_id.dart';
 import 'package:flutter/material.dart';
-
-import 'dart:math' as math;
-
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class ConfirmSwitchPopupScreen extends StatefulWidget {
   final String token;
@@ -72,11 +72,6 @@ class _ConfirmSwitchPopupScreenState extends State<ConfirmSwitchPopupScreen> {
     "Snacks": MealType.S,
     "Dinner": MealType.D,
   };
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   TextStyle getSwitchToOrFromStyle() {
     return TextStyle(fontWeight: FontWeight.bold, fontSize: 18);
@@ -201,10 +196,18 @@ class _ConfirmSwitchPopupScreenState extends State<ConfirmSwitchPopupScreen> {
                                 widget.selectedHostelCode,
                                 widget.token,
                               ).then((switchResponse) {
-                                SharedPreferences.getInstance().then((prefs) {
-                                  prefs.setString(
-                                      "secretKey", switchResponse.secretCode);
-                                });
+                                if (switchResponse == true) {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          ConfirmedSwitchScreen(),
+                                    ),
+                                  );
+                                } else {
+                                  Fluttertoast.showToast(
+                                      msg: "Cannot switch meals");
+                                }
                               });
                             },
                           )
