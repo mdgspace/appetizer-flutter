@@ -64,6 +64,8 @@ class _MenuState extends State<Menu> {
   String snacksDailyItems = "";
   String dinnerDailyItems = "";
 
+  String hostelNameFromWeek = "";
+
   @override
   Widget build(BuildContext context) {
     final selectedDateTime = Provider.of<CurrentDateModel>(context);
@@ -122,6 +124,8 @@ class _MenuState extends State<Menu> {
                 dinnerDailyItems = dinnerDailyItemsList.join(" , ");
               }
 
+              hostelNameFromWeek = snapshot.data.hostelName;
+
               Map<String, String> dailyItemsMap = {
                 "breakfast": breakfastDailyItems,
                 "lunch": lunchDailyItems,
@@ -129,16 +133,28 @@ class _MenuState extends State<Menu> {
                 "dinner": dinnerDailyItems
               };
 
-              //meal fetch
-              Day currentDayMeal = data.days[dateTime.weekday - 1];
+              if (dateTime.weekday > data.days.length) {
+                return Center(
+                  child: Container(
+                    height: MediaQuery.of(context).size.height,
+                    child: Text(
+                      "The menu for this day has not been uploaded yet!",
+                    ),
+                  ),
+                );
+              } else {
+                //day meal fetch
+                Day currentDayMeal = data.days[dateTime.weekday - 1];
 
-              return DayMenu(
-                token: widget.token,
-                currentDayMeal: currentDayMeal,
-                dailyItemsMap: dailyItemsMap,
-                selectedDateTime: selectedDateTime.dateTime,
-                selectedHostelCode: widget.selectedHostelCode,
-              );
+                return DayMenu(
+                  token: widget.token,
+                  currentDayMeal: currentDayMeal,
+                  dailyItemsMap: dailyItemsMap,
+                  selectedDateTime: selectedDateTime.dateTime,
+                  selectedHostelCode: widget.selectedHostelCode,
+                  hostelName: hostelNameFromWeek,
+                );
+              }
             }
           });
     }
