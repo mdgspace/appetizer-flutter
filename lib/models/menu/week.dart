@@ -1,10 +1,7 @@
-// To parse this JSON data, do
-//
-//     final confirm = confirmFromJson(jsonString);
-
 import 'dart:convert';
 
-Week confirmFromJson(String str) => Week.fromJson(json.decode(str));
+Week confirmFromJson(String str) =>
+    Week.fromJson(json.decode(str));
 
 String confirmToJson(Week data) => json.encode(data.toJson());
 
@@ -27,7 +24,8 @@ class Week {
     this.isApproved,
   });
 
-  factory Week.fromJson(Map<String, dynamic> json) => new Week(
+  factory Week.fromJson(Map<String, dynamic> json) =>
+      new Week(
         weekId: json["week_id"],
         year: json["year"],
         name: json["name"],
@@ -164,6 +162,8 @@ class Meal {
   dynamic wastage;
   bool isSwitchable;
   SwitchStatus switchStatus;
+  String hostelName;
+  String secretCode;
 
   Meal({
     this.id,
@@ -175,6 +175,8 @@ class Meal {
     this.wastage,
     this.isSwitchable,
     this.switchStatus,
+    this.hostelName,
+    this.secretCode,
   });
 
   factory Meal.fromJson(Map<String, dynamic> json) => new Meal(
@@ -188,6 +190,8 @@ class Meal {
         wastage: json["wastage"],
         isSwitchable: json["is_switchable"],
         switchStatus: switchStatusValues.map[json["switch_status"]],
+        hostelName: json["hostel_name"],
+        secretCode: json["secret_code"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -200,6 +204,8 @@ class Meal {
         "wastage": wastage,
         "is_switchable": isSwitchable,
         "switch_status": switchStatusValues.reverse[switchStatus],
+        "hostel_name": hostelName,
+        "secret_code": secretCode,
       };
 }
 

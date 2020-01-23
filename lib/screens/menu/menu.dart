@@ -1,18 +1,19 @@
 import 'package:appetizer/database/app_database.dart';
 import 'package:appetizer/enums/connectivity_status.dart';
 import 'package:appetizer/globals.dart';
+import 'package:appetizer/models/menu/week.dart';
 import 'package:appetizer/provider/current_date.dart';
 import 'package:appetizer/screens/menu/day_menu.dart';
 import 'package:appetizer/screens/menu/no_meals.dart';
 import 'package:appetizer/services/menu.dart';
 import 'package:appetizer/services/user.dart';
+import 'package:appetizer/utils/get_hostel_code.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sembast/sembast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../colors.dart';
-import '../../models/menu/week.dart';
 import '../../utils/get_week_id.dart';
 
 class Menu extends StatefulWidget {
@@ -42,7 +43,8 @@ class _MenuState extends State<Menu> {
     });
     SharedPreferences.getInstance().then((sharedPrefs) {
       if (sharedPrefs.getInt("mealKey") == null) {
-        menuWeek(widget.token, getWeekNumber(DateTime.now())).then((menu) {
+        menuWeekForYourMeals(widget.token, getWeekNumber(DateTime.now()))
+            .then((menu) {
           updateMealDb(menu);
         });
       }
@@ -82,10 +84,16 @@ class _MenuState extends State<Menu> {
           future: connectionStatus == ConnectivityStatus.Offline
               ? getWeekNumber(dateTime) == getWeekNumber(DateTime.now())
                   ? menuWeekFromDb()
-                  : menuWeekMultiMessing(
-                      token, getWeekNumber(dateTime), widget.selectedHostelCode)
-              : menuWeekMultiMessing(
-                  token, getWeekNumber(dateTime), widget.selectedHostelCode),
+                  : widget.selectedHostelCode ==
+                          hostelCodeMap[widget.residingHostel]
+                      ? menuWeekForYourMeals(token, getWeekNumber(dateTime))
+                      : menuWeekMultiMessing(token, getWeekNumber(dateTime),
+                          widget.selectedHostelCode)
+              : widget.selectedHostelCode ==
+                      hostelCodeMap[widget.residingHostel]
+                  ? menuWeekForYourMeals(token, getWeekNumber(dateTime))
+                  : menuWeekMultiMessing(token, getWeekNumber(dateTime),
+                      widget.selectedHostelCode),
           builder: (context, snapshot) {
             var data = snapshot.data;
             if (snapshot.connectionState == ConnectionState.waiting) {

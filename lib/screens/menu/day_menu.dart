@@ -1,12 +1,13 @@
 import 'dart:math' as math;
 
-import 'package:appetizer/models/menu/week.dart';
 import 'package:appetizer/screens/menu/other_meals_menu_card.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../../globals.dart';
 import 'your_meals_menu_card.dart';
+
+import 'package:appetizer/models/menu/week.dart';
 
 class DayMenu extends StatefulWidget {
   final String token;
