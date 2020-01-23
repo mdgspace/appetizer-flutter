@@ -157,34 +157,83 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
         : Container();
   }
 
+  Color _getQRBackgroundColor() {
+    switch (widget.switchStatus) {
+      case SwitchStatus.N:
+        return Colors.transparent;
+        break;
+      case SwitchStatus.A:
+        return Colors.greenAccent;
+        break;
+      case SwitchStatus.D:
+        return Colors.redAccent;
+        break;
+      case SwitchStatus.P:
+        return appiYellow;
+        break;
+      case SwitchStatus.U:
+        return appiGrey;
+        break;
+      default:
+        return Colors.transparent;
+    }
+  }
+
+  VoidCallback _getQROnTap() {
+    switch (widget.switchStatus) {
+      case SwitchStatus.N:
+        return () {};
+        break;
+      case SwitchStatus.A:
+        return () {
+          setState(() {
+            _secretCode = widget.secretCode;
+          });
+        };
+        break;
+      case SwitchStatus.D:
+        return () {
+          Fluttertoast.showToast(msg: "Your switch has been denied");
+        };
+        break;
+      case SwitchStatus.P:
+        return () {
+          Fluttertoast.showToast(
+              msg: "QR CODE will be available 12 hours before the meal");
+        };
+        break;
+      case SwitchStatus.U:
+        return () {
+          Fluttertoast.showToast(msg: "Your Switch was not approved!");
+        };
+        break;
+      default:
+        return () {};
+    }
+  }
+
   Widget _showQRButton() {
-    return widget.switchStatus == SwitchStatus.A
-        ? Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 4,
-            ),
-            child: GestureDetector(
-              onTap: () {
-                getQRData(widget.id, widget.token).then((secretCode) {
-                  setState(() {
-                    _secretCode = secretCode;
-                  });
-                });
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                  color: appiYellow,
-                  borderRadius: BorderRadius.circular(4),
-                ),
-                child: Image.asset(
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 4,
+      ),
+      child: GestureDetector(
+        onTap: _getQROnTap(),
+        child: Container(
+          decoration: BoxDecoration(
+            color: _getQRBackgroundColor(),
+            borderRadius: BorderRadius.circular(4),
+          ),
+          child: widget.switchStatus == SwitchStatus.N
+              ? Container()
+              : Image.asset(
                   "assets/icons/qr_image.png",
                   height: 40,
                   width: 40,
                 ),
-              ),
-            ),
-          )
-        : Container();
+        ),
+      ),
+    );
   }
 
   Widget _getSwitchIcon() {
