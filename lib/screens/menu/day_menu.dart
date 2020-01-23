@@ -1,13 +1,12 @@
 import 'dart:math' as math;
 
+import 'package:appetizer/models/menu/week.dart';
 import 'package:appetizer/screens/menu/other_meals_menu_card.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../../globals.dart';
 import 'your_meals_menu_card.dart';
-
-import 'package:appetizer/models/menu/week.dart';
 
 class DayMenu extends StatefulWidget {
   final String token;
@@ -92,6 +91,16 @@ class _DayMenuState extends State<DayMenu> {
   SwitchStatus snacksSwitchStatus;
   SwitchStatus dinnerSwitchStatus;
 
+  String breakfastHostelName;
+  String lunchHostelName;
+  String snacksHostelName;
+  String dinnerHostelName;
+
+  String breakfastSecretCode;
+  String lunchSecretCode;
+  String snacksSecretCode;
+  String dinnerSecretCode;
+
   void setLeadingMealImage(List<CircleAvatar> mealLeadingImageList) {
     var randomColor =
         Color((math.Random().nextDouble() * 0xFFFFFF).toInt() << 0)
@@ -125,6 +134,10 @@ class _DayMenuState extends State<DayMenu> {
         }
         isBreakfastSwitchable = widget.currentDayMeal.meals[i].isSwitchable;
         breakfastSwitchStatus = widget.currentDayMeal.meals[i].switchStatus;
+        if (widget.residingHostel == widget.hostelName) {
+          breakfastHostelName = widget.currentDayMeal.meals[i].hostelName;
+          breakfastSecretCode = widget.currentDayMeal.meals[i].secretCode;
+        }
         breakfastId = widget.currentDayMeal.meals[i].id;
         isBreakfastSwitched =
             widget.currentDayMeal.meals[i].leaveStatus == LeaveStatus.N
@@ -154,6 +167,10 @@ class _DayMenuState extends State<DayMenu> {
         }
         isLunchSwitchable = widget.currentDayMeal.meals[i].isSwitchable;
         lunchSwitchStatus = widget.currentDayMeal.meals[i].switchStatus;
+        if (widget.residingHostel == widget.hostelName) {
+          lunchHostelName = widget.currentDayMeal.meals[i].hostelName;
+          lunchSecretCode = widget.currentDayMeal.meals[i].secretCode;
+        }
         lunchId = widget.currentDayMeal.meals[i].id;
         isLunchSwitched =
             widget.currentDayMeal.meals[i].leaveStatus == LeaveStatus.N
@@ -183,6 +200,10 @@ class _DayMenuState extends State<DayMenu> {
         }
         isSnacksSwitchable = widget.currentDayMeal.meals[i].isSwitchable;
         snacksSwitchStatus = widget.currentDayMeal.meals[i].switchStatus;
+        if (widget.residingHostel == widget.hostelName) {
+          snacksHostelName = widget.currentDayMeal.meals[i].hostelName;
+          snacksSecretCode = widget.currentDayMeal.meals[i].secretCode;
+        }
         snacksId = widget.currentDayMeal.meals[i].id;
         isSnacksSwitched =
             widget.currentDayMeal.meals[i].leaveStatus == LeaveStatus.N
@@ -212,6 +233,10 @@ class _DayMenuState extends State<DayMenu> {
         }
         isDinnerSwitchable = widget.currentDayMeal.meals[i].isSwitchable;
         dinnerSwitchStatus = widget.currentDayMeal.meals[i].switchStatus;
+        if (widget.residingHostel == widget.hostelName) {
+          dinnerHostelName = widget.currentDayMeal.meals[i].hostelName;
+          dinnerSecretCode = widget.currentDayMeal.meals[i].secretCode;
+        }
         dinnerId = widget.currentDayMeal.meals[i].id;
         isDinnerSwitched =
             widget.currentDayMeal.meals[i].leaveStatus == LeaveStatus.N
@@ -252,7 +277,8 @@ class _DayMenuState extends State<DayMenu> {
                     mealStartDateTime: breakfastStartDateTime,
                     selectedHostelCode: widget.selectedHostelCode,
                     switchStatus: breakfastSwitchStatus,
-                    hostelName: widget.hostelName,
+                    hostelName: breakfastHostelName,
+                    secretCode: breakfastSecretCode,
                   )
                 : OtherMealsMenuCard(
                     title: 'Breakfast',
@@ -290,7 +316,8 @@ class _DayMenuState extends State<DayMenu> {
                     mealStartDateTime: lunchStartDateTime,
                     selectedHostelCode: widget.selectedHostelCode,
                     switchStatus: lunchSwitchStatus,
-                    hostelName: widget.hostelName,
+                    hostelName: lunchHostelName,
+                    secretCode: lunchSecretCode,
                   )
                 : OtherMealsMenuCard(
                     title: 'Lunch',
@@ -328,7 +355,8 @@ class _DayMenuState extends State<DayMenu> {
                     mealStartDateTime: snacksStartDateTime,
                     selectedHostelCode: widget.selectedHostelCode,
                     switchStatus: snacksSwitchStatus,
-                    hostelName: widget.hostelName,
+                    hostelName: snacksHostelName,
+                    secretCode: snacksSecretCode,
                   )
                 : OtherMealsMenuCard(
                     title: 'Snacks',
@@ -366,7 +394,8 @@ class _DayMenuState extends State<DayMenu> {
                     mealStartDateTime: dinnerStartDateTime,
                     selectedHostelCode: widget.selectedHostelCode,
                     switchStatus: dinnerSwitchStatus,
-                    hostelName: widget.hostelName,
+                    hostelName: dinnerHostelName,
+                    secretCode: dinnerSecretCode,
                   )
                 : OtherMealsMenuCard(
                     title: 'Dinner',

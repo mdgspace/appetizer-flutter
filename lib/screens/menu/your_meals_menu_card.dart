@@ -28,6 +28,7 @@ class YourMealsMenuCard extends StatefulWidget {
   final String selectedHostelCode;
   final SwitchStatus switchStatus;
   final String hostelName;
+  final String secretCode;
 
   YourMealsMenuCard({
     Key key,
@@ -47,6 +48,7 @@ class YourMealsMenuCard extends StatefulWidget {
     this.selectedHostelCode,
     this.switchStatus,
     this.hostelName,
+    this.secretCode,
   }) : super(key: key);
 
   @override
