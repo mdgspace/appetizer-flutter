@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:appetizer/colors.dart';
+import 'package:appetizer/components/alert_dialog.dart';
 import 'package:appetizer/components/switch_confirmation_meal_card.dart';
 import 'package:appetizer/models/menu/week.dart';
 import 'package:appetizer/screens/multimessing/confirmed_switch_screen.dart';
@@ -191,6 +192,7 @@ class _ConfirmSwitchPopupScreenState extends State<ConfirmSwitchPopupScreen> {
                               ),
                             ),
                             onPressed: () {
+                              showCustomDialog(context, "Switching Meals");
                               switchMeals(
                                 currentHostelMealId,
                                 widget.selectedHostelCode,
@@ -205,6 +207,7 @@ class _ConfirmSwitchPopupScreenState extends State<ConfirmSwitchPopupScreen> {
                                     ),
                                   );
                                 } else {
+                                  Navigator.pop(context);
                                   Fluttertoast.showToast(
                                       msg: "Cannot switch meals");
                                 }
