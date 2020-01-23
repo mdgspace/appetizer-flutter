@@ -1,4 +1,5 @@
 import 'package:appetizer/colors.dart';
+import 'package:appetizer/components/alert_dialog.dart';
 import 'package:appetizer/models/multimessing/meal_switch_from_your_meals.dart';
 import 'package:appetizer/screens/menu_screens/week_menu_screen.dart';
 import 'package:appetizer/screens/multimessing/confirmed_switch_screen.dart';
@@ -144,6 +145,7 @@ class _SwitchableMealsScreenState extends State<SwitchableMealsScreen> {
                             ),
                             onPressed: () async {
                               Navigator.pop(alertContext);
+                              showCustomDialog(context, "Switching Meals");
                               switchMeals(
                                 widget.id,
                                 hostelCodeMap[
@@ -152,6 +154,8 @@ class _SwitchableMealsScreenState extends State<SwitchableMealsScreen> {
                               ).then(
                                 (switchResponse) {
                                   if (switchResponse == true) {
+                                    Fluttertoast.showToast(
+                                        msg: "Meals Switched successfully!");
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(

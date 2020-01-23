@@ -215,17 +215,68 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
                             ),
                           );
                         }
-                      : widget.switchStatus == SwitchStatus.A
+                      : widget.switchStatus == SwitchStatus.A ||
+                              widget.switchStatus == SwitchStatus.P
                           ? () {
-                              cancelSwitch(widget.id, widget.token)
-                                  .then((switchCancelResponse) {
-                                if (switchCancelResponse) {
-                                  setState(() {});
-                                } else {
-                                  Fluttertoast.showToast(
-                                      msg: "Unable to cancel the switch");
-                                }
-                              });
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext alertContext) {
+                                  return AlertDialog(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    title: new Text(
+                                      "Cancel Switch",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    content: new Text(
+                                      "Are you sure you want to cancel this switch?",
+                                    ),
+                                    actions: <Widget>[
+                                      new FlatButton(
+                                        onPressed: () {
+                                          Navigator.pop(alertContext);
+                                        },
+                                        child: new Text(
+                                          "NO",
+                                          style: TextStyle(
+                                              color: appiYellow,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                      new FlatButton(
+                                        child: new Text(
+                                          "YES",
+                                          style: TextStyle(
+                                              color: appiYellow,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        onPressed: () async {
+                                          Navigator.pop(alertContext);
+                                          showCustomDialog(
+                                              context, "Cancelling Switch");
+                                          cancelSwitch(widget.id, widget.token)
+                                              .then((switchCancelResponse) {
+                                            Navigator.pop(context);
+                                            if (switchCancelResponse) {
+                                              Navigator.of(context).popUntil(
+                                                  (route) => route.isFirst);
+                                            } else {
+                                              Fluttertoast.showToast(
+                                                  msg:
+                                                      "Unable to cancel the switch");
+                                            }
+                                          });
+                                        },
+                                        highlightColor: Colors.transparent,
+                                        splashColor: Colors.transparent,
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
                             }
                           : null,
             )
