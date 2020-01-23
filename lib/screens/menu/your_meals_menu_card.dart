@@ -537,21 +537,33 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                          Row(
                             children: <Widget>[
-                              Text(
-                                widget.title,
-                                style: new TextStyle(
-                                  color: appiYellow,
-                                  fontSize: 24,
-                                ),
+                              IconButton(
+                                icon: Icon(Icons.arrow_back),
+                                onPressed: () {
+                                  setState(() {
+                                    _secretCode = null;
+                                  });
+                                },
                               ),
-                              Text(
-                                widget.hostelName,
-                                style: TextStyle(
-                                  color: appiBrown,
-                                ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Text(
+                                    widget.title,
+                                    style: new TextStyle(
+                                      color: appiYellow,
+                                      fontSize: 24,
+                                    ),
+                                  ),
+                                  Text(
+                                    widget.hostelName,
+                                    style: TextStyle(
+                                      color: appiBrown,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
