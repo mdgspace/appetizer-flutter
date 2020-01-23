@@ -154,8 +154,6 @@ class _SwitchableMealsScreenState extends State<SwitchableMealsScreen> {
                               ).then(
                                 (switchResponse) {
                                   if (switchResponse == true) {
-                                    Fluttertoast.showToast(
-                                        msg: "Meals Switched successfully!");
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
