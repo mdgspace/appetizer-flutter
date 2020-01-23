@@ -53,6 +53,7 @@ class _HomeState extends State<Home> {
         residingHostel = prefs.getString("hostelName");
       });
     });
+    switchableHostelsList.add("Your Meals");
     switchableHostels(widget.token).then((hostelsList) {
       hostelsList.forEach((hostel) {
         switchableHostelsList.add(hostel[2].toString());
@@ -198,9 +199,15 @@ class _HomeState extends State<Home> {
                     );
                   }).toList(),
                   onChanged: (String _selectedHostelName) {
-                    setState(() {
-                      selectedHostelName = _selectedHostelName;
-                    });
+                    if (_selectedHostelName == "Your Meals") {
+                      setState(() {
+                        selectedHostelName = null;
+                      });
+                    } else {
+                      setState(() {
+                        selectedHostelName = _selectedHostelName;
+                      });
+                    }
                   },
                 ),
               ),
