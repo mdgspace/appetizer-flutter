@@ -3,24 +3,24 @@ import 'package:appetizer/globals.dart';
 import 'package:appetizer/screens/my_leaves/my_leaves_screen.dart';
 import 'package:appetizer/services/user.dart';
 import 'package:flutter/material.dart';
-import '../flutter_calendar_carousel/flutter_calendar_carousel.dart'
-    show CalendarCarousel, WeekdayFormat;
-import '../flutter_calendar_carousel/classes/event.dart';
 import 'package:provider/provider.dart';
 
+import '../flutter_calendar_carousel/classes/event.dart';
+import '../flutter_calendar_carousel/flutter_calendar_carousel.dart'
+    show CalendarCarousel, WeekdayFormat;
 import '../provider/current_date.dart';
 
 class HorizontalDatePicker extends StatefulWidget {
   final String token;
 
   const HorizontalDatePicker({Key key, this.token}) : super(key: key);
+
   @override
   _HorizontalDatePickerState createState() => _HorizontalDatePickerState();
 }
 
 class _HorizontalDatePickerState extends State<HorizontalDatePicker> {
   CalendarCarousel _calendarCarousel;
-  DateTime _currentDate = DateTime.now();
   double _fontSizeDate = 14.0;
 
   @override
@@ -56,7 +56,7 @@ class _HorizontalDatePickerState extends State<HorizontalDatePicker> {
       firstDayOfWeek: 1,
       showWeekDays: true,
       height: 80.0,
-      selectedDateTime: _currentDate,
+      selectedDateTime: currentSelectedDate.dateTime,
       customGridViewPhysics: NeverScrollableScrollPhysics(),
       markedDateShowIcon: true,
       markedDateIconMaxShown: 2,
