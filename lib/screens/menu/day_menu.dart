@@ -123,7 +123,7 @@ class _DayMenuState extends State<DayMenu> {
                 widget.currentDayMeal.meals[i].startTime;
         breakfastStartDateTime = dateFormat.parse(breakfastDateTimeString);
         if (!breakfastStartDateTime
-            .subtract(Duration(hours: 12))
+            .subtract(outdatedTime)
             .isAfter(DateTime.now())) {
           isBreakfastLeaveToggleOutdated = true;
         }
@@ -156,7 +156,7 @@ class _DayMenuState extends State<DayMenu> {
                 widget.currentDayMeal.meals[i].startTime;
         lunchStartDateTime = dateFormat.parse(lunchDateTimeString);
         if (!lunchStartDateTime
-            .subtract(Duration(hours: 12))
+            .subtract(outdatedTime)
             .isAfter(DateTime.now())) {
           isLunchLeaveToggleOutdated = true;
         }
@@ -189,7 +189,7 @@ class _DayMenuState extends State<DayMenu> {
                 widget.currentDayMeal.meals[i].startTime;
         snacksStartDateTime = dateFormat.parse(snacksDateTimeString);
         if (!snacksStartDateTime
-            .subtract(Duration(hours: 12))
+            .subtract(outdatedTime)
             .isAfter(DateTime.now())) {
           isSnacksLeaveToggleOutdated = true;
         }
@@ -222,7 +222,7 @@ class _DayMenuState extends State<DayMenu> {
                 widget.currentDayMeal.meals[i].startTime;
         dinnerStartDateTime = dateFormat.parse(dinnerDateTimeString);
         if (!dinnerStartDateTime
-            .subtract(Duration(hours: 12))
+            .subtract(outdatedTime)
             .isAfter(DateTime.now())) {
           isDinnerLeaveToggleOutdated = true;
         }
