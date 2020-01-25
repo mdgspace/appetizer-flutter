@@ -199,7 +199,7 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
       case SwitchStatus.P:
         return () {
           Fluttertoast.showToast(
-              msg: "QR CODE will be available 12 hours before the meal");
+              msg: "QR CODE will be available 8 hours before the meal");
         };
         break;
       case SwitchStatus.U:
@@ -425,7 +425,7 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
       } else {
         Fluttertoast.showToast(
           msg:
-              "Leave status cannot be changed less than 12 hours before the meal time",
+              "Leave status cannot be changed less than 8 hours before the meal time",
         );
       }
     } else {
@@ -494,7 +494,7 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
       } else {
         Fluttertoast.showToast(
           msg:
-              "Leave status cannot be changed less than 12 hours before the meal time",
+              "Leave status cannot be changed less than 8 hours before the meal time",
         );
       }
     }
