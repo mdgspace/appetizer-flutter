@@ -140,7 +140,8 @@ class _DayMenuState extends State<DayMenu> {
         }
         breakfastId = widget.currentDayMeal.meals[i].id;
         isBreakfastSwitched =
-            widget.currentDayMeal.meals[i].leaveStatus == LeaveStatus.N
+            widget.currentDayMeal.meals[i].leaveStatus.status ==
+                    LeaveStatusEnum.N
                 ? true
                 : false;
         for (var j = 0; j < widget.currentDayMeal.meals[i].items.length; j++) {
@@ -172,10 +173,10 @@ class _DayMenuState extends State<DayMenu> {
           lunchSecretCode = widget.currentDayMeal.meals[i].secretCode;
         }
         lunchId = widget.currentDayMeal.meals[i].id;
-        isLunchSwitched =
-            widget.currentDayMeal.meals[i].leaveStatus == LeaveStatus.N
-                ? true
-                : false;
+        isLunchSwitched = widget.currentDayMeal.meals[i].leaveStatus.status ==
+                LeaveStatusEnum.N
+            ? true
+            : false;
         for (var j = 0; j < widget.currentDayMeal.meals[i].items.length; j++) {
           var lunchMealItem = widget.currentDayMeal.meals[i].items[j].name;
           lunchItemsList.add(lunchMealItem);
@@ -205,10 +206,10 @@ class _DayMenuState extends State<DayMenu> {
           snacksSecretCode = widget.currentDayMeal.meals[i].secretCode;
         }
         snacksId = widget.currentDayMeal.meals[i].id;
-        isSnacksSwitched =
-            widget.currentDayMeal.meals[i].leaveStatus == LeaveStatus.N
-                ? true
-                : false;
+        isSnacksSwitched = widget.currentDayMeal.meals[i].leaveStatus.status ==
+                LeaveStatusEnum.N
+            ? true
+            : false;
         for (var j = 0; j < widget.currentDayMeal.meals[i].items.length; j++) {
           var snacksMealItem = widget.currentDayMeal.meals[i].items[j].name;
           snacksItemsList.add(snacksMealItem);
@@ -238,10 +239,10 @@ class _DayMenuState extends State<DayMenu> {
           dinnerSecretCode = widget.currentDayMeal.meals[i].secretCode;
         }
         dinnerId = widget.currentDayMeal.meals[i].id;
-        isDinnerSwitched =
-            widget.currentDayMeal.meals[i].leaveStatus == LeaveStatus.N
-                ? true
-                : false;
+        isDinnerSwitched = widget.currentDayMeal.meals[i].leaveStatus.status ==
+                LeaveStatusEnum.N
+            ? true
+            : false;
         for (var j = 0; j < widget.currentDayMeal.meals[i].items.length; j++) {
           var dinnerMealItem = widget.currentDayMeal.meals[i].items[j].name;
           dinnerItemsList.add(dinnerMealItem);
