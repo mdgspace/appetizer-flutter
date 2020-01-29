@@ -51,8 +51,7 @@ Future<Week> menuWeekMultiMessing(
   }
 }
 
-Future<Week> menuWeekForYourMeals(
-    String token, int weekId) async {
+Future<Week> menuWeekForYourMeals(String token, int weekId) async {
   String endpoint = "/api/menu/my_week/?week_id=$weekId";
   String uri = url + endpoint;
   var tokenAuth = {"Authorization": "Token " + token};
@@ -62,8 +61,7 @@ Future<Week> menuWeekForYourMeals(
       headers: tokenAuth,
     );
     final jsonResponse = jsonDecode(response.body);
-    Week weekForYourMeals =
-        new Week.fromJson(jsonResponse);
+    Week weekForYourMeals = new Week.fromJson(jsonResponse);
     print(response.body);
     return weekForYourMeals;
   } on Exception catch (e) {

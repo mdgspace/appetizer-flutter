@@ -1,10 +1,10 @@
-import 'package:appetizer/screens/menu/home.dart';
+import 'package:appetizer/ui/menu/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'colors.dart';
-import 'screens/login/login.dart';
-import 'screens/on_boarding/onBoarding.dart';
+import 'ui/login/login.dart';
+import 'ui/on_boarding/onBoarding.dart';
 
 void main() async {
   //await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
