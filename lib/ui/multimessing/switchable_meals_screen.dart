@@ -1,3 +1,4 @@
+import 'package:appetizer/change_notifiers/menu_model.dart';
 import 'package:appetizer/colors.dart';
 import 'package:appetizer/ui/components/alert_dialog.dart';
 import 'package:appetizer/models/multimessing/meal_switch_from_your_meals.dart';
@@ -8,6 +9,7 @@ import 'package:appetizer/services/multimessing/switch_meals.dart';
 import 'package:appetizer/utils/get_hostel_code.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
 
 class SwitchableMealsScreen extends StatefulWidget {
   final String token;
@@ -186,64 +188,67 @@ class _SwitchableMealsuitate extends State<SwitchableMealsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        centerTitle: true,
-        title: Text(
-          "Mess Menu",
-          style: new TextStyle(
-            color: Colors.white,
-            fontSize: 25.0,
-            fontFamily: 'Lobster_Two',
-          ),
-        ),
-        actions: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: GestureDetector(
-              child: Container(
-                child: Image.asset("assets/icons/week_menu.png"),
-              ),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => WeekMenu(widget.token),
-                  ),
-                );
-              },
+    return ChangeNotifierProvider(
+      builder: (context) => MenuModel(),
+      child: Scaffold(
+        appBar: AppBar(
+          elevation: 0,
+          centerTitle: true,
+          title: Text(
+            "Mess Menu",
+            style: new TextStyle(
+              color: Colors.white,
+              fontSize: 25.0,
+              fontFamily: 'Lobster_Two',
             ),
-          )
-        ],
-        backgroundColor: appiBrown,
-        iconTheme: new IconThemeData(color: appiYellow),
-      ),
-      body: FutureBuilder(
-        future: listSwitchableMeals(widget.id, widget.token),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Container(
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              child: Center(
-                child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(appiYellow),
+          ),
+          actions: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: GestureDetector(
+                child: Container(
+                  child: Image.asset("assets/icons/week_menu.png"),
                 ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => WeekMenu(token: widget.token),
+                    ),
+                  );
+                },
               ),
-            );
-          } else {
-            var data = snapshot.data;
-            return Table(
-              defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-              border: TableBorder.all(
-                width: 0.5,
-                color: appiGrey.withOpacity(0.5),
-              ),
-              children: _tableBody(data),
-            );
-          }
-        },
+            )
+          ],
+          backgroundColor: appiBrown,
+          iconTheme: new IconThemeData(color: appiYellow),
+        ),
+        body: FutureBuilder(
+          future: listSwitchableMeals(widget.id, widget.token),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Container(
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
+                child: Center(
+                  child: CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(appiYellow),
+                  ),
+                ),
+              );
+            } else {
+              var data = snapshot.data;
+              return Table(
+                defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                border: TableBorder.all(
+                  width: 0.5,
+                  color: appiGrey.withOpacity(0.5),
+                ),
+                children: _tableBody(data),
+              );
+            }
+          },
+        ),
       ),
     );
   }

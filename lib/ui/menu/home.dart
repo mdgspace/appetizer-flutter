@@ -1,3 +1,4 @@
+import 'package:appetizer/change_notifiers/menu_model.dart';
 import 'package:appetizer/colors.dart';
 import 'package:appetizer/ui/components/alert_dialog.dart';
 import 'package:appetizer/utils/connectivity_status.dart';
@@ -87,6 +88,7 @@ class _HomeState extends State<Home> {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(builder: (context) => CurrentDateModel()),
+        ChangeNotifierProvider(builder: (context) => MenuModel()),
         StreamProvider<ConnectivityStatus>(
             builder: (context) =>
                 ConnectivityService().connectionStatusController.stream)
@@ -226,7 +228,7 @@ class _HomeState extends State<Home> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => WeekMenu(widget.token)));
+                          builder: (context) => WeekMenu(token: widget.token)));
                 },
               ),
             )
@@ -234,7 +236,7 @@ class _HomeState extends State<Home> {
           backgroundColor: appiBrown,
           iconTheme: new IconThemeData(color: appiYellow),
         ),
-        body: SafeArea(
+        /*body: SafeArea(
           child: Stack(
             children: <Widget>[
               Column(
@@ -256,7 +258,8 @@ class _HomeState extends State<Home> {
               ),
             ],
           ),
-        ),
+        ),*/
+        body: WeekMenu(),
         drawer: Drawer(
           child: Column(
             children: <Widget>[

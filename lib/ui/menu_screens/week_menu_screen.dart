@@ -1,14 +1,16 @@
+import 'package:appetizer/change_notifiers/menu_model.dart';
 import 'package:appetizer/utils/get_week_id.dart';
 import 'package:appetizer/utils/week_day_int_to_string.dart';
 import 'package:appetizer/models/menu/week.dart';
 import 'package:appetizer/services/menu.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../colors.dart';
 
 class WeekMenu extends StatelessWidget {
   final String token;
-  WeekMenu(this.token);
+  WeekMenu({this.token});
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +74,7 @@ class WeekMenu extends StatelessWidget {
               ],
             ),
           ),
-          FutureBuilder(
+          /*FutureBuilder(
             future: menuWeek(token, getWeekNumber(DateTime.now())),
             builder: (context, snapshot) {
               Week data = snapshot.data;
@@ -120,6 +122,67 @@ class WeekMenu extends StatelessWidget {
                   print('D: $dinner');
                   rows.add(_buildTableRow(weekDayIntToString(day.date.weekday),
                       day.date.day, breakfast, lunch, dinner, context));
+                });
+
+                return Flexible(
+                  child: ListView(
+                    shrinkWrap: true,
+                    children: rows,
+                  ),
+                );
+              }
+            },
+          ),*/
+          Consumer<MenuModel>(
+            builder: (context, menu, child) {
+              if (menu.data == null) {
+                return Container(
+                  height: MediaQuery.of(context).size.height / 1.5,
+                  width: MediaQuery.of(context).size.width,
+                  child: Center(
+                      child: CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(appiYellow),
+                  )),
+                );
+              } else {
+                print(menu.data);
+                List<Widget> rows = [];
+                menu.data.days.forEach((day) {
+                  List<String> breakfast = [];
+                  List<String> lunch = [];
+                  List<String> dinner = [];
+
+                  day.meals.forEach(
+                    (meal) {
+                      meal.items.forEach(
+                          (f) => print("item ${f.name} ${meal.type}"));
+                      switch (meal.type) {
+                        case MealType.B:
+                          meal.items
+                              .forEach((item) => breakfast.add(item.name));
+                          print(breakfast);
+                          break;
+                        case MealType.L:
+                          meal.items.forEach((item) => lunch.add(item.name));
+                          break;
+                        case MealType.S:
+                          break;
+                        case MealType.D:
+                          meal.items.forEach((item) => dinner.add(item.name));
+                          break;
+                      }
+                    },
+                  );
+                  print('B: $breakfast');
+                  print('L: $lunch');
+                  print('D: $dinner');
+                  rows.add(_buildTableRow(
+                      weekDayIntToString(day.date.weekday),
+                      day.date.day,
+                      breakfast,
+                      lunch,
+                      dinner,
+                      context));
                 });
 
                 return Flexible(
