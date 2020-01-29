@@ -13,7 +13,6 @@ class MenuModel extends ChangeNotifier {
 
   Week get data => _currentWeek;
 
-
   void currentWeekMenu() {
     // TODO: store user details in a separate model (user details should be fetched only once during the start of the app
     getUserDetails().then((details) async {

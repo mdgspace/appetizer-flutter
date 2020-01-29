@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:io';
-
 import 'package:appetizer/ui/components/alert_dialog.dart';
 import 'package:appetizer/ui/password/choose_new_password.dart';
 import 'package:appetizer/ui/password/forgot_password.dart';
