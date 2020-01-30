@@ -81,6 +81,11 @@ class _DayMenuState extends State<DayMenu> {
   DateTime snacksStartDateTime;
   DateTime dinnerStartDateTime;
 
+  DateTime breakfastEndDateTime;
+  DateTime lunchEndDateTime;
+  DateTime snacksEndDateTime;
+  DateTime dinnerEndDateTime;
+
   bool isBreakfastSwitchable;
   bool isLunchSwitchable;
   bool isSnacksSwitchable;
@@ -117,11 +122,16 @@ class _DayMenuState extends State<DayMenu> {
     for (var i = 0; i < numberOfMeals; i++) {
       if (widget.currentDayMeal.meals[i].type == MealType.B) {
         breakfastLeaveStatus = widget.currentDayMeal.meals[i].leaveStatus;
-        String breakfastDateTimeString =
+        String breakfastStartDateTimeString =
             widget.currentDayMeal.date.toString().substring(0, 10) +
                 " " +
                 widget.currentDayMeal.meals[i].startTime;
-        breakfastStartDateTime = dateFormat.parse(breakfastDateTimeString);
+        breakfastStartDateTime = dateFormat.parse(breakfastStartDateTimeString);
+        String breakfastEndDateTimeString =
+            widget.currentDayMeal.date.toString().substring(0, 10) +
+                " " +
+                widget.currentDayMeal.meals[i].endTime;
+        breakfastEndDateTime = dateFormat.parse(breakfastEndDateTimeString);
         if (!breakfastStartDateTime
             .subtract(outdatedTime)
             .isAfter(DateTime.now())) {
@@ -151,11 +161,16 @@ class _DayMenuState extends State<DayMenu> {
         }
       } else if (widget.currentDayMeal.meals[i].type == MealType.L) {
         lunchLeaveStatus = widget.currentDayMeal.meals[i].leaveStatus;
-        String lunchDateTimeString =
+        String lunchStartDateTimeString =
             widget.currentDayMeal.date.toString().substring(0, 10) +
                 " " +
                 widget.currentDayMeal.meals[i].startTime;
-        lunchStartDateTime = dateFormat.parse(lunchDateTimeString);
+        lunchStartDateTime = dateFormat.parse(lunchStartDateTimeString);
+        String lunchEndDateTimeString =
+            widget.currentDayMeal.date.toString().substring(0, 10) +
+                " " +
+                widget.currentDayMeal.meals[i].endTime;
+        lunchEndDateTime = dateFormat.parse(lunchEndDateTimeString);
         if (!lunchStartDateTime
             .subtract(outdatedTime)
             .isAfter(DateTime.now())) {
@@ -184,11 +199,16 @@ class _DayMenuState extends State<DayMenu> {
         }
       } else if (widget.currentDayMeal.meals[i].type == MealType.S) {
         snacksLeaveStatus = widget.currentDayMeal.meals[i].leaveStatus;
-        String snacksDateTimeString =
+        String snacksStartDateTimeString =
             widget.currentDayMeal.date.toString().substring(0, 10) +
                 " " +
                 widget.currentDayMeal.meals[i].startTime;
-        snacksStartDateTime = dateFormat.parse(snacksDateTimeString);
+        snacksStartDateTime = dateFormat.parse(snacksStartDateTimeString);
+        String snacksEndDateTimeString =
+            widget.currentDayMeal.date.toString().substring(0, 10) +
+                " " +
+                widget.currentDayMeal.meals[i].endTime;
+        snacksEndDateTime = dateFormat.parse(snacksEndDateTimeString);
         if (!snacksStartDateTime
             .subtract(outdatedTime)
             .isAfter(DateTime.now())) {
@@ -217,11 +237,16 @@ class _DayMenuState extends State<DayMenu> {
         }
       } else if (widget.currentDayMeal.meals[i].type == MealType.D) {
         dinnerLeaveStatus = widget.currentDayMeal.meals[i].leaveStatus;
-        String dinnerDateTimeString =
+        String dinnerStartDateTimeString =
             widget.currentDayMeal.date.toString().substring(0, 10) +
                 " " +
                 widget.currentDayMeal.meals[i].startTime;
-        dinnerStartDateTime = dateFormat.parse(dinnerDateTimeString);
+        dinnerStartDateTime = dateFormat.parse(dinnerStartDateTimeString);
+        String dinnerEndDateTimeString =
+            widget.currentDayMeal.date.toString().substring(0, 10) +
+                " " +
+                widget.currentDayMeal.meals[i].endTime;
+        dinnerEndDateTime = dateFormat.parse(dinnerEndDateTimeString);
         if (!dinnerStartDateTime
             .subtract(outdatedTime)
             .isAfter(DateTime.now())) {
@@ -276,6 +301,7 @@ class _DayMenuState extends State<DayMenu> {
                     isSwitchable: isBreakfastSwitchable,
                     selectedDateTime: widget.selectedDateTime,
                     mealStartDateTime: breakfastStartDateTime,
+                    mealEndDateTime: breakfastEndDateTime,
                     selectedHostelCode: widget.selectedHostelCode,
                     switchStatus: breakfastSwitchStatus,
                     hostelName: breakfastHostelName,
@@ -316,6 +342,7 @@ class _DayMenuState extends State<DayMenu> {
                     isSwitchable: isLunchSwitchable,
                     selectedDateTime: widget.selectedDateTime,
                     mealStartDateTime: lunchStartDateTime,
+                    mealEndDateTime: lunchEndDateTime,
                     selectedHostelCode: widget.selectedHostelCode,
                     switchStatus: lunchSwitchStatus,
                     hostelName: lunchHostelName,
@@ -356,6 +383,7 @@ class _DayMenuState extends State<DayMenu> {
                     isSwitchable: isSnacksSwitchable,
                     selectedDateTime: widget.selectedDateTime,
                     mealStartDateTime: snacksStartDateTime,
+                    mealEndDateTime: snacksEndDateTime,
                     selectedHostelCode: widget.selectedHostelCode,
                     switchStatus: snacksSwitchStatus,
                     hostelName: snacksHostelName,
@@ -396,6 +424,7 @@ class _DayMenuState extends State<DayMenu> {
                     isSwitchable: isDinnerSwitchable,
                     selectedDateTime: widget.selectedDateTime,
                     mealStartDateTime: dinnerStartDateTime,
+                    mealEndDateTime: dinnerEndDateTime,
                     selectedHostelCode: widget.selectedHostelCode,
                     switchStatus: dinnerSwitchStatus,
                     hostelName: dinnerHostelName,

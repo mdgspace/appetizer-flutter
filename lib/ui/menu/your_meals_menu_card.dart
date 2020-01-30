@@ -1,4 +1,5 @@
 import 'package:appetizer/colors.dart';
+import 'package:appetizer/globals.dart';
 import 'package:appetizer/models/menu/week.dart';
 import 'package:appetizer/services/leave.dart';
 import 'package:appetizer/services/multimessing/switch_meals.dart';
@@ -25,6 +26,7 @@ class YourMealsMenuCard extends StatefulWidget {
   final bool isSwitchable;
   final DateTime selectedDateTime;
   final DateTime mealStartDateTime;
+  final DateTime mealEndDateTime;
   final String selectedHostelCode;
   final SwitchStatus switchStatus;
   final String hostelName;
@@ -45,6 +47,7 @@ class YourMealsMenuCard extends StatefulWidget {
     this.isSwitchable,
     this.selectedDateTime,
     this.mealStartDateTime,
+    this.mealEndDateTime,
     this.selectedHostelCode,
     this.switchStatus,
     this.hostelName,
@@ -188,11 +191,7 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
         return () {};
         break;
       case SwitchStatusEnum.A:
-        return () {
-          setState(() {
-            _secretCode = widget.secretCode;
-          });
-        };
+        return () {};
         break;
       case SwitchStatusEnum.D:
         return () {
@@ -202,8 +201,20 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
       case SwitchStatusEnum.F:
       case SwitchStatusEnum.T:
         return () {
-          Fluttertoast.showToast(
-              msg: "QR CODE will be available 8 hours before the meal");
+          if (widget.mealEndDateTime
+              .add(Duration(hours: 1))
+              .isBefore(DateTime.now())) {
+            Fluttertoast.showToast(msg: "Time for this meal has passed!");
+          } else if (widget.mealStartDateTime
+              .subtract(outdatedTime)
+              .isAfter(DateTime.now())) {
+            Fluttertoast.showToast(
+                msg: "QR CODE will be available 8 hours before the meal");
+          } else {
+            setState(() {
+              _secretCode = widget.secretCode;
+            });
+          }
         };
         break;
       case SwitchStatusEnum.U:
