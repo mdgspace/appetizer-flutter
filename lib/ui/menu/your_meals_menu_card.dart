@@ -1,11 +1,11 @@
 import 'package:appetizer/colors.dart';
-import 'package:appetizer/ui/components/alert_dialog.dart';
 import 'package:appetizer/models/menu/week.dart';
+import 'package:appetizer/services/leave.dart';
+import 'package:appetizer/services/multimessing/switch_meals.dart';
+import 'package:appetizer/ui/components/alert_dialog.dart';
 import 'package:appetizer/ui/multimessing/qr_generator_widget.dart';
 import 'package:appetizer/ui/multimessing/switchable_meals_screen.dart';
 import 'package:appetizer/ui/user_feedback/new_feedback.dart';
-import 'package:appetizer/services/leave.dart';
-import 'package:appetizer/services/multimessing/switch_meals.dart';
 import 'package:appetizer/utils/get_day_and_date_for_meal_card.dart';
 import 'package:appetizer/utils/get_leave_color_from_leave_status.dart';
 import 'package:flutter/material.dart';
@@ -132,14 +132,15 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
   }
 
   Widget _skippedFlagComponent() {
-    return (!(getLeaveColorFromLeaveStatus(widget.leaveStatus) ==
+    return (!(getLeaveColorFromLeaveStatus(widget.leaveStatus.status) ==
                 Colors.white) &&
             widget.isOutdated)
         ? Padding(
             padding: const EdgeInsets.fromLTRB(30, 5, 30, 5),
             child: Container(
               decoration: BoxDecoration(
-                  color: getLeaveColorFromLeaveStatus(widget.leaveStatus),
+                  color:
+                      getLeaveColorFromLeaveStatus(widget.leaveStatus.status),
                   borderRadius: BorderRadius.circular(4)),
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(12, 1, 12, 1),
@@ -158,20 +159,23 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
   }
 
   Color _getQRBackgroundColor() {
-    switch (widget.switchStatus) {
-      case SwitchStatus.N:
+    switch (widget.switchStatus.status) {
+      case SwitchStatusEnum.N:
         return Colors.transparent;
         break;
-      case SwitchStatus.A:
+      case SwitchStatusEnum.A:
         return Colors.greenAccent;
         break;
-      case SwitchStatus.D:
+      case SwitchStatusEnum.D:
         return Colors.redAccent;
         break;
-      case SwitchStatus.P:
+      case SwitchStatusEnum.T:
         return appiYellow;
         break;
-      case SwitchStatus.U:
+      case SwitchStatusEnum.F:
+        return appiYellow;
+        break;
+      case SwitchStatusEnum.U:
         return appiGrey;
         break;
       default:
@@ -180,29 +184,30 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
   }
 
   VoidCallback _getQROnTap() {
-    switch (widget.switchStatus) {
-      case SwitchStatus.N:
+    switch (widget.switchStatus.status) {
+      case SwitchStatusEnum.N:
         return () {};
         break;
-      case SwitchStatus.A:
+      case SwitchStatusEnum.A:
         return () {
           setState(() {
             _secretCode = widget.secretCode;
           });
         };
         break;
-      case SwitchStatus.D:
+      case SwitchStatusEnum.D:
         return () {
           Fluttertoast.showToast(msg: "Your switch has been denied");
         };
         break;
-      case SwitchStatus.P:
+      case SwitchStatusEnum.F:
+      case SwitchStatusEnum.T:
         return () {
           Fluttertoast.showToast(
               msg: "QR CODE will be available 8 hours before the meal");
         };
         break;
-      case SwitchStatus.U:
+      case SwitchStatusEnum.U:
         return () {
           Fluttertoast.showToast(msg: "Your Switch was not approved!");
         };
@@ -224,7 +229,7 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
             color: _getQRBackgroundColor(),
             borderRadius: BorderRadius.circular(4),
           ),
-          child: widget.switchStatus == SwitchStatus.N
+          child: widget.switchStatus.status == SwitchStatusEnum.N
               ? Container()
               : Image.asset(
                   "assets/icons/qr_image.png",
@@ -244,7 +249,7 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
               child: Image.asset(
                 widget.isToggleOutdated
                     ? "assets/icons/switch_inactive.png"
-                    : widget.switchStatus == SwitchStatus.N
+                    : widget.switchStatus.status == SwitchStatusEnum.N
                         ? "assets/icons/switch_active.png"
                         : "assets/icons/switch_crossed_active.png",
                 width: 30,
@@ -252,7 +257,7 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
               ),
               onTap: widget.isToggleOutdated
                   ? null
-                  : widget.switchStatus == SwitchStatus.N
+                  : widget.switchStatus.status == SwitchStatusEnum.N
                       ? () {
                           Navigator.push(
                             context,
@@ -264,8 +269,8 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
                             ),
                           );
                         }
-                      : widget.switchStatus == SwitchStatus.A ||
-                              widget.switchStatus == SwitchStatus.P
+                      : widget.switchStatus.status == SwitchStatusEnum.T ||
+                              widget.switchStatus.status == SwitchStatusEnum.F
                           ? () {
                               showDialog(
                                 context: context,

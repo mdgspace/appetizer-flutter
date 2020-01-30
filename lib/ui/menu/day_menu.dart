@@ -297,6 +297,7 @@ class _DayMenuState extends State<DayMenu> {
                     selectedHostelCode: widget.selectedHostelCode,
                     switchStatus: breakfastSwitchStatus,
                     hostelName: widget.hostelName,
+                    residingHostel: widget.residingHostel,
                   )
             : Container(),
         (lunchMealMap.isNotEmpty)
@@ -336,6 +337,7 @@ class _DayMenuState extends State<DayMenu> {
                     selectedHostelCode: widget.selectedHostelCode,
                     switchStatus: lunchSwitchStatus,
                     hostelName: widget.hostelName,
+                    residingHostel: widget.residingHostel,
                   )
             : Container(),
         (snacksMealMap.isNotEmpty)
@@ -375,6 +377,7 @@ class _DayMenuState extends State<DayMenu> {
                     selectedHostelCode: widget.selectedHostelCode,
                     switchStatus: snacksSwitchStatus,
                     hostelName: widget.hostelName,
+                    residingHostel: widget.residingHostel,
                   )
             : Container(),
         (dinnerMealMap.isNotEmpty)
@@ -414,6 +417,7 @@ class _DayMenuState extends State<DayMenu> {
                     selectedHostelCode: widget.selectedHostelCode,
                     switchStatus: dinnerSwitchStatus,
                     hostelName: widget.hostelName,
+                    residingHostel: widget.residingHostel,
                   )
             : Container(),
       ],
