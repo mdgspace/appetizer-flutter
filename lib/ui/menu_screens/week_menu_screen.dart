@@ -1,15 +1,25 @@
-import 'package:appetizer/utils/get_week_id.dart';
-import 'package:appetizer/utils/week_day_int_to_string.dart';
 import 'package:appetizer/models/menu/week.dart';
 import 'package:appetizer/services/menu.dart';
+import 'package:appetizer/utils/get_week_id.dart';
+import 'package:appetizer/utils/week_day_int_to_string.dart';
 import 'package:flutter/material.dart';
 
 import '../../colors.dart';
 
-class WeekMenu extends StatelessWidget {
+class WeekMenu extends StatefulWidget {
   final String token;
-  WeekMenu(this.token);
+  final String hostelCode;
 
+  WeekMenu({
+    this.token,
+    this.hostelCode,
+  });
+
+  @override
+  _WeekMenuState createState() => _WeekMenuState();
+}
+
+class _WeekMenuState extends State<WeekMenu> {
   @override
   Widget build(BuildContext context) {
     final _headerTextStyle = TextStyle(color: Color(0xffFFC107), fontSize: 16);
@@ -73,7 +83,8 @@ class WeekMenu extends StatelessWidget {
             ),
           ),
           FutureBuilder(
-            future: menuWeek(token, getWeekNumber(DateTime.now())),
+            future: menuWeekMultiMessing(
+                widget.token, getWeekNumber(DateTime.now()), widget.hostelCode),
             builder: (context, snapshot) {
               Week data = snapshot.data;
 
