@@ -1,12 +1,12 @@
 import 'package:appetizer/database/app_database.dart';
-import 'package:appetizer/utils/connectivity_status.dart';
 import 'package:appetizer/globals.dart';
 import 'package:appetizer/models/menu/week.dart';
 import 'package:appetizer/provider/current_date.dart';
-import 'package:appetizer/ui/menu/day_menu.dart';
-import 'package:appetizer/ui/menu/no_meals.dart';
 import 'package:appetizer/services/menu.dart';
 import 'package:appetizer/services/user.dart';
+import 'package:appetizer/ui/menu/day_menu.dart';
+import 'package:appetizer/ui/menu/no_meals.dart';
+import 'package:appetizer/utils/connectivity_status.dart';
 import 'package:appetizer/utils/get_hostel_code.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -148,13 +148,17 @@ class _MenuState extends State<Menu> {
               };
 
               if (dateTime.weekday > data.days.length) {
-                return Center(
-                  child: Container(
-                    height: MediaQuery.of(context).size.height,
-                    child: Text(
-                      "The menu for this day has not been uploaded yet!",
+                return Column(
+                  children: [
+                    Container(
+                      height: MediaQuery.of(context).size.height * 0.75,
+                      child: Center(
+                        child: Text(
+                          "The menu for this day has not been uploaded yet!",
+                        ),
+                      ),
                     ),
-                  ),
+                  ],
                 );
               } else {
                 //day meal fetch
