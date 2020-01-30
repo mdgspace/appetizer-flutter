@@ -1,3 +1,4 @@
+import 'package:appetizer/change_notifiers/menu_model.dart';
 import 'package:appetizer/models/user/user_details_shared_pref.dart';
 import 'package:appetizer/colors.dart';
 import 'package:appetizer/globals.dart';
@@ -45,6 +46,9 @@ class _HomeState extends State<Home> {
   String residingHostel;
   List<String> switchableHostelsList = [];
 
+  InheritedData inheritedData;
+  MenuModel menuModel;
+
   @override
   void initState() {
     super.initState();
@@ -85,9 +89,21 @@ class _HomeState extends State<Home> {
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (inheritedData == null) {
+      inheritedData = InheritedData.of(context);
+      menuModel = MenuModel(inheritedData.userDetails);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider(builder: (context) {
+          return menuModel;
+        }),
         ChangeNotifierProvider(builder: (context) => CurrentDateModel()),
         StreamProvider<ConnectivityStatus>(
             builder: (context) =>
@@ -255,10 +271,8 @@ class _HomeState extends State<Home> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => WeekMenu(
-                              token: widget.token,
-                              hostelCode: hostelCodeMap[residingHostel],
-                            )));
+                        builder: (context) => ChangeNotifierProvider.value(
+                            value: menuModel, child: WeekMenu())));
               },
             ),
           )

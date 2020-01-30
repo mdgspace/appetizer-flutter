@@ -1,6 +1,7 @@
 import 'package:appetizer/models/menu/week.dart';
 import 'package:appetizer/models/user/user_details_shared_pref.dart';
 import 'package:appetizer/services/menu.dart';
+import 'package:appetizer/utils/get_hostel_code.dart';
 import 'package:appetizer/utils/get_week_id.dart';
 import 'package:appetizer/utils/user_details.dart';
 import 'package:flutter/foundation.dart';
@@ -10,9 +11,9 @@ import 'package:flutter/foundation.dart';
 class MenuModel extends ChangeNotifier {
   Week _currentWeek;
 
-  MenuModel(String token, String hostelCode) {
+  MenuModel(UserDetailsSharedPref userDetails) {
 //    currentWeekMenu();
-    currentWeekMenuMultiMessing(token, hostelCode);
+    currentWeekMenuMultiMessing(userDetails);
   }
 
   Week get data => _currentWeek;
@@ -27,9 +28,9 @@ class MenuModel extends ChangeNotifier {
     });
   }
 
-  void currentWeekMenuMultiMessing(String token, String hostelCode) async {
+  void currentWeekMenuMultiMessing(UserDetailsSharedPref userDetails) async {
     _currentWeek = await menuWeekMultiMessing(
-        token, getWeekNumber(DateTime.now()), hostelCode);
+        userDetails.token, getWeekNumber(DateTime.now()), hostelCodeMap[userDetails.hostelName]);
     notifyListeners();
   }
 }

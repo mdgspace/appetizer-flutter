@@ -215,7 +215,7 @@ class _SwitchableMealsuitate extends State<SwitchableMealsScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => WeekMenu(token: widget.token),
+                    builder: (context) => WeekMenu(),
                   ),
                 );
               },
