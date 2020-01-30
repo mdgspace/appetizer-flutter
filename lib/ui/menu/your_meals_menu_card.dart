@@ -311,7 +311,8 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
                                           Navigator.pop(alertContext);
                                           showCustomDialog(
                                               context, "Cancelling Switch");
-                                          cancelSwitch(widget.id, widget.token)
+                                          cancelSwitch(widget.switchStatus.id,
+                                                  widget.token)
                                               .then((switchCancelResponse) {
                                             Navigator.pop(context);
                                             if (switchCancelResponse) {
