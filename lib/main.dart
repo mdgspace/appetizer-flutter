@@ -3,12 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 import 'change_notifiers/menu_model.dart';
+
 import 'colors.dart';
 import 'ui/login/login.dart';
 import 'ui/on_boarding/onBoarding.dart';
 
 void main() async {
+
   //await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(ChangeNotifierProvider(
     builder: (context) => MenuModel(),
@@ -33,6 +36,7 @@ void main() async {
               fontFamily: "OpenSans"),
           //used for username in nav drawer
           display2: TextStyle(
+
             color: Colors.white,
             fontSize: 22,
           ),

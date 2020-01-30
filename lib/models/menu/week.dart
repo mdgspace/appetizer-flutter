@@ -1,7 +1,6 @@
 import 'dart:convert';
 
-Week confirmFromJson(String str) =>
-    Week.fromJson(json.decode(str));
+Week confirmFromJson(String str) => Week.fromJson(json.decode(str));
 
 String confirmToJson(Week data) => json.encode(data.toJson());
 
@@ -24,8 +23,7 @@ class Week {
     this.isApproved,
   });
 
-  factory Week.fromJson(Map<String, dynamic> json) =>
-      new Week(
+  factory Week.fromJson(Map<String, dynamic> json) => new Week(
         weekId: json["week_id"],
         year: json["year"],
         name: json["name"],
@@ -179,17 +177,17 @@ class Meal {
     this.secretCode,
   });
 
-  factory Meal.fromJson(Map<String, dynamic> json) => new Meal(
+ factory Meal.fromJson(Map<String, dynamic> json) => new Meal(
         id: json["id"],
         type: mealTypeValues.map[json["type"]],
         items: new List<MealItem>.from(
             json["items"].map((x) => MealItem.fromJson(x))),
         startTime: json["start_time"],
         endTime: json["end_time"],
-        leaveStatus: leaveStatusValues.map[json["leave_status"]],
+        leaveStatus: LeaveStatus.fromJson(json["leave_status"]),
         wastage: json["wastage"],
         isSwitchable: json["is_switchable"],
-        switchStatus: switchStatusValues.map[json["switch_status"]],
+        switchStatus: SwitchStatus.fromJson(json["switch_status"]),
         hostelName: json["hostel_name"],
         secretCode: json["secret_code"],
       );
@@ -200,33 +198,74 @@ class Meal {
         "items": new List<dynamic>.from(items.map((x) => x.toJson())),
         "start_time": startTime,
         "end_time": endTime,
-        "leave_status": leaveStatusValues.reverse[leaveStatus],
+        "leave_status": leaveStatus.toJson(),
         "wastage": wastage,
         "is_switchable": isSwitchable,
-        "switch_status": switchStatusValues.reverse[switchStatus],
+        "switch_status": switchStatus.toJson(),
         "hostel_name": hostelName,
         "secret_code": secretCode,
       };
 }
 
-enum LeaveStatus { N, A, D, P, U }
+class LeaveStatus {
+  int id;
+  LeaveStatusEnum status;
 
-enum SwitchStatus { N, A, D, P, U }
+  LeaveStatus({
+    this.id,
+    this.status,
+  });
+
+  factory LeaveStatus.fromJson(Map<String, dynamic> json) => new LeaveStatus(
+        id: json["id"],
+        status: leaveStatusValues.map[json["status"]],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "status": leaveStatusValues.reverse[status],
+      };
+}
+
+class SwitchStatus {
+  int id;
+  SwitchStatusEnum status;
+
+  SwitchStatus({
+    this.id,
+    this.status,
+  });
+
+  factory SwitchStatus.fromJson(Map<String, dynamic> json) => new SwitchStatus(
+        id: json["id"],
+        status: switchStatusValues.map[json["status"]],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "status": switchStatusValues.reverse[status],
+      };
+}
+
+enum LeaveStatusEnum { N, A, D, P, U }
+
+enum SwitchStatusEnum { N, A, D, F, T, U }
 
 final leaveStatusValues = new EnumValues({
-  "N": LeaveStatus.N,
-  "A": LeaveStatus.A,
-  "D": LeaveStatus.D,
-  "P": LeaveStatus.P,
-  "U": LeaveStatus.U
+  "N": LeaveStatusEnum.N,
+  "A": LeaveStatusEnum.A,
+  "D": LeaveStatusEnum.D,
+  "P": LeaveStatusEnum.P,
+  "U": LeaveStatusEnum.U
 });
 
 final switchStatusValues = new EnumValues({
-  "N": SwitchStatus.N,
-  "A": SwitchStatus.A,
-  "D": SwitchStatus.D,
-  "P": SwitchStatus.P,
-  "U": SwitchStatus.U
+  "N": SwitchStatusEnum.N,
+  "A": SwitchStatusEnum.A,
+  "D": SwitchStatusEnum.D,
+  "F": SwitchStatusEnum.F,
+  "T": SwitchStatusEnum.T,
+  "U": SwitchStatusEnum.U
 });
 
 enum MealType { B, L, S, D }

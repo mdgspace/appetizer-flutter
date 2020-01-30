@@ -1,21 +1,21 @@
 import 'package:appetizer/colors.dart';
-import 'package:appetizer/ui/components/alert_dialog.dart';
-import 'package:appetizer/utils/connectivity_status.dart';
 import 'package:appetizer/globals.dart';
 import 'package:appetizer/provider/current_date.dart';
+import 'package:appetizer/services/connectivity_service.dart';
+import 'package:appetizer/services/leave.dart';
+import 'package:appetizer/services/multimessing/switchable_hostels.dart';
+import 'package:appetizer/services/user.dart';
 import 'package:appetizer/ui/FAQ/faq_screen.dart';
+import 'package:appetizer/ui/components/alert_dialog.dart';
+import 'package:appetizer/ui/components/horizontal_date_picker.dart';
 import 'package:appetizer/ui/menu/menu.dart';
 import 'package:appetizer/ui/menu_screens/week_menu_screen.dart';
 import 'package:appetizer/ui/my_leaves/my_leaves_screen.dart';
 import 'package:appetizer/ui/my_rebates/my_rebates_screen.dart';
 import 'package:appetizer/ui/notification_history/noti_history_screen.dart';
 import 'package:appetizer/ui/user_feedback/user_feedback.dart';
-import 'package:appetizer/services/connectivity_service.dart';
-import 'package:appetizer/services/leave.dart';
-import 'package:appetizer/services/multimessing/switchable_hostels.dart';
-import 'package:appetizer/services/user.dart';
+import 'package:appetizer/utils/connectivity_status.dart';
 import 'package:appetizer/utils/get_hostel_code.dart';
-import 'package:appetizer/ui/components/horizontal_date_picker.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -226,7 +226,11 @@ class _HomeState extends State<Home> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => WeekMenu(token: widget.token)));
+                          builder: (context) => WeekMenu(
+                                token: widget.token,
+                                hostelCode: hostelCodeMap[residingHostel],
+                              )));
+
                 },
               ),
             )
