@@ -111,23 +111,26 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
   }
 
   Widget _titleAndBhawanNameComponent() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Text(
-          widget.title,
-          style: new TextStyle(
-            color: appiYellow,
-            fontSize: 24,
+    return Padding(
+      padding: const EdgeInsets.only(right: 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            widget.title,
+            style: new TextStyle(
+              color: appiYellow,
+              fontSize: 24,
+            ),
           ),
-        ),
-        Text(
-          widget.hostelName,
-          style: new TextStyle(
-            color: appiBrown,
+          Text(
+            widget.hostelName,
+            style: new TextStyle(
+              color: appiBrown,
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -135,23 +138,19 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
     return (!(getLeaveColorFromLeaveStatus(widget.leaveStatus.status) ==
                 Colors.white) &&
             widget.isOutdated)
-        ? Padding(
-            padding: const EdgeInsets.fromLTRB(30, 5, 30, 5),
-            child: Container(
-              decoration: BoxDecoration(
-                  color:
-                      getLeaveColorFromLeaveStatus(widget.leaveStatus.status),
-                  borderRadius: BorderRadius.circular(4)),
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(12, 1, 12, 1),
-                child: Text(
-                  "Skipped".toUpperCase(),
-                  style: TextStyle(
-                      color: Colors.white,
-                      letterSpacing: .5,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 12),
-                ),
+        ? Container(
+            decoration: BoxDecoration(
+                color: getLeaveColorFromLeaveStatus(widget.leaveStatus.status),
+                borderRadius: BorderRadius.circular(4)),
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(4, 1, 4, 1),
+              child: Text(
+                "Skipped".toUpperCase(),
+                style: TextStyle(
+                    color: Colors.white,
+                    letterSpacing: .5,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 12),
               ),
             ),
           )
@@ -623,11 +622,11 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Row(
-                          children: <Widget>[
-                            Expanded(
-                              child: Padding(
-                                padding: const EdgeInsets.only(bottom: 24.0),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 32),
+                          child: Row(
+                            children: <Widget>[
+                              Expanded(
                                 child: Row(
                                   children: <Widget>[
                                     _titleAndBhawanNameComponent(),
@@ -635,11 +634,15 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
                                   ],
                                 ),
                               ),
-                            ),
-                            _showQRButton(),
-                            _getSwitchIcon(),
-                            _feedbackOrToggleComponent(context),
-                          ],
+                              Row(
+                                children: <Widget>[
+                                  _showQRButton(),
+                                  _getSwitchIcon(),
+                                  _feedbackOrToggleComponent(context),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                         Column(
                           children: _itemWidgetList(),
