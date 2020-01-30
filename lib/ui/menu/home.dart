@@ -230,6 +230,7 @@ class _HomeState extends State<Home> {
                                 token: widget.token,
                                 hostelCode: hostelCodeMap[residingHostel],
                               )));
+
                 },
               ),
             )

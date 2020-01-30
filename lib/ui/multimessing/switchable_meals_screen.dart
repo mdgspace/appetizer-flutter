@@ -1,3 +1,4 @@
+import 'package:appetizer/change_notifiers/menu_model.dart';
 import 'package:appetizer/colors.dart';
 import 'package:appetizer/models/multimessing/meal_switch_from_your_meals.dart';
 import 'package:appetizer/services/multimessing/list_switchable_meals.dart';
@@ -7,6 +8,7 @@ import 'package:appetizer/ui/multimessing/confirmed_switch_screen.dart';
 import 'package:appetizer/utils/get_hostel_code.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
 
 class SwitchableMealsScreen extends StatefulWidget {
   final String token;
@@ -189,16 +191,19 @@ class _SwitchableMealsuitate extends State<SwitchableMealsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        centerTitle: true,
-        title: Text(
-          "Mess Menu",
-          style: new TextStyle(
-            color: Colors.white,
-            fontSize: 25.0,
-            fontFamily: 'Lobster_Two',
+    return ChangeNotifierProvider(
+      builder: (context) => MenuModel(),
+      child: Scaffold(
+        appBar: AppBar(
+          elevation: 0,
+          centerTitle: true,
+          title: Text(
+            "Mess Menu",
+            style: new TextStyle(
+              color: Colors.white,
+              fontSize: 25.0,
+              fontFamily: 'Lobster_Two',
+            ),
           ),
         ),
         backgroundColor: appiBrown,
@@ -214,21 +219,22 @@ class _SwitchableMealsuitate extends State<SwitchableMealsScreen> {
               child: Center(
                 child: CircularProgressIndicator(
                   valueColor: AlwaysStoppedAnimation<Color>(appiYellow),
+
                 ),
-              ),
-            );
-          } else {
-            var data = snapshot.data;
-            return Table(
-              defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-              border: TableBorder.all(
-                width: 0.5,
-                color: appiGrey.withOpacity(0.5),
-              ),
-              children: _tableBody(data),
-            );
-          }
-        },
+              );
+            } else {
+              var data = snapshot.data;
+              return Table(
+                defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                border: TableBorder.all(
+                  width: 0.5,
+                  color: appiGrey.withOpacity(0.5),
+                ),
+                children: _tableBody(data),
+              );
+            }
+          },
+        ),
       ),
     );
   }
