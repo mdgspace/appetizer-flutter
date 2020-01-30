@@ -380,143 +380,148 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
   }
 
   void onChangedCallback(bool value, BuildContext context) {
-    if (value) {
-      if (!widget.isToggleOutdated) {
-        showDialog(
-            context: context,
-            builder: (BuildContext dialogContext) {
-              return AlertDialog(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                title: new Text(
-                  "Cancel Leave",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
+    if (_mealSwitchStatusbool) {
+      if (value) {
+        if (!widget.isToggleOutdated) {
+          showDialog(
+              context: context,
+              builder: (BuildContext dialogContext) {
+                return AlertDialog(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
                   ),
-                ),
-                content: new Text(
-                    "Are you sure you would like to cancel this leave?"),
-                actions: <Widget>[
-                  new FlatButton(
-                    onPressed: () {
-                      Navigator.pop(dialogContext);
-                    },
-                    child: new Text(
-                      "CANCEL",
-                      style: TextStyle(
-                          color: appiYellow, fontWeight: FontWeight.bold),
+                  title: new Text(
+                    "Cancel Leave",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
                     ),
-                    highlightColor: Colors.transparent,
-                    splashColor: Colors.transparent,
                   ),
-                  new FlatButton(
-                    child: new Text(
-                      "CANCEL LEAVE",
-                      style: TextStyle(
-                          color: appiYellow, fontWeight: FontWeight.bold),
+                  content: new Text(
+                      "Are you sure you would like to cancel this leave?"),
+                  actions: <Widget>[
+                    new FlatButton(
+                      onPressed: () {
+                        Navigator.pop(dialogContext);
+                      },
+                      child: new Text(
+                        "CANCEL",
+                        style: TextStyle(
+                            color: appiYellow, fontWeight: FontWeight.bold),
+                      ),
+                      highlightColor: Colors.transparent,
+                      splashColor: Colors.transparent,
                     ),
-                    onPressed: () async {
-                      Navigator.pop(context);
-                      showCustomDialog(context, "Cancelling Leave");
-                      cancelLeave(widget.id, widget.token).then((leaveBool) {
-                        if (leaveBool) {
-                          Navigator.pop(context);
-                          setState(() {
-                            _mealLeaveStatusBool = true;
-                            Fluttertoast.showToast(
-                              msg: "Leave Cancelled",
-                            );
-                          });
-                        }
-                      }).catchError((e) {
+                    new FlatButton(
+                      child: new Text(
+                        "CANCEL LEAVE",
+                        style: TextStyle(
+                            color: appiYellow, fontWeight: FontWeight.bold),
+                      ),
+                      onPressed: () async {
                         Navigator.pop(context);
-                        Fluttertoast.showToast(
-                          msg: "Something Wrong Occured",
-                        );
-                      });
-                    },
-                    highlightColor: Colors.transparent,
-                    splashColor: Colors.transparent,
-                  ),
-                ],
-              );
-            });
-      } else {
-        Fluttertoast.showToast(
-          msg:
-              "Leave status cannot be changed less than 8 hours before the meal time",
-        );
-      }
-    } else {
-      if (!widget.isToggleOutdated) {
-        showDialog(
-            context: context,
-            builder: (BuildContext dialogContext) {
-              return AlertDialog(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                title: new Text(
-                  "Leave Meal",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                content:
-                    new Text("Are you sure you would like to leave this meal?"),
-                actions: <Widget>[
-                  new FlatButton(
-                    onPressed: () {
-                      Navigator.pop(dialogContext);
-                    },
-                    child: new Text(
-                      "CANCEL",
-                      style: TextStyle(
-                          color: appiYellow, fontWeight: FontWeight.bold),
-                    ),
-                    highlightColor: Colors.transparent,
-                    splashColor: Colors.transparent,
-                  ),
-                  new FlatButton(
-                    child: new Text(
-                      "SKIP MEAL",
-                      style: TextStyle(
-                          color: appiYellow, fontWeight: FontWeight.bold),
-                    ),
-                    onPressed: () async {
-                      Navigator.pop(context);
-                      showCustomDialog(context, "Leaving Meal");
-                      leave(widget.id.toString(), widget.token)
-                          .then((leaveResult) {
-                        if (leaveResult.meal == widget.id) {
+                        showCustomDialog(context, "Cancelling Leave");
+                        cancelLeave(widget.id, widget.token).then((leaveBool) {
+                          if (leaveBool) {
+                            Navigator.pop(context);
+                            setState(() {
+                              _mealLeaveStatusBool = true;
+                              Fluttertoast.showToast(
+                                msg: "Leave Cancelled",
+                              );
+                            });
+                          }
+                        }).catchError((e) {
                           Navigator.pop(context);
                           Fluttertoast.showToast(
-                            msg: "Meal Skipped",
+                            msg: "Something Wrong Occured",
                           );
-                          setState(() {
-                            _mealLeaveStatusBool = false;
-                          });
-                        }
-                      }).catchError((e) {
-                        Navigator.pop(context);
-                        Fluttertoast.showToast(
-                          msg: "Something Wrong Occured",
-                        );
-                      });
-                    },
-                    highlightColor: Colors.transparent,
-                    splashColor: Colors.transparent,
-                  ),
-                ],
-              );
-            });
+                        });
+                      },
+                      highlightColor: Colors.transparent,
+                      splashColor: Colors.transparent,
+                    ),
+                  ],
+                );
+              });
+        } else {
+          Fluttertoast.showToast(
+            msg:
+                "Leave status cannot be changed less than 8 hours before the meal time",
+          );
+        }
       } else {
-        Fluttertoast.showToast(
-          msg:
-              "Leave status cannot be changed less than 8 hours before the meal time",
-        );
+        if (!widget.isToggleOutdated) {
+          showDialog(
+              context: context,
+              builder: (BuildContext dialogContext) {
+                return AlertDialog(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  title: new Text(
+                    "Leave Meal",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  content: new Text(
+                      "Are you sure you would like to leave this meal?"),
+                  actions: <Widget>[
+                    new FlatButton(
+                      onPressed: () {
+                        Navigator.pop(dialogContext);
+                      },
+                      child: new Text(
+                        "CANCEL",
+                        style: TextStyle(
+                            color: appiYellow, fontWeight: FontWeight.bold),
+                      ),
+                      highlightColor: Colors.transparent,
+                      splashColor: Colors.transparent,
+                    ),
+                    new FlatButton(
+                      child: new Text(
+                        "SKIP MEAL",
+                        style: TextStyle(
+                            color: appiYellow, fontWeight: FontWeight.bold),
+                      ),
+                      onPressed: () async {
+                        Navigator.pop(context);
+                        showCustomDialog(context, "Leaving Meal");
+                        leave(widget.id.toString(), widget.token)
+                            .then((leaveResult) {
+                          if (leaveResult.meal == widget.id) {
+                            Navigator.pop(context);
+                            Fluttertoast.showToast(
+                              msg: "Meal Skipped",
+                            );
+                            setState(() {
+                              _mealLeaveStatusBool = false;
+                            });
+                          }
+                        }).catchError((e) {
+                          Navigator.pop(context);
+                          Fluttertoast.showToast(
+                            msg: "Something Wrong Occured",
+                          );
+                        });
+                      },
+                      highlightColor: Colors.transparent,
+                      splashColor: Colors.transparent,
+                    ),
+                  ],
+                );
+              });
+        } else {
+          Fluttertoast.showToast(
+            msg:
+                "Leave status cannot be changed less than 8 hours before the meal time",
+          );
+        }
       }
+    } else {
+      Fluttertoast.showToast(
+          msg: "Leave Status cannot be changed when Switch is active !!");
     }
   }
 
