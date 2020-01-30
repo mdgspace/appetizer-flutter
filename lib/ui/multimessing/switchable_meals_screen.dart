@@ -192,67 +192,64 @@ class _SwitchableMealsuitate extends State<SwitchableMealsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      builder: (context) => MenuModel(),
-      child: Scaffold(
-        appBar: AppBar(
-          elevation: 0,
-          centerTitle: true,
-          title: Text(
-            "Mess Menu",
-            style: new TextStyle(
-              color: Colors.white,
-              fontSize: 25.0,
-              fontFamily: 'Lobster_Two',
-            ),
+    return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        centerTitle: true,
+        title: Text(
+          "Mess Menu",
+          style: new TextStyle(
+            color: Colors.white,
+            fontSize: 25.0,
+            fontFamily: 'Lobster_Two',
           ),
-          actions: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: GestureDetector(
-                child: Container(
-                  child: Image.asset("assets/icons/week_menu.png"),
-                ),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => WeekMenu(token: widget.token),
-                    ),
-                  );
-                },
+        ),
+        actions: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: GestureDetector(
+              child: Container(
+                child: Image.asset("assets/icons/week_menu.png"),
               ),
-            )
-          ],
-          backgroundColor: appiBrown,
-          iconTheme: new IconThemeData(color: appiYellow),
-        ),
-        body: FutureBuilder(
-          future: listSwitchableMeals(widget.id, widget.token),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Container(
-                height: MediaQuery.of(context).size.height,
-                width: MediaQuery.of(context).size.width,
-                child: Center(
-                  child: CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(appiYellow),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => WeekMenu(token: widget.token),
                   ),
+                );
+              },
+            ),
+          )
+        ],
+        backgroundColor: appiBrown,
+        iconTheme: new IconThemeData(color: appiYellow),
+      ),
+      body: FutureBuilder(
+        future: listSwitchableMeals(widget.id, widget.token),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Container(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              child: Center(
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(appiYellow),
                 ),
-              );
-            } else {
-              var data = snapshot.data;
-              return Table(
-                defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                border: TableBorder.all(
-                  width: 0.5,
-                  color: appiGrey.withOpacity(0.5),
-                ),
-                children: _tableBody(data),
-              );
-            }
-          },
-        ),
+              ),
+            );
+          } else {
+            var data = snapshot.data;
+            return Table(
+              defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+              border: TableBorder.all(
+                width: 0.5,
+                color: appiGrey.withOpacity(0.5),
+              ),
+              children: _tableBody(data),
+            );
+          }
+        },
       ),
     );
   }
