@@ -59,13 +59,16 @@ class YourMealsMenuCard extends StatefulWidget {
 }
 
 class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
-  bool isSwitched;
+  bool _mealLeaveStatusBool;
+  bool _mealSwitchStatusbool;
   String _secretCode;
 
   @override
   void initState() {
     super.initState();
-    isSwitched = widget.isSwitched;
+    _mealLeaveStatusBool = widget.isSwitched;
+    _mealSwitchStatusbool =
+        widget.switchStatus.status == SwitchStatusEnum.N ? true : false;
   }
 
   Widget _menuListItem(String itemName, CircleAvatar foodIcon) {
@@ -172,8 +175,6 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
         return Colors.redAccent;
         break;
       case SwitchStatusEnum.T:
-        return appiYellow;
-        break;
       case SwitchStatusEnum.F:
         return appiYellow;
         break;
@@ -259,7 +260,7 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
               child: Image.asset(
                 widget.isToggleOutdated
                     ? "assets/icons/switch_inactive.png"
-                    : widget.switchStatus.status == SwitchStatusEnum.N
+                    : _mealSwitchStatusbool
                         ? "assets/icons/switch_active.png"
                         : "assets/icons/switch_crossed_active.png",
                 width: 30,
@@ -267,7 +268,7 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
               ),
               onTap: widget.isToggleOutdated
                   ? null
-                  : widget.switchStatus.status == SwitchStatusEnum.N
+                  : _mealSwitchStatusbool
                       ? () {
                           Navigator.push(
                             context,
@@ -328,6 +329,9 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
                                             if (switchCancelResponse) {
                                               Navigator.of(context).popUntil(
                                                   (route) => route.isFirst);
+                                              setState(() {
+                                                _mealSwitchStatusbool = true;
+                                              });
                                             } else {
                                               Fluttertoast.showToast(
                                                   msg:
@@ -368,7 +372,7 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
         : !widget.isCheckedOut
             ? Switch(
                 activeColor: appiYellow,
-                value: isSwitched,
+                value: _mealLeaveStatusBool,
                 onChanged: (value) async {
                   onChangedCallback(value, context);
                 })
@@ -419,7 +423,7 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
                         if (leaveBool) {
                           Navigator.pop(context);
                           setState(() {
-                            isSwitched = true;
+                            _mealLeaveStatusBool = true;
                             Fluttertoast.showToast(
                               msg: "Leave Cancelled",
                             );
@@ -491,7 +495,7 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
                             msg: "Meal Skipped",
                           );
                           setState(() {
-                            isSwitched = false;
+                            _mealLeaveStatusBool = false;
                           });
                         }
                       }).catchError((e) {
