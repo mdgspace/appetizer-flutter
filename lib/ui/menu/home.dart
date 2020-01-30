@@ -1,3 +1,4 @@
+import 'package:appetizer/models/user/user_details_shared_pref.dart';
 import 'package:appetizer/colors.dart';
 import 'package:appetizer/globals.dart';
 import 'package:appetizer/provider/current_date.dart';
@@ -8,6 +9,7 @@ import 'package:appetizer/services/user.dart';
 import 'package:appetizer/ui/FAQ/faq_screen.dart';
 import 'package:appetizer/ui/components/alert_dialog.dart';
 import 'package:appetizer/ui/components/horizontal_date_picker.dart';
+import 'package:appetizer/ui/components/inherited_data.dart';
 import 'package:appetizer/ui/menu/menu.dart';
 import 'package:appetizer/ui/menu_screens/week_menu_screen.dart';
 import 'package:appetizer/ui/my_leaves/my_leaves_screen.dart';
@@ -25,12 +27,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../settings/settings_screen.dart';
 
 class Home extends StatefulWidget {
-  final String username;
-  final String enrollment;
   final String token;
 
-  const Home({Key key, this.username, this.enrollment, this.token})
-      : super(key: key);
+  const Home({Key key, this.token}) : super(key: key);
 
   @override
   _HomeState createState() => _HomeState();
@@ -41,12 +40,15 @@ class _HomeState extends State<Home> {
   FirebaseMessaging _fcm = FirebaseMessaging();
 
   String selectedHostelName;
+
+  // TODO: remove residingHostel variable
   String residingHostel;
   List<String> switchableHostelsList = [];
 
   @override
   void initState() {
     super.initState();
+
     firebaseCloudMessagingListeners();
     SharedPreferences.getInstance().then((prefs) {
       setState(() {
@@ -297,7 +299,7 @@ class _HomeState extends State<Home> {
                           Padding(
                             padding: const EdgeInsets.only(top: 8),
                             child: Text(
-                              widget.username,
+                              InheritedData.of(context).userDetails.username,
                               overflow: TextOverflow.ellipsis,
                               style: Theme.of(context).accentTextTheme.display2,
                             ),
@@ -305,7 +307,7 @@ class _HomeState extends State<Home> {
                           Padding(
                             padding: const EdgeInsets.only(top: 8, bottom: 4),
                             child: Text(
-                              widget.enrollment,
+                              InheritedData.of(context).userDetails.enrNo,
                               overflow: TextOverflow.ellipsis,
                               style: Theme.of(context).accentTextTheme.display3,
                             ),

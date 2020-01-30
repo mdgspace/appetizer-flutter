@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:appetizer/models/user/user_details_shared_pref.dart';
 import 'package:appetizer/ui/components/alert_dialog.dart';
+import 'package:appetizer/ui/components/inherited_data.dart';
 import 'package:appetizer/ui/password/choose_new_password.dart';
 import 'package:appetizer/ui/password/forgot_password.dart';
 import 'package:appetizer/globals.dart';
@@ -404,10 +406,19 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
           await new Future.delayed(const Duration(seconds: 5));
           Navigator.pushReplacement(context,
               MaterialPageRoute(builder: (context) {
-            return Home(
-              enrollment: loginCredentials.enrNo.toString(),
-              username: loginCredentials.name,
-              token: loginCredentials.token,
+            return InheritedData(
+              userDetails: UserDetailsSharedPref.fromData(
+                  loginCredentials.enrNo.toString(),
+                  loginCredentials.name,
+                  loginCredentials.token,
+                  loginCredentials.branch,
+                  loginCredentials.hostelName,
+                  loginCredentials.roomNo,
+                  loginCredentials.email,
+                  loginCredentials.contactNo),
+              child: Home(
+                token: loginCredentials.token,
+              ),
             );
           }));
         } else {
@@ -507,10 +518,19 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
         Navigator.pop(context);
         Navigator.pushReplacement(context,
             MaterialPageRoute(builder: (context) {
-          return Home(
-            enrollment: oauthResponse.studentData.enrNo.toString(),
-            username: oauthResponse.studentData.name,
-            token: oauthResponse.token,
+          return InheritedData(
+            userDetails: UserDetailsSharedPref.fromData(
+                oauthResponse.studentData.enrNo.toString(),
+                oauthResponse.studentData.name,
+                oauthResponse.token,
+                oauthResponse.studentData.branch,
+                oauthResponse.studentData.hostelName,
+                oauthResponse.studentData.roomNo,
+                oauthResponse.studentData.email,
+                oauthResponse.studentData.contactNo),
+            child: Home(
+              token: oauthResponse.token,
+            ),
           );
         }));
       }
@@ -532,5 +552,3 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
     ));
   }
 }
-
-

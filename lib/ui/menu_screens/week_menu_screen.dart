@@ -1,14 +1,13 @@
-import 'package:appetizer/change_notifiers/menu_model.dart';
-import 'package:appetizer/utils/week_day_int_to_string.dart';
 import 'package:appetizer/models/menu/week.dart';
+import 'package:appetizer/services/menu.dart';
+import 'package:appetizer/utils/get_week_id.dart';
+import 'package:appetizer/utils/week_day_int_to_string.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../../colors.dart';
 
 class WeekMenu extends StatefulWidget {
   final String token;
-
   final String hostelCode;
 
   WeekMenu({
@@ -83,10 +82,13 @@ class _WeekMenuState extends State<WeekMenu> {
               ],
             ),
           ),
+          FutureBuilder(
+            future: menuWeekMultiMessing(
+                widget.token, getWeekNumber(DateTime.now()), widget.hostelCode),
+            builder: (context, snapshot) {
+              Week data = snapshot.data;
 
-          Consumer<MenuModel>(
-            builder: (context, menu, child) {
-              if (menu.data == null) {
+              if (snapshot.data == null) {
                 return Container(
                   height: MediaQuery.of(context).size.height / 1.5,
                   width: MediaQuery.of(context).size.width,
@@ -96,9 +98,9 @@ class _WeekMenuState extends State<WeekMenu> {
                   )),
                 );
               } else {
-                print(menu.data);
+                print(snapshot.data);
                 List<Widget> rows = [];
-                menu.data.days.forEach((day) {
+                data.days.forEach((day) {
                   List<String> breakfast = [];
                   List<String> lunch = [];
                   List<String> dinner = [];
