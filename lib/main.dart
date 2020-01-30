@@ -1,4 +1,5 @@
 import 'package:appetizer/ui/menu/home.dart';
+import 'package:appetizer/utils/user_details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -109,6 +110,10 @@ void main() async {
   ));
 }
 
+// TODO: Appetizer Widget MUST NOT exist
+// TODO: (Improvement) OnBoarding implementation very naive, adds overhead on app start
+// TODO: (Improvement) getIntent() method looks naive
+
 class Appetizer extends StatefulWidget {
   @override
   _AppetizerState createState() => _AppetizerState();
@@ -139,7 +144,7 @@ class _AppetizerState extends State<Appetizer> {
   }
 
   void navigate() {
-    getUserDetails().then((details) {
+    UserDetailsUtils.getUserDetails().then((details) {
       Navigator.pushReplacement(
           context,
           MaterialPageRoute(

@@ -1,5 +1,5 @@
-import 'package:appetizer/ui/login/login.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:appetizer/utils/user_details.dart';
+import 'package:flutter/foundation.dart';
 
 class UserDetailsModel extends ChangeNotifier {
   String _enrNo;
@@ -33,7 +33,7 @@ class UserDetailsModel extends ChangeNotifier {
 
   /// loads user details from SharedPreferences
   void loadUserDetails() {
-    getUserDetails().then((details) async {
+    UserDetailsUtils.getUserDetails().then((details) async {
       _enrNo = details.getString("enrNo");
       _username = details.getString("username");
       _token = details.getString("token");

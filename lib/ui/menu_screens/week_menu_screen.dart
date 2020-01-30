@@ -1,12 +1,6 @@
-
 import 'package:appetizer/change_notifiers/menu_model.dart';
-import 'package:appetizer/utils/get_week_id.dart';
 import 'package:appetizer/utils/week_day_int_to_string.dart';
-
 import 'package:appetizer/models/menu/week.dart';
-import 'package:appetizer/services/menu.dart';
-import 'package:appetizer/utils/get_week_id.dart';
-import 'package:appetizer/utils/week_day_int_to_string.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

@@ -533,7 +533,4 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
   }
 }
 
-Future<SharedPreferences> getUserDetails() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  return prefs;
-}
+
