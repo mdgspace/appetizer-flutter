@@ -2,12 +2,14 @@ import 'package:appetizer/ui/menu/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 import 'colors.dart';
 import 'ui/login/login.dart';
 import 'ui/on_boarding/onBoarding.dart';
 
 void main() async {
-  //await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(MaterialApp(
     routes: {
       "/home": (context) => Home(),
