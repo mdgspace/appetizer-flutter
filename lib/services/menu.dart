@@ -12,24 +12,6 @@ String url = "https://appetizer-mdg.herokuapp.com";
 var header = {"Content-Type": "application/json"};
 http.Client client = new http.Client();
 
-Future<Week> menuWeek(String token, int weekId) async {
-  String endpoint = "/api/menu/week/?week_id=$weekId";
-  String uri = url + endpoint;
-  var tokenAuth = {"Authorization": "Token " + token};
-  try {
-    var response = await client.get(
-      uri,
-      headers: tokenAuth,
-    );
-    final jsonResponse = jsonDecode(response.body);
-    Week week = new Week.fromJson(jsonResponse);
-    print(response.body);
-    return week;
-  } on Exception catch (e) {
-    print(e);
-    return null;
-  }
-}
 
 Future<Week> menuWeekMultiMessing(
     String token, int weekId, String hostelCode) async {

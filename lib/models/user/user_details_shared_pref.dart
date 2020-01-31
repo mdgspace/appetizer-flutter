@@ -1,6 +1,4 @@
-import 'package:appetizer/models/user/login.dart';
 import 'package:appetizer/utils/user_details.dart';
-import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserDetailsSharedPref{

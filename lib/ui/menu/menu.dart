@@ -5,6 +5,7 @@ import 'package:appetizer/models/menu/week.dart';
 import 'package:appetizer/provider/current_date.dart';
 import 'package:appetizer/services/menu.dart';
 import 'package:appetizer/services/user.dart';
+import 'package:appetizer/ui/components/inherited_data.dart';
 import 'package:appetizer/ui/menu/day_menu.dart';
 import 'package:appetizer/ui/menu/no_meals.dart';
 import 'package:appetizer/utils/connectivity_status.dart';
@@ -20,14 +21,10 @@ import '../../utils/get_week_id.dart';
 
 class Menu extends StatefulWidget {
   final String token;
-  final String selectedHostelCode;
-  final String residingHostel;
 
   const Menu({
     Key key,
     this.token,
-    this.selectedHostelCode,
-    this.residingHostel,
   }) : super(key: key);
 
   @override
@@ -35,6 +32,23 @@ class Menu extends StatefulWidget {
 }
 
 class _MenuState extends State<Menu> {
+  static const String MEAL_STORE_NAME = 'meals';
+
+  // A Store with int keys and Map<String, dynamic> values.
+  // This Store acts like a persistent map, values of which are Week objects converted to Map
+  final _mealStore = intMapStoreFactory.store(MEAL_STORE_NAME);
+
+  // Private getter to shorten the amount of code needed to get the
+  // singleton instance of an opened database.
+  Future<Database> get _db async => await AppDatabase.instance.database;
+
+  String hostelNameFromWeek = "";
+  InheritedData inheritedData;
+
+  var dailyItemsMap;
+  var selectedDateTime;
+  var data;
+
   @override
   void initState() {
     super.initState();
@@ -53,15 +67,14 @@ class _MenuState extends State<Menu> {
     });
   }
 
-  static const String MEAL_STORE_NAME = 'meals';
-
-  // A Store with int keys and Map<String, dynamic> values.
-  // This Store acts like a persistent map, values of which are Week objects converted to Map
-  final _mealStore = intMapStoreFactory.store(MEAL_STORE_NAME);
-
-  // Private getter to shorten the amount of code needed to get the
-  // singleton instance of an opened database.
-  Future<Database> get _db async => await AppDatabase.instance.database;
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    selectedDateTime = Provider.of<CurrentDateModel>(context);
+    if (inheritedData == null) {
+      inheritedData = InheritedData.of(context);
+    }
+  }
 
   Future<void> updateMealDb(Week weekMenu) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -69,58 +82,31 @@ class _MenuState extends State<Menu> {
     prefs.setInt("mealKey", mealKey);
   }
 
-  String hostelNameFromWeek = "";
-
-  var dailyItemsMap;
-
   @override
   Widget build(BuildContext context) {
-    final selectedDateTime = Provider.of<CurrentDateModel>(context);
     var connectionStatus = Provider.of<ConnectivityStatus>(context);
 
-    return Consumer<MenuModel>(
+    // if selectedHostel == myHostel then
+    //// if
+
+    return Consumer<YourMenuModel>(
       builder: (_, menu, child) {
         if (menu.isFetching == 1) {
-          return Container(
-            height: MediaQuery.of(context).size.height / 1.5,
-            width: MediaQuery.of(context).size.width,
-            child: Center(
-              child: CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(appiYellow),
-              ),
-            ),
-          );
+          return _loadingIndicator(context);
         } else {
-          var data;
-          data = menu.currentWeekYourMeals;
-          /* if (widget.selectedHostelCode ==
-              hostelCodeMap[widget.residingHostel]) {
-            menu.selectedWeekMenuYourMeals(selectedDateTime.dateTime);
-            data = menu.menuYourMeals;
-          } else {
-            menu.selectedWeekMenuMultiMessing(
-                hostelCodeMap[widget.selectedHostelCode],
-                selectedDateTime.dateTime);
-            data = menu.menuMultiMessing;
-          }*/
-          if (menu.isFetching == 0 && menu.menuYourMeals == null) {
+          if(Provider.of<OtherMenuModel>(context).hostelCode == hostelCodeMap[inheritedData.userDetails.hostelName]) {
+            menu.selectedWeekMenuYourMeals(selectedDateTime);
+            data = menu.selectedWeekYourMeals;
+          }else{
+
+          }
+          if (data == null) {
             return NoMealsScreen();
           } else {
             hostelNameFromWeek = data.hostelName;
 
             if (selectedDateTime.dateTime.weekday > data.days.length) {
-              return Column(
-                children: [
-                  Container(
-                    height: MediaQuery.of(context).size.height * 0.75,
-                    child: Center(
-                      child: Text(
-                        "The menu for this day has not been uploaded yet!",
-                      ),
-                    ),
-                  ),
-                ],
-              );
+              return _menuUnavailableForSingleDay(context);
             } else {
               //day meal fetch
               Day currentDayMeal =
@@ -133,116 +119,37 @@ class _MenuState extends State<Menu> {
                 currentDayMeal: currentDayMeal,
                 dailyItemsMap: dailyItemsMap,
                 selectedDateTime: selectedDateTime.dateTime,
-                selectedHostelCode: widget.selectedHostelCode,
+                selectedHostelCode: Provider.of<OtherMenuModel>(context).hostelCode,
                 hostelName: hostelNameFromWeek,
-                residingHostel: widget.residingHostel,
+                residingHostel: inheritedData.userDetails.hostelName,
               );
             }
           }
         }
       },
     );
-
-    /*Widget getWeekMenu(String token, DateTime dateTime) {
-      return FutureBuilder(
-          future: connectionStatus == ConnectivityStatus.Offline
-              ? getWeekNumber(dateTime) == getWeekNumber(DateTime.now())
-                  ? menuWeekFromDb()
-                  : widget.selectedHostelCode ==
-                          hostelCodeMap[widget.residingHostel]
-                      ? menuWeekForYourMeals(token, getWeekNumber(dateTime))
-                      : menuWeekMultiMessing(token, getWeekNumber(dateTime),
-                          widget.selectedHostelCode)
-              : widget.selectedHostelCode ==
-                      hostelCodeMap[widget.residingHostel]
-                  ? menuWeekForYourMeals(token, getWeekNumber(dateTime))
-                  : menuWeekMultiMessing(token, getWeekNumber(dateTime),
-                      widget.selectedHostelCode),
-          builder: (context, snapshot) {
-            var data = snapshot.data;
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Container(
-                height: MediaQuery.of(context).size.height / 1.5,
-                width: MediaQuery.of(context).size.width,
-                child: Center(
-                  child: CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(appiYellow),
-                  ),
-                ),
-              );
-            } else if (data == null) {
-              return NoMealsScreen();
-            } else {
-              //Daily Items fetch
-              List<String> breakfastDailyItemsList = [];
-              for (var i = 0; i < data.dailyItems.breakfast.length; i++) {
-                var name = data.dailyItems.breakfast[i].name;
-                breakfastDailyItemsList.add(name);
-                breakfastDailyItems = breakfastDailyItemsList.join(" , ");
-              }
-
-              List<String> lunchDailyItemsList = [];
-              for (var i = 0; i < data.dailyItems.lunch.length; i++) {
-                var name = data.dailyItems.lunch[i].name;
-                lunchDailyItemsList.add(name);
-                lunchDailyItems = lunchDailyItemsList.join(" , ");
-              }
-
-              List<String> snacksDailyItemsList = [];
-              for (var i = 0; i < data.dailyItems.snack.length; i++) {
-                var name = data.dailyItems.snack[i].name;
-                snacksDailyItemsList.add(name);
-                snacksDailyItems = snacksDailyItemsList.join(" , ");
-              }
-
-              List<String> dinnerDailyItemsList = [];
-              for (var i = 0; i < data.dailyItems.dinner.length; i++) {
-                var name = data.dailyItems.dinner[i].name;
-                dinnerDailyItemsList.add(name);
-                dinnerDailyItems = dinnerDailyItemsList.join(" , ");
-              }
-
-              hostelNameFromWeek = snapshot.data.hostelName;
-
-              Map<String, String> dailyItemsMap = {
-                "breakfast": breakfastDailyItems,
-                "lunch": lunchDailyItems,
-                "snacks": snacksDailyItems,
-                "dinner": dinnerDailyItems
-              };
-
-              if (dateTime.weekday > data.days.length) {
-                return Column(
-                  children: [
-                    Container(
-                      height: MediaQuery.of(context).size.height * 0.75,
-                      child: Center(
-                        child: Text(
-                          "The menu for this day has not been uploaded yet!",
-                        ),
-                      ),
-                    ),
-                  ],
-                );
-              } else {
-                //day meal fetch
-                Day currentDayMeal = data.days[dateTime.weekday - 1];
-
-                return DayMenu(
-                  token: widget.token,
-                  currentDayMeal: currentDayMeal,
-                  dailyItemsMap: dailyItemsMap,
-                  selectedDateTime: selectedDateTime.dateTime,
-                  selectedHostelCode: widget.selectedHostelCode,
-                  hostelName: hostelNameFromWeek,
-                  residingHostel: widget.residingHostel,
-                );
-              }
-            }
-          });
-    }
-
-    return getWeekMenu(widget.token, selectedDateTime.dateTime);
-    */
   }
+
+  Widget _menuUnavailableForSingleDay(context) => Column(
+        children: [
+          Container(
+            height: MediaQuery.of(context).size.height * 0.75,
+            child: Center(
+              child: Text(
+                "The menu for this day has not been uploaded yet!",
+              ),
+            ),
+          ),
+        ],
+      );
+
+  Widget _loadingIndicator(context) => Container(
+        height: MediaQuery.of(context).size.height / 1.5,
+        width: MediaQuery.of(context).size.width,
+        child: Center(
+          child: CircularProgressIndicator(
+            valueColor: AlwaysStoppedAnimation<Color>(appiYellow),
+          ),
+        ),
+      );
 }

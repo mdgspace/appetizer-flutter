@@ -1,6 +1,7 @@
 import 'package:appetizer/change_notifiers/menu_model.dart';
 import 'package:appetizer/models/menu/week.dart';
 import 'package:appetizer/utils/week_day_int_to_string.dart';
+import 'package:appetizer/utils/week_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -74,9 +75,9 @@ class _WeekMenuState extends State<WeekMenu> {
               ],
             ),
           ),
-          Consumer<MenuModel>(
+          Consumer<YourMenuModel>(
             builder: (BuildContext context, menu, Widget child) {
-              if (menu.menuYourMeals == null) {
+              if (menu.selectedWeekYourMeals == null) {
                 return Container(
                   height: MediaQuery.of(context).size.height / 1.5,
                   width: MediaQuery.of(context).size.width,
@@ -86,9 +87,9 @@ class _WeekMenuState extends State<WeekMenu> {
                   )),
                 );
               } else {
-                print(menu.menuYourMeals);
+                print(menu.selectedWeekYourMeals);
                 List<Widget> rows = [];
-                menu.menuYourMeals.days.forEach((day) {
+                menu.selectedWeekYourMeals.days.forEach((day) {
                   List<String> breakfast = [];
                   List<String> lunch = [];
                   List<String> dinner = [];

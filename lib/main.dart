@@ -72,6 +72,7 @@ class _AppetizerState extends State<Appetizer> {
     }
   }
 
+
   void initState() {
     getIntent();
     checkFirstScreen();

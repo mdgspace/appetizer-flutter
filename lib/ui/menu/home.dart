@@ -1,5 +1,4 @@
 import 'package:appetizer/change_notifiers/menu_model.dart';
-import 'package:appetizer/models/user/user_details_shared_pref.dart';
 import 'package:appetizer/colors.dart';
 import 'package:appetizer/globals.dart';
 import 'package:appetizer/provider/current_date.dart';
@@ -47,7 +46,7 @@ class _HomeState extends State<Home> {
   List<String> switchableHostelsList = [];
 
   InheritedData inheritedData;
-  MenuModel menuModel;
+  YourMenuModel menuModel;
 
   @override
   void initState() {
@@ -93,7 +92,7 @@ class _HomeState extends State<Home> {
     super.didChangeDependencies();
     if (inheritedData == null) {
       inheritedData = InheritedData.of(context);
-      menuModel = MenuModel(inheritedData.userDetails);
+      menuModel = YourMenuModel(inheritedData.userDetails);
     }
   }
 
@@ -122,13 +121,11 @@ class _HomeState extends State<Home> {
                   HorizontalDatePicker(token: widget.token),
                   Flexible(
                     child: SingleChildScrollView(
-                      child: Menu(
-                        token: widget.token,
-                        selectedHostelCode: hostelCodeMap[
-                            selectedHostelName == null
-                                ? residingHostel
-                                : selectedHostelName],
-                        residingHostel: residingHostel,
+                      child: ChangeNotifierProvider(
+                        create: (context) => OtherMenuModel(inheritedData.userDetails, hostelCodeMap[selectedHostelName]),
+                        child: Menu(
+                          token: widget.token,
+                        ),
                       ),
                     ),
                   ),
