@@ -1,8 +1,9 @@
-import 'package:appetizer/ui/components/alert_dialog.dart';
-import 'package:appetizer/utils/month_int_to_month_string.dart';
-import 'package:flutter/material.dart';
 import 'package:appetizer/services/feedback.dart';
+import 'package:appetizer/ui/components/alert_dialog.dart';
+import 'package:appetizer/utils/date_time_utils.dart';
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 import '../../colors.dart';
 
 class NewFeedback extends StatefulWidget {
@@ -121,7 +122,7 @@ class _NewFeedbackState extends State<NewFeedback> {
                         decoration: InputDecoration(
                           hintText: date.day.toString() +
                               " " +
-                              monthIntToMonthString(date.month) +
+                              DateTimeUtils.getMonthName(date) +
                               " " +
                               date.year.toString(),
                           hintStyle: new TextStyle(

@@ -1,10 +1,10 @@
+import 'package:appetizer/services/transaction.dart';
+import 'package:appetizer/utils/date_time_utils.dart';
 import 'package:flutter/material.dart';
 
 import '../../colors.dart';
 import 'monthly_balance.dart';
 import 'see_rebate_history.dart';
-import 'package:appetizer/services/transaction.dart';
-import 'package:appetizer/utils/month_int_to_month_string.dart';
 
 class MyRebates extends StatelessWidget {
   final String token;
@@ -61,7 +61,7 @@ class MyRebates extends StatelessWidget {
                 0,
                 snapshot.data.rebate,
                 0,
-                monthIntToMonthString(DateTime.now().month),
+                DateTimeUtils.getMonthName(DateTime.now()),
                 DateTime.now().year);
           }
         });

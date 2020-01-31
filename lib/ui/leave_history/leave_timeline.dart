@@ -1,12 +1,12 @@
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:appetizer/ui/leave_history/multiple_leave_timeline_card.dart';
-import 'package:appetizer/ui/leave_history/single_leave_timeline_card.dart';
-import 'package:appetizer/utils/week_day_int_to_week_day_name.dart';
 import 'package:appetizer/colors.dart';
 import 'package:appetizer/provider/year_and_month.dart';
 import 'package:appetizer/services/leave.dart';
+import 'package:appetizer/ui/leave_history/multiple_leave_timeline_card.dart';
+import 'package:appetizer/ui/leave_history/single_leave_timeline_card.dart';
+import 'package:appetizer/utils/date_time_utils.dart';
 import 'package:appetizer/utils/month_string_to_month_int.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LeaveTimeline extends StatelessWidget {
   final String token;
@@ -33,14 +33,18 @@ class LeaveTimeline extends StatelessWidget {
               leavesArray.add(MultipleLeaveTimelineCard(
                   leaves.startMealType,
                   leaves.endMealType,
-                  weekDayIntToWeekDayName(
-                      DateTime.fromMillisecondsSinceEpoch(leaves.startDatetime)
-                          .toLocal()
-                          .weekday),
-                  weekDayIntToWeekDayName(
-                      DateTime.fromMillisecondsSinceEpoch(leaves.endDatetime)
-                          .toLocal()
-                          .weekday),
+                  DateTimeUtils.getWeekDayName(
+                          DateTime.fromMillisecondsSinceEpoch(
+                                  leaves.startDatetime)
+                              .toLocal())
+                      .substring(0, 3)
+                      .toUpperCase(),
+                  DateTimeUtils.getWeekDayName(
+                          DateTime.fromMillisecondsSinceEpoch(
+                                  leaves.endDatetime)
+                              .toLocal())
+                      .substring(0, 3)
+                      .toUpperCase(),
                   DateTime.fromMillisecondsSinceEpoch(leaves.startDatetime)
                       .toLocal()
                       .day,
@@ -51,10 +55,12 @@ class LeaveTimeline extends StatelessWidget {
             } else {
               leavesArray.add(SingleLeaveTimelineCard(
                 leaves.startMealType,
-                weekDayIntToWeekDayName(
-                    DateTime.fromMillisecondsSinceEpoch(leaves.startDatetime)
-                        .toLocal()
-                        .weekday),
+                DateTimeUtils.getWeekDayName(
+                        DateTime.fromMillisecondsSinceEpoch(
+                                leaves.startDatetime)
+                            .toLocal())
+                    .substring(0, 3)
+                    .toUpperCase(),
                 DateTime.fromMillisecondsSinceEpoch(leaves.startDatetime)
                     .toLocal()
                     .day,

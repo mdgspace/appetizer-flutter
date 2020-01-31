@@ -1,10 +1,9 @@
+import 'package:appetizer/colors.dart';
+import 'package:appetizer/services/user.dart';
+import 'package:appetizer/utils/date_time_utils.dart';
 import 'package:flutter/material.dart';
 
 import 'notification.dart';
-import 'package:appetizer/services/user.dart';
-import 'package:appetizer/colors.dart';
-
-import 'package:appetizer/utils/time_stamp_to_date_time.dart';
 
 class NotificationHistory extends StatelessWidget {
   final String token;
@@ -47,7 +46,7 @@ class NotificationHistory extends StatelessWidget {
                   return MessNotification(
                       snapshot.data[index].title,
                       snapshot.data[index].message,
-                      dateTime(snapshot.data[index].dateCreated));
+                      DateTimeUtils.dateTime(snapshot.data[index].dateCreated));
                 });
           }
         });

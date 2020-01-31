@@ -1,6 +1,7 @@
 import 'package:appetizer/services/transaction.dart';
+import 'package:appetizer/utils/date_time_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:appetizer/utils/month_int_to_month_string.dart';
+
 import '../../colors.dart';
 import 'rebate_history_card.dart';
 
@@ -147,7 +148,8 @@ class _RebateHistoryScreenState extends State<RebateHistoryScreen> {
                     0,
                     snapshot.data.results[index].rebate,
                     snapshot.data.results[index].expenses,
-                    monthIntToMonthString(snapshot.data.results[index].monthId),
+                    DateTimeUtils.getMonthName(DateTime(DateTime.now().year,
+                        snapshot.data.results[index].monthId)),
                     snapshot.data.results[index].year);
               });
         }

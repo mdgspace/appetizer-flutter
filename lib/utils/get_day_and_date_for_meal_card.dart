@@ -1,5 +1,4 @@
-import 'package:appetizer/utils/month_int_to_month_string.dart';
-import 'package:appetizer/utils/week_day_int_to_full_day_name.dart';
+import 'package:appetizer/utils/date_time_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -16,10 +15,10 @@ Widget getDayAndDateForCard(DateTime mealStartDateTime) {
     child: Column(
       children: <Widget>[
         Text(
-          weekDayIntToWeekDayFullName(mealDateTime.weekday),
+          DateTimeUtils.getWeekDayName(mealDateTime),
         ),
         Text(
-          monthIntToMonthString(mealDateTime.month) +
+          DateTimeUtils.getMonthName(mealDateTime) +
               " " +
               mealDateTime.day.toString() +
               "," +
