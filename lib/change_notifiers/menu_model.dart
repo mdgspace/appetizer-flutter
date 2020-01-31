@@ -6,38 +6,22 @@ import 'package:appetizer/utils/get_week_id.dart';
 import 'package:appetizer/utils/user_details.dart';
 import 'package:flutter/foundation.dart';
 
-class MenuModel extends ChangeNotifier {
+class YourMenuModel extends ChangeNotifier {
   Week _currentWeekYourMeals;
-
   Week _selectedWeekYourMeals;
-  Week _selectedWeekMultiMessing;
   UserDetailsSharedPref _userDetails;
   //Convert to enum;
   int _isFetching;
 
-  MenuModel(UserDetailsSharedPref userDetails) {
+  YourMenuModel(UserDetailsSharedPref userDetails) {
     _userDetails = userDetails;
-    _isFetching = 1;
     currentWeekMenuYourMeals();
   }
 
   Week get currentWeekYourMeals => _currentWeekYourMeals;
-
-  Week get menuYourMeals => _selectedWeekYourMeals;
-  Week get menuMultiMessing => _selectedWeekMultiMessing;
-
+  Week get selectedWeekYourMeals => _selectedWeekYourMeals;
   int get isFetching => _isFetching;
 
-  // FIXME: Probably Changes made in backend side type mismatch error
-/*
-  void currentWeekMenu() {
-    UserDetailsUtils.getUserDetails().then((details) async {
-      _currentWeekYourMeals = await menuWeek(
-          details.getString("token"), getWeekNumber(DateTime.now()));
-      notifyListeners();
-    });
-  }
-*/
 
   void currentWeekMenuYourMeals() async {
     _isFetching = 1;
@@ -58,13 +42,36 @@ class MenuModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void selectedWeekMenuMultiMessing(
-      String hostelCode, DateTime dateTime) async {
-    _isFetching = 1;
-    notifyListeners();
-    _selectedWeekMultiMessing = await menuWeekMultiMessing(
-        _userDetails.token, getWeekNumber(dateTime), hostelCode);
-    _isFetching = 0;
-    notifyListeners();
+}
+
+class OtherMenuModel extends ChangeNotifier {
+
+  int _weekId;
+  String _hostelCode;
+
+  UserDetailsSharedPref _userDetails;
+  Week _hostelWeekMenu;
+  bool _isFetching;
+
+  String get hostelCode => _hostelCode;
+  Week get hostelWeekMenu => _hostelWeekMenu;
+  bool get isFetching => _isFetching;
+
+  OtherMenuModel(UserDetailsSharedPref userDetails, String hostelCode){
+    _userDetails = userDetails;
+    _weekId = getWeekNumber(DateTime.now());
+    _hostelCode = hostelCode;
   }
+
+  void getOtherMenu(DateTime selectedDateTime, String selectedHostel) async{
+    _isFetching = true;
+    menuWeekMultiMessing(_userDetails.token, getWeekNumber(selectedDateTime), hostelCodeMap[selectedHostel]).then((weekMenu){
+    _isFetching = false;
+    _hostelWeekMenu = weekMenu;
+    notifyListeners();
+    }).catchError((e){
+      print(e);
+    });
+  }
+
 }
