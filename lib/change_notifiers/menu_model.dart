@@ -6,31 +6,65 @@ import 'package:appetizer/utils/get_week_id.dart';
 import 'package:appetizer/utils/user_details.dart';
 import 'package:flutter/foundation.dart';
 
-// FIXME: Solve the bug, menu does-not load on first time login
-
 class MenuModel extends ChangeNotifier {
-  Week _currentWeek;
+  Week _currentWeekYourMeals;
+
+  Week _selectedWeekYourMeals;
+  Week _selectedWeekMultiMessing;
+  UserDetailsSharedPref _userDetails;
+  //Convert to enum;
+  int _isFetching;
 
   MenuModel(UserDetailsSharedPref userDetails) {
-//    currentWeekMenu();
-    currentWeekMenuMultiMessing(userDetails);
+    _userDetails = userDetails;
+    _isFetching = 1;
+    currentWeekMenuYourMeals();
   }
 
-  Week get data => _currentWeek;
+  Week get currentWeekYourMeals => _currentWeekYourMeals;
+
+  Week get menuYourMeals => _selectedWeekYourMeals;
+  Week get menuMultiMessing => _selectedWeekMultiMessing;
+
+  int get isFetching => _isFetching;
 
   // FIXME: Probably Changes made in backend side type mismatch error
+/*
   void currentWeekMenu() {
-    // TODO: store user details in a separate model (user details should be fetched only once during the start of the app
     UserDetailsUtils.getUserDetails().then((details) async {
-      _currentWeek = await menuWeek(
+      _currentWeekYourMeals = await menuWeek(
           details.getString("token"), getWeekNumber(DateTime.now()));
       notifyListeners();
     });
   }
+*/
 
-  void currentWeekMenuMultiMessing(UserDetailsSharedPref userDetails) async {
-    _currentWeek = await menuWeekMultiMessing(
-        userDetails.token, getWeekNumber(DateTime.now()), hostelCodeMap[userDetails.hostelName]);
+  void currentWeekMenuYourMeals() async {
+    _isFetching = 1;
+    notifyListeners();
+    _currentWeekYourMeals = await menuWeekForYourMeals(
+        _userDetails.token, getWeekNumber(DateTime.now()));
+    _selectedWeekYourMeals = _currentWeekYourMeals;
+    _isFetching = 0;
+    notifyListeners();
+  }
+
+  void selectedWeekMenuYourMeals(DateTime dateTime) async {
+    _isFetching = 1;
+    notifyListeners();
+    _selectedWeekYourMeals =
+        await menuWeekForYourMeals(_userDetails.token, getWeekNumber(dateTime));
+    _isFetching = 0;
+    notifyListeners();
+  }
+
+  void selectedWeekMenuMultiMessing(
+      String hostelCode, DateTime dateTime) async {
+    _isFetching = 1;
+    notifyListeners();
+    _selectedWeekMultiMessing = await menuWeekMultiMessing(
+        _userDetails.token, getWeekNumber(dateTime), hostelCode);
+    _isFetching = 0;
     notifyListeners();
   }
 }

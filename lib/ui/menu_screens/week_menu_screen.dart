@@ -76,7 +76,7 @@ class _WeekMenuState extends State<WeekMenu> {
           ),
           Consumer<MenuModel>(
             builder: (BuildContext context, menu, Widget child) {
-              if (menu.data == null) {
+              if (menu.menuYourMeals == null) {
                 return Container(
                   height: MediaQuery.of(context).size.height / 1.5,
                   width: MediaQuery.of(context).size.width,
@@ -86,9 +86,9 @@ class _WeekMenuState extends State<WeekMenu> {
                   )),
                 );
               } else {
-                print(menu.data);
+                print(menu.menuYourMeals);
                 List<Widget> rows = [];
-                menu.data.days.forEach((day) {
+                menu.menuYourMeals.days.forEach((day) {
                   List<String> breakfast = [];
                   List<String> lunch = [];
                   List<String> dinner = [];

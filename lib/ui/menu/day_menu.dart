@@ -41,15 +41,15 @@ class _DayMenuState extends State<DayMenu> {
   int snacksId;
   int dinnerId;
 
-  List<CircleAvatar> breakfastLeadingImageList = [];
-  List<CircleAvatar> lunchLeadingImageList = [];
-  List<CircleAvatar> snacksLeadingImageList = [];
-  List<CircleAvatar> dinnerLeadingImageList = [];
+  List<CircleAvatar> breakfastLeadingImageList;
+  List<CircleAvatar> lunchLeadingImageList;
+  List<CircleAvatar> snacksLeadingImageList;
+  List<CircleAvatar> dinnerLeadingImageList;
 
-  List<String> breakfastItemsList = [];
-  List<String> lunchItemsList = [];
-  List<String> snacksItemsList = [];
-  List<String> dinnerItemsList = [];
+  List<String> breakfastItemsList;
+  List<String> lunchItemsList;
+  List<String> snacksItemsList;
+  List<String> dinnerItemsList;
 
   Map<CircleAvatar, String> breakfastMealMap = {};
   Map<CircleAvatar, String> lunchMealMap = {};
@@ -154,6 +154,8 @@ class _DayMenuState extends State<DayMenu> {
                     LeaveStatusEnum.N
                 ? true
                 : false;
+        breakfastItemsList = [];
+        breakfastLeadingImageList = [];
         for (var j = 0; j < widget.currentDayMeal.meals[i].items.length; j++) {
           var breakfastMealItem = widget.currentDayMeal.meals[i].items[j].name;
           breakfastItemsList.add(breakfastMealItem);
@@ -192,6 +194,9 @@ class _DayMenuState extends State<DayMenu> {
                 LeaveStatusEnum.N
             ? true
             : false;
+        lunchItemsList = [];
+        lunchLeadingImageList = [];
+
         for (var j = 0; j < widget.currentDayMeal.meals[i].items.length; j++) {
           var lunchMealItem = widget.currentDayMeal.meals[i].items[j].name;
           lunchItemsList.add(lunchMealItem);
@@ -230,6 +235,9 @@ class _DayMenuState extends State<DayMenu> {
                 LeaveStatusEnum.N
             ? true
             : false;
+        snacksItemsList = [];
+        snacksLeadingImageList = [];
+
         for (var j = 0; j < widget.currentDayMeal.meals[i].items.length; j++) {
           var snacksMealItem = widget.currentDayMeal.meals[i].items[j].name;
           snacksItemsList.add(snacksMealItem);
@@ -268,6 +276,8 @@ class _DayMenuState extends State<DayMenu> {
                 LeaveStatusEnum.N
             ? true
             : false;
+        dinnerItemsList = [];
+        dinnerLeadingImageList = [];
         for (var j = 0; j < widget.currentDayMeal.meals[i].items.length; j++) {
           var dinnerMealItem = widget.currentDayMeal.meals[i].items[j].name;
           dinnerItemsList.add(dinnerMealItem);

@@ -1,3 +1,4 @@
+import 'package:appetizer/change_notifiers/menu_model.dart';
 import 'package:appetizer/database/app_database.dart';
 import 'package:appetizer/globals.dart';
 import 'package:appetizer/models/menu/week.dart';
@@ -8,6 +9,7 @@ import 'package:appetizer/ui/menu/day_menu.dart';
 import 'package:appetizer/ui/menu/no_meals.dart';
 import 'package:appetizer/utils/connectivity_status.dart';
 import 'package:appetizer/utils/get_hostel_code.dart';
+import 'package:appetizer/utils/menu_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sembast/sembast.dart';
@@ -67,19 +69,81 @@ class _MenuState extends State<Menu> {
     prefs.setInt("mealKey", mealKey);
   }
 
-  String breakfastDailyItems = "";
-  String lunchDailyItems = "";
-  String snacksDailyItems = "";
-  String dinnerDailyItems = "";
-
   String hostelNameFromWeek = "";
+
+  var dailyItemsMap;
 
   @override
   Widget build(BuildContext context) {
     final selectedDateTime = Provider.of<CurrentDateModel>(context);
     var connectionStatus = Provider.of<ConnectivityStatus>(context);
 
-    Widget getWeekMenu(String token, DateTime dateTime) {
+    return Consumer<MenuModel>(
+      builder: (_, menu, child) {
+        if (menu.isFetching == 1) {
+          return Container(
+            height: MediaQuery.of(context).size.height / 1.5,
+            width: MediaQuery.of(context).size.width,
+            child: Center(
+              child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(appiYellow),
+              ),
+            ),
+          );
+        } else {
+          var data;
+          data = menu.currentWeekYourMeals;
+          /* if (widget.selectedHostelCode ==
+              hostelCodeMap[widget.residingHostel]) {
+            menu.selectedWeekMenuYourMeals(selectedDateTime.dateTime);
+            data = menu.menuYourMeals;
+          } else {
+            menu.selectedWeekMenuMultiMessing(
+                hostelCodeMap[widget.selectedHostelCode],
+                selectedDateTime.dateTime);
+            data = menu.menuMultiMessing;
+          }*/
+          if (menu.isFetching == 0 && menu.menuYourMeals == null) {
+            return NoMealsScreen();
+          } else {
+            hostelNameFromWeek = data.hostelName;
+
+            if (selectedDateTime.dateTime.weekday > data.days.length) {
+              return Column(
+                children: [
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.75,
+                    child: Center(
+                      child: Text(
+                        "The menu for this day has not been uploaded yet!",
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            } else {
+              //day meal fetch
+              Day currentDayMeal =
+                  data.days[selectedDateTime.dateTime.weekday - 1];
+              print("AMISH : rebuild");
+              dailyItemsMap = getDailyItemsMap(data);
+              print(dailyItemsMap);
+              return DayMenu(
+                token: widget.token,
+                currentDayMeal: currentDayMeal,
+                dailyItemsMap: dailyItemsMap,
+                selectedDateTime: selectedDateTime.dateTime,
+                selectedHostelCode: widget.selectedHostelCode,
+                hostelName: hostelNameFromWeek,
+                residingHostel: widget.residingHostel,
+              );
+            }
+          }
+        }
+      },
+    );
+
+    /*Widget getWeekMenu(String token, DateTime dateTime) {
       return FutureBuilder(
           future: connectionStatus == ConnectivityStatus.Offline
               ? getWeekNumber(dateTime) == getWeekNumber(DateTime.now())
@@ -179,5 +243,6 @@ class _MenuState extends State<Menu> {
     }
 
     return getWeekMenu(widget.token, selectedDateTime.dateTime);
+    */
   }
 }
