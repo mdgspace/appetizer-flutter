@@ -1,7 +1,6 @@
 import 'package:appetizer/models/menu/week.dart';
 import 'package:appetizer/services/menu.dart';
-import 'package:appetizer/utils/get_week_id.dart';
-import 'package:appetizer/utils/week_day_int_to_string.dart';
+import 'package:appetizer/utils/date_time_utils.dart';
 import 'package:flutter/material.dart';
 
 import '../../colors.dart';
@@ -83,8 +82,8 @@ class _WeekMenuState extends State<WeekMenu> {
             ),
           ),
           FutureBuilder(
-            future: menuWeekMultiMessing(
-                widget.token, getWeekNumber(DateTime.now()), widget.hostelCode),
+            future: menuWeekMultiMessing(widget.token,
+                DateTimeUtils.getWeekNumber(DateTime.now()), widget.hostelCode),
             builder: (context, snapshot) {
               Week data = snapshot.data;
 
@@ -129,8 +128,15 @@ class _WeekMenuState extends State<WeekMenu> {
                   print('B: $breakfast');
                   print('L: $lunch');
                   print('D: $dinner');
-                  rows.add(_buildTableRow(weekDayIntToString(day.date.weekday),
-                      day.date.day, breakfast, lunch, dinner, context));
+                  rows.add(_buildTableRow(
+                      DateTimeUtils.getWeekDayName(day.date)
+                          .substring(0, 1)
+                          .toUpperCase(),
+                      day.date.day,
+                      breakfast,
+                      lunch,
+                      dinner,
+                      context));
                 });
 
                 return Flexible(

@@ -7,8 +7,8 @@ import 'package:appetizer/services/multimessing/switch_meals.dart';
 import 'package:appetizer/ui/components/alert_dialog.dart';
 import 'package:appetizer/ui/components/switch_confirmation_meal_card.dart';
 import 'package:appetizer/ui/multimessing/confirmed_switch_screen.dart';
+import 'package:appetizer/utils/date_time_utils.dart';
 import 'package:appetizer/utils/get_hostel_code.dart';
-import 'package:appetizer/utils/get_week_id.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -37,7 +37,8 @@ class ConfirmSwitchPopupScreen extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _ConfirmSwitchPopupScreenState createState() => _ConfirmSwitchPopupScreenState();
+  _ConfirmSwitchPopupScreenState createState() =>
+      _ConfirmSwitchPopupScreenState();
 }
 
 class _ConfirmSwitchPopupScreenState extends State<ConfirmSwitchPopupScreen> {
@@ -97,7 +98,7 @@ class _ConfirmSwitchPopupScreenState extends State<ConfirmSwitchPopupScreen> {
       body: FutureBuilder(
         future: menuWeekMultiMessing(
           widget.token,
-          getWeekNumber(widget.selectedDateTime),
+          DateTimeUtils.getWeekNumber(widget.selectedDateTime),
           hostelCodeMap[widget.residingHostel],
         ),
         builder: (context, snapshot) {
