@@ -31,7 +31,7 @@ Future<bool> switchMeals(int mealId, String toHostel, String token) async {
 }
 
 Future<bool> cancelSwitch(int id, String token) async {
-  String endPoint = "/api/leave/switch/meal/$id";
+  String endPoint = "/api/leave/switch/$id";
   String uri = url + endPoint;
   var tokenAuth = {"Authorization": "Token " + token};
   try {
