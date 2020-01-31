@@ -11,7 +11,7 @@ class MyLeavesHistory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      builder: (context) => YearAndMonthModel(),
+      create: (context) => YearAndMonthModel(),
       child: Scaffold(
         appBar: AppBar(
           elevation: 0.0,
