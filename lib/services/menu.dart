@@ -37,6 +37,7 @@ Future<Week> menuWeekForYourMeals(String token, int weekId) async {
   String endpoint = "/api/menu/my_week/?week_id=$weekId";
   String uri = url + endpoint;
   var tokenAuth = {"Authorization": "Token " + token};
+  print("TOKEN: $token");
   try {
     var response = await client.get(
       uri,
@@ -47,8 +48,8 @@ Future<Week> menuWeekForYourMeals(String token, int weekId) async {
     if(jsonResponse["detail"] == "Not found."){
       return null;
     }
+    print("menuWeekForYourMeals \n ${response.body}");
     Week weekForYourMeals = new Week.fromJson(jsonResponse);
-    print(response.body);
     return weekForYourMeals;
   } on Exception catch (e) {
     print(e);

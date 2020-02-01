@@ -115,22 +115,12 @@ class _HomeState extends State<Home> {
                   Flexible(
                     child: SingleChildScrollView(
                       child: ChangeNotifierProvider(
-                        create: (context) => OtherMenuModel(inheritedData.userDetails, hostelCodeMap[inheritedData.userDetails.hostelName]),
-                        child: Consumer<CurrentDateModel>(
-                          builder: (_, dateModel, child){
-                            if(dateModel.weekDidChange){
-                              print("WeekID home: ${dateModel.weekId}");
-                              return Menu(
-                                token: widget.token,
-                                weekId: dateModel.weekId,
-                              );
-                            }else{
-                              return Menu(
-                                token: widget.token,
-                              );
-                            }
-
-                          },
+                        create: (context) => OtherMenuModel(
+                            inheritedData.userDetails,
+                            hostelCodeMap[
+                                inheritedData.userDetails.hostelName]),
+                        child: Menu(
+                          token: widget.token,
                         ),
                       ),
                     ),

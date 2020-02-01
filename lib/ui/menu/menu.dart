@@ -23,8 +23,7 @@ enum MenuMode { YOUR_MENU, OTHER_MENU }
 
 class Menu extends StatefulWidget {
   final String token;
-  final int weekId;
-  const Menu({Key key, this.token, this.weekId}) : super(key: key);
+  const Menu({Key key, this.token}) : super(key: key);
 
   @override
   _MenuState createState() => _MenuState();
@@ -49,12 +48,16 @@ class _MenuState extends State<Menu> {
   String _selectedHostelcode;
   MenuMode _menuMode;
 
-  bool weekChange;
+  int weekId;
 
   @override
   void initState() {
     super.initState();
-
+    weekId = getWeekNumber(DateTime.now());
+    /*   if (widget.weekId != null) {
+      Provider.of<YourMenuModel>(context, listen: false)
+          .selectedWeekMenuYourMeals(widget.weekId);
+    }*/
     userMeGet(widget.token).then((me) {
       setState(() {
         isCheckedOut = me.isCheckedOut;
@@ -74,10 +77,12 @@ class _MenuState extends State<Menu> {
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    print("Menu : ${widget.weekId}");
-    if (widget.weekId != null) {
-      Provider.of<YourMenuModel>(context)
-          .selectedWeekMenuYourMeals(widget.weekId);
+    final weekId = Provider.of<CurrentDateModel>(context).weekId;
+    print("Menu didChange: $weekId");
+    if (weekId != this.weekId) {
+      this.weekId = weekId;
+      Provider.of<YourMenuModel>(context, listen: false)
+          .selectedWeekMenuYourMeals(weekId);
     }
 
     if (inheritedData == null) {
@@ -150,7 +155,6 @@ class _MenuState extends State<Menu> {
               selectedDateTime: selectedDateTime,
               selectedHostelCode: _selectedHostelcode,
               hostelName: hostelNameFromWeek,
-              residingHostel: inheritedData.userDetails.hostelName,
             );
           }
         }
