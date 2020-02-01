@@ -163,7 +163,7 @@ class _MenuState extends State<Menu> {
 
   _showOtherMenu(BuildContext context) {
     var selectedDateTime = Provider.of<CurrentDateModel>(context).dateTime;
-
+    print("showing other menu");
     return Consumer<OtherMenuModel>(
       builder: (_, menu, child) {
         if (menu.isFetching == true) {
@@ -173,7 +173,7 @@ class _MenuState extends State<Menu> {
             return NoMealsScreen();
           } else {
             Day currentDayMeal =
-            menu.hostelWeekMenu.days[selectedDateTime.weekday - 1];
+                menu.hostelWeekMenu.days[selectedDateTime.weekday - 1];
             dailyItemsMap = getDailyItemsMap(menu.hostelWeekMenu);
             print(dailyItemsMap);
             return DayMenu(

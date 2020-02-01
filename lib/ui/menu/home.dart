@@ -114,10 +114,16 @@ class _HomeState extends State<Home> {
                   Flexible(
                     child: SingleChildScrollView(
                       child: ChangeNotifierProvider(
-                        create: (context) => OtherMenuModel(
-                            inheritedData.userDetails,
-                            hostelCodeMap[
-                                inheritedData.userDetails.hostelName]),
+                        create: (context) {
+                          var hostel;
+                          if (selectedHostelName == null) {
+                            hostel = inheritedData.userDetails.hostelName;
+                          } else {
+                            hostel = selectedHostelName;
+                          }
+                          return OtherMenuModel(
+                              inheritedData.userDetails, hostelCodeMap[hostel]);
+                        },
                         child: Menu(
                           token: widget.token,
                         ),
@@ -205,8 +211,11 @@ class _HomeState extends State<Home> {
                 child: Image.asset("assets/icons/week_menu.png"),
               ),
               onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => WeekMenu()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ChangeNotifierProvider.value(
+                            value: menuModel, child: WeekMenu())));
               },
             ),
           )
