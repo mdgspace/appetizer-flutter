@@ -18,8 +18,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../colors.dart';
 
-enum MenuMode { YOUR_MENU, OTHER_MENU }
-
 class Menu extends StatefulWidget {
   final String token;
   const Menu({Key key, this.token}) : super(key: key);
@@ -42,9 +40,7 @@ class _MenuState extends State<Menu> {
   InheritedData inheritedData;
 
   var dailyItemsMap;
-
   String _selectedHostelcode;
-  MenuMode _menuMode;
 
   int weekId;
 
@@ -84,27 +80,15 @@ class _MenuState extends State<Menu> {
     }
     if (weekId != this.weekId) {
       this.weekId = weekId;
-      if(this._selectedHostelcode == hostelCodeMap[inheritedData.userDetails.hostelName]){
+      if (this._selectedHostelcode ==
+          hostelCodeMap[inheritedData.userDetails.hostelName]) {
         Provider.of<YourMenuModel>(context, listen: false)
             .selectedWeekMenuYourMeals(weekId);
-      }else{
-        Provider.of<OtherMenuModel>(context, listen: false).getOtherMenu(weekId);
+      } else {
+        Provider.of<OtherMenuModel>(context, listen: false)
+            .getOtherMenu(weekId);
       }
     }
-
-    /*final selectedHostelCode = Provider.of<OtherMenuModel>(context).hostelCode;
-    print("PROVIDER HOSTEL CODE: $selectedHostelCode");
-    if (selectedHostelCode != this._selectedHostelcode) {
-      this._selectedHostelcode = selectedHostelCode;
-      print("MENU HOSTEL CODE: $_selectedHostelcode");
-      if (_selectedHostelcode ==
-          hostelCodeMap[inheritedData.userDetails.hostelName]) {
-        _menuMode = MenuMode.YOUR_MENU;
-      } else {
-        print("MENU Mode other : $_selectedHostelcode");
-        _menuMode = MenuMode.OTHER_MENU;
-      }
-    }*/
   }
 
   Future<void> updateMealDb(Week weekMenu) async {
@@ -123,8 +107,6 @@ class _MenuState extends State<Menu> {
         } else {
           var selectedDateTime =
               Provider.of<CurrentDateModel>(context).dateTime;
-//          otherMenuModel
-//              .getOtherMenu(DateTimeUtils.getWeekNumber(selectedDateTime));
 
           if (otherMenuModel.isFetching == true) {
             return _loadingIndicator(context);
@@ -199,37 +181,6 @@ class _MenuState extends State<Menu> {
               selectedHostelCode:
                   hostelCodeMap[inheritedData.userDetails.hostelName],
               hostelName: inheritedData.userDetails.hostelName,
-            );
-          }
-        }
-      },
-    );
-  }
-
-  _showOtherMenu(BuildContext context) {
-    var selectedDateTime = Provider.of<CurrentDateModel>(context).dateTime;
-    print("showing other menu");
-    return Consumer<OtherMenuModel>(
-      builder: (_, menu, child) {
-        if (menu.isFetching == true) {
-          return _loadingIndicator(context);
-        } else {
-          if (menu.isFetching == false && menu.hostelWeekMenu == null) {
-            return NoMealsScreen();
-          } else {
-            print("OTHER MENU Hostel: ${menu.hostelCode}");
-            print("OTHER MENU : ${menu.hostelWeekMenu.toJson()}");
-            Day currentDayMeal =
-                menu.hostelWeekMenu.days[selectedDateTime.weekday - 1];
-            dailyItemsMap = getDailyItemsMap(menu.hostelWeekMenu);
-            print(dailyItemsMap);
-            return DayMenu(
-              token: widget.token,
-              currentDayMeal: currentDayMeal,
-              dailyItemsMap: dailyItemsMap,
-              selectedDateTime: selectedDateTime,
-              selectedHostelCode: menu.hostelCode,
-              hostelName: menu.hostelCode,
             );
           }
         }

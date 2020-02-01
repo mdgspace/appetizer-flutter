@@ -9,6 +9,9 @@ import 'package:intl/intl.dart';
 import '../../globals.dart';
 import 'your_meals_menu_card.dart';
 
+// TODO: (IMP) (CLEANUP) (nitish) USE OOP and git rid of 25+ variables,
+// TODO: (IMP) (CLEANUP) (nitish) unify hostelName hostelCode (i.e. there should be a need of passing both hostelName and code ONLY code will be passed), use method hostelName.toCode() and hostelCode.toName() not hostelCodeMap[hostelMap]
+
 class DayMenu extends StatefulWidget {
   final String token;
   final Day currentDayMeal;

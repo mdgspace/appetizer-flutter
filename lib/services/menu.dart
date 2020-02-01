@@ -12,6 +12,7 @@ String url = "https://appetizer-mdg.herokuapp.com";
 var header = {"Content-Type": "application/json"};
 http.Client client = new http.Client();
 
+// FIXME: (IMP) (BUG PRONE) (aseem) check not found and return null if not found.
 
 Future<Week> menuWeekMultiMessing(
     String token, int weekId, String hostelCode) async {
@@ -25,10 +26,9 @@ Future<Week> menuWeekMultiMessing(
     );
     final jsonResponse = jsonDecode(response.body);
     print("JSON RESPONSE: $jsonResponse");
-    if(jsonResponse["detail"] == "Not found."){
+    if (jsonResponse["detail"] == "Not found.") {
       return null;
     }
-    print("menuWeekForYourMeals \n ${response.body}");
     Week week = new Week.fromJson(jsonResponse);
     return week;
   } on Exception catch (e) {
@@ -49,10 +49,9 @@ Future<Week> menuWeekForYourMeals(String token, int weekId) async {
     );
     final jsonResponse = jsonDecode(response.body);
     print("JSON RESPONSE: $jsonResponse");
-    if(jsonResponse["detail"] == "Not found."){
+    if (jsonResponse["detail"] == "Not found.") {
       return null;
     }
-    print("menuWeekForYourMeals \n ${response.body}");
     Week weekForYourMeals = new Week.fromJson(jsonResponse);
     return weekForYourMeals;
   } on Exception catch (e) {

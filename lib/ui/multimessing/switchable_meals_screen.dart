@@ -1,4 +1,3 @@
-import 'package:appetizer/change_notifiers/menu_model.dart';
 import 'package:appetizer/colors.dart';
 import 'package:appetizer/models/multimessing/meal_switch_from_your_meals.dart';
 import 'package:appetizer/services/multimessing/list_switchable_meals.dart';
@@ -9,7 +8,6 @@ import 'package:appetizer/ui/multimessing/confirmed_switch_screen.dart';
 import 'package:appetizer/utils/get_hostel_code.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:provider/provider.dart';
 
 class SwitchableMealsScreen extends StatefulWidget {
   final String token;
@@ -22,10 +20,10 @@ class SwitchableMealsScreen extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _SwitchableMealsuitate createState() => _SwitchableMealsuitate();
+  _SwitchableMealsState createState() => _SwitchableMealsState();
 }
 
-class _SwitchableMealsuitate extends State<SwitchableMealsScreen> {
+class _SwitchableMealsState extends State<SwitchableMealsScreen> {
   TextStyle getHeaderTextStyle() {
     return TextStyle(color: appiYellow, fontSize: 18);
   }
