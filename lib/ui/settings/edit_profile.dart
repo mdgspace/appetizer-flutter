@@ -127,6 +127,17 @@ class _EditProfileState extends State<EditProfile> {
                       height: MediaQuery.of(context).size.height / 1.9,
                       child: Column(
                         children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(16,16,16,16),
+                            child: Text("Edit Profile",
+                                textAlign: TextAlign.center,
+                                style: Theme.of(context)
+                                    .primaryTextTheme
+                                    .display1
+                                    .copyWith(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w500)),
+                          ),
                           _showContactNoInput(),
                           _showEmailInput(),
                           _showConfirmButton(),
@@ -166,7 +177,7 @@ class _EditProfileState extends State<EditProfile> {
 
   Widget _showContactNoInput() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(40.0, 40.0, 40.0, 0.0),
+      padding: const EdgeInsets.fromLTRB(40.0, 20.0, 40.0, 0.0),
       child: new TextFormField(
         maxLines: 1,
         keyboardType: TextInputType.number,
@@ -197,7 +208,7 @@ class _EditProfileState extends State<EditProfile> {
 
   Widget _showEmailInput() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(40.0, 40.0, 40.0, 0.0),
+      padding: const EdgeInsets.fromLTRB(40.0, 40.0, 40.0, 20.0),
       child: new TextFormField(
         maxLines: 1,
         keyboardType: TextInputType.number,
