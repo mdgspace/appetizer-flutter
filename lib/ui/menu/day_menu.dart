@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:appetizer/models/menu/week.dart';
 import 'package:appetizer/ui/components/inherited_data.dart';
 import 'package:appetizer/ui/menu/other_meals_menu_card.dart';
+import 'package:appetizer/utils/get_hostel_code.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../../globals.dart';
@@ -306,11 +307,13 @@ class _DayMenuState extends State<DayMenu> {
     dinnerMealMap = Map.fromIterables(dinnerLeadingImageList, dinnerItemsList);
     snacksMealMap = Map.fromIterables(snacksLeadingImageList, snacksItemsList);
 
+    print("BMM: $breakfastMealMap");
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         (breakfastMealMap.isNotEmpty)
-            ? inheritedData.userDetails.hostelName == widget.hostelName
+            ? hostelCodeMap[inheritedData.userDetails.hostelName] == widget.selectedHostelCode
                 ? YourMealsMenuCard(
                     title: 'Breakfast',
                     menuItems: breakfastMealMap,
@@ -350,7 +353,7 @@ class _DayMenuState extends State<DayMenu> {
                   )
             : Container(),
         (lunchMealMap.isNotEmpty)
-            ? inheritedData.userDetails.hostelName == widget.hostelName
+            ? hostelCodeMap[inheritedData.userDetails.hostelName] == widget.selectedHostelCode
                 ? YourMealsMenuCard(
                     title: 'Lunch',
                     menuItems: lunchMealMap,
@@ -390,7 +393,7 @@ class _DayMenuState extends State<DayMenu> {
                   )
             : Container(),
         (snacksMealMap.isNotEmpty)
-            ? inheritedData.userDetails.hostelName == widget.hostelName
+            ? hostelCodeMap[inheritedData.userDetails.hostelName] == widget.selectedHostelCode
                 ? YourMealsMenuCard(
                     title: 'Snacks',
                     menuItems: snacksMealMap,
@@ -430,7 +433,7 @@ class _DayMenuState extends State<DayMenu> {
                   )
             : Container(),
         (dinnerMealMap.isNotEmpty)
-            ? inheritedData.userDetails.hostelName == widget.hostelName
+            ? hostelCodeMap[inheritedData.userDetails.hostelName] == widget.selectedHostelCode
                 ? YourMealsMenuCard(
                     title: 'Dinner',
                     menuItems: dinnerMealMap,

@@ -71,19 +71,21 @@ class OtherMenuModel extends ChangeNotifier {
     _weekId = DateTimeUtils.getWeekNumber(DateTime.now());
     _hostelCode = hostelCode;
     print("Hostel code set $_hostelCode");
-//    getOtherMenu(DateTime.now(), _hostelCode);
+
+    getOtherMenu(DateTimeUtils.getWeekNumber(DateTime.now()));
     notifyListeners();
   }
 
-/*  void getOtherMenu(int weekId) async{
+  void getOtherMenu(int weekId) async{
     _isFetching = true;
     menuWeekMultiMessing(_userDetails.token, weekId, _hostelCode).then((weekMenu){
+      print("FETCHED : ${weekMenu}");
     _isFetching = false;
     _hostelWeekMenu = weekMenu;
     notifyListeners();
     }).catchError((e){
       print(e);
     });
-  }*/
+  }
 
 }

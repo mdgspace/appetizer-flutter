@@ -129,6 +129,7 @@ class _MenuState extends State<Menu> {
                   .hostelWeekMenu.days[selectedDateTime.weekday - 1];
               dailyItemsMap = getDailyItemsMap(otherMenuModel.hostelWeekMenu);
               print(dailyItemsMap);
+              print("OTHER DAY: $currentDayMeal");
               return DayMenu(
                 token: widget.token,
                 currentDayMeal: currentDayMeal,
@@ -187,7 +188,7 @@ class _MenuState extends State<Menu> {
               currentDayMeal: currentDayMeal,
               dailyItemsMap: dailyItemsMap,
               selectedDateTime: selectedDateTime,
-              selectedHostelCode: _selectedHostelcode,
+              selectedHostelCode: hostelCodeMap[inheritedData.userDetails.hostelName],
               hostelName: inheritedData.userDetails.hostelName,
             );
           }
