@@ -1,12 +1,15 @@
+import 'package:appetizer/change_notifiers/menu_model.dart';
 import 'package:appetizer/colors.dart';
 import 'package:appetizer/models/multimessing/meal_switch_from_your_meals.dart';
 import 'package:appetizer/services/multimessing/list_switchable_meals.dart';
 import 'package:appetizer/services/multimessing/switch_meals.dart';
 import 'package:appetizer/ui/components/alert_dialog.dart';
+import 'package:appetizer/ui/menu_screens/week_menu_screen.dart';
 import 'package:appetizer/ui/multimessing/confirmed_switch_screen.dart';
 import 'package:appetizer/utils/get_hostel_code.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
 
 class SwitchableMealsScreen extends StatefulWidget {
   final String token;
@@ -201,6 +204,24 @@ class _SwitchableMealsuitate extends State<SwitchableMealsScreen> {
             fontFamily: 'Lobster_Two',
           ),
         ),
+        actions: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: GestureDetector(
+              child: Container(
+                child: Image.asset("assets/icons/week_menu.png"),
+              ),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => WeekMenu(),
+                  ),
+                );
+              },
+            ),
+          )
+        ],
         backgroundColor: appiBrown,
         iconTheme: new IconThemeData(color: appiYellow),
       ),

@@ -2,6 +2,7 @@ import 'package:appetizer/colors.dart';
 import 'package:appetizer/models/menu/week.dart';
 import 'package:appetizer/services/multimessing/switch_meals.dart';
 import 'package:appetizer/ui/components/alert_dialog.dart';
+import 'package:appetizer/ui/components/inherited_data.dart';
 import 'package:appetizer/ui/multimessing/confirm_switch_popup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -22,7 +23,6 @@ class OtherMealsMenuCard extends StatefulWidget {
   final String selectedHostelCode;
   final SwitchStatus switchStatus;
   final String hostelName;
-  final String residingHostel;
 
   OtherMealsMenuCard({
     Key key,
@@ -41,7 +41,6 @@ class OtherMealsMenuCard extends StatefulWidget {
     this.selectedHostelCode,
     this.switchStatus,
     this.hostelName,
-    this.residingHostel,
   }) : super(key: key);
 
   @override
@@ -50,6 +49,15 @@ class OtherMealsMenuCard extends StatefulWidget {
 
 class _OtherMealsMenuCardState extends State<OtherMealsMenuCard> {
   bool isSwitched;
+  InheritedData inheritedData;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (inheritedData == null) {
+      inheritedData = InheritedData.of(context);
+    }
+  }
 
   @override
   void initState() {
@@ -154,7 +162,6 @@ class _OtherMealsMenuCardState extends State<OtherMealsMenuCard> {
                                     widget.dailyItems,
                                 selectedDateTime: widget.selectedDateTime,
                                 selectedHostelCode: widget.selectedHostelCode,
-                                residingHostel: widget.residingHostel,
                               ),
                             ),
                           );
@@ -201,7 +208,8 @@ class _OtherMealsMenuCardState extends State<OtherMealsMenuCard> {
                                           Navigator.pop(alertContext);
                                           showCustomDialog(
                                               context, "Cancelling Switch");
-                                          cancelSwitch(widget.switchStatus.id, widget.token)
+                                          cancelSwitch(widget.switchStatus.id,
+                                                  widget.token)
                                               .then((switchCancelResponse) {
                                             Navigator.pop(context);
                                             if (switchCancelResponse) {

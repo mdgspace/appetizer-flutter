@@ -1,8 +1,8 @@
 import 'package:appetizer/globals.dart';
 import 'package:appetizer/ui/my_leaves/info_message.dart';
 import 'package:appetizer/services/leave.dart';
+import 'package:appetizer/utils/user_details.dart';
 import 'package:flutter/material.dart';
-import '../login/login.dart';
 import 'package:appetizer/services/user.dart';
 import 'package:appetizer/colors.dart';
 
@@ -21,7 +21,7 @@ class _LeaveStatusCardState extends State<LeaveStatusCard> {
 
   @override
   void initState() {
-    getUserDetails().then((userDetails) {
+    UserDetailsUtils.getUserDetails().then((userDetails) {
       userMeGet(userDetails.getString("token")).then((myDetails) {
         setState(() {
           _isCheckedIn = !myDetails.isCheckedOut;
@@ -185,7 +185,7 @@ class _LeaveStatusCardState extends State<LeaveStatusCard> {
   }
 
   void onCheckTapped() {
-    getUserDetails().then((userDetails) {
+    UserDetailsUtils.getUserDetails().then((userDetails) {
       userMeGet(userDetails.getString("token")).then((myDetails) {
         if (!myDetails.isCheckedOut) {
           showDialog(

@@ -26,7 +26,7 @@ dependencies:
   intl: any
   url_launcher: ^5.0.2
   shared_preferences: 0.5.3
-  provider: ^3.0.0+1
+  provider: ^4.0.2
   flutter_launcher_icons: ^0.7.2
   flutter_svg:
   share: 0.5.2

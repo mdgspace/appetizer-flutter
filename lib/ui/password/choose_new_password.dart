@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:appetizer/models/user/user_details_shared_pref.dart';
+import 'package:appetizer/ui/components/inherited_data.dart';
 import 'package:appetizer/ui/menu/home.dart';
 import 'package:appetizer/models/user/oauth.dart';
 import 'package:flutter/material.dart';
@@ -269,20 +271,30 @@ class _ChooseNewPassState extends State<ChooseNewPass> {
     }
   }
 
+  // TODO: (remove duplication) duplication in login, password
   void loginUser() async {
     showCustomDialog(context, "Logging You In");
-    OauthResponse response =
+    OauthResponse oauthResponse =
         await oAuthComplete(enr, password, email, int.parse(contactNo));
-    if (response.token != null) {
-      saveUserDetails(response.studentData.enrNo.toString(),
-          response.studentData.name, response.token);
+    if (oauthResponse.token != null) {
+      saveUserDetails(oauthResponse.studentData.enrNo.toString(),
+          oauthResponse.studentData.name, oauthResponse.token);
       await new Future.delayed(const Duration(milliseconds: 1000));
       Navigator.pop(context);
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-        return Home(
-          enrollment: response.studentData.enrNo.toString(),
-          username: response.studentData.name,
-          token: response.token,
+        return InheritedData(
+          userDetails: UserDetailsSharedPref.fromData(
+              oauthResponse.studentData.enrNo.toString(),
+              oauthResponse.studentData.name,
+              oauthResponse.token,
+              oauthResponse.studentData.branch,
+              oauthResponse.studentData.hostelName,
+              oauthResponse.studentData.roomNo,
+              oauthResponse.studentData.email,
+              oauthResponse.studentData.contactNo),
+          child: Home(
+            token: oauthResponse.token,
+          ),
         );
       }));
     } else {

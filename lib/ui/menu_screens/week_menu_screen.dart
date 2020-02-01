@@ -1,19 +1,13 @@
+import 'package:appetizer/change_notifiers/menu_model.dart';
 import 'package:appetizer/models/menu/week.dart';
 import 'package:appetizer/services/menu.dart';
 import 'package:appetizer/utils/date_time_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../colors.dart';
 
 class WeekMenu extends StatefulWidget {
-  final String token;
-  final String hostelCode;
-
-  WeekMenu({
-    this.token,
-    this.hostelCode,
-  });
-
   @override
   _WeekMenuState createState() => _WeekMenuState();
 }
@@ -81,13 +75,9 @@ class _WeekMenuState extends State<WeekMenu> {
               ],
             ),
           ),
-          FutureBuilder(
-            future: menuWeekMultiMessing(widget.token,
-                DateTimeUtils.getWeekNumber(DateTime.now()), widget.hostelCode),
-            builder: (context, snapshot) {
-              Week data = snapshot.data;
-
-              if (snapshot.data == null) {
+          Consumer<YourMenuModel>(
+            builder: (BuildContext context, menu, Widget child) {
+              if (menu.selectedWeekYourMeals == null) {
                 return Container(
                   height: MediaQuery.of(context).size.height / 1.5,
                   width: MediaQuery.of(context).size.width,
@@ -97,9 +87,9 @@ class _WeekMenuState extends State<WeekMenu> {
                   )),
                 );
               } else {
-                print(snapshot.data);
+                print(menu.selectedWeekYourMeals);
                 List<Widget> rows = [];
-                data.days.forEach((day) {
+                menu.selectedWeekYourMeals.days.forEach((day) {
                   List<String> breakfast = [];
                   List<String> lunch = [];
                   List<String> dinner = [];
@@ -147,7 +137,7 @@ class _WeekMenuState extends State<WeekMenu> {
                 );
               }
             },
-          )
+          ),
         ],
       ),
     );

@@ -12,24 +12,6 @@ String url = "https://appetizer-mdg.herokuapp.com";
 var header = {"Content-Type": "application/json"};
 http.Client client = new http.Client();
 
-Future<Week> menuWeek(String token, int weekId) async {
-  String endpoint = "/api/menu/week/?week_id=$weekId";
-  String uri = url + endpoint;
-  var tokenAuth = {"Authorization": "Token " + token};
-  try {
-    var response = await client.get(
-      uri,
-      headers: tokenAuth,
-    );
-    final jsonResponse = jsonDecode(response.body);
-    Week week = new Week.fromJson(jsonResponse);
-    print(response.body);
-    return week;
-  } on Exception catch (e) {
-    print(e);
-    return null;
-  }
-}
 
 Future<Week> menuWeekMultiMessing(
     String token, int weekId, String hostelCode) async {
@@ -55,14 +37,19 @@ Future<Week> menuWeekForYourMeals(String token, int weekId) async {
   String endpoint = "/api/menu/my_week/?week_id=$weekId";
   String uri = url + endpoint;
   var tokenAuth = {"Authorization": "Token " + token};
+  print("TOKEN: $token");
   try {
     var response = await client.get(
       uri,
       headers: tokenAuth,
     );
     final jsonResponse = jsonDecode(response.body);
+    print("JSON RESPONSE: $jsonResponse");
+    if(jsonResponse["detail"] == "Not found."){
+      return null;
+    }
+    print("menuWeekForYourMeals \n ${response.body}");
     Week weekForYourMeals = new Week.fromJson(jsonResponse);
-    print(response.body);
     return weekForYourMeals;
   } on Exception catch (e) {
     print(e);
