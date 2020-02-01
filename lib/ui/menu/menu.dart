@@ -45,7 +45,6 @@ class _MenuState extends State<Menu> {
   // singleton instance of an opened database.
   Future<Database> get _db async => await AppDatabase.instance.database;
 
-  String hostelNameFromWeek = "";
   InheritedData inheritedData;
 
   var dailyItemsMap;
@@ -160,7 +159,7 @@ class _MenuState extends State<Menu> {
               dailyItemsMap: dailyItemsMap,
               selectedDateTime: selectedDateTime,
               selectedHostelCode: _selectedHostelcode,
-              hostelName: hostelNameFromWeek,
+              hostelName: inheritedData.userDetails.hostelName,
             );
           }
         }
