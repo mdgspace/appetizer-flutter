@@ -24,8 +24,12 @@ Future<Week> menuWeekMultiMessing(
       headers: tokenAuth,
     );
     final jsonResponse = jsonDecode(response.body);
+    print("JSON RESPONSE: $jsonResponse");
+    if(jsonResponse["detail"] == "Not found."){
+      return null;
+    }
+    print("menuWeekForYourMeals \n ${response.body}");
     Week week = new Week.fromJson(jsonResponse);
-    print(response.body);
     return week;
   } on Exception catch (e) {
     print(e);

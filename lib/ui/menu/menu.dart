@@ -76,12 +76,20 @@ class _MenuState extends State<Menu> {
       inheritedData = InheritedData.of(context);
     }
     final weekId = Provider.of<CurrentDateModel>(context).weekId;
+    final selectedHostelCode = Provider.of<OtherMenuModel>(context).hostelCode;
     print("Menu didChange: $weekId");
+    if (selectedHostelCode != this._selectedHostelcode) {
+      print("Changing from $_selectedHostelcode to $selectedHostelCode");
+      this._selectedHostelcode = selectedHostelCode;
+    }
     if (weekId != this.weekId) {
       this.weekId = weekId;
-      Provider.of<YourMenuModel>(context, listen: false)
-          .selectedWeekMenuYourMeals(weekId);
-      Provider.of<OtherMenuModel>(context, listen: false).getOtherMenu(weekId);
+      if(this._selectedHostelcode == hostelCodeMap[inheritedData.userDetails.hostelName]){
+        Provider.of<YourMenuModel>(context, listen: false)
+            .selectedWeekMenuYourMeals(weekId);
+      }else{
+        Provider.of<OtherMenuModel>(context, listen: false).getOtherMenu(weekId);
+      }
     }
 
     /*final selectedHostelCode = Provider.of<OtherMenuModel>(context).hostelCode;
@@ -112,8 +120,7 @@ class _MenuState extends State<Menu> {
         if (otherMenuModel.hostelCode ==
             hostelCodeMap[inheritedData.userDetails.hostelName]) {
           return _showYourMenu(context);
-        }
-        else {
+        } else {
           var selectedDateTime =
               Provider.of<CurrentDateModel>(context).dateTime;
 //          otherMenuModel
@@ -142,10 +149,8 @@ class _MenuState extends State<Menu> {
             }
           }
         }
-
       },
     );
-
   }
 
   Widget _menuUnavailableForSingleDay(context) => Column(
@@ -191,7 +196,8 @@ class _MenuState extends State<Menu> {
               currentDayMeal: currentDayMeal,
               dailyItemsMap: dailyItemsMap,
               selectedDateTime: selectedDateTime,
-              selectedHostelCode: hostelCodeMap[inheritedData.userDetails.hostelName],
+              selectedHostelCode:
+                  hostelCodeMap[inheritedData.userDetails.hostelName],
               hostelName: inheritedData.userDetails.hostelName,
             );
           }

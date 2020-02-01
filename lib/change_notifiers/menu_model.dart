@@ -82,7 +82,6 @@ class OtherMenuModel extends ChangeNotifier {
       print("FETCHED $_hostelCode: $weekMenu");
     _isFetching = false;
     _hostelWeekMenu = weekMenu;
-    print("INSIDE FETCHER: ${_hostelWeekMenu.toJson()}");
     notifyListeners();
     }).catchError((e){
       print(e);
