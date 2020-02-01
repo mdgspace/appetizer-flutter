@@ -58,7 +58,7 @@ class _MenuState extends State<Menu> {
   @override
   void initState() {
     super.initState();
-    weekId = getWeekNumber(DateTime.now());
+    weekId = DateTimeUtils.getWeekNumber(DateTime.now());
     /*   if (widget.weekId != null) {
       Provider.of<YourMenuModel>(context, listen: false)
           .selectedWeekMenuYourMeals(widget.weekId);

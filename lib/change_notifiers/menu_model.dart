@@ -1,8 +1,8 @@
 import 'package:appetizer/models/menu/week.dart';
 import 'package:appetizer/models/user/user_details_shared_pref.dart';
 import 'package:appetizer/services/menu.dart';
+import 'package:appetizer/utils/date_time_utils.dart';
 import 'package:appetizer/utils/get_hostel_code.dart';
-import 'package:appetizer/utils/get_week_id.dart';
 import 'package:flutter/foundation.dart';
 
 class YourMenuModel extends ChangeNotifier {
@@ -26,7 +26,7 @@ class YourMenuModel extends ChangeNotifier {
     _isFetching = true;
     notifyListeners();
     _currentWeekYourMeals = await menuWeekForYourMeals(
-        _userDetails.token, getWeekNumber(DateTime.now()));
+        _userDetails.token, DateTimeUtils.getWeekNumber(DateTime.now()));
     _selectedWeekYourMeals = _currentWeekYourMeals;
     _isFetching = false;
     notifyListeners();
@@ -63,7 +63,7 @@ class OtherMenuModel extends ChangeNotifier {
 
   OtherMenuModel(UserDetailsSharedPref userDetails, String hostelCode){
     _userDetails = userDetails;
-    _weekId = getWeekNumber(DateTime.now());
+    _weekId = DateTimeUtils.getWeekNumber(DateTime.now());
     _hostelCode = hostelCode;
     print("Hostel code set $_hostelCode");
     notifyListeners();
@@ -71,7 +71,7 @@ class OtherMenuModel extends ChangeNotifier {
 
   void getOtherMenu(DateTime selectedDateTime, String selectedHostel) async{
     _isFetching = true;
-    menuWeekMultiMessing(_userDetails.token, getWeekNumber(selectedDateTime), hostelCodeMap[selectedHostel]).then((weekMenu){
+    menuWeekMultiMessing(_userDetails.token, DateTimeUtils.getWeekNumber(selectedDateTime), hostelCodeMap[selectedHostel]).then((weekMenu){
     _isFetching = false;
     _hostelWeekMenu = weekMenu;
     notifyListeners();

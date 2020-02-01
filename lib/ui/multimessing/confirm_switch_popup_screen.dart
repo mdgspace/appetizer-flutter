@@ -108,7 +108,7 @@ class _ConfirmSwitchPopupScreenState extends State<ConfirmSwitchPopupScreen> {
         future: menuWeekMultiMessing(
           widget.token,
           DateTimeUtils.getWeekNumber(widget.selectedDateTime),
-          hostelCodeMap[widget.residingHostel],
+          hostelCodeMap[inheritedData.userDetails.hostelName],
         ),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {

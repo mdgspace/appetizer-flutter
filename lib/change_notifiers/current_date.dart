@@ -1,4 +1,4 @@
-import 'package:appetizer/utils/get_week_id.dart';
+import 'package:appetizer/utils/date_time_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:appetizer/change_notifiers/menu_model.dart';
@@ -11,7 +11,7 @@ class CurrentDateModel with ChangeNotifier {
 
   CurrentDateModel() {
     _dateTime = DateTime.now();
-    _weekId = getWeekNumber(_dateTime);
+    _weekId = DateTimeUtils.getWeekNumber(_dateTime);
     _weekDidChange = false;
   }
 
@@ -21,9 +21,9 @@ class CurrentDateModel with ChangeNotifier {
 
   void  setDateTime(DateTime value, BuildContext context) {
     _dateTime = value;
-    if(_weekId != getWeekNumber(value)){
+    if(_weekId != DateTimeUtils.getWeekNumber(value)){
       _weekDidChange = true;
-      _weekId = getWeekNumber(value);
+      _weekId = DateTimeUtils.getWeekNumber(value);
     }else{
       _weekDidChange = false;
     }
