@@ -371,6 +371,7 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
           )
         : !widget.isCheckedOut
             ? Switch(
+
                 activeColor: appiYellow,
                 value: _mealLeaveStatusBool,
                 onChanged: (value) async {
@@ -380,6 +381,7 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
   }
 
   void onChangedCallback(bool value, BuildContext context) {
+
     if (_mealSwitchStatusbool) {
       if (value) {
         if (!widget.isToggleOutdated) {

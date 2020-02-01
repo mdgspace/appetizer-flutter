@@ -17,6 +17,7 @@ import 'package:appetizer/ui/user_feedback/user_feedback.dart';
 import 'package:appetizer/utils/connectivity_status.dart';
 import 'package:appetizer/utils/get_hostel_code.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
@@ -172,7 +173,8 @@ class _HomeState extends State<Home> {
                   ),
                   value: selectedHostelName,
                   hint: Text(
-                    "Your Meals",
+                    "       Your Meals",
+                    textAlign: TextAlign.center,
                     style: new TextStyle(
                         color: Colors.white,
                         fontSize: 25.0,
@@ -184,10 +186,11 @@ class _HomeState extends State<Home> {
                       child: Align(
                         alignment: Alignment.center,
                         child: SizedBox(
-                          width: 120,
+                          width:MediaQuery.of(context).size.width * 0.47,
                           child: Text(
                             hostelName,
-                            overflow: TextOverflow.ellipsis,
+                            //overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.center,
                             style: new TextStyle(
                               color: Colors.white,
                               fontSize: 25.0,
