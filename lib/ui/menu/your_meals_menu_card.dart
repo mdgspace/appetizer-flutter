@@ -146,17 +146,17 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
             widget.isOutdated)
         ? Container(
             decoration: BoxDecoration(
-                color: getLeaveColorFromLeaveStatus(widget.leaveStatus.status),
-                borderRadius: BorderRadius.circular(4)),
+              color: getLeaveColorFromLeaveStatus(widget.leaveStatus.status),
+              shape: BoxShape.circle,
+            ),
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(4, 1, 4, 1),
+              padding: const EdgeInsets.all(8),
               child: Text(
-                "Skipped".toUpperCase(),
+                "S",
                 style: TextStyle(
                     color: Colors.white,
-                    letterSpacing: .5,
                     fontWeight: FontWeight.bold,
-                    fontSize: 12),
+                    fontSize: 18),
               ),
             ),
           )
@@ -371,7 +371,6 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
           )
         : !widget.isCheckedOut
             ? Switch(
-
                 activeColor: appiYellow,
                 value: _mealLeaveStatusBool,
                 onChanged: (value) async {
@@ -381,7 +380,6 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
   }
 
   void onChangedCallback(bool value, BuildContext context) {
-
     if (_mealSwitchStatusbool) {
       if (value) {
         if (!widget.isToggleOutdated) {
