@@ -1,7 +1,7 @@
+import 'package:appetizer/change_notifiers/current_date.dart';
 import 'package:appetizer/change_notifiers/menu_model.dart';
 import 'package:appetizer/colors.dart';
 import 'package:appetizer/globals.dart';
-import 'package:appetizer/change_notifiers/current_date.dart';
 import 'package:appetizer/services/connectivity_service.dart';
 import 'package:appetizer/services/leave.dart';
 import 'package:appetizer/services/multimessing/switchable_hostels.dart';
@@ -59,6 +59,7 @@ class _HomeState extends State<Home> {
       hostelsList.forEach((hostel) {
         switchableHostelsList.add(hostel[2].toString());
       });
+      setState(() {});
     }).catchError((e) {
       Fluttertoast.showToast(msg: "Unable to fetch hostels");
     });
@@ -221,6 +222,7 @@ class _HomeState extends State<Home> {
         backgroundColor: appiBrown,
         iconTheme: new IconThemeData(color: appiYellow),
       );
+
   Widget _drawer(context) => Drawer(
         child: Column(
           children: <Widget>[
@@ -511,6 +513,7 @@ class _HomeState extends State<Home> {
           ],
         ),
       );
+
   Widget _fab(context) => FloatingActionButton(
         onPressed: () {
           showDialog(

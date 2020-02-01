@@ -116,14 +116,6 @@ class _DayMenuState extends State<DayMenu> {
   String dinnerSecretCode;
 
   void setLeadingMealImage(List<CircleAvatar> mealLeadingImageList) {
-//    var randomColor =
-//        Color((math.Random().nextDouble() * 0xFFFFFF).toInt() << 0)
-//            .withOpacity(0.2);
-//    mealLeadingImageList.add(CircleAvatar(
-//      radius: _radius,
-//      backgroundColor: randomColor,
-//    ));
-
     mealLeadingImageList.add(CircleAvatar(
       radius: _radius,
       backgroundColor: Colors.transparent,
