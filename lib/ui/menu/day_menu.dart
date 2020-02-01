@@ -4,7 +4,6 @@ import 'package:appetizer/models/menu/week.dart';
 import 'package:appetizer/ui/menu/other_meals_menu_card.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
 import '../../globals.dart';
 import 'your_meals_menu_card.dart';
 
@@ -107,12 +106,18 @@ class _DayMenuState extends State<DayMenu> {
   String dinnerSecretCode;
 
   void setLeadingMealImage(List<CircleAvatar> mealLeadingImageList) {
-    var randomColor =
-        Color((math.Random().nextDouble() * 0xFFFFFF).toInt() << 0)
-            .withOpacity(0.2);
+//    var randomColor =
+//        Color((math.Random().nextDouble() * 0xFFFFFF).toInt() << 0)
+//            .withOpacity(0.2);
+//    mealLeadingImageList.add(CircleAvatar(
+//      radius: _radius,
+//      backgroundColor: randomColor,
+//    ));
+
     mealLeadingImageList.add(CircleAvatar(
       radius: _radius,
-      backgroundColor: randomColor,
+      backgroundColor: Colors.transparent,
+      child: Image.asset("assets/icons/meal_icon"+(math.Random().nextInt(5) + 1).toString()+".jpg",scale: 2.5,),
     ));
   }
 
