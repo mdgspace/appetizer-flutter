@@ -98,7 +98,10 @@ class _SettingsState extends State<Settings> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => EditProfile()));
+                                  builder: (context) => EditProfile(
+                                        email: prefs.getString("email"),
+                                        contactNo: prefs.getString("contactNo"),
+                                      )));
                         },
                       ),
                       GestureDetector(
@@ -230,11 +233,14 @@ class _SettingsState extends State<Settings> {
           top: 30.0,
         ),
         (!isLoading)
-            ? Positioned(
-                child: UserDetails(name, enr, branch, hostel, room, email),
-                top: 50.0,
-                left: 0.0,
-              )
+            ? Container(
+                alignment: Alignment.center,
+                height: MediaQuery.of(context).size.height / 2.1,
+                width: MediaQuery.of(context).size.width,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 80),
+                  child: UserDetails(name, enr, branch, hostel, room, email),
+                ))
             : Positioned(
                 top: 50.0,
                 left: 0.0,

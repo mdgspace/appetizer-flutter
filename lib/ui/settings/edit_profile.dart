@@ -1,6 +1,7 @@
 import 'package:appetizer/ui/settings/settings_screen.dart';
 import 'package:appetizer/ui/settings/user_details.dart';
 import 'package:appetizer/services/user.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -65,7 +66,23 @@ class _EditProfileState extends State<EditProfile> {
     width = MediaQuery.of(context).size.width;
     return Stack(
       children: <Widget>[
+        Container(
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          color: const Color.fromRGBO(121, 85, 72, 1),
+        ),
+        SafeArea(
+          child: Container(
+            alignment: Alignment.topRight,
+            child: SvgPicture.asset(
+              'assets/icons/IITRLogo.svg',
+              height: 160,
+              width: 160,
+            ),
+          ),
+        ),
         Scaffold(
+          backgroundColor: Colors.transparent,
           appBar: AppBar(
             leading: IconButton(
               icon: Icon(Icons.arrow_back),
@@ -86,81 +103,85 @@ class _EditProfileState extends State<EditProfile> {
               "Settings",
               style: new TextStyle(color: Colors.white),
             ),
-            backgroundColor: const Color.fromRGBO(121, 85, 72, 1),
+            backgroundColor: Colors.transparent,
             elevation: 0.0,
           ),
-          body: SafeArea(
-            child: SingleChildScrollView(
+          body: SingleChildScrollView(
+            child: Container(
+              color: Colors.transparent,
               child: Form(
                 key: formKey,
                 child: Column(
                   children: <Widget>[
-                    new Container(
-                      height: MediaQuery.of(context).size.height / 2.5,
-                      width: MediaQuery.of(context).size.width,
-                      color: const Color.fromRGBO(121, 85, 72, 1),
-                    ),
-                    _showContactNoInput(),
-                    _showEmailInput(),
-                    _showConfirmButton(),
+                    Container(
+                        alignment: Alignment.center,
+                        child: UserDetails(name, enr, branch, hostel, room, email)),
+//                      Container(
+//                        color: Colors.transparent,
+//                        child:
+//                            UserDetails(name, enr, branch, hostel, room, email),
+//                      ),
+                    Container(
+                      alignment: Alignment.bottomCenter,
+                      color: Colors.white,
+                      height: MediaQuery.of(context).size.height / 1.9,
+                      child: Column(
+                        children: <Widget>[
+                          _showContactNoInput(),
+                          _showEmailInput(),
+                          _showConfirmButton(),
+                        ],
+                      ),
+                    )
                   ],
                 ),
               ),
             ),
           ),
         ),
-        Positioned(
-          child: SvgPicture.asset(
-            'assets/icons/IITRLogo.svg',
-            height: 160.0,
-            width: 160.0,
-          ),
-          left: 192.0,
-          top: 30.0,
-        ),
-        Positioned(
-          child: UserDetails(name, enr, branch, hostel, room, email),
-          top: 50.0,
-          left: 0.0,
-        )
       ],
     );
   }
 
   Widget _showConfirmButton() {
     return Padding(
-      padding: const EdgeInsets.only(top: 58, bottom: 48),
-      child: new FlatButton(
-        padding: EdgeInsets.fromLTRB(width * 0.25, 15, width * 0.25, 15),
-        color: Colors.white,
-        shape: new Border.all(
-          width: 2,
-          color: appiYellow,
-          style: BorderStyle.solid,
-        ),
-        child: new Text(
-          'Save Details',
-          style: Theme.of(context).primaryTextTheme.display4,
-        ),
-        onPressed: _validateAndSave,
-      ),
-    );
+        padding: const EdgeInsets.fromLTRB(24, 50, 24, 24),
+        child: OutlineButton(
+          highlightedBorderColor: appiYellow,
+          borderSide: BorderSide(
+            color: appiYellow,
+            width: 2,
+          ),
+          splashColor: Colors.transparent,
+          child: ListTile(
+            title: Text(
+              "Save Details",
+              textAlign: TextAlign.center,
+              style: Theme.of(context).primaryTextTheme.display1,
+            ),
+          ),
+          onPressed: _validateAndSave,
+        ));
   }
 
   Widget _showContactNoInput() {
     return Padding(
       padding: const EdgeInsets.fromLTRB(40.0, 40.0, 40.0, 0.0),
       child: new TextFormField(
-        initialValue: widget.contactNo,
         maxLines: 1,
         keyboardType: TextInputType.number,
+        initialValue: widget.contactNo,
         autofocus: false,
         decoration: new InputDecoration(
-            labelText: "Contact No",
-            icon: new Icon(
-              Icons.person,
-              color: Colors.grey,
-            )),
+          labelText: "Contact No",
+          labelStyle:
+          Theme.of(context).primaryTextTheme.subhead,
+          icon: new Icon(
+            Icons.person,
+            color: appiGreyIcon,
+            size: 30,
+          ),
+        ),
         validator: (value) {
           if (value.isEmpty) {
             return "Contact No can\'t be empty";
@@ -178,16 +199,20 @@ class _EditProfileState extends State<EditProfile> {
     return Padding(
       padding: const EdgeInsets.fromLTRB(40.0, 40.0, 40.0, 0.0),
       child: new TextFormField(
-        initialValue: widget.email,
         maxLines: 1,
-        keyboardType: TextInputType.emailAddress,
+        keyboardType: TextInputType.number,
+        initialValue: widget.email,
         autofocus: false,
         decoration: new InputDecoration(
-            labelText: "Email",
-            icon: new Icon(
-              Icons.email,
-              color: Colors.grey,
-            )),
+          labelText: "Email",
+          labelStyle:
+          Theme.of(context).primaryTextTheme.subhead,
+          icon: new Icon(
+            Icons.mail,
+            color: appiGreyIcon,
+            size: 30,
+          ),
+        ),
         validator: (value) {
           Pattern pattern =
               r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
@@ -217,9 +242,7 @@ class _EditProfileState extends State<EditProfile> {
     Navigator.pop(context);
     Navigator.pop(context);
     Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => Settings()));
+        context, MaterialPageRoute(builder: (context) => Settings()));
 
     saveUserDetails(contactNo, email);
   }
