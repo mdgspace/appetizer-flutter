@@ -6,15 +6,9 @@ import 'package:appetizer/services/menu.dart';
 import 'package:appetizer/services/user.dart';
 import 'package:appetizer/ui/menu/day_menu.dart';
 import 'package:appetizer/ui/menu/no_meals.dart';
-import 'package:appetizer/utils/connectivity_status.dart';
 import 'package:appetizer/utils/date_time_utils.dart';
 import 'package:appetizer/change_notifiers/current_date.dart';
-import 'package:appetizer/services/menu.dart';
-import 'package:appetizer/services/user.dart';
 import 'package:appetizer/ui/components/inherited_data.dart';
-import 'package:appetizer/ui/menu/day_menu.dart';
-import 'package:appetizer/ui/menu/no_meals.dart';
-import 'package:appetizer/utils/connectivity_status.dart';
 import 'package:appetizer/utils/get_hostel_code.dart';
 import 'package:appetizer/utils/menu_utils.dart';
 import 'package:flutter/material.dart';
@@ -167,5 +161,32 @@ class _MenuState extends State<Menu> {
     );
   }
 
-  _showOtherMenu(BuildContext context) {}
+  _showOtherMenu(BuildContext context) {
+    var selectedDateTime = Provider.of<CurrentDateModel>(context).dateTime;
+
+    return Consumer<OtherMenuModel>(
+      builder: (_, menu, child) {
+        if (menu.isFetching == true) {
+          return _loadingIndicator(context);
+        } else {
+          if (menu.isFetching == false && menu.hostelWeekMenu == null) {
+            return NoMealsScreen();
+          } else {
+            Day currentDayMeal =
+            menu.hostelWeekMenu.days[selectedDateTime.weekday - 1];
+            dailyItemsMap = getDailyItemsMap(menu.hostelWeekMenu);
+            print(dailyItemsMap);
+            return DayMenu(
+              token: widget.token,
+              currentDayMeal: currentDayMeal,
+              dailyItemsMap: dailyItemsMap,
+              selectedDateTime: selectedDateTime,
+              selectedHostelCode: _selectedHostelcode,
+              hostelName: inheritedData.userDetails.hostelName,
+            );
+          }
+        }
+      },
+    );
+  }
 }
