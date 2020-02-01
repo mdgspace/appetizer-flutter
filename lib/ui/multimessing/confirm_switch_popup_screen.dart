@@ -5,6 +5,7 @@ import 'package:appetizer/models/menu/week.dart';
 import 'package:appetizer/services/menu.dart';
 import 'package:appetizer/services/multimessing/switch_meals.dart';
 import 'package:appetizer/ui/components/alert_dialog.dart';
+import 'package:appetizer/ui/components/inherited_data.dart';
 import 'package:appetizer/ui/components/switch_confirmation_meal_card.dart';
 import 'package:appetizer/ui/multimessing/confirmed_switch_screen.dart';
 import 'package:appetizer/utils/get_hostel_code.dart';
@@ -21,7 +22,6 @@ class ConfirmSwitchPopupScreen extends StatefulWidget {
   final String dailyItemsToWhichToBeSwitched;
   final DateTime selectedDateTime;
   final String selectedHostelCode;
-  final String residingHostel;
 
   const ConfirmSwitchPopupScreen({
     Key key,
@@ -33,16 +33,26 @@ class ConfirmSwitchPopupScreen extends StatefulWidget {
     this.dailyItemsToWhichToBeSwitched,
     this.selectedDateTime,
     this.selectedHostelCode,
-    this.residingHostel,
   }) : super(key: key);
 
   @override
-  _ConfirmSwitchPopupScreenState createState() => _ConfirmSwitchPopupScreenState();
+  _ConfirmSwitchPopupScreenState createState() =>
+      _ConfirmSwitchPopupScreenState();
 }
 
 class _ConfirmSwitchPopupScreenState extends State<ConfirmSwitchPopupScreen> {
   static final double _radius = 16;
   int currentHostelMealId;
+
+  InheritedData inheritedData;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (inheritedData == null) {
+      inheritedData = InheritedData.of(context);
+    }
+  }
 
   List<CircleAvatar> mealFromWhichToBeSwitchedLeadingImageList = [];
   List<String> mealFromWhichToBeSwitchedItemsList = [];
@@ -98,7 +108,7 @@ class _ConfirmSwitchPopupScreenState extends State<ConfirmSwitchPopupScreen> {
         future: menuWeekMultiMessing(
           widget.token,
           getWeekNumber(widget.selectedDateTime),
-          hostelCodeMap[widget.residingHostel],
+          hostelCodeMap[inheritedData.getUserDetails.hostelName],
         ),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {

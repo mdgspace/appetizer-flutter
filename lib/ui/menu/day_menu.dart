@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:appetizer/models/menu/week.dart';
+import 'package:appetizer/ui/components/inherited_data.dart';
 import 'package:appetizer/ui/menu/other_meals_menu_card.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -15,7 +16,6 @@ class DayMenu extends StatefulWidget {
   final DateTime selectedDateTime;
   final String selectedHostelCode;
   final String hostelName;
-  final String residingHostel;
 
   const DayMenu({
     Key key,
@@ -25,7 +25,6 @@ class DayMenu extends StatefulWidget {
     this.selectedDateTime,
     this.selectedHostelCode,
     this.hostelName,
-    this.residingHostel,
   }) : super(key: key);
 
   @override
@@ -33,8 +32,18 @@ class DayMenu extends StatefulWidget {
 }
 
 class _DayMenuState extends State<DayMenu> {
+  InheritedData inheritedData;
+
   static final double _radius = 16;
   DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (inheritedData == null) {
+      inheritedData = InheritedData.of(context);
+    }
+  }
 
   int breakfastId;
   int lunchId;
@@ -144,7 +153,7 @@ class _DayMenuState extends State<DayMenu> {
         }
         isBreakfastSwitchable = widget.currentDayMeal.meals[i].isSwitchable;
         breakfastSwitchStatus = widget.currentDayMeal.meals[i].switchStatus;
-        if (widget.residingHostel == widget.hostelName) {
+        if (inheritedData.userDetails.hostelName == widget.hostelName) {
           breakfastHostelName = widget.currentDayMeal.meals[i].hostelName;
           breakfastSecretCode = widget.currentDayMeal.meals[i].secretCode;
         }
@@ -185,7 +194,7 @@ class _DayMenuState extends State<DayMenu> {
         }
         isLunchSwitchable = widget.currentDayMeal.meals[i].isSwitchable;
         lunchSwitchStatus = widget.currentDayMeal.meals[i].switchStatus;
-        if (widget.residingHostel == widget.hostelName) {
+        if (inheritedData.userDetails.hostelName == widget.hostelName) {
           lunchHostelName = widget.currentDayMeal.meals[i].hostelName;
           lunchSecretCode = widget.currentDayMeal.meals[i].secretCode;
         }
@@ -226,7 +235,7 @@ class _DayMenuState extends State<DayMenu> {
         }
         isSnacksSwitchable = widget.currentDayMeal.meals[i].isSwitchable;
         snacksSwitchStatus = widget.currentDayMeal.meals[i].switchStatus;
-        if (widget.residingHostel == widget.hostelName) {
+        if (inheritedData.userDetails.hostelName == widget.hostelName) {
           snacksHostelName = widget.currentDayMeal.meals[i].hostelName;
           snacksSecretCode = widget.currentDayMeal.meals[i].secretCode;
         }
@@ -267,7 +276,7 @@ class _DayMenuState extends State<DayMenu> {
         }
         isDinnerSwitchable = widget.currentDayMeal.meals[i].isSwitchable;
         dinnerSwitchStatus = widget.currentDayMeal.meals[i].switchStatus;
-        if (widget.residingHostel == widget.hostelName) {
+        if (inheritedData.userDetails.hostelName == widget.hostelName) {
           dinnerHostelName = widget.currentDayMeal.meals[i].hostelName;
           dinnerSecretCode = widget.currentDayMeal.meals[i].secretCode;
         }
@@ -296,7 +305,7 @@ class _DayMenuState extends State<DayMenu> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         (breakfastMealMap.isNotEmpty)
-            ? widget.residingHostel == widget.hostelName
+            ? inheritedData.userDetails.hostelName == widget.hostelName
                 ? YourMealsMenuCard(
                     title: 'Breakfast',
                     menuItems: breakfastMealMap,
@@ -333,11 +342,10 @@ class _DayMenuState extends State<DayMenu> {
                     selectedHostelCode: widget.selectedHostelCode,
                     switchStatus: breakfastSwitchStatus,
                     hostelName: widget.hostelName,
-                    residingHostel: widget.residingHostel,
                   )
             : Container(),
         (lunchMealMap.isNotEmpty)
-            ? widget.residingHostel == widget.hostelName
+            ? inheritedData.userDetails.hostelName == widget.hostelName
                 ? YourMealsMenuCard(
                     title: 'Lunch',
                     menuItems: lunchMealMap,
@@ -374,11 +382,10 @@ class _DayMenuState extends State<DayMenu> {
                     selectedHostelCode: widget.selectedHostelCode,
                     switchStatus: lunchSwitchStatus,
                     hostelName: widget.hostelName,
-                    residingHostel: widget.residingHostel,
                   )
             : Container(),
         (snacksMealMap.isNotEmpty)
-            ? widget.residingHostel == widget.hostelName
+            ? inheritedData.userDetails.hostelName == widget.hostelName
                 ? YourMealsMenuCard(
                     title: 'Snacks',
                     menuItems: snacksMealMap,
@@ -415,11 +422,10 @@ class _DayMenuState extends State<DayMenu> {
                     selectedHostelCode: widget.selectedHostelCode,
                     switchStatus: snacksSwitchStatus,
                     hostelName: widget.hostelName,
-                    residingHostel: widget.residingHostel,
                   )
             : Container(),
         (dinnerMealMap.isNotEmpty)
-            ? widget.residingHostel == widget.hostelName
+            ? inheritedData.userDetails.hostelName == widget.hostelName
                 ? YourMealsMenuCard(
                     title: 'Dinner',
                     menuItems: dinnerMealMap,
@@ -456,7 +462,6 @@ class _DayMenuState extends State<DayMenu> {
                     selectedHostelCode: widget.selectedHostelCode,
                     switchStatus: dinnerSwitchStatus,
                     hostelName: widget.hostelName,
-                    residingHostel: widget.residingHostel,
                   )
             : Container(),
       ],

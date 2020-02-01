@@ -41,8 +41,6 @@ class _HomeState extends State<Home> {
 
   String selectedHostelName;
 
-  // TODO: remove residingHostel variable
-  String residingHostel;
   List<String> switchableHostelsList = [];
 
   InheritedData inheritedData;
@@ -53,11 +51,6 @@ class _HomeState extends State<Home> {
     super.initState();
 
     firebaseCloudMessagingListeners();
-    SharedPreferences.getInstance().then((prefs) {
-      setState(() {
-        residingHostel = prefs.getString("hostelName");
-      });
-    });
     switchableHostelsList.add("Your Meals");
     switchableHostels(widget.token).then((hostelsList) {
       hostelsList.forEach((hostel) {

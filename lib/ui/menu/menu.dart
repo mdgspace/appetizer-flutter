@@ -121,7 +121,6 @@ class _MenuState extends State<Menu> {
                 selectedDateTime: selectedDateTime.dateTime,
                 selectedHostelCode: Provider.of<OtherMenuModel>(context).hostelCode,
                 hostelName: hostelNameFromWeek,
-                residingHostel: inheritedData.userDetails.hostelName,
               );
             }
           }
