@@ -43,6 +43,10 @@ Future<Week> menuWeekForYourMeals(String token, int weekId) async {
       headers: tokenAuth,
     );
     final jsonResponse = jsonDecode(response.body);
+    print("JSON RESPONSE: $jsonResponse");
+    if(jsonResponse["detail"] == "Not found."){
+      return null;
+    }
     Week weekForYourMeals = new Week.fromJson(jsonResponse);
     print(response.body);
     return weekForYourMeals;

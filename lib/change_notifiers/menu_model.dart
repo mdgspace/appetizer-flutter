@@ -3,7 +3,6 @@ import 'package:appetizer/models/user/user_details_shared_pref.dart';
 import 'package:appetizer/services/menu.dart';
 import 'package:appetizer/utils/get_hostel_code.dart';
 import 'package:appetizer/utils/get_week_id.dart';
-import 'package:appetizer/utils/user_details.dart';
 import 'package:flutter/foundation.dart';
 
 class YourMenuModel extends ChangeNotifier {
@@ -11,7 +10,7 @@ class YourMenuModel extends ChangeNotifier {
   Week _selectedWeekYourMeals;
   UserDetailsSharedPref _userDetails;
   //Convert to enum;
-  int _isFetching;
+  bool _isFetching;
 
   YourMenuModel(UserDetailsSharedPref userDetails) {
     _userDetails = userDetails;
@@ -20,26 +19,31 @@ class YourMenuModel extends ChangeNotifier {
 
   Week get currentWeekYourMeals => _currentWeekYourMeals;
   Week get selectedWeekYourMeals => _selectedWeekYourMeals;
-  int get isFetching => _isFetching;
+  bool get isFetching => _isFetching;
 
 
   void currentWeekMenuYourMeals() async {
-    _isFetching = 1;
+    _isFetching = true;
     notifyListeners();
     _currentWeekYourMeals = await menuWeekForYourMeals(
         _userDetails.token, getWeekNumber(DateTime.now()));
     _selectedWeekYourMeals = _currentWeekYourMeals;
-    _isFetching = 0;
+    _isFetching = false;
     notifyListeners();
   }
 
-  void selectedWeekMenuYourMeals(DateTime dateTime) async {
-    _isFetching = 1;
+  void selectedWeekMenuYourMeals(int weekId) async {
+    _isFetching = true;
     notifyListeners();
-    _selectedWeekYourMeals =
-        await menuWeekForYourMeals(_userDetails.token, getWeekNumber(dateTime));
-    _isFetching = 0;
-    notifyListeners();
+    print("SELECTED WEEK ${weekId}");
+    menuWeekForYourMeals(_userDetails.token, weekId).then((week){
+      _selectedWeekYourMeals = week;
+      print("_selectWekk : ${_selectedWeekYourMeals}");
+      _isFetching = false;
+      notifyListeners();
+    }).catchError((e){
+      print(e);
+    });
   }
 
 }
@@ -61,6 +65,8 @@ class OtherMenuModel extends ChangeNotifier {
     _userDetails = userDetails;
     _weekId = getWeekNumber(DateTime.now());
     _hostelCode = hostelCode;
+    print("Hostel code set $_hostelCode");
+    notifyListeners();
   }
 
   void getOtherMenu(DateTime selectedDateTime, String selectedHostel) async{

@@ -1,7 +1,7 @@
 import 'package:appetizer/change_notifiers/menu_model.dart';
 import 'package:appetizer/colors.dart';
 import 'package:appetizer/globals.dart';
-import 'package:appetizer/provider/current_date.dart';
+import 'package:appetizer/change_notifiers/current_date.dart';
 import 'package:appetizer/services/connectivity_service.dart';
 import 'package:appetizer/services/leave.dart';
 import 'package:appetizer/services/multimessing/switchable_hostels.dart';
@@ -115,9 +115,22 @@ class _HomeState extends State<Home> {
                   Flexible(
                     child: SingleChildScrollView(
                       child: ChangeNotifierProvider(
-                        create: (context) => OtherMenuModel(inheritedData.userDetails, hostelCodeMap[selectedHostelName]),
-                        child: Menu(
-                          token: widget.token,
+                        create: (context) => OtherMenuModel(inheritedData.userDetails, hostelCodeMap[inheritedData.userDetails.hostelName]),
+                        child: Consumer<CurrentDateModel>(
+                          builder: (_, dateModel, child){
+                            if(dateModel.weekDidChange){
+                              print("WeekID home: ${dateModel.weekId}");
+                              return Menu(
+                                token: widget.token,
+                                weekId: dateModel.weekId,
+                              );
+                            }else{
+                              return Menu(
+                                token: widget.token,
+                              );
+                            }
+
+                          },
                         ),
                       ),
                     ),
