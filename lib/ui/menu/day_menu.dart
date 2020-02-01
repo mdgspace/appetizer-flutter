@@ -60,10 +60,10 @@ class _DayMenuState extends State<DayMenu> {
   List<String> snacksItemsList;
   List<String> dinnerItemsList;
 
-  Map<CircleAvatar, String> breakfastMealMap = {};
-  Map<CircleAvatar, String> lunchMealMap = {};
-  Map<CircleAvatar, String> snacksMealMap = {};
-  Map<CircleAvatar, String> dinnerMealMap = {};
+  Map<CircleAvatar, String> breakfastMealMap;
+  Map<CircleAvatar, String> lunchMealMap;
+  Map<CircleAvatar, String> snacksMealMap;
+  Map<CircleAvatar, String> dinnerMealMap;
 
   bool isBreakfastSwitched;
   bool isLunchSwitched;
@@ -127,13 +127,27 @@ class _DayMenuState extends State<DayMenu> {
     mealLeadingImageList.add(CircleAvatar(
       radius: _radius,
       backgroundColor: Colors.transparent,
-      child: Image.asset("assets/icons/meal_icon"+(math.Random().nextInt(5) + 1).toString()+".jpg",scale: 2.5,),
+      child: Image.asset(
+        "assets/icons/meal_icon" +
+            (math.Random().nextInt(5) + 1).toString() +
+            ".jpg",
+        scale: 2.5,
+      ),
     ));
   }
 
   @override
   Widget build(BuildContext context) {
+    print("fucking day ${widget.currentDayMeal.date}");
     var numberOfMeals = widget.currentDayMeal.meals.length;
+    breakfastItemsList = [];
+    breakfastLeadingImageList = [];
+    lunchItemsList = [];
+    lunchLeadingImageList = [];
+    snacksItemsList = [];
+    snacksLeadingImageList = [];
+    dinnerItemsList = [];
+    dinnerLeadingImageList = [];
     for (var i = 0; i < numberOfMeals; i++) {
       if (widget.currentDayMeal.meals[i].type == MealType.B) {
         breakfastLeaveStatus = widget.currentDayMeal.meals[i].leaveStatus;
@@ -169,8 +183,7 @@ class _DayMenuState extends State<DayMenu> {
                     LeaveStatusEnum.N
                 ? true
                 : false;
-        breakfastItemsList = [];
-        breakfastLeadingImageList = [];
+
         for (var j = 0; j < widget.currentDayMeal.meals[i].items.length; j++) {
           var breakfastMealItem = widget.currentDayMeal.meals[i].items[j].name;
           breakfastItemsList.add(breakfastMealItem);
@@ -209,8 +222,6 @@ class _DayMenuState extends State<DayMenu> {
                 LeaveStatusEnum.N
             ? true
             : false;
-        lunchItemsList = [];
-        lunchLeadingImageList = [];
 
         for (var j = 0; j < widget.currentDayMeal.meals[i].items.length; j++) {
           var lunchMealItem = widget.currentDayMeal.meals[i].items[j].name;
@@ -250,8 +261,6 @@ class _DayMenuState extends State<DayMenu> {
                 LeaveStatusEnum.N
             ? true
             : false;
-        snacksItemsList = [];
-        snacksLeadingImageList = [];
 
         for (var j = 0; j < widget.currentDayMeal.meals[i].items.length; j++) {
           var snacksMealItem = widget.currentDayMeal.meals[i].items[j].name;
@@ -291,8 +300,7 @@ class _DayMenuState extends State<DayMenu> {
                 LeaveStatusEnum.N
             ? true
             : false;
-        dinnerItemsList = [];
-        dinnerLeadingImageList = [];
+
         for (var j = 0; j < widget.currentDayMeal.meals[i].items.length; j++) {
           var dinnerMealItem = widget.currentDayMeal.meals[i].items[j].name;
           dinnerItemsList.add(dinnerMealItem);
@@ -303,17 +311,17 @@ class _DayMenuState extends State<DayMenu> {
 
     breakfastMealMap =
         Map.fromIterables(breakfastLeadingImageList, breakfastItemsList);
+
     lunchMealMap = Map.fromIterables(lunchLeadingImageList, lunchItemsList);
     dinnerMealMap = Map.fromIterables(dinnerLeadingImageList, dinnerItemsList);
     snacksMealMap = Map.fromIterables(snacksLeadingImageList, snacksItemsList);
-
-    print("BMM: $breakfastMealMap");
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         (breakfastMealMap.isNotEmpty)
-            ? hostelCodeMap[inheritedData.userDetails.hostelName] == widget.selectedHostelCode
+            ? hostelCodeMap[inheritedData.userDetails.hostelName] ==
+                    widget.selectedHostelCode
                 ? YourMealsMenuCard(
                     title: 'Breakfast',
                     menuItems: breakfastMealMap,
@@ -353,7 +361,8 @@ class _DayMenuState extends State<DayMenu> {
                   )
             : Container(),
         (lunchMealMap.isNotEmpty)
-            ? hostelCodeMap[inheritedData.userDetails.hostelName] == widget.selectedHostelCode
+            ? hostelCodeMap[inheritedData.userDetails.hostelName] ==
+                    widget.selectedHostelCode
                 ? YourMealsMenuCard(
                     title: 'Lunch',
                     menuItems: lunchMealMap,
@@ -393,7 +402,8 @@ class _DayMenuState extends State<DayMenu> {
                   )
             : Container(),
         (snacksMealMap.isNotEmpty)
-            ? hostelCodeMap[inheritedData.userDetails.hostelName] == widget.selectedHostelCode
+            ? hostelCodeMap[inheritedData.userDetails.hostelName] ==
+                    widget.selectedHostelCode
                 ? YourMealsMenuCard(
                     title: 'Snacks',
                     menuItems: snacksMealMap,
@@ -433,7 +443,8 @@ class _DayMenuState extends State<DayMenu> {
                   )
             : Container(),
         (dinnerMealMap.isNotEmpty)
-            ? hostelCodeMap[inheritedData.userDetails.hostelName] == widget.selectedHostelCode
+            ? hostelCodeMap[inheritedData.userDetails.hostelName] ==
+                    widget.selectedHostelCode
                 ? YourMealsMenuCard(
                     title: 'Dinner',
                     menuItems: dinnerMealMap,

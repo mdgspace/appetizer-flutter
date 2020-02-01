@@ -17,6 +17,7 @@ import 'package:appetizer/ui/my_rebates/my_rebates_screen.dart';
 import 'package:appetizer/ui/notification_history/noti_history_screen.dart';
 import 'package:appetizer/ui/user_feedback/user_feedback.dart';
 import 'package:appetizer/utils/connectivity_status.dart';
+import 'package:appetizer/utils/date_time_utils.dart';
 import 'package:appetizer/utils/get_hostel_code.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -187,12 +188,14 @@ class _HomeState extends State<Home> {
                     });
                     otherMenuModel.setHostelCode =
                         hostelCodeMap[inheritedData.userDetails.hostelName];
+                    otherMenuModel.getOtherMenu(DateTimeUtils.getWeekNumber(DateTime.now()));
                   } else {
                     setState(() {
                       selectedHostelName = _selectedHostelName;
                     });
                     otherMenuModel.setHostelCode =
                         hostelCodeMap[_selectedHostelName];
+                    otherMenuModel.getOtherMenu(DateTimeUtils.getWeekNumber(DateTime.now()));
                   }
                 },
               ),
