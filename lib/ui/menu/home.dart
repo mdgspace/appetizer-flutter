@@ -87,9 +87,9 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(builder: (context) => CurrentDateModel()),
+        ChangeNotifierProvider(create: (context) => CurrentDateModel()),
         StreamProvider<ConnectivityStatus>(
-            builder: (context) =>
+            create: (context) =>
                 ConnectivityService().connectionStatusController.stream)
       ],
       child: Scaffold(
