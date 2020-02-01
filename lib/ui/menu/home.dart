@@ -41,18 +41,21 @@ class _HomeState extends State<Home> {
 
   String selectedHostelName;
 
-  List<String> switchableHostelsList = [];
+  List<String> switchableHostelsList;
 
   InheritedData inheritedData;
   YourMenuModel menuModel;
+  OtherMenuModel otherMenuModel;
 
   @override
   void initState() {
     super.initState();
 
     firebaseCloudMessagingListeners();
+    switchableHostelsList = [];
     switchableHostelsList.add("Your Meals");
     switchableHostels(widget.token).then((hostelsList) {
+      print("HOSTELS LIST $hostelsList");
       hostelsList.forEach((hostel) {
         switchableHostelsList.add(hostel[2].toString());
       });
@@ -86,6 +89,8 @@ class _HomeState extends State<Home> {
     if (inheritedData == null) {
       inheritedData = InheritedData.of(context);
       menuModel = YourMenuModel(inheritedData.userDetails);
+      otherMenuModel = OtherMenuModel(inheritedData.userDetails,
+          hostelCodeMap[inheritedData.userDetails.hostelName]);
     }
   }
 
@@ -96,6 +101,7 @@ class _HomeState extends State<Home> {
         ChangeNotifierProvider(create: (context) {
           return menuModel;
         }),
+        ChangeNotifierProvider(create: (context) => otherMenuModel),
         ChangeNotifierProvider(create: (context) => CurrentDateModel()),
         StreamProvider<ConnectivityStatus>(
             create: (context) =>
@@ -113,20 +119,8 @@ class _HomeState extends State<Home> {
                   HorizontalDatePicker(token: widget.token),
                   Flexible(
                     child: SingleChildScrollView(
-                      child: ChangeNotifierProvider(
-                        create: (context) {
-                          var hostel;
-                          if (selectedHostelName == null) {
-                            hostel = inheritedData.userDetails.hostelName;
-                          } else {
-                            hostel = selectedHostelName;
-                          }
-                          return OtherMenuModel(
-                              inheritedData.userDetails, hostelCodeMap[hostel]);
-                        },
-                        child: Menu(
-                          token: widget.token,
-                        ),
+                      child: Menu(
+                        token: widget.token,
                       ),
                     ),
                   ),
@@ -191,10 +185,14 @@ class _HomeState extends State<Home> {
                     setState(() {
                       selectedHostelName = null;
                     });
+                    otherMenuModel.setHostelCode =
+                        hostelCodeMap[inheritedData.userDetails.hostelName];
                   } else {
                     setState(() {
                       selectedHostelName = _selectedHostelName;
                     });
+                    otherMenuModel.setHostelCode =
+                        hostelCodeMap[_selectedHostelName];
                   }
                 },
               ),

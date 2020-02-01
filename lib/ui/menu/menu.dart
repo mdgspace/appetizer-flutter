@@ -51,11 +51,7 @@ class _MenuState extends State<Menu> {
   @override
   void initState() {
     super.initState();
-    weekId = DateTimeUtils.getWeekNumber(DateTime.now());
-    /*   if (widget.weekId != null) {
-      Provider.of<YourMenuModel>(context, listen: false)
-          .selectedWeekMenuYourMeals(widget.weekId);
-    }*/
+
     userMeGet(widget.token).then((me) {
       setState(() {
         isCheckedOut = me.isCheckedOut;
@@ -76,24 +72,31 @@ class _MenuState extends State<Menu> {
   void didChangeDependencies() {
     super.didChangeDependencies();
 
+    if (inheritedData == null) {
+      inheritedData = InheritedData.of(context);
+    }
     final weekId = Provider.of<CurrentDateModel>(context).weekId;
     print("Menu didChange: $weekId");
     if (weekId != this.weekId) {
       this.weekId = weekId;
       Provider.of<YourMenuModel>(context, listen: false)
           .selectedWeekMenuYourMeals(weekId);
+//      Provider.of<OtherMenuModel>(context, listen: false).getOtherMenu(weekId);
     }
 
-    if (inheritedData == null) {
-      inheritedData = InheritedData.of(context);
-      _selectedHostelcode = Provider.of<OtherMenuModel>(context).hostelCode;
+    /*final selectedHostelCode = Provider.of<OtherMenuModel>(context).hostelCode;
+    print("PROVIDER HOSTEL CODE: $selectedHostelCode");
+    if (selectedHostelCode != this._selectedHostelcode) {
+      this._selectedHostelcode = selectedHostelCode;
+      print("MENU HOSTEL CODE: $_selectedHostelcode");
       if (_selectedHostelcode ==
           hostelCodeMap[inheritedData.userDetails.hostelName]) {
         _menuMode = MenuMode.YOUR_MENU;
       } else {
+        print("MENU Mode other : $_selectedHostelcode");
         _menuMode = MenuMode.OTHER_MENU;
       }
-    }
+    }*/
   }
 
   Future<void> updateMealDb(Week weekMenu) async {
@@ -104,9 +107,41 @@ class _MenuState extends State<Menu> {
 
   @override
   Widget build(BuildContext context) {
-    return _menuMode == MenuMode.YOUR_MENU
-        ? _showYourMenu(context)
-        : _showOtherMenu(context);
+    return Consumer<OtherMenuModel>(
+      builder: (_, otherMenuModel, __) {
+        if (otherMenuModel.hostelCode ==
+            hostelCodeMap[inheritedData.userDetails.hostelName]) {
+          return _showYourMenu(context);
+        } else {
+          var selectedDateTime =
+              Provider.of<CurrentDateModel>(context).dateTime;
+//          otherMenuModel
+//              .getOtherMenu(DateTimeUtils.getWeekNumber(selectedDateTime));
+
+          if (otherMenuModel.isFetching == true) {
+            return _loadingIndicator(context);
+          } else {
+            if (otherMenuModel.isFetching == false &&
+                otherMenuModel.hostelWeekMenu == null) {
+              return NoMealsScreen();
+            } else {
+              Day currentDayMeal = otherMenuModel
+                  .hostelWeekMenu.days[selectedDateTime.weekday - 1];
+              dailyItemsMap = getDailyItemsMap(otherMenuModel.hostelWeekMenu);
+              print(dailyItemsMap);
+              return DayMenu(
+                token: widget.token,
+                currentDayMeal: currentDayMeal,
+                dailyItemsMap: dailyItemsMap,
+                selectedDateTime: selectedDateTime,
+                selectedHostelCode: otherMenuModel.hostelCode,
+                hostelName: inheritedData.userDetails.hostelName,
+              );
+            }
+          }
+        }
+      },
+    );
   }
 
   Widget _menuUnavailableForSingleDay(context) => Column(

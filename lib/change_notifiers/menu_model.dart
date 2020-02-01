@@ -53,6 +53,11 @@ class OtherMenuModel extends ChangeNotifier {
   int _weekId;
   String _hostelCode;
 
+  set setHostelCode(String value) {
+    _hostelCode = value;
+    print("hostel code set to: $_hostelCode");
+  }
+
   UserDetailsSharedPref _userDetails;
   Week _hostelWeekMenu;
   bool _isFetching;
@@ -66,18 +71,19 @@ class OtherMenuModel extends ChangeNotifier {
     _weekId = DateTimeUtils.getWeekNumber(DateTime.now());
     _hostelCode = hostelCode;
     print("Hostel code set $_hostelCode");
+//    getOtherMenu(DateTime.now(), _hostelCode);
     notifyListeners();
   }
 
-  void getOtherMenu(DateTime selectedDateTime, String selectedHostel) async{
+/*  void getOtherMenu(int weekId) async{
     _isFetching = true;
-    menuWeekMultiMessing(_userDetails.token, DateTimeUtils.getWeekNumber(selectedDateTime), hostelCodeMap[selectedHostel]).then((weekMenu){
+    menuWeekMultiMessing(_userDetails.token, weekId, _hostelCode).then((weekMenu){
     _isFetching = false;
     _hostelWeekMenu = weekMenu;
     notifyListeners();
     }).catchError((e){
       print(e);
     });
-  }
+  }*/
 
 }
