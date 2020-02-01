@@ -81,7 +81,7 @@ class _MenuState extends State<Menu> {
       this.weekId = weekId;
       Provider.of<YourMenuModel>(context, listen: false)
           .selectedWeekMenuYourMeals(weekId);
-//      Provider.of<OtherMenuModel>(context, listen: false).getOtherMenu(weekId);
+      Provider.of<OtherMenuModel>(context, listen: false).getOtherMenu(weekId);
     }
 
     /*final selectedHostelCode = Provider.of<OtherMenuModel>(context).hostelCode;
@@ -112,7 +112,8 @@ class _MenuState extends State<Menu> {
         if (otherMenuModel.hostelCode ==
             hostelCodeMap[inheritedData.userDetails.hostelName]) {
           return _showYourMenu(context);
-        } else {
+        }
+        else {
           var selectedDateTime =
               Provider.of<CurrentDateModel>(context).dateTime;
 //          otherMenuModel
@@ -136,13 +137,15 @@ class _MenuState extends State<Menu> {
                 dailyItemsMap: dailyItemsMap,
                 selectedDateTime: selectedDateTime,
                 selectedHostelCode: otherMenuModel.hostelCode,
-                hostelName: inheritedData.userDetails.hostelName,
+                hostelName: otherMenuModel.hostelCode,
               );
             }
           }
         }
+
       },
     );
+
   }
 
   Widget _menuUnavailableForSingleDay(context) => Column(
@@ -208,6 +211,8 @@ class _MenuState extends State<Menu> {
           if (menu.isFetching == false && menu.hostelWeekMenu == null) {
             return NoMealsScreen();
           } else {
+            print("OTHER MENU Hostel: ${menu.hostelCode}");
+            print("OTHER MENU : ${menu.hostelWeekMenu.toJson()}");
             Day currentDayMeal =
                 menu.hostelWeekMenu.days[selectedDateTime.weekday - 1];
             dailyItemsMap = getDailyItemsMap(menu.hostelWeekMenu);
@@ -217,8 +222,8 @@ class _MenuState extends State<Menu> {
               currentDayMeal: currentDayMeal,
               dailyItemsMap: dailyItemsMap,
               selectedDateTime: selectedDateTime,
-              selectedHostelCode: _selectedHostelcode,
-              hostelName: inheritedData.userDetails.hostelName,
+              selectedHostelCode: menu.hostelCode,
+              hostelName: menu.hostelCode,
             );
           }
         }

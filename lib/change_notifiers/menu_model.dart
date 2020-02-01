@@ -52,15 +52,14 @@ class OtherMenuModel extends ChangeNotifier {
 
   int _weekId;
   String _hostelCode;
+  UserDetailsSharedPref _userDetails;
+  Week _hostelWeekMenu;
+  bool _isFetching;
 
   set setHostelCode(String value) {
     _hostelCode = value;
     print("hostel code set to: $_hostelCode");
   }
-
-  UserDetailsSharedPref _userDetails;
-  Week _hostelWeekMenu;
-  bool _isFetching;
 
   String get hostelCode => _hostelCode;
   Week get hostelWeekMenu => _hostelWeekMenu;
@@ -72,16 +71,18 @@ class OtherMenuModel extends ChangeNotifier {
     _hostelCode = hostelCode;
     print("Hostel code set $_hostelCode");
 
-    getOtherMenu(DateTimeUtils.getWeekNumber(DateTime.now()));
-    notifyListeners();
+//    getOtherMenu(DateTimeUtils.getWeekNumber(DateTime.now()));
+
   }
 
   void getOtherMenu(int weekId) async{
     _isFetching = true;
+    notifyListeners();
     menuWeekMultiMessing(_userDetails.token, weekId, _hostelCode).then((weekMenu){
-      print("FETCHED : ${weekMenu}");
+      print("FETCHED $_hostelCode: $weekMenu");
     _isFetching = false;
     _hostelWeekMenu = weekMenu;
+    print("INSIDE FETCHER: ${_hostelWeekMenu.toJson()}");
     notifyListeners();
     }).catchError((e){
       print(e);

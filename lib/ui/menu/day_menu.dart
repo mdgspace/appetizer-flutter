@@ -130,7 +130,6 @@ class _DayMenuState extends State<DayMenu> {
 
   @override
   Widget build(BuildContext context) {
-    print("fucking day ${widget.currentDayMeal.date}");
     var numberOfMeals = widget.currentDayMeal.meals.length;
     breakfastItemsList = [];
     breakfastLeadingImageList = [];
