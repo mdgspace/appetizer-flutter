@@ -109,6 +109,7 @@ class DateRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: appiBrown,
       width: MediaQuery.of(context).size.width,
       padding: EdgeInsets.all(padding),
       child: Row(children: _dateWidgets),

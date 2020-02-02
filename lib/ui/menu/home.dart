@@ -8,8 +8,8 @@ import 'package:appetizer/services/multimessing/switchable_hostels.dart';
 import 'package:appetizer/services/user.dart';
 import 'package:appetizer/ui/FAQ/faq_screen.dart';
 import 'package:appetizer/ui/components/alert_dialog.dart';
-import 'package:appetizer/ui/components/horizontal_date_picker.dart';
 import 'package:appetizer/ui/components/inherited_data.dart';
+import 'package:appetizer/ui/date_picker/date_picker.dart';
 import 'package:appetizer/ui/menu/menu.dart';
 import 'package:appetizer/ui/menu_screens/week_menu_screen.dart';
 import 'package:appetizer/ui/my_leaves/my_leaves_screen.dart';
@@ -119,7 +119,10 @@ class _HomeState extends State<Home> {
             children: <Widget>[
               Column(
                 children: <Widget>[
-                  HorizontalDatePicker(token: widget.token),
+                  Container(
+                      height: 90,
+                      width: MediaQuery.of(context).size.width,
+                      child: DatePicker(padding: 0,)),
                   Flexible(
                     child: SingleChildScrollView(
                       child: Menu(
