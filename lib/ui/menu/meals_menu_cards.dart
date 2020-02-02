@@ -1,3 +1,4 @@
+import 'package:appetizer/change_notifiers/menu_model.dart';
 import 'package:appetizer/globals.dart';
 import 'package:appetizer/models/menu/week.dart';
 import 'package:appetizer/services/leave.dart';
@@ -7,11 +8,13 @@ import 'package:appetizer/ui/components/inherited_data.dart';
 import 'package:appetizer/ui/multimessing/qr_generator_widget.dart';
 import 'package:appetizer/ui/multimessing/switchable_meals_screen.dart';
 import 'package:appetizer/ui/user_feedback/new_feedback.dart';
+import 'package:appetizer/utils/date_time_utils.dart';
 import 'package:appetizer/utils/get_day_and_date_for_meal_card.dart';
 import 'package:appetizer/utils/get_leave_color_from_leave_status.dart';
 import 'package:appetizer/utils/menu_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
 
 import '../../colors.dart';
 import '../../globals.dart';
@@ -283,6 +286,7 @@ class _YourMealsMenuCardNewState extends State<YourMealsMenuCardNew> {
                                 widget.meal.id, inheritedData.userDetails.token)
                             .then((leaveBool) {
                           if (leaveBool) {
+                            Provider.of<YourMenuModel>(context, listen: false).selectedWeekMenuYourMeals(DateTimeUtils.getWeekNumber(widget.meal.startDateTime));
                             Navigator.pop(context);
                             setState(() {
                               _mealLeaveStatus = true;
@@ -352,6 +356,7 @@ class _YourMealsMenuCardNewState extends State<YourMealsMenuCardNew> {
                         leave(widget.meal.id.toString(),
                                 inheritedData.userDetails.token)
                             .then((leaveResult) {
+                          Provider.of<YourMenuModel>(context, listen: false).selectedWeekMenuYourMeals(DateTimeUtils.getWeekNumber(widget.meal.startDateTime));
                           if (leaveResult.meal == widget.meal.id) {
                             Navigator.pop(context);
                             Fluttertoast.showToast(
