@@ -675,7 +675,7 @@ class _OtherMealsMenuCardNewState extends State<OtherMealsMenuCardNew> {
     super.didUpdateWidget(oldWidget);
     if (widget.meal != null) {
       _mealSwitchStatus =
-      widget.meal.switchStatus.status == SwitchStatusEnum.N ? true : false;
+          widget.meal.switchStatus.status == SwitchStatusEnum.N ? true : false;
     } else {
       // Toggle ON when _mealLeaveStatus = true
       _mealSwitchStatus = false;
@@ -751,12 +751,14 @@ class _OtherMealsMenuCardNewState extends State<OtherMealsMenuCardNew> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => ChangeNotifierProvider.value(
+                              builder: (context) =>
+                                  ChangeNotifierProvider.value(
                                 value: otherMenuModel,
                                 child: SwitchableMealsScreen(
                                   id: widget.meal.id,
                                   token: inheritedData.userDetails.token,
-                                  weekId: DateTimeUtils.getWeekNumber(widget.meal.startDateTime),
+                                  weekId: DateTimeUtils.getWeekNumber(
+                                      widget.meal.startDateTime),
                                   model: 1,
                                 ),
                               ),

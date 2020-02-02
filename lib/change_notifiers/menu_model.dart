@@ -36,6 +36,9 @@ class YourMenuModel extends ChangeNotifier {
     notifyListeners();
     menuWeekForYourMeals(_userDetails.token, weekId).then((week) {
       _selectedWeekYourMeals = week;
+      if (weekId == DateTimeUtils.getWeekNumber(DateTime.now())) {
+        _currentWeekYourMeals = week;
+      }
       _isFetching = false;
       notifyListeners();
     }).catchError((e) {
