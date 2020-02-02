@@ -51,56 +51,60 @@ class _YourMealsMenuCardNewState extends State<YourMealsMenuCardNew> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(0.0, 4.0, 0.0, 4.0),
-      child: _secretCode == null
-          ? Card(
-              margin: EdgeInsets.fromLTRB(12, 4, 12, 4),
-              elevation: 2,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 32),
-                          child: Row(
-                            children: <Widget>[
-                              Expanded(
-                                child: Row(
+    if (widget.meal == null) {
+      return Container();
+    } else {
+      return Padding(
+        padding: const EdgeInsets.fromLTRB(0.0, 4.0, 0.0, 4.0),
+        child: _secretCode == null
+            ? Card(
+                margin: EdgeInsets.fromLTRB(12, 4, 12, 4),
+                elevation: 2,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 32),
+                            child: Row(
+                              children: <Widget>[
+                                Expanded(
+                                  child: Row(
+                                    children: <Widget>[
+                                      MenuCardUtils.titleAndBhawanNameComponent(
+                                          widget.meal),
+                                      _skippedFlagComponent(),
+                                    ],
+                                  ),
+                                ),
+                                Row(
                                   children: <Widget>[
-                                    MenuCardUtils.titleAndBhawanNameComponent(
-                                        widget.meal),
-                                    _skippedFlagComponent(),
+                                    _showQRButton(),
+                                    _getSwitchIcon(),
+                                    _feedbackOrToggleComponent(context),
                                   ],
                                 ),
-                              ),
-                              Row(
-                                children: <Widget>[
-                                  _showQRButton(),
-                                  _getSwitchIcon(),
-                                  _feedbackOrToggleComponent(context),
-                                ],
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                        Column(
-                          children: MenuCardUtils.itemWidgetList(widget.meal),
-                        ),
-                      ],
+                          Column(
+                            children: MenuCardUtils.itemWidgetList(widget.meal),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  MenuCardUtils.dailyItemsComponent(
-                      widget.meal, widget.dailyItems),
-                ],
-              ),
-            )
-          : _getQRCard(_secretCode),
-    );
+                    MenuCardUtils.dailyItemsComponent(
+                        widget.meal, widget.dailyItems),
+                  ],
+                ),
+              )
+            : _getQRCard(_secretCode),
+      );
+    }
   }
 
   Widget _getQRCard(String secretCode) {
@@ -608,45 +612,50 @@ class _OtherMealsMenuCardNewState extends State<OtherMealsMenuCardNew> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(0.0, 4.0, 0.0, 4.0),
-      child: Card(
-        margin: EdgeInsets.fromLTRB(12, 4, 12, 4),
-        elevation: 2,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.only(bottom: 24.0),
-                          child: Row(
-                            children: <Widget>[
-                              MenuCardUtils.titleAndBhawanNameComponent(widget.meal),
-                            ],
+    if (widget.meal == null) {
+      return null;
+    } else {
+      return Padding(
+        padding: const EdgeInsets.fromLTRB(0.0, 4.0, 0.0, 4.0),
+        child: Card(
+          margin: EdgeInsets.fromLTRB(12, 4, 12, 4),
+          elevation: 2,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.only(bottom: 24.0),
+                            child: Row(
+                              children: <Widget>[
+                                MenuCardUtils.titleAndBhawanNameComponent(
+                                    widget.meal),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                      _getSwitchIcon(),
-                    ],
-                  ),
-                  Column(
-                    children: MenuCardUtils.itemWidgetList(widget.meal),
-                  ),
-                ],
+                        _getSwitchIcon(),
+                      ],
+                    ),
+                    Column(
+                      children: MenuCardUtils.itemWidgetList(widget.meal),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            MenuCardUtils.dailyItemsComponent(widget.meal, widget.dailyItems),
-          ],
+              MenuCardUtils.dailyItemsComponent(widget.meal, widget.dailyItems),
+            ],
+          ),
         ),
-      ),
-    );;
+      );
+    }
   }
 
   Widget _getSwitchIcon() {
@@ -654,105 +663,104 @@ class _OtherMealsMenuCardNewState extends State<OtherMealsMenuCardNew> {
       padding: const EdgeInsets.symmetric(horizontal: 12),
       child: widget.meal.isSwitchable
           ? GestureDetector(
-        child: Image.asset(
-          widget.meal.isLeaveToggleOutdated
-              ? "assets/icons/switch_inactive.png"
-              : _mealSwitchStatus
-              ? "assets/icons/switch_active.png"
-              : "assets/icons/switch_crossed_active.png",
-          width: 30,
-          scale: 2,
-        ),
-        onTap: widget.meal.isLeaveToggleOutdated
-            ? null
-            : _mealSwitchStatus
-            ? () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => SwitchableMealsScreen(
-                id: widget.meal.id,
-                token: inheritedData.userDetails.token,
+              child: Image.asset(
+                widget.meal.isLeaveToggleOutdated
+                    ? "assets/icons/switch_inactive.png"
+                    : _mealSwitchStatus
+                        ? "assets/icons/switch_active.png"
+                        : "assets/icons/switch_crossed_active.png",
+                width: 30,
+                scale: 2,
               ),
-            ),
-          );
-        }
-            : widget.meal.switchStatus.status == SwitchStatusEnum.T ||
-            widget.meal.switchStatus.status ==
-                SwitchStatusEnum.F
-            ? () {
-          showDialog(
-            context: context,
-            builder: (BuildContext alertContext) {
-              return AlertDialog(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                title: new Text(
-                  "Cancel Switch",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                content: new Text(
-                  "Are you sure you want to cancel this switch?",
-                ),
-                actions: <Widget>[
-                  new FlatButton(
-                    onPressed: () {
-                      Navigator.pop(alertContext);
-                    },
-                    child: new Text(
-                      "NO",
-                      style: TextStyle(
-                          color: appiYellow,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  new FlatButton(
-                    child: new Text(
-                      "YES",
-                      style: TextStyle(
-                          color: appiYellow,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    onPressed: () async {
-                      Navigator.pop(alertContext);
-                      showCustomDialog(
-                          context, "Cancelling Switch");
-                      cancelSwitch(
-                          widget.meal.switchStatus.id,
-                          inheritedData
-                              .userDetails.token)
-                          .then((switchCancelResponse) {
-                        Navigator.pop(context);
-                        if (switchCancelResponse) {
-                          Navigator.of(context).popUntil(
-                                  (route) => route.isFirst);
-                          setState(() {
-                            _mealSwitchStatus = true;
-                          });
-                        } else {
-                          Fluttertoast.showToast(
-                              msg:
-                              "Unable to cancel the switch");
+              onTap: widget.meal.isLeaveToggleOutdated
+                  ? null
+                  : _mealSwitchStatus
+                      ? () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => SwitchableMealsScreen(
+                                id: widget.meal.id,
+                                token: inheritedData.userDetails.token,
+                              ),
+                            ),
+                          );
                         }
-                      });
-                    },
-                    highlightColor: Colors.transparent,
-                    splashColor: Colors.transparent,
-                  ),
-                ],
-              );
-            },
-          );
-        }
-            : null,
-      )
+                      : widget.meal.switchStatus.status == SwitchStatusEnum.T ||
+                              widget.meal.switchStatus.status ==
+                                  SwitchStatusEnum.F
+                          ? () {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext alertContext) {
+                                  return AlertDialog(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    title: new Text(
+                                      "Cancel Switch",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    content: new Text(
+                                      "Are you sure you want to cancel this switch?",
+                                    ),
+                                    actions: <Widget>[
+                                      new FlatButton(
+                                        onPressed: () {
+                                          Navigator.pop(alertContext);
+                                        },
+                                        child: new Text(
+                                          "NO",
+                                          style: TextStyle(
+                                              color: appiYellow,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                      new FlatButton(
+                                        child: new Text(
+                                          "YES",
+                                          style: TextStyle(
+                                              color: appiYellow,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        onPressed: () async {
+                                          Navigator.pop(alertContext);
+                                          showCustomDialog(
+                                              context, "Cancelling Switch");
+                                          cancelSwitch(
+                                                  widget.meal.switchStatus.id,
+                                                  inheritedData
+                                                      .userDetails.token)
+                                              .then((switchCancelResponse) {
+                                            Navigator.pop(context);
+                                            if (switchCancelResponse) {
+                                              Navigator.of(context).popUntil(
+                                                  (route) => route.isFirst);
+                                              setState(() {
+                                                _mealSwitchStatus = true;
+                                              });
+                                            } else {
+                                              Fluttertoast.showToast(
+                                                  msg:
+                                                      "Unable to cancel the switch");
+                                            }
+                                          });
+                                        },
+                                        highlightColor: Colors.transparent,
+                                        splashColor: Colors.transparent,
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            }
+                          : null,
+            )
           : Container(),
     );
   }
-
 }
 
 class MenuCardUtils {
