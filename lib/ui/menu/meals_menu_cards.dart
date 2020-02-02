@@ -35,6 +35,7 @@ class _YourMealsMenuCardNewState extends State<YourMealsMenuCardNew> {
   bool _mealSwitchStatus;
   String _secretCode;
   InheritedData inheritedData;
+  YourMenuModel yourMenuModel;
 
   @override
   void initState() {
@@ -57,6 +58,11 @@ class _YourMealsMenuCardNewState extends State<YourMealsMenuCardNew> {
     super.didChangeDependencies();
     if (inheritedData == null) {
       inheritedData = InheritedData.of(context);
+    }
+
+    final yourMenuModel = Provider.of<YourMenuModel>(context);
+    if (this.yourMenuModel != yourMenuModel) {
+      this.yourMenuModel = yourMenuModel;
     }
   }
 
@@ -287,7 +293,10 @@ class _YourMealsMenuCardNewState extends State<YourMealsMenuCardNew> {
                                 widget.meal.id, inheritedData.userDetails.token)
                             .then((leaveBool) {
                           if (leaveBool) {
-                            Provider.of<YourMenuModel>(context, listen: false).selectedWeekMenuYourMeals(DateTimeUtils.getWeekNumber(widget.meal.startDateTime));
+                            Provider.of<YourMenuModel>(context, listen: false)
+                                .selectedWeekMenuYourMeals(
+                                    DateTimeUtils.getWeekNumber(
+                                        widget.meal.startDateTime));
                             Navigator.pop(context);
                             setState(() {
                               _mealLeaveStatus = true;
@@ -357,7 +366,10 @@ class _YourMealsMenuCardNewState extends State<YourMealsMenuCardNew> {
                         leave(widget.meal.id.toString(),
                                 inheritedData.userDetails.token)
                             .then((leaveResult) {
-                          Provider.of<YourMenuModel>(context, listen: false).selectedWeekMenuYourMeals(DateTimeUtils.getWeekNumber(widget.meal.startDateTime));
+                          Provider.of<YourMenuModel>(context, listen: false)
+                              .selectedWeekMenuYourMeals(
+                                  DateTimeUtils.getWeekNumber(
+                                      widget.meal.startDateTime));
                           if (leaveResult.meal == widget.meal.id) {
                             Navigator.pop(context);
                             Fluttertoast.showToast(
@@ -414,9 +426,14 @@ class _YourMealsMenuCardNewState extends State<YourMealsMenuCardNew> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => SwitchableMealsScreen(
-                                id: widget.meal.id,
-                                token: inheritedData.userDetails.token,
+                              builder: (context) => ChangeNotifierProvider.value(
+                                value: yourMenuModel,
+                                child: SwitchableMealsScreen(
+                                  id: widget.meal.id,
+                                  token: inheritedData.userDetails.token,
+                                  weekId: DateTimeUtils.getWeekNumber(
+                                      widget.meal.startDateTime),
+                                ),
                               ),
                             ),
                           );
@@ -469,6 +486,12 @@ class _YourMealsMenuCardNewState extends State<YourMealsMenuCardNew> {
                                                   inheritedData
                                                       .userDetails.token)
                                               .then((switchCancelResponse) {
+                                            Provider.of<YourMenuModel>(context,
+                                                    listen: false)
+                                                .selectedWeekMenuYourMeals(
+                                                    DateTimeUtils.getWeekNumber(
+                                                        widget.meal
+                                                            .startDateTime));
                                             Navigator.pop(context);
                                             if (switchCancelResponse) {
                                               Navigator.of(context).popUntil(

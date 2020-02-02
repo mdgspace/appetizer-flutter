@@ -1,3 +1,5 @@
+import 'package:appetizer/change_notifiers/current_date.dart';
+import 'package:appetizer/change_notifiers/menu_model.dart';
 import 'package:appetizer/colors.dart';
 import 'package:appetizer/models/multimessing/meal_switch_from_your_meals.dart';
 import 'package:appetizer/services/multimessing/list_switchable_meals.dart';
@@ -5,18 +7,21 @@ import 'package:appetizer/services/multimessing/switch_meals.dart';
 import 'package:appetizer/ui/components/alert_dialog.dart';
 import 'package:appetizer/ui/menu_screens/week_menu_screen.dart';
 import 'package:appetizer/ui/multimessing/confirmed_switch_screen.dart';
+import 'package:appetizer/utils/date_time_utils.dart';
 import 'package:appetizer/utils/get_hostel_code.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
 
 class SwitchableMealsScreen extends StatefulWidget {
   final String token;
   final int id;
-
+  final int weekId;
   const SwitchableMealsScreen({
     Key key,
     this.token,
     this.id,
+    this.weekId
   }) : super(key: key);
 
   @override
@@ -157,6 +162,7 @@ class _SwitchableMealsState extends State<SwitchableMealsScreen> {
                                 widget.token,
                               ).then(
                                 (switchResponse) {
+                                  Provider.of<YourMenuModel>(context, listen: false).selectedWeekMenuYourMeals(widget.weekId);
                                   if (switchResponse == true) {
                                     Navigator.push(
                                       context,
