@@ -233,57 +233,29 @@ class Meal {
     return "Meal";
   }
 
-  //TODO: correct this
-  bool get isOutdated {
-    if (!_timeWithDate(_timeFormat.parse(startTime)).isAfter(DateTime.now())) {
-      return true;
-    } else {
-      return false;
-    }
+  bool _isOutdated;
+
+  bool get isOutdated => _isOutdated;
+  set isOutdated(bool value) {
+    _isOutdated = value;
   }
 
-  bool get isLeaveToggleOutdated {
-    if (!_timeWithDate(_timeFormat.parse(endTime))
-        .subtract(outdatedTime)
-        .isAfter(DateTime.now())) {
-      return true;
-    } else {
-      return false;
-    }
+  bool _isLeaveToggleOutdated;
+  bool get isLeaveToggleOutdated => _isLeaveToggleOutdated;
+  set isLeaveToggleOutdated(bool value) {
+    _isLeaveToggleOutdated = value;
   }
 
   bool get mealSwitchStatusBool =>
       switchStatus.status == SwitchStatusEnum.N ? true : false;
+
   bool get mealLeaveStatusBool =>
       leaveStatus.status == LeaveStatusEnum.N ? true : false;
 
-  DateTime get startTimeObject => _timeWithDate(_timeFormat.parse(startTime));
-  DateTime get endTimeObject => _timeWithDate(_timeFormat.parse(endTime));
-//  DateTime get startDateTime => dateFormat.parse(startTime);
-//  DateTime get endDateTime => dateFormat.parse(endTime);
+  DateTime get startTimeObject => _timeFormat.parse(startTime);
+  DateTime get endTimeObject => _timeFormat.parse(endTime);
 
   DateFormat _timeFormat = DateFormat("HH:mm:ss");
-
-  DateTime _timeWithDate(DateTime dateTime) {
-    final _now = DateTime.now();
-    return DateTime(_now.year, _now.month, _now.day, dateTime.hour,
-        dateTime.minute, dateTime.second);
-  }
-
-//  DateTime _startDateTime;
-//  DateTime _endDateTime;
-
-//  set startDateTime(DateTime dateTime) {
-//    _startDateTime = dateTime;
-//  }
-
-/*  DateTime get startDateTime {
-    print("class Meal.startDateTime $startTime}");
-    final time = startTime;
-    return startTime;
-  }
-
-  DateTime get endDateTime => _endDateTime;*/
 }
 
 class LeaveStatus {

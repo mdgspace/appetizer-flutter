@@ -372,6 +372,8 @@ class _YourMealsMenuCardNewState extends State<YourMealsMenuCardNew> {
   }
 
   Widget _getSwitchIcon() {
+    print(
+        "IS SWITCHABLE: ${widget.meal.isSwitchable} STATUS ${_mealSwitchStatus} LEAVE_TOGGLE_OUTDATED: ${widget.meal.isLeaveToggleOutdated}");
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12),
       child: widget.meal.isSwitchable
