@@ -125,12 +125,12 @@ class _YourMealsMenuCardNewState extends State<YourMealsMenuCardNew> {
                   ],
                 ),
               )
-            : _getQRCard(_secretCode),
+            : _getQRCard(),
       );
     }
   }
 
-  Widget _getQRCard(String secretCode) {
+  Widget _getQRCard() {
     return Card(
       margin: EdgeInsets.fromLTRB(12, 4, 12, 4),
       elevation: 2,
@@ -188,7 +188,8 @@ class _YourMealsMenuCardNewState extends State<YourMealsMenuCardNew> {
             ),
           ),
           QRWidget(
-            secretCode: secretCode,
+            token: inheritedData.getUserDetails.token,
+            switchId: widget.meal.switchStatus.id,
           ),
           Row(
             children: <Widget>[
@@ -589,8 +590,7 @@ class _YourMealsMenuCardNewState extends State<YourMealsMenuCardNew> {
                 msg: "QR CODE will be available 8 hours before the meal");
           } else {
             setState(() {
-              print("INSIDE SET STATE ${widget.meal.secretCode}");
-              _secretCode = widget.meal.secretCode;
+              _secretCode = "1";
             });
           }
         };

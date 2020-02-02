@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:appetizer/models/multimessing/switch_details.dart';
 import 'package:http/http.dart' as http;
 
 String url = "https://appetizer-mdg.herokuapp.com";
@@ -46,14 +47,15 @@ Future<bool> cancelSwitch(int id, String token) async {
   }
 }
 
-Future<String> getQRData(int id, String token) async {
-  String endpoint = "/api/leave/switch/meal/$id";
+Future<SwitchDetails> getSwitchDetails(int id, String token) async {
+  String endpoint = "/api/leave/switch/$id";
   String uri = url + endpoint;
   var tokenAuth = {"Authorization": "Token $token"};
   try {
     final response = await client.get(uri, headers: tokenAuth);
-    String secretCode = response.body;
-    return secretCode;
+    final jsonResponse = jsonDecode(response.body);
+    SwitchDetails switchDetails = SwitchDetails.fromJson(jsonResponse);
+    return switchDetails;
   } on Exception catch (e) {
     print(e);
     return null;
