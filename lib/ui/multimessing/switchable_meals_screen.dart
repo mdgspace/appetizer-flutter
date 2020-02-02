@@ -17,11 +17,13 @@ class SwitchableMealsScreen extends StatefulWidget {
   final String token;
   final int id;
   final int weekId;
+  final int model;
   const SwitchableMealsScreen({
     Key key,
     this.token,
     this.id,
-    this.weekId
+    this.weekId,
+    this.model
   }) : super(key: key);
 
   @override
@@ -162,7 +164,11 @@ class _SwitchableMealsState extends State<SwitchableMealsScreen> {
                                 widget.token,
                               ).then(
                                 (switchResponse) {
-                                  Provider.of<YourMenuModel>(context, listen: false).selectedWeekMenuYourMeals(widget.weekId);
+                                  if(widget.model == 0){
+                                    Provider.of<YourMenuModel>(context, listen: false).selectedWeekMenuYourMeals(widget.weekId);
+                                  }else{
+                                    Provider.of<OtherMenuModel>(context, listen: false).getOtherMenu(widget.weekId);
+                                  }
                                   if (switchResponse == true) {
                                     Navigator.push(
                                       context,

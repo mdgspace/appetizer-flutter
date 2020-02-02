@@ -426,13 +426,15 @@ class _YourMealsMenuCardNewState extends State<YourMealsMenuCardNew> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => ChangeNotifierProvider.value(
+                              builder: (context) =>
+                                  ChangeNotifierProvider.value(
                                 value: yourMenuModel,
                                 child: SwitchableMealsScreen(
                                   id: widget.meal.id,
                                   token: inheritedData.userDetails.token,
                                   weekId: DateTimeUtils.getWeekNumber(
                                       widget.meal.startDateTime),
+                                  model: 0,
                                 ),
                               ),
                             ),
@@ -647,12 +649,16 @@ class OtherMealsMenuCardNew extends StatefulWidget {
 class _OtherMealsMenuCardNewState extends State<OtherMealsMenuCardNew> {
   bool _mealSwitchStatus;
   InheritedData inheritedData;
-
+  OtherMenuModel otherMenuModel;
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (inheritedData == null) {
       inheritedData = InheritedData.of(context);
+      final otherMenuModel = Provider.of<OtherMenuModel>(context);
+      if (this.otherMenuModel != otherMenuModel) {
+        this.otherMenuModel = otherMenuModel;
+      }
     }
   }
 
@@ -732,9 +738,14 @@ class _OtherMealsMenuCardNewState extends State<OtherMealsMenuCardNew> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => SwitchableMealsScreen(
-                                id: widget.meal.id,
-                                token: inheritedData.userDetails.token,
+                              builder: (context) => ChangeNotifierProvider.value(
+                                value: otherMenuModel,
+                                child: SwitchableMealsScreen(
+                                  id: widget.meal.id,
+                                  token: inheritedData.userDetails.token,
+                                  weekId: DateTimeUtils.getWeekNumber(widget.meal.startDateTime),
+                                  model: 1,
+                                ),
                               ),
                             ),
                           );
