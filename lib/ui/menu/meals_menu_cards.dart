@@ -71,7 +71,8 @@ class _YourMealsMenuCardNewState extends State<YourMealsMenuCardNew> {
                               Expanded(
                                 child: Row(
                                   children: <Widget>[
-                                    _titleAndBhawanNameComponent(),
+                                    MenuCardUtils.titleAndBhawanNameComponent(
+                                        widget.meal),
                                     _skippedFlagComponent(),
                                   ],
                                 ),
@@ -87,12 +88,13 @@ class _YourMealsMenuCardNewState extends State<YourMealsMenuCardNew> {
                           ),
                         ),
                         Column(
-                          children: _itemWidgetList(),
+                          children: MenuCardUtils.itemWidgetList(widget.meal),
                         ),
                       ],
                     ),
                   ),
-                  _dailyItemsComponent(),
+                  MenuCardUtils.dailyItemsComponent(
+                      widget.meal, widget.dailyItems),
                 ],
               ),
             )
@@ -179,81 +181,6 @@ class _YourMealsMenuCardNewState extends State<YourMealsMenuCardNew> {
           )
         ],
       ),
-    );
-  }
-
-  Widget _dailyItemsComponent() {
-    return Row(
-      children: <Widget>[
-        Expanded(
-          child: Container(
-            color: Color(0xffF4F4F4),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                'Daily Items: ${widget.dailyItems}',
-                style: TextStyle(color: Color.fromRGBO(0, 0, 0, .54)),
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  List<Widget> _itemWidgetList() {
-    List<Widget> list = [];
-    int i = 0;
-    widget.meal.items.forEach((mealItem) {
-      list.add(_menuListItem(
-          mealItem.name,
-          CircleAvatar(
-            radius: 16,
-            backgroundColor: Colors.transparent,
-            child: Image.asset(
-              "assets/icons/meal_icon" + (i + 1).toString() + ".jpg",
-              scale: 2.5,
-            ),
-          )));
-      i++;
-    });
-    return list;
-  }
-
-  Widget _menuListItem(String itemName, CircleAvatar foodIcon) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-        Container(
-          padding: EdgeInsets.only(right: 4.0),
-          child: Column(
-            children: <Widget>[
-              foodIcon,
-              SizedBox(
-                height: 8.0,
-              )
-            ],
-          ),
-        ),
-        Expanded(
-          child: Container(
-            padding: EdgeInsets.only(left: 4.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  itemName,
-                ),
-                Divider(
-                  height: 8.0,
-                ),
-              ],
-            ),
-          ),
-        ),
-      ],
     );
   }
 
@@ -536,30 +463,6 @@ class _YourMealsMenuCardNewState extends State<YourMealsMenuCardNew> {
     );
   }
 
-  Widget _titleAndBhawanNameComponent() {
-    return Padding(
-      padding: const EdgeInsets.only(right: 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            widget.meal.title,
-            style: new TextStyle(
-              color: appiYellow,
-              fontSize: 24,
-            ),
-          ),
-          Text(
-            widget.meal.hostelName,
-            style: new TextStyle(
-              color: appiBrown,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   Widget _skippedFlagComponent() {
     return (!(getLeaveColorFromLeaveStatus(widget.meal.leaveStatus.status) ==
                 Colors.white) &&
@@ -671,5 +574,143 @@ class _YourMealsMenuCardNewState extends State<YourMealsMenuCardNew> {
       default:
         return () {};
     }
+  }
+}
+
+class OtherMealsMenuCardNew extends StatefulWidget {
+  final Meal meal;
+  final DailyItems dailyItems;
+
+  OtherMealsMenuCardNew(this.meal, this.dailyItems);
+
+  @override
+  _OtherMealsMenuCardNewState createState() => _OtherMealsMenuCardNewState();
+}
+
+class _OtherMealsMenuCardNewState extends State<OtherMealsMenuCardNew> {
+  bool mealSwitchStatus;
+  InheritedData inheritedData;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (inheritedData == null) {
+      inheritedData = InheritedData.of(context);
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    mealSwitchStatus = widget.meal.mealSwitchStatusBool;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return null;
+  }
+}
+
+class MenuCardUtils {
+  static Widget _menuListItem(
+      Meal meal, String itemName, CircleAvatar foodIcon) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        Container(
+          padding: EdgeInsets.only(right: 4.0),
+          child: Column(
+            children: <Widget>[
+              foodIcon,
+              SizedBox(
+                height: 8.0,
+              )
+            ],
+          ),
+        ),
+        Expanded(
+          child: Container(
+            padding: EdgeInsets.only(left: 4.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  itemName,
+                ),
+                Divider(
+                  height: 8.0,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  static Widget titleAndBhawanNameComponent(Meal meal) {
+    return Padding(
+      padding: const EdgeInsets.only(right: 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            meal.title,
+            style: new TextStyle(
+              color: appiYellow,
+              fontSize: 24,
+            ),
+          ),
+          Text(
+            meal.hostelName,
+            style: new TextStyle(
+              color: appiBrown,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  static Widget dailyItemsComponent(Meal meal, DailyItems dailyItems) {
+    return Row(
+      children: <Widget>[
+        Expanded(
+          child: Container(
+            color: Color(0xffF4F4F4),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                'Daily Items: $dailyItems',
+                style: TextStyle(color: Color.fromRGBO(0, 0, 0, .54)),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  static List<Widget> itemWidgetList(Meal meal) {
+    List<Widget> list = [];
+    int i = 0;
+    meal.items.forEach((mealItem) {
+      list.add(_menuListItem(
+          meal,
+          mealItem.name,
+          CircleAvatar(
+            radius: 16,
+            backgroundColor: Colors.transparent,
+            child: Image.asset(
+              "assets/icons/meal_icon" + (i + 1).toString() + ".jpg",
+              scale: 2.5,
+            ),
+          )));
+      i++;
+    });
+    return list;
   }
 }
