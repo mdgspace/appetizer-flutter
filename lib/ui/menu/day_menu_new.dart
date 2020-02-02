@@ -8,8 +8,9 @@ import 'package:intl/intl.dart';
 class DayMenuNew extends StatefulWidget {
   final Day day;
   final DailyItems dailyItems;
-  final String selectedHostelCode;
-  DayMenuNew(this.day, this.dailyItems, this.selectedHostelCode);
+  // 0->Your 1->Other
+  final int menuType;
+  DayMenuNew(this.day, this.dailyItems, this.menuType);
 
   @override
   _DayMenuNewState createState() => _DayMenuNewState();
@@ -31,33 +32,29 @@ class _DayMenuNewState extends State<DayMenuNew> {
     return Column(
       children: <Widget>[
         (widget.day.mealMap[MealType.B] != null)
-            ? ((hostelCodeMap[inheritedData.userDetails.hostelName] ==
-                    widget.selectedHostelCode)
+            ? ((widget.menuType == 0)
                 ? YourMealsMenuCardNew(
                     widget.day.mealMap[MealType.B], widget.dailyItems)
                 : OtherMealsMenuCardNew(
                     widget.day.mealMap[MealType.B], widget.dailyItems))
             : Container(),
         (widget.day.mealMap[MealType.L] != null)
-            ? ((hostelCodeMap[inheritedData.userDetails.hostelName] ==
-                    widget.selectedHostelCode)
-                ? YourMealsMenuCardNew(
+            ? ((widget.menuType == 0)
+               ? YourMealsMenuCardNew(
                     widget.day.mealMap[MealType.L], widget.dailyItems)
                 : OtherMealsMenuCardNew(
                     widget.day.mealMap[MealType.L], widget.dailyItems))
             : Container(),
         (widget.day.mealMap[MealType.S] != null)
-            ? ((hostelCodeMap[inheritedData.userDetails.hostelName] ==
-                    widget.selectedHostelCode)
-                ? YourMealsMenuCardNew(
+            ? ((widget.menuType == 0)
+            ? YourMealsMenuCardNew(
                     widget.day.mealMap[MealType.S], widget.dailyItems)
                 : OtherMealsMenuCardNew(
                     widget.day.mealMap[MealType.S], widget.dailyItems))
             : Container(),
         (widget.day.mealMap[MealType.D] != null)
-            ? ((hostelCodeMap[inheritedData.userDetails.hostelName] ==
-                    widget.selectedHostelCode)
-                ? YourMealsMenuCardNew(
+            ? ((widget.menuType == 0)
+            ? YourMealsMenuCardNew(
                     widget.day.mealMap[MealType.D], widget.dailyItems)
                 : OtherMealsMenuCardNew(
                     widget.day.mealMap[MealType.D], widget.dailyItems))

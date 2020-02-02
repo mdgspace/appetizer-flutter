@@ -9,6 +9,7 @@ import 'package:appetizer/ui/multimessing/switchable_meals_screen.dart';
 import 'package:appetizer/ui/user_feedback/new_feedback.dart';
 import 'package:appetizer/utils/get_day_and_date_for_meal_card.dart';
 import 'package:appetizer/utils/get_leave_color_from_leave_status.dart';
+import 'package:appetizer/utils/menu_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -818,6 +819,7 @@ class MenuCardUtils {
   }
 
   static Widget dailyItemsComponent(Meal meal, DailyItems dailyItems) {
+    final dailyItemsMap = getDailyItemsMap(dailyItems);
     return Row(
       children: <Widget>[
         Expanded(
@@ -826,7 +828,7 @@ class MenuCardUtils {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                'Daily Items: $dailyItems',
+                '${dailyItemsMap[meal.type]}',
                 style: TextStyle(color: Color.fromRGBO(0, 0, 0, .54)),
               ),
             ),
