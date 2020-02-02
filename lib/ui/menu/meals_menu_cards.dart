@@ -654,8 +654,13 @@ class _OtherMealsMenuCardNewState extends State<OtherMealsMenuCardNew> {
   @override
   void initState() {
     super.initState();
-    _mealSwitchStatus =
-        widget.meal != null ? widget.meal.mealSwitchStatusBool : false;
+    if (widget.meal != null) {
+      _mealSwitchStatus =
+          widget.meal.switchStatus.status == SwitchStatusEnum.N ? true : false;
+    } else {
+      // menu else hence inactive
+      _mealSwitchStatus = false;
+    }
   }
 
   @override
@@ -677,7 +682,7 @@ class _OtherMealsMenuCardNewState extends State<OtherMealsMenuCardNew> {
       _mealSwitchStatus =
           widget.meal.switchStatus.status == SwitchStatusEnum.N ? true : false;
     } else {
-      // Toggle ON when _mealLeaveStatus = true
+      // menu else hence inactive
       _mealSwitchStatus = false;
     }
   }
@@ -813,6 +818,11 @@ class _OtherMealsMenuCardNewState extends State<OtherMealsMenuCardNew> {
                                                   inheritedData
                                                       .userDetails.token)
                                               .then((switchCancelResponse) {
+                                            Provider.of<OtherMenuModel>(context)
+                                                .getOtherMenu(
+                                                    DateTimeUtils.getWeekNumber(
+                                                        widget.meal
+                                                            .startDateTime));
                                             Navigator.pop(context);
                                             if (switchCancelResponse) {
                                               Navigator.of(context).popUntil(
