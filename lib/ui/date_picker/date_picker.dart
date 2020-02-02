@@ -1,4 +1,5 @@
 import 'package:appetizer/change_notifiers/current_date.dart';
+import 'package:appetizer/colors.dart';
 import 'package:appetizer/utils/date_time_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +28,7 @@ class DatePicker extends StatefulWidget {
   final double padding;
 
   const DatePicker({this.padding = 4});
+
   @override
   _DatePickerState createState() => _DatePickerState();
 }
@@ -79,8 +81,7 @@ class _DatePickerState extends State<DatePicker> {
 
   List<Widget> _currentRowWidgets(DateTime anchor) {
     final list = _currentRowDates(anchor).map((dateTime) {
-      return DateCell(
-          dateTime, widget.padding);
+      return DateCell(dateTime, widget.padding);
     }).toList(growable: false);
     return list;
   }
@@ -102,6 +103,7 @@ class _DatePickerState extends State<DatePicker> {
 class DateRow extends StatelessWidget {
   final List<Widget> _dateWidgets;
   final double padding;
+
   const DateRow(this._dateWidgets, this.padding);
 
   @override
@@ -117,42 +119,74 @@ class DateRow extends StatelessWidget {
 class DateCell extends StatelessWidget {
   final DateTime cellDate;
   final double _parentPadding;
+
   DateCell(this.cellDate, this._parentPadding);
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-
     final _scrW = MediaQuery.of(context).size.width - (2 * _parentPadding);
     final _padding = 4.0;
     final _width = (_scrW - (14 * _padding)) / 7;
 
+    bool _isCellDateCurrentDate() {
+      return cellDate.day == DateTime.now().day &&
+          cellDate.weekday == DateTime.now().weekday;
+    }
+
+    bool _isCellDateSelectedDate() {
+      return cellDate == Provider.of<CurrentDateModel>(context).dateTime;
+    }
+
     return Container(
       padding: EdgeInsets.all(_padding),
+      color: appiBrown,
+      height: 90,
       child: GestureDetector(
-        onTap: (){
-          Provider.of<CurrentDateModel>(context, listen: false).setDateTime(cellDate, context);
+        onTap: () {
+          Provider.of<CurrentDateModel>(context, listen: false)
+              .setDateTime(cellDate, context);
         },
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Container(
-              width: _width,
-              height: _width,
               decoration: BoxDecoration(
-                color: (cellDate == Provider.of<CurrentDateModel>(context).dateTime) ? Colors.yellow : Colors.transparent,
-                shape: BoxShape.circle,
-                border: Border.all(),
+                shape: BoxShape.rectangle,
               ),
-              child: Center(child: Text(cellDate.day.toString())),
+              child: Text(
+                DateTimeUtils.getWeekDayName(cellDate)[0],
+                style: TextStyle(
+                  color: _isCellDateSelectedDate()
+                      ? appiYellow
+                      : _isCellDateCurrentDate() ? appiYellow : Colors.white,
+                ),
+              ),
             ),
             SizedBox(
               height: 4,
             ),
             Container(
+              width: _width,
+              height: _width,
               decoration: BoxDecoration(
-                shape: BoxShape.rectangle,
+                color:
+                    _isCellDateSelectedDate() ? appiYellow : Colors.transparent,
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: _isCellDateSelectedDate()
+                      ? appiBrown
+                      : _isCellDateCurrentDate() ? appiYellow : Colors.white,
+                ),
               ),
-              child: Text(DateTimeUtils.getWeekDayName(cellDate)[0]),
+              child: Center(
+                  child: Text(
+                cellDate.day.toString(),
+                style: TextStyle(
+                  color: _isCellDateSelectedDate()
+                      ? appiBrown
+                      : _isCellDateCurrentDate() ? appiYellow : Colors.white,
+                ),
+              )),
             ),
           ],
         ),
