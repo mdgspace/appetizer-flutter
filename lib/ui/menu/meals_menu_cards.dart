@@ -564,7 +564,7 @@ class _YourMealsMenuCardNewState extends State<YourMealsMenuCardNew> {
       case SwitchStatusEnum.F:
       case SwitchStatusEnum.T:
         return () {
-          if (widget.meal.startTimeObject
+          if (widget.meal.endDateTime
               .add(Duration(hours: 1))
               .isBefore(DateTime.now())) {
             Fluttertoast.showToast(msg: "Time for this meal has passed!");
@@ -575,6 +575,7 @@ class _YourMealsMenuCardNewState extends State<YourMealsMenuCardNew> {
                 msg: "QR CODE will be available 8 hours before the meal");
           } else {
             setState(() {
+              print("INSIDE SET STATE ${widget.meal.secretCode}");
               _secretCode = widget.meal.secretCode;
             });
           }

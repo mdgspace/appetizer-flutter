@@ -18,7 +18,8 @@ class DayMenuNew extends StatefulWidget {
           dateFormat.parse(date + " " + day.meals[i].startTime);
       DateTime mealEndDateTime =
           dateFormat.parse(date + " " + day.meals[i].endTime);
-
+      day.meals[i].startDateTime = mealStartDateTime;
+      day.meals[i].endDateTime = mealEndDateTime;
       if (!mealStartDateTime.isAfter(DateTime.now())) {
         day.meals[i].isOutdated = true;
       } else {

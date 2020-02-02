@@ -163,6 +163,9 @@ class Day {
 }
 
 class Meal {
+
+  //WARNING secretCode is always null (backend side)
+  //TODO: (aseem) remove secretCode while making sure nothing breaks
   int id;
   MealType type;
   List<MealItem> items;
@@ -255,7 +258,31 @@ class Meal {
   DateTime get startTimeObject => _timeFormat.parse(startTime);
   DateTime get endTimeObject => _timeFormat.parse(endTime);
 
+
   DateFormat _timeFormat = DateFormat("HH:mm:ss");
+
+  DateTime _startDateTime;
+  DateTime _endDateTime;
+
+  DateTime get startDateTime => _startDateTime;
+
+  set startDateTime(DateTime value) {
+    _startDateTime = value;
+  }
+
+  DateTime get endDateTime => _endDateTime;
+
+  set endDateTime(DateTime value) {
+    _endDateTime = value;
+  }
+
+  String _secretCodeMeal;
+
+  String get secretCodeMeal => _secretCodeMeal;
+
+  set secretCodeMeal(String value) {
+    _secretCodeMeal = value;
+  }
 }
 
 class LeaveStatus {
