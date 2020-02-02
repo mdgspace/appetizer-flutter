@@ -1,5 +1,9 @@
 import 'dart:convert';
 
+import 'package:intl/intl.dart';
+
+import '../../globals.dart';
+
 Week confirmFromJson(String str) => Week.fromJson(json.decode(str));
 
 String confirmToJson(Week data) => json.encode(data.toJson());
@@ -205,6 +209,49 @@ class Meal {
         "hostel_name": hostelName,
         "secret_code": secretCode,
       };
+
+  String get title {
+    switch(type){
+      case MealType.B:
+        return "Breakfast";
+      case MealType.L:
+        return "Lunch";
+      case MealType.S:
+        return "Snacks";
+      case MealType.D:
+        return "Dinner";
+    }
+    print("Meal type didn't match returning 'Meal'");
+    return "Meal";
+  }
+
+  bool get isOutdated{
+    if (!_dateFormat.parse(startTime).isAfter(DateTime.now())) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  bool get isLeaveToggleOutdated{
+    if (!_dateFormat.parse(startTime)
+        .subtract(outdatedTime)
+        .isAfter(DateTime.now())) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  bool get mealSwitchStatusBool => switchStatus.status == SwitchStatusEnum.N ? true : false;
+  bool get mealLeaveStatusBool => leaveStatus.status == LeaveStatusEnum.N ? true : false;
+
+  DateTime get startDateTime => _dateFormat.parse(startTime);
+  DateTime get endDateTime => _dateFormat.parse(endTime);
+
+
+
+  DateFormat _dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
 }
 
 class LeaveStatus {
