@@ -1,74 +1,116 @@
+import 'package:appetizer/change_notifiers/current_date.dart';
 import 'package:appetizer/utils/date_time_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:provider/provider.dart';
 
 // Weekday -> mon = 1, sun = 7
 
 void main() async {
   //await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-  runApp(MaterialApp(
-    debugShowCheckedModeBanner: false,
-    home: Scaffold(appBar: AppBar(), body: DatePicker()),
-  ));
+  runApp(
+    MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        appBar: AppBar(),
+        body: ChangeNotifierProvider(
+          create: (context) => CurrentDateModel(),
+          child: DatePicker(),
+        ),
+      ),
+    ),
+  );
 }
 
-class DatePicker extends StatefulWidget{
+class DatePicker extends StatefulWidget {
+  final double padding;
+
+  const DatePicker({this.padding = 4});
   @override
   _DatePickerState createState() => _DatePickerState();
 }
 
 class _DatePickerState extends State<DatePicker> {
-
   DateTime activeDate;
+  int indexState;
+  CurrentDateModel dateModel;
+
+  @override
+  void initState() {
+    super.initState();
+    indexState = 11;
+    activeDate = DateTime.now();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final dateModel = Provider.of<CurrentDateModel>(context);
+    if (dateModel != this.dateModel) {
+      this.dateModel = dateModel;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     final _pageController = PageController(
-      initialPage: 1,
+      initialPage: 11,
     );
-    return PageView(
+    return PageView.builder(
+      pageSnapping: true,
       controller: _pageController,
-      children: <Widget>[
-        DateRow(),
-        DateRow(),
-        DateRow()
-      ],
-    );
-  }
-}
-
-class DateRow extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final _padding = 20.0;
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      padding: EdgeInsets.all(_padding),
-      child: Row(children: _currentRowWidgets(_padding)),
+      itemBuilder: (context, index) {
+        return DateRow(_currentRowWidgets(dateModel.dateTime), widget.padding);
+      },
+      onPageChanged: (index) {
+        print("PAGE: $index");
+        if (index < indexState) {
+          dateModel.setDateTime(
+              dateModel.dateTime.subtract(Duration(days: 7)), context);
+        } else {
+          dateModel.setDateTime(
+              dateModel.dateTime.add(Duration(days: 7)), context);
+        }
+        indexState = index;
+      },
     );
   }
 
-  List<Widget> _currentRowWidgets(double _padding) {
-    final list = _currentRowDates().map((dateTime) {
-      return DateCell(dateTime, _padding);
+  List<Widget> _currentRowWidgets(DateTime anchor) {
+    final list = _currentRowDates(anchor).map((dateTime) {
+      return DateCell(
+          dateTime, widget.padding);
     }).toList(growable: false);
     return list;
   }
 
-  List<DateTime> _currentRowDates() {
+  List<DateTime> _currentRowDates(anchor) {
     List<DateTime> _dateList = List(7);
-    final _now = DateTime.now();
-    for (int i = _now.weekday - 1; i >= 1; i--) {
-      _dateList[i - 1] =
-          _now.subtract(Duration(hours: 24 * (_now.weekday - i)));
+    for (int i = anchor.weekday - 1; i >= 1; i--) {
+      _dateList[i - 1] = anchor.subtract(Duration(days: (anchor.weekday - i)));
     }
-    _dateList[_now.weekday - 1] = _now;
-    for (int i = _now.weekday + 1; i <= 7; i++) {
-      _dateList[i - 1] = _now.add(Duration(hours: 24 * (i - _now.weekday)));
+    _dateList[anchor.weekday - 1] = anchor;
+    for (int i = anchor.weekday + 1; i <= 7; i++) {
+      _dateList[i - 1] = anchor.add(Duration(days: (i - anchor.weekday)));
     }
-    print(_dateList);
+//    print(_dateList);
     return _dateList;
+  }
+}
+
+class DateRow extends StatelessWidget {
+  final List<Widget> _dateWidgets;
+  final double padding;
+  const DateRow(this._dateWidgets, this.padding);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      padding: EdgeInsets.all(padding),
+      child: Row(children: _dateWidgets),
+    );
   }
 }
 
@@ -81,33 +123,39 @@ class DateCell extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: implement build
 
-    final _scrW = MediaQuery.of(context).size.width - (2*_parentPadding);
-    print("ScrW $_scrW");
+    final _scrW = MediaQuery.of(context).size.width - (2 * _parentPadding);
     final _padding = 4.0;
     final _width = (_scrW - (14 * _padding)) / 7;
-    print("W $_width");
 
     return Container(
       padding: EdgeInsets.all(_padding),
-      child: Column(
-        children: <Widget>[
-          Container(
-            width: _width,
-            height: _width,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(),
+      child: GestureDetector(
+        onTap: (){
+          Provider.of<CurrentDateModel>(context, listen: false).setDateTime(cellDate, context);
+        },
+        child: Column(
+          children: <Widget>[
+            Container(
+              width: _width,
+              height: _width,
+              decoration: BoxDecoration(
+                color: (cellDate == Provider.of<CurrentDateModel>(context).dateTime) ? Colors.yellow : Colors.transparent,
+                shape: BoxShape.circle,
+                border: Border.all(),
+              ),
+              child: Center(child: Text(cellDate.day.toString())),
             ),
-            child: Center(child: Text(cellDate.day.toString())),
-          ),
-          SizedBox(height: 4,),
-          Container(
-            decoration: BoxDecoration(
-              shape: BoxShape.rectangle,
+            SizedBox(
+              height: 4,
             ),
-            child: Text(DateTimeUtils.getWeekDayName(cellDate)[0]),
-          ),
-        ],
+            Container(
+              decoration: BoxDecoration(
+                shape: BoxShape.rectangle,
+              ),
+              child: Text(DateTimeUtils.getWeekDayName(cellDate)[0]),
+            ),
+          ],
+        ),
       ),
     );
   }
