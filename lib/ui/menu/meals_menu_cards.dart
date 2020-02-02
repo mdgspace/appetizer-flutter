@@ -15,7 +15,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../colors.dart';
 import '../../globals.dart';
-
+//TODO: Solve bug in othermenu
 class YourMealsMenuCardNew extends StatefulWidget {
   final Meal meal;
   final DailyItems dailyItems;
@@ -35,10 +35,16 @@ class _YourMealsMenuCardNewState extends State<YourMealsMenuCardNew> {
   @override
   void initState() {
     super.initState();
-    _mealLeaveStatus =
-        widget.meal.leaveStatus.status == LeaveStatusEnum.N ? true : false;
-    _mealSwitchStatus =
-        widget.meal.switchStatus.status == SwitchStatusEnum.N ? true : false;
+    print("MEAL ${widget.meal}");
+    if (widget.meal != null) {
+      _mealLeaveStatus =
+          widget.meal.leaveStatus.status == LeaveStatusEnum.N ? true : false;
+      _mealSwitchStatus =
+          widget.meal.switchStatus.status == SwitchStatusEnum.N ? true : false;
+    } else {
+      _mealLeaveStatus = false;
+      _mealSwitchStatus = false;
+    }
   }
 
   @override
@@ -155,7 +161,7 @@ class _YourMealsMenuCardNewState extends State<YourMealsMenuCardNew> {
                               ),
                             ],
                           ),
-                          getDayAndDateForCard(widget.meal.startDateTime),
+                          getDayAndDateForCard(widget.meal.startTimeObject),
                         ],
                       ),
                     ),
@@ -469,13 +475,13 @@ class _YourMealsMenuCardNewState extends State<YourMealsMenuCardNew> {
   }
 
   Widget _skippedFlagComponent() {
-    return (!(getLeaveColorFromLeaveStatus(widget.meal.leaveStatus.status) ==
+    return (!(getLeaveColorFromLeaveStatus(widget.meal.leaveStatus?.status) ==
                 Colors.white) &&
             widget.meal.isOutdated)
         ? Container(
             decoration: BoxDecoration(
               color:
-                  getLeaveColorFromLeaveStatus(widget.meal.leaveStatus.status),
+                  getLeaveColorFromLeaveStatus(widget.meal.leaveStatus?.status),
               shape: BoxShape.circle,
             ),
             child: Padding(
@@ -555,11 +561,11 @@ class _YourMealsMenuCardNewState extends State<YourMealsMenuCardNew> {
       case SwitchStatusEnum.F:
       case SwitchStatusEnum.T:
         return () {
-          if (widget.meal.startDateTime
+          if (widget.meal.startTimeObject
               .add(Duration(hours: 1))
               .isBefore(DateTime.now())) {
             Fluttertoast.showToast(msg: "Time for this meal has passed!");
-          } else if (widget.meal.startDateTime
+          } else if (widget.meal.startTimeObject
               .subtract(outdatedTime)
               .isAfter(DateTime.now())) {
             Fluttertoast.showToast(
@@ -607,7 +613,8 @@ class _OtherMealsMenuCardNewState extends State<OtherMealsMenuCardNew> {
   @override
   void initState() {
     super.initState();
-    _mealSwitchStatus = widget.meal.mealSwitchStatusBool;
+    _mealSwitchStatus =
+        widget.meal != null ? widget.meal.mealSwitchStatusBool : false;
   }
 
   @override
@@ -766,6 +773,7 @@ class _OtherMealsMenuCardNewState extends State<OtherMealsMenuCardNew> {
 class MenuCardUtils {
   static Widget _menuListItem(
       Meal meal, String itemName, CircleAvatar foodIcon) {
+    print("itemName $itemName");
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
@@ -789,7 +797,7 @@ class MenuCardUtils {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  itemName,
+                  "" + itemName,
                 ),
                 Divider(
                   height: 8.0,
@@ -803,6 +811,8 @@ class MenuCardUtils {
   }
 
   static Widget titleAndBhawanNameComponent(Meal meal) {
+    print("meal title ${meal.title}");
+
     return Padding(
       padding: const EdgeInsets.only(right: 10),
       child: Column(
@@ -836,7 +846,7 @@ class MenuCardUtils {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                '${dailyItemsMap[meal.type]}',
+                "" + '${dailyItemsMap[meal.type]}',
                 style: TextStyle(color: Color.fromRGBO(0, 0, 0, .54)),
               ),
             ),

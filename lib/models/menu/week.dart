@@ -138,10 +138,11 @@ class Day {
     this.meals,
   }) {
     _mealMap = Map();
-    meals.forEach((meal){
+    meals.forEach((meal) {
       _mealMap[meal.type] = meal;
     });
   }
+  DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
 
   factory Day.fromJson(Map<String, dynamic> json) => new Day(
         id: json["id"],
@@ -232,8 +233,9 @@ class Meal {
     return "Meal";
   }
 
+  //TODO: correct this
   bool get isOutdated {
-    if (!_dateFormat.parse(startTime).isAfter(DateTime.now())) {
+    if (!_timeWithDate(_timeFormat.parse(startTime)).isAfter(DateTime.now())) {
       return true;
     } else {
       return false;
@@ -241,8 +243,7 @@ class Meal {
   }
 
   bool get isLeaveToggleOutdated {
-    if (!_dateFormat
-        .parse(startTime)
+    if (!_timeWithDate(_timeFormat.parse(endTime))
         .subtract(outdatedTime)
         .isAfter(DateTime.now())) {
       return true;
@@ -256,10 +257,33 @@ class Meal {
   bool get mealLeaveStatusBool =>
       leaveStatus.status == LeaveStatusEnum.N ? true : false;
 
-  DateTime get startDateTime => _dateFormat.parse(startTime);
-  DateTime get endDateTime => _dateFormat.parse(endTime);
+  DateTime get startTimeObject => _timeWithDate(_timeFormat.parse(startTime));
+  DateTime get endTimeObject => _timeWithDate(_timeFormat.parse(endTime));
+//  DateTime get startDateTime => dateFormat.parse(startTime);
+//  DateTime get endDateTime => dateFormat.parse(endTime);
 
-  DateFormat _dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
+  DateFormat _timeFormat = DateFormat("HH:mm:ss");
+
+  DateTime _timeWithDate(DateTime dateTime) {
+    final _now = DateTime.now();
+    return DateTime(_now.year, _now.month, _now.day, dateTime.hour,
+        dateTime.minute, dateTime.second);
+  }
+
+//  DateTime _startDateTime;
+//  DateTime _endDateTime;
+
+//  set startDateTime(DateTime dateTime) {
+//    _startDateTime = dateTime;
+//  }
+
+/*  DateTime get startDateTime {
+    print("class Meal.startDateTime $startTime}");
+    final time = startTime;
+    return startTime;
+  }
+
+  DateTime get endDateTime => _endDateTime;*/
 }
 
 class LeaveStatus {
