@@ -25,7 +25,7 @@ Future<Week> menuWeekMultiMessing(
       headers: tokenAuth,
     );
     final jsonResponse = jsonDecode(response.body);
-    print("JSON RESPONSE MM: $jsonResponse");
+    print("menuWeekMultiMessing: $jsonResponse");
     if (jsonResponse["detail"] == "Not found.") {
       return null;
     }
@@ -53,7 +53,7 @@ Future<Week> menuWeekForYourMeals(String token, int weekId) async {
       headers: tokenAuth,
     );
     final jsonResponse = jsonDecode(response.body);
-    print("JSON RESPONSE: $jsonResponse");
+    print("menuWeekForYourMeals: $jsonResponse");
     if (jsonResponse["detail"] == "Not found.") {
       return null;
     }

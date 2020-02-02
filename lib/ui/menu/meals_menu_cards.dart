@@ -36,7 +36,6 @@ class _YourMealsMenuCardNewState extends State<YourMealsMenuCardNew> {
   @override
   void initState() {
     super.initState();
-    print("MEAL ${widget.meal}");
     if (widget.meal != null) {
       _mealLeaveStatus =
           widget.meal.leaveStatus.status == LeaveStatusEnum.N ? true : false;
@@ -372,9 +371,7 @@ class _YourMealsMenuCardNewState extends State<YourMealsMenuCardNew> {
   }
 
   Widget _getSwitchIcon() {
-    print(
-        "IS SWITCHABLE: ${widget.meal.isSwitchable} STATUS ${_mealSwitchStatus} LEAVE_TOGGLE_OUTDATED: ${widget.meal.isLeaveToggleOutdated}");
-    return Padding(
+     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12),
       child: widget.meal.isSwitchable
           ? GestureDetector(
@@ -777,7 +774,7 @@ class _OtherMealsMenuCardNewState extends State<OtherMealsMenuCardNew> {
 class MenuCardUtils {
   static Widget _menuListItem(
       Meal meal, String itemName, CircleAvatar foodIcon) {
-    print("itemName $itemName");
+
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
@@ -815,7 +812,7 @@ class MenuCardUtils {
   }
 
   static Widget titleAndBhawanNameComponent(Meal meal) {
-    print("OTHER MEAL JSON : ${meal.toJson()}");
+
     return Padding(
       padding: const EdgeInsets.only(right: 10),
       child: Column(
