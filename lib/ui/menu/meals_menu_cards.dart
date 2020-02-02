@@ -5,11 +5,13 @@ import 'package:appetizer/services/leave.dart';
 import 'package:appetizer/services/multimessing/switch_meals.dart';
 import 'package:appetizer/ui/components/alert_dialog.dart';
 import 'package:appetizer/ui/components/inherited_data.dart';
+import 'package:appetizer/ui/multimessing/confirm_switch_popup_screen.dart';
 import 'package:appetizer/ui/multimessing/qr_generator_widget.dart';
 import 'package:appetizer/ui/multimessing/switchable_meals_screen.dart';
 import 'package:appetizer/ui/user_feedback/new_feedback.dart';
 import 'package:appetizer/utils/date_time_utils.dart';
 import 'package:appetizer/utils/get_day_and_date_for_meal_card.dart';
+import 'package:appetizer/utils/get_hostel_code.dart';
 import 'package:appetizer/utils/get_leave_color_from_leave_status.dart';
 import 'package:appetizer/utils/menu_utils.dart';
 import 'package:flutter/material.dart';
@@ -650,6 +652,7 @@ class _OtherMealsMenuCardNewState extends State<OtherMealsMenuCardNew> {
   bool _mealSwitchStatus;
   InheritedData inheritedData;
   OtherMenuModel otherMenuModel;
+  YourMenuModel yourMenuModel;
 
   @override
   void initState() {
@@ -668,10 +671,15 @@ class _OtherMealsMenuCardNewState extends State<OtherMealsMenuCardNew> {
     super.didChangeDependencies();
     if (inheritedData == null) {
       inheritedData = InheritedData.of(context);
-      final otherMenuModel = Provider.of<OtherMenuModel>(context);
-      if (this.otherMenuModel != otherMenuModel) {
-        this.otherMenuModel = otherMenuModel;
-      }
+    }
+    final otherMenuModel = Provider.of<OtherMenuModel>(context);
+    if (this.otherMenuModel != otherMenuModel) {
+      this.otherMenuModel = otherMenuModel;
+    }
+
+    final yourMenuModel = Provider.of<YourMenuModel>(context);
+    if (this.yourMenuModel != yourMenuModel) {
+      this.yourMenuModel = yourMenuModel;
     }
   }
 
@@ -735,6 +743,7 @@ class _OtherMealsMenuCardNewState extends State<OtherMealsMenuCardNew> {
     }
   }
 
+  //TODO: (nitish) fix daily items thing
   Widget _getSwitchIcon() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -743,7 +752,7 @@ class _OtherMealsMenuCardNewState extends State<OtherMealsMenuCardNew> {
               child: Image.asset(
                 widget.meal.isLeaveToggleOutdated
                     ? "assets/icons/switch_inactive.png"
-                    : _mealSwitchStatus
+                    : widget.meal.switchStatus.status == SwitchStatusEnum.N
                         ? "assets/icons/switch_active.png"
                         : "assets/icons/switch_crossed_active.png",
                 width: 30,
@@ -751,20 +760,31 @@ class _OtherMealsMenuCardNewState extends State<OtherMealsMenuCardNew> {
               ),
               onTap: widget.meal.isLeaveToggleOutdated
                   ? null
-                  : _mealSwitchStatus
+                  : widget.meal.switchStatus.status == SwitchStatusEnum.N
                       ? () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) =>
+                              builder: (context) => MultiProvider(
+                                providers: [
                                   ChangeNotifierProvider.value(
-                                value: otherMenuModel,
-                                child: SwitchableMealsScreen(
-                                  id: widget.meal.id,
+                                      value: otherMenuModel),
+                                  ChangeNotifierProvider.value(
+                                      value: yourMenuModel),
+                                ],
+                                child: ConfirmSwitchPopupScreen(
                                   token: inheritedData.userDetails.token,
-                                  weekId: DateTimeUtils.getWeekNumber(
-                                      widget.meal.startDateTime),
-                                  model: 1,
+                                  id: widget.meal.id,
+                                  mealStartDateTime: widget.meal.startDateTime,
+                                  title: widget.meal.title,
+                                  menuToWhichToBeSwitched:
+                                      MenuCardUtils.getMapMenuItems(
+                                          widget.meal),
+                                  dailyItemsToWhichToBeSwitched: "Daily Items:",
+                                  selectedDateTime: widget.meal.startDateTime,
+                                  selectedHostelCode:
+                                      hostelCodeMap[widget.meal.hostelName],
+                                  hostelName: inheritedData.userDetails.hostelName,
                                 ),
                               ),
                             ),
@@ -818,18 +838,22 @@ class _OtherMealsMenuCardNewState extends State<OtherMealsMenuCardNew> {
                                                   inheritedData
                                                       .userDetails.token)
                                               .then((switchCancelResponse) {
-                                            Provider.of<OtherMenuModel>(context)
+                                            Provider.of<OtherMenuModel>(context,
+                                                    listen: false)
                                                 .getOtherMenu(
                                                     DateTimeUtils.getWeekNumber(
                                                         widget.meal
                                                             .startDateTime));
+                                            Provider.of<YourMenuModel>(context,
+                                                    listen: false)
+                                                .selectedWeekMenuYourMeals(
+                                                    DateTimeUtils.getWeekNumber(
+                                                        widget.meal
+                                                            .startDateTime));
+
                                             Navigator.pop(context);
                                             if (switchCancelResponse) {
-                                              Navigator.of(context).popUntil(
-                                                  (route) => route.isFirst);
-                                              setState(() {
-                                                _mealSwitchStatus = true;
-                                              });
+                                              setState(() {});
                                             } else {
                                               Fluttertoast.showToast(
                                                   msg:
@@ -933,6 +957,25 @@ class MenuCardUtils {
         ),
       ],
     );
+  }
+
+  static getMapMenuItems(Meal meal) {
+    Map<CircleAvatar, String> map = {};
+    int i = 0;
+    meal.items.forEach((mealItem) {
+      map.putIfAbsent(
+          CircleAvatar(
+            radius: 16,
+            backgroundColor: Colors.transparent,
+            child: Image.asset(
+              "assets/icons/meal_icon" + (i + 1).toString() + ".jpg",
+              scale: 2.5,
+            ),
+          ),
+          () => mealItem.name);
+    });
+    print("returning: $map");
+    return map;
   }
 
   static List<Widget> itemWidgetList(Meal meal) {

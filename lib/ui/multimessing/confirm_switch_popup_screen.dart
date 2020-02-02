@@ -1,5 +1,6 @@
 import 'dart:math' as math;
 
+import 'package:appetizer/change_notifiers/menu_model.dart';
 import 'package:appetizer/colors.dart';
 import 'package:appetizer/models/menu/week.dart';
 import 'package:appetizer/services/menu.dart';
@@ -12,7 +13,10 @@ import 'package:appetizer/utils/date_time_utils.dart';
 import 'package:appetizer/utils/get_hostel_code.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
 
+
+//TODO: (nitish) Make this modular, take example from what I have dont with other widgets
 class ConfirmSwitchPopupScreen extends StatefulWidget {
   final String token;
   final int id;
@@ -22,6 +26,7 @@ class ConfirmSwitchPopupScreen extends StatefulWidget {
   final String dailyItemsToWhichToBeSwitched;
   final DateTime selectedDateTime;
   final String selectedHostelCode;
+  final String hostelName;
 
   const ConfirmSwitchPopupScreen({
     Key key,
@@ -33,6 +38,7 @@ class ConfirmSwitchPopupScreen extends StatefulWidget {
     this.dailyItemsToWhichToBeSwitched,
     this.selectedDateTime,
     this.selectedHostelCode,
+    this.hostelName
   }) : super(key: key);
 
   @override
@@ -108,7 +114,7 @@ class _ConfirmSwitchPopupScreenState extends State<ConfirmSwitchPopupScreen> {
         future: menuWeekMultiMessing(
           widget.token,
           DateTimeUtils.getWeekNumber(widget.selectedDateTime),
-          hostelCodeMap[inheritedData.userDetails.hostelName],
+          hostelCodeMap[widget.hostelName],
         ),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -214,6 +220,15 @@ class _ConfirmSwitchPopupScreenState extends State<ConfirmSwitchPopupScreen> {
                                 widget.selectedHostelCode,
                                 widget.token,
                               ).then((switchResponse) {
+                                Provider.of<OtherMenuModel>(context,
+                                        listen: false)
+                                    .getOtherMenu(DateTimeUtils.getWeekNumber(
+                                        widget.mealStartDateTime));
+                                Provider.of<YourMenuModel>(context,
+                                        listen: false)
+                                    .selectedWeekMenuYourMeals(
+                                        DateTimeUtils.getWeekNumber(
+                                            widget.mealStartDateTime));
                                 if (switchResponse == true) {
                                   Navigator.push(
                                     context,
