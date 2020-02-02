@@ -1,5 +1,9 @@
 import 'dart:convert';
 
+import 'package:intl/intl.dart';
+
+import '../../globals.dart';
+
 Week confirmFromJson(String str) => Week.fromJson(json.decode(str));
 
 String confirmToJson(Week data) => json.encode(data.toJson());
@@ -126,13 +130,19 @@ class Day {
   int dayId;
   DateTime date;
   List<Meal> meals;
-
+  Map<MealType, Meal> _mealMap;
   Day({
     this.id,
     this.dayId,
     this.date,
     this.meals,
-  });
+  }) {
+    _mealMap = Map();
+    meals.forEach((meal) {
+      _mealMap[meal.type] = meal;
+    });
+  }
+  DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
 
   factory Day.fromJson(Map<String, dynamic> json) => new Day(
         id: json["id"],
@@ -148,6 +158,8 @@ class Day {
             "${date.year.toString().padLeft(4, '0')}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}",
         "meals": new List<dynamic>.from(meals.map((x) => x.toJson())),
       };
+
+  Map<MealType, Meal> get mealMap => _mealMap;
 }
 
 class Meal {
@@ -177,7 +189,7 @@ class Meal {
     this.secretCode,
   });
 
- factory Meal.fromJson(Map<String, dynamic> json) => new Meal(
+  factory Meal.fromJson(Map<String, dynamic> json) => new Meal(
         id: json["id"],
         type: mealTypeValues.map[json["type"]],
         items: new List<MealItem>.from(
@@ -205,6 +217,73 @@ class Meal {
         "hostel_name": hostelName,
         "secret_code": secretCode,
       };
+
+  String get title {
+    switch (type) {
+      case MealType.B:
+        return "Breakfast";
+      case MealType.L:
+        return "Lunch";
+      case MealType.S:
+        return "Snacks";
+      case MealType.D:
+        return "Dinner";
+    }
+    print("Meal type didn't match returning 'Meal'");
+    return "Meal";
+  }
+
+  //TODO: correct this
+  bool get isOutdated {
+    if (!_timeWithDate(_timeFormat.parse(startTime)).isAfter(DateTime.now())) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  bool get isLeaveToggleOutdated {
+    if (!_timeWithDate(_timeFormat.parse(endTime))
+        .subtract(outdatedTime)
+        .isAfter(DateTime.now())) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  bool get mealSwitchStatusBool =>
+      switchStatus.status == SwitchStatusEnum.N ? true : false;
+  bool get mealLeaveStatusBool =>
+      leaveStatus.status == LeaveStatusEnum.N ? true : false;
+
+  DateTime get startTimeObject => _timeWithDate(_timeFormat.parse(startTime));
+  DateTime get endTimeObject => _timeWithDate(_timeFormat.parse(endTime));
+//  DateTime get startDateTime => dateFormat.parse(startTime);
+//  DateTime get endDateTime => dateFormat.parse(endTime);
+
+  DateFormat _timeFormat = DateFormat("HH:mm:ss");
+
+  DateTime _timeWithDate(DateTime dateTime) {
+    final _now = DateTime.now();
+    return DateTime(_now.year, _now.month, _now.day, dateTime.hour,
+        dateTime.minute, dateTime.second);
+  }
+
+//  DateTime _startDateTime;
+//  DateTime _endDateTime;
+
+//  set startDateTime(DateTime dateTime) {
+//    _startDateTime = dateTime;
+//  }
+
+/*  DateTime get startDateTime {
+    print("class Meal.startDateTime $startTime}");
+    final time = startTime;
+    return startTime;
+  }
+
+  DateTime get endDateTime => _endDateTime;*/
 }
 
 class LeaveStatus {

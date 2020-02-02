@@ -4,13 +4,12 @@ import 'package:appetizer/globals.dart';
 import 'package:appetizer/models/menu/week.dart';
 import 'package:appetizer/services/menu.dart';
 import 'package:appetizer/services/user.dart';
-import 'package:appetizer/ui/menu/day_menu.dart';
+import 'package:appetizer/ui/menu/day_menu_new.dart';
 import 'package:appetizer/ui/menu/no_meals.dart';
 import 'package:appetizer/utils/date_time_utils.dart';
 import 'package:appetizer/change_notifiers/current_date.dart';
 import 'package:appetizer/ui/components/inherited_data.dart';
 import 'package:appetizer/utils/get_hostel_code.dart';
-import 'package:appetizer/utils/menu_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sembast/sembast.dart';
@@ -117,17 +116,18 @@ class _MenuState extends State<Menu> {
             } else {
               Day currentDayMeal = otherMenuModel
                   .hostelWeekMenu.days[selectedDateTime.weekday - 1];
-              dailyItemsMap = getDailyItemsMap(otherMenuModel.hostelWeekMenu);
+              final dailyItems = otherMenuModel.hostelWeekMenu.dailyItems;
               print(dailyItemsMap);
               print("OTHER DAY: $currentDayMeal");
-              return DayMenu(
+              /*return DayMenu(
                 token: widget.token,
                 currentDayMeal: currentDayMeal,
                 dailyItemsMap: dailyItemsMap,
                 selectedDateTime: selectedDateTime,
                 selectedHostelCode: otherMenuModel.hostelCode,
                 hostelName: otherMenuModel.hostelCode,
-              );
+              );*/
+              return DayMenuNew(currentDayMeal, dailyItems, 1);
             }
           }
         }
@@ -171,16 +171,11 @@ class _MenuState extends State<Menu> {
           } else {
             Day currentDayMeal =
                 menu.selectedWeekYourMeals.days[selectedDateTime.weekday - 1];
-            dailyItemsMap = getDailyItemsMap(menu.selectedWeekYourMeals);
-            print(dailyItemsMap);
-            return DayMenu(
-              token: widget.token,
-              currentDayMeal: currentDayMeal,
-              dailyItemsMap: dailyItemsMap,
-              selectedDateTime: selectedDateTime,
-              selectedHostelCode:
-                  hostelCodeMap[inheritedData.userDetails.hostelName],
-              hostelName: inheritedData.userDetails.hostelName,
+            final dailyItems = menu.selectedWeekYourMeals.dailyItems;
+            return DayMenuNew(
+              currentDayMeal,
+              dailyItems,
+              0,
             );
           }
         }
