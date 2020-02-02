@@ -11,19 +11,16 @@ void showCustomDialog(BuildContext context, String message) {
           Padding(
             padding: const EdgeInsets.fromLTRB(36, 10, 36, 10),
             child: new Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 new CircularProgressIndicator(
                   valueColor: new AlwaysStoppedAnimation<Color>(appiYellow),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 20, right: 20),
-                  child: Center(
-                    child: new Text(
-                      message,
-                      style: new TextStyle(
-                        fontSize: 18,
-                      ),
+                Center(
+                  child: new Text(
+                    message,
+                    style: new TextStyle(
+                      fontSize: 18,
                     ),
                   ),
                 ),
