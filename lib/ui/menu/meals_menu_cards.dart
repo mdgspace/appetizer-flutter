@@ -650,6 +650,14 @@ class _OtherMealsMenuCardNewState extends State<OtherMealsMenuCardNew> {
   bool _mealSwitchStatus;
   InheritedData inheritedData;
   OtherMenuModel otherMenuModel;
+
+  @override
+  void initState() {
+    super.initState();
+    _mealSwitchStatus =
+        widget.meal != null ? widget.meal.mealSwitchStatusBool : false;
+  }
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -663,10 +671,15 @@ class _OtherMealsMenuCardNewState extends State<OtherMealsMenuCardNew> {
   }
 
   @override
-  void initState() {
-    super.initState();
-    _mealSwitchStatus =
-        widget.meal != null ? widget.meal.mealSwitchStatusBool : false;
+  void didUpdateWidget(Widget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.meal != null) {
+      _mealSwitchStatus =
+      widget.meal.switchStatus.status == SwitchStatusEnum.N ? true : false;
+    } else {
+      // Toggle ON when _mealLeaveStatus = true
+      _mealSwitchStatus = false;
+    }
   }
 
   @override
