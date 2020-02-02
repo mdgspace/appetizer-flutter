@@ -36,13 +36,15 @@ class _YourMealsMenuCardNewState extends State<YourMealsMenuCardNew> {
   @override
   void initState() {
     super.initState();
+
     if (widget.meal != null) {
       _mealLeaveStatus =
           widget.meal.leaveStatus.status == LeaveStatusEnum.N ? true : false;
       _mealSwitchStatus =
           widget.meal.switchStatus.status == SwitchStatusEnum.N ? true : false;
     } else {
-      _mealLeaveStatus = false;
+      // Toggle ON when _mealLeaveStatus = true
+      _mealLeaveStatus = true;
       _mealSwitchStatus = false;
     }
   }
@@ -52,6 +54,21 @@ class _YourMealsMenuCardNewState extends State<YourMealsMenuCardNew> {
     super.didChangeDependencies();
     if (inheritedData == null) {
       inheritedData = InheritedData.of(context);
+    }
+  }
+
+  @override
+  void didUpdateWidget(Widget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.meal != null) {
+      _mealLeaveStatus =
+          widget.meal.leaveStatus.status == LeaveStatusEnum.N ? true : false;
+      _mealSwitchStatus =
+          widget.meal.switchStatus.status == SwitchStatusEnum.N ? true : false;
+    } else {
+      // Toggle ON when _mealLeaveStatus = true
+      _mealLeaveStatus = true;
+      _mealSwitchStatus = false;
     }
   }
 
@@ -371,7 +388,7 @@ class _YourMealsMenuCardNewState extends State<YourMealsMenuCardNew> {
   }
 
   Widget _getSwitchIcon() {
-     return Padding(
+    return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12),
       child: widget.meal.isSwitchable
           ? GestureDetector(
@@ -774,7 +791,6 @@ class _OtherMealsMenuCardNewState extends State<OtherMealsMenuCardNew> {
 class MenuCardUtils {
   static Widget _menuListItem(
       Meal meal, String itemName, CircleAvatar foodIcon) {
-
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
@@ -812,7 +828,6 @@ class MenuCardUtils {
   }
 
   static Widget titleAndBhawanNameComponent(Meal meal) {
-
     return Padding(
       padding: const EdgeInsets.only(right: 10),
       child: Column(

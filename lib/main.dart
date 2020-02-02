@@ -72,7 +72,6 @@ class _AppetizerState extends State<Appetizer> {
     }
   }
 
-
   void initState() {
     getIntent();
     checkFirstScreen();
@@ -86,11 +85,11 @@ class _AppetizerState extends State<Appetizer> {
           MaterialPageRoute(
               builder: (context) => (details.getString("token") != null)
                   ? InheritedData(
-                    userDetails: UserDetailsSharedPref(details),
-                    child: Home(
+                      userDetails: UserDetailsSharedPref(details),
+                      child: Home(
                         token: details.getString("token"),
                       ),
-                  )
+                    )
                   : Login(code: code)));
     });
   }

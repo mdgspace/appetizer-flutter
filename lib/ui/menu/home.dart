@@ -122,7 +122,9 @@ class _HomeState extends State<Home> {
                   Container(
                       height: 90,
                       width: MediaQuery.of(context).size.width,
-                      child: DatePicker(padding: 0,)),
+                      child: DatePicker(
+                        padding: 0,
+                      )),
                   Flexible(
                     child: SingleChildScrollView(
                       child: Menu(

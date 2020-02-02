@@ -51,17 +51,19 @@ class _DayMenuNewState extends State<DayMenuNew> {
   @override
   Widget build(BuildContext context) {
     if (widget.menuType == 0) {
-      return Column(
-        children: <Widget>[
-          YourMealsMenuCardNew(
-              widget.day.mealMap[MealType.B], widget.dailyItems),
-          YourMealsMenuCardNew(
-              widget.day.mealMap[MealType.L], widget.dailyItems),
-          YourMealsMenuCardNew(
-              widget.day.mealMap[MealType.S], widget.dailyItems),
-          YourMealsMenuCardNew(
-              widget.day.mealMap[MealType.D], widget.dailyItems),
-        ],
+      return GestureDetector(
+        child: Column(
+          children: <Widget>[
+            YourMealsMenuCardNew(
+                widget.day.mealMap[MealType.B], widget.dailyItems),
+            YourMealsMenuCardNew(
+                widget.day.mealMap[MealType.L], widget.dailyItems),
+            YourMealsMenuCardNew(
+                widget.day.mealMap[MealType.S], widget.dailyItems),
+            YourMealsMenuCardNew(
+                widget.day.mealMap[MealType.D], widget.dailyItems),
+          ],
+        ),
       );
     } else if (widget.menuType == 1) {
       return Column(
@@ -82,27 +84,3 @@ class _DayMenuNewState extends State<DayMenuNew> {
     }
   }
 }
-
-/*
-*  String breakfastStartDateTimeString =
-            widget.currentDayMeal.date.toString().substring(0, 10) +
-                " " +
-                widget.currentDayMeal.meals[i].startTime;
-        breakfastStartDateTime = dateFormat.parse(breakfastStartDateTimeString);
-        String breakfastEndDateTimeString =
-            widget.currentDayMeal.date.toString().substring(0, 10) +
-                " " +
-                widget.currentDayMeal.meals[i].endTime;
-        breakfastEndDateTime = dateFormat.parse(breakfastEndDateTimeString);
-        if (!breakfastStartDateTime
-            .subtract(outdatedTime)
-            .isAfter(DateTime.now())) {
-          isBreakfastLeaveToggleOutdated = true;
-        }
-        if (!breakfastStartDateTime.isAfter(DateTime.now())) {
-          isBreakfastOutdated = true;
-        } else {
-          isBreakfastOutdated = false;
-        }
-*
-* */

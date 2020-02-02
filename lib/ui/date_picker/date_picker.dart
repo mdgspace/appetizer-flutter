@@ -1,4 +1,5 @@
 import 'package:appetizer/change_notifiers/current_date.dart';
+import 'package:appetizer/change_notifiers/menu_model.dart';
 import 'package:appetizer/colors.dart';
 import 'package:appetizer/utils/date_time_utils.dart';
 import 'package:flutter/cupertino.dart';
