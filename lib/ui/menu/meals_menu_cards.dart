@@ -15,6 +15,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../colors.dart';
 import '../../globals.dart';
+
 //TODO: Solve bug in othermenu
 class YourMealsMenuCardNew extends StatefulWidget {
   final Meal meal;
@@ -620,7 +621,7 @@ class _OtherMealsMenuCardNewState extends State<OtherMealsMenuCardNew> {
   @override
   Widget build(BuildContext context) {
     if (widget.meal == null) {
-      return null;
+      return Container();
     } else {
       return Padding(
         padding: const EdgeInsets.fromLTRB(0.0, 4.0, 0.0, 4.0),
@@ -797,7 +798,7 @@ class MenuCardUtils {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  "" + itemName,
+                  "$itemName",
                 ),
                 Divider(
                   height: 8.0,
@@ -811,22 +812,21 @@ class MenuCardUtils {
   }
 
   static Widget titleAndBhawanNameComponent(Meal meal) {
-    print("meal title ${meal.title}");
-
+    print("OTHER MEAL JSON : ${meal.toJson()}");
     return Padding(
       padding: const EdgeInsets.only(right: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            meal.title,
+            "${meal.title}",
             style: new TextStyle(
               color: appiYellow,
               fontSize: 24,
             ),
           ),
           Text(
-            meal.hostelName,
+            "${meal.hostelName}",
             style: new TextStyle(
               color: appiBrown,
             ),
@@ -846,7 +846,7 @@ class MenuCardUtils {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                "" + '${dailyItemsMap[meal.type]}',
+                "${dailyItemsMap[meal.type]}",
                 style: TextStyle(color: Color.fromRGBO(0, 0, 0, .54)),
               ),
             ),
