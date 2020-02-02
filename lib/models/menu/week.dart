@@ -130,13 +130,18 @@ class Day {
   int dayId;
   DateTime date;
   List<Meal> meals;
-
+  Map<MealType, Meal> _mealMap;
   Day({
     this.id,
     this.dayId,
     this.date,
     this.meals,
-  });
+  }) {
+    _mealMap = Map();
+    meals.forEach((meal){
+      _mealMap[meal.type] = meal;
+    });
+  }
 
   factory Day.fromJson(Map<String, dynamic> json) => new Day(
         id: json["id"],
@@ -152,6 +157,8 @@ class Day {
             "${date.year.toString().padLeft(4, '0')}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}",
         "meals": new List<dynamic>.from(meals.map((x) => x.toJson())),
       };
+
+  Map<MealType, Meal> get mealMap => _mealMap;
 }
 
 class Meal {
@@ -181,7 +188,7 @@ class Meal {
     this.secretCode,
   });
 
- factory Meal.fromJson(Map<String, dynamic> json) => new Meal(
+  factory Meal.fromJson(Map<String, dynamic> json) => new Meal(
         id: json["id"],
         type: mealTypeValues.map[json["type"]],
         items: new List<MealItem>.from(
@@ -211,7 +218,7 @@ class Meal {
       };
 
   String get title {
-    switch(type){
+    switch (type) {
       case MealType.B:
         return "Breakfast";
       case MealType.L:
@@ -225,7 +232,7 @@ class Meal {
     return "Meal";
   }
 
-  bool get isOutdated{
+  bool get isOutdated {
     if (!_dateFormat.parse(startTime).isAfter(DateTime.now())) {
       return true;
     } else {
@@ -233,8 +240,9 @@ class Meal {
     }
   }
 
-  bool get isLeaveToggleOutdated{
-    if (!_dateFormat.parse(startTime)
+  bool get isLeaveToggleOutdated {
+    if (!_dateFormat
+        .parse(startTime)
         .subtract(outdatedTime)
         .isAfter(DateTime.now())) {
       return true;
@@ -243,13 +251,13 @@ class Meal {
     }
   }
 
-  bool get mealSwitchStatusBool => switchStatus.status == SwitchStatusEnum.N ? true : false;
-  bool get mealLeaveStatusBool => leaveStatus.status == LeaveStatusEnum.N ? true : false;
+  bool get mealSwitchStatusBool =>
+      switchStatus.status == SwitchStatusEnum.N ? true : false;
+  bool get mealLeaveStatusBool =>
+      leaveStatus.status == LeaveStatusEnum.N ? true : false;
 
   DateTime get startDateTime => _dateFormat.parse(startTime);
   DateTime get endDateTime => _dateFormat.parse(endTime);
-
-
 
   DateFormat _dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
 }
