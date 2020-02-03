@@ -48,6 +48,7 @@ class _HomeState extends State<Home> {
   InheritedData inheritedData;
   YourMenuModel menuModel;
   OtherMenuModel otherMenuModel;
+  CurrentDateModel currentDateModel;
 
   @override
   void initState() {
@@ -94,6 +95,7 @@ class _HomeState extends State<Home> {
       menuModel = YourMenuModel(inheritedData.userDetails);
       otherMenuModel = OtherMenuModel(inheritedData.userDetails,
           hostelCodeMap[inheritedData.userDetails.hostelName]);
+      currentDateModel = CurrentDateModel();
     }
   }
 
@@ -105,7 +107,7 @@ class _HomeState extends State<Home> {
           return menuModel;
         }),
         ChangeNotifierProvider(create: (context) => otherMenuModel),
-        ChangeNotifierProvider(create: (context) => CurrentDateModel()),
+        ChangeNotifierProvider(create: (context) => currentDateModel),
         StreamProvider<ConnectivityStatus>(
             create: (context) =>
                 ConnectivityService().connectionStatusController.stream)
@@ -174,9 +176,23 @@ class _HomeState extends State<Home> {
                             )
                           : Container(),
                   Flexible(
-                    child: SingleChildScrollView(
-                      child: Menu(
-                        token: widget.token,
+                    child: GestureDetector(
+                      onHorizontalDragEnd: (d) {
+                        if (d.velocity.pixelsPerSecond.dx < -500) {
+                          currentDateModel.setDateTime(
+                              currentDateModel.dateTime.add(Duration(days: 1)),
+                              context);
+                        } else if (d.velocity.pixelsPerSecond.dx > 500) {
+                          currentDateModel.setDateTime(
+                              currentDateModel.dateTime
+                                  .subtract(Duration(days: 1)),
+                              context);
+                        }
+                      },
+                      child: SingleChildScrollView(
+                        child: Menu(
+                          token: widget.token,
+                        ),
                       ),
                     ),
                   ),
