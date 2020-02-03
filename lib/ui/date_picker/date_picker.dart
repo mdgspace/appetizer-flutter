@@ -1,8 +1,6 @@
 import 'package:appetizer/change_notifiers/current_date.dart';
-import 'package:appetizer/change_notifiers/menu_model.dart';
 import 'package:appetizer/colors.dart';
 import 'package:appetizer/utils/date_time_utils.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:provider/provider.dart';
@@ -29,7 +27,7 @@ void main() async {
 class DatePicker extends StatefulWidget {
   final double padding;
 
-  const DatePicker({this.padding = 4});
+  const DatePicker({this.padding = 16});
 
   @override
   _DatePickerState createState() => _DatePickerState();
@@ -128,7 +126,7 @@ class DateCell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _scrW = MediaQuery.of(context).size.width - (2 * _parentPadding);
-    final _padding = 4.0;
+    final _padding = 8.0;
     final _width = (_scrW - (14 * _padding)) / 7;
 
     bool _isCellDateCurrentDate() {
@@ -185,6 +183,7 @@ class DateCell extends StatelessWidget {
                   child: Text(
                 cellDate.day.toString(),
                 style: TextStyle(
+                  fontSize: 16,
                   color: _isCellDateSelectedDate()
                       ? appiBrown
                       : _isCellDateCurrentDate() ? appiYellow : Colors.white,
