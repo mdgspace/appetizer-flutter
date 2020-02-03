@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 // Weekday -> mon = 1, sun = 7
 
 // This is to test the DatePicker individually if you make any changes
+/*
 void main() async {
   //await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(
@@ -23,6 +24,7 @@ void main() async {
     ),
   );
 }
+*/
 
 class DatePicker extends StatefulWidget {
   final double padding;
