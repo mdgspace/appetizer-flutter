@@ -37,12 +37,14 @@ class _OnBoarding extends State<OnBoarding> {
       body: new Swiper.children(
         children: <Widget>[
           new Container(
-            margin: EdgeInsets.only(top: 24, bottom: 48),
+            margin: EdgeInsets.only(bottom: 10),
+            height: MediaQuery.of(context).size.height,
             alignment: Alignment.center,
             child: new Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Padding(
-                  padding: EdgeInsets.all(8),
+                  padding: EdgeInsets.fromLTRB(8,5, 8, 5),
                   child: new Text(
                     "Legible display of mess menu",
                     textAlign: TextAlign.center,
@@ -53,12 +55,12 @@ class _OnBoarding extends State<OnBoarding> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.all(8),
+                  padding: EdgeInsets.fromLTRB(8, 5, 8, 5),
                   child: Image(
                     image: AssetImage("assets/images/onBoarding1.png"),
                   ),
                 ),
-                Expanded(
+                Container(
                   child: Align(
                     alignment: FractionalOffset.bottomCenter,
                     child: new Text(
@@ -78,12 +80,14 @@ class _OnBoarding extends State<OnBoarding> {
             ),
           ),
           new Container(
-            margin: EdgeInsets.only(top: 24, bottom: 48),
+            margin: EdgeInsets.only(bottom: 10),
+            height: MediaQuery.of(context).size.height,
             alignment: Alignment.center,
             child: new Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Padding(
-                  padding: EdgeInsets.all(8),
+                  padding: EdgeInsets.fromLTRB(8, 5, 8, 5),
                   child: new Text(
                     "Check-in/Check-out whenever you want",
                     textAlign: TextAlign.center,
@@ -94,12 +98,12 @@ class _OnBoarding extends State<OnBoarding> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.all(8),
+                  padding: EdgeInsets.fromLTRB(8, 5, 8, 5),
                   child: Image(
                     image: AssetImage("assets/images/onBoarding2.png"),
                   ),
                 ),
-                Expanded(
+                Container(
                   child: Align(
                     alignment: FractionalOffset.bottomCenter,
                     child: new Text(
@@ -119,12 +123,14 @@ class _OnBoarding extends State<OnBoarding> {
             ),
           ),
           new Container(
-            margin: EdgeInsets.only(top: 24, bottom: 48),
+            margin: EdgeInsets.only(bottom: 10),
+            height: MediaQuery.of(context).size.height,
             alignment: Alignment.center,
             child: new Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Padding(
-                  padding: EdgeInsets.all(8),
+                  padding: EdgeInsets.fromLTRB(8, 5, 8, 5),
                   child: new Text(
                     "Skip a Particular meal",
                     textAlign: TextAlign.center,
@@ -135,12 +141,12 @@ class _OnBoarding extends State<OnBoarding> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.all(8),
+                  padding: EdgeInsets.fromLTRB(8, 5, 8, 5),
                   child: Image(
                     image: AssetImage("assets/images/onBoarding3.png"),
                   ),
                 ),
-                Expanded(
+                Container(
                   child: Align(
                     alignment: FractionalOffset.bottomCenter,
                     child: new Text(
@@ -160,12 +166,14 @@ class _OnBoarding extends State<OnBoarding> {
             ),
           ),
           new Container(
-            margin: EdgeInsets.only(top: 24, bottom: 48),
+            margin: EdgeInsets.only(bottom: 10),
+            height: MediaQuery.of(context).size.height,
             alignment: Alignment.center,
             child: new Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Padding(
-                  padding: EdgeInsets.all(8),
+                  padding: EdgeInsets.fromLTRB(8, 5, 8, 5),
                   child: new Text(
                     "A self-sustained system for feedback and suggestions",
                     textAlign: TextAlign.center,
@@ -181,7 +189,7 @@ class _OnBoarding extends State<OnBoarding> {
                     image: AssetImage("assets/images/onBoarding4.png"),
                   ),
                 ),
-                Expanded(
+                Container(
                   child: Align(
                     alignment: FractionalOffset.bottomCenter,
                     child: new Text(

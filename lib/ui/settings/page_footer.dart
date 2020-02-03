@@ -4,6 +4,7 @@ class SettingsPageFooter extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: Colors.white,
       height: 38.0,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
