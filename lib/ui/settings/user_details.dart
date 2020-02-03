@@ -17,7 +17,7 @@ class UserDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(16.0, 40.0, 16.0, 30.0),
+      padding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 30.0),
       child: Card(
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
@@ -34,7 +34,7 @@ class UserDetails extends StatelessWidget {
                       child: Text(
                         "$_name",
                         style: TextStyle(
-                          fontSize: 25.0,
+                          fontSize: 18,
                           color: appiLightGreyText,
                         ),
                       ),
@@ -48,7 +48,7 @@ class UserDetails extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                             color: appiDarkGreyText,
-                            fontSize: 13.0,
+                            fontSize: 13,
                           ),
                         ),
                       ),
@@ -59,8 +59,8 @@ class UserDetails extends StatelessWidget {
                   padding: const EdgeInsets.fromLTRB(8.0, 4.0, 10.0, 4.0),
                   child: SvgPicture.asset(
                     'assets/icons/redIITRLogo.svg',
-                    height: 55.0,
-                    width: 55.0,
+                    height: 40.0,
+                    width: 40.0,
                     color: const Color.fromRGBO(234, 87, 87, 1),
                   ),
                 ),
@@ -93,11 +93,8 @@ class UserDetails extends StatelessWidget {
                               child: Text(
                                 "$_enrollmentNo",
                                 overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                    fontSize: 16.0,
-                                    color: const Color.fromRGBO(79, 79, 79, 1),
-                                    fontWeight: FontWeight.w500),
-                              ),
+                                style: Theme.of(context).accentTextTheme.subtitle,
+                            ),
                             ),
                           ],
                         ),

@@ -108,29 +108,39 @@ class _EditProfileState extends State<EditProfile> {
           ),
           body: SingleChildScrollView(
             child: Container(
+              height: MediaQuery.of(context).size.height,
               color: Colors.transparent,
               child: Form(
                 key: formKey,
                 child: Column(
                   children: <Widget>[
                     Container(
-                        alignment: Alignment.center,
-                        child: UserDetails(name, enr, branch, hostel, room, email)),
-//                      Container(
-//                        color: Colors.transparent,
-//                        child:
-//                            UserDetails(name, enr, branch, hostel, room, email),
-//                      ),
-                    Container(
-                      alignment: Alignment.bottomCenter,
-                      color: Colors.white,
-                      height: MediaQuery.of(context).size.height / 1.9,
-                      child: Column(
-                        children: <Widget>[
-                          _showContactNoInput(),
-                          _showEmailInput(),
-                          _showConfirmButton(),
-                        ],
+                      alignment: Alignment.center,
+                      child:
+                          UserDetails(name, enr, branch, hostel, room, email),
+                    ),
+                    Expanded(
+                      child: Container(
+                        color: Colors.white,
+                        child: Column(
+                          children: <Widget>[
+                            Padding(
+                              padding:
+                                  const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                              child: Text("Edit Profile",
+                                  textAlign: TextAlign.center,
+                                  style: Theme.of(context)
+                                      .primaryTextTheme
+                                      .display1
+                                      .copyWith(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.w500)),
+                            ),
+                            _showContactNoInput(),
+                            _showEmailInput(),
+                            _showConfirmButton(),
+                          ],
+                        ),
                       ),
                     )
                   ],
@@ -145,7 +155,7 @@ class _EditProfileState extends State<EditProfile> {
 
   Widget _showConfirmButton() {
     return Padding(
-        padding: const EdgeInsets.fromLTRB(24, 50, 24, 24),
+        padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
         child: OutlineButton(
           highlightedBorderColor: appiYellow,
           borderSide: BorderSide(
@@ -166,7 +176,7 @@ class _EditProfileState extends State<EditProfile> {
 
   Widget _showContactNoInput() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(40.0, 40.0, 40.0, 0.0),
+      padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
       child: new TextFormField(
         maxLines: 1,
         keyboardType: TextInputType.number,
@@ -174,8 +184,7 @@ class _EditProfileState extends State<EditProfile> {
         autofocus: false,
         decoration: new InputDecoration(
           labelText: "Contact No",
-          labelStyle:
-          Theme.of(context).primaryTextTheme.subhead,
+          labelStyle: Theme.of(context).primaryTextTheme.subhead,
           icon: new Icon(
             Icons.person,
             color: appiGreyIcon,
@@ -197,7 +206,7 @@ class _EditProfileState extends State<EditProfile> {
 
   Widget _showEmailInput() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(40.0, 40.0, 40.0, 0.0),
+      padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
       child: new TextFormField(
         maxLines: 1,
         keyboardType: TextInputType.number,
@@ -205,8 +214,7 @@ class _EditProfileState extends State<EditProfile> {
         autofocus: false,
         decoration: new InputDecoration(
           labelText: "Email",
-          labelStyle:
-          Theme.of(context).primaryTextTheme.subhead,
+          labelStyle: Theme.of(context).primaryTextTheme.subhead,
           icon: new Icon(
             Icons.mail,
             color: appiGreyIcon,
