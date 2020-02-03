@@ -1,6 +1,5 @@
 import 'package:appetizer/change_notifiers/menu_model.dart';
 import 'package:appetizer/models/menu/week.dart';
-import 'package:appetizer/services/menu.dart';
 import 'package:appetizer/utils/date_time_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -87,7 +86,6 @@ class _WeekMenuState extends State<WeekMenu> {
                   )),
                 );
               } else {
-                print(menu.currentWeekYourMeals);
                 List<Widget> rows = [];
                 menu.currentWeekYourMeals.days.forEach((day) {
                   List<String> breakfast = [];
@@ -102,7 +100,6 @@ class _WeekMenuState extends State<WeekMenu> {
                         case MealType.B:
                           meal.items
                               .forEach((item) => breakfast.add(item.name));
-                          print(breakfast);
                           break;
                         case MealType.L:
                           meal.items.forEach((item) => lunch.add(item.name));
@@ -115,9 +112,6 @@ class _WeekMenuState extends State<WeekMenu> {
                       }
                     },
                   );
-                  print('B: $breakfast');
-                  print('L: $lunch');
-                  print('D: $dinner');
                   rows.add(_buildTableRow(
                       DateTimeUtils.getWeekDayName(day.date)
                           .substring(0, 1)
@@ -146,7 +140,7 @@ class _WeekMenuState extends State<WeekMenu> {
   _buildTableRow(String day, int date, List<String> breakfast,
       List<String> lunch, List<String> dinner, context) {
     final height = (MediaQuery.of(context).size.height -
-            AppBar().preferredSize.height * 2.5) /
+            AppBar().preferredSize.height * 2.12) /
         7;
     final screenHeight = MediaQuery.of(context).size.height;
     final dateWidget = Container(
@@ -166,10 +160,11 @@ class _WeekMenuState extends State<WeekMenu> {
               ),
               child: Center(
                 child: Padding(
-                  padding: const EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.all(12.0),
                   child: Center(
                       child: Text(
                     day,
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 12,
                     ),
