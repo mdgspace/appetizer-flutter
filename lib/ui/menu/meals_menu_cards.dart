@@ -401,13 +401,30 @@ class _YourMealsMenuCardNewState extends State<YourMealsMenuCardNew> {
             ),
           )
         : !isCheckedOut
-            ? Switch(
-                activeColor: appiYellow,
-                value: _mealLeaveStatus,
-                onChanged:
-                    (widget.meal.isLeaveToggleOutdated || !_mealSwitchStatus)
-                        ? null
-                        : onChangedCallback,
+            ? GestureDetector(
+                onHorizontalDragStart: (d) => {
+                  if (widget.meal.isLeaveToggleOutdated)
+                    {
+                      Fluttertoast.showToast(
+                        msg:
+                            "Leave status cannot be changed less than 8 hours before the meal time",
+                      )
+                    }
+                  else if (!_mealSwitchStatus)
+                    {
+                      Fluttertoast.showToast(
+                          msg:
+                              "Leave Status cannot be changed when Switch is active !!")
+                    }
+                },
+                child: Switch(
+                  activeColor: appiYellow,
+                  value: _mealLeaveStatus,
+                  onChanged:
+                      (widget.meal.isLeaveToggleOutdated || !_mealSwitchStatus)
+                          ? null
+                          : onChangedCallback,
+                ),
               )
             : Container();
   }
