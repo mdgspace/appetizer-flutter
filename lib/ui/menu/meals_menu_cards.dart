@@ -224,37 +224,15 @@ class _YourMealsMenuCardNewState extends State<YourMealsMenuCardNew> {
     );
   }
 
-  Widget _feedbackOrToggleComponent(BuildContext context) {
-    return widget.meal.isOutdated
-        ? Padding(
-            padding: const EdgeInsets.all(8),
-            child: InkWell(
-              child: Image.asset(
-                "assets/icons/feedback_button.png",
-                height: 25,
-                width: 25,
-              ),
-              onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => NewFeedback()));
-              },
-            ),
-          )
-        : !isCheckedOut
-            ? Switch(
-                activeColor: appiYellow,
-                value: _mealLeaveStatus,
-                onChanged: (value) async {
-                  onChangedCallback(value, context);
-                })
-            : Container();
-  }
-
-  void onChangedCallback(bool value, BuildContext context) {
+  onChangedCallback(bool value) {
+    setState(() {
+      _mealLeaveStatus = value;
+    });
     if (_mealSwitchStatus) {
       if (value) {
         if (!widget.meal.isLeaveToggleOutdated) {
           showDialog(
+              barrierDismissible: false,
               context: context,
               builder: (BuildContext dialogContext) {
                 return AlertDialog(
@@ -273,6 +251,9 @@ class _YourMealsMenuCardNewState extends State<YourMealsMenuCardNew> {
                     new FlatButton(
                       onPressed: () {
                         Navigator.pop(dialogContext);
+                        setState(() {
+                          _mealLeaveStatus = !_mealLeaveStatus;
+                        });
                       },
                       child: new Text(
                         "CANCEL",
@@ -300,15 +281,15 @@ class _YourMealsMenuCardNewState extends State<YourMealsMenuCardNew> {
                                     DateTimeUtils.getWeekNumber(
                                         widget.meal.startDateTime));
                             Navigator.pop(context);
-                            setState(() {
-                              _mealLeaveStatus = true;
-                              Fluttertoast.showToast(
-                                msg: "Leave Cancelled",
-                              );
-                            });
+                            Fluttertoast.showToast(
+                              msg: "Leave Cancelled",
+                            );
                           }
                         }).catchError((e) {
                           Navigator.pop(context);
+                          setState(() {
+                            _mealLeaveStatus = !_mealLeaveStatus;
+                          });
                           Fluttertoast.showToast(
                             msg: "Something Wrong Occured",
                           );
@@ -329,6 +310,7 @@ class _YourMealsMenuCardNewState extends State<YourMealsMenuCardNew> {
       } else {
         if (!widget.meal.isLeaveToggleOutdated) {
           showDialog(
+              barrierDismissible: false,
               context: context,
               builder: (BuildContext dialogContext) {
                 return AlertDialog(
@@ -347,6 +329,9 @@ class _YourMealsMenuCardNewState extends State<YourMealsMenuCardNew> {
                     new FlatButton(
                       onPressed: () {
                         Navigator.pop(dialogContext);
+                        setState(() {
+                          _mealLeaveStatus = !_mealLeaveStatus;
+                        });
                       },
                       child: new Text(
                         "CANCEL",
@@ -377,12 +362,12 @@ class _YourMealsMenuCardNewState extends State<YourMealsMenuCardNew> {
                             Fluttertoast.showToast(
                               msg: "Meal Skipped",
                             );
-                            setState(() {
-                              _mealLeaveStatus = false;
-                            });
                           }
                         }).catchError((e) {
                           Navigator.pop(context);
+                          setState(() {
+                            _mealLeaveStatus = !_mealLeaveStatus;
+                          });
                           Fluttertoast.showToast(
                             msg: "Something Wrong Occured",
                           );
@@ -394,17 +379,37 @@ class _YourMealsMenuCardNewState extends State<YourMealsMenuCardNew> {
                   ],
                 );
               });
-        } else {
-          Fluttertoast.showToast(
-            msg:
-                "Leave status cannot be changed less than 8 hours before the meal time",
-          );
         }
       }
-    } else {
-      Fluttertoast.showToast(
-          msg: "Leave Status cannot be changed when Switch is active !!");
     }
+  }
+
+  Widget _feedbackOrToggleComponent(BuildContext context) {
+    return widget.meal.isOutdated
+        ? Padding(
+            padding: const EdgeInsets.all(8),
+            child: InkWell(
+              child: Image.asset(
+                "assets/icons/feedback_button.png",
+                height: 25,
+                width: 25,
+              ),
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => NewFeedback()));
+              },
+            ),
+          )
+        : !isCheckedOut
+            ? Switch(
+                activeColor: appiYellow,
+                value: _mealLeaveStatus,
+                onChanged:
+                    (widget.meal.isLeaveToggleOutdated || !_mealSwitchStatus)
+                        ? null
+                        : onChangedCallback,
+              )
+            : Container();
   }
 
   Widget _getSwitchIcon() {
@@ -447,6 +452,7 @@ class _YourMealsMenuCardNewState extends State<YourMealsMenuCardNew> {
                                   SwitchStatusEnum.F
                           ? () {
                               showDialog(
+                                barrierDismissible: false,
                                 context: context,
                                 builder: (BuildContext alertContext) {
                                   return AlertDialog(
@@ -784,7 +790,8 @@ class _OtherMealsMenuCardNewState extends State<OtherMealsMenuCardNew> {
                                   selectedDateTime: widget.meal.startDateTime,
                                   selectedHostelCode:
                                       hostelCodeMap[widget.meal.hostelName],
-                                  hostelName: inheritedData.userDetails.hostelName,
+                                  hostelName:
+                                      inheritedData.userDetails.hostelName,
                                 ),
                               ),
                             ),
@@ -795,6 +802,7 @@ class _OtherMealsMenuCardNewState extends State<OtherMealsMenuCardNew> {
                                   SwitchStatusEnum.F
                           ? () {
                               showDialog(
+                                barrierDismissible: false,
                                 context: context,
                                 builder: (BuildContext alertContext) {
                                   return AlertDialog(
