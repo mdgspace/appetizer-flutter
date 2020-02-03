@@ -16,6 +16,14 @@ class _WeekMenuState extends State<WeekMenu> {
   Widget build(BuildContext context) {
     final _headerTextStyle = TextStyle(color: Color(0xffFFC107), fontSize: 16);
 
+    //FIXME: setState() or markNeedsBuild() called during build exception, when using Navigator.pop(context) fix that.
+    try {
+      Provider.of<YourMenuModel>(context, listen: false);
+    } on ProviderNotFoundException {
+      print("Caught ProviderNotFoundException WeekMenu");
+      Navigator.pop(context);
+      return Container();
+    }
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
