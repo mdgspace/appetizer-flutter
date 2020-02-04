@@ -189,7 +189,7 @@ class _YourMealsMenuCardNewState extends State<YourMealsMenuCardNew> {
                               ),
                             ],
                           ),
-                          getDayAndDateForCard(widget.meal.startTimeObject),
+                          getDayAndDateForCard(widget.meal.startDateTime),
                         ],
                       ),
                     ),
@@ -210,7 +210,7 @@ class _YourMealsMenuCardNewState extends State<YourMealsMenuCardNew> {
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        'Scan this QR code at the mess reception and get delecious meal',
+                        'Scan this QR code at the mess reception and get delicious meal',
                         style: TextStyle(
                           color: Color.fromRGBO(0, 0, 0, .54),
                         ),
