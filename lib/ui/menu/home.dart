@@ -27,7 +27,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../settings/settings_screen.dart';
 
-//TODO: (IMP) (amish) rewrite HorizontalDatePicker
 class Home extends StatefulWidget {
   final String token;
 
@@ -257,18 +256,19 @@ class _HomeState extends State<Home> {
                     setState(() {
                       selectedHostelName = null;
                     });
+
+                    menuModel
+                        .selectedWeekMenuYourMeals(currentDateModel.weekId);
                     otherMenuModel.setHostelCode =
                         hostelCodeMap[inheritedData.userDetails.hostelName];
-                    otherMenuModel.getOtherMenu(
-                        DateTimeUtils.getWeekNumber(DateTime.now()));
+                    otherMenuModel.getOtherMenu(currentDateModel.weekId);
                   } else {
                     setState(() {
                       selectedHostelName = _selectedHostelName;
                     });
                     otherMenuModel.setHostelCode =
                         hostelCodeMap[_selectedHostelName];
-                    otherMenuModel.getOtherMenu(
-                        DateTimeUtils.getWeekNumber(DateTime.now()));
+                    otherMenuModel.getOtherMenu(currentDateModel.weekId);
                   }
                 },
               ),
