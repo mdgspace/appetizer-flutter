@@ -24,25 +24,28 @@ import 'ui/on_boarding/onBoarding.dart';
 
 // TODO: refractor all the inline styles to a styles directory with proper file name and variable name
 
-void main() async {
-  //await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-  runApp(MaterialApp(
-    routes: {
-      "/home": (context) => Home(),
-      "/login": (context) => Login(),
-    },
-    debugShowCheckedModeBanner: false,
-    title: 'Appetizer',
-    theme: ThemeData(
-      fontFamily: 'OpenSans',
-      primaryColor: appiYellow,
-      accentColor: appiGrey,
-      cursorColor: appiYellow,
-      accentTextTheme: accentTextTheme,
-      primaryTextTheme: primaryTextTheme,
-    ),
-    home: Appetizer(),
-  ));
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((_) {
+    runApp(MaterialApp(
+      routes: {
+        "/home": (context) => Home(),
+        "/login": (context) => Login(),
+      },
+      debugShowCheckedModeBanner: false,
+      title: 'Appetizer',
+      theme: ThemeData(
+        fontFamily: 'OpenSans',
+        primaryColor: appiYellow,
+        accentColor: appiGrey,
+        cursorColor: appiYellow,
+        accentTextTheme: accentTextTheme,
+        primaryTextTheme: primaryTextTheme,
+      ),
+      home: Appetizer(),
+    ));
+  });
 }
 
 // TODO: Appetizer Widget MUST NOT exist
