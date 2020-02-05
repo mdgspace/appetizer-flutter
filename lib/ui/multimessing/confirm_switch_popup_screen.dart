@@ -7,7 +7,9 @@ import 'package:appetizer/services/menu.dart';
 import 'package:appetizer/services/multimessing/switch_meals.dart';
 import 'package:appetizer/ui/components/alert_dialog.dart';
 import 'package:appetizer/ui/components/inherited_data.dart';
+import 'package:appetizer/ui/components/progress_bar.dart';
 import 'package:appetizer/ui/components/switch_confirmation_meal_card.dart';
+import 'package:appetizer/ui/menu/meals_menu_cards.dart';
 import 'package:appetizer/ui/multimessing/confirmed_switch_screen.dart';
 import 'package:appetizer/utils/date_time_utils.dart';
 import 'package:appetizer/utils/get_hostel_code.dart';
@@ -15,30 +17,13 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
-//TODO: (nitish) Make this modular, take example from what I have dont with other widgets
 class ConfirmSwitchPopupScreen extends StatefulWidget {
-  final String token;
-  final int id;
-  final DateTime mealStartDateTime;
-  final String title;
-  final Map<CircleAvatar, String> menuToWhichToBeSwitched;
-  final String dailyItemsToWhichToBeSwitched;
-  final DateTime selectedDateTime;
-  final String selectedHostelCode;
-  final String hostelName;
+  final Meal meal;
 
-  const ConfirmSwitchPopupScreen(
-      {Key key,
-      this.token,
-      this.id,
-      this.mealStartDateTime,
-      this.title,
-      this.menuToWhichToBeSwitched,
-      this.dailyItemsToWhichToBeSwitched,
-      this.selectedDateTime,
-      this.selectedHostelCode,
-      this.hostelName})
-      : super(key: key);
+  const ConfirmSwitchPopupScreen({
+    Key key,
+    this.meal,
+  }) : super(key: key);
 
   @override
   _ConfirmSwitchPopupScreenState createState() =>
@@ -48,7 +33,6 @@ class ConfirmSwitchPopupScreen extends StatefulWidget {
 class _ConfirmSwitchPopupScreenState extends State<ConfirmSwitchPopupScreen> {
   static final double _radius = 16;
   int currentHostelMealId;
-
   InheritedData inheritedData;
 
   @override
@@ -62,7 +46,6 @@ class _ConfirmSwitchPopupScreenState extends State<ConfirmSwitchPopupScreen> {
   List<CircleAvatar> mealFromWhichToBeSwitchedLeadingImageList = [];
   List<String> mealFromWhichToBeSwitchedItemsList = [];
   Map<CircleAvatar, String> mealFromWhichToBeSwitchedMap = {};
-  String mealFromWhichToBeSwitchedDailyItems = '';
 
   void setLeadingMealImage(List<CircleAvatar> mealLeadingImageList) {
     mealLeadingImageList.add(CircleAvatar(
@@ -114,28 +97,20 @@ class _ConfirmSwitchPopupScreenState extends State<ConfirmSwitchPopupScreen> {
       ),
       body: FutureBuilder(
         future: menuWeekMultiMessing(
-          widget.token,
-          DateTimeUtils.getWeekNumber(widget.selectedDateTime),
-          hostelCodeMap[widget.hostelName],
+          inheritedData.userDetails.token,
+          DateTimeUtils.getWeekNumber(widget.meal.startDateTime),
+          hostelCodeMap[inheritedData.userDetails.hostelName],
         ),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Container(
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              child: Center(
-                child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(appiYellow),
-                ),
-              ),
-            );
+            return ProgressBar();
           } else {
             snapshot.data.days.forEach((dayMenu) {
               String mealDateString = dayMenu.date.toString().substring(0, 10);
               dayMenu.meals.forEach((mealMenu) {
                 if (mealDateString ==
-                        widget.mealStartDateTime.toString().substring(0, 10) &&
-                    titleToMealTypeMap[widget.title] == mealMenu.type) {
+                        widget.meal.startDateTime.toString().substring(0, 10) &&
+                    titleToMealTypeMap[widget.meal.title] == mealMenu.type) {
                   currentHostelMealId = mealMenu.id;
                   setMealFromWhichToBeSwitchedComponents(mealMenu);
                   mealFromWhichToBeSwitchedMap = Map.fromIterables(
@@ -161,12 +136,11 @@ class _ConfirmSwitchPopupScreenState extends State<ConfirmSwitchPopupScreen> {
                         ),
                       ),
                       SwitchConfirmationMealCard(
-                        token: widget.token,
-                        id: widget.id,
-                        title: widget.title,
+                        token: inheritedData.userDetails.token,
+                        id: widget.meal.id,
+                        title: widget.meal.title,
                         menuItems: mealFromWhichToBeSwitchedMap,
-                        dailyItems: mealFromWhichToBeSwitchedDailyItems,
-                        mealStartDateTime: widget.mealStartDateTime,
+                        mealStartDateTime: widget.meal.startDateTime,
                       ),
                       Padding(
                         padding: const EdgeInsets.all(16.0),
@@ -185,12 +159,11 @@ class _ConfirmSwitchPopupScreenState extends State<ConfirmSwitchPopupScreen> {
                         ),
                       ),
                       SwitchConfirmationMealCard(
-                        token: widget.token,
-                        id: widget.id,
-                        title: widget.title,
-                        menuItems: widget.menuToWhichToBeSwitched,
-                        dailyItems: widget.dailyItemsToWhichToBeSwitched,
-                        mealStartDateTime: widget.mealStartDateTime,
+                        token: inheritedData.userDetails.token,
+                        id: widget.meal.id,
+                        title: widget.meal.title,
+                        menuItems: MenuCardUtils.getMapMenuItems(widget.meal),
+                        mealStartDateTime: widget.meal.startDateTime,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
@@ -219,18 +192,18 @@ class _ConfirmSwitchPopupScreenState extends State<ConfirmSwitchPopupScreen> {
                               showCustomDialog(context, "Switching Meals");
                               switchMeals(
                                 currentHostelMealId,
-                                widget.selectedHostelCode,
-                                widget.token,
+                                hostelCodeMap[widget.meal.hostelName],
+                                inheritedData.userDetails.token,
                               ).then((switchResponse) {
                                 Provider.of<OtherMenuModel>(context,
                                         listen: false)
                                     .getOtherMenu(DateTimeUtils.getWeekNumber(
-                                        widget.mealStartDateTime));
+                                        widget.meal.startDateTime));
                                 Provider.of<YourMenuModel>(context,
                                         listen: false)
                                     .selectedWeekMenuYourMeals(
                                         DateTimeUtils.getWeekNumber(
-                                            widget.mealStartDateTime));
+                                            widget.meal.startDateTime));
                                 if (switchResponse == true) {
                                   Navigator.push(
                                     context,

@@ -7,7 +7,6 @@ class SwitchConfirmationMealCard extends StatefulWidget {
   final int id;
   final String title;
   final Map<CircleAvatar, String> menuItems;
-  final String dailyItems;
   final DateTime mealStartDateTime;
 
   const SwitchConfirmationMealCard({
@@ -16,7 +15,6 @@ class SwitchConfirmationMealCard extends StatefulWidget {
     this.id,
     this.title,
     this.menuItems,
-    this.dailyItems,
     this.mealStartDateTime,
   }) : super(key: key);
 
@@ -117,15 +115,11 @@ class _SwitchConfirmationMealCardState
                 children: <Widget>[
                   Expanded(
                     child: Container(
-                        color: Color(0xffF4F4F4),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            'Daily Items: ${widget.dailyItems}',
-                            style:
-                                TextStyle(color: Color.fromRGBO(0, 0, 0, .54)),
-                          ),
-                        )),
+                      color: Color(0xffF4F4F4),
+                      child: Padding(
+                        padding: const EdgeInsets.all(12.0),
+                      ),
+                    ),
                   ),
                 ],
               )

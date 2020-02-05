@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:appetizer/change_notifiers/menu_model.dart';
 import 'package:appetizer/globals.dart';
 import 'package:appetizer/models/menu/week.dart';
+import 'package:appetizer/models/user/user_details_shared_pref.dart';
 import 'package:appetizer/services/leave.dart';
 import 'package:appetizer/services/multimessing/switch_meals.dart';
 import 'package:appetizer/ui/components/alert_dialog.dart';
@@ -13,7 +14,6 @@ import 'package:appetizer/ui/multimessing/switchable_meals_screen.dart';
 import 'package:appetizer/ui/user_feedback/new_feedback.dart';
 import 'package:appetizer/utils/date_time_utils.dart';
 import 'package:appetizer/utils/get_day_and_date_for_meal_card.dart';
-import 'package:appetizer/utils/get_hostel_code.dart';
 import 'package:appetizer/utils/get_leave_color_from_leave_status.dart';
 import 'package:appetizer/utils/menu_utils.dart';
 import 'package:flutter/material.dart';
@@ -675,7 +675,7 @@ class OtherMealsMenuCardNew extends StatefulWidget {
 
 class _OtherMealsMenuCardNewState extends State<OtherMealsMenuCardNew> {
   bool _mealSwitchStatus;
-  InheritedData inheritedData;
+  UserDetailsSharedPref inheritedUserDetails;
   OtherMenuModel otherMenuModel;
   YourMenuModel yourMenuModel;
 
@@ -694,8 +694,8 @@ class _OtherMealsMenuCardNewState extends State<OtherMealsMenuCardNew> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    if (inheritedData == null) {
-      inheritedData = InheritedData.of(context);
+    if (inheritedUserDetails == null) {
+      inheritedUserDetails = InheritedData.of(context).userDetails;
     }
     final otherMenuModel = Provider.of<OtherMenuModel>(context);
     if (this.otherMenuModel != otherMenuModel) {
@@ -797,20 +797,11 @@ class _OtherMealsMenuCardNewState extends State<OtherMealsMenuCardNew> {
                                   ChangeNotifierProvider.value(
                                       value: yourMenuModel),
                                 ],
-                                child: ConfirmSwitchPopupScreen(
-                                  token: inheritedData.userDetails.token,
-                                  id: widget.meal.id,
-                                  mealStartDateTime: widget.meal.startDateTime,
-                                  title: widget.meal.title,
-                                  menuToWhichToBeSwitched:
-                                      MenuCardUtils.getMapMenuItems(
-                                          widget.meal),
-                                  dailyItemsToWhichToBeSwitched: "Daily Items:",
-                                  selectedDateTime: widget.meal.startDateTime,
-                                  selectedHostelCode:
-                                      hostelCodeMap[widget.meal.hostelName],
-                                  hostelName:
-                                      inheritedData.userDetails.hostelName,
+                                child: InheritedData(
+                                  userDetails: inheritedUserDetails,
+                                  child: ConfirmSwitchPopupScreen(
+                                    meal: widget.meal,
+                                  ),
                                 ),
                               ),
                             ),
@@ -862,8 +853,7 @@ class _OtherMealsMenuCardNewState extends State<OtherMealsMenuCardNew> {
                                               context, "Cancelling Switch");
                                           cancelSwitch(
                                                   widget.meal.switchStatus.id,
-                                                  inheritedData
-                                                      .userDetails.token)
+                                                  inheritedUserDetails.token)
                                               .then((switchCancelResponse) {
                                             Provider.of<OtherMenuModel>(context,
                                                     listen: false)
