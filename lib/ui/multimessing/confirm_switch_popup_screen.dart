@@ -15,7 +15,6 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
-
 //TODO: (nitish) Make this modular, take example from what I have dont with other widgets
 class ConfirmSwitchPopupScreen extends StatefulWidget {
   final String token;
@@ -28,18 +27,18 @@ class ConfirmSwitchPopupScreen extends StatefulWidget {
   final String selectedHostelCode;
   final String hostelName;
 
-  const ConfirmSwitchPopupScreen({
-    Key key,
-    this.token,
-    this.id,
-    this.mealStartDateTime,
-    this.title,
-    this.menuToWhichToBeSwitched,
-    this.dailyItemsToWhichToBeSwitched,
-    this.selectedDateTime,
-    this.selectedHostelCode,
-    this.hostelName
-  }) : super(key: key);
+  const ConfirmSwitchPopupScreen(
+      {Key key,
+      this.token,
+      this.id,
+      this.mealStartDateTime,
+      this.title,
+      this.menuToWhichToBeSwitched,
+      this.dailyItemsToWhichToBeSwitched,
+      this.selectedDateTime,
+      this.selectedHostelCode,
+      this.hostelName})
+      : super(key: key);
 
   @override
   _ConfirmSwitchPopupScreenState createState() =>
@@ -66,12 +65,15 @@ class _ConfirmSwitchPopupScreenState extends State<ConfirmSwitchPopupScreen> {
   String mealFromWhichToBeSwitchedDailyItems = '';
 
   void setLeadingMealImage(List<CircleAvatar> mealLeadingImageList) {
-    var randomColor =
-        Color((math.Random().nextDouble() * 0xFFFFFF).toInt() << 0)
-            .withOpacity(0.2);
     mealLeadingImageList.add(CircleAvatar(
       radius: _radius,
-      backgroundColor: randomColor,
+      backgroundColor: Colors.transparent,
+      child: Image.asset(
+        "assets/icons/meal_icon" +
+            (math.Random().nextInt(5) + 1).toString() +
+            ".jpg",
+        scale: 2.5,
+      ),
     ));
   }
 

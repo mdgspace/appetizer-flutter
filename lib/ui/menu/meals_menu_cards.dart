@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:appetizer/change_notifiers/menu_model.dart';
 import 'package:appetizer/globals.dart';
 import 'package:appetizer/models/menu/week.dart';
@@ -986,14 +988,15 @@ class MenuCardUtils {
 
   static getMapMenuItems(Meal meal) {
     Map<CircleAvatar, String> map = {};
-    int i = 0;
     meal.items.forEach((mealItem) {
       map.putIfAbsent(
           CircleAvatar(
             radius: 16,
             backgroundColor: Colors.transparent,
             child: Image.asset(
-              "assets/icons/meal_icon" + (i + 1).toString() + ".jpg",
+              "assets/icons/meal_icon" +
+                  (math.Random().nextInt(5) + 1).toString() +
+                  ".jpg",
               scale: 2.5,
             ),
           ),
@@ -1005,7 +1008,6 @@ class MenuCardUtils {
 
   static List<Widget> itemWidgetList(Meal meal) {
     List<Widget> list = [];
-    int i = 0;
     meal.items.forEach((mealItem) {
       list.add(_menuListItem(
           meal,
@@ -1014,11 +1016,12 @@ class MenuCardUtils {
             radius: 16,
             backgroundColor: Colors.transparent,
             child: Image.asset(
-              "assets/icons/meal_icon" + (i + 1).toString() + ".jpg",
+              "assets/icons/meal_icon" +
+                  (math.Random().nextInt(5) + 1).toString() +
+                  ".jpg",
               scale: 2.5,
             ),
           )));
-      i++;
     });
     return list;
   }
