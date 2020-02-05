@@ -1,5 +1,3 @@
-import 'dart:math' as math;
-
 import 'package:appetizer/change_notifiers/menu_model.dart';
 import 'package:appetizer/globals.dart';
 import 'package:appetizer/models/menu/week.dart';
@@ -23,7 +21,6 @@ import 'package:provider/provider.dart';
 import '../../colors.dart';
 import '../../globals.dart';
 
-//TODO: Solve bug in othermenu
 class YourMealsMenuCardNew extends StatefulWidget {
   final Meal meal;
   final DailyItems dailyItems;
@@ -768,7 +765,6 @@ class _OtherMealsMenuCardNewState extends State<OtherMealsMenuCardNew> {
     }
   }
 
-  //TODO: (nitish) fix daily items thing
   Widget _getSwitchIcon() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -890,129 +886,5 @@ class _OtherMealsMenuCardNewState extends State<OtherMealsMenuCardNew> {
             )
           : Container(),
     );
-  }
-}
-
-class MenuCardUtils {
-  static Widget _menuListItem(
-      Meal meal, String itemName, CircleAvatar foodIcon) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-        Container(
-          padding: EdgeInsets.only(right: 4.0),
-          child: Column(
-            children: <Widget>[
-              foodIcon,
-              SizedBox(
-                height: 8.0,
-              )
-            ],
-          ),
-        ),
-        Expanded(
-          child: Container(
-            padding: EdgeInsets.only(left: 4.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  "$itemName",
-                ),
-                Divider(
-                  height: 8.0,
-                ),
-              ],
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  static Widget titleAndBhawanNameComponent(Meal meal) {
-    return Padding(
-      padding: const EdgeInsets.only(right: 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            "${meal.title}",
-            style: new TextStyle(
-              color: appiYellow,
-              fontSize: 24,
-            ),
-          ),
-          Text(
-            "${meal.hostelName}",
-            style: new TextStyle(
-              color: appiBrown,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  static Widget dailyItemsComponent(Meal meal, DailyItems dailyItems) {
-    final dailyItemsMap = getDailyItemsMap(dailyItems);
-    return Row(
-      children: <Widget>[
-        Expanded(
-          child: Container(
-            color: Color(0xffF4F4F4),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                "${dailyItemsMap[meal.type]}",
-                style: TextStyle(color: Color.fromRGBO(0, 0, 0, .54)),
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  static getMapMenuItems(Meal meal) {
-    Map<CircleAvatar, String> map = {};
-    meal.items.forEach((mealItem) {
-      map.putIfAbsent(
-          CircleAvatar(
-            radius: 16,
-            backgroundColor: Colors.transparent,
-            child: Image.asset(
-              "assets/icons/meal_icon" +
-                  (math.Random().nextInt(5) + 1).toString() +
-                  ".jpg",
-              scale: 2.5,
-            ),
-          ),
-          () => mealItem.name);
-    });
-    print("returning: $map");
-    return map;
-  }
-
-  static List<Widget> itemWidgetList(Meal meal) {
-    List<Widget> list = [];
-    meal.items.forEach((mealItem) {
-      list.add(_menuListItem(
-          meal,
-          mealItem.name,
-          CircleAvatar(
-            radius: 16,
-            backgroundColor: Colors.transparent,
-            child: Image.asset(
-              "assets/icons/meal_icon" +
-                  (math.Random().nextInt(5) + 1).toString() +
-                  ".jpg",
-              scale: 2.5,
-            ),
-          )));
-    });
-    return list;
   }
 }
