@@ -3,6 +3,8 @@ import 'package:appetizer/styles.dart';
 import 'package:appetizer/ui/components/inherited_data.dart';
 import 'package:appetizer/ui/menu/home.dart';
 import 'package:appetizer/utils/user_details.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -25,6 +27,8 @@ import 'ui/on_boarding/onBoarding.dart';
 // TODO: refractor all the inline styles to a styles directory with proper file name and variable name
 
 void main() {
+  FirebaseAnalytics analytics = FirebaseAnalytics();
+
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {
@@ -33,6 +37,9 @@ void main() {
         "/home": (context) => Home(),
         "/login": (context) => Login(),
       },
+      navigatorObservers: [
+        FirebaseAnalyticsObserver(analytics: analytics),
+      ],
       debugShowCheckedModeBanner: false,
       title: 'Appetizer',
       theme: ThemeData(
