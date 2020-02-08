@@ -16,10 +16,10 @@ class Image {
   });
 
   factory Image.fromJson(Map<String, dynamic> json) => new Image(
-    detail: json["detail"],
-  );
+        detail: json["detail"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "detail": detail,
-  };
+        "detail": detail,
+      };
 }

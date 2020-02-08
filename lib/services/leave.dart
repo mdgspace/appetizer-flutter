@@ -1,11 +1,11 @@
 import 'dart:convert';
-import 'package:appetizer/models/leaves/createLeave.dart';
+import 'package:appetizer/models/leaves/create_leave.dart';
 import 'package:appetizer/models/leaves/check.dart';
-import 'package:appetizer/models/leaves/leaveList.dart';
-import 'package:appetizer/models/leaves/remainingLeaveCount.dart';
+import 'package:appetizer/models/leaves/leave_list.dart';
+import 'package:appetizer/models/leaves/remaining_leave_count.dart';
 import 'package:http/http.dart' as http;
 
-String url = "https://mess.iitr.ac.in";
+String url = "https://appetizer-mdg.herokuapp.com";
 var header = {"Content-Type": "application/json"};
 http.Client client = new http.Client();
 

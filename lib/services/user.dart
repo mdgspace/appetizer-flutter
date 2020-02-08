@@ -1,14 +1,14 @@
 import 'dart:convert';
 import 'package:appetizer/models/detail.dart';
 import 'package:appetizer/models/user/oauth.dart';
-import 'package:appetizer/models/user/oauthnewuser.dart';
+import 'package:appetizer/models/user/oauth_new_user.dart';
 import 'package:http/http.dart' as http;
 import 'package:appetizer/models/user/image.dart';
 import 'package:appetizer/models/user/login.dart';
 import 'package:appetizer/models/user/me.dart';
-import 'package:appetizer/models/user/Notification.dart';
+import 'package:appetizer/models/user/notification.dart';
 
-String url = "https://mess.iitr.ac.in";
+String url = "https://appetizer-mdg.herokuapp.com";
 var header = {"Content-Type": "application/json"};
 http.Client client = new http.Client();
 
@@ -84,6 +84,30 @@ Future<Me> userMePatch(String token, String email, String contactNo) async {
     "email": email,
     "contactNo": contactNo,
   };
+  var tokenAuth = {
+    "Authorization": "Token " + token,
+    "Content-Type": "application/json"
+  };
+  try {
+    var response = await client.patch(
+      uri,
+      headers: tokenAuth,
+      body: jsonEncode(json),
+    );
+    final jsonResponse = jsonDecode(response.body);
+    Me me = new Me.fromJson(jsonResponse);
+    print(response.body);
+    return me;
+  } on Exception catch (e) {
+    print(e);
+    return null;
+  }
+}
+
+Future<Me> userMePatchFCM(String token, String fcmToken) async {
+  String endpoint = "/api/user/me/";
+  String uri = url + endpoint;
+  var json = {"fcm_token": fcmToken};
   var tokenAuth = {
     "Authorization": "Token " + token,
     "Content-Type": "application/json"

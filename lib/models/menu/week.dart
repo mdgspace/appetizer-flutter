@@ -1,8 +1,8 @@
-// To parse this JSON data, do
-//
-//     final confirm = confirmFromJson(jsonString);
-
 import 'dart:convert';
+
+import 'package:intl/intl.dart';
+
+import '../../globals.dart';
 
 Week confirmFromJson(String str) => Week.fromJson(json.decode(str));
 
@@ -12,6 +12,7 @@ class Week {
   int weekId;
   int year;
   dynamic name;
+  String hostelName;
   DailyItems dailyItems;
   List<Day> days;
   bool isApproved;
@@ -20,6 +21,7 @@ class Week {
     this.weekId,
     this.year,
     this.name,
+    this.hostelName,
     this.dailyItems,
     this.days,
     this.isApproved,
@@ -29,6 +31,7 @@ class Week {
         weekId: json["week_id"],
         year: json["year"],
         name: json["name"],
+        hostelName: json["hostel_name"],
         dailyItems: DailyItems.fromJson(json["daily_items"]),
         days: new List<Day>.from(json["days"].map((x) => Day.fromJson(x))),
         isApproved: json["is_approved"],
@@ -38,6 +41,7 @@ class Week {
         "week_id": weekId,
         "year": year,
         "name": name,
+        "hostel_name": hostelName,
         "daily_items": dailyItems.toJson(),
         "days": new List<dynamic>.from(days.map((x) => x.toJson())),
         "is_approved": isApproved,
@@ -126,13 +130,19 @@ class Day {
   int dayId;
   DateTime date;
   List<Meal> meals;
-
+  Map<MealType, Meal> _mealMap;
   Day({
     this.id,
     this.dayId,
     this.date,
     this.meals,
-  });
+  }) {
+    _mealMap = Map();
+    meals.forEach((meal) {
+      _mealMap[meal.type] = meal;
+    });
+  }
+  DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
 
   factory Day.fromJson(Map<String, dynamic> json) => new Day(
         id: json["id"],
@@ -148,9 +158,14 @@ class Day {
             "${date.year.toString().padLeft(4, '0')}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}",
         "meals": new List<dynamic>.from(meals.map((x) => x.toJson())),
       };
+
+  Map<MealType, Meal> get mealMap => _mealMap;
 }
 
 class Meal {
+
+  //WARNING secretCode is always null (backend side)
+  //TODO: (aseem) remove secretCode while making sure nothing breaks
   int id;
   MealType type;
   List<MealItem> items;
@@ -158,6 +173,10 @@ class Meal {
   String endTime;
   LeaveStatus leaveStatus;
   dynamic wastage;
+  bool isSwitchable;
+  SwitchStatus switchStatus;
+  String hostelName;
+  String secretCode;
 
   Meal({
     this.id,
@@ -167,6 +186,10 @@ class Meal {
     this.endTime,
     this.leaveStatus,
     this.wastage,
+    this.isSwitchable,
+    this.switchStatus,
+    this.hostelName,
+    this.secretCode,
   });
 
   factory Meal.fromJson(Map<String, dynamic> json) => new Meal(
@@ -176,8 +199,12 @@ class Meal {
             json["items"].map((x) => MealItem.fromJson(x))),
         startTime: json["start_time"],
         endTime: json["end_time"],
-        leaveStatus: leaveStatusValues.map[json["leave_status"]],
+        leaveStatus: LeaveStatus.fromJson(json["leave_status"]),
         wastage: json["wastage"],
+        isSwitchable: json["is_switchable"],
+        switchStatus: SwitchStatus.fromJson(json["switch_status"]),
+        hostelName: json["hostel_name"],
+        secretCode: json["secret_code"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -186,19 +213,137 @@ class Meal {
         "items": new List<dynamic>.from(items.map((x) => x.toJson())),
         "start_time": startTime,
         "end_time": endTime,
-        "leave_status": leaveStatusValues.reverse[leaveStatus],
+        "leave_status": leaveStatus.toJson(),
         "wastage": wastage,
+        "is_switchable": isSwitchable,
+        "switch_status": switchStatus.toJson(),
+        "hostel_name": hostelName,
+        "secret_code": secretCode,
+      };
+
+  String get title {
+    switch (type) {
+      case MealType.B:
+        return "Breakfast";
+      case MealType.L:
+        return "Lunch";
+      case MealType.S:
+        return "Snacks";
+      case MealType.D:
+        return "Dinner";
+    }
+    print("Meal type didn't match returning 'Meal'");
+    return "Meal";
+  }
+
+  bool _isOutdated;
+
+  bool get isOutdated => _isOutdated;
+  set isOutdated(bool value) {
+    _isOutdated = value;
+  }
+
+  bool _isLeaveToggleOutdated;
+  bool get isLeaveToggleOutdated => _isLeaveToggleOutdated;
+  set isLeaveToggleOutdated(bool value) {
+    _isLeaveToggleOutdated = value;
+  }
+
+  bool get mealSwitchStatusBool =>
+      switchStatus.status == SwitchStatusEnum.N ? true : false;
+
+  bool get mealLeaveStatusBool =>
+      leaveStatus.status == LeaveStatusEnum.N ? true : false;
+
+  DateTime get startTimeObject => _timeFormat.parse(startTime);
+  DateTime get endTimeObject => _timeFormat.parse(endTime);
+
+
+  DateFormat _timeFormat = DateFormat("HH:mm:ss");
+
+  DateTime _startDateTime;
+  DateTime _endDateTime;
+
+  DateTime get startDateTime => _startDateTime;
+
+  set startDateTime(DateTime value) {
+    _startDateTime = value;
+  }
+
+  DateTime get endDateTime => _endDateTime;
+
+  set endDateTime(DateTime value) {
+    _endDateTime = value;
+  }
+
+  String _secretCodeMeal;
+
+  String get secretCodeMeal => _secretCodeMeal;
+
+  set secretCodeMeal(String value) {
+    _secretCodeMeal = value;
+  }
+}
+
+class LeaveStatus {
+  int id;
+  LeaveStatusEnum status;
+
+  LeaveStatus({
+    this.id,
+    this.status,
+  });
+
+  factory LeaveStatus.fromJson(Map<String, dynamic> json) => new LeaveStatus(
+        id: json["id"],
+        status: leaveStatusValues.map[json["status"]],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "status": leaveStatusValues.reverse[status],
       };
 }
 
-enum LeaveStatus { N, A, D, P, U }
+class SwitchStatus {
+  int id;
+  SwitchStatusEnum status;
+
+  SwitchStatus({
+    this.id,
+    this.status,
+  });
+
+  factory SwitchStatus.fromJson(Map<String, dynamic> json) => new SwitchStatus(
+        id: json["id"],
+        status: switchStatusValues.map[json["status"]],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "status": switchStatusValues.reverse[status],
+      };
+}
+
+enum LeaveStatusEnum { N, A, D, P, U }
+
+enum SwitchStatusEnum { N, A, D, F, T, U }
 
 final leaveStatusValues = new EnumValues({
-  "N": LeaveStatus.N,
-  "A": LeaveStatus.A,
-  "D": LeaveStatus.D,
-  "P": LeaveStatus.P,
-  "U": LeaveStatus.U
+  "N": LeaveStatusEnum.N,
+  "A": LeaveStatusEnum.A,
+  "D": LeaveStatusEnum.D,
+  "P": LeaveStatusEnum.P,
+  "U": LeaveStatusEnum.U
+});
+
+final switchStatusValues = new EnumValues({
+  "N": SwitchStatusEnum.N,
+  "A": SwitchStatusEnum.A,
+  "D": SwitchStatusEnum.D,
+  "F": SwitchStatusEnum.F,
+  "T": SwitchStatusEnum.T,
+  "U": SwitchStatusEnum.U
 });
 
 enum MealType { B, L, S, D }
