@@ -63,6 +63,29 @@ class _EditProfileState extends State<EditProfile> {
 
   @override
   Widget build(BuildContext context) {
+    AppBar appBar = AppBar(
+      leading: IconButton(
+        icon: Icon(Icons.arrow_back),
+        color: const Color.fromRGBO(255, 193, 7, 1),
+        onPressed: () => Navigator.pop(context, false),
+      ),
+//            actions: <Widget>[
+//              GestureDetector(
+//                child: new Text(
+//                  "SAVE",
+//                  style: TextStyle(
+//                    fontSize: 12,
+//                  ),
+//                ),
+//              ),
+//            ],
+      title: Text(
+        "Settings",
+        style: new TextStyle(color: Colors.white),
+      ),
+      backgroundColor: Colors.transparent,
+      elevation: 0.0,
+    );
     width = MediaQuery.of(context).size.width;
     return Stack(
       children: <Widget>[
@@ -83,29 +106,7 @@ class _EditProfileState extends State<EditProfile> {
         ),
         Scaffold(
           backgroundColor: Colors.transparent,
-          appBar: AppBar(
-            leading: IconButton(
-              icon: Icon(Icons.arrow_back),
-              color: const Color.fromRGBO(255, 193, 7, 1),
-              onPressed: () => Navigator.pop(context, false),
-            ),
-//            actions: <Widget>[
-//              GestureDetector(
-//                child: new Text(
-//                  "SAVE",
-//                  style: TextStyle(
-//                    fontSize: 12,
-//                  ),
-//                ),
-//              ),
-//            ],
-            title: Text(
-              "Settings",
-              style: new TextStyle(color: Colors.white),
-            ),
-            backgroundColor: Colors.transparent,
-            elevation: 0.0,
-          ),
+          appBar: appBar,
           body: SingleChildScrollView(
             child: Container(
               height: MediaQuery.of(context).size.height,
@@ -115,6 +116,8 @@ class _EditProfileState extends State<EditProfile> {
                 child: Column(
                   children: <Widget>[
                     Container(
+                      height: MediaQuery.of(context).size.height / 2 -
+                          appBar.preferredSize.height,
                       alignment: Alignment.center,
                       child:
                           UserDetails(name, enr, branch, hostel, room, email),
@@ -122,11 +125,11 @@ class _EditProfileState extends State<EditProfile> {
                     Expanded(
                       child: Container(
                         color: Colors.white,
-                        child: Column(
+                        child: ListView(
                           children: <Widget>[
                             Padding(
                               padding:
-                                  const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                                  const EdgeInsets.fromLTRB(15, 15, 15, 15),
                               child: Text("Edit Profile",
                                   textAlign: TextAlign.center,
                                   style: Theme.of(context)
@@ -155,7 +158,7 @@ class _EditProfileState extends State<EditProfile> {
 
   Widget _showConfirmButton() {
     return Padding(
-        padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+        padding: const EdgeInsets.fromLTRB(15, 15, 15, 15),
         child: OutlineButton(
           highlightedBorderColor: appiYellow,
           borderSide: BorderSide(
@@ -176,7 +179,7 @@ class _EditProfileState extends State<EditProfile> {
 
   Widget _showContactNoInput() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+      padding: const EdgeInsets.fromLTRB(15, 15, 15, 15),
       child: new TextFormField(
         maxLines: 1,
         keyboardType: TextInputType.number,
@@ -206,7 +209,7 @@ class _EditProfileState extends State<EditProfile> {
 
   Widget _showEmailInput() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+      padding: const EdgeInsets.fromLTRB(15, 15, 15, 15),
       child: new TextFormField(
         maxLines: 1,
         keyboardType: TextInputType.number,
