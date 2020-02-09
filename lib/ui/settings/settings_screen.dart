@@ -63,6 +63,20 @@ class _SettingsState extends State<Settings> {
 
   @override
   Widget build(BuildContext context) {
+    AppBar appBar = AppBar(
+      leading: IconButton(
+        icon: Icon(Icons.arrow_back),
+        color: const Color.fromRGBO(255, 193, 7, 1),
+        onPressed: () => Navigator.pop(context, false),
+      ),
+      title: Text(
+        "Settings",
+        style: new TextStyle(color: Colors.white),
+      ),
+      backgroundColor: Colors.transparent,
+      elevation: 0.0,
+    );
+
     return Stack(
       children: <Widget>[
         Container(
@@ -82,19 +96,7 @@ class _SettingsState extends State<Settings> {
         ),
         Scaffold(
           backgroundColor: Colors.transparent,
-          appBar: AppBar(
-            leading: IconButton(
-              icon: Icon(Icons.arrow_back),
-              color: const Color.fromRGBO(255, 193, 7, 1),
-              onPressed: () => Navigator.pop(context, false),
-            ),
-            title: Text(
-              "Settings",
-              style: new TextStyle(color: Colors.white),
-            ),
-            backgroundColor: Colors.transparent,
-            elevation: 0.0,
-          ),
+          appBar: appBar,
           body: SingleChildScrollView(
             child: SafeArea(
               child: Container(
@@ -104,6 +106,8 @@ class _SettingsState extends State<Settings> {
                   children: <Widget>[
                     (!isLoading)
                         ? Container(
+                            height: MediaQuery.of(context).size.height / 2 -
+                                appBar.preferredSize.height,
                             alignment: Alignment.center,
                             child: UserDetails(
                                 name, enr, branch, hostel, room, email),
@@ -120,12 +124,12 @@ class _SettingsState extends State<Settings> {
                                 ),
                               ),
                             ),
-                      alignment: Alignment.center,
+                            alignment: Alignment.center,
                           ),
                     Expanded(
                       child: Container(
                         color: Colors.white,
-                        //height: MediaQuery.of(context).size.height / 1.83,
+                        //height: MediaQuery.of(context).size.height / 2,
                         child: ListView(
                           children: <Widget>[
                             GestureDetector(
@@ -176,10 +180,12 @@ class _SettingsState extends State<Settings> {
                               child: SettingsPageListItems(
                                   Icons.share, "Share/Tell a friend"),
                               onTap: () {
-                                final RenderBox box = context.findRenderObject();
+                                final RenderBox box =
+                                    context.findRenderObject();
                                 Share.share(shareText,
                                     sharePositionOrigin:
-                                        box.localToGlobal(Offset.zero) & box.size);
+                                        box.localToGlobal(Offset.zero) &
+                                            box.size);
                               },
                             ),
                             GestureDetector(
@@ -231,7 +237,8 @@ class _SettingsState extends State<Settings> {
                                                 FirebaseMessaging();
                                             SharedPreferences.getInstance()
                                                 .then((prefs) {
-                                              userMeGet(prefs.getString("token"))
+                                              userMeGet(
+                                                      prefs.getString("token"))
                                                   .then((me) async {
                                                 fcm.unsubscribeFromTopic(
                                                     "release-" + me.hostelCode);
@@ -240,7 +247,8 @@ class _SettingsState extends State<Settings> {
                                                 Navigator.of(context)
                                                     .pushNamedAndRemoveUntil(
                                                         "/login",
-                                                        (Route<dynamic> route) =>
+                                                        (Route<dynamic>
+                                                                route) =>
                                                             false);
                                                 prefs.clear();
                                                 prefs.setBool("seen", true);
@@ -261,7 +269,6 @@ class _SettingsState extends State<Settings> {
                         ),
                       ),
                     ),
-
                   ],
                 ),
               ),

@@ -8,6 +8,7 @@ class MyLeavesHistory extends StatelessWidget {
   final String token;
 
   const MyLeavesHistory({Key key, this.token}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -64,12 +65,13 @@ class MyLeavesHistory extends StatelessWidget {
                     width: MediaQuery.of(context).size.width,
                     child: SingleChildScrollView(
                       child: ConstrainedBox(
-                          constraints: BoxConstraints(
-                            maxHeight: 594.0,
-                          ),
-                          child: LeaveTimeline(
-                            token: token,
-                          )),
+                        constraints: BoxConstraints(
+                          maxHeight: 594.0,
+                        ),
+                        child: LeaveTimeline(
+                          token: token,
+                        ),
+                      ),
                     ),
                   ),
                 ),
