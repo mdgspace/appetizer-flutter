@@ -3,7 +3,8 @@ import 'dart:convert';
 import 'package:appetizer/models/multimessing/switch_details.dart';
 import 'package:http/http.dart' as http;
 
-String url = "https://appetizer-mdg.herokuapp.com";
+import '../../globals.dart';
+
 http.Client client = new http.Client();
 
 Future<bool> switchMeals(int mealId, String toHostel, String token) async {

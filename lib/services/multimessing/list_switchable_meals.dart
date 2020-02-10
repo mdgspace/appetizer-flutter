@@ -1,7 +1,8 @@
 import 'package:appetizer/models/multimessing/meal_switch_from_your_meals.dart';
 import 'package:http/http.dart' as http;
 
-String url = "https://appetizer-mdg.herokuapp.com";
+import '../../globals.dart';
+
 http.Client client = new http.Client();
 
 Future<List<SwitchableMealsForYourMeal>> listSwitchableMeals(

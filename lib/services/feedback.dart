@@ -4,8 +4,8 @@ import 'package:appetizer/models/feed_back/feed_back.dart';
 import 'package:appetizer/models/feed_back/responses.dart';
 import 'package:appetizer/models/feed_back/submitted_feedbacks.dart';
 import 'package:http/http.dart' as http;
+import '../globals.dart';
 
-String url = "https://appetizer-mdg.herokuapp.com";
 var header = {"Content-Type": "application/json"};
 http.Client client = new http.Client();
 
