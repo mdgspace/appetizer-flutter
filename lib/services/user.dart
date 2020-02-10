@@ -8,7 +8,8 @@ import 'package:appetizer/models/user/login.dart';
 import 'package:appetizer/models/user/me.dart';
 import 'package:appetizer/models/user/notification.dart';
 
-String url = "https://appetizer-mdg.herokuapp.com";
+import '../globals.dart';
+
 var header = {"Content-Type": "application/json"};
 http.Client client = new http.Client();
 
