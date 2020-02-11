@@ -40,6 +40,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   String version = "2.0.0a";
+  String playStoreLink;
   FirebaseMessaging _fcm = FirebaseMessaging();
 
   String selectedHostelName;
@@ -54,7 +55,7 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
-    _checkVersion();
+    _checkVersionAndPlayStoreLink();
 
     firebaseCloudMessagingListeners();
     switchableHostelsList = [];
@@ -89,12 +90,13 @@ class _HomeState extends State<Home> {
     );
   }
 
-  void _checkVersion() {
+  void _checkVersionAndPlayStoreLink() {
     RemoteConfig.instance.then((remoteConfig) async {
       await remoteConfig.fetch(expiration: const Duration(seconds: 0));
       await remoteConfig.activateFetched();
       setState(() {
         version = remoteConfig.getString("appetizer_flutter_version");
+        playStoreLink = remoteConfig.getString("appetizer_flutter_play_link");
       });
       checkVersion(version).then((version) {
         if (version.isExpired) {
