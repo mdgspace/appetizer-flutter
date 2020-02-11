@@ -20,6 +20,7 @@ import 'package:appetizer/ui/user_feedback/user_feedback.dart';
 import 'package:appetizer/utils/connectivity_status.dart';
 import 'package:appetizer/utils/get_hostel_code.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
@@ -89,63 +90,70 @@ class _HomeState extends State<Home> {
   }
 
   void _checkVersion() {
-    checkVersion(version).then((version) {
-      if (version.isExpired) {
-        showDialog(
-            barrierDismissible: false,
-            context: context,
-            builder: (BuildContext alertContext) {
-              return AlertDialog(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                title: new Text(
-                  "Current Version Expired",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
+    RemoteConfig.instance.then((remoteConfig) async {
+      await remoteConfig.fetch(expiration: const Duration(seconds: 0));
+      await remoteConfig.activateFetched();
+      setState(() {
+        version = remoteConfig.getString("appetizer_flutter_version");
+      });
+      checkVersion(version).then((version) {
+        if (version.isExpired) {
+          showDialog(
+              barrierDismissible: false,
+              context: context,
+              builder: (BuildContext alertContext) {
+                return AlertDialog(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
                   ),
-                ),
-                content: new Text(
-                  "Your Appetizer App is out of date. You need to update the app to continue!",
-                ),
-                actions: <Widget>[
-                  new FlatButton(
-                    onPressed: () {
-                      Navigator.pop(alertContext);
-                    },
-                    child: new Text(
-                      "CANCEL",
-                      style: TextStyle(
-                        color: appiYellow,
-                        fontWeight: FontWeight.bold,
-                      ),
+                  title: new Text(
+                    "Current Version Expired",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
                     ),
-                    highlightColor: Colors.transparent,
-                    splashColor: Colors.transparent,
                   ),
-                  new FlatButton(
-                    child: new Text(
-                      "UPDATE",
-                      style: TextStyle(
-                        color: appiYellow,
-                        fontWeight: FontWeight.bold,
+                  content: new Text(
+                    "Your Appetizer App is out of date. You need to update the app to continue!",
+                  ),
+                  actions: <Widget>[
+                    new FlatButton(
+                      onPressed: () {
+                        Navigator.pop(alertContext);
+                      },
+                      child: new Text(
+                        "CANCEL",
+                        style: TextStyle(
+                          color: appiYellow,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
+                      highlightColor: Colors.transparent,
+                      splashColor: Colors.transparent,
                     ),
-                    onPressed: () async {
-                      Navigator.pop(alertContext);
-                      if (await canLaunch(playStoreLink)) {
-                        await launch(playStoreLink);
-                      } else {
-                        throw 'Could not launch $playStoreLink';
-                      }
-                    },
-                    highlightColor: Colors.transparent,
-                    splashColor: Colors.transparent,
-                  ),
-                ],
-              );
-            });
-      }
+                    new FlatButton(
+                      child: new Text(
+                        "UPDATE",
+                        style: TextStyle(
+                          color: appiYellow,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      onPressed: () async {
+                        Navigator.pop(alertContext);
+                        if (await canLaunch(playStoreLink)) {
+                          await launch(playStoreLink);
+                        } else {
+                          throw 'Could not launch $playStoreLink';
+                        }
+                      },
+                      highlightColor: Colors.transparent,
+                      splashColor: Colors.transparent,
+                    ),
+                  ],
+                );
+              });
+        }
+      });
     });
   }
 
