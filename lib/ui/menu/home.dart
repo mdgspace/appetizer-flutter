@@ -6,6 +6,7 @@ import 'package:appetizer/services/connectivity_service.dart';
 import 'package:appetizer/services/leave.dart';
 import 'package:appetizer/services/multimessing/switchable_hostels.dart';
 import 'package:appetizer/services/user.dart';
+import 'package:appetizer/services/version_check.dart';
 import 'package:appetizer/ui/FAQ/faq_screen.dart';
 import 'package:appetizer/ui/components/alert_dialog.dart';
 import 'package:appetizer/ui/components/inherited_data.dart';
@@ -17,13 +18,13 @@ import 'package:appetizer/ui/my_rebates/my_rebates_screen.dart';
 import 'package:appetizer/ui/notification_history/noti_history_screen.dart';
 import 'package:appetizer/ui/user_feedback/user_feedback.dart';
 import 'package:appetizer/utils/connectivity_status.dart';
-import 'package:appetizer/utils/date_time_utils.dart';
 import 'package:appetizer/utils/get_hostel_code.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../settings/settings_screen.dart';
 
@@ -37,7 +38,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  String version = "v1.5.6r";
+  String version = "2.0.0a";
   FirebaseMessaging _fcm = FirebaseMessaging();
 
   String selectedHostelName;
@@ -52,6 +53,7 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
+    _checkVersion();
 
     firebaseCloudMessagingListeners();
     switchableHostelsList = [];
@@ -84,6 +86,67 @@ class _HomeState extends State<Home> {
         print('on launch $message');
       },
     );
+  }
+
+  void _checkVersion() {
+    checkVersion(version).then((version) {
+      if (version.isExpired) {
+        showDialog(
+            barrierDismissible: false,
+            context: context,
+            builder: (BuildContext alertContext) {
+              return AlertDialog(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                title: new Text(
+                  "Current Version Expired",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                content: new Text(
+                  "Your Appetizer App is out of date. You need to update the app to continue!",
+                ),
+                actions: <Widget>[
+                  new FlatButton(
+                    onPressed: () {
+                      Navigator.pop(alertContext);
+                    },
+                    child: new Text(
+                      "CANCEL",
+                      style: TextStyle(
+                        color: appiYellow,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    highlightColor: Colors.transparent,
+                    splashColor: Colors.transparent,
+                  ),
+                  new FlatButton(
+                    child: new Text(
+                      "UPDATE",
+                      style: TextStyle(
+                        color: appiYellow,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    onPressed: () async {
+                      Navigator.pop(alertContext);
+                      if (await canLaunch(playStoreLink)) {
+                        await launch(playStoreLink);
+                      } else {
+                        throw 'Could not launch $playStoreLink';
+                      }
+                    },
+                    highlightColor: Colors.transparent,
+                    splashColor: Colors.transparent,
+                  ),
+                ],
+              );
+            });
+      }
+    });
   }
 
   @override
