@@ -4,4 +4,4 @@ var menuScaffoldKey = new GlobalKey<ScaffoldState>();
 bool isCheckedOut = false;
 bool isCheckedLoading = false;
 Duration outdatedTime = Duration(hours: 8);
-String url = "https://appetizer-mdg.herokuapp.com";
+String url = "https://api.mess.vishwas.rocks";
