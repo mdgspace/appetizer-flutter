@@ -1,14 +1,14 @@
+import 'package:appetizer/change_notifiers/current_date.dart';
 import 'package:appetizer/change_notifiers/menu_model.dart';
 import 'package:appetizer/database/app_database.dart';
 import 'package:appetizer/globals.dart';
 import 'package:appetizer/models/menu/week.dart';
 import 'package:appetizer/services/menu.dart';
 import 'package:appetizer/services/user.dart';
+import 'package:appetizer/ui/components/inherited_data.dart';
 import 'package:appetizer/ui/menu/day_menu_new.dart';
 import 'package:appetizer/ui/menu/no_meals.dart';
 import 'package:appetizer/utils/date_time_utils.dart';
-import 'package:appetizer/change_notifiers/current_date.dart';
-import 'package:appetizer/ui/components/inherited_data.dart';
 import 'package:appetizer/utils/get_hostel_code.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -19,6 +19,7 @@ import '../../colors.dart';
 
 class Menu extends StatefulWidget {
   final String token;
+
   const Menu({Key key, this.token}) : super(key: key);
 
   @override
@@ -39,7 +40,7 @@ class _MenuState extends State<Menu> {
   InheritedData inheritedData;
 
   var dailyItemsMap;
-  String _selectedHostelcode;
+  String _selectedHostelCode;
 
   int weekId;
 
@@ -53,13 +54,11 @@ class _MenuState extends State<Menu> {
       });
     });
     SharedPreferences.getInstance().then((sharedPrefs) {
-      if (sharedPrefs.getInt("mealKey") == null) {
-        menuWeekForYourMeals(
-                widget.token, DateTimeUtils.getWeekNumber(DateTime.now()))
-            .then((menu) {
-          updateMealDb(menu);
-        });
-      }
+      menuWeekForYourMeals(
+              widget.token, DateTimeUtils.getWeekNumber(DateTime.now()))
+          .then((menu) {
+        updateMealDb(menu);
+      });
     });
   }
 
@@ -73,13 +72,13 @@ class _MenuState extends State<Menu> {
     final weekId = Provider.of<CurrentDateModel>(context).weekId;
     final selectedHostelCode = Provider.of<OtherMenuModel>(context).hostelCode;
     print("Menu didChange: $weekId");
-    if (selectedHostelCode != this._selectedHostelcode) {
-      print("Changing from $_selectedHostelcode to $selectedHostelCode");
-      this._selectedHostelcode = selectedHostelCode;
+    if (selectedHostelCode != this._selectedHostelCode) {
+      print("Changing from $_selectedHostelCode to $selectedHostelCode");
+      this._selectedHostelCode = selectedHostelCode;
     }
     if (weekId != this.weekId) {
       this.weekId = weekId;
-      if (this._selectedHostelcode ==
+      if (this._selectedHostelCode ==
           hostelCodeMap[inheritedData.userDetails.hostelName]) {
         Provider.of<YourMenuModel>(context, listen: false)
             .selectedWeekMenuYourMeals(weekId);

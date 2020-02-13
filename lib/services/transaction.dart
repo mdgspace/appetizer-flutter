@@ -4,7 +4,8 @@ import 'package:appetizer/models/transaction/yearly_rebate.dart';
 import 'package:appetizer/models/transaction/faq.dart';
 import 'package:http/http.dart' as http;
 
-String url = "https://appetizer-mdg.herokuapp.com";
+import '../globals.dart';
+
 var header = {"Content-Type": "application/json"};
 http.Client client = new http.Client();
 

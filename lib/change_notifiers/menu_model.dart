@@ -2,9 +2,8 @@ import 'package:appetizer/models/menu/week.dart';
 import 'package:appetizer/models/user/user_details_shared_pref.dart';
 import 'package:appetizer/services/menu.dart';
 import 'package:appetizer/utils/date_time_utils.dart';
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/foundation.dart';
-
-//TODO: (nitish) integrate localDB when internet not available
 
 class YourMenuModel extends ChangeNotifier {
   Week _currentWeekYourMeals;
@@ -18,14 +17,21 @@ class YourMenuModel extends ChangeNotifier {
   }
 
   Week get currentWeekYourMeals => _currentWeekYourMeals;
+
   Week get selectedWeekYourMeals => _selectedWeekYourMeals;
+
   bool get isFetching => _isFetching;
 
   void currentWeekMenuYourMeals() async {
     _isFetching = true;
     notifyListeners();
-    _currentWeekYourMeals = await menuWeekForYourMeals(
-        _userDetails.token, DateTimeUtils.getWeekNumber(DateTime.now()));
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.none) {
+      _currentWeekYourMeals = await menuWeekFromDb();
+    } else {
+      _currentWeekYourMeals = await menuWeekForYourMeals(
+          _userDetails.token, DateTimeUtils.getWeekNumber(DateTime.now()));
+    }
     _selectedWeekYourMeals = _currentWeekYourMeals;
     _isFetching = false;
     notifyListeners();
@@ -34,10 +40,15 @@ class YourMenuModel extends ChangeNotifier {
   void selectedWeekMenuYourMeals(int weekId) async {
     _isFetching = true;
     notifyListeners();
-    menuWeekForYourMeals(_userDetails.token, weekId).then((week) {
+    menuWeekForYourMeals(_userDetails.token, weekId).then((week) async {
       _selectedWeekYourMeals = week;
       if (weekId == DateTimeUtils.getWeekNumber(DateTime.now())) {
-        _currentWeekYourMeals = week;
+        var connectivityResult = await (Connectivity().checkConnectivity());
+        if (connectivityResult == ConnectivityResult.none) {
+          _currentWeekYourMeals = await menuWeekFromDb();
+        } else {
+          _currentWeekYourMeals = week;
+        }
       }
       _isFetching = false;
       notifyListeners();
@@ -58,7 +69,9 @@ class OtherMenuModel extends ChangeNotifier {
   }
 
   String get hostelCode => _hostelCode;
+
   Week get hostelWeekMenu => _hostelWeekMenu;
+
   bool get isFetching => _isFetching;
 
   OtherMenuModel(UserDetailsSharedPref userDetails, String hostelCode) {

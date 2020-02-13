@@ -1,5 +1,3 @@
-import 'dart:math' as math;
-
 import 'package:appetizer/change_notifiers/menu_model.dart';
 import 'package:appetizer/colors.dart';
 import 'package:appetizer/models/menu/week.dart';
@@ -7,38 +5,22 @@ import 'package:appetizer/services/menu.dart';
 import 'package:appetizer/services/multimessing/switch_meals.dart';
 import 'package:appetizer/ui/components/alert_dialog.dart';
 import 'package:appetizer/ui/components/inherited_data.dart';
+import 'package:appetizer/ui/components/progress_bar.dart';
 import 'package:appetizer/ui/components/switch_confirmation_meal_card.dart';
 import 'package:appetizer/ui/multimessing/confirmed_switch_screen.dart';
 import 'package:appetizer/utils/date_time_utils.dart';
 import 'package:appetizer/utils/get_hostel_code.dart';
+import 'package:appetizer/utils/menu_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
-
-//TODO: (nitish) Make this modular, take example from what I have dont with other widgets
 class ConfirmSwitchPopupScreen extends StatefulWidget {
-  final String token;
-  final int id;
-  final DateTime mealStartDateTime;
-  final String title;
-  final Map<CircleAvatar, String> menuToWhichToBeSwitched;
-  final String dailyItemsToWhichToBeSwitched;
-  final DateTime selectedDateTime;
-  final String selectedHostelCode;
-  final String hostelName;
+  final Meal meal;
 
   const ConfirmSwitchPopupScreen({
     Key key,
-    this.token,
-    this.id,
-    this.mealStartDateTime,
-    this.title,
-    this.menuToWhichToBeSwitched,
-    this.dailyItemsToWhichToBeSwitched,
-    this.selectedDateTime,
-    this.selectedHostelCode,
-    this.hostelName
+    this.meal,
   }) : super(key: key);
 
   @override
@@ -47,9 +29,7 @@ class ConfirmSwitchPopupScreen extends StatefulWidget {
 }
 
 class _ConfirmSwitchPopupScreenState extends State<ConfirmSwitchPopupScreen> {
-  static final double _radius = 16;
   int currentHostelMealId;
-
   InheritedData inheritedData;
 
   @override
@@ -63,17 +43,6 @@ class _ConfirmSwitchPopupScreenState extends State<ConfirmSwitchPopupScreen> {
   List<CircleAvatar> mealFromWhichToBeSwitchedLeadingImageList = [];
   List<String> mealFromWhichToBeSwitchedItemsList = [];
   Map<CircleAvatar, String> mealFromWhichToBeSwitchedMap = {};
-  String mealFromWhichToBeSwitchedDailyItems = '';
-
-  void setLeadingMealImage(List<CircleAvatar> mealLeadingImageList) {
-    var randomColor =
-        Color((math.Random().nextDouble() * 0xFFFFFF).toInt() << 0)
-            .withOpacity(0.2);
-    mealLeadingImageList.add(CircleAvatar(
-      radius: _radius,
-      backgroundColor: randomColor,
-    ));
-  }
 
   void setMealFromWhichToBeSwitchedComponents(Meal mealFromWhichToBeSwitched) {
     mealFromWhichToBeSwitchedItemsList = [];
@@ -81,7 +50,9 @@ class _ConfirmSwitchPopupScreenState extends State<ConfirmSwitchPopupScreen> {
     for (var j = 0; j < mealFromWhichToBeSwitched.items.length; j++) {
       var mealItem = mealFromWhichToBeSwitched.items[j].name;
       mealFromWhichToBeSwitchedItemsList.add(mealItem);
-      setLeadingMealImage(mealFromWhichToBeSwitchedLeadingImageList);
+      MenuCardUtils.setLeadingMealImage(
+        mealFromWhichToBeSwitchedLeadingImageList,
+      );
     }
   }
 
@@ -93,47 +64,74 @@ class _ConfirmSwitchPopupScreenState extends State<ConfirmSwitchPopupScreen> {
   };
 
   TextStyle getSwitchToOrFromStyle() {
-    return TextStyle(fontWeight: FontWeight.bold, fontSize: 18);
+    return TextStyle(
+      fontWeight: FontWeight.bold,
+      fontSize: 18,
+    );
+  }
+
+  AppBar _getAppBar() {
+    return AppBar(
+      title: Text(
+        "Confirm Meal Switch",
+        style: TextStyle(
+          color: Colors.white,
+        ),
+      ),
+      leading: Container(),
+      backgroundColor: appiBrown,
+      centerTitle: true,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
+    VoidCallback _onConfirmSwitchPressed() {
+      return () {
+        showCustomDialog(context, "Switching Meals");
+        switchMeals(
+          currentHostelMealId,
+          hostelCodeMap[widget.meal.hostelName],
+          inheritedData.userDetails.token,
+        ).then((switchResponse) {
+          Provider.of<OtherMenuModel>(context, listen: false).getOtherMenu(
+              DateTimeUtils.getWeekNumber(widget.meal.startDateTime));
+          Provider.of<YourMenuModel>(context, listen: false)
+              .selectedWeekMenuYourMeals(
+                  DateTimeUtils.getWeekNumber(widget.meal.startDateTime));
+          if (switchResponse == true) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ConfirmedSwitchScreen(),
+              ),
+            );
+          } else {
+            Navigator.pop(context);
+            Fluttertoast.showToast(msg: "Cannot switch meals");
+          }
+        });
+      };
+    }
+
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Confirm Meal Switch",
-          style: TextStyle(
-            color: Colors.white,
-          ),
-        ),
-        leading: Container(),
-        backgroundColor: appiBrown,
-        centerTitle: true,
-      ),
+      appBar: _getAppBar(),
       body: FutureBuilder(
         future: menuWeekMultiMessing(
-          widget.token,
-          DateTimeUtils.getWeekNumber(widget.selectedDateTime),
-          hostelCodeMap[widget.hostelName],
+          inheritedData.userDetails.token,
+          DateTimeUtils.getWeekNumber(widget.meal.startDateTime),
+          hostelCodeMap[inheritedData.userDetails.hostelName],
         ),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Container(
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              child: Center(
-                child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(appiYellow),
-                ),
-              ),
-            );
+            return ProgressBar();
           } else {
             snapshot.data.days.forEach((dayMenu) {
               String mealDateString = dayMenu.date.toString().substring(0, 10);
               dayMenu.meals.forEach((mealMenu) {
                 if (mealDateString ==
-                        widget.mealStartDateTime.toString().substring(0, 10) &&
-                    titleToMealTypeMap[widget.title] == mealMenu.type) {
+                        widget.meal.startDateTime.toString().substring(0, 10) &&
+                    titleToMealTypeMap[widget.meal.title] == mealMenu.type) {
                   currentHostelMealId = mealMenu.id;
                   setMealFromWhichToBeSwitchedComponents(mealMenu);
                   mealFromWhichToBeSwitchedMap = Map.fromIterables(
@@ -159,19 +157,18 @@ class _ConfirmSwitchPopupScreenState extends State<ConfirmSwitchPopupScreen> {
                         ),
                       ),
                       SwitchConfirmationMealCard(
-                        token: widget.token,
-                        id: widget.id,
-                        title: widget.title,
+                        meal: widget.meal,
                         menuItems: mealFromWhichToBeSwitchedMap,
-                        dailyItems: mealFromWhichToBeSwitchedDailyItems,
-                        mealStartDateTime: widget.mealStartDateTime,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Center(
-                          child: Image.asset(
-                            "assets/icons/switch_active.png",
-                            scale: 1.5,
+                      GestureDetector(
+                        onTap: _onConfirmSwitchPressed(),
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Center(
+                            child: Image.asset(
+                              "assets/icons/switch_active.png",
+                              scale: 1.5,
+                            ),
                           ),
                         ),
                       ),
@@ -183,70 +180,9 @@ class _ConfirmSwitchPopupScreenState extends State<ConfirmSwitchPopupScreen> {
                         ),
                       ),
                       SwitchConfirmationMealCard(
-                        token: widget.token,
-                        id: widget.id,
-                        title: widget.title,
-                        menuItems: widget.menuToWhichToBeSwitched,
-                        dailyItems: widget.dailyItemsToWhichToBeSwitched,
-                        mealStartDateTime: widget.mealStartDateTime,
+                        meal: widget.meal,
+                        menuItems: MenuCardUtils.getMapMenuItems(widget.meal),
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: <Widget>[
-                          FlatButton(
-                            child: Text(
-                              "CANCEL",
-                              style: TextStyle(
-                                color: appiYellow,
-                                fontSize: 16,
-                              ),
-                            ),
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                          ),
-                          FlatButton(
-                            child: Text(
-                              "SWITCH",
-                              style: TextStyle(
-                                color: appiYellow,
-                                fontSize: 16,
-                              ),
-                            ),
-                            onPressed: () {
-                              showCustomDialog(context, "Switching Meals");
-                              switchMeals(
-                                currentHostelMealId,
-                                widget.selectedHostelCode,
-                                widget.token,
-                              ).then((switchResponse) {
-                                Provider.of<OtherMenuModel>(context,
-                                        listen: false)
-                                    .getOtherMenu(DateTimeUtils.getWeekNumber(
-                                        widget.mealStartDateTime));
-                                Provider.of<YourMenuModel>(context,
-                                        listen: false)
-                                    .selectedWeekMenuYourMeals(
-                                        DateTimeUtils.getWeekNumber(
-                                            widget.mealStartDateTime));
-                                if (switchResponse == true) {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          ConfirmedSwitchScreen(),
-                                    ),
-                                  );
-                                } else {
-                                  Navigator.pop(context);
-                                  Fluttertoast.showToast(
-                                      msg: "Cannot switch meals");
-                                }
-                              });
-                            },
-                          )
-                        ],
-                      )
                     ],
                   ),
                 ),

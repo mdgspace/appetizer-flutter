@@ -1,23 +1,17 @@
 import 'package:appetizer/colors.dart';
+import 'package:appetizer/models/menu/week.dart';
+import 'package:appetizer/ui/components/inherited_data.dart';
 import 'package:appetizer/utils/get_day_and_date_for_meal_card.dart';
 import 'package:flutter/material.dart';
 
 class SwitchConfirmationMealCard extends StatefulWidget {
-  final String token;
-  final int id;
-  final String title;
+  final Meal meal;
   final Map<CircleAvatar, String> menuItems;
-  final String dailyItems;
-  final DateTime mealStartDateTime;
 
   const SwitchConfirmationMealCard({
     Key key,
-    this.token,
-    this.id,
-    this.title,
+    this.meal,
     this.menuItems,
-    this.dailyItems,
-    this.mealStartDateTime,
   }) : super(key: key);
 
   @override
@@ -27,6 +21,16 @@ class SwitchConfirmationMealCard extends StatefulWidget {
 
 class _SwitchConfirmationMealCardState
     extends State<SwitchConfirmationMealCard> {
+  InheritedData inheritedData;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (inheritedData == null) {
+      inheritedData = InheritedData.of(context);
+    }
+  }
+
   List<Widget> _itemWidgetList() {
     List<Widget> list = [];
     widget.menuItems.forEach((icon, string) {
@@ -96,11 +100,11 @@ class _SwitchConfirmationMealCardState
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
                                 Text(
-                                  widget.title,
+                                  widget.meal.title,
                                   style: new TextStyle(
                                       color: appiYellow, fontSize: 24),
                                 ),
-                                getDayAndDateForCard(widget.mealStartDateTime),
+                                getDayAndDateForCard(widget.meal.startDateTime),
                               ],
                             ),
                           ),
@@ -117,15 +121,11 @@ class _SwitchConfirmationMealCardState
                 children: <Widget>[
                   Expanded(
                     child: Container(
-                        color: Color(0xffF4F4F4),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            'Daily Items: ${widget.dailyItems}',
-                            style:
-                                TextStyle(color: Color.fromRGBO(0, 0, 0, .54)),
-                          ),
-                        )),
+                      color: Color(0xffF4F4F4),
+                      child: Padding(
+                        padding: const EdgeInsets.all(12.0),
+                      ),
+                    ),
                   ),
                 ],
               )

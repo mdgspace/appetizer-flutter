@@ -35,7 +35,7 @@ class QRWidgetState extends State<QRWidget> {
         } else if (snapshot.data != null) {
           return _contentWidget(snapshot.data.secretCode);
         } else {
-          Fluttertoast.showToast(msg: "No Secret could be found");
+          Fluttertoast.showToast(msg: "No Secret was fetched");
           return Container();
         }
       },

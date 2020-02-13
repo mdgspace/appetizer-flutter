@@ -1,6 +1,7 @@
 import 'package:appetizer/change_notifiers/menu_model.dart';
 import 'package:appetizer/globals.dart';
 import 'package:appetizer/models/menu/week.dart';
+import 'package:appetizer/models/user/user_details_shared_pref.dart';
 import 'package:appetizer/services/leave.dart';
 import 'package:appetizer/services/multimessing/switch_meals.dart';
 import 'package:appetizer/ui/components/alert_dialog.dart';
@@ -11,7 +12,6 @@ import 'package:appetizer/ui/multimessing/switchable_meals_screen.dart';
 import 'package:appetizer/ui/user_feedback/new_feedback.dart';
 import 'package:appetizer/utils/date_time_utils.dart';
 import 'package:appetizer/utils/get_day_and_date_for_meal_card.dart';
-import 'package:appetizer/utils/get_hostel_code.dart';
 import 'package:appetizer/utils/get_leave_color_from_leave_status.dart';
 import 'package:appetizer/utils/menu_utils.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +21,6 @@ import 'package:provider/provider.dart';
 import '../../colors.dart';
 import '../../globals.dart';
 
-//TODO: Solve bug in othermenu
 class YourMealsMenuCardNew extends StatefulWidget {
   final Meal meal;
   final DailyItems dailyItems;
@@ -673,7 +672,7 @@ class OtherMealsMenuCardNew extends StatefulWidget {
 
 class _OtherMealsMenuCardNewState extends State<OtherMealsMenuCardNew> {
   bool _mealSwitchStatus;
-  InheritedData inheritedData;
+  UserDetailsSharedPref inheritedUserDetails;
   OtherMenuModel otherMenuModel;
   YourMenuModel yourMenuModel;
 
@@ -692,8 +691,8 @@ class _OtherMealsMenuCardNewState extends State<OtherMealsMenuCardNew> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    if (inheritedData == null) {
-      inheritedData = InheritedData.of(context);
+    if (inheritedUserDetails == null) {
+      inheritedUserDetails = InheritedData.of(context).userDetails;
     }
     final otherMenuModel = Provider.of<OtherMenuModel>(context);
     if (this.otherMenuModel != otherMenuModel) {
@@ -766,7 +765,6 @@ class _OtherMealsMenuCardNewState extends State<OtherMealsMenuCardNew> {
     }
   }
 
-  //TODO: (nitish) fix daily items thing
   Widget _getSwitchIcon() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -795,20 +793,11 @@ class _OtherMealsMenuCardNewState extends State<OtherMealsMenuCardNew> {
                                   ChangeNotifierProvider.value(
                                       value: yourMenuModel),
                                 ],
-                                child: ConfirmSwitchPopupScreen(
-                                  token: inheritedData.userDetails.token,
-                                  id: widget.meal.id,
-                                  mealStartDateTime: widget.meal.startDateTime,
-                                  title: widget.meal.title,
-                                  menuToWhichToBeSwitched:
-                                      MenuCardUtils.getMapMenuItems(
-                                          widget.meal),
-                                  dailyItemsToWhichToBeSwitched: "Daily Items:",
-                                  selectedDateTime: widget.meal.startDateTime,
-                                  selectedHostelCode:
-                                      hostelCodeMap[widget.meal.hostelName],
-                                  hostelName:
-                                      inheritedData.userDetails.hostelName,
+                                child: InheritedData(
+                                  userDetails: inheritedUserDetails,
+                                  child: ConfirmSwitchPopupScreen(
+                                    meal: widget.meal,
+                                  ),
                                 ),
                               ),
                             ),
@@ -860,8 +849,7 @@ class _OtherMealsMenuCardNewState extends State<OtherMealsMenuCardNew> {
                                               context, "Cancelling Switch");
                                           cancelSwitch(
                                                   widget.meal.switchStatus.id,
-                                                  inheritedData
-                                                      .userDetails.token)
+                                                  inheritedUserDetails.token)
                                               .then((switchCancelResponse) {
                                             Provider.of<OtherMenuModel>(context,
                                                     listen: false)
@@ -898,128 +886,5 @@ class _OtherMealsMenuCardNewState extends State<OtherMealsMenuCardNew> {
             )
           : Container(),
     );
-  }
-}
-
-class MenuCardUtils {
-  static Widget _menuListItem(
-      Meal meal, String itemName, CircleAvatar foodIcon) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-        Container(
-          padding: EdgeInsets.only(right: 4.0),
-          child: Column(
-            children: <Widget>[
-              foodIcon,
-              SizedBox(
-                height: 8.0,
-              )
-            ],
-          ),
-        ),
-        Expanded(
-          child: Container(
-            padding: EdgeInsets.only(left: 4.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  "$itemName",
-                ),
-                Divider(
-                  height: 8.0,
-                ),
-              ],
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  static Widget titleAndBhawanNameComponent(Meal meal) {
-    return Padding(
-      padding: const EdgeInsets.only(right: 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            "${meal.title}",
-            style: new TextStyle(
-              color: appiYellow,
-              fontSize: 24,
-            ),
-          ),
-          Text(
-            "${meal.hostelName}",
-            style: new TextStyle(
-              color: appiBrown,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  static Widget dailyItemsComponent(Meal meal, DailyItems dailyItems) {
-    final dailyItemsMap = getDailyItemsMap(dailyItems);
-    return Row(
-      children: <Widget>[
-        Expanded(
-          child: Container(
-            color: Color(0xffF4F4F4),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                "${dailyItemsMap[meal.type]}",
-                style: TextStyle(color: Color.fromRGBO(0, 0, 0, .54)),
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  static getMapMenuItems(Meal meal) {
-    Map<CircleAvatar, String> map = {};
-    int i = 0;
-    meal.items.forEach((mealItem) {
-      map.putIfAbsent(
-          CircleAvatar(
-            radius: 16,
-            backgroundColor: Colors.transparent,
-            child: Image.asset(
-              "assets/icons/meal_icon" + (i + 1).toString() + ".jpg",
-              scale: 2.5,
-            ),
-          ),
-          () => mealItem.name);
-    });
-    print("returning: $map");
-    return map;
-  }
-
-  static List<Widget> itemWidgetList(Meal meal) {
-    List<Widget> list = [];
-    int i = 0;
-    meal.items.forEach((mealItem) {
-      list.add(_menuListItem(
-          meal,
-          mealItem.name,
-          CircleAvatar(
-            radius: 16,
-            backgroundColor: Colors.transparent,
-            child: Image.asset(
-              "assets/icons/meal_icon" + (i + 1).toString() + ".jpg",
-              scale: 2.5,
-            ),
-          )));
-      i++;
-    });
-    return list;
   }
 }
