@@ -106,6 +106,7 @@ class _SettingsState extends State<Settings> {
                   children: <Widget>[
                     (!isLoading)
                         ? Container(
+                      //color: Colors.black,
                             height: MediaQuery.of(context).size.height / 2 -
                                 appBar.preferredSize.height,
                             alignment: Alignment.center,

@@ -22,11 +22,11 @@ final accentTextTheme = TextTheme(
   title: TextStyle(
     fontWeight: FontWeight.bold,
     color: appiLightGreyText,
-    fontSize: 15,
+    fontSize: 12.5,
   ),
   subtitle: TextStyle(
     color: appiLightGreyText,
-    fontSize: 15,
+    fontSize: 12.5,
     fontWeight: FontWeight.w500,
   ),
 );
