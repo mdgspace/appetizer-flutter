@@ -1,14 +1,22 @@
 import 'dart:convert';
+
 import 'package:appetizer/models/menu/approve.dart';
 import 'package:appetizer/models/menu/week.dart';
 import 'package:http/http.dart' as http;
+import 'package:sembast/sembast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-String url = "https://mess.iitr.ac.in";
+import '../database/app_database.dart';
+import '../globals.dart';
+
 var header = {"Content-Type": "application/json"};
 http.Client client = new http.Client();
 
-Future<Week> menuWeek(String token , int weekId) async {
-  String endpoint = "/api/menu/week/?week_id=$weekId";
+// FIXME: (IMP) (BUG PRONE) (aseem) check not found and return null if not found.
+
+Future<Week> menuWeekMultiMessing(
+    String token, int weekId, String hostelCode) async {
+  String endpoint = "/api/menu/week/v2?hostel=$hostelCode&week_id=$weekId";
   String uri = url + endpoint;
   var tokenAuth = {"Authorization": "Token " + token};
   try {
@@ -17,10 +25,62 @@ Future<Week> menuWeek(String token , int weekId) async {
       headers: tokenAuth,
     );
     final jsonResponse = jsonDecode(response.body);
+    print("menuWeekMultiMessing: $jsonResponse");
+    if (jsonResponse["detail"] == "Not found.") {
+      return null;
+    }
     Week week = new Week.fromJson(jsonResponse);
-    print(response.body);
+
+//    print("MULTIMESSING RESPONSE WEEK: ${week.toJson()}");
+//    print("MULTIMESSING RESPONSE DAY: ${week.days[0].toJson()}");
+//    print("MULTIMESSING RESPONSE MEAL: ${week.days[0].meals[0].toJson()}");
+
     return week;
   } on Exception catch (e) {
+    print(e);
+    return null;
+  }
+}
+
+Future<Week> menuWeekForYourMeals(String token, int weekId) async {
+  String endpoint = "/api/menu/my_week/?week_id=$weekId";
+  String uri = url + endpoint;
+  var tokenAuth = {"Authorization": "Token " + token};
+  print("TOKEN: $token");
+  try {
+    var response = await client.get(
+      uri,
+      headers: tokenAuth,
+    );
+    final jsonResponse = jsonDecode(response.body);
+    print("menuWeekForYourMeals: $jsonResponse");
+    if (jsonResponse["detail"] == "Not found.") {
+      return null;
+    }
+    Week weekForYourMeals = new Week.fromJson(jsonResponse);
+    return weekForYourMeals;
+  } on Exception catch (e) {
+    print(e);
+    return null;
+  }
+}
+
+Future<Week> menuWeekFromDb() async {
+  const String MEAL_STORE_NAME = 'meals';
+
+  // A Store with int keys and Map<String, dynamic> values.
+  // This Store acts like a persistent map, values of which are Week objects converted to Map
+  final _mealStore = intMapStoreFactory.store(MEAL_STORE_NAME);
+
+  // Private getter to shorten the amount of code needed to get the
+  // singleton instance of an opened database.
+  Database _db = await AppDatabase.instance.database;
+
+  try {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var record = await _mealStore.record(prefs.getInt("mealKey")).get(_db);
+    return Week.fromJson(record);
+  } catch (e) {
     print(e);
     return null;
   }
@@ -153,7 +213,7 @@ Future<List<MealItem>> allMealItems(String token) async {
   try {
     var response = await client.get(uri, headers: tokenAuth);
     final jsonResponse = jsonDecode(response.body);
-      List<MealItem> mealItems = new List<MealItem>.from(jsonResponse);
+    List<MealItem> mealItems = new List<MealItem>.from(jsonResponse);
     print(response.body);
     return mealItems;
   } on Exception catch (e) {

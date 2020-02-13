@@ -1,5 +1,6 @@
 import UIKit
 import Flutter
+import Firebase
 
 var sharedText:String = "";
 var host:String = "mess.iitr.ac.in";
@@ -13,10 +14,12 @@ var path:String = "/oauth/";
     didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?
   ) -> Bool {
     
+    // Use Firebase library to configure APIs
+    FirebaseApp.configure()
     
     let controller : FlutterViewController = window?.rootViewController as! FlutterViewController
     let channel = FlutterMethodChannel(name: "app.channel.shared.data",
-                                              binaryMessenger: controller)
+                                       binaryMessenger: controller.binaryMessenger)
     channel.setMethodCallHandler({
       (call: FlutterMethodCall, result: FlutterResult) -> Void in
       // Note: this method is invoked on the UI thread.

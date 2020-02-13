@@ -1,104 +1,63 @@
-import 'package:appetizer/home.dart';
+import 'package:appetizer/models/user/user_details_shared_pref.dart';
+import 'package:appetizer/styles.dart';
+import 'package:appetizer/ui/components/inherited_data.dart';
+import 'package:appetizer/ui/menu/home.dart';
+import 'package:appetizer/utils/user_details.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'colors.dart';
-import 'login.dart';
-import 'onBoarding.dart';
 
-void main() async {
-  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-  runApp(MaterialApp(
-    routes: {
-      "/home": (context) => Home(),
-      "/login": (context) => Login(),
-    },
-    debugShowCheckedModeBanner: false,
-    title: 'Appetizer',
-    theme: ThemeData(
-      fontFamily: 'OpenSans',
-      primaryColor: appiYellow,
-      accentColor: appiGrey,
-      cursorColor: appiYellow,
-      accentTextTheme: TextTheme(
-        //used for authenticating button
-        display1: new TextStyle(
-            fontWeight: FontWeight.w900,
-            fontSize: 19.0,
-            color: Colors.white,
-            fontFamily: "OpenSans"),
-        //used for username in nav drawer
-        display2: TextStyle(
-          color: Colors.white,
-          fontSize: 22,
-        ),
-        //used for enrolment no in nav drawer
-        display3: TextStyle(
-          color: appiYellow,
-          fontSize: 15,
-        ),
-        title: TextStyle(
-          fontWeight: FontWeight.bold,
-          color: appiLightGreyText,
-          fontSize: 16,
-        ),
-        subtitle: TextStyle(
-          color: appiLightGreyText,
-          fontSize: 16,
-          fontWeight: FontWeight.w500,
-        ),
+import 'colors.dart';
+import 'ui/login/login.dart';
+import 'ui/on_boarding/onBoarding.dart';
+
+/*
+ *  Architectural Design GuideLines -
+ *  1. Provider package for all the dynamic widgets and data.
+ *  2. Inherited Widget for the static data.
+ *
+ *  Rules of Thumb:
+ *  a) Any class in the ui directory must not import from services in any case.
+ *  b) Any Future must be called only once in the whole lifecycle of the app for static data, and on data changes for dynamic data.
+ *
+ * */
+
+// TODO: refractor all the inline styles to a styles directory with proper file name and variable name
+
+void main() {
+  FirebaseAnalytics analytics = FirebaseAnalytics();
+
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((_) {
+    runApp(MaterialApp(
+      routes: {
+        "/home": (context) => Home(),
+        "/login": (context) => Login(),
+      },
+      navigatorObservers: [
+        FirebaseAnalyticsObserver(analytics: analytics),
+      ],
+      debugShowCheckedModeBanner: false,
+      title: 'Appetizer',
+      theme: ThemeData(
+        fontFamily: 'OpenSans',
+        primaryColor: appiYellow,
+        accentColor: appiGrey,
+        cursorColor: appiYellow,
+        accentTextTheme: accentTextTheme,
+        primaryTextTheme: primaryTextTheme,
       ),
-      primaryTextTheme: TextTheme(
-        //display1 theme is used for the Login Button
-        display1: new TextStyle(
-          fontWeight: FontWeight.w900,
-          fontSize: 22.0,
-          color: appiYellow,
-          fontFamily: "OpenSans",
-        ),
-        //display2 theme is used for the channel-I button
-        display2: new TextStyle(
-            fontWeight: FontWeight.w900,
-            fontSize: 14.0,
-            color: Colors.white,
-            fontFamily: "OpenSans"),
-        //display3 theme is used for the help and forgot password button
-        display3: new TextStyle(
-          fontSize: 15.0,
-          color: appiYellow,
-          decoration: TextDecoration.underline,
-          fontFamily: "OpenSans",
-        ),
-        //display4 theme is used for the "showDash function"
-        display4: new TextStyle(
-          fontSize: 15.0,
-          color: appiYellow,
-          fontFamily: "OpenSans",
-        ),
-        //subhead theme is used for the Enrollment No and Password Input field
-        subhead: new TextStyle(
-          fontSize: 17.0,
-          color: appiGreyIcon.withOpacity(0.8),
-          fontFamily: "OpenSans",
-        ),
-        //headline used for forgot password title
-        headline: new TextStyle(
-          fontSize: 24.0,
-          color: appiGreyIcon,
-          fontFamily: "OpenSans",
-        ),
-        //caption used for sub-Text
-        caption: new TextStyle(
-          fontWeight: FontWeight.w900,
-          fontSize: 16.0,
-          color: appiYellow,
-          fontFamily: "OpenSans",
-        ),
-      ),
-    ),
-    home: Appetizer(),
-  ));
+      home: Appetizer(),
+    ));
+  });
 }
+
+// TODO: Appetizer Widget MUST NOT exist
+// TODO: (Improvement) OnBoarding implementation very naive, adds overhead on app start
+// TODO: (Improvement) getIntent() method looks naive
 
 class Appetizer extends StatefulWidget {
   @override
@@ -130,15 +89,16 @@ class _AppetizerState extends State<Appetizer> {
   }
 
   void navigate() {
-    getUserDetails().then((details) {
+    UserDetailsUtils.getUserDetails().then((details) {
       Navigator.pushReplacement(
           context,
           MaterialPageRoute(
               builder: (context) => (details.getString("token") != null)
-                  ? Home(
-                      username: details.getString("username"),
-                      enrollment: details.getString("enrNo"),
-                      token: details.getString("token"),
+                  ? InheritedData(
+                      userDetails: UserDetailsSharedPref(details),
+                      child: Home(
+                        token: details.getString("token"),
+                      ),
                     )
                   : Login(code: code)));
     });

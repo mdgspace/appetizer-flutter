@@ -2,21 +2,21 @@ import 'package:appetizer/colors.dart';
 import 'package:appetizer/models/menu/week.dart';
 import 'package:flutter/material.dart';
 
-Color getLeaveColorFromLeaveStatus(LeaveStatus ls) {
+Color getLeaveColorFromLeaveStatus(LeaveStatusEnum ls) {
   switch (ls) {
-    case LeaveStatus.N:
+    case LeaveStatusEnum.N:
       return Colors.white;
       break;
-    case LeaveStatus.A:
+    case LeaveStatusEnum.A:
       return Colors.green;
       break;
-    case LeaveStatus.D:
+    case LeaveStatusEnum.D:
       return Colors.red;
       break;
-    case LeaveStatus.P:
+    case LeaveStatusEnum.P:
       return appiYellow;
       break;
-    case LeaveStatus.U:
+    case LeaveStatusEnum.U:
       return Colors.blue;
       break;
     default:

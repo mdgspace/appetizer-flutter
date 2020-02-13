@@ -1,10 +1,11 @@
 import 'dart:convert';
-import 'package:appetizer/models/transaction/currentMonthRebate.dart';
-import 'package:appetizer/models/transaction/yearlyRebate.dart';
-import 'package:appetizer/models/transaction/FAQ.dart';
+import 'package:appetizer/models/transaction/current_month_rebate.dart';
+import 'package:appetizer/models/transaction/yearly_rebate.dart';
+import 'package:appetizer/models/transaction/faq.dart';
 import 'package:http/http.dart' as http;
 
-String url = "https://mess.iitr.ac.in";
+import '../globals.dart';
+
 var header = {"Content-Type": "application/json"};
 http.Client client = new http.Client();
 

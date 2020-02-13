@@ -1,14 +1,15 @@
 import 'dart:convert';
 import 'package:appetizer/models/detail.dart';
 import 'package:appetizer/models/user/oauth.dart';
-import 'package:appetizer/models/user/oauthnewuser.dart';
+import 'package:appetizer/models/user/oauth_new_user.dart';
 import 'package:http/http.dart' as http;
 import 'package:appetizer/models/user/image.dart';
 import 'package:appetizer/models/user/login.dart';
 import 'package:appetizer/models/user/me.dart';
-import 'package:appetizer/models/user/Notification.dart';
+import 'package:appetizer/models/user/notification.dart';
 
-String url = "https://mess.iitr.ac.in";
+import '../globals.dart';
+
 var header = {"Content-Type": "application/json"};
 http.Client client = new http.Client();
 
