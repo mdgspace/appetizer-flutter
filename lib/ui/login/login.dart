@@ -496,43 +496,45 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
           );
         }));
       } else {
-        print(oauthResponse.isNew);
-        print(oauthResponse.token);
-        Navigator.pop(context);
-        showCustomDialog(context, "Logging You In");
-        saveUserDetails(
-          oauthResponse.studentData.enrNo.toString(),
-          oauthResponse.studentData.name,
-          oauthResponse.token,
-          oauthResponse.studentData.branch,
-          oauthResponse.studentData.hostelName,
-          oauthResponse.studentData.roomNo,
-          oauthResponse.studentData.email,
-          oauthResponse.studentData.contactNo,
-        );
-        setState(() {
-          _isLoginSuccessful = true;
-          isLoginButtonTapped = false;
-        });
-        await new Future.delayed(const Duration(milliseconds: 500));
-        Navigator.pop(context);
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) {
-          return InheritedData(
-            userDetails: UserDetailsSharedPref.fromData(
-                oauthResponse.studentData.enrNo.toString(),
-                oauthResponse.studentData.name,
-                oauthResponse.token,
-                oauthResponse.studentData.branch,
-                oauthResponse.studentData.hostelName,
-                oauthResponse.studentData.roomNo,
-                oauthResponse.studentData.email,
-                oauthResponse.studentData.contactNo),
-            child: Home(
-              token: oauthResponse.token,
-            ),
+        if (oauthResponse.token != null) {
+          print(oauthResponse.isNew);
+          print(oauthResponse.token);
+          Navigator.pop(context);
+          showCustomDialog(context, "Logging You In");
+          saveUserDetails(
+            oauthResponse.studentData.enrNo.toString(),
+            oauthResponse.studentData.name,
+            oauthResponse.token,
+            oauthResponse.studentData.branch,
+            oauthResponse.studentData.hostelName,
+            oauthResponse.studentData.roomNo,
+            oauthResponse.studentData.email,
+            oauthResponse.studentData.contactNo,
           );
-        }));
+          setState(() {
+            _isLoginSuccessful = true;
+            isLoginButtonTapped = false;
+          });
+          await new Future.delayed(const Duration(milliseconds: 500));
+          Navigator.pop(context);
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) {
+            return InheritedData(
+              userDetails: UserDetailsSharedPref.fromData(
+                  oauthResponse.studentData.enrNo.toString(),
+                  oauthResponse.studentData.name,
+                  oauthResponse.token,
+                  oauthResponse.studentData.branch,
+                  oauthResponse.studentData.hostelName,
+                  oauthResponse.studentData.roomNo,
+                  oauthResponse.studentData.email,
+                  oauthResponse.studentData.contactNo),
+              child: Home(
+                token: oauthResponse.token,
+              ),
+            );
+          }));
+        }
       }
     }
   }

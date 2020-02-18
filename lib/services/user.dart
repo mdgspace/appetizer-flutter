@@ -197,12 +197,13 @@ Future<Detail> userReset(String email) async {
 
 Future oAuthRedirect(String code) async {
   String endpoint = "/api/user/oauth/redirect/?code=$code";
-  String uri = "https://mess.iitr.ac.in" + endpoint;
+  String uri = url + endpoint;
   try {
     var response = await client.get(
       uri,
     );
     final jsonResponse = jsonDecode(response.body);
+    print(response.body);
     OauthResponseNewUser newUserDetails =
         new OauthResponseNewUser.fromJson(jsonResponse);
     if (!newUserDetails.isNew) {
@@ -219,7 +220,7 @@ Future oAuthRedirect(String code) async {
 Future<OauthResponse> oAuthComplete(
     int enrNo, String password, String email, int contactNo) async {
   String endpoint = "/api/user/oauth/complete/";
-  String uri = "https://mess.iitr.ac.in" + endpoint;
+  String uri = url + endpoint;
   print(url);
   var json = {
     "enr": enrNo,
