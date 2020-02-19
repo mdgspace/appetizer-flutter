@@ -43,19 +43,32 @@ class QRWidgetState extends State<QRWidget> {
   }
 
   _contentWidget(String secretCode) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: Center(
-        child: Container(
-          color: const Color(0xFFFFFFFF),
-          child: QrImage(
-            data: secretCode,
-            version: QrVersions.auto,
-            size: 150,
-            gapless: false,
-          ),
-        ),
-      ),
-    );
+    return secretCode == null
+        ? Container(
+            height: 150,
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 32),
+                child: Text(
+                  "QR code not availaible right now. Check out later!",
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+          )
+        : Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Center(
+              child: Container(
+                color: const Color(0xFFFFFFFF),
+                child: QrImage(
+                  data: secretCode,
+                  version: QrVersions.auto,
+                  size: 150,
+                  gapless: false,
+                ),
+              ),
+            ),
+          );
   }
 }
