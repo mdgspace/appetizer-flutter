@@ -113,12 +113,15 @@ class _MenuState extends State<Menu> {
                 otherMenuModel.hostelWeekMenu == null) {
               return NoMealsScreen();
             } else {
-              if (selectedDateTime.weekday >
-                  otherMenuModel.hostelWeekMenu.days.length) {
+              Day currentDayMeal;
+              otherMenuModel.hostelWeekMenu.days.forEach((day) {
+                if (day.date.weekday == selectedDateTime.weekday) {
+                  currentDayMeal = day;
+                }
+              });
+              if (currentDayMeal == null) {
                 return _menuUnavailableForSingleDay(context);
               }
-              Day currentDayMeal = otherMenuModel
-                  .hostelWeekMenu.days[selectedDateTime.weekday - 1];
               final dailyItems = otherMenuModel.hostelWeekMenu.dailyItems;
               print(dailyItemsMap);
               print("OTHER DAY: ${currentDayMeal.toJson()}");
@@ -165,12 +168,15 @@ class _MenuState extends State<Menu> {
           if (menu.isFetching == false && menu.selectedWeekYourMeals == null) {
             return NoMealsScreen();
           } else {
-            if (selectedDateTime.weekday >
-                menu.selectedWeekYourMeals.days.length) {
+            Day currentDayMeal;
+            menu.selectedWeekYourMeals.days.forEach((day) {
+              if (day.date.weekday == selectedDateTime.weekday) {
+                currentDayMeal = day;
+              }
+            });
+            if (currentDayMeal == null) {
               return _menuUnavailableForSingleDay(context);
             }
-            Day currentDayMeal =
-                menu.selectedWeekYourMeals.days[selectedDateTime.weekday - 1];
             final dailyItems = menu.selectedWeekYourMeals.dailyItems;
             print("OTHER DAY: ${currentDayMeal.toJson()}");
 
