@@ -132,6 +132,7 @@ class _YourMealsMenuCardNewState extends State<YourMealsMenuCardNew> {
                     ),
                     MenuCardUtils.dailyItemsComponent(
                         widget.meal, widget.dailyItems),
+                    MenuCardUtils.specialMealBanner(widget.meal.costType),
                   ],
                 ),
               )
@@ -758,6 +759,7 @@ class _OtherMealsMenuCardNewState extends State<OtherMealsMenuCardNew> {
                 ),
               ),
               MenuCardUtils.dailyItemsComponent(widget.meal, widget.dailyItems),
+              MenuCardUtils.specialMealBanner(widget.meal.costType),
             ],
           ),
         ),

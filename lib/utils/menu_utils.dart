@@ -159,4 +159,29 @@ class MenuCardUtils {
     });
     return list;
   }
+
+  static Widget specialMealBanner(CostType costType) {
+    return costType == CostType.S
+        ? Row(
+            children: <Widget>[
+              Expanded(
+                child: Container(
+                  color: appiYellow,
+                  child: Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: Center(
+                      child: Text(
+                        "Special Meal",
+                        style: TextStyle(
+                          color: appiBrown,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          )
+        : Container();
+  }
 }
