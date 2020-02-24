@@ -15,6 +15,7 @@ import 'package:appetizer/ui/menu/menu.dart';
 import 'package:appetizer/ui/menu_screens/week_menu_screen.dart';
 import 'package:appetizer/ui/my_leaves/my_leaves_screen.dart';
 import 'package:appetizer/ui/my_rebates/my_rebates_screen.dart';
+import 'package:appetizer/ui/my_switches/my_switches_screen.dart';
 import 'package:appetizer/ui/notification_history/noti_history_screen.dart';
 import 'package:appetizer/ui/user_feedback/user_feedback.dart';
 import 'package:appetizer/utils/connectivity_status.dart';
@@ -460,6 +461,25 @@ class _HomeState extends State<Home> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => MyLeaves(
+                                      token: widget.token,
+                                    )));
+                      },
+                    ),
+                    GestureDetector(
+                      child: ListTile(
+                        leading: Image(
+                          image: AssetImage("assets/icons/leaves@1x.png"),
+                          width: 24,
+                          height: 24,
+                        ),
+                        title: Text("Switches"),
+                      ),
+                      onTap: () {
+                        Navigator.pop(context);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => MySwitches(
                                       token: widget.token,
                                     )));
                       },

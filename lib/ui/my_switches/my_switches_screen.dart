@@ -1,20 +1,18 @@
+import 'package:appetizer/services/multimessing/switches_left.dart';
+import 'package:appetizer/ui/my_switches/see_switch_history.dart';
+import 'package:appetizer/ui/my_switches/switch_status_card.dart';
 import 'package:flutter/material.dart';
 
-import 'leave_status_card.dart';
-import 'see_leave_history.dart';
-
-import 'package:appetizer/services/leave.dart';
-
-class MyLeaves extends StatefulWidget {
+class MySwitches extends StatefulWidget {
   final String token;
 
-  const MyLeaves({Key key, this.token}) : super(key: key);
+  const MySwitches({Key key, this.token}) : super(key: key);
 
   @override
-  _MyLeavesState createState() => _MyLeavesState();
+  _MySwitchesState createState() => _MySwitchesState();
 }
 
-class _MyLeavesState extends State<MyLeaves> {
+class _MySwitchesState extends State<MySwitches> {
   GlobalKey<ScaffoldState> _globalKey = new GlobalKey();
 
   @override
@@ -28,7 +26,7 @@ class _MyLeavesState extends State<MyLeaves> {
           onPressed: () => Navigator.pop(context, false),
         ),
         title: Text(
-          "My Leaves",
+          "My Switches",
           style: TextStyle(color: Colors.white),
         ),
         backgroundColor: const Color.fromRGBO(121, 85, 72, 1),
@@ -41,7 +39,7 @@ class _MyLeavesState extends State<MyLeaves> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  getRemainingLeaves(),
+                  getRemainingSwitches(),
                 ],
               ),
             ),
@@ -52,7 +50,7 @@ class _MyLeavesState extends State<MyLeaves> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      SeeLeavesHistory(
+                      SeeSwitchHistory(
                         token: widget.token,
                       ),
                     ],
@@ -66,14 +64,14 @@ class _MyLeavesState extends State<MyLeaves> {
     );
   }
 
-  Widget getRemainingLeaves() {
+  Widget getRemainingSwitches() {
     return FutureBuilder(
-        future: remainingLeaves(widget.token),
+        future: remainingSwitches(widget.token),
         builder: (context, snapshot) {
           if (snapshot.data == null) {
-            return LeaveStatusCard(null);
+            return SwitchStatusCard(null);
           } else {
-            return LeaveStatusCard(snapshot.data.count);
+            return SwitchStatusCard(snapshot.data.switches);
           }
         });
   }
