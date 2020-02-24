@@ -1,19 +1,14 @@
 import 'package:appetizer/change_notifiers/current_date.dart';
 import 'package:appetizer/change_notifiers/menu_model.dart';
-import 'package:appetizer/database/app_database.dart';
 import 'package:appetizer/globals.dart';
 import 'package:appetizer/models/menu/week.dart';
-import 'package:appetizer/services/menu.dart';
 import 'package:appetizer/services/user.dart';
 import 'package:appetizer/ui/components/inherited_data.dart';
 import 'package:appetizer/ui/menu/day_menu_new.dart';
 import 'package:appetizer/ui/menu/no_meals.dart';
-import 'package:appetizer/utils/date_time_utils.dart';
 import 'package:appetizer/utils/get_hostel_code.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sembast/sembast.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../colors.dart';
 
@@ -27,16 +22,6 @@ class Menu extends StatefulWidget {
 }
 
 class _MenuState extends State<Menu> {
-  static const String MEAL_STORE_NAME = 'meals';
-
-  // A Store with int keys and Map<String, dynamic> values.
-  // This Store acts like a persistent map, values of which are Week objects converted to Map
-  final _mealStore = intMapStoreFactory.store(MEAL_STORE_NAME);
-
-  // Private getter to shorten the amount of code needed to get the
-  // singleton instance of an opened database.
-  Future<Database> get _db async => await AppDatabase.instance.database;
-
   InheritedData inheritedData;
 
   var dailyItemsMap;
@@ -51,13 +36,6 @@ class _MenuState extends State<Menu> {
     userMeGet(widget.token).then((me) {
       setState(() {
         isCheckedOut = me.isCheckedOut;
-      });
-    });
-    SharedPreferences.getInstance().then((sharedPrefs) {
-      menuWeekForYourMeals(
-              widget.token, DateTimeUtils.getWeekNumber(DateTime.now()))
-          .then((menu) {
-        updateMealDb(menu);
       });
     });
   }
@@ -87,12 +65,6 @@ class _MenuState extends State<Menu> {
             .getOtherMenu(weekId);
       }
     }
-  }
-
-  Future<void> updateMealDb(Week weekMenu) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    int mealKey = await _mealStore.add(await _db, weekMenu.toJson());
-    prefs.setInt("mealKey", mealKey);
   }
 
   @override
@@ -169,6 +141,7 @@ class _MenuState extends State<Menu> {
             return NoMealsScreen();
           } else {
             Day currentDayMeal;
+
             menu.selectedWeekYourMeals.days.forEach((day) {
               if (day.date.weekday == selectedDateTime.weekday) {
                 currentDayMeal = day;

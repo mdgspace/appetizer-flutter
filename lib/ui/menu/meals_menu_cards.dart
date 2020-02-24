@@ -20,6 +20,10 @@ import 'package:provider/provider.dart';
 
 import '../../colors.dart';
 import '../../globals.dart';
+import '../../globals.dart';
+import '../../globals.dart';
+import '../../globals.dart';
+import '../../globals.dart';
 
 class YourMealsMenuCardNew extends StatefulWidget {
   final Meal meal;
@@ -303,7 +307,7 @@ class _YourMealsMenuCardNewState extends State<YourMealsMenuCardNew> {
         } else {
           Fluttertoast.showToast(
             msg:
-                "Leave status cannot be changed less than 8 hours before the meal time",
+                "Leave status cannot be changed less than ${outdatedTime.inHours} hours before the meal time",
           );
         }
       } else {
@@ -406,7 +410,7 @@ class _YourMealsMenuCardNewState extends State<YourMealsMenuCardNew> {
                     {
                       Fluttertoast.showToast(
                         msg:
-                            "Leave status cannot be changed less than 8 hours before the meal time",
+                            "Leave status cannot be changed less than ${outdatedTime.inHours} hours before the meal time",
                       )
                     }
                   else if (!_mealSwitchStatus)
