@@ -2,8 +2,6 @@ import 'dart:convert';
 
 import 'package:intl/intl.dart';
 
-import '../../globals.dart';
-
 Week confirmFromJson(String str) => Week.fromJson(json.decode(str));
 
 String confirmToJson(Week data) => json.encode(data.toJson());
@@ -131,6 +129,7 @@ class Day {
   DateTime date;
   List<Meal> meals;
   Map<MealType, Meal> _mealMap;
+
   Day({
     this.id,
     this.dayId,
@@ -142,6 +141,7 @@ class Day {
       _mealMap[meal.type] = meal;
     });
   }
+
   DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
 
   factory Day.fromJson(Map<String, dynamic> json) => new Day(
@@ -163,11 +163,11 @@ class Day {
 }
 
 class Meal {
-
   //WARNING secretCode is always null (backend side)
   //TODO: (aseem) remove secretCode while making sure nothing breaks
   int id;
   MealType type;
+  CostType costType;
   List<MealItem> items;
   String startTime;
   String endTime;
@@ -181,6 +181,7 @@ class Meal {
   Meal({
     this.id,
     this.type,
+    this.costType,
     this.items,
     this.startTime,
     this.endTime,
@@ -195,6 +196,7 @@ class Meal {
   factory Meal.fromJson(Map<String, dynamic> json) => new Meal(
         id: json["id"],
         type: mealTypeValues.map[json["type"]],
+        costType: costTypeValues.map[json["cost_type"]],
         items: new List<MealItem>.from(
             json["items"].map((x) => MealItem.fromJson(x))),
         startTime: json["start_time"],
@@ -210,6 +212,7 @@ class Meal {
   Map<String, dynamic> toJson() => {
         "id": id,
         "type": mealTypeValues.reverse[type],
+        "cost_type": costTypeValues.reverse[costType],
         "items": new List<dynamic>.from(items.map((x) => x.toJson())),
         "start_time": startTime,
         "end_time": endTime,
@@ -239,12 +242,15 @@ class Meal {
   bool _isOutdated;
 
   bool get isOutdated => _isOutdated;
+
   set isOutdated(bool value) {
     _isOutdated = value;
   }
 
   bool _isLeaveToggleOutdated;
+
   bool get isLeaveToggleOutdated => _isLeaveToggleOutdated;
+
   set isLeaveToggleOutdated(bool value) {
     _isLeaveToggleOutdated = value;
   }
@@ -256,8 +262,8 @@ class Meal {
       leaveStatus.status == LeaveStatusEnum.N ? true : false;
 
   DateTime get startTimeObject => _timeFormat.parse(startTime);
-  DateTime get endTimeObject => _timeFormat.parse(endTime);
 
+  DateTime get endTimeObject => _timeFormat.parse(endTime);
 
   DateFormat _timeFormat = DateFormat("HH:mm:ss");
 
@@ -327,8 +333,6 @@ class SwitchStatus {
 
 enum LeaveStatusEnum { N, A, D, P, U }
 
-enum SwitchStatusEnum { N, A, D, F, T, U }
-
 final leaveStatusValues = new EnumValues({
   "N": LeaveStatusEnum.N,
   "A": LeaveStatusEnum.A,
@@ -336,6 +340,8 @@ final leaveStatusValues = new EnumValues({
   "P": LeaveStatusEnum.P,
   "U": LeaveStatusEnum.U
 });
+
+enum SwitchStatusEnum { N, A, D, F, T, U }
 
 final switchStatusValues = new EnumValues({
   "N": SwitchStatusEnum.N,
@@ -345,6 +351,10 @@ final switchStatusValues = new EnumValues({
   "T": SwitchStatusEnum.T,
   "U": SwitchStatusEnum.U
 });
+
+enum CostType { N, S }
+
+final costTypeValues = new EnumValues({"N": CostType.N, "S": CostType.S});
 
 enum MealType { B, L, S, D }
 
