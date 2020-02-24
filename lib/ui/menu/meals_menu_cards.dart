@@ -115,7 +115,9 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
                                 Row(
                                   children: <Widget>[
                                     _showQRButton(),
-                                    _getSwitchIcon(),
+                                    widget.meal.items.isNotEmpty
+                                        ? _getSwitchIcon()
+                                        : Container(),
                                     _feedbackOrToggleComponent(context),
                                   ],
                                 ),
