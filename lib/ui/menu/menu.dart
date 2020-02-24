@@ -4,13 +4,12 @@ import 'package:appetizer/globals.dart';
 import 'package:appetizer/models/menu/week.dart';
 import 'package:appetizer/services/user.dart';
 import 'package:appetizer/ui/components/inherited_data.dart';
-import 'package:appetizer/ui/menu/day_menu_new.dart';
+import 'package:appetizer/ui/menu/day_menu.dart';
 import 'package:appetizer/ui/menu/no_meals.dart';
 import 'package:appetizer/utils/get_hostel_code.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../../colors.dart';
+import 'package:appetizer/colors.dart';
 
 class Menu extends StatefulWidget {
   final String token;
@@ -98,7 +97,7 @@ class _MenuState extends State<Menu> {
               print(dailyItemsMap);
               print("OTHER DAY: ${currentDayMeal.toJson()}");
 
-              return DayMenuNew(currentDayMeal, dailyItems, 1);
+              return DayMenu(currentDayMeal, dailyItems, 1);
             }
           }
         }
@@ -153,7 +152,7 @@ class _MenuState extends State<Menu> {
             final dailyItems = menu.selectedWeekYourMeals.dailyItems;
             print("OTHER DAY: ${currentDayMeal.toJson()}");
 
-            return DayMenuNew(
+            return DayMenu(
               currentDayMeal,
               dailyItems,
               0,

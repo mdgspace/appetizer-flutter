@@ -5,12 +5,12 @@ import 'package:appetizer/ui/menu/meals_menu_cards.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class DayMenuNew extends StatefulWidget {
+class DayMenu extends StatefulWidget {
   final Day day;
   final DailyItems dailyItems;
   // 0->Your 1->Other
   final int menuType;
-  DayMenuNew(this.day, this.dailyItems, this.menuType) {
+  DayMenu(this.day, this.dailyItems, this.menuType) {
     DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
     String date = day.date.toString().substring(0, 10);
     for (int i = 0; i < day.meals.length; i++) {
@@ -34,10 +34,10 @@ class DayMenuNew extends StatefulWidget {
   }
 
   @override
-  _DayMenuNewState createState() => _DayMenuNewState();
+  _DayMenuState createState() => _DayMenuState();
 }
 
-class _DayMenuNewState extends State<DayMenuNew> {
+class _DayMenuState extends State<DayMenu> {
   InheritedData inheritedData;
 
   @override
@@ -54,13 +54,13 @@ class _DayMenuNewState extends State<DayMenuNew> {
       return GestureDetector(
         child: Column(
           children: <Widget>[
-            YourMealsMenuCardNew(
+            YourMealsMenuCard(
                 widget.day.mealMap[MealType.B], widget.dailyItems),
-            YourMealsMenuCardNew(
+            YourMealsMenuCard(
                 widget.day.mealMap[MealType.L], widget.dailyItems),
-            YourMealsMenuCardNew(
+            YourMealsMenuCard(
                 widget.day.mealMap[MealType.S], widget.dailyItems),
-            YourMealsMenuCardNew(
+            YourMealsMenuCard(
                 widget.day.mealMap[MealType.D], widget.dailyItems),
           ],
         ),
@@ -68,13 +68,13 @@ class _DayMenuNewState extends State<DayMenuNew> {
     } else if (widget.menuType == 1) {
       return Column(
         children: <Widget>[
-          OtherMealsMenuCardNew(
+          OtherMealsMenuCard(
               widget.day.mealMap[MealType.B], widget.dailyItems),
-          OtherMealsMenuCardNew(
+          OtherMealsMenuCard(
               widget.day.mealMap[MealType.L], widget.dailyItems),
-          OtherMealsMenuCardNew(
+          OtherMealsMenuCard(
               widget.day.mealMap[MealType.S], widget.dailyItems),
-          OtherMealsMenuCardNew(
+          OtherMealsMenuCard(
               widget.day.mealMap[MealType.D], widget.dailyItems),
         ],
       );

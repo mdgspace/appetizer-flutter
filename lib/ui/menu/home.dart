@@ -16,6 +16,7 @@ import 'package:appetizer/ui/menu_screens/week_menu_screen.dart';
 import 'package:appetizer/ui/my_leaves/my_leaves_screen.dart';
 import 'package:appetizer/ui/my_rebates/my_rebates_screen.dart';
 import 'package:appetizer/ui/notification_history/noti_history_screen.dart';
+import 'package:appetizer/ui/settings/settings_screen.dart';
 import 'package:appetizer/ui/user_feedback/user_feedback.dart';
 import 'package:appetizer/utils/connectivity_status.dart';
 import 'package:appetizer/utils/get_hostel_code.dart';
@@ -26,8 +27,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import '../settings/settings_screen.dart';
 
 class Home extends StatefulWidget {
   final String token;
