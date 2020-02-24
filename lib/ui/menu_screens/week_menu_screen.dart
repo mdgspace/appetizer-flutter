@@ -3,8 +3,7 @@ import 'package:appetizer/models/menu/week.dart';
 import 'package:appetizer/utils/date_time_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../../colors.dart';
+import 'package:appetizer/colors.dart';
 
 class WeekMenu extends StatefulWidget {
   @override

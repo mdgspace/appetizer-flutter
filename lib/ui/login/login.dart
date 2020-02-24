@@ -207,7 +207,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
       ),
       validator: (value) =>
           value.isEmpty ? 'Enrollment No can\'t be empty' : null,
-      onSaved: (value) => _enrollmentNo = value,
+      onSaved: (value) => _enrollmentNo = value.trim(),
     );
   }
 

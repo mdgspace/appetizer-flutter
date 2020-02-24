@@ -17,6 +17,7 @@ import 'package:appetizer/utils/menu_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
+import 'package:appetizer/colors.dart';
 
 import '../../colors.dart';
 import '../../globals.dart';
@@ -25,13 +26,13 @@ class YourMealsMenuCardNew extends StatefulWidget {
   final Meal meal;
   final DailyItems dailyItems;
 
-  YourMealsMenuCardNew(this.meal, this.dailyItems);
+  YourMealsMenuCard(this.meal, this.dailyItems);
 
   @override
-  _YourMealsMenuCardNewState createState() => _YourMealsMenuCardNewState();
+  _YourMealsMenuCardState createState() => _YourMealsMenuCardState();
 }
 
-class _YourMealsMenuCardNewState extends State<YourMealsMenuCardNew> {
+class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
   bool _mealLeaveStatus;
   bool _mealSwitchStatus;
   String _secretCode;
@@ -117,7 +118,9 @@ class _YourMealsMenuCardNewState extends State<YourMealsMenuCardNew> {
                                 Row(
                                   children: <Widget>[
                                     _showQRButton(),
-                                    _getSwitchIcon(),
+                                    widget.meal.items.isNotEmpty
+                                        ? _getSwitchIcon()
+                                        : Container(),
                                     _feedbackOrToggleComponent(context),
                                   ],
                                 ),
@@ -661,17 +664,17 @@ class _YourMealsMenuCardNewState extends State<YourMealsMenuCardNew> {
   }
 }
 
-class OtherMealsMenuCardNew extends StatefulWidget {
+class OtherMealsMenuCard extends StatefulWidget {
   final Meal meal;
   final DailyItems dailyItems;
 
-  OtherMealsMenuCardNew(this.meal, this.dailyItems);
+  OtherMealsMenuCard(this.meal, this.dailyItems);
 
   @override
-  _OtherMealsMenuCardNewState createState() => _OtherMealsMenuCardNewState();
+  _OtherMealsMenuCardState createState() => _OtherMealsMenuCardState();
 }
 
-class _OtherMealsMenuCardNewState extends State<OtherMealsMenuCardNew> {
+class _OtherMealsMenuCardState extends State<OtherMealsMenuCard> {
   bool _mealSwitchStatus;
   UserDetailsSharedPref inheritedUserDetails;
   OtherMenuModel otherMenuModel;
