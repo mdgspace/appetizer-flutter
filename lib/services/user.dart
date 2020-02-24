@@ -59,6 +59,26 @@ Future<Detail> userLogout(String token) async {
   }
 }
 
+Future<TokenStatus> checkTokenStatus(String token) async {
+  String endpoint = "/api/user/me/";
+  String uri = url + endpoint;
+  var tokenAuth = {"Authorization": "Token " + token};
+  try {
+    var response = await client.get(
+      uri,
+      headers: tokenAuth,
+    );
+    final jsonResponse = jsonDecode(response.body);
+    if (jsonResponse["detail"] == "Invalid token.") {
+      return TokenStatus.INVALID_TOKEN;
+    }
+    return TokenStatus.OK;
+  } on Exception catch (e) {
+    print(e);
+    return null;
+  }
+}
+
 Future<Me> userMeGet(String token) async {
   String endpoint = "/api/user/me/";
   String uri = url + endpoint;
@@ -69,6 +89,9 @@ Future<Me> userMeGet(String token) async {
       headers: tokenAuth,
     );
     final jsonResponse = jsonDecode(response.body);
+    if (jsonResponse["detail"] == "Invalid token.") {
+      return null;
+    }
     Me me = new Me.fromJson(jsonResponse);
     print(response.body);
     return me;

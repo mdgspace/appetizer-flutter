@@ -57,6 +57,18 @@ class _HomeState extends State<Home> {
     _checkVersionAndPlayStoreLink();
 
     firebaseCloudMessagingListeners();
+
+    checkTokenStatus(widget.token).then((status) async {
+      if (status == TokenStatus.INVALID_TOKEN) {
+        Navigator.of(context)
+            .pushNamedAndRemoveUntil("/login", (Route<dynamic> route) => false);
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.clear();
+        prefs.setBool("seen", true);
+        Fluttertoast.showToast(msg: "Please login again.");
+      }
+    }).catchError((e) => print(e));
+
     switchableHostelsList = [];
     switchableHostelsList.add("Your Meals");
     switchableHostels(widget.token).then((hostelsList) {
