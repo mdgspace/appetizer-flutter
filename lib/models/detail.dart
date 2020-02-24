@@ -16,10 +16,10 @@ class Detail {
   });
 
   factory Detail.fromJson(Map<String, dynamic> json) => new Detail(
-    detail: json["detail"],
-  );
+        detail: json["detail"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "detail": detail,
-  };
+        "detail": detail,
+      };
 }
