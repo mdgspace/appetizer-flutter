@@ -1,4 +1,4 @@
-import 'package:appetizer/services/multimessing/switches_left.dart';
+import 'package:appetizer/services/multimessing/switch.dart';
 import 'package:appetizer/ui/my_switches/see_switch_history.dart';
 import 'package:appetizer/ui/my_switches/switch_status_card.dart';
 import 'package:flutter/material.dart';
@@ -71,7 +71,7 @@ class _MySwitchesState extends State<MySwitches> {
           if (snapshot.data == null) {
             return SwitchStatusCard(null);
           } else {
-            return SwitchStatusCard(snapshot.data.switches);
+            return SwitchStatusCard(snapshot.data.count);
           }
         });
   }

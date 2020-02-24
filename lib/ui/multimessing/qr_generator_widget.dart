@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:appetizer/colors.dart';
-import 'package:appetizer/services/multimessing/switch_meals.dart';
+import 'package:appetizer/services/multimessing/switch.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:fluttertoast/fluttertoast.dart';

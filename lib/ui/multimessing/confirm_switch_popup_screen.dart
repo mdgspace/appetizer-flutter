@@ -2,7 +2,7 @@ import 'package:appetizer/change_notifiers/menu_model.dart';
 import 'package:appetizer/colors.dart';
 import 'package:appetizer/models/menu/week.dart';
 import 'package:appetizer/services/menu.dart';
-import 'package:appetizer/services/multimessing/switch_meals.dart';
+import 'package:appetizer/services/multimessing/switch.dart';
 import 'package:appetizer/ui/components/alert_dialog.dart';
 import 'package:appetizer/ui/components/inherited_data.dart';
 import 'package:appetizer/ui/components/progress_bar.dart';
