@@ -2,7 +2,7 @@ import 'package:appetizer/change_notifiers/menu_model.dart';
 import 'package:appetizer/colors.dart';
 import 'package:appetizer/models/multimessing/meal_switch_from_your_meals.dart';
 import 'package:appetizer/services/multimessing/list_switchable_meals.dart';
-import 'package:appetizer/services/multimessing/switch_meals.dart';
+import 'package:appetizer/services/multimessing/switch.dart';
 import 'package:appetizer/ui/components/alert_dialog.dart';
 import 'package:appetizer/ui/menu_screens/week_menu_screen.dart';
 import 'package:appetizer/ui/multimessing/confirmed_switch_screen.dart';
@@ -16,13 +16,10 @@ class SwitchableMealsScreen extends StatefulWidget {
   final int id;
   final int weekId;
   final int model;
-  const SwitchableMealsScreen({
-    Key key,
-    this.token,
-    this.id,
-    this.weekId,
-    this.model
-  }) : super(key: key);
+
+  const SwitchableMealsScreen(
+      {Key key, this.token, this.id, this.weekId, this.model})
+      : super(key: key);
 
   @override
   _SwitchableMealsState createState() => _SwitchableMealsState();
@@ -162,10 +159,15 @@ class _SwitchableMealsState extends State<SwitchableMealsScreen> {
                                 widget.token,
                               ).then(
                                 (switchResponse) {
-                                  if(widget.model == 0){
-                                    Provider.of<YourMenuModel>(context, listen: false).selectedWeekMenuYourMeals(widget.weekId);
-                                  }else{
-                                    Provider.of<OtherMenuModel>(context, listen: false).getOtherMenu(widget.weekId);
+                                  if (widget.model == 0) {
+                                    Provider.of<YourMenuModel>(context,
+                                            listen: false)
+                                        .selectedWeekMenuYourMeals(
+                                            widget.weekId);
+                                  } else {
+                                    Provider.of<OtherMenuModel>(context,
+                                            listen: false)
+                                        .getOtherMenu(widget.weekId);
                                   }
                                   if (switchResponse == true) {
                                     Navigator.push(

@@ -3,7 +3,7 @@ import 'package:appetizer/globals.dart';
 import 'package:appetizer/models/menu/week.dart';
 import 'package:appetizer/models/user/user_details_shared_pref.dart';
 import 'package:appetizer/services/leave.dart';
-import 'package:appetizer/services/multimessing/switch_meals.dart';
+import 'package:appetizer/services/multimessing/switch.dart';
 import 'package:appetizer/ui/components/alert_dialog.dart';
 import 'package:appetizer/ui/components/inherited_data.dart';
 import 'package:appetizer/ui/multimessing/confirm_switch_popup_screen.dart';
@@ -19,7 +19,10 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:appetizer/colors.dart';
 
-class YourMealsMenuCard extends StatefulWidget {
+import '../../colors.dart';
+import '../../globals.dart';
+
+class YourMealsMenuCardNew extends StatefulWidget {
   final Meal meal;
   final DailyItems dailyItems;
 

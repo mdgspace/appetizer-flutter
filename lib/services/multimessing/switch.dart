@@ -1,11 +1,29 @@
 import 'dart:convert';
 
+import 'package:appetizer/models/multimessing/remaining_switch_count.dart';
 import 'package:appetizer/models/multimessing/switch_details.dart';
 import 'package:http/http.dart' as http;
 
 import '../../globals.dart';
 
 http.Client client = new http.Client();
+
+Future<SwitchCount> remainingSwitches(String token) async {
+  String endPoint = "/api/leave/switch/count/remaining/";
+  String uri = url + endPoint;
+  var tokenAuth = {"Authorization": "Token " + token};
+
+  try {
+    var response = await client.get(uri, headers: tokenAuth);
+    final jsonResponse = jsonDecode(response.body);
+    SwitchCount switchCount = new SwitchCount.fromJson(jsonResponse);
+    print(response.body);
+    return switchCount;
+  } on Exception catch (e) {
+    print(e);
+    return null;
+  }
+}
 
 Future<bool> switchMeals(int mealId, String toHostel, String token) async {
   String endPoint = "/api/leave/switch/";
