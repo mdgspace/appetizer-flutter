@@ -1,8 +1,7 @@
 import 'package:appetizer/services/transaction.dart';
 import 'package:appetizer/utils/date_time_utils.dart';
 import 'package:flutter/material.dart';
-
-import '../../colors.dart';
+import 'package:appetizer/colors.dart';
 import 'rebate_history_card.dart';
 
 class RebateHistoryScreen extends StatefulWidget {

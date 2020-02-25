@@ -32,7 +32,22 @@ Future<LeaveList> leaveList(String token, int year, int month) async {
     endPoint = "/api/leave/all/?year=$year";
   } else {
     endPoint = "/api/leave/all/?year=$year&month=$month";
+  }Future<LeaveCount> remainingLeaves(String token) async {
+  String endPoint = "/api/leave/count/remaining/";
+  String uri = url + endPoint;
+  var tokenAuth = {"Authorization": "Token " + token};
+
+  try {
+    var response = await client.get(uri, headers: tokenAuth);
+    final jsonResponse = jsonDecode(response.body);
+    LeaveCount leaveCount = new LeaveCount.fromJson(jsonResponse);
+    print(response.body);
+    return leaveCount;
+  } on Exception catch (e) {
+    print(e);
+    return null;
   }
+}
   String uri = url + endPoint;
   var tokenAuth = {"Authorization": "Token " + token};
 

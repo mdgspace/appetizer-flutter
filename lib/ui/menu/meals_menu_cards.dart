@@ -19,10 +19,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:appetizer/colors.dart';
 
-import '../../colors.dart';
-import '../../globals.dart';
-
-class YourMealsMenuCardNew extends StatefulWidget {
+class YourMealsMenuCard extends StatefulWidget {
   final Meal meal;
   final DailyItems dailyItems;
 
