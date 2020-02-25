@@ -52,6 +52,7 @@ class _LeaveDropdownFilterState extends State<LeaveDropdownFilter> {
         child: Card(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.fromLTRB(24.0, 12.0, 16.0, 4.0),
