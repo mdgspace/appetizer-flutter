@@ -1,7 +1,7 @@
+import 'package:appetizer/colors.dart';
+import 'package:appetizer/ui/login/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-import '../../colors.dart';
-import '../login/login.dart';
 
 class OnBoarding extends StatefulWidget {
   @override

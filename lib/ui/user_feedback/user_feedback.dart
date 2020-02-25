@@ -4,8 +4,7 @@ import 'package:appetizer/ui/user_feedback/new_feedback.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:appetizer/services/feedback.dart';
-
-import '../../colors.dart';
+import 'package:appetizer/colors.dart';
 
 class UserFeedback extends StatefulWidget {
   @override

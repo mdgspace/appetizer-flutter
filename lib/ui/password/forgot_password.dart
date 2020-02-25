@@ -1,8 +1,8 @@
 import 'package:appetizer/models/detail.dart';
+import 'package:appetizer/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:appetizer/services/user.dart';
-import '../../colors.dart';
-import '../../strings.dart';
+import 'package:appetizer/colors.dart';
 
 class ForgotPass extends StatefulWidget {
   @override
@@ -86,7 +86,7 @@ class _ForgotPassState extends State<ForgotPass> {
                   padding: const EdgeInsets.only(left: 48, right: 48),
                   child: Text(
                     passInstruction,
-                    style:  new TextStyle(
+                    style: new TextStyle(
                       fontSize: 14.0,
                       color: appiGreyIcon.withOpacity(0.9),
                       fontFamily: "OpenSans",
@@ -136,7 +136,7 @@ class _ForgotPassState extends State<ForgotPass> {
                       title: Text(
                         "SEND INSTRUCTIONS",
                         textAlign: TextAlign.center,
-                        style:  Theme.of(context).primaryTextTheme.caption,
+                        style: Theme.of(context).primaryTextTheme.caption,
                       ),
                     ),
                     onPressed: () {

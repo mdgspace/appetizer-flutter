@@ -3,8 +3,8 @@ import 'package:appetizer/ui/components/alert_dialog.dart';
 import 'package:appetizer/utils/date_time_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:appetizer/colors.dart';
 
-import '../../colors.dart';
 
 class NewFeedback extends StatefulWidget {
   @override
