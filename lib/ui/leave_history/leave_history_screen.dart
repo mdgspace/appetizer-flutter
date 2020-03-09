@@ -1,3 +1,4 @@
+import 'package:appetizer/models/menu/week.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:appetizer/provider/year_and_month.dart';
@@ -31,49 +32,32 @@ class MyLeavesHistory extends StatelessWidget {
           child: Container(
             child: Stack(
               children: <Widget>[
-                Container(),
-                Positioned(
-                  top: 0.0,
-                  bottom: 0.0,
-                  left: 0.0,
-                  child: Container(
-                    height: MediaQuery.of(context).size.height,
-                    width: MediaQuery.of(context).size.width,
-                    color: const Color.fromRGBO(241, 241, 241, 1),
-                  ),
+                Container(
+                  height: MediaQuery.of(context).size.height,
+                  width: 80,
+                  color: const Color.fromRGBO(241, 241, 241, 1),
                 ),
                 Positioned(
-                  top: 0.0,
-                  bottom: 0.0,
                   left: 79,
+                  top: 0,
                   child: Container(
                     height: MediaQuery.of(context).size.height,
-                    width: 1.0,
+                    width: 1,
                     color: const Color.fromRGBO(0, 0, 0, 0.20),
                   ),
                 ),
-                Positioned(
-                  top: 0.0,
-                  left: 0.0,
-                  child: LeaveDropdownFilter(),
-                ),
-                Positioned(
-                  top: 147.0,
-                  left: 0.0,
-                  child: Container(
-                    height: MediaQuery.of(context).size.height,
-                    width: MediaQuery.of(context).size.width,
-                    child: SingleChildScrollView(
-                      child: ConstrainedBox(
-                        constraints: BoxConstraints(
-                          maxHeight: 594.0,
-                        ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    LeaveDropdownFilter(),
+                    Flexible(
+                      child: Container(
                         child: LeaveTimeline(
                           token: token,
                         ),
                       ),
                     ),
-                  ),
+                  ],
                 ),
               ],
             ),

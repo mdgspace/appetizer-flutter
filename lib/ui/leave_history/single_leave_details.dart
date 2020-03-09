@@ -10,8 +10,8 @@ class SingleLeaveDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 53.0,
-      width: 320.0,
+      height: 60,
+      width: MediaQuery.of(context).size.width - 80,
       decoration: BoxDecoration(
           color: Colors.white,
           border: Border(
@@ -32,6 +32,9 @@ class SingleLeaveDetails extends StatelessWidget {
               ),
             ),
           ),
+          Expanded(child: Container(
+
+          )),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[

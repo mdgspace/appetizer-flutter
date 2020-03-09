@@ -18,8 +18,8 @@ class MultipleLeaveDetails extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 156.0,
-      width: 320.0,
+      height: 200,
+      width: MediaQuery.of(context).size.width - 80,
       decoration: BoxDecoration(
           color: Colors.white,
           border: Border(
@@ -46,6 +46,7 @@ class MultipleLeaveDetails extends StatelessWidget{
                     ),
                   ),
                 ),
+                Expanded(child: Container()),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
@@ -90,6 +91,7 @@ class MultipleLeaveDetails extends StatelessWidget{
                     ),
                   ),
                 ),
+                Expanded(child: Container()),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[

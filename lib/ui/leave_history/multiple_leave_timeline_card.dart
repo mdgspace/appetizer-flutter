@@ -17,20 +17,21 @@ class MultipleLeaveTimelineCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
     return Container(
-      height: 156.0,
-      width: 412.0,
+      height: 200,
+      //width: MediaQuery.of(context).size.width-80,
       child: Stack(
         children: <Widget>[
           Positioned(
             top: 0.0,
-            left: 80.0,
+            left: 80,
             child: MultipleLeaveDetails(
                 _mealFrom, _mealTo, _dayFrom, _dayTo, _dateFrom, _dateTo),
           ),
           Positioned(
-            top: 23.0,
-            left: 59.0,
+            top: 45,
+            left: 60,
             child: MultipleLeaveTimelineIcon(_consecutiveLeaves),
           ),
         ],
