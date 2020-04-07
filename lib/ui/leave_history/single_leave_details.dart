@@ -32,9 +32,7 @@ class SingleLeaveDetails extends StatelessWidget {
               ),
             ),
           ),
-          Expanded(child: Container(
-
-          )),
+          Expanded(child: Container()),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[

@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:appetizer/colors.dart';
 
-
 class NewFeedback extends StatefulWidget {
   @override
   _NewFeedbackState createState() => _NewFeedbackState();

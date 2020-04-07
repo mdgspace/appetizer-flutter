@@ -4,22 +4,23 @@
 
 import 'dart:convert';
 
-LeaveCount leaveCountFromJson(String str) => LeaveCount.fromJson(json.decode(str));
+LeaveCount leaveCountFromJson(String str) =>
+    LeaveCount.fromJson(json.decode(str));
 
 String leaveCountToJson(LeaveCount data) => json.encode(data.toJson());
 
 class LeaveCount {
-    int count;
+  int count;
 
-    LeaveCount({
-        this.count,
-    });
+  LeaveCount({
+    this.count,
+  });
 
-    factory LeaveCount.fromJson(Map<String, dynamic> json) => new LeaveCount(
+  factory LeaveCount.fromJson(Map<String, dynamic> json) => new LeaveCount(
         count: json["count"],
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "count": count,
-    };
+      };
 }

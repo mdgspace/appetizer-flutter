@@ -4,9 +4,11 @@
 
 import 'dart:convert';
 
-OauthResponseNewUser oauthResponseNewUserFromJson(String str) => OauthResponseNewUser.fromJson(json.decode(str));
+OauthResponseNewUser oauthResponseNewUserFromJson(String str) =>
+    OauthResponseNewUser.fromJson(json.decode(str));
 
-String oauthResponseNewUserToJson(OauthResponseNewUser data) => json.encode(data.toJson());
+String oauthResponseNewUserToJson(OauthResponseNewUser data) =>
+    json.encode(data.toJson());
 
 class OauthResponseNewUser {
   StudentData studentData;
@@ -17,15 +19,16 @@ class OauthResponseNewUser {
     this.isNew,
   });
 
-  factory OauthResponseNewUser.fromJson(Map<String, dynamic> json) => new OauthResponseNewUser(
-    studentData: StudentData.fromJson(json["student_data"]),
-    isNew: json["is_new"],
-  );
+  factory OauthResponseNewUser.fromJson(Map<String, dynamic> json) =>
+      new OauthResponseNewUser(
+        studentData: StudentData.fromJson(json["student_data"]),
+        isNew: json["is_new"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "student_data": studentData.toJson(),
-    "is_new": isNew,
-  };
+        "student_data": studentData.toJson(),
+        "is_new": isNew,
+      };
 }
 
 class StudentData {
@@ -50,24 +53,24 @@ class StudentData {
   });
 
   factory StudentData.fromJson(Map<String, dynamic> json) => new StudentData(
-    contactNo: json["contact_no"],
-    branch: json["branch"],
-    hostelName: json["hostel_name"],
-    name: json["name"],
-    hostelCode: json["hostel_code"],
-    degree: json["degree"],
-    email: json["email"],
-    enrNo: json["enr_no"],
-  );
+        contactNo: json["contact_no"],
+        branch: json["branch"],
+        hostelName: json["hostel_name"],
+        name: json["name"],
+        hostelCode: json["hostel_code"],
+        degree: json["degree"],
+        email: json["email"],
+        enrNo: json["enr_no"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "contact_no": contactNo,
-    "branch": branch,
-    "hostel_name": hostelName,
-    "name": name,
-    "hostel_code": hostelCode,
-    "degree": degree,
-    "email": email,
-    "enr_no": enrNo,
-  };
+        "contact_no": contactNo,
+        "branch": branch,
+        "hostel_name": hostelName,
+        "name": name,
+        "hostel_code": hostelCode,
+        "degree": degree,
+        "email": email,
+        "enr_no": enrNo,
+      };
 }

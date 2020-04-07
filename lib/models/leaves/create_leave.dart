@@ -4,7 +4,8 @@
 
 import 'dart:convert';
 
-CreateLeave createLeaveFromJson(String str) => CreateLeave.fromJson(json.decode(str));
+CreateLeave createLeaveFromJson(String str) =>
+    CreateLeave.fromJson(json.decode(str));
 
 String createLeaveToJson(CreateLeave data) => json.encode(data.toJson());
 
@@ -16,10 +17,10 @@ class CreateLeave {
   });
 
   factory CreateLeave.fromJson(Map<String, dynamic> json) => new CreateLeave(
-    meal: json["meal"],
-  );
+        meal: json["meal"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "meal": meal,
-  };
+        "meal": meal,
+      };
 }

@@ -7,8 +7,7 @@ import 'dart:convert';
 OauthResponse oauthResponseFromJson(String str) =>
     OauthResponse.fromJson(json.decode(str));
 
-String oauthResponseToJson(OauthResponse data) =>
-    json.encode(data.toJson());
+String oauthResponseToJson(OauthResponse data) => json.encode(data.toJson());
 
 class OauthResponse {
   String token;

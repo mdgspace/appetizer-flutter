@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class SettingsPageFooter extends StatelessWidget{
+class SettingsPageFooter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(

@@ -26,7 +26,7 @@ Future<MonthlyRebate> getMonthlyRebate(String token) async {
   }
 }
 
-Future<YearlyRebate> getYearlyRebate(String token , int year) async{
+Future<YearlyRebate> getYearlyRebate(String token, int year) async {
   String endPoint = "/api/transaction/list/expenses/?year=$year";
   String uri = url + endPoint;
 
@@ -43,7 +43,7 @@ Future<YearlyRebate> getYearlyRebate(String token , int year) async{
   }
 }
 
-Future<List<Faq>> getFAQ(String token) async{
+Future<List<Faq>> getFAQ(String token) async {
   String endPoint = "/api/faqs/";
   String uri = url + endPoint;
 

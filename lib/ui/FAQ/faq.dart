@@ -25,13 +25,11 @@ class Faq extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 20.0),
-              child: Text(
-                  'A.  $answer',
+              child: Text('A.  $answer',
                   style: TextStyle(
                     fontSize: 17.0,
                     color: const Color.fromRGBO(0, 0, 0, 0.54),
-                  )
-              ),
+                  )),
             ),
           ],
         ),

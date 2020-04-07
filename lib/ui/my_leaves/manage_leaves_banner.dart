@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class ManageLeaveBanner extends StatelessWidget{
+class ManageLeaveBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -38,8 +38,7 @@ class ManageLeaveBanner extends StatelessWidget{
                     'See upcoming meals you are leaving',
                     style: TextStyle(
                         color: const Color.fromRGBO(255, 193, 7, 1),
-                        fontSize: 12.0
-                    ),
+                        fontSize: 12.0),
                   ),
                 ),
               ],

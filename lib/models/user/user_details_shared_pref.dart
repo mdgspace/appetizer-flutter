@@ -1,7 +1,7 @@
 import 'package:appetizer/utils/user_details.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class UserDetailsSharedPref{
+class UserDetailsSharedPref {
   String _enrNo;
   String _username;
   String _token;
@@ -27,7 +27,7 @@ class UserDetailsSharedPref{
 
   String get contactNo => _contactNo;
 
-  UserDetailsSharedPref(SharedPreferences details){
+  UserDetailsSharedPref(SharedPreferences details) {
     _enrNo = details.getString("enrNo");
     _username = details.getString("username");
     _token = details.getString("token");
@@ -39,8 +39,14 @@ class UserDetailsSharedPref{
   }
   //TODO: Unify Login and UserDetails, they store similar data yet different classes
 
-  UserDetailsSharedPref.fromData(this._enrNo, this._username, this._token, this._branch,
-      this._hostelName, this._roomNo, this._email,
+  UserDetailsSharedPref.fromData(
+      this._enrNo,
+      this._username,
+      this._token,
+      this._branch,
+      this._hostelName,
+      this._roomNo,
+      this._email,
       this._contactNo);
 
   /// loads user details from SharedPreferences

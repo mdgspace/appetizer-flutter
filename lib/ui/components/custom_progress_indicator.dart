@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:appetizer/colors.dart';
 
-Widget getCustomProgressLoader(String message){
+Widget getCustomProgressLoader(String message) {
   return Center(
     child: Padding(
       padding: const EdgeInsets.all(16.0),
       child: Container(
-        height:80,
+        height: 80,
         width: 400,
         child: Card(
           shape: RoundedRectangleBorder(),
@@ -16,9 +16,12 @@ Widget getCustomProgressLoader(String message){
               CircularProgressIndicator(
                 valueColor: AlwaysStoppedAnimation<Color>(appiYellow),
               ),
-              Text(message, style: TextStyle(
-                fontSize: 18,
-              ),),
+              Text(
+                message,
+                style: TextStyle(
+                  fontSize: 18,
+                ),
+              ),
             ],
           ),
         ),

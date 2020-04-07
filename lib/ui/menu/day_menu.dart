@@ -68,14 +68,10 @@ class _DayMenuState extends State<DayMenu> {
     } else if (widget.menuType == 1) {
       return Column(
         children: <Widget>[
-          OtherMealsMenuCard(
-              widget.day.mealMap[MealType.B], widget.dailyItems),
-          OtherMealsMenuCard(
-              widget.day.mealMap[MealType.L], widget.dailyItems),
-          OtherMealsMenuCard(
-              widget.day.mealMap[MealType.S], widget.dailyItems),
-          OtherMealsMenuCard(
-              widget.day.mealMap[MealType.D], widget.dailyItems),
+          OtherMealsMenuCard(widget.day.mealMap[MealType.B], widget.dailyItems),
+          OtherMealsMenuCard(widget.day.mealMap[MealType.L], widget.dailyItems),
+          OtherMealsMenuCard(widget.day.mealMap[MealType.S], widget.dailyItems),
+          OtherMealsMenuCard(widget.day.mealMap[MealType.D], widget.dailyItems),
         ],
       );
     } else {

@@ -1,4 +1,4 @@
-import 'package:appetizer/change_notifiers/current_date.dart';
+import 'package:appetizer/change_notifiers/current_date_model.dart';
 import 'package:appetizer/colors.dart';
 import 'package:appetizer/utils/date_time_utils.dart';
 import 'package:flutter/material.dart';

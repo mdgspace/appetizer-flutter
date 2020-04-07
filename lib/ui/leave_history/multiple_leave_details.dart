@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-class MultipleLeaveDetails extends StatelessWidget{
-
+class MultipleLeaveDetails extends StatelessWidget {
   final String _mealFrom;
   final String _mealTo;
   final String _dayFrom;
@@ -9,11 +8,8 @@ class MultipleLeaveDetails extends StatelessWidget{
   final int _dateFrom;
   final int _dateTo;
 
-  MultipleLeaveDetails(
-      this._mealFrom, this._mealTo,
-      this._dayFrom, this._dayTo,
-      this._dateFrom, this._dateTo
-      );
+  MultipleLeaveDetails(this._mealFrom, this._mealTo, this._dayFrom, this._dayTo,
+      this._dateFrom, this._dateTo);
 
   @override
   Widget build(BuildContext context) {
@@ -24,10 +20,8 @@ class MultipleLeaveDetails extends StatelessWidget{
           color: Colors.white,
           border: Border(
               bottom: BorderSide(
-                color: const Color.fromRGBO(0, 0, 0, 0.37),
-              )
-          )
-      ),
+            color: const Color.fromRGBO(0, 0, 0, 0.37),
+          ))),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[

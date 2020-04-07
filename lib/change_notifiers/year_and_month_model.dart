@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 
 class YearAndMonthModel with ChangeNotifier {
-
   int _currentYearSelected = DateTime.now().year;
   String _currentMonthSelected = 'All';
 

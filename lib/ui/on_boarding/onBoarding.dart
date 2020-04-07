@@ -44,7 +44,7 @@ class _OnBoarding extends State<OnBoarding> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Padding(
-                  padding: EdgeInsets.fromLTRB(8,5, 8, 5),
+                  padding: EdgeInsets.fromLTRB(8, 5, 8, 5),
                   child: new Text(
                     "Legible display of mess menu",
                     textAlign: TextAlign.center,
