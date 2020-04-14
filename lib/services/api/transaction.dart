@@ -1,4 +1,8 @@
+import 'dart:convert';
+
+import 'package:appetizer/constants.dart';
 import 'package:appetizer/globals.dart';
+import 'package:appetizer/models/failure_model.dart';
 import 'package:appetizer/models/transaction/current_month_rebate.dart';
 import 'package:appetizer/models/transaction/yearly_rebate.dart';
 import 'package:appetizer/models/transaction/faq.dart';
@@ -18,9 +22,10 @@ class TransactionApi {
       var jsonResponse = await ApiUtils.get(uri, headers: headers);
       MonthlyRebate monthlyRebate = new MonthlyRebate.fromJson(jsonResponse);
       return monthlyRebate;
-    } on Exception catch (e) {
-      print(e);
-      return null;
+    } on FormatException {
+      throw Failure(Constants.BAD_RESPONSE_FORMAT);
+    } on Exception {
+      throw Failure(Constants.GENERIC_FAILURE);
     }
   }
 
@@ -33,9 +38,10 @@ class TransactionApi {
       var jsonResponse = await ApiUtils.get(uri, headers: headers);
       YearlyRebate yearlyRebate = new YearlyRebate.fromJson(jsonResponse);
       return yearlyRebate;
-    } on Exception catch (e) {
-      print(e);
-      return null;
+    } on FormatException {
+      throw Failure(Constants.BAD_RESPONSE_FORMAT);
+    } on Exception {
+      throw Failure(Constants.GENERIC_FAILURE);
     }
   }
 
@@ -46,11 +52,12 @@ class TransactionApi {
     try {
       await ApiUtils.addTokenToHeaders(headers);
       var jsonResponse = await ApiUtils.get(uri, headers: headers);
-      List<Faq> faqList = faqFromJson(jsonResponse);
+      List<Faq> faqList = faqFromJson(json.encode(jsonResponse));
       return faqList;
-    } on Exception catch (e) {
-      print(e);
-      return null;
+    } on FormatException {
+      throw Failure(Constants.BAD_RESPONSE_FORMAT);
+    } on Exception {
+      throw Failure(Constants.GENERIC_FAILURE);
     }
   }
 }

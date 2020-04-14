@@ -1,4 +1,8 @@
+import 'dart:convert';
+
+import 'package:appetizer/constants.dart';
 import 'package:appetizer/globals.dart';
+import 'package:appetizer/models/failure_model.dart';
 import 'package:appetizer/models/feed_back/feed_back.dart';
 import 'package:appetizer/models/feed_back/responses.dart';
 import 'package:appetizer/models/feed_back/submitted_feedbacks.dart';
@@ -19,9 +23,10 @@ class FeedbackApi {
       SubmittedFeedbacksList list =
           new SubmittedFeedbacksList.fromJson(jsonResponse);
       return list.feedbacks;
-    } on Exception catch (e) {
-      print(e);
-      return null;
+    } on FormatException {
+      throw Failure(Constants.BAD_RESPONSE_FORMAT);
+    } on Exception {
+      throw Failure(Constants.GENERIC_FAILURE);
     }
   }
 
@@ -32,11 +37,12 @@ class FeedbackApi {
     try {
       await ApiUtils.addTokenToHeaders(headers);
       var jsonResponse = await ApiUtils.get(uri, headers: headers);
-      List<Response> list = responseFromJson(jsonResponse);
+      List<Response> list = responseFromJson(json.encode(jsonResponse));
       return list;
-    } on Exception catch (e) {
-      print(e);
-      return null;
+    } on FormatException {
+      throw Failure(Constants.BAD_RESPONSE_FORMAT);
+    } on Exception {
+      throw Failure(Constants.GENERIC_FAILURE);
     }
   }
 
@@ -53,16 +59,18 @@ class FeedbackApi {
 
     try {
       await ApiUtils.addTokenToHeaders(headers);
-      var jsonResponse = await ApiUtils.post(uri, headers: headers, body: json);
+      var jsonResponse =
+          await ApiUtils.post(uri, headers: headers, body: jsonEncode(json));
       Feedback feedback = new Feedback.fromJson(jsonResponse);
       return feedback;
-    } on Exception catch (e) {
-      print(e);
-      return null;
+    } on FormatException {
+      throw Failure(Constants.BAD_RESPONSE_FORMAT);
+    } on Exception {
+      throw Failure(Constants.GENERIC_FAILURE);
     }
   }
 
-  resolveFeedbackTypeCode(String str) {
+  static resolveFeedbackTypeCode(String str) {
     switch (str) {
       case "gn":
         return "General";

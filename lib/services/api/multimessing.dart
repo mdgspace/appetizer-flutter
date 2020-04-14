@@ -1,6 +1,8 @@
 import 'dart:convert';
 
+import 'package:appetizer/constants.dart';
 import 'package:appetizer/globals.dart';
+import 'package:appetizer/models/failure_model.dart';
 import 'package:appetizer/models/multimessing/meal_switch_from_your_meals.dart';
 import 'package:appetizer/models/multimessing/remaining_switch_count.dart';
 import 'package:appetizer/models/multimessing/switch_details.dart';
@@ -19,11 +21,12 @@ class MultimessingApi {
       await ApiUtils.addTokenToHeaders(headers);
       var jsonResponse = await ApiUtils.get(uri, headers: headers);
       List<SwitchableMealsForYourMeal> switchableMeals =
-          switchableMealsForYourMealFromJson(jsonResponse);
+          switchableMealsForYourMealFromJson(json.encode(jsonResponse));
       return switchableMeals;
-    } on Exception catch (e) {
-      print(e);
-      return null;
+    } on FormatException {
+      throw Failure(Constants.BAD_RESPONSE_FORMAT);
+    } on Exception {
+      throw Failure(Constants.GENERIC_FAILURE);
     }
   }
 
@@ -36,9 +39,10 @@ class MultimessingApi {
       var jsonResponse = await ApiUtils.get(uri, headers: headers);
       SwitchCount switchCount = new SwitchCount.fromJson(jsonResponse);
       return switchCount;
-    } on Exception catch (e) {
-      print(e);
-      return null;
+    } on FormatException {
+      throw Failure(Constants.BAD_RESPONSE_FORMAT);
+    } on Exception {
+      throw Failure(Constants.GENERIC_FAILURE);
     }
   }
 
@@ -58,9 +62,10 @@ class MultimessingApi {
         return true;
       }
       return false;
-    } on Exception catch (e) {
-      print(e);
-      return null;
+    } on FormatException {
+      throw Failure(Constants.BAD_RESPONSE_FORMAT);
+    } on Exception {
+      throw Failure(Constants.GENERIC_FAILURE);
     }
   }
 
@@ -75,9 +80,10 @@ class MultimessingApi {
         return true;
       }
       return false;
-    } on Exception catch (e) {
-      print(e);
-      return null;
+    } on FormatException {
+      throw Failure(Constants.BAD_RESPONSE_FORMAT);
+    } on Exception {
+      throw Failure(Constants.GENERIC_FAILURE);
     }
   }
 
@@ -89,9 +95,10 @@ class MultimessingApi {
       final jsonResponse = await ApiUtils.get(uri, headers: headers);
       SwitchDetails switchDetails = SwitchDetails.fromJson(jsonResponse);
       return switchDetails;
-    } on Exception catch (e) {
-      print(e);
-      return null;
+    } on FormatException {
+      throw Failure(Constants.BAD_RESPONSE_FORMAT);
+    } on Exception {
+      throw Failure(Constants.GENERIC_FAILURE);
     }
   }
 
@@ -102,11 +109,12 @@ class MultimessingApi {
       await ApiUtils.addTokenToHeaders(headers);
       var jsonResponse = await ApiUtils.get(uri, headers: headers);
       List<List<dynamic>> switchableHostels =
-          switchableHostelsFromJson(jsonResponse);
+          switchableHostelsFromJson(json.encode(jsonResponse));
       return switchableHostels;
-    } on Exception catch (e) {
-      print(e);
-      return null;
+    } on FormatException {
+      throw Failure(Constants.BAD_RESPONSE_FORMAT);
+    } on Exception {
+      throw Failure(Constants.GENERIC_FAILURE);
     }
   }
 }

@@ -1,4 +1,6 @@
+import 'package:appetizer/constants.dart';
 import 'package:appetizer/globals.dart';
+import 'package:appetizer/models/failure_model.dart';
 import 'package:appetizer/models/leaves/create_leave.dart';
 import 'package:appetizer/models/leaves/check.dart';
 import 'package:appetizer/models/leaves/leave_list.dart';
@@ -19,9 +21,10 @@ class LeaveApi {
       var jsonResponse = await ApiUtils.get(uri, headers: headers);
       LeaveCount leaveCount = new LeaveCount.fromJson(jsonResponse);
       return leaveCount;
-    } on Exception catch (e) {
-      print(e);
-      return null;
+    } on FormatException {
+      throw Failure(Constants.BAD_RESPONSE_FORMAT);
+    } on Exception {
+      throw Failure(Constants.GENERIC_FAILURE);
     }
   }
 
@@ -39,9 +42,10 @@ class LeaveApi {
       var jsonResponse = await ApiUtils.get(uri, headers: headers);
       LeaveList leaveList = new LeaveList.fromJson(jsonResponse);
       return leaveList;
-    } on Exception catch (e) {
-      print(e);
-      return null;
+    } on FormatException {
+      throw Failure(Constants.BAD_RESPONSE_FORMAT);
+    } on Exception {
+      throw Failure(Constants.GENERIC_FAILURE);
     }
   }
 
@@ -54,9 +58,10 @@ class LeaveApi {
       var jsonResponse = await ApiUtils.post(uri, headers: headers);
       Check check = new Check.fromJson(jsonResponse);
       return check;
-    } on Exception catch (e) {
-      print(e);
-      return null;
+    } on FormatException {
+      throw Failure(Constants.BAD_RESPONSE_FORMAT);
+    } on Exception {
+      throw Failure(Constants.GENERIC_FAILURE);
     }
   }
 
@@ -72,9 +77,10 @@ class LeaveApi {
       var jsonResponse = await ApiUtils.post(uri, headers: headers, body: json);
       CreateLeave leave = new CreateLeave.fromJson(jsonResponse);
       return leave;
-    } on Exception catch (e) {
-      print(e);
-      return null;
+    } on FormatException {
+      throw Failure(Constants.BAD_RESPONSE_FORMAT);
+    } on Exception {
+      throw Failure(Constants.GENERIC_FAILURE);
     }
   }
 
@@ -89,9 +95,10 @@ class LeaveApi {
         return true;
       }
       return false;
-    } on Exception catch (e) {
-      print(e);
-      return null;
+    } on FormatException {
+      throw Failure(Constants.BAD_RESPONSE_FORMAT);
+    } on Exception {
+      throw Failure(Constants.GENERIC_FAILURE);
     }
   }
 }

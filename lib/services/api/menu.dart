@@ -1,5 +1,7 @@
+import 'package:appetizer/constants.dart';
 import 'package:appetizer/database/app_database.dart';
 import 'package:appetizer/globals.dart';
+import 'package:appetizer/models/failure_model.dart';
 import 'package:appetizer/models/menu/approve.dart';
 import 'package:appetizer/models/menu/week.dart';
 import 'package:appetizer/utils/api_utils.dart';
@@ -23,9 +25,10 @@ class MenuApi {
       );
       Week week = new Week.fromJson(jsonResponse);
       return week;
-    } on Exception catch (e) {
-      print(e);
-      return null;
+    } on FormatException {
+      throw Failure(Constants.BAD_RESPONSE_FORMAT);
+    } on Exception {
+      throw Failure(Constants.GENERIC_FAILURE);
     }
   }
 
@@ -41,9 +44,10 @@ class MenuApi {
       );
       Week weekForYourMeals = new Week.fromJson(jsonResponse);
       return weekForYourMeals;
-    } on Exception catch (e) {
-      print(e);
-      return null;
+    } on FormatException {
+      throw Failure(Constants.BAD_RESPONSE_FORMAT);
+    } on Exception {
+      throw Failure(Constants.GENERIC_FAILURE);
     }
   }
 
@@ -62,9 +66,10 @@ class MenuApi {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       var record = await _mealStore.record(prefs.getInt("mealKey")).get(_db);
       return Week.fromJson(record);
-    } catch (e) {
-      print(e);
-      return null;
+    } on FormatException {
+      throw Failure(Constants.BAD_RESPONSE_FORMAT);
+    } on Exception {
+      throw Failure(Constants.GENERIC_FAILURE);
     }
   }
 
@@ -80,9 +85,10 @@ class MenuApi {
       );
       Week week = new Week.fromJson(jsonResponse);
       return week;
-    } on Exception catch (e) {
-      print(e);
-      return null;
+    } on FormatException {
+      throw Failure(Constants.BAD_RESPONSE_FORMAT);
+    } on Exception {
+      throw Failure(Constants.GENERIC_FAILURE);
     }
   }
 
@@ -98,9 +104,10 @@ class MenuApi {
       );
       Day day = new Day.fromJson(jsonResponse);
       return day;
-    } on Exception catch (e) {
-      print(e);
-      return null;
+    } on FormatException {
+      throw Failure(Constants.BAD_RESPONSE_FORMAT);
+    } on Exception {
+      throw Failure(Constants.GENERIC_FAILURE);
     }
   }
 
@@ -116,9 +123,10 @@ class MenuApi {
       );
       Meal meal = new Meal.fromJson(jsonResponse);
       return meal;
-    } on Exception catch (e) {
-      print(e);
-      return null;
+    } on FormatException {
+      throw Failure(Constants.BAD_RESPONSE_FORMAT);
+    } on Exception {
+      throw Failure(Constants.GENERIC_FAILURE);
     }
   }
 
@@ -134,9 +142,10 @@ class MenuApi {
       );
       Meal meal = new Meal.fromJson(jsonResponse);
       return meal;
-    } on Exception catch (e) {
-      print(e);
-      return null;
+    } on FormatException {
+      throw Failure(Constants.BAD_RESPONSE_FORMAT);
+    } on Exception {
+      throw Failure(Constants.GENERIC_FAILURE);
     }
   }
 
@@ -154,9 +163,10 @@ class MenuApi {
       );
       Meal meal = new Meal.fromJson(jsonResponse);
       return meal;
-    } on Exception catch (e) {
-      print(e);
-      return null;
+    } on FormatException {
+      throw Failure(Constants.BAD_RESPONSE_FORMAT);
+    } on Exception {
+      throw Failure(Constants.GENERIC_FAILURE);
     }
   }
 
@@ -175,9 +185,10 @@ class MenuApi {
       );
       Approve approve = new Approve.fromJson(jsonResponse);
       return approve;
-    } on Exception catch (e) {
-      print(e);
-      return null;
+    } on FormatException {
+      throw Failure(Constants.BAD_RESPONSE_FORMAT);
+    } on Exception {
+      throw Failure(Constants.GENERIC_FAILURE);
     }
   }
 
@@ -190,9 +201,10 @@ class MenuApi {
       var jsonResponse = await ApiUtils.get(uri, headers: headers);
       List<MealItem> mealItems = new List<MealItem>.from(jsonResponse);
       return mealItems;
-    } on Exception catch (e) {
-      print(e);
-      return null;
+    } on FormatException {
+      throw Failure(Constants.BAD_RESPONSE_FORMAT);
+    } on Exception {
+      throw Failure(Constants.GENERIC_FAILURE);
     }
   }
 }
