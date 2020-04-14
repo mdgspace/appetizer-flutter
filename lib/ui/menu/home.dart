@@ -1,26 +1,25 @@
-import 'package:appetizer/change_notifiers/current_date_model.dart';
-import 'package:appetizer/change_notifiers/menu_model.dart';
 import 'package:appetizer/colors.dart';
+import 'package:appetizer/enums/token_status.dart';
 import 'package:appetizer/globals.dart';
-import 'package:appetizer/services/connectivity_service.dart';
-import 'package:appetizer/services/leave.dart';
-import 'package:appetizer/services/multimessing/switchable_hostels.dart';
-import 'package:appetizer/services/user.dart';
-import 'package:appetizer/services/version_check.dart';
+import 'package:appetizer/services/api/leave.dart';
+import 'package:appetizer/services/api/multimessing.dart';
+import 'package:appetizer/services/api/user.dart';
+import 'package:appetizer/services/api/version_check.dart';
 import 'package:appetizer/ui/FAQ/faq_screen.dart';
+import 'package:appetizer/ui/base_view.dart';
 import 'package:appetizer/ui/components/alert_dialog.dart';
 import 'package:appetizer/ui/components/inherited_data.dart';
 import 'package:appetizer/ui/date_picker/date_picker.dart';
-import 'package:appetizer/ui/menu/menu.dart';
-import 'package:appetizer/ui/menu_screens/week_menu_screen.dart';
+import 'package:appetizer/ui/menu/other_menu.dart';
+import 'package:appetizer/ui/menu/your_menu.dart';
 import 'package:appetizer/ui/my_leaves/my_leaves_screen.dart';
 import 'package:appetizer/ui/my_rebates/my_rebates_screen.dart';
 import 'package:appetizer/ui/my_switches/my_switches_screen.dart';
 import 'package:appetizer/ui/notification_history/noti_history_screen.dart';
 import 'package:appetizer/ui/settings/settings_screen.dart';
 import 'package:appetizer/ui/user_feedback/user_feedback.dart';
-import 'package:appetizer/utils/connectivity_status.dart';
-import 'package:appetizer/utils/get_hostel_code.dart';
+import 'package:appetizer/viewmodels/current_date_model.dart';
+import 'package:appetizer/viewmodels/home_model.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
@@ -48,8 +47,6 @@ class _HomeState extends State<Home> {
   List<String> switchableHostelsList;
 
   InheritedData inheritedData;
-  YourMenuModel menuModel;
-  OtherMenuModel otherMenuModel;
   CurrentDateModel currentDateModel;
 
   @override
@@ -59,7 +56,7 @@ class _HomeState extends State<Home> {
 
     firebaseCloudMessagingListeners();
 
-    checkTokenStatus(widget.token).then((status) async {
+    UserApi().checkTokenStatus().then((status) async {
       if (status == TokenStatus.INVALID_TOKEN) {
         Navigator.of(context)
             .pushNamedAndRemoveUntil("/login", (Route<dynamic> route) => false);
@@ -72,7 +69,7 @@ class _HomeState extends State<Home> {
 
     switchableHostelsList = [];
     switchableHostelsList.add("Your Meals");
-    switchableHostels(widget.token).then((hostelsList) {
+    MultimessingApi().switchableHostels().then((hostelsList) {
       print("HOSTELS LIST $hostelsList");
       hostelsList.forEach((hostel) {
         switchableHostelsList.add(hostel[2].toString());
@@ -81,7 +78,7 @@ class _HomeState extends State<Home> {
     }).catchError((e) {
       Fluttertoast.showToast(msg: "Unable to fetch hostels");
     });
-    userMeGet(widget.token).then((me) {
+    UserApi().userMeGet().then((me) {
       setState(() {
         isCheckedOut = me.isCheckedOut;
       });
@@ -110,7 +107,7 @@ class _HomeState extends State<Home> {
         version = remoteConfig.getString("appetizer_flutter_version");
         playStoreLink = remoteConfig.getString("appetizer_flutter_play_link");
       });
-      checkVersion(version).then((version) {
+      VersionCheckApi().checkVersion(version).then((version) {
         if (version.isExpired) {
           showDialog(
               barrierDismissible: false,
@@ -176,121 +173,113 @@ class _HomeState extends State<Home> {
     super.didChangeDependencies();
     if (inheritedData == null) {
       inheritedData = InheritedData.of(context);
-      menuModel = YourMenuModel(inheritedData.userDetails);
-      otherMenuModel = OtherMenuModel(inheritedData.userDetails,
-          hostelCodeMap[inheritedData.userDetails.hostelName]);
       currentDateModel = CurrentDateModel();
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (context) {
-          return menuModel;
-        }),
-        ChangeNotifierProvider(create: (context) => otherMenuModel),
-        ChangeNotifierProvider(create: (context) => currentDateModel),
-        StreamProvider<ConnectivityStatus>(
-            create: (context) =>
-                ConnectivityService().connectionStatusController.stream)
-      ],
-      child: Scaffold(
-        floatingActionButton: !isCheckedOut ? _fab(context) : null,
-        key: menuScaffoldKey,
-        appBar: _appBar(context),
-        body: SafeArea(
-          child: Stack(
-            children: <Widget>[
-              Column(
-                children: <Widget>[
-                  Container(
+    return BaseView<HomeModel>(
+      builder: (context, model, child) => MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (context) => currentDateModel),
+        ],
+        child: Scaffold(
+          floatingActionButton: !isCheckedOut ? _fab(context) : null,
+          appBar: _appBar(context, model),
+          body: SafeArea(
+            child: Stack(
+              children: <Widget>[
+                Column(
+                  children: <Widget>[
+                    Container(
                       height: 90,
                       width: MediaQuery.of(context).size.width,
                       child: DatePicker(
                         padding: 0,
-                      )),
-                  isCheckedOut == null
-                      ? Container()
-                      : isCheckedOut
-                          ? Container(
-                              width: MediaQuery.of(context).size.width,
-                              color: appiRed,
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-                                  Padding(
-                                    padding:
-                                        const EdgeInsets.fromLTRB(16, 4, 16, 4),
-                                    child: Center(
-                                      child: Align(
-                                        alignment: Alignment.centerLeft,
+                      ),
+                    ),
+                    isCheckedOut == null
+                        ? Container()
+                        : isCheckedOut
+                            ? Container(
+                                width: MediaQuery.of(context).size.width,
+                                color: appiRed,
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          16, 4, 16, 4),
+                                      child: Center(
+                                        child: Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: Text(
+                                            "You are currently Checked-Out",
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 14),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => MyLeaves(),
+                                          ),
+                                        );
+                                      },
+                                      child: Padding(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            16, 4, 16, 4),
                                         child: Text(
-                                          "You are currently Checked-Out",
+                                          "CHECK-IN",
                                           style: TextStyle(
                                               color: Colors.white,
                                               fontSize: 14),
                                         ),
                                       ),
-                                    ),
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) => MyLeaves(
-                                                    token: widget.token,
-                                                  )));
-                                    },
-                                    child: Padding(
-                                      padding: const EdgeInsets.fromLTRB(
-                                          16, 4, 16, 4),
-                                      child: Text(
-                                        "CHECK-IN",
-                                        style: TextStyle(
-                                            color: Colors.white, fontSize: 14),
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            )
-                          : Container(),
-                  Flexible(
-                    child: GestureDetector(
-                      onHorizontalDragEnd: (d) {
-                        if (d.velocity.pixelsPerSecond.dx < -500) {
-                          currentDateModel.setDateTime(
-                              currentDateModel.dateTime.add(Duration(days: 1)),
-                              context);
-                        } else if (d.velocity.pixelsPerSecond.dx > 500) {
-                          currentDateModel.setDateTime(
-                              currentDateModel.dateTime
-                                  .subtract(Duration(days: 1)),
-                              context);
-                        }
-                      },
-                      child: SingleChildScrollView(
-                        child: Menu(
-                          token: widget.token,
-                        ),
+                                    )
+                                  ],
+                                ),
+                              )
+                            : Container(),
+                    Flexible(
+                      child: GestureDetector(
+                        onHorizontalDragEnd: (d) {
+                          if (d.velocity.pixelsPerSecond.dx < -500) {
+                            currentDateModel.setDateTime(
+                                currentDateModel.dateTime
+                                    .add(Duration(days: 1)),
+                                context);
+                          } else if (d.velocity.pixelsPerSecond.dx > 500) {
+                            currentDateModel.setDateTime(
+                                currentDateModel.dateTime
+                                    .subtract(Duration(days: 1)),
+                                context);
+                          }
+                        },
+                        child: model.selectedHostel == "Your Meals"
+                            ? YourMenu()
+                            : OtherMenu(hostelName: model.selectedHostel),
                       ),
                     ),
-                  ),
-                ],
-              ),
-            ],
+                  ],
+                ),
+              ],
+            ),
           ),
+          drawer: _drawer(context),
         ),
-        drawer: _drawer(context),
       ),
     );
   }
 
-  Widget _appBar(context) => AppBar(
+  Widget _appBar(context, HomeModel model) => AppBar(
         elevation: 0,
         centerTitle: true,
         title: Container(
@@ -311,9 +300,10 @@ class _HomeState extends State<Home> {
                   "       Your Meals",
                   textAlign: TextAlign.center,
                   style: new TextStyle(
-                      color: Colors.white,
-                      fontSize: 25.0,
-                      fontFamily: 'Lobster_Two'),
+                    color: Colors.white,
+                    fontSize: 25.0,
+                    fontFamily: 'Lobster_Two',
+                  ),
                 ),
                 items: switchableHostelsList.map((String hostelName) {
                   return DropdownMenuItem<String>(
@@ -324,7 +314,6 @@ class _HomeState extends State<Home> {
                         width: MediaQuery.of(context).size.width * 0.47,
                         child: Text(
                           hostelName,
-                          //overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.center,
                           style: new TextStyle(
                             color: Colors.white,
@@ -337,24 +326,10 @@ class _HomeState extends State<Home> {
                   );
                 }).toList(),
                 onChanged: (String _selectedHostelName) {
-                  if (_selectedHostelName == "Your Meals") {
-                    setState(() {
-                      selectedHostelName = null;
-                    });
-
-                    menuModel
-                        .selectedWeekMenuYourMeals(currentDateModel.weekId);
-                    otherMenuModel.setHostelCode =
-                        hostelCodeMap[inheritedData.userDetails.hostelName];
-                    otherMenuModel.getOtherMenu(currentDateModel.weekId);
-                  } else {
-                    setState(() {
-                      selectedHostelName = _selectedHostelName;
-                    });
-                    otherMenuModel.setHostelCode =
-                        hostelCodeMap[_selectedHostelName];
-                    otherMenuModel.getOtherMenu(currentDateModel.weekId);
-                  }
+                  setState(() {
+                    selectedHostelName = _selectedHostelName;
+                  });
+                  model.selectedHostel = _selectedHostelName;
                 },
               ),
             ),
@@ -370,11 +345,11 @@ class _HomeState extends State<Home> {
                 child: Image.asset("assets/icons/week_menu.png"),
               ),
               onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => ChangeNotifierProvider.value(
-                            value: menuModel, child: WeekMenu())));
+                // Navigator.push(
+                //     context,
+                //     MaterialPageRoute(
+                //         builder: (context) => ChangeNotifierProvider.value(
+                //             value: menuModel, child: WeekMenu())));
               },
             ),
           )
@@ -452,9 +427,11 @@ class _HomeState extends State<Home> {
                       onTap: () {
                         Navigator.pop(context);
                         Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => UserFeedback()));
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => UserFeedback(),
+                          ),
+                        );
                       },
                     ),
                     GestureDetector(
@@ -469,11 +446,11 @@ class _HomeState extends State<Home> {
                       onTap: () {
                         Navigator.pop(context);
                         Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => MyLeaves(
-                                      token: widget.token,
-                                    )));
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => MyLeaves(),
+                          ),
+                        );
                       },
                     ),
                     GestureDetector(
@@ -488,11 +465,11 @@ class _HomeState extends State<Home> {
                       onTap: () {
                         Navigator.pop(context);
                         Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => MySwitches(
-                                      token: widget.token,
-                                    )));
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => MySwitches(),
+                          ),
+                        );
                       },
                     ),
                     GestureDetector(
@@ -507,11 +484,11 @@ class _HomeState extends State<Home> {
                       onTap: () {
                         Navigator.pop(context);
                         Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => MyRebates(
-                                      token: widget.token,
-                                    )));
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => MyRebates(),
+                          ),
+                        );
                       },
                     ),
                     GestureDetector(
@@ -526,10 +503,11 @@ class _HomeState extends State<Home> {
                       onTap: () {
                         Navigator.pop(context);
                         Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    NotificationHistory(token: widget.token)));
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => NotificationHistory(),
+                          ),
+                        );
                       },
                     ),
                     GestureDetector(
@@ -544,9 +522,11 @@ class _HomeState extends State<Home> {
                       onTap: () {
                         Navigator.pop(context);
                         Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => Settings()));
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Settings(),
+                          ),
+                        );
                       },
                     ),
                     GestureDetector(
@@ -561,10 +541,11 @@ class _HomeState extends State<Home> {
                       onTap: () {
                         Navigator.pop(context);
                         Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    FaqList(token: widget.token)));
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => FaqList(),
+                          ),
+                        );
                       },
                     ),
                     GestureDetector(
@@ -619,11 +600,10 @@ class _HomeState extends State<Home> {
                                             context, "Logging You Out");
                                         FirebaseMessaging fcm =
                                             FirebaseMessaging();
-                                        userMeGet(widget.token)
-                                            .then((me) async {
+                                        UserApi().userMeGet().then((me) async {
                                           fcm.unsubscribeFromTopic(
                                               "debug-" + me.hostelCode);
-                                          userLogout(widget.token);
+                                          UserApi().userLogout();
                                           Navigator.of(context)
                                               .pushNamedAndRemoveUntil(
                                                   "/login",
@@ -730,7 +710,7 @@ class _HomeState extends State<Home> {
                       ),
                       onPressed: () async {
                         Navigator.pop(context);
-                        check(widget.token).then((check) {
+                        LeaveApi().check().then((check) {
                           setState(() {
                             isCheckedOut = check.isCheckedOut;
                           });
