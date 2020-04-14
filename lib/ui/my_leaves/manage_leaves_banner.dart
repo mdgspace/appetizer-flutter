@@ -43,7 +43,6 @@ class ManageLeaveBanner extends StatelessWidget {
                 ),
               ],
             ),
-            //TODO: ADD RICE BOWL SVG
           ],
         ),
       ),

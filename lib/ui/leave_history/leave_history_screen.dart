@@ -1,14 +1,10 @@
-import 'package:appetizer/change_notifiers/year_and_month_model.dart';
+import 'package:appetizer/viewmodels/year_and_month_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'leave_dropdown_filter.dart';
 import 'leave_timeline.dart';
 
 class MyLeavesHistory extends StatelessWidget {
-  final String token;
-
-  const MyLeavesHistory({Key key, this.token}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -51,9 +47,7 @@ class MyLeavesHistory extends StatelessWidget {
                     LeaveDropdownFilter(),
                     Flexible(
                       child: Container(
-                        child: LeaveTimeline(
-                          token: token,
-                        ),
+                        child: LeaveTimeline(),
                       ),
                     ),
                   ],

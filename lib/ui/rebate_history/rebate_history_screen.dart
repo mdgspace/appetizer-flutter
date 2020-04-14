@@ -1,14 +1,13 @@
-import 'package:appetizer/services/transaction.dart';
+import 'package:appetizer/enums/view_state.dart';
+import 'package:appetizer/ui/base_view.dart';
+import 'package:appetizer/ui/components/error_widget.dart';
 import 'package:appetizer/utils/date_time_utils.dart';
+import 'package:appetizer/viewmodels/rebates_models/rebate_history_model.dart';
 import 'package:flutter/material.dart';
 import 'package:appetizer/colors.dart';
 import 'rebate_history_card.dart';
 
 class RebateHistoryScreen extends StatefulWidget {
-  final String token;
-
-  const RebateHistoryScreen({Key key, this.token}) : super(key: key);
-
   @override
   _RebateHistoryScreenState createState() => _RebateHistoryScreenState();
 }
@@ -26,27 +25,56 @@ class _RebateHistoryScreenState extends State<RebateHistoryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0.0,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          color: const Color.fromRGBO(255, 193, 7, 1),
-          onPressed: () => Navigator.pop(context, false),
+    return BaseView<RebateHistoryModel>(
+      onModelReady: (model) => model.getYearlyRebate(currentItemSelected),
+      builder: (context, model, child) => Scaffold(
+        appBar: AppBar(
+          elevation: 0.0,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            color: const Color.fromRGBO(255, 193, 7, 1),
+            onPressed: () => Navigator.pop(context, false),
+          ),
+          title: Text("Rebate History", style: TextStyle(color: Colors.white)),
+          backgroundColor: const Color.fromRGBO(121, 85, 72, 1),
         ),
-        title: Text("Rebate History", style: TextStyle(color: Colors.white)),
-        backgroundColor: const Color.fromRGBO(121, 85, 72, 1),
-      ),
-      body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Container(
-              height: 150.0,
-              child: getDropdownFilter(),
-            ),
-            Expanded(child: getRebateHistoryList()),
-          ],
+        body: SafeArea(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Container(
+                height: 150.0,
+                child: getDropdownFilter(),
+              ),
+              Expanded(
+                child: model.state == ViewState.Busy
+                    ? Container(
+                        child: Center(
+                          child: CircularProgressIndicator(
+                            valueColor:
+                                new AlwaysStoppedAnimation<Color>(appiYellow),
+                          ),
+                        ),
+                      )
+                    : model.state == ViewState.Error
+                        ? AppiErrorWidget(message: model.errorMessage)
+                        : ListView.builder(
+                            itemCount: model.yearlyRebate.count,
+                            itemBuilder: (BuildContext context, int index) {
+                              return RebateHistoryCard(
+                                  0,
+                                  model.yearlyRebate.results[index].rebate,
+                                  model.yearlyRebate.results[index].expenses,
+                                  DateTimeUtils.getMonthName(DateTime(
+                                      DateTime.now().year,
+                                      model.yearlyRebate.results[index]
+                                          .monthId)),
+                                  model.yearlyRebate.results[index].year);
+                            },
+                          ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -126,33 +154,5 @@ class _RebateHistoryScreenState extends State<RebateHistoryScreen> {
     setState(() {
       currentItemSelected = newValueSelected;
     });
-  }
-
-  Widget getRebateHistoryList() {
-    return FutureBuilder(
-      future: getYearlyRebate(widget.token, currentItemSelected),
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if (snapshot.data == null) {
-          return Container(
-            child: Center(
-                child: CircularProgressIndicator(
-              valueColor: new AlwaysStoppedAnimation<Color>(appiYellow),
-            )),
-          );
-        } else {
-          return ListView.builder(
-              itemCount: snapshot.data.count,
-              itemBuilder: (BuildContext context, int index) {
-                return RebateHistoryCard(
-                    0,
-                    snapshot.data.results[index].rebate,
-                    snapshot.data.results[index].expenses,
-                    DateTimeUtils.getMonthName(DateTime(DateTime.now().year,
-                        snapshot.data.results[index].monthId)),
-                    snapshot.data.results[index].year);
-              });
-        }
-      },
-    );
   }
 }
