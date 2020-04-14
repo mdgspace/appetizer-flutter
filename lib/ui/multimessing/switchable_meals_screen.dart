@@ -1,24 +1,23 @@
-import 'package:appetizer/change_notifiers/menu_model.dart';
 import 'package:appetizer/colors.dart';
+import 'package:appetizer/enums/view_state.dart';
 import 'package:appetizer/models/multimessing/meal_switch_from_your_meals.dart';
-import 'package:appetizer/services/multimessing/list_switchable_meals.dart';
-import 'package:appetizer/services/multimessing/switch.dart';
+import 'package:appetizer/ui/base_view.dart';
 import 'package:appetizer/ui/components/alert_dialog.dart';
+import 'package:appetizer/ui/components/error_widget.dart';
+import 'package:appetizer/ui/components/progress_bar.dart';
 import 'package:appetizer/ui/menu_screens/week_menu_screen.dart';
 import 'package:appetizer/ui/multimessing/confirmed_switch_screen.dart';
 import 'package:appetizer/utils/get_hostel_code.dart';
+import 'package:appetizer/viewmodels/multimessing_models/switchable_meals_model.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:provider/provider.dart';
 
 class SwitchableMealsScreen extends StatefulWidget {
-  final String token;
   final int id;
   final int weekId;
   final int model;
 
-  const SwitchableMealsScreen(
-      {Key key, this.token, this.id, this.weekId, this.model})
+  const SwitchableMealsScreen({Key key, this.id, this.weekId, this.model})
       : super(key: key);
 
   @override
@@ -75,17 +74,18 @@ class _SwitchableMealsState extends State<SwitchableMealsScreen> {
   }
 
   List<TableRow> _tableBody(
-      List<SwitchableMealsForYourMeal> listOfSwitchableMealsForYourMeal) {
+      List<SwitchableMealsForYourMeal> listOfSwitchableMealsForYourMeal,
+      SwitchableMealsModel model) {
     List<TableRow> _body = [];
     _body.add(_tableHeader());
     listOfSwitchableMealsForYourMeal.forEach((meal) {
-      _body.add(_getTableRow(meal));
+      _body.add(_getTableRow(meal, model));
     });
     return _body;
   }
 
-  TableRow _getTableRow(
-      SwitchableMealsForYourMeal _switchableMealsFromYourMeal) {
+  TableRow _getTableRow(SwitchableMealsForYourMeal _switchableMealsFromYourMeal,
+      SwitchableMealsModel model) {
     return TableRow(
       children: [
         TableCell(
@@ -152,37 +152,35 @@ class _SwitchableMealsState extends State<SwitchableMealsScreen> {
                             onPressed: () async {
                               Navigator.pop(alertContext);
                               showCustomDialog(context, "Switching Meals");
-                              switchMeals(
+                              await model.switchMeals(
                                 widget.id,
                                 hostelCodeMap[
                                     _switchableMealsFromYourMeal.hostelName],
-                                widget.token,
-                              ).then(
-                                (switchResponse) {
-                                  if (widget.model == 0) {
-                                    Provider.of<YourMenuModel>(context,
-                                            listen: false)
-                                        .selectedWeekMenuYourMeals(
-                                            widget.weekId);
-                                  } else {
-                                    Provider.of<OtherMenuModel>(context,
-                                            listen: false)
-                                        .getOtherMenu(widget.weekId);
-                                  }
-                                  if (switchResponse == true) {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            ConfirmedSwitchScreen(),
-                                      ),
-                                    );
-                                  } else {
-                                    Fluttertoast.showToast(
-                                        msg: "Cannot switch meals");
-                                  }
-                                },
                               );
+                              // if (widget.model == 0) {
+                              //   Provider.of<YourMenuModel>(context,
+                              //           listen: false)
+                              //       .selectedWeekMenuYourMeals(widget.weekId);
+                              // } else {
+                              //   Provider.of<OtherMenuModel>(context,
+                              //           listen: false)
+                              //       .getOtherMenu(widget.weekId);
+                              // }
+                              if (model.isMealSwitched) {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        ConfirmedSwitchScreen(),
+                                  ),
+                                );
+                              }
+                              if (model.state == ViewState.Error) {
+                                Navigator.pop(context);
+                                Fluttertoast.showToast(
+                                  msg: model.errorMessage,
+                                );
+                              }
                             },
                             highlightColor: Colors.transparent,
                             splashColor: Colors.transparent,
@@ -202,64 +200,53 @@ class _SwitchableMealsState extends State<SwitchableMealsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        centerTitle: true,
-        title: Text(
-          "Mess Menu",
-          style: new TextStyle(
-            color: Colors.white,
-            fontSize: 25.0,
-            fontFamily: 'Lobster_Two',
-          ),
-        ),
-        actions: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: GestureDetector(
-              child: Container(
-                child: Image.asset("assets/icons/week_menu.png"),
-              ),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => WeekMenu(),
-                  ),
-                );
-              },
+    return BaseView<SwitchableMealsModel>(
+      onModelReady: (model) => model.getSwitchableMeals(widget.id),
+      builder: (context, model, child) => Scaffold(
+        appBar: AppBar(
+          elevation: 0,
+          centerTitle: true,
+          title: Text(
+            "Mess Menu",
+            style: new TextStyle(
+              color: Colors.white,
+              fontSize: 25.0,
+              fontFamily: 'Lobster_Two',
             ),
-          )
-        ],
-        backgroundColor: appiBrown,
-        iconTheme: new IconThemeData(color: appiYellow),
-      ),
-      body: FutureBuilder(
-        future: listSwitchableMeals(widget.id, widget.token),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Container(
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              child: Center(
-                child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(appiYellow),
+          ),
+          actions: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: GestureDetector(
+                child: Container(
+                  child: Image.asset("assets/icons/week_menu.png"),
                 ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => WeekMenu(),
+                    ),
+                  );
+                },
               ),
-            );
-          } else {
-            var data = snapshot.data;
-            return Table(
-              defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-              border: TableBorder.all(
-                width: 0.5,
-                color: appiGrey.withOpacity(0.5),
-              ),
-              children: _tableBody(data),
-            );
-          }
-        },
+            )
+          ],
+          backgroundColor: appiBrown,
+          iconTheme: new IconThemeData(color: appiYellow),
+        ),
+        body: model.state == ViewState.Busy
+            ? ProgressBar()
+            : model.state == ViewState.Error
+                ? AppiErrorWidget(message: model.errorMessage)
+                : Table(
+                    defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                    border: TableBorder.all(
+                      width: 0.5,
+                      color: appiGrey.withOpacity(0.5),
+                    ),
+                    children: _tableBody(model.listOfSwitchableMeals, model),
+                  ),
       ),
     );
   }

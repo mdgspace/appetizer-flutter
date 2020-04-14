@@ -1,17 +1,17 @@
 import 'dart:ui';
 
 import 'package:appetizer/colors.dart';
-import 'package:appetizer/services/multimessing/switch.dart';
+import 'package:appetizer/enums/view_state.dart';
+import 'package:appetizer/ui/base_view.dart';
+import 'package:appetizer/viewmodels/multimessing_models/qr_genrator_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class QRWidget extends StatefulWidget {
-  final String token;
   final int switchId;
 
-  const QRWidget({Key key, this.token, this.switchId}) : super(key: key);
+  const QRWidget({Key key, this.switchId}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => QRWidgetState();
@@ -20,25 +20,21 @@ class QRWidget extends StatefulWidget {
 class QRWidgetState extends State<QRWidget> {
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: getSwitchDetails(widget.switchId, widget.token),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Container(
-            height: 150,
-            child: Center(
-              child: CircularProgressIndicator(
-                valueColor: new AlwaysStoppedAnimation<Color>(appiYellow),
+    return BaseView<QRGeneratorModel>(
+      onModelReady: (model) => model.fetchSecretCode(widget.switchId),
+      builder: (context, model, child) => model.state != ViewState.Idle
+          ? Container(
+              height: 150,
+              child: Center(
+                child: model.state == ViewState.Busy
+                    ? CircularProgressIndicator(
+                        valueColor:
+                            new AlwaysStoppedAnimation<Color>(appiYellow),
+                      )
+                    : Text("No Secret was fetched"),
               ),
-            ),
-          );
-        } else if (snapshot.data != null) {
-          return _contentWidget(snapshot.data.secretCode);
-        } else {
-          Fluttertoast.showToast(msg: "No Secret was fetched");
-          return Container();
-        }
-      },
+            )
+          : _contentWidget(model.secretCode),
     );
   }
 
