@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'package:appetizer/models/user/user_details_shared_pref.dart';
+import 'package:appetizer/ui/base_view.dart';
 import 'package:appetizer/ui/components/inherited_data.dart';
 import 'package:appetizer/ui/menu/home.dart';
-import 'package:appetizer/models/user/oauth.dart';
+import 'package:appetizer/viewmodels/password_models/new_password_model.dart';
 import 'package:flutter/material.dart';
-import 'package:appetizer/services/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:appetizer/ui/components/alert_dialog.dart';
 import 'package:appetizer/colors.dart';
@@ -20,9 +20,7 @@ class ChooseNewPass extends StatefulWidget {
       : super(key: key);
 
   @override
-  State<StatefulWidget> createState() {
-    return _ChooseNewPassState();
-  }
+  State<StatefulWidget> createState() => _ChooseNewPassState();
 }
 
 class _ChooseNewPassState extends State<ChooseNewPass> {
@@ -39,51 +37,45 @@ class _ChooseNewPassState extends State<ChooseNewPass> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: appiBrown,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          splashColor: Colors.transparent,
-          highlightColor: Colors.transparent,
-          onPressed: () {
-            Navigator.pop(context);
-          },
+    return BaseView<NewPasswordModel>(
+      builder: (context, model, child) => Scaffold(
+        appBar: AppBar(
+          backgroundColor: appiBrown,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent,
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+          iconTheme: IconThemeData(
+            color: appiYellow,
+          ),
+          title: Text(
+            "Choose New Password",
+            style: TextStyle(color: Colors.white),
+          ),
+          elevation: 0.0,
         ),
-        iconTheme: IconThemeData(
-          color: appiYellow,
-        ),
-        title: Text(
-          "Choose New Password",
-          style: TextStyle(color: Colors.white),
-        ),
-        elevation: 0.0,
-      ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.only(left: 40, right: 40),
-            child: Form(
-              key: formKey,
-              child: new Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  //new Expanded(child: new Container()),
-                  _choosePassword(),
-                  //new Expanded(child: new Container()),
-                  _subTitle(),
-                  //new Expanded(child: new Container()),
-                  _showNewPasswordInput(),
-                  //new Expanded(child: new Container()),
-                  _showConfirmPasswordInput(),
-                  //new Expanded(child: new Container()),
-                  _showEmailInput(),
-                  //new Expanded(child: new Container()),
-                  _showContactNoInput(),
-                  //new Expanded(child: new Container()),
-                  _showConfirmButton(),
-                  //new Expanded(child: new Container()),
-                ],
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 40, right: 40),
+              child: Form(
+                key: formKey,
+                child: new Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    _choosePassword(),
+                    _subTitle(),
+                    _showNewPasswordInput(),
+                    _showConfirmPasswordInput(),
+                    _showEmailInput(),
+                    _showContactNoInput(),
+                    _showConfirmButton(model),
+                  ],
+                ),
               ),
             ),
           ),
@@ -243,7 +235,7 @@ class _ChooseNewPassState extends State<ChooseNewPass> {
     );
   }
 
-  Widget _showConfirmButton() {
+  Widget _showConfirmButton(NewPasswordModel model) {
     return new RaisedButton(
       elevation: 5.0,
       color: Colors.white,
@@ -259,41 +251,42 @@ class _ChooseNewPassState extends State<ChooseNewPass> {
         child: new Text('CONFIRM',
             style: new TextStyle(fontSize: 15.0, color: appiYellow)),
       ),
-      onPressed: _validateAndSave,
+      onPressed: () {
+        _validateAndSave(model);
+      },
     );
   }
 
-  void _validateAndSave() {
+  void _validateAndSave(NewPasswordModel model) {
     final form = formKey.currentState;
     if (form.validate()) {
       form.save();
-      loginUser();
+      loginUser(model);
     }
   }
 
   // TODO: (remove duplication) duplication in login, password
-  void loginUser() async {
+  void loginUser(NewPasswordModel model) async {
     showCustomDialog(context, "Logging You In");
-    OauthResponse oauthResponse =
-        await oAuthComplete(enr, password, email, int.parse(contactNo));
-    if (oauthResponse.token != null) {
-      saveUserDetails(oauthResponse.studentData.enrNo.toString(),
-          oauthResponse.studentData.name, oauthResponse.token);
+    await model.oAuthComplete(enr, password, email, int.parse(contactNo));
+    if (model.oauthResponse.token != null) {
+      saveUserDetails(model.oauthResponse.studentData.enrNo.toString(),
+          model.oauthResponse.studentData.name, model.oauthResponse.token);
       await new Future.delayed(const Duration(milliseconds: 1000));
       Navigator.pop(context);
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
         return InheritedData(
           userDetails: UserDetailsSharedPref.fromData(
-              oauthResponse.studentData.enrNo.toString(),
-              oauthResponse.studentData.name,
-              oauthResponse.token,
-              oauthResponse.studentData.branch,
-              oauthResponse.studentData.hostelName,
-              oauthResponse.studentData.roomNo,
-              oauthResponse.studentData.email,
-              oauthResponse.studentData.contactNo),
+              model.oauthResponse.studentData.enrNo.toString(),
+              model.oauthResponse.studentData.name,
+              model.oauthResponse.token,
+              model.oauthResponse.studentData.branch,
+              model.oauthResponse.studentData.hostelName,
+              model.oauthResponse.studentData.roomNo,
+              model.oauthResponse.studentData.email,
+              model.oauthResponse.studentData.contactNo),
           child: Home(
-            token: oauthResponse.token,
+            token: model.oauthResponse.token,
           ),
         );
       }));
