@@ -1,6 +1,6 @@
-import 'package:appetizer/ui/settings/settings_screen.dart';
+import 'package:appetizer/ui/base_view.dart';
 import 'package:appetizer/ui/settings/user_details.dart';
-import 'package:appetizer/services/user.dart';
+import 'package:appetizer/viewmodels/settings_models/edit_profile_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -19,7 +19,6 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
-  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   var formKey = new GlobalKey<FormState>();
 
   SharedPreferences prefs;
@@ -69,112 +68,107 @@ class _EditProfileState extends State<EditProfile> {
         color: const Color.fromRGBO(255, 193, 7, 1),
         onPressed: () => Navigator.pop(context, false),
       ),
-//            actions: <Widget>[
-//              GestureDetector(
-//                child: new Text(
-//                  "SAVE",
-//                  style: TextStyle(
-//                    fontSize: 12,
-//                  ),
-//                ),
-//              ),
-//            ],
       title: Text(
-        "Settings",
+        "Edit Profile",
         style: new TextStyle(color: Colors.white),
       ),
       backgroundColor: Colors.transparent,
       elevation: 0.0,
     );
     width = MediaQuery.of(context).size.width;
-    return Stack(
-      children: <Widget>[
-        Container(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          color: const Color.fromRGBO(121, 85, 72, 1),
-        ),
-        SafeArea(
-          child: Container(
-            alignment: Alignment.topRight,
-            child: SvgPicture.asset(
-              'assets/icons/IITRLogo.svg',
-              height: 160,
-              width: 160,
+    return BaseView<EditProfileModel>(
+      builder: (context, model, child) => Stack(
+        children: <Widget>[
+          Container(
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+            color: const Color.fromRGBO(121, 85, 72, 1),
+          ),
+          SafeArea(
+            child: Container(
+              alignment: Alignment.topRight,
+              child: SvgPicture.asset(
+                'assets/icons/IITRLogo.svg',
+                height: 160,
+                width: 160,
+              ),
             ),
           ),
-        ),
-        Scaffold(
-          backgroundColor: Colors.transparent,
-          appBar: appBar,
-          body: SingleChildScrollView(
-            child: Container(
-              height: MediaQuery.of(context).size.height,
-              color: Colors.transparent,
-              child: Form(
-                key: formKey,
-                child: Column(
-                  children: <Widget>[
-                    Container(
-                      height: MediaQuery.of(context).size.height / 2 -
-                          appBar.preferredSize.height,
-                      alignment: Alignment.center,
-                      child:
-                          UserDetails(name, enr, branch, hostel, room, email),
-                    ),
-                    Expanded(
-                      child: Container(
-                        color: Colors.white,
-                        child: ListView(
-                          children: <Widget>[
-                            Padding(
-                              padding:
-                                  const EdgeInsets.fromLTRB(15, 15, 15, 15),
-                              child: Text("Edit Profile",
-                                  textAlign: TextAlign.center,
-                                  style: Theme.of(context)
-                                      .primaryTextTheme
-                                      .display1
-                                      .copyWith(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w500)),
-                            ),
-                            _showContactNoInput(),
-                            _showEmailInput(),
-                            _showConfirmButton(),
-                          ],
-                        ),
+          Scaffold(
+            backgroundColor: Colors.transparent,
+            appBar: appBar,
+            body: SingleChildScrollView(
+              child: Container(
+                height: MediaQuery.of(context).size.height,
+                color: Colors.transparent,
+                child: Form(
+                  key: formKey,
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                        height: MediaQuery.of(context).size.height / 2 -
+                            appBar.preferredSize.height,
+                        alignment: Alignment.center,
+                        child:
+                            UserDetails(name, enr, branch, hostel, room, email),
                       ),
-                    )
-                  ],
+                      Expanded(
+                        child: Container(
+                          color: Colors.white,
+                          child: ListView(
+                            children: <Widget>[
+                              Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(15, 15, 15, 15),
+                                child: Text("Edit Profile",
+                                    textAlign: TextAlign.center,
+                                    style: Theme.of(context)
+                                        .primaryTextTheme
+                                        .display1
+                                        .copyWith(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.w500)),
+                              ),
+                              _showContactNoInput(),
+                              _showEmailInput(),
+                              _showConfirmButton(model),
+                            ],
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
-  Widget _showConfirmButton() {
+  Widget _showConfirmButton(EditProfileModel model) {
     return Padding(
-        padding: const EdgeInsets.fromLTRB(15, 15, 15, 15),
-        child: OutlineButton(
-          highlightedBorderColor: appiYellow,
-          borderSide: BorderSide(
-            color: appiYellow,
-            width: 2,
+      padding: const EdgeInsets.fromLTRB(15, 15, 15, 15),
+      child: OutlineButton(
+        highlightedBorderColor: appiYellow,
+        borderSide: BorderSide(
+          color: appiYellow,
+          width: 2,
+        ),
+        splashColor: Colors.transparent,
+        child: ListTile(
+          title: Text(
+            "Save Details",
+            textAlign: TextAlign.center,
+            style: Theme.of(context).primaryTextTheme.display1,
           ),
-          splashColor: Colors.transparent,
-          child: ListTile(
-            title: Text(
-              "Save Details",
-              textAlign: TextAlign.center,
-              style: Theme.of(context).primaryTextTheme.display1,
-            ),
-          ),
-          onPressed: _validateAndSave,
-        ));
+        ),
+        onPressed: () {
+          _validateAndSave(model);
+        },
+      ),
+    );
   }
 
   Widget _showContactNoInput() {
@@ -236,31 +230,19 @@ class _EditProfileState extends State<EditProfile> {
     );
   }
 
-  void _validateAndSave() {
+  void _validateAndSave(EditProfileModel model) {
     final form = formKey.currentState;
     if (form.validate()) {
       form.save();
-      saveDetails();
+      saveDetails(model);
     }
   }
 
-  Future saveDetails() async {
+  Future saveDetails(EditProfileModel model) async {
     showCustomDialog(context, "Saving Details");
-    var response = await userMePatch(token, email, contactNo);
-    Navigator.pop(context);
-    //_showSnackBar(context, "Details have been updated successfully");
-    //new Future.delayed(new Duration(seconds: 3));
+    await model.updateUserDetails(email, contactNo);
     Navigator.pop(context);
     Navigator.pop(context);
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => Settings()));
-
     saveUserDetails(contactNo, email);
-  }
-
-  void _showSnackBar(BuildContext context, String message) {
-    _scaffoldKey.currentState.showSnackBar(SnackBar(
-      content: Text(message),
-    ));
   }
 }
