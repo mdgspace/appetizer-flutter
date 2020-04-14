@@ -1,3 +1,4 @@
+import 'package:appetizer/locator.dart';
 import 'package:appetizer/models/user/user_details_shared_pref.dart';
 import 'package:appetizer/styles.dart';
 import 'package:appetizer/ui/components/inherited_data.dart';
@@ -16,7 +17,8 @@ import 'ui/on_boarding/onBoarding.dart';
 /*
  *  Architectural Design GuideLines -
  *  1. Provider package for all the dynamic widgets and data.
- *  2. Inherited Widget for the static data.
+ *  2. GetIt for dependency injection.
+ *  3. Inherited Widget for the static data.
  *
  *  Rules of Thumb:
  *  a) Any class in the ui directory must not import from services in any case.
@@ -30,6 +32,7 @@ void main() {
   FirebaseAnalytics analytics = FirebaseAnalytics();
 
   WidgetsFlutterBinding.ensureInitialized();
+  setupLocator();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {
     runApp(MaterialApp(
@@ -91,16 +94,18 @@ class _AppetizerState extends State<Appetizer> {
   void navigate() {
     UserDetailsUtils.getUserDetails().then((details) {
       Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-              builder: (context) => (details.getString("token") != null)
-                  ? InheritedData(
-                      userDetails: UserDetailsSharedPref(details),
-                      child: Home(
-                        token: details.getString("token"),
-                      ),
-                    )
-                  : Login(code: code)));
+        context,
+        MaterialPageRoute(
+          builder: (context) => (details.getString("token") != null)
+              ? InheritedData(
+                  userDetails: UserDetailsSharedPref(details),
+                  child: Home(
+                    token: details.getString("token"),
+                  ),
+                )
+              : Login(code: code),
+        ),
+      );
     });
   }
 
@@ -113,7 +118,7 @@ class _AppetizerState extends State<Appetizer> {
     if (sharedData != null) {
       code = sharedData;
     }
-    print("Code " + code);
+    print("Code " + code ?? "");
   }
 
   @override
