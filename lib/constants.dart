@@ -1,6 +1,6 @@
 class Constants {
   /// USER AUTHENTICATION CONSTANTS
-  static const String USER_AUTH_INCORRECT_PASSWORD =
+  static const String USER_AUTH_WRONG_CREDENTIALS =
       "Invalid Credentials, Please check.";
   static const String USER_AUTH_USER_NOT_FOUND =
       "User Not found, try Signing Up.";

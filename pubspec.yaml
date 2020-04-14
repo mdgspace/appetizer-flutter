@@ -25,11 +25,11 @@ dependencies:
   flutter_swiper: ^1.1.6
   intl: any
   url_launcher: ^5.0.2
-  shared_preferences: 0.5.3
+  shared_preferences: ^0.5.3
   provider: ^4.0.2
   flutter_launcher_icons: ^0.7.2
   flutter_svg:
-  share: 0.5.2
+  share: ^0.5.2
   fluttertoast: ^3.1.2
   uni_links:
   firebase_messaging: ^6.0.9
@@ -39,6 +39,7 @@ dependencies:
   qr_flutter:
   firebase_analytics:
   firebase_remote_config:
+  get_it:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -53,14 +54,11 @@ flutter_icons:
   ios: true
   image_path: "assets/icons/appetizer_logo.png"
 
-
-
 # For information on the generic Dart part of this file, see the
 # following page: https://www.dartlang.org/tools/pub/pubspec
 
 # The following section is specific to Flutter.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -101,8 +99,6 @@ flutter:
         - asset: assets/fonts/Lobster_Two/LobsterTwo-Bold.ttf
         - asset: assets/fonts/Lobster_Two/LobsterTwo-BoldItalic.ttf
           weight: 700
-
-
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf

@@ -1,30 +1,9 @@
-import 'package:appetizer/change_notifiers/current_date_model.dart';
 import 'package:appetizer/colors.dart';
 import 'package:appetizer/utils/date_time_utils.dart';
+import 'package:appetizer/viewmodels/current_date_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:provider/provider.dart';
-
-// Weekday -> mon = 1, sun = 7
-
-// This is to test the DatePicker individually if you make any changes
-/*
-void main() async {
-  //await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-  runApp(
-    MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(),
-        body: ChangeNotifierProvider(
-          create: (context) => CurrentDateModel(),
-          child: DatePicker(),
-        ),
-      ),
-    ),
-  );
-}
-*/
 
 class DatePicker extends StatefulWidget {
   final double padding;
@@ -97,7 +76,6 @@ class _DatePickerState extends State<DatePicker> {
     for (int i = anchor.weekday + 1; i <= 7; i++) {
       _dateList[i - 1] = anchor.add(Duration(days: (i - anchor.weekday)));
     }
-//    print(_dateList);
     return _dateList;
   }
 }

@@ -1,6 +1,6 @@
-import 'package:appetizer/change_notifiers/menu_model.dart';
 import 'package:appetizer/models/menu/week.dart';
 import 'package:appetizer/utils/date_time_utils.dart';
+import 'package:appetizer/viewmodels/menu_models/your_menu_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:appetizer/colors.dart';
