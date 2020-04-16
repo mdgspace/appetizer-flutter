@@ -4,6 +4,7 @@ import 'package:appetizer/models/user/login.dart';
 import 'package:appetizer/services/api/user.dart';
 import 'package:appetizer/viewmodels/base_model.dart';
 import 'package:appetizer/models/failure_model.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 class LoginModel extends BaseModel {
   final UserApi _userApi = locator<UserApi>();
@@ -35,19 +36,39 @@ class LoginModel extends BaseModel {
     notifyListeners();
   }
 
+  var _oauthResponse;
+
+  get oauthResponse => _oauthResponse;
+
+  set oauthResponse(var oauthResponse) {
+    _oauthResponse = oauthResponse;
+    notifyListeners();
+  }
+
   Future loginWithEnrollmentAndPassword(
       {String enrollment, String password}) async {
     setState(ViewState.Busy);
     try {
       login = await _userApi.userLogin(enrollment, password);
       isLoginSuccessful = true;
-      // FirebaseMessaging fcm = FirebaseMessaging();
-      // Me me = await _userApi.userMePatchFCM(await fcm.getToken());
-      // fcm.subscribeToTopic("release-" + me.hostelCode);
+      isCheckedOut = login.isCheckedOut;
+      currentUser = login;
+      FirebaseMessaging fcm = FirebaseMessaging();
+      fcm.subscribeToTopic("release-" + login.hostelCode);
       setState(ViewState.Idle);
     } on Failure catch (f) {
       print(f.message);
       isLoginSuccessful = false;
+      setErrorMessage(f.message);
+      setState(ViewState.Error);
+    }
+  }
+
+  Future getOAuthResponse(String code) async {
+    try {
+      oauthResponse = await _userApi.oAuthRedirect(code);
+    } on Failure catch (f) {
+      print(f.message);
       setErrorMessage(f.message);
       setState(ViewState.Error);
     }
