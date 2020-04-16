@@ -9,9 +9,9 @@ void showCustomDialog(BuildContext context, String message) {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.fromLTRB(36, 10, 36, 10),
+            padding: const EdgeInsets.all(12),
             child: new Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 new CircularProgressIndicator(
                   valueColor: new AlwaysStoppedAnimation<Color>(appiYellow),
