@@ -55,6 +55,11 @@ Future<void> main() async {
           cursorColor: appiYellow,
           accentTextTheme: accentTextTheme,
           primaryTextTheme: primaryTextTheme,
+          appBarTheme: AppBarTheme(
+            iconTheme: IconThemeData(
+              color: appiYellow,
+            ),
+          ),
         ),
         home: StartupView(),
       ),

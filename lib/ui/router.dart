@@ -59,13 +59,7 @@ class Router {
       case 'help':
         return MaterialPageRoute(builder: (_) => Help());
       case 'edit_profile':
-        var arguments = settings.arguments as Map<String, dynamic>;
-        return MaterialPageRoute(
-          builder: (_) => EditProfile(
-            contactNo: arguments["contactNo"],
-            email: arguments["email"],
-          ),
-        );
+        return MaterialPageRoute(builder: (_) => EditProfile());
       case 'forgot_pass':
         return MaterialPageRoute(builder: (_) => ForgotPass());
       case 'choose_new_pass':

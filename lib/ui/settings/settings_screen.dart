@@ -71,7 +71,8 @@ class _SettingsState extends State<Settings> {
                     children: <Widget>[
                       (model.state == ViewState.Busy)
                           ? Container(
-                              height: MediaQuery.of(context).size.height / 3.3,
+                              height: MediaQuery.of(context).size.height / 2 -
+                                  appBar.preferredSize.height,
                               child: Padding(
                                 padding: const EdgeInsets.fromLTRB(
                                     16.0, 0.0, 16.0, 30.0),
@@ -116,10 +117,7 @@ class _SettingsState extends State<Settings> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => EditProfile(
-                                        email: model.userDetails.email,
-                                        contactNo: model.userDetails.contactNo,
-                                      ),
+                                      builder: (context) => EditProfile(),
                                     ),
                                   );
                                 },
@@ -165,10 +163,12 @@ class _SettingsState extends State<Settings> {
                                 onTap: () {
                                   final RenderBox box =
                                       context.findRenderObject();
-                                  Share.share(shareText,
-                                      sharePositionOrigin:
-                                          box.localToGlobal(Offset.zero) &
-                                              box.size);
+                                  Share.share(
+                                    shareText,
+                                    sharePositionOrigin:
+                                        box.localToGlobal(Offset.zero) &
+                                            box.size,
+                                  );
                                 },
                               ),
                               GestureDetector(
