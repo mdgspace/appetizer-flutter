@@ -40,7 +40,11 @@ class ApiUtils {
   static Future<dynamic> put(String uri,
       {Map<String, String> headers, dynamic body}) async {
     try {
-      final response = await client.put(uri, headers: headers, body: body);
+      final response = await client.put(
+        uri,
+        headers: headers,
+        body: json.encode(body),
+      );
       final jsonResponse = ApiUtils.jsonResponse(response);
       return jsonResponse;
     } on SocketException {
