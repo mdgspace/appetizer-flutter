@@ -13,16 +13,10 @@ class FaqList extends StatelessWidget {
       onModelReady: (model) => model.getFaqs(),
       builder: (context, model, child) => Scaffold(
         appBar: AppBar(
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back),
-            color: const Color.fromRGBO(255, 193, 7, 1),
-            onPressed: () => Navigator.pop(context, false),
-          ),
           title: Text(
             "FAQs",
             style: TextStyle(color: Colors.white),
           ),
-          backgroundColor: const Color.fromRGBO(121, 85, 72, 1),
         ),
         body: SafeArea(
           child: model.state == ViewState.Busy

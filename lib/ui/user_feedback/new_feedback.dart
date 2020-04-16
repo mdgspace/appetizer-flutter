@@ -24,11 +24,6 @@ class _NewFeedbackState extends State<NewFeedback> {
       builder: (context, model, child) => Scaffold(
         key: _scaffoldKey,
         appBar: AppBar(
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back),
-            color: const Color.fromRGBO(255, 193, 7, 1),
-            onPressed: () => Navigator.pop(context, false),
-          ),
           title: Text(
             "New Feedback",
             style: TextStyle(color: Colors.white),
@@ -54,7 +49,6 @@ class _NewFeedbackState extends State<NewFeedback> {
               ),
             ),
           ],
-          backgroundColor: const Color.fromRGBO(121, 85, 72, 1),
         ),
         body: SingleChildScrollView(
           child: Center(

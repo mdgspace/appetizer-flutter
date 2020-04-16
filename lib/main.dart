@@ -56,6 +56,8 @@ Future<void> main() async {
           accentTextTheme: accentTextTheme,
           primaryTextTheme: primaryTextTheme,
           appBarTheme: AppBarTheme(
+            elevation: 0.0,
+            color: appiBrown,
             iconTheme: IconThemeData(
               color: appiYellow,
             ),

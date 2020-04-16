@@ -14,16 +14,10 @@ class MyLeaves extends StatelessWidget {
       builder: (context, model, child) => Scaffold(
         key: myLeavesViewScaffoldKey,
         appBar: AppBar(
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back),
-            color: const Color.fromRGBO(255, 193, 7, 1),
-            onPressed: () => Navigator.pop(context, false),
-          ),
           title: Text(
             "My Leaves",
             style: TextStyle(color: Colors.white),
           ),
-          backgroundColor: const Color.fromRGBO(121, 85, 72, 1),
         ),
         body: SafeArea(
           child: Column(

@@ -1,4 +1,3 @@
-import 'package:appetizer/colors.dart';
 import 'package:appetizer/enums/view_state.dart';
 import 'package:appetizer/models/menu/week.dart';
 import 'package:appetizer/ui/base_view.dart';
@@ -69,7 +68,6 @@ class _ConfirmSwitchPopupScreenState extends State<ConfirmSwitchPopupScreen> {
         ),
       ),
       leading: Container(),
-      backgroundColor: appiBrown,
       centerTitle: true,
     );
   }

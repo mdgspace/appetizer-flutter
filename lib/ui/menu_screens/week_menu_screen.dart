@@ -25,14 +25,15 @@ class _WeekMenuState extends State<WeekMenu> {
     }
     return Scaffold(
       appBar: AppBar(
-        elevation: 0,
         centerTitle: true,
         title: Text(
           "Mess Menu",
           style: new TextStyle(
-              color: Colors.white, fontSize: 25.0, fontFamily: 'Lobster_Two'),
+            color: Colors.white,
+            fontSize: 25.0,
+            fontFamily: 'Lobster_Two',
+          ),
         ),
-        backgroundColor: appiBrown,
         iconTheme: new IconThemeData(color: appiYellow),
       ),
       body: Column(

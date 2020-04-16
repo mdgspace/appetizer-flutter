@@ -6,36 +6,24 @@ import 'package:url_launcher/url_launcher.dart';
 class Help extends StatelessWidget {
   final String version = "Version 1.6.2r";
 
+  final AppBar _appBar = AppBar(
+    title: Text(
+      "About Us",
+      style: TextStyle(color: Colors.white),
+    ),
+  );
+
   @override
   Widget build(BuildContext context) {
-    AppBar appBar = AppBar(
-      backgroundColor: appiBrown,
-      leading: IconButton(
-        icon: Icon(Icons.arrow_back),
-        splashColor: Colors.transparent,
-        highlightColor: Colors.transparent,
-        onPressed: () {
-          Navigator.pop(context);
-        },
-      ),
-      iconTheme: IconThemeData(
-        color: appiYellow,
-      ),
-      title: Text(
-        "About Us",
-        style: TextStyle(color: Colors.white),
-      ),
-      elevation: 0.0,
-    );
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: appBar,
+      appBar: _appBar,
       body: Column(
         children: <Widget>[
           Container(
             width: MediaQuery.of(context).size.width,
             height: (MediaQuery.of(context).size.height / 2 -
-                appBar.preferredSize.height -
+                _appBar.preferredSize.height -
                 8),
             color: appiBrown,
             child: new Stack(

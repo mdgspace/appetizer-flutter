@@ -25,7 +25,6 @@ class _EditProfileState extends State<EditProfile> {
       style: new TextStyle(color: Colors.white),
     ),
     backgroundColor: Colors.transparent,
-    elevation: 0.0,
   );
 
   @override

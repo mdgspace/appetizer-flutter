@@ -17,38 +17,24 @@ class _ForgotPassState extends State<ForgotPass> {
 
   @override
   Widget build(BuildContext context) {
-    AppBar appBar = AppBar(
-      backgroundColor: appiBrown,
-      leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-          }),
-      iconTheme: IconThemeData(
-        color: appiYellow,
-      ),
-      elevation: 0.0,
-    );
-
     return BaseView<ForgotPasswordModel>(
       builder: (context, model, child) => Scaffold(
         resizeToAvoidBottomInset: true,
         body: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              appBar,
               Column(
                 children: <Widget>[
                   Container(
                     height: (MediaQuery.of(context).size.height) / 2 -
-                        appBar.preferredSize.height,
+                        AppBar().preferredSize.height,
                     width: MediaQuery.of(context).size.width,
                     color: appiBrown,
                     child: Row(
                       children: <Widget>[
                         Container(
                           height: (MediaQuery.of(context).size.height) / 2 -
-                              appBar.preferredSize.height,
+                              AppBar().preferredSize.height,
                           padding: const EdgeInsets.only(
                               bottom: 48, top: 8, right: 8, left: 8),
                           child: Image(
@@ -59,7 +45,7 @@ class _ForgotPassState extends State<ForgotPass> {
                         ),
                         Container(
                           height: (MediaQuery.of(context).size.height) / 2 -
-                              appBar.preferredSize.height,
+                              AppBar().preferredSize.height,
                           padding: const EdgeInsets.all(8.0),
                           child: Image(
                             alignment: Alignment.topRight,

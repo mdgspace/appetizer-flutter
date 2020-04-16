@@ -31,8 +31,6 @@ class _OnBoarding extends State<OnBoarding> {
             },
           ),
         ],
-        backgroundColor: appiBrown,
-        elevation: 0.0,
       ),
       body: new Swiper.children(
         children: <Widget>[

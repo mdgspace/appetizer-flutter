@@ -204,7 +204,6 @@ class _SwitchableMealsState extends State<SwitchableMealsScreen> {
       onModelReady: (model) => model.getSwitchableMeals(widget.id),
       builder: (context, model, child) => Scaffold(
         appBar: AppBar(
-          elevation: 0,
           centerTitle: true,
           title: Text(
             "Mess Menu",
@@ -232,7 +231,6 @@ class _SwitchableMealsState extends State<SwitchableMealsScreen> {
               ),
             )
           ],
-          backgroundColor: appiBrown,
           iconTheme: new IconThemeData(color: appiYellow),
         ),
         body: model.state == ViewState.Busy

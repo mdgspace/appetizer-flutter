@@ -27,17 +27,11 @@ class _SettingsState extends State<Settings> {
   @override
   Widget build(BuildContext context) {
     AppBar appBar = AppBar(
-      leading: IconButton(
-        icon: Icon(Icons.arrow_back),
-        color: const Color.fromRGBO(255, 193, 7, 1),
-        onPressed: () => Navigator.pop(context, false),
-      ),
       title: Text(
         "Settings",
         style: new TextStyle(color: Colors.white),
       ),
       backgroundColor: Colors.transparent,
-      elevation: 0.0,
     );
 
     return BaseView<SettingsModel>(

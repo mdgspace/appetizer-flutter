@@ -31,7 +31,6 @@ class _ChooseNewPassState extends State<ChooseNewPass> {
     return BaseView<NewPasswordModel>(
       builder: (context, model, child) => Scaffold(
         appBar: AppBar(
-          backgroundColor: appiBrown,
           iconTheme: IconThemeData(
             color: appiYellow,
           ),
@@ -39,7 +38,6 @@ class _ChooseNewPassState extends State<ChooseNewPass> {
             "Choose New Password",
             style: TextStyle(color: Colors.white),
           ),
-          elevation: 0.0,
         ),
         body: SafeArea(
           child: SingleChildScrollView(

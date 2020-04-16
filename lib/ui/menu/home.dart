@@ -197,7 +197,6 @@ class _HomeState extends State<Home> {
 
   Widget _appBar(context, HomeModel model) {
     return AppBar(
-      elevation: 0,
       centerTitle: true,
       title: Container(
         decoration: BoxDecoration(

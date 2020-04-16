@@ -29,16 +29,10 @@ class _UserFeedbackState extends State<UserFeedback> {
       },
       builder: (context, model, child) => Scaffold(
         appBar: AppBar(
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back),
-            color: const Color.fromRGBO(255, 193, 7, 1),
-            onPressed: () => Navigator.pop(context, false),
-          ),
           title: Text(
             "Feedback",
             style: TextStyle(color: Colors.white),
           ),
-          backgroundColor: const Color.fromRGBO(121, 85, 72, 1),
         ),
         body: SafeArea(
           child: new ListView(

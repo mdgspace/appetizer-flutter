@@ -16,11 +16,6 @@ class MyRebates extends StatelessWidget {
       onModelReady: (model) => model.getMonthlyRebate(),
       builder: (context, model, child) => Scaffold(
         appBar: AppBar(
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back),
-            color: const Color.fromRGBO(255, 193, 7, 1),
-            onPressed: () => Navigator.pop(context, false),
-          ),
           title: Text(
             "My Rebates",
             style: TextStyle(color: Colors.white),
