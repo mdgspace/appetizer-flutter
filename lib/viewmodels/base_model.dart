@@ -18,6 +18,20 @@ class BaseModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  bool get isLoggedIn => _localStorageService.isLoggedIn;
+
+  set isLoggedIn(bool isLoggedIn) {
+    _localStorageService.isLoggedIn = isLoggedIn;
+    notifyListeners();
+  }
+
+  String get token => _localStorageService.token;
+
+  set token(String token) {
+    _localStorageService.token = token;
+    notifyListeners();
+  }
+
   String get appetizerVersion => _remoteConfigService.appetizerVersion;
 
   String get googlePlayLink => _remoteConfigService.googlePlayLink;
