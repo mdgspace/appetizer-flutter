@@ -60,7 +60,7 @@ class LocalStorageService {
   }
 
   set currentUser(Login userToSave) {
-    _saveToDisk(userKey, json.encode(userToSave.toJson()));
+    _saveToDisk(userKey, json.encode(userToSave?.toJson()));
   }
 
   String get token => _getFromDisk(tokenKey);
@@ -75,7 +75,7 @@ class LocalStorageService {
     _saveToDisk(isLoggedInKey, isLoggedIn);
   }
 
-  bool get isFirstTimeLogin => _getFromDisk(isFirstTimeLoginKey) ?? false;
+  bool get isFirstTimeLogin => _getFromDisk(isFirstTimeLoginKey) ?? true;
 
   set isFirstTimeLogin(bool isLoggedIn) {
     _saveToDisk(isFirstTimeLoginKey, isLoggedIn);

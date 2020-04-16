@@ -280,7 +280,7 @@ class _ChooseNewPassState extends State<ChooseNewPass> {
       Navigator.pop(context);
       Navigator.pushReplacementNamed(
         context,
-        "/",
+        "home",
         arguments: model.oauthResponse.token,
       );
     } else {

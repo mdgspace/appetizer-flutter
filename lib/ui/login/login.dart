@@ -2,10 +2,8 @@ import 'dart:async';
 import 'dart:io';
 import 'package:appetizer/colors.dart';
 import 'package:appetizer/enums/view_state.dart';
-import 'package:appetizer/locator.dart';
 import 'package:appetizer/models/user/oauth.dart';
 import 'package:appetizer/models/user/login.dart' as login;
-import 'package:appetizer/services/navigation_service.dart';
 import 'package:appetizer/ui/base_view.dart';
 import 'package:appetizer/ui/components/alert_dialog.dart';
 import 'package:appetizer/ui/password/choose_new_password.dart';
@@ -401,14 +399,11 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
           model.areCredentialsCorrect = true;
           showSnackBar(loginViewScaffoldKey, "Login Successful");
           await new Future.delayed(const Duration(seconds: 5));
-          NavigationService _navigationService = locator<NavigationService>();
-          _navigationService.pushNamedAndRemoveUntil('settings',
-              arguments: model.login.token);
-          // Navigator.pushReplacementNamed(
-          //   context,
-          //   "/",
-          //   arguments: model.login.token,
-          // );
+          Navigator.pushReplacementNamed(
+            context,
+            "home",
+            arguments: model.login.token,
+          );
         } else {
           resetLogin(model);
           setState(() {
@@ -497,7 +492,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
           Navigator.pop(context);
           Navigator.pushReplacementNamed(
             context,
-            "/",
+            "home",
             arguments: model.oauthResponse.token,
           );
         }
