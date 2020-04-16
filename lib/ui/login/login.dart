@@ -1,13 +1,14 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:appetizer/colors.dart';
 import 'package:appetizer/enums/view_state.dart';
-import 'package:appetizer/models/user/user_details_shared_pref.dart';
-import 'package:appetizer/services/api/user.dart';
+import 'package:appetizer/locator.dart';
+import 'package:appetizer/models/user/oauth.dart';
+import 'package:appetizer/models/user/login.dart' as login;
+import 'package:appetizer/services/navigation_service.dart';
 import 'package:appetizer/ui/base_view.dart';
 import 'package:appetizer/ui/components/alert_dialog.dart';
-import 'package:appetizer/ui/components/inherited_data.dart';
 import 'package:appetizer/ui/password/choose_new_password.dart';
-import 'package:appetizer/ui/password/forgot_password.dart';
 import 'package:appetizer/globals.dart';
 import 'package:appetizer/viewmodels/login_models/login_model.dart';
 import 'package:flare_flutter/flare_actor.dart';
@@ -16,13 +17,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import '../../colors.dart';
-import '../../globals.dart';
-import '../help/help.dart';
-import '../menu/home.dart';
 
 class Login extends StatefulWidget {
   final String code;
@@ -40,17 +35,18 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
   Animation _chefWrongAnimation;
   Animation _chefCorrectAnimation;
 
-  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   final _formKey = new GlobalKey<FormState>();
 
   String url =
       "http://people.iitr.ernet.in/oauth/?client_id=0a6fb094b8fe79ce0217&redirect_url=appetizer://mess.iitr.ac.in/oauth/";
 
   String _enrollmentNo, _password;
+
   FlareActor flareActor = FlareActor(
     "flare_files/login_appetizer.flr",
     animation: "idle",
   );
+
   bool _obscureText = true;
 
   // Toggles the password show status
@@ -62,13 +58,13 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
 
   void resetLogin(LoginModel model) {
     _formKey.currentState.reset();
-    showSnackBar(_scaffoldKey, model.errorMessage);
+    showSnackBar(loginViewScaffoldKey, model.errorMessage);
   }
 
-  void onModelReady() {
+  void onModelReady(LoginModel model) {
     if (widget.code != null && widget.code != "") {
       SchedulerBinding.instance
-          .addPostFrameCallback((_) => verifyUser(context));
+          .addPostFrameCallback((_) => verifyUser(context, model));
     }
 
     _chefCorrectController =
@@ -76,16 +72,19 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
     _chefWrongController =
         AnimationController(vsync: this, duration: Duration(seconds: 3));
 
-    _chefCorrectAnimation =
-        Tween(begin: 1.0, end: 0.21).animate(CurvedAnimation(
-      parent: _chefCorrectController,
-      curve: Curves.fastOutSlowIn,
-    ));
+    _chefCorrectAnimation = Tween(begin: 1.0, end: 0.21).animate(
+      CurvedAnimation(
+        parent: _chefCorrectController,
+        curve: Curves.fastOutSlowIn,
+      ),
+    );
 
-    _chefWrongAnimation = Tween(begin: 1.0, end: 0.21).animate(CurvedAnimation(
-      parent: _chefWrongController,
-      curve: Curves.fastOutSlowIn,
-    ));
+    _chefWrongAnimation = Tween(begin: 1.0, end: 0.21).animate(
+      CurvedAnimation(
+        parent: _chefWrongController,
+        curve: Curves.fastOutSlowIn,
+      ),
+    );
   }
 
   void onModelDestroy() {
@@ -98,10 +97,10 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
     final width = MediaQuery.of(context).size.width;
 
     return BaseView<LoginModel>(
-      onModelReady: (model) => onModelReady(),
+      onModelReady: (model) => onModelReady(model),
       onModelDestroy: (model) => onModelDestroy(),
       builder: (context, model, child) => Scaffold(
-        key: _scaffoldKey,
+        key: loginViewScaffoldKey,
         body: Column(
           children: <Widget>[
             Expanded(
@@ -122,19 +121,29 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                             flareActor,
                             Transform(
                               transform: Matrix4.translationValues(
-                                  _chefCorrectAnimation.value * width, 0, 0),
+                                _chefCorrectAnimation.value * width,
+                                0,
+                                0,
+                              ),
                               child: Align(
-                                  alignment: Alignment.bottomCenter,
-                                  child: SvgPicture.asset(
-                                      "assets/images/happyChef.svg")),
+                                alignment: Alignment.bottomCenter,
+                                child: SvgPicture.asset(
+                                  "assets/images/happyChef.svg",
+                                ),
+                              ),
                             ),
                             Transform(
                               transform: Matrix4.translationValues(
-                                  _chefWrongAnimation.value * width, 0, 0),
+                                _chefWrongAnimation.value * width,
+                                0,
+                                0,
+                              ),
                               child: Align(
-                                  alignment: Alignment.bottomCenter,
-                                  child: SvgPicture.asset(
-                                      "assets/images/sadChef.svg")),
+                                alignment: Alignment.bottomCenter,
+                                child: SvgPicture.asset(
+                                  "assets/images/sadChef.svg",
+                                ),
+                              ),
                             ),
                             Align(
                               alignment: Alignment.topCenter,
@@ -142,9 +151,10 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                 "Appetizer",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                    fontSize: 50.0,
-                                    fontFamily: 'Lobster_Two',
-                                    color: Colors.white),
+                                  fontSize: 50.0,
+                                  fontFamily: 'Lobster_Two',
+                                  color: Colors.white,
+                                ),
                               ),
                             ),
                           ],
@@ -297,7 +307,9 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                 'Help',
                 style: Theme.of(context).primaryTextTheme.display3,
               ),
-              onTap: _help,
+              onTap: () {
+                Navigator.pushNamed(context, "help");
+              },
             ),
           );
   }
@@ -312,7 +324,9 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                 '  |  ',
                 style: Theme.of(context).primaryTextTheme.display4,
               ),
-              onTap: _help,
+              onTap: () {
+                Navigator.pushNamed(context, "help");
+              },
             ),
           );
   }
@@ -327,7 +341,9 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                 'Forgot Password?',
                 style: Theme.of(context).primaryTextTheme.display3,
               ),
-              onTap: _forgotPassword,
+              onTap: () {
+                Navigator.pushNamed(context, "forgot_password");
+              },
             ),
           );
   }
@@ -356,25 +372,18 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
       FocusScope.of(context).requestFocus(new FocusNode());
       model
           .loginWithEnrollmentAndPassword(
-              enrollment: _enrollmentNo, password: _password)
+        enrollment: _enrollmentNo,
+        password: _password,
+      )
           .then((_) async {
         if (model.isLoginSuccessful) {
-          isCheckedOut = model.login.isCheckedOut;
-          saveUserDetails(
-            model.login.enrNo.toString(),
-            model.login.name,
-            model.login.token,
-            model.login.branch,
-            model.login.hostelName,
-            model.login.roomNo,
-            model.login.email,
-            model.login.contactNo,
-          );
           if (model.areCredentialsCorrect == null) {
             _chefCorrectController.forward();
             setState(() {
-              flareActor = FlareActor("flare_files/login_appetizer.flr",
-                  animation: "Initial To Right");
+              flareActor = FlareActor(
+                "flare_files/login_appetizer.flr",
+                animation: "Initial To Right",
+              );
             });
           } else {
             _chefWrongController.duration = Duration(milliseconds: 600);
@@ -383,31 +392,23 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
             await Future.delayed(Duration(milliseconds: 100));
             _chefCorrectController.forward();
             setState(() {
-              flareActor = FlareActor("flare_files/login_appetizer.flr",
-                  animation: "Wrong To Right");
+              flareActor = FlareActor(
+                "flare_files/login_appetizer.flr",
+                animation: "Wrong To Right",
+              );
             });
           }
           model.areCredentialsCorrect = true;
-          showSnackBar(_scaffoldKey, "Login Successful");
+          showSnackBar(loginViewScaffoldKey, "Login Successful");
           await new Future.delayed(const Duration(seconds: 5));
-          Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) {
-            return InheritedData(
-              userDetails: UserDetailsSharedPref.fromData(
-                model.login.enrNo.toString(),
-                model.login.name,
-                model.login.token,
-                model.login.branch,
-                model.login.hostelName,
-                model.login.roomNo,
-                model.login.email,
-                model.login.contactNo,
-              ),
-              child: Home(
-                token: model.login.token,
-              ),
-            );
-          }));
+          NavigationService _navigationService = locator<NavigationService>();
+          _navigationService.pushNamedAndRemoveUntil('settings',
+              arguments: model.login.token);
+          // Navigator.pushReplacementNamed(
+          //   context,
+          //   "/",
+          //   arguments: model.login.token,
+          // );
         } else {
           resetLogin(model);
           setState(() {
@@ -417,8 +418,10 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
           model.areCredentialsCorrect = false;
           _chefWrongController.forward();
           setState(() {
-            flareActor = FlareActor("flare_files/login_appetizer.flr",
-                animation: "Initial To Wrong");
+            flareActor = FlareActor(
+              "flare_files/login_appetizer.flr",
+              animation: "Initial To Wrong",
+            );
           });
         }
       });
@@ -435,98 +438,70 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
     return false;
   }
 
-  Future<void> saveUserDetails(
-      String enrNo,
-      String username,
-      String token,
-      String branch,
-      String hostelName,
-      String roomNo,
-      String email,
-      String contactNo) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString("token", token);
-    prefs.setString("enrNo", enrNo);
-    prefs.setString("username", username);
-    prefs.setString("branch", branch);
-    prefs.setString("hostelName", hostelName);
-    prefs.setString("roomNo", roomNo);
-    prefs.setString("email", email);
-    prefs.setString("contactNo", contactNo);
-  }
-
   void _channelILogin() {
-    //FlutterWebBrowser.openWebPage(url: url);
     launch(url);
     exit(0);
   }
 
-  Future verifyUser(BuildContext context) async {
+  Future verifyUser(BuildContext context, LoginModel model) async {
     showCustomDialog(context, "Fetching Details");
-    var oauthResponse = await UserApi().oAuthRedirect(widget.code);
+    await model.getOAuthResponse(widget.code);
     print("Code " + widget.code);
-    if (oauthResponse != null) {
-      if (oauthResponse.isNew) {
+    if (model.oauthResponse != null) {
+      StudentData studentData = model.oauthResponse.studentData;
+      if (model.oauthResponse.isNew) {
         Navigator.pop(context);
         showCustomDialog(context, "Redirecting");
         await new Future.delayed(
-          new Duration(milliseconds: 500),
+          new Duration(
+            milliseconds: 500,
+          ),
         );
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) {
-          return ChooseNewPass(
-            name: oauthResponse.studentData.name,
-            enr: oauthResponse.studentData.enrNo,
-            email: oauthResponse.studentData.email,
-            contactNo: oauthResponse.studentData.contactNo,
-          );
-        }));
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) {
+            return ChooseNewPass(
+              name: studentData.name,
+              enr: studentData.enrNo,
+              email: studentData.email,
+              contactNo: studentData.contactNo,
+            );
+          }),
+        );
       } else {
-        if (oauthResponse.token != null) {
-          print(oauthResponse.isNew);
-          print(oauthResponse.token);
+        if (model.oauthResponse.token != null) {
           Navigator.pop(context);
           showCustomDialog(context, "Logging You In");
-          saveUserDetails(
-            oauthResponse.studentData.enrNo.toString(),
-            oauthResponse.studentData.name,
-            oauthResponse.token,
-            oauthResponse.studentData.branch,
-            oauthResponse.studentData.hostelName,
-            oauthResponse.studentData.roomNo,
-            oauthResponse.studentData.email,
-            oauthResponse.studentData.contactNo,
+          login.Login userDetails = login.Login(
+            email: studentData.email,
+            hostelName: studentData.hostelName,
+            hostelCode: studentData.hostelCode,
+            roomNo: studentData.roomNo,
+            enrNo: studentData.enrNo,
+            name: studentData.name,
+            contactNo: studentData.contactNo,
+            branch: studentData.branch,
+            imageUrl: studentData.imageUrl,
+            isCheckedOut: studentData.isCheckedOut,
+            lastUpdated: studentData.lastUpdated,
+            leavesLeft: studentData.leavesLeft,
+            dob: studentData.dob,
+            gender: studentData.gender,
+            degree: studentData.degree,
+            admissionYear: studentData.admissionYear,
+            role: studentData.role,
+            token: model.oauthResponse.token,
           );
+          model.currentUser = userDetails;
           await new Future.delayed(const Duration(milliseconds: 500));
           Navigator.pop(context);
-          Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) {
-            return InheritedData(
-              userDetails: UserDetailsSharedPref.fromData(
-                  oauthResponse.studentData.enrNo.toString(),
-                  oauthResponse.studentData.name,
-                  oauthResponse.token,
-                  oauthResponse.studentData.branch,
-                  oauthResponse.studentData.hostelName,
-                  oauthResponse.studentData.roomNo,
-                  oauthResponse.studentData.email,
-                  oauthResponse.studentData.contactNo),
-              child: Home(
-                token: oauthResponse.token,
-              ),
-            );
-          }));
+          Navigator.pushReplacementNamed(
+            context,
+            "/",
+            arguments: model.oauthResponse.token,
+          );
         }
       }
     }
-  }
-
-  Future _help() async {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => Help()));
-  }
-
-  Future _forgotPassword() async {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => ForgotPass()));
   }
 }

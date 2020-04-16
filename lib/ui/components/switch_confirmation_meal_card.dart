@@ -1,6 +1,5 @@
 import 'package:appetizer/colors.dart';
 import 'package:appetizer/models/menu/week.dart';
-import 'package:appetizer/ui/components/inherited_data.dart';
 import 'package:appetizer/utils/get_day_and_date_for_meal_card.dart';
 import 'package:flutter/material.dart';
 
@@ -21,16 +20,6 @@ class SwitchConfirmationMealCard extends StatefulWidget {
 
 class _SwitchConfirmationMealCardState
     extends State<SwitchConfirmationMealCard> {
-  InheritedData inheritedData;
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (inheritedData == null) {
-      inheritedData = InheritedData.of(context);
-    }
-  }
-
   List<Widget> _itemWidgetList() {
     List<Widget> list = [];
     widget.menuItems.forEach((icon, string) {

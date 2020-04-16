@@ -83,7 +83,6 @@ class _NewFeedbackState extends State<NewFeedback> {
                           },
                         ),
                       ),
-                      //new Expanded(child: new Container()),
                       Padding(
                         padding: const EdgeInsets.only(top: 40),
                         child: new Text(

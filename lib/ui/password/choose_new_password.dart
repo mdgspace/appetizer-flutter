@@ -1,11 +1,9 @@
 import 'dart:async';
-import 'package:appetizer/models/user/user_details_shared_pref.dart';
+import 'package:appetizer/models/user/login.dart';
+import 'package:appetizer/models/user/oauth.dart';
 import 'package:appetizer/ui/base_view.dart';
-import 'package:appetizer/ui/components/inherited_data.dart';
-import 'package:appetizer/ui/menu/home.dart';
 import 'package:appetizer/viewmodels/password_models/new_password_model.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:appetizer/ui/components/alert_dialog.dart';
 import 'package:appetizer/colors.dart';
 
@@ -26,14 +24,7 @@ class ChooseNewPass extends StatefulWidget {
 class _ChooseNewPassState extends State<ChooseNewPass> {
   var formKey = new GlobalKey<FormState>();
   String password, email, contactNo;
-  int enr;
-  TextEditingController controller1 = new TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-    enr = widget.enr;
-  }
+  TextEditingController _newPasswordController = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -41,14 +32,6 @@ class _ChooseNewPassState extends State<ChooseNewPass> {
       builder: (context, model, child) => Scaffold(
         appBar: AppBar(
           backgroundColor: appiBrown,
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back),
-            splashColor: Colors.transparent,
-            highlightColor: Colors.transparent,
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
           iconTheme: IconThemeData(
             color: appiYellow,
           ),
@@ -130,18 +113,17 @@ class _ChooseNewPassState extends State<ChooseNewPass> {
 
   Widget _showNewPasswordInput() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0.0, 48.0, 0.0, 0.0),
+      padding: const EdgeInsets.only(top: 48.0),
       child: new TextFormField(
-        controller: controller1,
-        maxLines: 1,
+        controller: _newPasswordController,
         obscureText: true,
-        autofocus: false,
         decoration: new InputDecoration(
-            labelText: "New Password",
-            icon: new Icon(
-              Icons.lock,
-              color: Colors.grey,
-            )),
+          labelText: "New Password",
+          icon: new Icon(
+            Icons.lock,
+            color: Colors.grey,
+          ),
+        ),
         validator: (value) {
           if (value.isEmpty) {
             return "Password can\'t be empty";
@@ -159,20 +141,19 @@ class _ChooseNewPassState extends State<ChooseNewPass> {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0.0, 48.0, 0.0, 0.0),
       child: new TextFormField(
-        maxLines: 1,
         obscureText: true,
-        autofocus: false,
         decoration: new InputDecoration(
-            labelText: "Confirm Password",
-            icon: new Icon(
-              Icons.lock,
-              color: Colors.grey,
-            )),
+          labelText: "Confirm Password",
+          icon: new Icon(
+            Icons.lock,
+            color: Colors.grey,
+          ),
+        ),
         validator: (value) {
           if (value.isEmpty) {
             return 'Password can\'t be empty';
           }
-          if (value != controller1.text) {
+          if (value != _newPasswordController.text) {
             return "Passwords do not match";
           }
           return null;
@@ -187,15 +168,14 @@ class _ChooseNewPassState extends State<ChooseNewPass> {
       padding: const EdgeInsets.fromLTRB(0.0, 48.0, 0.0, 0.0),
       child: new TextFormField(
         initialValue: widget.email,
-        maxLines: 1,
         keyboardType: TextInputType.emailAddress,
-        autofocus: false,
         decoration: new InputDecoration(
-            labelText: "Email",
-            icon: new Icon(
-              Icons.email,
-              color: Colors.grey,
-            )),
+          labelText: "Email",
+          icon: new Icon(
+            Icons.email,
+            color: Colors.grey,
+          ),
+        ),
         validator: (value) {
           Pattern pattern =
               r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
@@ -213,15 +193,14 @@ class _ChooseNewPassState extends State<ChooseNewPass> {
       padding: const EdgeInsets.fromLTRB(0.0, 48.0, 0.0, 0.0),
       child: new TextFormField(
         initialValue: widget.contactNo,
-        maxLines: 1,
         keyboardType: TextInputType.number,
-        autofocus: false,
         decoration: new InputDecoration(
-            labelText: "Contact No",
-            icon: new Icon(
-              Icons.person,
-              color: Colors.grey,
-            )),
+          labelText: "Contact No",
+          icon: new Icon(
+            Icons.person,
+            color: Colors.grey,
+          ),
+        ),
         validator: (value) {
           if (value.isEmpty) {
             return "Contact No can\'t be empty";
@@ -240,16 +219,19 @@ class _ChooseNewPassState extends State<ChooseNewPass> {
       elevation: 5.0,
       color: Colors.white,
       shape: new RoundedRectangleBorder(
-          side: BorderSide(
-            color: appiYellow,
-            style: BorderStyle.solid,
-            width: 2,
-          ),
-          borderRadius: new BorderRadius.circular(40.0)),
+        side: BorderSide(
+          color: appiYellow,
+          style: BorderStyle.solid,
+          width: 2,
+        ),
+        borderRadius: new BorderRadius.circular(40.0),
+      ),
       child: Padding(
         padding: const EdgeInsets.all(15.0),
-        child: new Text('CONFIRM',
-            style: new TextStyle(fontSize: 15.0, color: appiYellow)),
+        child: new Text(
+          'CONFIRM',
+          style: new TextStyle(fontSize: 15.0, color: appiYellow),
+        ),
       ),
       onPressed: () {
         _validateAndSave(model);
@@ -265,43 +247,46 @@ class _ChooseNewPassState extends State<ChooseNewPass> {
     }
   }
 
-  // TODO: (remove duplication) duplication in login, password
-  void loginUser(NewPasswordModel model) async {
+  Future<void> loginUser(NewPasswordModel model) async {
     showCustomDialog(context, "Logging You In");
-    await model.oAuthComplete(enr, password, email, int.parse(contactNo));
+    await model.oAuthComplete(
+        widget.enr, password, email, int.parse(contactNo));
     if (model.oauthResponse.token != null) {
-      saveUserDetails(model.oauthResponse.studentData.enrNo.toString(),
-          model.oauthResponse.studentData.name, model.oauthResponse.token);
-      await new Future.delayed(const Duration(milliseconds: 1000));
+      StudentData studentData = model.oauthResponse.studentData;
       Navigator.pop(context);
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-        return InheritedData(
-          userDetails: UserDetailsSharedPref.fromData(
-              model.oauthResponse.studentData.enrNo.toString(),
-              model.oauthResponse.studentData.name,
-              model.oauthResponse.token,
-              model.oauthResponse.studentData.branch,
-              model.oauthResponse.studentData.hostelName,
-              model.oauthResponse.studentData.roomNo,
-              model.oauthResponse.studentData.email,
-              model.oauthResponse.studentData.contactNo),
-          child: Home(
-            token: model.oauthResponse.token,
-          ),
-        );
-      }));
+      showCustomDialog(context, "Logging You In");
+      Login userDetails = Login(
+        email: studentData.email,
+        hostelName: studentData.hostelName,
+        hostelCode: studentData.hostelCode,
+        roomNo: studentData.roomNo,
+        enrNo: studentData.enrNo,
+        name: studentData.name,
+        contactNo: studentData.contactNo,
+        branch: studentData.branch,
+        imageUrl: studentData.imageUrl,
+        isCheckedOut: studentData.isCheckedOut,
+        lastUpdated: studentData.lastUpdated,
+        leavesLeft: studentData.leavesLeft,
+        dob: studentData.dob,
+        gender: studentData.gender,
+        degree: studentData.degree,
+        admissionYear: studentData.admissionYear,
+        role: studentData.role,
+        token: model.oauthResponse.token,
+      );
+      model.currentUser = userDetails;
+      await new Future.delayed(const Duration(milliseconds: 500));
+      Navigator.pop(context);
+      Navigator.pushReplacementNamed(
+        context,
+        "/",
+        arguments: model.oauthResponse.token,
+      );
     } else {
       //TODO
       Navigator.pop(context);
       print("Error");
     }
-  }
-
-  Future<void> saveUserDetails(
-      String enrNo, String username, String token) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString("token", token);
-    prefs.setString("enrNo", enrNo);
-    prefs.setString("username", username);
   }
 }

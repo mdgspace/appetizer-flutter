@@ -4,7 +4,6 @@ import 'package:appetizer/models/menu/week.dart';
 import 'package:appetizer/ui/base_view.dart';
 import 'package:appetizer/ui/components/alert_dialog.dart';
 import 'package:appetizer/ui/components/error_widget.dart';
-import 'package:appetizer/ui/components/inherited_data.dart';
 import 'package:appetizer/ui/components/progress_bar.dart';
 import 'package:appetizer/ui/components/switch_confirmation_meal_card.dart';
 import 'package:appetizer/ui/multimessing/confirmed_switch_screen.dart';
@@ -30,15 +29,6 @@ class ConfirmSwitchPopupScreen extends StatefulWidget {
 
 class _ConfirmSwitchPopupScreenState extends State<ConfirmSwitchPopupScreen> {
   int currentHostelMealId;
-  InheritedData inheritedData;
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (inheritedData == null) {
-      inheritedData = InheritedData.of(context);
-    }
-  }
 
   List<CircleAvatar> mealFromWhichToBeSwitchedLeadingImageList = [];
   List<String> mealFromWhichToBeSwitchedItemsList = [];
@@ -120,7 +110,7 @@ class _ConfirmSwitchPopupScreenState extends State<ConfirmSwitchPopupScreen> {
     return BaseView<ConfirmSwitchPopupModel>(
       onModelReady: (model) => model.getMenuWeekMultimessing(
         DateTimeUtils.getWeekNumber(widget.meal.startDateTime),
-        hostelCodeMap[inheritedData.userDetails.hostelName],
+        hostelCodeMap[model.currentUser.hostelName],
       ),
       builder: (context, model, child) => Scaffold(
         appBar: _getAppBar(),

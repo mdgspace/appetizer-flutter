@@ -4,7 +4,6 @@ import 'package:appetizer/models/menu/week.dart';
 import 'package:appetizer/services/api/user.dart';
 import 'package:appetizer/ui/base_view.dart';
 import 'package:appetizer/ui/components/error_widget.dart';
-import 'package:appetizer/ui/components/inherited_data.dart';
 import 'package:appetizer/ui/components/progress_bar.dart';
 import 'package:appetizer/ui/menu/day_menu.dart';
 import 'package:appetizer/utils/get_hostel_code.dart';
@@ -22,7 +21,6 @@ class OtherMenu extends StatefulWidget {
 }
 
 class _OtherMenuState extends State<OtherMenu> {
-  InheritedData inheritedData;
   var dailyItemsMap;
   int weekId;
   var selectedDateTime;
@@ -41,9 +39,6 @@ class _OtherMenuState extends State<OtherMenu> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    if (inheritedData == null) {
-      inheritedData = InheritedData.of(context);
-    }
     weekId = Provider.of<CurrentDateModel>(context).weekId;
     selectedDateTime = Provider.of<CurrentDateModel>(context).dateTime;
   }

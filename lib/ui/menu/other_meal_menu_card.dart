@@ -1,8 +1,6 @@
 import 'package:appetizer/models/menu/week.dart';
-import 'package:appetizer/models/user/user_details_shared_pref.dart';
 import 'package:appetizer/services/api/multimessing.dart';
 import 'package:appetizer/ui/components/alert_dialog.dart';
-import 'package:appetizer/ui/components/inherited_data.dart';
 import 'package:appetizer/ui/multimessing/confirm_switch_popup_screen.dart';
 import 'package:appetizer/utils/menu_utils.dart';
 import 'package:appetizer/viewmodels/menu_models/other_menu_model.dart';
@@ -23,7 +21,6 @@ class OtherMealsMenuCard extends StatefulWidget {
 }
 
 class _OtherMealsMenuCardState extends State<OtherMealsMenuCard> {
-  UserDetailsSharedPref inheritedUserDetails;
   OtherMenuModel otherMenuModel;
   YourMenuModel yourMenuModel;
 
@@ -42,9 +39,6 @@ class _OtherMealsMenuCardState extends State<OtherMealsMenuCard> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    if (inheritedUserDetails == null) {
-      inheritedUserDetails = InheritedData.of(context).userDetails;
-    }
     // final otherMenuModel = Provider.of<OtherMenuModel>(context);
     // if (this.otherMenuModel != otherMenuModel) {
     //   this.otherMenuModel = otherMenuModel;
@@ -144,12 +138,7 @@ class _OtherMealsMenuCardState extends State<OtherMealsMenuCard> {
                                   ChangeNotifierProvider.value(
                                       value: yourMenuModel),
                                 ],
-                                child: InheritedData(
-                                  userDetails: inheritedUserDetails,
-                                  child: ConfirmSwitchPopupScreen(
-                                    meal: widget.meal,
-                                  ),
-                                ),
+                                child: ConfirmSwitchPopupScreen(),
                               ),
                             ),
                           );

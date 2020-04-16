@@ -3,7 +3,6 @@ import 'package:appetizer/models/menu/week.dart';
 import 'package:appetizer/services/api/leave.dart';
 import 'package:appetizer/services/api/multimessing.dart';
 import 'package:appetizer/ui/components/alert_dialog.dart';
-import 'package:appetizer/ui/components/inherited_data.dart';
 import 'package:appetizer/ui/multimessing/qr_generator_widget.dart';
 import 'package:appetizer/ui/multimessing/switchable_meals_screen.dart';
 import 'package:appetizer/ui/user_feedback/new_feedback.dart';
@@ -31,7 +30,6 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
   bool _mealLeaveStatus;
   bool _mealSwitchStatus;
   String _secretCode;
-  InheritedData inheritedData;
   YourMenuModel yourMenuModel;
 
   @override
@@ -53,10 +51,6 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    if (inheritedData == null) {
-      inheritedData = InheritedData.of(context);
-    }
-
     final yourMenuModel = Provider.of<YourMenuModel>(context);
     if (this.yourMenuModel != yourMenuModel) {
       this.yourMenuModel = yourMenuModel;
