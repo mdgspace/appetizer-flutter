@@ -1,11 +1,9 @@
 import 'package:appetizer/colors.dart';
 import 'package:appetizer/globals.dart';
 import 'package:appetizer/services/api/leave.dart';
-import 'package:appetizer/services/api/user.dart';
 import 'package:appetizer/services/api/version_check.dart';
 import 'package:appetizer/ui/FAQ/faq_screen.dart';
 import 'package:appetizer/ui/base_view.dart';
-import 'package:appetizer/ui/components/alert_dialog.dart';
 import 'package:appetizer/ui/date_picker/date_picker.dart';
 import 'package:appetizer/ui/menu/other_menu.dart';
 import 'package:appetizer/ui/menu/your_menu.dart';
@@ -17,10 +15,8 @@ import 'package:appetizer/ui/settings/settings_screen.dart';
 import 'package:appetizer/ui/user_feedback/user_feedback.dart';
 import 'package:appetizer/viewmodels/current_date_model.dart';
 import 'package:appetizer/viewmodels/home_model.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Home extends StatefulWidget {
@@ -518,27 +514,7 @@ class _HomeState extends State<Home> {
                                         ),
                                         onPressed: () async {
                                           Navigator.pop(alertContext);
-                                          showCustomDialog(
-                                              context, "Logging You Out");
-                                          FirebaseMessaging fcm =
-                                              FirebaseMessaging();
-                                          UserApi()
-                                              .userMeGet()
-                                              .then((me) async {
-                                            fcm.unsubscribeFromTopic(
-                                                "debug-" + me.hostelCode);
-                                            UserApi().userLogout();
-                                            Navigator.of(context)
-                                                .pushNamedAndRemoveUntil(
-                                                    "/login",
-                                                    (Route<dynamic> route) =>
-                                                        false);
-                                            SharedPreferences prefs =
-                                                await SharedPreferences
-                                                    .getInstance();
-                                            prefs.clear();
-                                            prefs.setBool("seen", true);
-                                          });
+                                          model.logout();
                                         }),
                                   ],
                                 );

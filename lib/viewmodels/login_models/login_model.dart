@@ -51,6 +51,8 @@ class LoginModel extends BaseModel {
     try {
       login = await _userApi.userLogin(enrollment, password);
       isLoginSuccessful = true;
+      token = login.token;
+      isLoggedIn = true;
       isCheckedOut = login.isCheckedOut;
       currentUser = login;
       FirebaseMessaging fcm = FirebaseMessaging();

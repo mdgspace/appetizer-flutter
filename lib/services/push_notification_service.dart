@@ -4,6 +4,8 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 class PushNotificationService {
   final FirebaseMessaging _fcm = FirebaseMessaging();
 
+  FirebaseMessaging get fcm => _fcm;
+
   Future initialise() async {
     if (Platform.isIOS) {
       // request permissions if we're on android
