@@ -1,18 +1,14 @@
+import 'package:appetizer/colors.dart';
+import 'package:appetizer/globals.dart';
 import 'package:appetizer/locator.dart';
-import 'package:appetizer/models/user/user_details_shared_pref.dart';
+import 'package:appetizer/managers/dialog_manager.dart';
+import 'package:appetizer/services/analytics_service.dart';
+import 'package:appetizer/services/navigation_service.dart';
 import 'package:appetizer/styles.dart';
-import 'package:appetizer/ui/components/inherited_data.dart';
-import 'package:appetizer/ui/menu/home.dart';
-import 'package:appetizer/utils/user_details.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:firebase_analytics/observer.dart';
+import 'package:appetizer/ui/router.dart';
+import 'package:appetizer/ui/startup_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-import 'colors.dart';
-import 'ui/login/login.dart';
-import 'ui/on_boarding/onBoarding.dart';
 
 /*
  *  Architectural Design GuideLines -
@@ -24,107 +20,44 @@ import 'ui/on_boarding/onBoarding.dart';
  *  a) Any class in the ui directory must not import from services in any case.
  *  b) Any Future must be called only once in the whole lifecycle of the app for static data, and on data changes for dynamic data.
  *
- * */
+ */
 
-// TODO: refractor all the inline styles to a styles directory with proper file name and variable name
-
-void main() {
-  FirebaseAnalytics analytics = FirebaseAnalytics();
-
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  setupLocator();
+
+  // Register all the models and services before the app starts
+  await setupLocator();
+
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {
-    runApp(MaterialApp(
-      routes: {
-        "/home": (context) => Home(),
-        "/login": (context) => Login(),
-      },
-      navigatorObservers: [
-        FirebaseAnalyticsObserver(analytics: analytics),
-      ],
-      debugShowCheckedModeBanner: false,
-      title: 'Appetizer',
-      theme: ThemeData(
-        fontFamily: 'OpenSans',
-        primaryColor: appiYellow,
-        accentColor: appiGrey,
-        cursorColor: appiYellow,
-        accentTextTheme: accentTextTheme,
-        primaryTextTheme: primaryTextTheme,
-      ),
-      home: Appetizer(),
-    ));
-  });
-}
-
-// TODO: Appetizer Widget MUST NOT exist
-// TODO: (Improvement) OnBoarding implementation very naive, adds overhead on app start
-// TODO: (Improvement) getIntent() method looks naive
-
-class Appetizer extends StatefulWidget {
-  @override
-  _AppetizerState createState() => _AppetizerState();
-}
-
-class _AppetizerState extends State<Appetizer> {
-  static const platform = const MethodChannel('app.channel.shared.data');
-  String code;
-  var sharedData;
-
-  Future checkFirstScreen() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool _seen = (prefs.getBool('seen') ?? false);
-
-    if (_seen) {
-      navigate();
-    } else {
-      prefs.setBool('seen', true);
-      Navigator.of(context).pushReplacement(
-          new MaterialPageRoute(builder: (context) => new OnBoarding()));
-    }
-  }
-
-  void initState() {
-    getIntent();
-    checkFirstScreen();
-    super.initState();
-  }
-
-  void navigate() {
-    UserDetailsUtils.getUserDetails().then((details) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => (details.getString("token") != null)
-              ? InheritedData(
-                  userDetails: UserDetailsSharedPref(details),
-                  child: Home(
-                    token: details.getString("token"),
-                  ),
-                )
-              : Login(code: code),
+    runApp(
+      MaterialApp(
+        onGenerateRoute: Router.generateRoute,
+        builder: (context, child) => Navigator(
+          onGenerateRoute: (settings) => MaterialPageRoute(
+            builder: (context) => DialogManager(child: child),
+          ),
         ),
-      );
-    });
-  }
-
-  getIntent() async {
-    try {
-      sharedData = await platform.invokeMethod("getCode");
-    } on Exception catch (e) {
-      print(e);
-    }
-    if (sharedData != null) {
-      code = sharedData;
-    }
-    print("Code " + code ?? "");
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: new Container(),
+        navigatorKey: locator<NavigationService>().navigatorKey,
+        navigatorObservers: [
+          locator<AnalyticsService>().getAnalyticsObserver(),
+        ],
+        debugShowCheckedModeBanner: false,
+        title: 'Appetizer',
+        theme: ThemeData(
+          primarySwatch: MaterialColor(
+            appiYellow.value,
+            primarySwatchColor,
+          ),
+          fontFamily: 'OpenSans',
+          primaryColor: appiYellow,
+          accentColor: appiGrey,
+          cursorColor: appiYellow,
+          accentTextTheme: accentTextTheme,
+          primaryTextTheme: primaryTextTheme,
+        ),
+        home: StartupView(),
+      ),
     );
-  }
+  });
 }
