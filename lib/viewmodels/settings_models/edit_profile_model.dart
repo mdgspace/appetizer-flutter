@@ -3,6 +3,7 @@ import 'package:appetizer/locator.dart';
 import 'package:appetizer/models/failure_model.dart';
 import 'package:appetizer/models/user/me.dart';
 import 'package:appetizer/services/api/user.dart';
+import 'package:appetizer/utils/user_details.dart';
 import 'package:appetizer/viewmodels/base_model.dart';
 
 class EditProfileModel extends BaseModel {
@@ -21,6 +22,7 @@ class EditProfileModel extends BaseModel {
     setState(ViewState.Busy);
     try {
       updatedUserDetails = await _userApi.userMePatch(email, contactNo);
+      currentUser = UserDetailsUtils.getLoginModelFromMe(updatedUserDetails);
       setState(ViewState.Idle);
     } on Failure catch (f) {
       print(f.message);
