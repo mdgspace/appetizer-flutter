@@ -12,7 +12,7 @@ class MyLeaves extends StatelessWidget {
     return BaseView<MyLeavesModel>(
       onModelReady: (model) => model.getRemainingLeaves(),
       builder: (context, model, child) => Scaffold(
-        key: myLeavesScreenKey,
+        key: myLeavesViewScaffoldKey,
         appBar: AppBar(
           leading: IconButton(
             icon: Icon(Icons.arrow_back),

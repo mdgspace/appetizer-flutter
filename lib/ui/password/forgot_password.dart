@@ -1,6 +1,7 @@
 import 'package:appetizer/enums/view_state.dart';
 import 'package:appetizer/strings.dart';
 import 'package:appetizer/ui/base_view.dart';
+import 'package:appetizer/ui/components/alert_dialog.dart';
 import 'package:appetizer/viewmodels/password_models/forgot_password_model.dart';
 import 'package:flutter/material.dart';
 import 'package:appetizer/colors.dart';
@@ -166,7 +167,7 @@ class _ForgotPassState extends State<ForgotPass> {
   }
 
   _sendInstruction(ForgotPasswordModel model) async {
-    _showDialog();
+    showCustomDialog(context, "Sending Email");
     await model.sendResetEmail(_email);
     if (model.state != ViewState.Error) {
       _showSnackBar("link has been emailed");
@@ -175,39 +176,6 @@ class _ForgotPassState extends State<ForgotPass> {
       _showSnackBar(model.errorMessage);
       _popContext();
     }
-  }
-
-  void _showDialog() {
-    showDialog(
-      context: context,
-      child: new SimpleDialog(
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(18.0),
-            child: new Row(
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(left: 15.0),
-                  child: new CircularProgressIndicator(
-                    valueColor: new AlwaysStoppedAnimation<Color>(appiYellow),
-                  ),
-                ),
-                new Expanded(child: new Container()),
-                Padding(
-                  padding: const EdgeInsets.only(right: 30.0),
-                  child: new Text(
-                    "Sending Email",
-                    style: new TextStyle(
-                      fontSize: 15,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
   }
 
   void _popContext() {

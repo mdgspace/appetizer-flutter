@@ -7,7 +7,6 @@ import 'package:appetizer/models/user/me.dart';
 import 'package:appetizer/services/api/user.dart';
 import 'package:appetizer/viewmodels/base_model.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsModel extends BaseModel {
   UserApi _userApi = locator<UserApi>();
@@ -38,15 +37,14 @@ class SettingsModel extends BaseModel {
     } on Failure catch (f) {
       print(f.message);
       if (f.message == Constants.NO_INTERNET_CONNECTION) {
-        SharedPreferences prefs = await SharedPreferences.getInstance();
         userDetails = Me(
-          email: prefs.getString("email"),
-          name: prefs.getString("username"),
-          enrNo: prefs.getInt("enrNo"),
-          branch: prefs.getString("branch"),
-          hostelName: prefs.getString("hostelName"),
-          roomNo: prefs.getString("roomNo"),
-          contactNo: prefs.getString("contactNo"),
+          email: currentUser.email,
+          name: currentUser.name,
+          enrNo: currentUser.enrNo,
+          branch: currentUser.branch,
+          hostelName: currentUser.hostelName,
+          roomNo: currentUser.roomNo,
+          contactNo: currentUser.contactNo,
         );
         setState(ViewState.Idle);
       } else {
