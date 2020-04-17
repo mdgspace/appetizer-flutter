@@ -55,7 +55,8 @@ class LeaveApi {
 
     try {
       await ApiUtils.addTokenToHeaders(headers);
-      var jsonResponse = await ApiUtils.post(uri, headers: headers);
+      var json = {"is_checked_out": true};
+      var jsonResponse = await ApiUtils.post(uri, headers: headers, body: json);
       Check check = new Check.fromJson(jsonResponse);
       return check;
     } on FormatException {
