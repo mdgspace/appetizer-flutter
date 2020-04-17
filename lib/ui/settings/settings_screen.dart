@@ -1,4 +1,5 @@
 import 'package:appetizer/enums/view_state.dart';
+import 'package:appetizer/models/user/me.dart';
 import 'package:appetizer/ui/FAQ/faq_screen.dart';
 import 'package:appetizer/ui/base_view.dart';
 import 'package:appetizer/ui/settings/list_item.dart';
@@ -8,20 +9,13 @@ import 'package:appetizer/viewmodels/settings_models/settings_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:share/share.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:appetizer/ui/password/reset_password.dart';
-import 'package:appetizer/ui/components/alert_dialog.dart';
 import 'package:appetizer/colors.dart';
 import 'package:appetizer/ui/help/help.dart';
 import 'edit_profile.dart';
 
-class Settings extends StatefulWidget {
-  @override
-  _SettingsState createState() => _SettingsState();
-}
-
-class _SettingsState extends State<Settings> {
-  String shareText =
+class Settings extends StatelessWidget {
+  final String shareText =
       "Let me recommend you this application:\n https://play.google.com/store/apps/details?id=co.sdslabs.mdg.appetizer&hl=en";
 
   @override
@@ -68,13 +62,14 @@ class _SettingsState extends State<Settings> {
                               height: MediaQuery.of(context).size.height / 2 -
                                   appBar.preferredSize.height,
                               child: Padding(
-                                padding: const EdgeInsets.fromLTRB(
-                                    16.0, 0.0, 16.0, 30.0),
+                                padding:
+                                    const EdgeInsets.fromLTRB(16, 0, 16, 30),
                                 child: Center(
                                   child: CircularProgressIndicator(
                                     valueColor:
                                         new AlwaysStoppedAnimation<Color>(
-                                            appiYellow),
+                                      appiYellow,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -82,7 +77,7 @@ class _SettingsState extends State<Settings> {
                             )
                           : Builder(
                               builder: (context) {
-                                var userDetails = model.userDetails;
+                                Me userDetails = model.userDetails;
                                 return Container(
                                   height:
                                       MediaQuery.of(context).size.height / 2 -
@@ -167,9 +162,10 @@ class _SettingsState extends State<Settings> {
                               ),
                               GestureDetector(
                                 child: SettingsPageListItems(
-                                    Icons.exit_to_app, "Log Out"),
+                                  Icons.exit_to_app,
+                                  "Log Out",
+                                ),
                                 onTap: () async {
-                                  //Navigator.pop(context);
                                   showDialog(
                                     context: context,
                                     builder: (BuildContext alertContext) {
@@ -194,11 +190,10 @@ class _SettingsState extends State<Settings> {
                                             child: new Text(
                                               "CANCEL",
                                               style: TextStyle(
-                                                  color: appiYellow,
-                                                  fontWeight: FontWeight.bold),
+                                                color: appiYellow,
+                                                fontWeight: FontWeight.bold,
+                                              ),
                                             ),
-                                            highlightColor: Colors.transparent,
-                                            splashColor: Colors.transparent,
                                           ),
                                           new FlatButton(
                                             child: new Text(
@@ -209,28 +204,8 @@ class _SettingsState extends State<Settings> {
                                             ),
                                             onPressed: () async {
                                               Navigator.pop(alertContext);
-                                              showCustomDialog(
-                                                  context, "Logging You Out");
-                                              SharedPreferences.getInstance()
-                                                  .then((prefs) async {
-                                                model
-                                                    .logout()
-                                                    .then((isLoggedOut) {
-                                                  if (isLoggedOut) {
-                                                    Navigator.of(context)
-                                                        .pushNamedAndRemoveUntil(
-                                                            "/login",
-                                                            (Route<dynamic>
-                                                                    route) =>
-                                                                false);
-                                                    prefs.clear();
-                                                    prefs.setBool("seen", true);
-                                                  }
-                                                });
-                                              });
+                                              model.logout();
                                             },
-                                            highlightColor: Colors.transparent,
-                                            splashColor: Colors.transparent,
                                           ),
                                         ],
                                       );

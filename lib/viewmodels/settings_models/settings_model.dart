@@ -5,11 +5,16 @@ import 'package:appetizer/models/detail.dart';
 import 'package:appetizer/models/failure_model.dart';
 import 'package:appetizer/models/user/me.dart';
 import 'package:appetizer/services/api/user.dart';
+import 'package:appetizer/services/navigation_service.dart';
+import 'package:appetizer/services/push_notification_service.dart';
+import 'package:appetizer/utils/user_details.dart';
 import 'package:appetizer/viewmodels/base_model.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 
 class SettingsModel extends BaseModel {
   UserApi _userApi = locator<UserApi>();
+  PushNotificationService _pushNotificationService =
+      locator<PushNotificationService>();
+  NavigationService _navigationService = locator<NavigationService>();
 
   Me _userDetails;
 
@@ -37,15 +42,8 @@ class SettingsModel extends BaseModel {
     } on Failure catch (f) {
       print(f.message);
       if (f.message == Constants.NO_INTERNET_CONNECTION) {
-        userDetails = Me(
-          email: currentUser.email,
-          name: currentUser.name,
-          enrNo: currentUser.enrNo,
-          branch: currentUser.branch,
-          hostelName: currentUser.hostelName,
-          roomNo: currentUser.roomNo,
-          contactNo: currentUser.contactNo,
-        );
+        userDetails =
+            UserDetailsUtils.getMeFromLoggedInUserDetails(currentUser);
         setState(ViewState.Idle);
       } else {
         setErrorMessage(f.message);
@@ -54,20 +52,21 @@ class SettingsModel extends BaseModel {
     }
   }
 
-  Future<bool> logout() async {
+  Future logout() async {
     setState(ViewState.Busy);
     try {
-      FirebaseMessaging fcm = FirebaseMessaging();
-      fcm.unsubscribeFromTopic("release-" + userDetails.hostelCode);
-      userLogoutDetail = await _userApi.userLogout();
+      await _userApi.userLogout();
+      _pushNotificationService.fcm
+          .unsubscribeFromTopic("release-" + currentUser.hostelCode);
+      _navigationService.pushNamedAndRemoveUntil("login");
+      currentUser = null;
+      isLoggedIn = false;
+      token = null;
       setState(ViewState.Idle);
-      if (userLogoutDetail.detail == "user logged out") return true;
     } on Failure catch (f) {
       print(f.message);
       setErrorMessage(f.message);
       setState(ViewState.Error);
-      return false;
     }
-    return false;
   }
 }
