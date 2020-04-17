@@ -3,6 +3,7 @@ import 'package:appetizer/globals.dart';
 import 'package:appetizer/locator.dart';
 import 'package:appetizer/managers/dialog_manager.dart';
 import 'package:appetizer/services/analytics_service.dart';
+import 'package:appetizer/services/dialog_service.dart';
 import 'package:appetizer/services/navigation_service.dart';
 import 'package:appetizer/styles.dart';
 import 'package:appetizer/ui/router.dart';
@@ -34,6 +35,7 @@ Future<void> main() async {
       MaterialApp(
         onGenerateRoute: Router.generateRoute,
         builder: (context, child) => Navigator(
+          key: locator<DialogService>().dialogNavigationKey,
           onGenerateRoute: (settings) => MaterialPageRoute(
             builder: (context) => DialogManager(child: child),
           ),

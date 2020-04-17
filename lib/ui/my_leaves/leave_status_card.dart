@@ -115,17 +115,18 @@ class _LeaveStatusCardState extends State<LeaveStatusCard> {
                               padding: EdgeInsets.symmetric(
                                   horizontal: 20, vertical: 5),
                               child: Container(
-                                  decoration: new BoxDecoration(
-                                    shape: BoxShape.circle,
+                                decoration: new BoxDecoration(
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(top: 16),
+                                  child: Icon(
+                                    Icons.account_circle,
+                                    size: 90,
+                                    color: appiBrown,
                                   ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(top: 16),
-                                    child: Icon(
-                                      Icons.account_circle,
-                                      size: 90,
-                                      color: appiBrown,
-                                    ),
-                                  )),
+                                ),
+                              ),
                             )
                           ],
                         ),
@@ -151,9 +152,7 @@ class _LeaveStatusCardState extends State<LeaveStatusCard> {
                                   ),
                                 ),
                               ),
-                              onPressed: () {
-                                onCheckTapped(model);
-                              },
+                              onPressed: model.onCheckTapped,
                             ),
                           ),
                         ),
@@ -179,55 +178,5 @@ class _LeaveStatusCardState extends State<LeaveStatusCard> {
               ),
             ),
     );
-  }
-
-  Future<void> onCheckTapped(LeaveStatusCardModel model) async {
-    if (!isCheckedOut) {
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
-          title: Text(
-            "Check Out",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          content: Text("Are you sure you would like to Check-Out?"),
-          actions: <Widget>[
-            FlatButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Text(
-                "CANCEL",
-                style: TextStyle(
-                  color: appiYellow,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            FlatButton(
-                onPressed: () {
-                  model.toggleCheckState();
-                  Navigator.pop(context);
-                },
-                child: Text(
-                  "CHECK OUT",
-                  style: TextStyle(
-                    color: appiYellow,
-                    fontWeight: FontWeight.bold,
-                  ),
-                )),
-          ],
-        ),
-      );
-    } else {
-      await model.toggleCheckState();
-      if (!isCheckedOut)
-        showSnackBar(myLeavesViewScaffoldKey, "You have checked in");
-    }
   }
 }

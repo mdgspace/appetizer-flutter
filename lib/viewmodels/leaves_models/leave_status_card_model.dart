@@ -6,11 +6,13 @@ import 'package:appetizer/models/leaves/check.dart';
 import 'package:appetizer/models/user/me.dart';
 import 'package:appetizer/services/api/leave.dart';
 import 'package:appetizer/services/api/user.dart';
+import 'package:appetizer/services/dialog_service.dart';
 import 'package:appetizer/viewmodels/base_model.dart';
 
 class LeaveStatusCardModel extends BaseModel {
   UserApi _userApi = locator<UserApi>();
   LeaveApi _leaveApi = locator<LeaveApi>();
+  DialogService _dialogService = locator<DialogService>();
 
   // bool _isCheckedOut;
   String _imageUrl;
@@ -53,6 +55,25 @@ class LeaveStatusCardModel extends BaseModel {
       print(f.message);
       setErrorMessage(f.message);
       setState(ViewState.Error);
+    }
+  }
+
+  Future onCheckTapped() async {
+    if (!isCheckedOut) {
+      var dialogResponse = await _dialogService.showConfirmationDialog(
+          title: "Check Out",
+          description: "Are you sure you would like to check out?",
+          confirmationTitle: "CHECK OUT");
+
+      if (dialogResponse.confirmed) {
+        await toggleCheckState();
+        if (isCheckedOut)
+          showSnackBar(myLeavesViewScaffoldKey, "You have checked out");
+      }
+    } else {
+      await toggleCheckState();
+      if (!isCheckedOut)
+        showSnackBar(myLeavesViewScaffoldKey, "You have checked in");
     }
   }
 }
