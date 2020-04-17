@@ -29,7 +29,7 @@ class UserApi {
       var jsonResponse = await ApiUtils.post(
         uri,
         headers: headers,
-        body: jsonEncode(json),
+        body: json,
       );
       Login login = new Login.fromJson(jsonResponse);
       return login;
@@ -113,7 +113,7 @@ class UserApi {
       var jsonResponse = await ApiUtils.patch(
         uri,
         headers: headers,
-        body: jsonEncode(json),
+        body: json,
       );
       Me me = new Me.fromJson(jsonResponse);
       return me;
@@ -133,7 +133,7 @@ class UserApi {
       var jsonResponse = await ApiUtils.patch(
         uri,
         headers: headers,
-        body: jsonEncode(json),
+        body: json,
       );
       Me me = new Me.fromJson(jsonResponse);
       return me;
@@ -242,7 +242,7 @@ class UserApi {
       var jsonResponse = await ApiUtils.post(
         uri,
         headers: headers,
-        body: jsonEncode(json),
+        body: json,
       );
       OauthResponse userDetails = new OauthResponse.fromJson(jsonResponse);
       return userDetails;

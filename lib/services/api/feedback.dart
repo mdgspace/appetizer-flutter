@@ -59,8 +59,7 @@ class FeedbackApi {
 
     try {
       await ApiUtils.addTokenToHeaders(headers);
-      var jsonResponse =
-          await ApiUtils.post(uri, headers: headers, body: jsonEncode(json));
+      var jsonResponse = await ApiUtils.post(uri, headers: headers, body: json);
       Feedback feedback = new Feedback.fromJson(jsonResponse);
       return feedback;
     } on FormatException {

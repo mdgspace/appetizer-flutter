@@ -26,7 +26,8 @@ class ApiUtils {
   static Future<dynamic> post(String uri,
       {Map<String, String> headers, dynamic body}) async {
     try {
-      final response = await client.post(uri, headers: headers, body: body);
+      final response =
+          await client.post(uri, headers: headers, body: jsonEncode(body));
       final jsonResponse = ApiUtils.jsonResponse(response);
       return jsonResponse;
     } on SocketException {
@@ -43,7 +44,7 @@ class ApiUtils {
       final response = await client.put(
         uri,
         headers: headers,
-        body: json.encode(body),
+        body: jsonEncode(body),
       );
       final jsonResponse = ApiUtils.jsonResponse(response);
       return jsonResponse;
@@ -58,7 +59,8 @@ class ApiUtils {
   static Future<dynamic> patch(String uri,
       {Map<String, String> headers, dynamic body}) async {
     try {
-      final response = await client.patch(uri, headers: headers, body: body);
+      final response =
+          await client.patch(uri, headers: headers, body: jsonEncode(body));
       final jsonResponse = ApiUtils.jsonResponse(response);
       return jsonResponse;
     } on SocketException {
