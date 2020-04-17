@@ -182,8 +182,6 @@ class _SwitchableMealsState extends State<SwitchableMealsScreen> {
                                 );
                               }
                             },
-                            highlightColor: Colors.transparent,
-                            splashColor: Colors.transparent,
                           ),
                         ],
                       );

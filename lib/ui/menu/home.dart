@@ -68,8 +68,6 @@ class _HomeState extends State<Home> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    highlightColor: Colors.transparent,
-                    splashColor: Colors.transparent,
                   ),
                   new FlatButton(
                     child: new Text(
@@ -87,8 +85,6 @@ class _HomeState extends State<Home> {
                         throw 'Could not launch ${model.googlePlayLink}';
                       }
                     },
-                    highlightColor: Colors.transparent,
-                    splashColor: Colors.transparent,
                   ),
                 ],
               );
@@ -501,8 +497,6 @@ class _HomeState extends State<Home> {
                                             color: appiYellow,
                                             fontWeight: FontWeight.bold),
                                       ),
-                                      highlightColor: Colors.transparent,
-                                      splashColor: Colors.transparent,
                                     ),
                                     new FlatButton(
                                         child: new Text(

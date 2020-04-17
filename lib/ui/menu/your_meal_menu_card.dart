@@ -251,8 +251,6 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
                         style: TextStyle(
                             color: appiYellow, fontWeight: FontWeight.bold),
                       ),
-                      highlightColor: Colors.transparent,
-                      splashColor: Colors.transparent,
                     ),
                     new FlatButton(
                       child: new Text(
@@ -286,8 +284,6 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
                           );
                         });
                       },
-                      highlightColor: Colors.transparent,
-                      splashColor: Colors.transparent,
                     ),
                   ],
                 );
@@ -329,8 +325,6 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
                         style: TextStyle(
                             color: appiYellow, fontWeight: FontWeight.bold),
                       ),
-                      highlightColor: Colors.transparent,
-                      splashColor: Colors.transparent,
                     ),
                     new FlatButton(
                       child: new Text(
@@ -364,8 +358,6 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
                           );
                         });
                       },
-                      highlightColor: Colors.transparent,
-                      splashColor: Colors.transparent,
                     ),
                   ],
                 );
@@ -516,13 +508,12 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
                                               });
                                             } else {
                                               Fluttertoast.showToast(
-                                                  msg:
-                                                      "Unable to cancel the switch");
+                                                msg:
+                                                    "Unable to cancel the switch",
+                                              );
                                             }
                                           });
                                         },
-                                        highlightColor: Colors.transparent,
-                                        splashColor: Colors.transparent,
                                       ),
                                     ],
                                   );

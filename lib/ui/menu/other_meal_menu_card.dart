@@ -214,8 +214,6 @@ class _OtherMealsMenuCardState extends State<OtherMealsMenuCard> {
                                             }
                                           });
                                         },
-                                        highlightColor: Colors.transparent,
-                                        splashColor: Colors.transparent,
                                       ),
                                     ],
                                   );
