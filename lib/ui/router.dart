@@ -1,3 +1,4 @@
+import 'package:appetizer/models/user/oauth.dart';
 import 'package:appetizer/ui/FAQ/faq_screen.dart';
 import 'package:appetizer/ui/help/help.dart';
 import 'package:appetizer/ui/leave_history/leave_history_screen.dart';
@@ -63,13 +64,10 @@ class Router {
       case 'forgot_pass':
         return MaterialPageRoute(builder: (_) => ForgotPass());
       case 'choose_new_pass':
-        var arguments = settings.arguments as Map<String, dynamic>;
+        var studentData = settings.arguments as StudentData;
         return MaterialPageRoute(
           builder: (_) => ChooseNewPass(
-            email: arguments["email"],
-            contactNo: arguments["contactNo"],
-            enr: arguments["enr"],
-            name: arguments["name"],
+            studentData: studentData,
           ),
         );
       case 'reset_password':

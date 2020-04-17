@@ -8,15 +8,9 @@ import 'package:appetizer/ui/components/alert_dialog.dart';
 import 'package:appetizer/colors.dart';
 
 class ChooseNewPass extends StatefulWidget {
-  final String name;
-  final int enr;
-  final String email;
-  final String contactNo;
+  final StudentData studentData;
 
-  const ChooseNewPass(
-      {Key key, this.email, this.contactNo, this.enr, this.name})
-      : super(key: key);
-
+  const ChooseNewPass({Key key, this.studentData}) : super(key: key);
   @override
   State<StatefulWidget> createState() => _ChooseNewPassState();
 }
@@ -78,7 +72,7 @@ class _ChooseNewPassState extends State<ChooseNewPass> {
             ),
           ),
           new Text(
-            widget.name.split(" ")[0],
+            widget.studentData.name.split(" ")[0],
             style: new TextStyle(
               color: appiYellow,
               fontSize: 16,
@@ -165,7 +159,7 @@ class _ChooseNewPassState extends State<ChooseNewPass> {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0.0, 48.0, 0.0, 0.0),
       child: new TextFormField(
-        initialValue: widget.email,
+        initialValue: widget.studentData.email,
         keyboardType: TextInputType.emailAddress,
         decoration: new InputDecoration(
           labelText: "Email",
@@ -190,7 +184,7 @@ class _ChooseNewPassState extends State<ChooseNewPass> {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0.0, 48.0, 0.0, 0.0),
       child: new TextFormField(
-        initialValue: widget.contactNo,
+        initialValue: widget.studentData.contactNo,
         keyboardType: TextInputType.number,
         decoration: new InputDecoration(
           labelText: "Contact No",
@@ -248,7 +242,11 @@ class _ChooseNewPassState extends State<ChooseNewPass> {
   Future<void> loginUser(NewPasswordModel model) async {
     showCustomDialog(context, "Logging You In");
     await model.oAuthComplete(
-        widget.enr, password, email, int.parse(contactNo));
+      widget.studentData.enrNo,
+      password,
+      email,
+      int.parse(contactNo),
+    );
     if (model.oauthResponse.token != null) {
       StudentData studentData = model.oauthResponse.studentData;
       Navigator.pop(context);

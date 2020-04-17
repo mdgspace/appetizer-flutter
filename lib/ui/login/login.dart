@@ -340,7 +340,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                 style: Theme.of(context).primaryTextTheme.display3,
               ),
               onTap: () {
-                Navigator.pushNamed(context, "forgot_password");
+                Navigator.pushNamed(context, "forgot_pass");
               },
             ),
           );
@@ -456,10 +456,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
           context,
           MaterialPageRoute(builder: (context) {
             return ChooseNewPass(
-              name: studentData.name,
-              enr: studentData.enrNo,
-              email: studentData.email,
-              contactNo: studentData.contactNo,
+              studentData: studentData,
             );
           }),
         );
