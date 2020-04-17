@@ -1,4 +1,5 @@
 import 'package:appetizer/enums/view_state.dart';
+import 'package:appetizer/globals.dart';
 import 'package:appetizer/ui/base_view.dart';
 import 'package:appetizer/ui/components/error_widget.dart';
 import 'package:appetizer/utils/date_time_utils.dart';
@@ -28,6 +29,7 @@ class _RebateHistoryScreenState extends State<RebateHistoryScreen> {
     return BaseView<RebateHistoryModel>(
       onModelReady: (model) => model.getYearlyRebate(currentItemSelected),
       builder: (context, model, child) => Scaffold(
+        key: rebatesHistoryViewScaffoldKey,
         appBar: AppBar(
           title: Text(
             "Rebate History",

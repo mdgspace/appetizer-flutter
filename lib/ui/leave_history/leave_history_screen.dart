@@ -1,3 +1,4 @@
+import 'package:appetizer/globals.dart';
 import 'package:appetizer/viewmodels/year_and_month_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -10,6 +11,7 @@ class MyLeavesHistory extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => YearAndMonthModel(),
       child: Scaffold(
+        key: leavesHistoryViewScaffoldKey,
         appBar: AppBar(
           title: Text(
             "Leave History",

@@ -1,4 +1,5 @@
 import 'package:appetizer/enums/view_state.dart';
+import 'package:appetizer/globals.dart';
 import 'package:appetizer/ui/base_view.dart';
 import 'package:appetizer/ui/components/error_widget.dart';
 import 'package:appetizer/ui/components/progress_bar.dart';
@@ -14,6 +15,7 @@ class NotificationHistory extends StatelessWidget {
     return BaseView<NotificationsModel>(
       onModelReady: (model) => model.getNotifications(),
       builder: (context, model, child) => Scaffold(
+        key: notificationHistoryViewScaffoldKey,
         appBar: AppBar(
           title: Text(
             "Notifications History",

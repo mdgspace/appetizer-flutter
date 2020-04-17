@@ -1,4 +1,5 @@
 import 'package:appetizer/enums/view_state.dart';
+import 'package:appetizer/globals.dart';
 import 'package:appetizer/ui/FAQ/faq.dart';
 import 'package:appetizer/ui/base_view.dart';
 import 'package:appetizer/ui/components/error_widget.dart';
@@ -12,6 +13,7 @@ class FaqList extends StatelessWidget {
     return BaseView<FaqModel>(
       onModelReady: (model) => model.getFaqs(),
       builder: (context, model, child) => Scaffold(
+        key: faqViewScaffoldKey,
         appBar: AppBar(
           title: Text(
             "FAQs",

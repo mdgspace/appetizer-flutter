@@ -1,3 +1,4 @@
+import 'package:appetizer/globals.dart';
 import 'package:appetizer/services/api/feedback.dart';
 import 'package:appetizer/ui/base_view.dart';
 import 'package:appetizer/ui/components/alert_dialog.dart';
@@ -14,7 +15,6 @@ class NewFeedback extends StatefulWidget {
 class _NewFeedbackState extends State<NewFeedback> {
   final _formKey = new GlobalKey<FormState>();
 
-  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   String title, feedbackType = "gn", description;
   DateTime date = DateTime.now();
 
@@ -22,7 +22,7 @@ class _NewFeedbackState extends State<NewFeedback> {
   Widget build(BuildContext context) {
     return BaseView<NewFeedbackModel>(
       builder: (context, model, child) => Scaffold(
-        key: _scaffoldKey,
+        key: newFeedbackViewScaffoldKey,
         appBar: AppBar(
           title: Text(
             "New Feedback",
@@ -179,7 +179,7 @@ class _NewFeedbackState extends State<NewFeedback> {
     await new Future.delayed(new Duration(seconds: 2));
     if (model.newFeedback.id != null) {
       Navigator.pop(context);
-      _showSnackBar(context, "Thank You For Your Feedback!");
+      showSnackBar(newFeedbackViewScaffoldKey, "Thank You For Your Feedback!");
       await new Future.delayed(new Duration(seconds: 1));
       Navigator.pop(context);
     }
@@ -195,11 +195,5 @@ class _NewFeedbackState extends State<NewFeedback> {
       setState(() {
         date = picked.toLocal();
       });
-  }
-
-  void _showSnackBar(BuildContext context, String message) {
-    _scaffoldKey.currentState.showSnackBar(SnackBar(
-      content: Text(message),
-    ));
   }
 }

@@ -1,4 +1,5 @@
 import 'package:appetizer/enums/view_state.dart';
+import 'package:appetizer/globals.dart';
 import 'package:appetizer/models/feed_back/responses.dart';
 import 'package:appetizer/models/feed_back/submitted_feedbacks.dart';
 import 'package:appetizer/services/api/feedback.dart';
@@ -28,6 +29,7 @@ class _UserFeedbackState extends State<UserFeedback> {
         getLists(model);
       },
       builder: (context, model, child) => Scaffold(
+        key: userFeedbackViewScaffoldKey,
         appBar: AppBar(
           title: Text(
             "Feedback",

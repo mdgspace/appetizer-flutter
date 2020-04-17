@@ -1,4 +1,5 @@
 import 'package:appetizer/enums/view_state.dart';
+import 'package:appetizer/globals.dart';
 import 'package:appetizer/models/user/me.dart';
 import 'package:appetizer/ui/FAQ/faq_screen.dart';
 import 'package:appetizer/ui/base_view.dart';
@@ -48,6 +49,7 @@ class Settings extends StatelessWidget {
             ),
           ),
           Scaffold(
+            key: settingsViewScaffoldKey,
             backgroundColor: Colors.transparent,
             appBar: appBar,
             body: SingleChildScrollView(

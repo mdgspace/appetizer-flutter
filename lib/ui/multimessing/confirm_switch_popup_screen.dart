@@ -1,4 +1,5 @@
 import 'package:appetizer/enums/view_state.dart';
+import 'package:appetizer/globals.dart';
 import 'package:appetizer/models/menu/week.dart';
 import 'package:appetizer/ui/base_view.dart';
 import 'package:appetizer/ui/components/alert_dialog.dart';
@@ -111,6 +112,7 @@ class _ConfirmSwitchPopupScreenState extends State<ConfirmSwitchPopupScreen> {
         hostelCodeMap[model.currentUser.hostelName],
       ),
       builder: (context, model, child) => Scaffold(
+        key: confirmSwitchPopupViewScaffoldKey,
         appBar: _getAppBar(),
         body: model.state == ViewState.Busy
             ? ProgressBar()

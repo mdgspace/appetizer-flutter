@@ -1,4 +1,5 @@
 import 'package:appetizer/enums/view_state.dart';
+import 'package:appetizer/globals.dart';
 import 'package:appetizer/strings.dart';
 import 'package:appetizer/ui/base_view.dart';
 import 'package:appetizer/ui/components/alert_dialog.dart';
@@ -19,6 +20,7 @@ class _ForgotPassState extends State<ForgotPass> {
   Widget build(BuildContext context) {
     return BaseView<ForgotPasswordModel>(
       builder: (context, model, child) => Scaffold(
+        key: forgotPasswordViewScaffoldKey,
         resizeToAvoidBottomInset: true,
         body: SingleChildScrollView(
           child: Column(

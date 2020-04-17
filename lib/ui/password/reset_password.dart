@@ -1,4 +1,5 @@
 import 'package:appetizer/enums/view_state.dart';
+import 'package:appetizer/globals.dart';
 import 'package:appetizer/ui/base_view.dart';
 import 'package:appetizer/ui/components/alert_dialog.dart';
 import 'package:appetizer/viewmodels/password_models/reset_password_model.dart';
@@ -12,8 +13,6 @@ class ResetPassword extends StatefulWidget {
 }
 
 class _ResetPasswordState extends State<ResetPassword> {
-  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
-
   bool _obscureText1 = true;
   bool _obscureText2 = true;
   String oldPassword = "";
@@ -47,7 +46,7 @@ class _ResetPasswordState extends State<ResetPassword> {
   Widget build(BuildContext context) {
     return BaseView<ResetPasswordModel>(
       builder: (context, model, child) => Scaffold(
-        key: _scaffoldKey,
+        key: resetPasswordViewScaffoldKey,
         resizeToAvoidBottomInset: true,
         body: SingleChildScrollView(
           child: Column(
@@ -180,14 +179,16 @@ class _ResetPasswordState extends State<ResetPassword> {
                                 await model.resetPassword(
                                     oldPassword, newPassword);
                                 if (model.state != ViewState.Error) {
-                                  _scaffoldKey.currentState.showSnackBar(
+                                  resetPasswordViewScaffoldKey.currentState
+                                      .showSnackBar(
                                     new SnackBar(
                                       content: new Text(
                                           "Password changed successfully"),
                                     ),
                                   );
                                 } else {
-                                  _scaffoldKey.currentState.showSnackBar(
+                                  resetPasswordViewScaffoldKey.currentState
+                                      .showSnackBar(
                                     new SnackBar(
                                       content: new Text(model.errorMessage),
                                     ),

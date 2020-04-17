@@ -108,6 +108,7 @@ class _HomeState extends State<Home> {
           ChangeNotifierProvider(create: (context) => currentDateModel),
         ],
         child: Scaffold(
+          key: homeViewScaffoldKey,
           floatingActionButton: !isCheckedOut ? _fab(context) : null,
           appBar: _appBar(context, model),
           body: SafeArea(
