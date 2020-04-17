@@ -158,20 +158,15 @@ class _ForgotPassState extends State<ForgotPass> {
     showCustomDialog(context, "Sending Email");
     await model.sendResetEmail(_email);
     if (model.state != ViewState.Error) {
-      _showSnackBar("link has been emailed");
+      showSnackBar(forgotPasswordViewScaffoldKey, "link has been emailed");
       Future.delayed(new Duration(seconds: 2), _popContext);
     } else {
-      _showSnackBar(model.errorMessage);
+      showSnackBar(forgotPasswordViewScaffoldKey, model.errorMessage);
       _popContext();
     }
   }
 
   void _popContext() {
     Navigator.pop(context);
-  }
-
-  void _showSnackBar(String detail) {
-    final snackBar = SnackBar(content: Text(detail));
-    Scaffold.of(formKey.currentContext).showSnackBar(snackBar);
   }
 }

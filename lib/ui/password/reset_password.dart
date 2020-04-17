@@ -187,20 +187,11 @@ class _ResetPasswordState extends State<ResetPassword> {
                                 await model.resetPassword(
                                     oldPassword, newPassword);
                                 if (model.state != ViewState.Error) {
-                                  resetPasswordViewScaffoldKey.currentState
-                                      .showSnackBar(
-                                    new SnackBar(
-                                      content: new Text(
-                                          "Password changed successfully"),
-                                    ),
-                                  );
+                                  showSnackBar(resetPasswordViewScaffoldKey,
+                                      "Password changed successfully");
                                 } else {
-                                  resetPasswordViewScaffoldKey.currentState
-                                      .showSnackBar(
-                                    new SnackBar(
-                                      content: new Text(model.errorMessage),
-                                    ),
-                                  );
+                                  showSnackBar(resetPasswordViewScaffoldKey,
+                                      model.errorMessage);
                                 }
                                 setState(() {
                                   Navigator.pop(context);

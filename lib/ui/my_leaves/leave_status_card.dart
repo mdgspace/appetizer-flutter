@@ -227,11 +227,7 @@ class _LeaveStatusCardState extends State<LeaveStatusCard> {
     } else {
       await model.toggleCheckState();
       if (!isCheckedOut)
-        Scaffold.of(context).showSnackBar(
-          SnackBar(
-            content: Text("You have checked in"),
-          ),
-        );
+        showSnackBar(myLeavesViewScaffoldKey, "You have checked in");
     }
   }
 }
