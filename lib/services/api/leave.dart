@@ -21,9 +21,11 @@ class LeaveApi {
       var jsonResponse = await ApiUtils.get(uri, headers: headers);
       LeaveCount leaveCount = new LeaveCount.fromJson(jsonResponse);
       return leaveCount;
-    } on FormatException {
+    } on FormatException catch (e) {
+      print(e.message);
       throw Failure(Constants.BAD_RESPONSE_FORMAT);
-    } on Exception {
+    } on Exception catch (e) {
+      print(e.toString());
       throw Failure(Constants.GENERIC_FAILURE);
     }
   }
@@ -42,9 +44,11 @@ class LeaveApi {
       var jsonResponse = await ApiUtils.get(uri, headers: headers);
       LeaveList leaveList = new LeaveList.fromJson(jsonResponse);
       return leaveList;
-    } on FormatException {
+    } on FormatException catch (e) {
+      print(e.message);
       throw Failure(Constants.BAD_RESPONSE_FORMAT);
-    } on Exception {
+    } on Exception catch (e) {
+      print(e.toString());
       throw Failure(Constants.GENERIC_FAILURE);
     }
   }
@@ -59,9 +63,11 @@ class LeaveApi {
       var jsonResponse = await ApiUtils.post(uri, headers: headers, body: json);
       Check check = new Check.fromJson(jsonResponse);
       return check;
-    } on FormatException {
+    } on FormatException catch (e) {
+      print(e.message);
       throw Failure(Constants.BAD_RESPONSE_FORMAT);
-    } on Exception {
+    } on Exception catch (e) {
+      print(e.toString());
       throw Failure(Constants.GENERIC_FAILURE);
     }
   }
@@ -78,9 +84,11 @@ class LeaveApi {
       var jsonResponse = await ApiUtils.post(uri, headers: headers, body: json);
       CreateLeave leave = new CreateLeave.fromJson(jsonResponse);
       return leave;
-    } on FormatException {
+    } on FormatException catch (e) {
+      print(e.message);
       throw Failure(Constants.BAD_RESPONSE_FORMAT);
-    } on Exception {
+    } on Exception catch (e) {
+      print(e.toString());
       throw Failure(Constants.GENERIC_FAILURE);
     }
   }
@@ -96,9 +104,11 @@ class LeaveApi {
         return true;
       }
       return false;
-    } on FormatException {
+    } on FormatException catch (e) {
+      print(e.message);
       throw Failure(Constants.BAD_RESPONSE_FORMAT);
-    } on Exception {
+    } on Exception catch (e) {
+      print(e.toString());
       throw Failure(Constants.GENERIC_FAILURE);
     }
   }

@@ -20,9 +20,11 @@ class VersionCheckApi {
       var jsonResponse = await ApiUtils.get(uri, headers: header);
       VersionCheck versionCheck = new VersionCheck.fromJson(jsonResponse);
       return versionCheck;
-    } on FormatException {
+    } on FormatException catch (e) {
+      print(e.message);
       throw Failure(Constants.BAD_RESPONSE_FORMAT);
-    } on Exception {
+    } on Exception catch (e) {
+      print(e.toString());
       throw Failure(Constants.GENERIC_FAILURE);
     }
   }

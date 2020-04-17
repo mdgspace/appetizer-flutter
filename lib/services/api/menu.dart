@@ -25,9 +25,11 @@ class MenuApi {
       );
       Week week = new Week.fromJson(jsonResponse);
       return week;
-    } on FormatException {
+    } on FormatException catch (e) {
+      print(e.message);
       throw Failure(Constants.BAD_RESPONSE_FORMAT);
-    } on Exception {
+    } on Exception catch (e) {
+      print(e.toString());
       throw Failure(Constants.GENERIC_FAILURE);
     }
   }
@@ -44,9 +46,11 @@ class MenuApi {
       );
       Week weekForYourMeals = new Week.fromJson(jsonResponse);
       return weekForYourMeals;
-    } on FormatException {
+    } on FormatException catch (e) {
+      print(e.message);
       throw Failure(Constants.BAD_RESPONSE_FORMAT);
-    } on Exception {
+    } on Exception catch (e) {
+      print(e.toString());
       throw Failure(Constants.GENERIC_FAILURE);
     }
   }
@@ -66,9 +70,11 @@ class MenuApi {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       var record = await _mealStore.record(prefs.getInt("mealKey")).get(_db);
       return Week.fromJson(record);
-    } on FormatException {
+    } on FormatException catch (e) {
+      print(e.message);
       throw Failure(Constants.BAD_RESPONSE_FORMAT);
-    } on Exception {
+    } on Exception catch (e) {
+      print(e.toString());
       throw Failure(Constants.GENERIC_FAILURE);
     }
   }
@@ -85,9 +91,11 @@ class MenuApi {
       );
       Week week = new Week.fromJson(jsonResponse);
       return week;
-    } on FormatException {
+    } on FormatException catch (e) {
+      print(e.message);
       throw Failure(Constants.BAD_RESPONSE_FORMAT);
-    } on Exception {
+    } on Exception catch (e) {
+      print(e.toString());
       throw Failure(Constants.GENERIC_FAILURE);
     }
   }
@@ -104,9 +112,11 @@ class MenuApi {
       );
       Day day = new Day.fromJson(jsonResponse);
       return day;
-    } on FormatException {
+    } on FormatException catch (e) {
+      print(e.message);
       throw Failure(Constants.BAD_RESPONSE_FORMAT);
-    } on Exception {
+    } on Exception catch (e) {
+      print(e.toString());
       throw Failure(Constants.GENERIC_FAILURE);
     }
   }
@@ -123,9 +133,11 @@ class MenuApi {
       );
       Meal meal = new Meal.fromJson(jsonResponse);
       return meal;
-    } on FormatException {
+    } on FormatException catch (e) {
+      print(e.message);
       throw Failure(Constants.BAD_RESPONSE_FORMAT);
-    } on Exception {
+    } on Exception catch (e) {
+      print(e.toString());
       throw Failure(Constants.GENERIC_FAILURE);
     }
   }
@@ -142,9 +154,11 @@ class MenuApi {
       );
       Meal meal = new Meal.fromJson(jsonResponse);
       return meal;
-    } on FormatException {
+    } on FormatException catch (e) {
+      print(e.message);
       throw Failure(Constants.BAD_RESPONSE_FORMAT);
-    } on Exception {
+    } on Exception catch (e) {
+      print(e.toString());
       throw Failure(Constants.GENERIC_FAILURE);
     }
   }
@@ -163,9 +177,11 @@ class MenuApi {
       );
       Meal meal = new Meal.fromJson(jsonResponse);
       return meal;
-    } on FormatException {
+    } on FormatException catch (e) {
+      print(e.message);
       throw Failure(Constants.BAD_RESPONSE_FORMAT);
-    } on Exception {
+    } on Exception catch (e) {
+      print(e.toString());
       throw Failure(Constants.GENERIC_FAILURE);
     }
   }
@@ -185,9 +201,11 @@ class MenuApi {
       );
       Approve approve = new Approve.fromJson(jsonResponse);
       return approve;
-    } on FormatException {
+    } on FormatException catch (e) {
+      print(e.message);
       throw Failure(Constants.BAD_RESPONSE_FORMAT);
-    } on Exception {
+    } on Exception catch (e) {
+      print(e.toString());
       throw Failure(Constants.GENERIC_FAILURE);
     }
   }
@@ -201,9 +219,11 @@ class MenuApi {
       var jsonResponse = await ApiUtils.get(uri, headers: headers);
       List<MealItem> mealItems = new List<MealItem>.from(jsonResponse);
       return mealItems;
-    } on FormatException {
+    } on FormatException catch (e) {
+      print(e.message);
       throw Failure(Constants.BAD_RESPONSE_FORMAT);
-    } on Exception {
+    } on Exception catch (e) {
+      print(e.toString());
       throw Failure(Constants.GENERIC_FAILURE);
     }
   }

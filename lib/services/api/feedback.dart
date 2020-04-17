@@ -23,9 +23,11 @@ class FeedbackApi {
       SubmittedFeedbacksList list =
           new SubmittedFeedbacksList.fromJson(jsonResponse);
       return list.feedbacks;
-    } on FormatException {
+    } on FormatException catch (e) {
+      print(e.message);
       throw Failure(Constants.BAD_RESPONSE_FORMAT);
-    } on Exception {
+    } on Exception catch (e) {
+      print(e.toString());
       throw Failure(Constants.GENERIC_FAILURE);
     }
   }
@@ -39,9 +41,11 @@ class FeedbackApi {
       var jsonResponse = await ApiUtils.get(uri, headers: headers);
       List<Response> list = responseFromJson(json.encode(jsonResponse));
       return list;
-    } on FormatException {
+    } on FormatException catch (e) {
+      print(e.message);
       throw Failure(Constants.BAD_RESPONSE_FORMAT);
-    } on Exception {
+    } on Exception catch (e) {
+      print(e.toString());
       throw Failure(Constants.GENERIC_FAILURE);
     }
   }
@@ -62,9 +66,11 @@ class FeedbackApi {
       var jsonResponse = await ApiUtils.post(uri, headers: headers, body: json);
       Feedback feedback = new Feedback.fromJson(jsonResponse);
       return feedback;
-    } on FormatException {
+    } on FormatException catch (e) {
+      print(e.message);
       throw Failure(Constants.BAD_RESPONSE_FORMAT);
-    } on Exception {
+    } on Exception catch (e) {
+      print(e.toString());
       throw Failure(Constants.GENERIC_FAILURE);
     }
   }

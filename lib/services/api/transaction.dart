@@ -22,9 +22,11 @@ class TransactionApi {
       var jsonResponse = await ApiUtils.get(uri, headers: headers);
       MonthlyRebate monthlyRebate = new MonthlyRebate.fromJson(jsonResponse);
       return monthlyRebate;
-    } on FormatException {
+    } on FormatException catch (e) {
+      print(e.message);
       throw Failure(Constants.BAD_RESPONSE_FORMAT);
-    } on Exception {
+    } on Exception catch (e) {
+      print(e.toString());
       throw Failure(Constants.GENERIC_FAILURE);
     }
   }
@@ -38,9 +40,11 @@ class TransactionApi {
       var jsonResponse = await ApiUtils.get(uri, headers: headers);
       YearlyRebate yearlyRebate = new YearlyRebate.fromJson(jsonResponse);
       return yearlyRebate;
-    } on FormatException {
+    } on FormatException catch (e) {
+      print(e.message);
       throw Failure(Constants.BAD_RESPONSE_FORMAT);
-    } on Exception {
+    } on Exception catch (e) {
+      print(e.toString());
       throw Failure(Constants.GENERIC_FAILURE);
     }
   }
@@ -54,9 +58,11 @@ class TransactionApi {
       var jsonResponse = await ApiUtils.get(uri, headers: headers);
       List<Faq> faqList = faqFromJson(json.encode(jsonResponse));
       return faqList;
-    } on FormatException {
+    } on FormatException catch (e) {
+      print(e.message);
       throw Failure(Constants.BAD_RESPONSE_FORMAT);
-    } on Exception {
+    } on Exception catch (e) {
+      print(e.toString());
       throw Failure(Constants.GENERIC_FAILURE);
     }
   }

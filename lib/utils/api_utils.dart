@@ -15,9 +15,11 @@ class ApiUtils {
       final response = await client.get(uri, headers: headers);
       final jsonResponse = ApiUtils.jsonResponse(response);
       return jsonResponse;
-    } on SocketException {
+    } on SocketException catch (e) {
+      print(e.message);
       throw Failure(Constants.NO_INTERNET_CONNECTION);
-    } on HttpException {
+    } on HttpException catch (e) {
+      print(e.message);
       throw Failure(Constants.HTTP_EXCEPTION);
     }
   }
@@ -30,9 +32,11 @@ class ApiUtils {
           await client.post(uri, headers: headers, body: jsonEncode(body));
       final jsonResponse = ApiUtils.jsonResponse(response);
       return jsonResponse;
-    } on SocketException {
+    } on SocketException catch (e) {
+      print(e.message);
       throw Failure(Constants.NO_INTERNET_CONNECTION);
-    } on HttpException {
+    } on HttpException catch (e) {
+      print(e.message);
       throw Failure(Constants.HTTP_EXCEPTION);
     }
   }
@@ -48,9 +52,11 @@ class ApiUtils {
       );
       final jsonResponse = ApiUtils.jsonResponse(response);
       return jsonResponse;
-    } on SocketException {
+    } on SocketException catch (e) {
+      print(e.message);
       throw Failure(Constants.NO_INTERNET_CONNECTION);
-    } on HttpException {
+    } on HttpException catch (e) {
+      print(e.message);
       throw Failure(Constants.HTTP_EXCEPTION);
     }
   }
@@ -63,9 +69,11 @@ class ApiUtils {
           await client.patch(uri, headers: headers, body: jsonEncode(body));
       final jsonResponse = ApiUtils.jsonResponse(response);
       return jsonResponse;
-    } on SocketException {
+    } on SocketException catch (e) {
+      print(e.message);
       throw Failure(Constants.NO_INTERNET_CONNECTION);
-    } on HttpException {
+    } on HttpException catch (e) {
+      print(e.message);
       throw Failure(Constants.HTTP_EXCEPTION);
     }
   }
@@ -77,9 +85,11 @@ class ApiUtils {
       final response = await http.delete(uri, headers: headers);
       final jsonResponse = ApiUtils.jsonResponse(response);
       return jsonResponse;
-    } on SocketException {
+    } on SocketException catch (e) {
+      print(e.message);
       throw Failure(Constants.NO_INTERNET_CONNECTION);
-    } on HttpException {
+    } on HttpException catch (e) {
+      print(e.message);
       throw Failure(Constants.HTTP_EXCEPTION);
     }
   }
@@ -94,20 +104,28 @@ class ApiUtils {
         print(responseJson);
         return responseJson;
       case 400:
+        print(response.body);
         throw BadRequestException(response.body);
       case 401:
+        print(response.body);
         throw UnauthorizedException(response.body);
       case 403:
+        print(response.body);
         throw ForbiddenException(response.body);
       case 404:
+        print(response.body);
         throw NotFoundException(response.body);
       case 409:
+        print(response.body);
         throw ConflictException(response.body);
       case 500:
+        print(response.body);
         throw InternalServerErrorException(response.body);
       case 503:
+        print(response.body);
         throw ServiceUnavailableException(response.body);
       default:
+        print(response.body);
         throw FetchDataException(
           'Error occured while Communication with Server with StatusCode : ${response.statusCode}',
         );

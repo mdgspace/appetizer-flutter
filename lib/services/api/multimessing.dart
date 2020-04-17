@@ -23,9 +23,11 @@ class MultimessingApi {
       List<SwitchableMealsForYourMeal> switchableMeals =
           switchableMealsForYourMealFromJson(json.encode(jsonResponse));
       return switchableMeals;
-    } on FormatException {
+    } on FormatException catch (e) {
+      print(e.message);
       throw Failure(Constants.BAD_RESPONSE_FORMAT);
-    } on Exception {
+    } on Exception catch (e) {
+      print(e.toString());
       throw Failure(Constants.GENERIC_FAILURE);
     }
   }
@@ -39,9 +41,11 @@ class MultimessingApi {
       var jsonResponse = await ApiUtils.get(uri, headers: headers);
       SwitchCount switchCount = new SwitchCount.fromJson(jsonResponse);
       return switchCount;
-    } on FormatException {
+    } on FormatException catch (e) {
+      print(e.message);
       throw Failure(Constants.BAD_RESPONSE_FORMAT);
-    } on Exception {
+    } on Exception catch (e) {
+      print(e.toString());
       throw Failure(Constants.GENERIC_FAILURE);
     }
   }
@@ -62,9 +66,11 @@ class MultimessingApi {
         return true;
       }
       return false;
-    } on FormatException {
+    } on FormatException catch (e) {
+      print(e.message);
       throw Failure(Constants.BAD_RESPONSE_FORMAT);
-    } on Exception {
+    } on Exception catch (e) {
+      print(e.toString());
       throw Failure(Constants.GENERIC_FAILURE);
     }
   }
@@ -80,9 +86,11 @@ class MultimessingApi {
         return true;
       }
       return false;
-    } on FormatException {
+    } on FormatException catch (e) {
+      print(e.message);
       throw Failure(Constants.BAD_RESPONSE_FORMAT);
-    } on Exception {
+    } on Exception catch (e) {
+      print(e.toString());
       throw Failure(Constants.GENERIC_FAILURE);
     }
   }
@@ -95,9 +103,11 @@ class MultimessingApi {
       final jsonResponse = await ApiUtils.get(uri, headers: headers);
       SwitchDetails switchDetails = SwitchDetails.fromJson(jsonResponse);
       return switchDetails;
-    } on FormatException {
+    } on FormatException catch (e) {
+      print(e.message);
       throw Failure(Constants.BAD_RESPONSE_FORMAT);
-    } on Exception {
+    } on Exception catch (e) {
+      print(e.toString());
       throw Failure(Constants.GENERIC_FAILURE);
     }
   }
@@ -111,9 +121,11 @@ class MultimessingApi {
       List<List<dynamic>> switchableHostels =
           switchableHostelsFromJson(json.encode(jsonResponse));
       return switchableHostels;
-    } on FormatException {
+    } on FormatException catch (e) {
+      print(e.message);
       throw Failure(Constants.BAD_RESPONSE_FORMAT);
-    } on Exception {
+    } on Exception catch (e) {
+      print(e.toString());
       throw Failure(Constants.GENERIC_FAILURE);
     }
   }

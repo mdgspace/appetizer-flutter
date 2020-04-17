@@ -33,11 +33,14 @@ class UserApi {
       );
       Login login = new Login.fromJson(jsonResponse);
       return login;
-    } on ForbiddenException {
+    } on ForbiddenException catch (e) {
+      print(e.message);
       throw Failure(Constants.USER_AUTH_WRONG_CREDENTIALS);
-    } on FormatException {
+    } on FormatException catch (e) {
+      print(e.message);
       throw Failure(Constants.BAD_RESPONSE_FORMAT);
-    } on Exception {
+    } on Exception catch (e) {
+      print(e.toString());
       throw Failure(Constants.GENERIC_FAILURE);
     }
   }
@@ -53,9 +56,11 @@ class UserApi {
       );
       Detail detail = new Detail.fromJson(jsonResponse);
       return detail;
-    } on FormatException {
+    } on FormatException catch (e) {
+      print(e.message);
       throw Failure(Constants.BAD_RESPONSE_FORMAT);
-    } on Exception {
+    } on Exception catch (e) {
+      print(e.toString());
       throw Failure(Constants.GENERIC_FAILURE);
     }
   }
@@ -73,9 +78,11 @@ class UserApi {
         return TokenStatus.INVALID_TOKEN;
       }
       return TokenStatus.OK;
-    } on FormatException {
+    } on FormatException catch (e) {
+      print(e.message);
       throw Failure(Constants.BAD_RESPONSE_FORMAT);
-    } on Exception {
+    } on Exception catch (e) {
+      print(e.toString());
       throw Failure(Constants.GENERIC_FAILURE);
     }
   }
@@ -94,9 +101,11 @@ class UserApi {
       }
       Me me = new Me.fromJson(jsonResponse);
       return me;
-    } on FormatException {
+    } on FormatException catch (e) {
+      print(e.message);
       throw Failure(Constants.BAD_RESPONSE_FORMAT);
-    } on Exception {
+    } on Exception catch (e) {
+      print(e.toString());
       throw Failure(Constants.GENERIC_FAILURE);
     }
   }
@@ -117,9 +126,11 @@ class UserApi {
       );
       Me me = new Me.fromJson(jsonResponse);
       return me;
-    } on FormatException {
+    } on FormatException catch (e) {
+      print(e.message);
       throw Failure(Constants.BAD_RESPONSE_FORMAT);
-    } on Exception {
+    } on Exception catch (e) {
+      print(e.toString());
       throw Failure(Constants.GENERIC_FAILURE);
     }
   }
@@ -137,9 +148,11 @@ class UserApi {
       );
       Me me = new Me.fromJson(jsonResponse);
       return me;
-    } on FormatException {
+    } on FormatException catch (e) {
+      print(e.message);
       throw Failure(Constants.BAD_RESPONSE_FORMAT);
-    } on Exception {
+    } on Exception catch (e) {
+      print(e.toString());
       throw Failure(Constants.GENERIC_FAILURE);
     }
   }
@@ -155,9 +168,11 @@ class UserApi {
       );
       Image image = new Image.fromJson(jsonResponse);
       return image;
-    } on FormatException {
+    } on FormatException catch (e) {
+      print(e.message);
       throw Failure(Constants.BAD_RESPONSE_FORMAT);
-    } on Exception {
+    } on Exception catch (e) {
+      print(e.toString());
       throw Failure(Constants.GENERIC_FAILURE);
     }
   }
@@ -179,9 +194,11 @@ class UserApi {
       );
       Detail detail = new Detail.fromJson(jsonResponse);
       return detail;
-    } on FormatException {
+    } on FormatException catch (e) {
+      print(e.message);
       throw Failure(Constants.BAD_RESPONSE_FORMAT);
-    } on Exception {
+    } on Exception catch (e) {
+      print(e.toString());
       throw Failure(Constants.GENERIC_FAILURE);
     }
   }
@@ -199,9 +216,11 @@ class UserApi {
       );
       Detail detail = new Detail.fromJson(jsonResponse);
       return detail;
-    } on FormatException {
+    } on FormatException catch (e) {
+      print(e.message);
       throw Failure(Constants.BAD_RESPONSE_FORMAT);
-    } on Exception {
+    } on Exception catch (e) {
+      print(e.toString());
       throw Failure(Constants.GENERIC_FAILURE);
     }
   }
@@ -220,9 +239,11 @@ class UserApi {
         return userDetails;
       }
       return newUserDetails;
-    } on FormatException {
+    } on FormatException catch (e) {
+      print(e.message);
       throw Failure(Constants.BAD_RESPONSE_FORMAT);
-    } on Exception {
+    } on Exception catch (e) {
+      print(e.toString());
       throw Failure(Constants.GENERIC_FAILURE);
     }
   }
@@ -246,9 +267,11 @@ class UserApi {
       );
       OauthResponse userDetails = new OauthResponse.fromJson(jsonResponse);
       return userDetails;
-    } on FormatException {
+    } on FormatException catch (e) {
+      print(e.message);
       throw Failure(Constants.BAD_RESPONSE_FORMAT);
-    } on Exception {
+    } on Exception catch (e) {
+      print(e.toString());
       throw Failure(Constants.GENERIC_FAILURE);
     }
   }
@@ -261,9 +284,11 @@ class UserApi {
       var jsonResponse = await ApiUtils.get(uri, headers: headers);
       Notification notification = new Notification.fromJson(jsonResponse);
       return notification.results;
-    } on FormatException {
+    } on FormatException catch (e) {
+      print(e.message);
       throw Failure(Constants.BAD_RESPONSE_FORMAT);
-    } on Exception {
+    } on Exception catch (e) {
+      print(e.toString());
       throw Failure(Constants.GENERIC_FAILURE);
     }
   }
