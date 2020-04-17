@@ -33,12 +33,12 @@ class StartUpViewModel extends BaseModel {
       _navigationService.pushNamedAndRemoveUntil('on_boarding');
     } else {
       if (_localStorageService.isLoggedIn) {
-        _navigationService.pushNamed(
+        _navigationService.pushNamedAndRemoveUntil(
           'home',
           arguments: _localStorageService.token,
         );
       } else {
-        _navigationService.pushNamed(
+        _navigationService.pushNamedAndRemoveUntil(
           'login',
           arguments: _code,
         );
