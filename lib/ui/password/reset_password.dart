@@ -48,6 +48,14 @@ class _ResetPasswordState extends State<ResetPassword> {
       builder: (context, model, child) => Scaffold(
         key: resetPasswordViewScaffoldKey,
         resizeToAvoidBottomInset: true,
+        appBar: AppBar(
+          title: Text(
+            "Reset Password",
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
+        ),
         body: SingleChildScrollView(
           child: Column(
             children: <Widget>[
