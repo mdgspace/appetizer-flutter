@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:appetizer/constants.dart';
 import 'package:appetizer/enums/token_status.dart';
 import 'package:appetizer/globals.dart';

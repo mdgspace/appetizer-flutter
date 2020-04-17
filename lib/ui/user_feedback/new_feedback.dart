@@ -2,6 +2,7 @@ import 'package:appetizer/globals.dart';
 import 'package:appetizer/services/api/feedback.dart';
 import 'package:appetizer/ui/base_view.dart';
 import 'package:appetizer/ui/components/alert_dialog.dart';
+import 'package:appetizer/utils/always_disabled_focus_node.dart';
 import 'package:appetizer/utils/date_time_utils.dart';
 import 'package:appetizer/viewmodels/feedback_models/new_feedback_model.dart';
 import 'package:flutter/material.dart';
@@ -51,112 +52,109 @@ class _NewFeedbackState extends State<NewFeedback> {
           ],
         ),
         body: SingleChildScrollView(
-          child: Center(
-            child: Container(
-              child: Padding(
-                padding: const EdgeInsets.all(35.0),
-                child: Form(
-                  key: _formKey,
-                  child: new Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      new Text(
-                        "Title",
-                      ),
-                      Container(
-                        child: new TextFormField(
-                          decoration: InputDecoration(hintText: "Enter Title"),
-                          validator: (value) {
-                            if (value.isEmpty) {
-                              return "Title can\'t be empty";
-                            }
-                            return null;
-                          },
-                          onSaved: (value) {
-                            title = value;
-                          },
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 40),
-                        child: new Text(
-                          "Type of Feedback",
-                        ),
-                      ),
-                      DropdownButton<String>(
-                        hint: new Text(
-                          FeedbackApi.resolveFeedbackTypeCode(feedbackType),
-                          style: TextStyle(color: Colors.black),
-                        ),
-                        items: ["gn", "am", "hc", "tm", "wm", "ws", "dn"]
-                            .map((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Container(
-                              child: Text(
-                                  FeedbackApi.resolveFeedbackTypeCode(value)),
-                            ),
-                          );
-                        }).toList(),
-                        onChanged: (String newValue) {
-                          setState(() {
-                            feedbackType = newValue;
-                          });
-                        },
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 30),
-                        child: new Text(
-                          "Date",
-                        ),
-                      ),
-                      Container(
-                        child: new TextField(
-                          decoration: InputDecoration(
-                            hintText: date.day.toString() +
-                                " " +
-                                DateTimeUtils.getMonthName(date) +
-                                " " +
-                                date.year.toString(),
-                            hintStyle: new TextStyle(
-                              color: Colors.black,
-                            ),
-                          ),
-                          onTap: () => _selectDate(context),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 45),
-                        child: new Text(
-                          "Description",
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 15),
-                        child: TextFormField(
-                          decoration:
-                              InputDecoration(border: OutlineInputBorder()),
-                          maxLines: 7,
-                          validator: (value) {
-                            if (value.length < 50) {
-                              return "Description must be atleast 50 charecters";
-                            }
-                            return null;
-                          },
-                          onSaved: (value) {
-                            description = value;
-                          },
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 35),
-                        child: new Center(
-                            child: new Image.asset(
-                                "assets/icons/feedback_dish.png")),
-                      ),
-                    ],
+          child: Container(
+            padding: const EdgeInsets.all(36),
+            child: Form(
+              key: _formKey,
+              child: new Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  new Text(
+                    "Title",
                   ),
-                ),
+                  Container(
+                    child: new TextFormField(
+                      decoration: InputDecoration(hintText: "Enter Title"),
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return "Title can\'t be empty";
+                        }
+                        return null;
+                      },
+                      onSaved: (value) {
+                        title = value;
+                      },
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 24),
+                    child: new Text(
+                      "Type of Feedback",
+                    ),
+                  ),
+                  DropdownButton<String>(
+                    hint: new Text(
+                      FeedbackApi.resolveFeedbackTypeCode(feedbackType),
+                      style: TextStyle(color: Colors.black),
+                    ),
+                    items: ["gn", "am", "hc", "tm", "wm", "ws", "dn"]
+                        .map((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Container(
+                          child: Text(
+                            FeedbackApi.resolveFeedbackTypeCode(value),
+                          ),
+                        ),
+                      );
+                    }).toList(),
+                    onChanged: (String newValue) {
+                      setState(() {
+                        feedbackType = newValue;
+                      });
+                    },
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 24),
+                    child: new Text(
+                      "Date",
+                    ),
+                  ),
+                  Container(
+                    child: new TextField(
+                      focusNode: AlwaysDisabledFocusNode(),
+                      decoration: InputDecoration(
+                        hintText: date.day.toString() +
+                            " " +
+                            DateTimeUtils.getMonthName(date) +
+                            " " +
+                            date.year.toString(),
+                        hintStyle: new TextStyle(
+                          color: Colors.black,
+                        ),
+                      ),
+                      onTap: () => _selectDate(context),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 24),
+                    child: new Text(
+                      "Description",
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 12),
+                    child: TextFormField(
+                      decoration: InputDecoration(border: OutlineInputBorder()),
+                      maxLines: 7,
+                      validator: (value) {
+                        if (value.length < 50) {
+                          return "Description must be atleast 50 charecters";
+                        }
+                        return null;
+                      },
+                      onSaved: (value) {
+                        description = value;
+                      },
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 24),
+                    child: new Center(
+                      child: new Image.asset("assets/icons/feedback_dish.png"),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
@@ -176,11 +174,12 @@ class _NewFeedbackState extends State<NewFeedback> {
   Future submitFeedback(NewFeedbackModel model) async {
     showCustomDialog(context, "Sending Feedback");
     await model.postNewFeedback(feedbackType, title, description, date);
-    await new Future.delayed(new Duration(seconds: 2));
     if (model.newFeedback.id != null) {
       Navigator.pop(context);
-      showSnackBar(newFeedbackViewScaffoldKey, "Thank You For Your Feedback!");
+      showSnackBar(userFeedbackViewScaffoldKey, "Thank You For Your Feedback!");
       await new Future.delayed(new Duration(seconds: 1));
+      Navigator.pop(context);
+    } else {
       Navigator.pop(context);
     }
   }
