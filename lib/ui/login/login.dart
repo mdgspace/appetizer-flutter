@@ -60,6 +60,9 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
   }
 
   void onModelReady(LoginModel model) {
+    Future.delayed(Duration(seconds: 1), () {
+      model.currentUser = null;
+    });
     if (widget.code != null && widget.code != "") {
       SchedulerBinding.instance
           .addPostFrameCallback((_) => verifyUser(context, model));

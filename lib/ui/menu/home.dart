@@ -472,47 +472,7 @@ class _HomeState extends State<Home> {
                         title: Text("Log Out"),
                         onTap: () {
                           Navigator.pop(context);
-                          showDialog(
-                              context: context,
-                              builder: (BuildContext alertContext) {
-                                return AlertDialog(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  title: new Text(
-                                    "Log Out",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  content: new Text(
-                                      "Are you sure you want to log out?"),
-                                  actions: <Widget>[
-                                    new FlatButton(
-                                      onPressed: () {
-                                        Navigator.pop(alertContext);
-                                      },
-                                      child: new Text(
-                                        "CANCEL",
-                                        style: TextStyle(
-                                            color: appiYellow,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                    new FlatButton(
-                                        child: new Text(
-                                          "LOG OUT",
-                                          style: TextStyle(
-                                              color: appiYellow,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        onPressed: () async {
-                                          Navigator.pop(alertContext);
-                                          model.logout();
-                                        }),
-                                  ],
-                                );
-                              });
+                          model.onLogoutTap();
                         }),
                   ),
                 ],

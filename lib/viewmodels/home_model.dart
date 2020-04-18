@@ -4,6 +4,7 @@ import 'package:appetizer/locator.dart';
 import 'package:appetizer/models/failure_model.dart';
 import 'package:appetizer/services/api/multimessing.dart';
 import 'package:appetizer/services/api/user.dart';
+import 'package:appetizer/services/dialog_service.dart';
 import 'package:appetizer/services/navigation_service.dart';
 import 'package:appetizer/services/push_notification_service.dart';
 import 'package:appetizer/viewmodels/base_model.dart';
@@ -15,6 +16,7 @@ class HomeModel extends BaseModel {
   PushNotificationService _pushNotificationService =
       locator<PushNotificationService>();
   NavigationService _navigationService = locator<NavigationService>();
+  DialogService _dialogService = locator<DialogService>();
 
   String _selectedHostel = "Your Meals";
 
@@ -54,15 +56,16 @@ class HomeModel extends BaseModel {
     }
   }
 
+  Future onModelReady() async {
+    await setSwitchableHostels();
+    await fetchInitialCheckedStatus();
+  }
+
   Future logout() async {
+    setState(ViewState.Busy);
     try {
       await _userApi.userLogout();
-      _pushNotificationService.fcm
-          .unsubscribeFromTopic("debug-" + currentUser.hostelCode);
-      _navigationService.pushNamedAndRemoveUntil("login");
-      currentUser = null;
-      isLoggedIn = false;
-      token = null;
+      setState(ViewState.Idle);
     } on Failure catch (f) {
       print(f.message);
       setErrorMessage(f.message);
@@ -70,8 +73,22 @@ class HomeModel extends BaseModel {
     }
   }
 
-  Future onModelReady() async {
-    await setSwitchableHostels();
-    await fetchInitialCheckedStatus();
+  Future onLogoutTap() async {
+    var _dialog = await _dialogService.showConfirmationDialog(
+      title: "Log Out",
+      description: "Are you sure you want to log out?",
+      confirmationTitle: "LOGOUT",
+    );
+
+    if (_dialog.confirmed) {
+      _dialogService.showCustomProgressDialog(title: "Logging You Out");
+      await logout();
+      _dialogService.dialogNavigationKey.currentState.pop();
+      _pushNotificationService.fcm
+          .unsubscribeFromTopic("release-" + currentUser.hostelCode);
+      _navigationService.pushNamedAndRemoveUntil("login");
+      isLoggedIn = false;
+      token = null;
+    }
   }
 }
