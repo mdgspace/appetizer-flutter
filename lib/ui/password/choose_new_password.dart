@@ -1,11 +1,8 @@
-import 'dart:async';
 import 'package:appetizer/globals.dart';
-import 'package:appetizer/models/user/login.dart';
 import 'package:appetizer/models/user/oauth.dart';
 import 'package:appetizer/ui/base_view.dart';
 import 'package:appetizer/viewmodels/password_models/new_password_model.dart';
 import 'package:flutter/material.dart';
-import 'package:appetizer/ui/components/alert_dialog.dart';
 import 'package:appetizer/colors.dart';
 
 class ChooseNewPass extends StatefulWidget {
@@ -237,54 +234,8 @@ class _ChooseNewPassState extends State<ChooseNewPass> {
     final form = formKey.currentState;
     if (form.validate()) {
       form.save();
-      loginUser(model);
-    }
-  }
-
-  Future<void> loginUser(NewPasswordModel model) async {
-    showCustomDialog(context, "Logging You In");
-    await model.oAuthComplete(
-      widget.studentData.enrNo,
-      password,
-      email,
-      int.parse(contactNo),
-    );
-    if (model.oauthResponse.token != null) {
-      StudentData studentData = model.oauthResponse.studentData;
-      Navigator.pop(context);
-      showCustomDialog(context, "Logging You In");
-      Login userDetails = Login(
-        email: studentData.email,
-        hostelName: studentData.hostelName,
-        hostelCode: studentData.hostelCode,
-        roomNo: studentData.roomNo,
-        enrNo: studentData.enrNo,
-        name: studentData.name,
-        contactNo: studentData.contactNo,
-        branch: studentData.branch,
-        imageUrl: studentData.imageUrl,
-        isCheckedOut: studentData.isCheckedOut,
-        lastUpdated: studentData.lastUpdated,
-        leavesLeft: studentData.leavesLeft,
-        dob: studentData.dob,
-        gender: studentData.gender,
-        degree: studentData.degree,
-        admissionYear: studentData.admissionYear,
-        role: studentData.role,
-        token: model.oauthResponse.token,
-      );
-      model.currentUser = userDetails;
-      await new Future.delayed(const Duration(milliseconds: 500));
-      Navigator.pop(context);
-      Navigator.pushReplacementNamed(
-        context,
-        "home",
-        arguments: model.oauthResponse.token,
-      );
-    } else {
-      //TODO
-      Navigator.pop(context);
-      print("Error");
+      model.loginUser(
+          widget.studentData.enrNo, password, email, int.parse(contactNo));
     }
   }
 }
