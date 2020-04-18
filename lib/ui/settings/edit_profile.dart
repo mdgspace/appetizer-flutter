@@ -6,7 +6,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:appetizer/colors.dart';
-import 'package:appetizer/ui/components/alert_dialog.dart';
 
 class EditProfile extends StatefulWidget {
   @override
@@ -193,17 +192,16 @@ class _EditProfileState extends State<EditProfile> {
     );
   }
 
-  void _validateAndSave(EditProfileModel model) {
+  Future<void> _validateAndSave(EditProfileModel model) async {
     final form = _formKey.currentState;
     if (form.validate()) {
       form.save();
-      saveDetails(model);
+      form.reset();
+      FocusScope.of(context).requestFocus(new FocusNode());
+      await model.saveUserDetails(_email, _contactNo);
+      Future.delayed(Duration(seconds: 1), () {
+        Navigator.pop(context);
+      });
     }
-  }
-
-  Future saveDetails(EditProfileModel model) async {
-    showCustomDialog(context, "Saving Details");
-    await model.updateUserDetails(_email, _contactNo);
-    Navigator.pop(context);
   }
 }
