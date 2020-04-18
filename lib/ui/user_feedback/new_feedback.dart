@@ -1,7 +1,6 @@
 import 'package:appetizer/globals.dart';
 import 'package:appetizer/services/api/feedback.dart';
 import 'package:appetizer/ui/base_view.dart';
-import 'package:appetizer/ui/components/alert_dialog.dart';
 import 'package:appetizer/utils/always_disabled_focus_node.dart';
 import 'package:appetizer/utils/date_time_utils.dart';
 import 'package:appetizer/viewmodels/feedback_models/new_feedback_model.dart';
@@ -39,6 +38,7 @@ class _NewFeedbackState extends State<NewFeedback> {
             ),
             GestureDetector(
               onTap: () {
+                FocusScope.of(context).requestFocus(new FocusNode());
                 _validateForm(model);
               },
               child: Padding(
@@ -167,20 +167,7 @@ class _NewFeedbackState extends State<NewFeedback> {
     final form = _formKey.currentState;
     if (form.validate()) {
       form.save();
-      submitFeedback(model);
-    }
-  }
-
-  Future submitFeedback(NewFeedbackModel model) async {
-    showCustomDialog(context, "Sending Feedback");
-    await model.postNewFeedback(feedbackType, title, description, date);
-    if (model.newFeedback.id != null) {
-      Navigator.pop(context);
-      showSnackBar(userFeedbackViewScaffoldKey, "Thank You For Your Feedback!");
-      await new Future.delayed(new Duration(seconds: 1));
-      Navigator.pop(context);
-    } else {
-      Navigator.pop(context);
+      model.postNewFeedback(feedbackType, title, description, date);
     }
   }
 
