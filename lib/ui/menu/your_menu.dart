@@ -42,31 +42,32 @@ class _YourMenuState extends State<YourMenu> {
   @override
   Widget build(BuildContext context) {
     return BaseView<YourMenuModel>(
-        onModelReady: (model) => model.selectedWeekMenuYourMeals(weekId),
-        builder: (context, model, child) => model.state == ViewState.Busy
-            ? ProgressBar()
-            : model.state == ViewState.Error
-                ? AppiErrorWidget()
-                : Builder(
-                    builder: (context) {
-                      Day currentDayMeal;
+      onModelReady: (model) => model.selectedWeekMenuYourMeals(weekId),
+      builder: (context, model, child) => model.state == ViewState.Busy
+          ? ProgressBar()
+          : model.state == ViewState.Error
+              ? AppiErrorWidget()
+              : Builder(
+                  builder: (context) {
+                    Day currentDayMeal;
 
-                      model.selectedWeekYourMeals.days.forEach((day) {
-                        if (day.date.weekday == selectedDateTime.weekday) {
-                          currentDayMeal = day;
-                        }
-                      });
-                      if (currentDayMeal == null) {
-                        return _menuUnavailableForSingleDay(context);
+                    model.selectedWeekYourMeals.days.forEach((day) {
+                      if (day.date.weekday == selectedDateTime.weekday) {
+                        currentDayMeal = day;
                       }
-                      final dailyItems = model.selectedWeekYourMeals.dailyItems;
-                      return DayMenu(
-                        currentDayMeal,
-                        dailyItems,
-                        0,
-                      );
-                    },
-                  ));
+                    });
+                    if (currentDayMeal == null) {
+                      return _menuUnavailableForSingleDay(context);
+                    }
+                    final dailyItems = model.selectedWeekYourMeals.dailyItems;
+                    return DayMenu(
+                      currentDayMeal,
+                      dailyItems,
+                      0,
+                    );
+                  },
+                ),
+    );
   }
 
   Widget _menuUnavailableForSingleDay(context) => Column(

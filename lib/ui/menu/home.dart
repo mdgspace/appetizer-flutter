@@ -32,67 +32,6 @@ class _HomeState extends State<Home> {
   String selectedHostelName;
   CurrentDateModel currentDateModel;
 
-  Future<void> onModelReady(HomeModel model) async {
-    _checkVersionAndPlayStoreLink(model);
-  }
-
-  void _checkVersionAndPlayStoreLink(HomeModel model) {
-    VersionCheckApi().checkVersion(model.appetizerVersion).then((version) {
-      if (version.isExpired) {
-        showDialog(
-            barrierDismissible: false,
-            context: context,
-            builder: (BuildContext alertContext) {
-              return AlertDialog(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                title: new Text(
-                  "Current Version Expired",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                content: new Text(
-                  "Your Appetizer App is out of date. You need to update the app to continue!",
-                ),
-                actions: <Widget>[
-                  new FlatButton(
-                    onPressed: () {
-                      Navigator.pop(alertContext);
-                    },
-                    child: new Text(
-                      "CANCEL",
-                      style: TextStyle(
-                        color: appiYellow,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  new FlatButton(
-                    child: new Text(
-                      "UPDATE",
-                      style: TextStyle(
-                        color: appiYellow,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    onPressed: () async {
-                      Navigator.pop(alertContext);
-                      if (await canLaunch(model.googlePlayLink)) {
-                        await launch(model.googlePlayLink);
-                      } else {
-                        throw 'Could not launch ${model.googlePlayLink}';
-                      }
-                    },
-                  ),
-                ],
-              );
-            });
-      }
-    });
-  }
-
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
