@@ -1,7 +1,5 @@
 import 'package:appetizer/colors.dart';
 import 'package:appetizer/globals.dart';
-import 'package:appetizer/services/api/leave.dart';
-import 'package:appetizer/services/api/version_check.dart';
 import 'package:appetizer/ui/FAQ/faq_screen.dart';
 import 'package:appetizer/ui/base_view.dart';
 import 'package:appetizer/ui/date_picker/date_picker.dart';
@@ -17,7 +15,6 @@ import 'package:appetizer/viewmodels/current_date_model.dart';
 import 'package:appetizer/viewmodels/home_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class Home extends StatefulWidget {
   final String token;
@@ -48,7 +45,7 @@ class _HomeState extends State<Home> {
         ],
         child: Scaffold(
           key: homeViewScaffoldKey,
-          floatingActionButton: !isCheckedOut ? _fab(context) : null,
+          floatingActionButton: !isCheckedOut ? _fab(context, model) : null,
           appBar: _appBar(context, model),
           body: SafeArea(
             child: Column(
@@ -463,55 +460,9 @@ class _HomeState extends State<Home> {
     );
   }
 
-  Widget _fab(context) {
+  Widget _fab(context, HomeModel model) {
     return FloatingActionButton(
-      onPressed: () {
-        showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                title: new Text(
-                  "Check Out",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                content: new Text("Are you sure you would like to check out?"),
-                actions: <Widget>[
-                  new FlatButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: new Text(
-                      "CANCEL",
-                      style: TextStyle(
-                        color: appiYellow,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  new FlatButton(
-                    child: new Text(
-                      "CHECK OUT",
-                      style: TextStyle(
-                          color: appiYellow, fontWeight: FontWeight.bold),
-                    ),
-                    onPressed: () async {
-                      Navigator.pop(context);
-                      LeaveApi().check().then((check) {
-                        setState(() {
-                          isCheckedOut = check.isCheckedOut;
-                        });
-                      });
-                    },
-                  ),
-                ],
-              );
-            });
-      },
+      onPressed: model.onCheckoutTap,
       backgroundColor: appiYellowLogo,
       child: Image.asset(
         "assets/images/checkOut.png",

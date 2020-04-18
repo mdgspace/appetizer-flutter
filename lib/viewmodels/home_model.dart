@@ -3,7 +3,9 @@ import 'package:appetizer/globals.dart';
 import 'package:appetizer/locator.dart';
 import 'package:appetizer/models/dialog_models.dart';
 import 'package:appetizer/models/failure_model.dart';
+import 'package:appetizer/models/leaves/check.dart';
 import 'package:appetizer/models/version_check.dart';
+import 'package:appetizer/services/api/leave.dart';
 import 'package:appetizer/services/api/multimessing.dart';
 import 'package:appetizer/services/api/user.dart';
 import 'package:appetizer/services/api/version_check.dart';
@@ -17,6 +19,7 @@ import 'package:url_launcher/url_launcher.dart';
 class HomeModel extends BaseModel {
   MultimessingApi _multimessingApi = locator<MultimessingApi>();
   UserApi _userApi = locator<UserApi>();
+  LeaveApi _leaveApi = locator<LeaveApi>();
   VersionCheckApi _versionCheckApi = locator<VersionCheckApi>();
   PushNotificationService _pushNotificationService =
       locator<PushNotificationService>();
@@ -122,6 +125,30 @@ class HomeModel extends BaseModel {
       _navigationService.pushNamedAndRemoveUntil("login");
       isLoggedIn = false;
       token = null;
+    }
+  }
+
+  Future toggleCheckState() async {
+    try {
+      Check check = await _leaveApi.check();
+      isCheckedOut = check.isCheckedOut;
+    } on Failure catch (f) {
+      print(f.message);
+      setErrorMessage(f.message);
+      setState(ViewState.Error);
+    }
+  }
+
+  Future onCheckoutTap() async {
+    var dialogResponse = await _dialogService.showConfirmationDialog(
+        title: "Check Out",
+        description: "Are you sure you would like to check out?",
+        confirmationTitle: "CHECK OUT");
+
+    if (dialogResponse.confirmed) {
+      await toggleCheckState();
+      if (isCheckedOut)
+        showSnackBar(myLeavesViewScaffoldKey, "You have checked out");
     }
   }
 }
