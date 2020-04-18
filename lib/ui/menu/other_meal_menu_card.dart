@@ -92,7 +92,9 @@ class _OtherMealsMenuCardState extends State<OtherMealsMenuCard> {
                             ),
                           ),
                         ),
-                        _getSwitchIcon(),
+                        widget.meal.items.isNotEmpty
+                            ? _getSwitchIcon()
+                            : Container(),
                       ],
                     ),
                     Column(
