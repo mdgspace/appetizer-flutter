@@ -92,7 +92,7 @@ class HomeModel extends BaseModel {
   }
 
   Future onModelReady() async {
-    await checkVersion();
+    checkVersion();
     await setSwitchableHostels();
     await fetchInitialCheckedStatus();
   }
