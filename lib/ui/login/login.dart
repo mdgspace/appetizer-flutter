@@ -2,11 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'package:appetizer/colors.dart';
 import 'package:appetizer/enums/view_state.dart';
-import 'package:appetizer/models/user/oauth.dart';
-import 'package:appetizer/models/user/login.dart' as login;
 import 'package:appetizer/ui/base_view.dart';
-import 'package:appetizer/ui/components/alert_dialog.dart';
-import 'package:appetizer/ui/password/choose_new_password.dart';
 import 'package:appetizer/globals.dart';
 import 'package:appetizer/viewmodels/login_models/login_model.dart';
 import 'package:flare_flutter/flare_actor.dart';
@@ -65,7 +61,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
     });
     if (widget.code != null && widget.code != "") {
       SchedulerBinding.instance
-          .addPostFrameCallback((_) => verifyUser(context, model));
+          .addPostFrameCallback((_) => model.verifyUser(widget.code));
     }
 
     _chefCorrectController =
@@ -439,64 +435,5 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
   void _channelILogin() {
     launch(url);
     exit(0);
-  }
-
-  Future verifyUser(BuildContext context, LoginModel model) async {
-    showCustomDialog(context, "Fetching Details");
-    await model.getOAuthResponse(widget.code);
-    print("Code " + widget.code);
-    if (model.oauthResponse != null) {
-      StudentData studentData = model.oauthResponse.studentData;
-      if (model.oauthResponse.isNew) {
-        Navigator.pop(context);
-        showCustomDialog(context, "Redirecting");
-        await new Future.delayed(
-          new Duration(
-            milliseconds: 500,
-          ),
-        );
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) {
-            return ChooseNewPass(
-              studentData: studentData,
-            );
-          }),
-        );
-      } else {
-        if (model.oauthResponse.token != null) {
-          Navigator.pop(context);
-          showCustomDialog(context, "Logging You In");
-          login.Login userDetails = login.Login(
-            email: studentData.email,
-            hostelName: studentData.hostelName,
-            hostelCode: studentData.hostelCode,
-            roomNo: studentData.roomNo,
-            enrNo: studentData.enrNo,
-            name: studentData.name,
-            contactNo: studentData.contactNo,
-            branch: studentData.branch,
-            imageUrl: studentData.imageUrl,
-            isCheckedOut: studentData.isCheckedOut,
-            lastUpdated: studentData.lastUpdated,
-            leavesLeft: studentData.leavesLeft,
-            dob: studentData.dob,
-            gender: studentData.gender,
-            degree: studentData.degree,
-            admissionYear: studentData.admissionYear,
-            role: studentData.role,
-            token: model.oauthResponse.token,
-          );
-          model.currentUser = userDetails;
-          await new Future.delayed(const Duration(milliseconds: 500));
-          Navigator.pop(context);
-          Navigator.pushReplacementNamed(
-            context,
-            "home",
-            arguments: model.oauthResponse.token,
-          );
-        }
-      }
-    }
   }
 }
