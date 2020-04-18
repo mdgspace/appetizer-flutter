@@ -6,11 +6,12 @@ class DialogRequest {
   final String buttonTitle;
   final String cancelTitle;
 
-  DialogRequest(
-      {@required this.title,
-      @required this.description,
-      @required this.buttonTitle,
-      this.cancelTitle});
+  DialogRequest({
+    @required this.title,
+    this.description,
+    this.buttonTitle,
+    this.cancelTitle,
+  });
 }
 
 class DialogResponse {
