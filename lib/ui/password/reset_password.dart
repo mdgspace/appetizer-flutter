@@ -1,7 +1,5 @@
-import 'package:appetizer/enums/view_state.dart';
 import 'package:appetizer/globals.dart';
 import 'package:appetizer/ui/base_view.dart';
-import 'package:appetizer/ui/components/alert_dialog.dart';
 import 'package:appetizer/viewmodels/password_models/reset_password_model.dart';
 import 'package:flutter/material.dart';
 import 'package:appetizer/colors.dart';
@@ -183,20 +181,14 @@ class _ResetPasswordState extends State<ResetPassword> {
                             ),
                             onPressed: () async {
                               if (_validateAndSave()) {
-                                showCustomDialog(context, "Updating Password");
-                                await model.resetPassword(
+                                _formKey.currentState.reset();
+                                FocusScope.of(context)
+                                    .requestFocus(new FocusNode());
+                                await model.onResetPasswordTapped(
                                     oldPassword, newPassword);
-                                if (model.state != ViewState.Error) {
-                                  showSnackBar(resetPasswordViewScaffoldKey,
-                                      "Password changed successfully");
-                                } else {
-                                  showSnackBar(resetPasswordViewScaffoldKey,
-                                      model.errorMessage);
-                                }
-                                setState(() {
+                                Future.delayed(Duration(seconds: 1), () {
                                   Navigator.pop(context);
                                 });
-                                _formKey.currentState.reset();
                               }
                             },
                           ),
