@@ -1,8 +1,6 @@
-import 'package:appetizer/enums/view_state.dart';
 import 'package:appetizer/globals.dart';
 import 'package:appetizer/strings.dart';
 import 'package:appetizer/ui/base_view.dart';
-import 'package:appetizer/ui/components/alert_dialog.dart';
 import 'package:appetizer/viewmodels/password_models/forgot_password_model.dart';
 import 'package:flutter/material.dart';
 import 'package:appetizer/colors.dart';
@@ -130,7 +128,7 @@ class _ForgotPassState extends State<ForgotPass> {
                       onPressed: () {
                         formKey.currentState.save();
                         if (formKey.currentState.validate()) {
-                          _sendInstruction(model);
+                          model.sendResetEmail(_email);
                         }
                       },
                     ),
@@ -152,21 +150,5 @@ class _ForgotPassState extends State<ForgotPass> {
       return 'Enter Valid Email';
     else
       return null;
-  }
-
-  _sendInstruction(ForgotPasswordModel model) async {
-    showCustomDialog(context, "Sending Email");
-    await model.sendResetEmail(_email);
-    if (model.state != ViewState.Error) {
-      showSnackBar(forgotPasswordViewScaffoldKey, "link has been emailed");
-      Future.delayed(new Duration(seconds: 2), _popContext);
-    } else {
-      showSnackBar(forgotPasswordViewScaffoldKey, model.errorMessage);
-      _popContext();
-    }
-  }
-
-  void _popContext() {
-    Navigator.pop(context);
   }
 }
