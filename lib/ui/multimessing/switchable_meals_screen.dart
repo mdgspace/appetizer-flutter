@@ -15,11 +15,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 class SwitchableMealsScreen extends StatefulWidget {
   final int id;
-  final int weekId;
-  final int model;
 
-  const SwitchableMealsScreen({Key key, this.id, this.weekId, this.model})
-      : super(key: key);
+  const SwitchableMealsScreen({Key key, this.id}) : super(key: key);
 
   @override
   _SwitchableMealsState createState() => _SwitchableMealsState();

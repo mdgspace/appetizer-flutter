@@ -148,7 +148,7 @@ class HomeModel extends BaseModel {
     if (dialogResponse.confirmed) {
       await toggleCheckState();
       if (isCheckedOut)
-        showSnackBar(myLeavesViewScaffoldKey, "You have checked out");
+        showSnackBar(homeViewScaffoldKey, "You have checked out");
     }
   }
 }

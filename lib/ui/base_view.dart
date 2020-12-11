@@ -7,8 +7,16 @@ class BaseView<T extends BaseModel> extends StatefulWidget {
   final Widget Function(BuildContext context, T model, Widget child) builder;
   final Function(T) onModelReady;
   final Function(T) onModelDestroy;
+  final Function(Widget, T) onDidUpdateWidget;
+  final Function(T) onDidChangeDependencies;
 
-  BaseView({this.builder, this.onModelReady, this.onModelDestroy});
+  BaseView({
+    this.builder,
+    this.onModelReady,
+    this.onModelDestroy,
+    this.onDidUpdateWidget,
+    this.onDidChangeDependencies,
+  });
 
   @override
   _BaseViewState<T> createState() => _BaseViewState<T>();
@@ -23,6 +31,22 @@ class _BaseViewState<T extends BaseModel> extends State<BaseView<T>> {
       widget.onModelReady(model);
     }
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    if (widget.onDidChangeDependencies != null) {
+      widget.onDidChangeDependencies(model);
+    }
+    super.didChangeDependencies();
+  }
+
+  @override
+  void didUpdateWidget(Widget oldWidget) {
+    if (widget.onDidUpdateWidget != null) {
+      widget.onDidUpdateWidget(oldWidget, model);
+    }
+    super.didUpdateWidget(oldWidget);
   }
 
   @override

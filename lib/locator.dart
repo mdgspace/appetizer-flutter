@@ -20,7 +20,9 @@ import 'package:appetizer/viewmodels/leaves_models/leave_timeline_model.dart';
 import 'package:appetizer/viewmodels/leaves_models/my_leaves_model.dart';
 import 'package:appetizer/viewmodels/login_models/login_model.dart';
 import 'package:appetizer/viewmodels/menu_models/menu_cards_model.dart';
+import 'package:appetizer/viewmodels/menu_models/other_menu_card_model.dart';
 import 'package:appetizer/viewmodels/menu_models/other_menu_model.dart';
+import 'package:appetizer/viewmodels/menu_models/your_menu_card_model.dart';
 import 'package:appetizer/viewmodels/menu_models/your_menu_model.dart';
 import 'package:appetizer/viewmodels/multimessing_models/qr_genrator_model.dart';
 import 'package:appetizer/viewmodels/multimessing_models/switchable_meals_model.dart';
@@ -85,4 +87,6 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => MySwitchesModel());
   locator.registerFactory(() => SwitchStatusCardModel());
   locator.registerFactory(() => HomeModel());
+  locator.registerFactory(() => YourMenuCardModel());
+  locator.registerFactory(() => OtherMenuCardModel());
 }

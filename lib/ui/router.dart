@@ -5,6 +5,7 @@ import 'package:appetizer/ui/leave_history/leave_history_screen.dart';
 import 'package:appetizer/ui/login/login.dart';
 import 'package:appetizer/ui/menu/home.dart';
 import 'package:appetizer/ui/multimessing/confirmed_switch_screen.dart';
+import 'package:appetizer/ui/multimessing/switchable_meals_screen.dart';
 import 'package:appetizer/ui/my_leaves/my_leaves_screen.dart';
 import 'package:appetizer/ui/my_rebates/my_rebates_screen.dart';
 import 'package:appetizer/ui/my_switches/my_switches_screen.dart';
@@ -76,6 +77,9 @@ class Router {
         return MaterialPageRoute(builder: (_) => ConfirmedSwitchScreen());
       case 'new_feedback':
         return MaterialPageRoute(builder: (_) => NewFeedback());
+      case 'switchable_meals_screen':
+        var id = settings.arguments as int;
+        return MaterialPageRoute(builder: (_) => SwitchableMealsScreen(id: id));
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

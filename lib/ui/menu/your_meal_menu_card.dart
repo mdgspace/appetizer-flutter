@@ -1,15 +1,12 @@
 import 'package:appetizer/globals.dart';
 import 'package:appetizer/models/menu/week.dart';
-import 'package:appetizer/services/api/leave.dart';
-import 'package:appetizer/services/api/multimessing.dart';
-import 'package:appetizer/ui/components/alert_dialog.dart';
+import 'package:appetizer/ui/base_view.dart';
 import 'package:appetizer/ui/multimessing/qr_generator_widget.dart';
-import 'package:appetizer/ui/multimessing/switchable_meals_screen.dart';
 import 'package:appetizer/ui/user_feedback/new_feedback.dart';
-import 'package:appetizer/utils/date_time_utils.dart';
 import 'package:appetizer/utils/get_day_and_date_for_meal_card.dart';
 import 'package:appetizer/utils/get_leave_color_from_leave_status.dart';
 import 'package:appetizer/utils/menu_utils.dart';
+import 'package:appetizer/viewmodels/menu_models/your_menu_card_model.dart';
 import 'package:appetizer/viewmodels/menu_models/your_menu_model.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -27,113 +24,113 @@ class YourMealsMenuCard extends StatefulWidget {
 }
 
 class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
-  bool _mealLeaveStatus;
-  bool _mealSwitchStatus;
-  String _secretCode;
   YourMenuModel yourMenuModel;
 
-  @override
-  void initState() {
-    super.initState();
+  void onModelReady(YourMenuCardModel model) {
+    model.meal = widget.meal;
+    model.dailyItems = widget.dailyItems;
 
     if (widget.meal != null) {
-      _mealLeaveStatus =
+      model.isLeaveToggleOutdated = widget.meal.isLeaveToggleOutdated;
+      model.mealLeaveStatus =
           widget.meal.leaveStatus.status == LeaveStatusEnum.N ? true : false;
-      _mealSwitchStatus =
+      model.mealSwitchStatus =
           widget.meal.switchStatus.status == SwitchStatusEnum.N ? true : false;
     } else {
       // Toggle ON when _mealLeaveStatus = true
-      _mealLeaveStatus = true;
-      _mealSwitchStatus = false;
+      model.mealLeaveStatus = true;
+      model.mealSwitchStatus = false;
     }
   }
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
+  void onDidChangeDependencies(YourMenuCardModel model) {
     final yourMenuModel = Provider.of<YourMenuModel>(context);
     if (this.yourMenuModel != yourMenuModel) {
       this.yourMenuModel = yourMenuModel;
     }
   }
 
-  @override
-  void didUpdateWidget(Widget oldWidget) {
-    super.didUpdateWidget(oldWidget);
+  void onDidUpdateWidget(Widget oldWidget, YourMenuCardModel model) {
     if (widget.meal != null) {
-      _mealLeaveStatus =
+      model.mealLeaveStatus =
           widget.meal.leaveStatus.status == LeaveStatusEnum.N ? true : false;
-      _mealSwitchStatus =
+      model.mealSwitchStatus =
           widget.meal.switchStatus.status == SwitchStatusEnum.N ? true : false;
     } else {
       // Toggle ON when _mealLeaveStatus = true
-      _mealLeaveStatus = true;
-      _mealSwitchStatus = false;
+      model.mealLeaveStatus = true;
+      model.mealSwitchStatus = false;
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    if (widget.meal == null) {
-      return Container();
-    } else {
-      return Padding(
-        padding: const EdgeInsets.fromLTRB(0.0, 4.0, 0.0, 4.0),
-        child: _secretCode == null
-            ? Card(
-                margin: EdgeInsets.fromLTRB(12, 4, 12, 4),
-                elevation: 2,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
+    return BaseView<YourMenuCardModel>(
+      onModelReady: (model) => onModelReady(model),
+      onDidChangeDependencies: (model) => onDidChangeDependencies(model),
+      onDidUpdateWidget: (oldWidget, model) =>
+          onDidUpdateWidget(oldWidget, model),
+      builder: (context, model, child) => widget.meal == null
+          ? Container()
+          : Padding(
+              padding: const EdgeInsets.fromLTRB(0.0, 4.0, 0.0, 4.0),
+              child: model.secretCode == null
+                  ? Card(
+                      margin: EdgeInsets.fromLTRB(12, 4, 12, 4),
+                      elevation: 2,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Padding(
-                            padding: const EdgeInsets.only(bottom: 32),
-                            child: Row(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
-                                Expanded(
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 32),
                                   child: Row(
                                     children: <Widget>[
-                                      MenuCardUtils.titleAndBhawanNameComponent(
-                                          widget.meal),
-                                      _skippedFlagComponent(),
+                                      Expanded(
+                                        child: Row(
+                                          children: <Widget>[
+                                            MenuCardUtils
+                                                .titleAndBhawanNameComponent(
+                                                    widget.meal),
+                                            _skippedFlagComponent(),
+                                          ],
+                                        ),
+                                      ),
+                                      Row(
+                                        children: <Widget>[
+                                          _showQRButton(model),
+                                          widget.meal.items.isNotEmpty
+                                              ? _getSwitchIcon(model)
+                                              : Container(),
+                                          _feedbackOrToggleComponent(model),
+                                        ],
+                                      ),
                                     ],
                                   ),
                                 ),
-                                Row(
-                                  children: <Widget>[
-                                    _showQRButton(),
-                                    widget.meal.items.isNotEmpty
-                                        ? _getSwitchIcon()
-                                        : Container(),
-                                    _feedbackOrToggleComponent(context),
-                                  ],
+                                Column(
+                                  children:
+                                      MenuCardUtils.itemWidgetList(widget.meal),
                                 ),
                               ],
                             ),
                           ),
-                          Column(
-                            children: MenuCardUtils.itemWidgetList(widget.meal),
-                          ),
+                          MenuCardUtils.dailyItemsComponent(
+                              widget.meal, widget.dailyItems),
+                          MenuCardUtils.specialMealBanner(widget.meal.costType),
                         ],
                       ),
-                    ),
-                    MenuCardUtils.dailyItemsComponent(
-                        widget.meal, widget.dailyItems),
-                    MenuCardUtils.specialMealBanner(widget.meal.costType),
-                  ],
-                ),
-              )
-            : _getQRCard(),
-      );
-    }
+                    )
+                  : _getQRCard(model),
+            ),
+    );
   }
 
-  Widget _getQRCard() {
+  Widget _getQRCard(YourMenuCardModel model) {
     return Card(
       margin: EdgeInsets.fromLTRB(12, 4, 12, 4),
       elevation: 2,
@@ -156,9 +153,7 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
                               IconButton(
                                 icon: Icon(Icons.arrow_back),
                                 onPressed: () {
-                                  setState(() {
-                                    _secretCode = null;
-                                  });
+                                  model.secretCode = null;
                                 },
                               ),
                               Column(
@@ -215,159 +210,7 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
     );
   }
 
-  onChangedCallback(bool value) {
-    setState(() {
-      _mealLeaveStatus = value;
-    });
-    if (_mealSwitchStatus) {
-      if (value) {
-        if (!widget.meal.isLeaveToggleOutdated) {
-          showDialog(
-              barrierDismissible: false,
-              context: context,
-              builder: (BuildContext dialogContext) {
-                return AlertDialog(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  title: new Text(
-                    "Cancel Leave",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  content: new Text(
-                      "Are you sure you would like to cancel this leave?"),
-                  actions: <Widget>[
-                    new FlatButton(
-                      onPressed: () {
-                        Navigator.pop(dialogContext);
-                        setState(() {
-                          _mealLeaveStatus = !_mealLeaveStatus;
-                        });
-                      },
-                      child: new Text(
-                        "CANCEL",
-                        style: TextStyle(
-                            color: appiYellow, fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    new FlatButton(
-                      child: new Text(
-                        "CANCEL LEAVE",
-                        style: TextStyle(
-                            color: appiYellow, fontWeight: FontWeight.bold),
-                      ),
-                      onPressed: () async {
-                        Navigator.pop(context);
-                        showCustomDialog(context, "Cancelling Leave");
-                        LeaveApi()
-                            .cancelLeave(widget.meal.id)
-                            .then((leaveBool) {
-                          if (leaveBool) {
-                            // Provider.of<YourMenuModel>(context, listen: false)
-                            //     .selectedWeekMenuYourMeals(
-                            //         DateTimeUtils.getWeekNumber(
-                            //             widget.meal.startDateTime));
-                            Navigator.pop(context);
-                            Fluttertoast.showToast(
-                              msg: "Leave Cancelled",
-                            );
-                          }
-                        }).catchError((e) {
-                          Navigator.pop(context);
-                          setState(() {
-                            _mealLeaveStatus = !_mealLeaveStatus;
-                          });
-                          Fluttertoast.showToast(
-                            msg: "Something Wrong Occured",
-                          );
-                        });
-                      },
-                    ),
-                  ],
-                );
-              });
-        } else {
-          Fluttertoast.showToast(
-            msg:
-                "Leave status cannot be changed less than ${outdatedTime.inHours} hours before the meal time",
-          );
-        }
-      } else {
-        if (!widget.meal.isLeaveToggleOutdated) {
-          showDialog(
-              barrierDismissible: false,
-              context: context,
-              builder: (BuildContext dialogContext) {
-                return AlertDialog(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  title: new Text(
-                    "Leave Meal",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  content: new Text(
-                      "Are you sure you would like to leave this meal?"),
-                  actions: <Widget>[
-                    new FlatButton(
-                      onPressed: () {
-                        Navigator.pop(dialogContext);
-                        setState(() {
-                          _mealLeaveStatus = !_mealLeaveStatus;
-                        });
-                      },
-                      child: new Text(
-                        "CANCEL",
-                        style: TextStyle(
-                            color: appiYellow, fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    new FlatButton(
-                      child: new Text(
-                        "SKIP MEAL",
-                        style: TextStyle(
-                            color: appiYellow, fontWeight: FontWeight.bold),
-                      ),
-                      onPressed: () async {
-                        Navigator.pop(context);
-                        showCustomDialog(context, "Leaving Meal");
-                        LeaveApi()
-                            .leave(widget.meal.id.toString())
-                            .then((leaveResult) {
-                          Provider.of<YourMenuModel>(context, listen: false)
-                              .selectedWeekMenuYourMeals(
-                                  DateTimeUtils.getWeekNumber(
-                                      widget.meal.startDateTime));
-                          if (leaveResult.meal == widget.meal.id) {
-                            Navigator.pop(context);
-                            Fluttertoast.showToast(
-                              msg: "Meal Skipped",
-                            );
-                          }
-                        }).catchError((e) {
-                          Navigator.pop(context);
-                          setState(() {
-                            _mealLeaveStatus = !_mealLeaveStatus;
-                          });
-                          Fluttertoast.showToast(
-                            msg: "Something Wrong Occured",
-                          );
-                        });
-                      },
-                    ),
-                  ],
-                );
-              });
-        }
-      }
-    }
-  }
-
-  Widget _feedbackOrToggleComponent(BuildContext context) {
+  Widget _feedbackOrToggleComponent(YourMenuCardModel model) {
     return widget.meal.isOutdated
         ? Padding(
             padding: const EdgeInsets.all(8),
@@ -386,14 +229,14 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
         : !isCheckedOut
             ? GestureDetector(
                 onHorizontalDragStart: (d) => {
-                  if (widget.meal.isLeaveToggleOutdated)
+                  if (model.isLeaveToggleOutdated)
                     {
                       Fluttertoast.showToast(
                         msg:
                             "Leave status cannot be changed less than ${outdatedTime.inHours} hours before the meal time",
                       )
                     }
-                  else if (!_mealSwitchStatus)
+                  else if (!model.mealSwitchStatus)
                     {
                       Fluttertoast.showToast(
                           msg:
@@ -402,17 +245,17 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
                 },
                 child: Switch(
                   activeColor: appiYellow,
-                  value: _mealLeaveStatus,
+                  value: model.mealLeaveStatus,
                   onChanged:
-                      (widget.meal.isLeaveToggleOutdated || !_mealSwitchStatus)
+                      (model.isLeaveToggleOutdated || !model.mealSwitchStatus)
                           ? null
-                          : onChangedCallback,
+                          : model.onLeaveChanged,
                 ),
               )
             : Container();
   }
 
-  Widget _getSwitchIcon() {
+  Widget _getSwitchIcon(YourMenuCardModel model) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12),
       child: widget.meal.isSwitchable
@@ -420,107 +263,12 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
               child: Image.asset(
                 widget.meal.isLeaveToggleOutdated
                     ? "assets/icons/switch_inactive.png"
-                    : _mealSwitchStatus
+                    : model.mealSwitchStatus
                         ? "assets/icons/switch_active.png"
                         : "assets/icons/switch_crossed_active.png",
                 width: 30,
               ),
-              onTap: widget.meal.isLeaveToggleOutdated
-                  ? null
-                  : _mealSwitchStatus
-                      ? () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  ChangeNotifierProvider.value(
-                                value: yourMenuModel,
-                                child: SwitchableMealsScreen(
-                                  id: widget.meal.id,
-                                  weekId: DateTimeUtils.getWeekNumber(
-                                      widget.meal.startDateTime),
-                                  model: 0,
-                                ),
-                              ),
-                            ),
-                          );
-                        }
-                      : widget.meal.switchStatus.status == SwitchStatusEnum.T ||
-                              widget.meal.switchStatus.status ==
-                                  SwitchStatusEnum.F
-                          ? () {
-                              showDialog(
-                                barrierDismissible: false,
-                                context: context,
-                                builder: (BuildContext alertContext) {
-                                  return AlertDialog(
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    title: new Text(
-                                      "Cancel Switch",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    content: new Text(
-                                      "Are you sure you want to cancel this switch?",
-                                    ),
-                                    actions: <Widget>[
-                                      new FlatButton(
-                                        onPressed: () {
-                                          Navigator.pop(alertContext);
-                                        },
-                                        child: new Text(
-                                          "NO",
-                                          style: TextStyle(
-                                              color: appiYellow,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ),
-                                      new FlatButton(
-                                        child: new Text(
-                                          "YES",
-                                          style: TextStyle(
-                                              color: appiYellow,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        onPressed: () async {
-                                          Navigator.pop(alertContext);
-                                          showCustomDialog(
-                                              context, "Cancelling Switch");
-                                          MultimessingApi()
-                                              .cancelSwitch(
-                                                  widget.meal.switchStatus.id)
-                                              .then((switchCancelResponse) {
-                                            Provider.of<YourMenuModel>(context,
-                                                    listen: false)
-                                                .selectedWeekMenuYourMeals(
-                                                    DateTimeUtils.getWeekNumber(
-                                                        widget.meal
-                                                            .startDateTime));
-                                            Navigator.pop(context);
-                                            if (switchCancelResponse) {
-                                              Navigator.of(context).popUntil(
-                                                  (route) => route.isFirst);
-                                              setState(() {
-                                                _mealSwitchStatus = true;
-                                              });
-                                            } else {
-                                              Fluttertoast.showToast(
-                                                msg:
-                                                    "Unable to cancel the switch",
-                                              );
-                                            }
-                                          });
-                                        },
-                                      ),
-                                    ],
-                                  );
-                                },
-                              );
-                            }
-                          : null,
+              onTap: model.onSwitchChanged,
             )
           : Container(),
     );
@@ -550,13 +298,51 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
         : Container();
   }
 
-  Widget _showQRButton() {
+  VoidCallback onQRTap(YourMenuCardModel model) {
+    switch (model.meal.switchStatus.status) {
+      case SwitchStatusEnum.N:
+      case SwitchStatusEnum.A:
+        return () {};
+        break;
+      case SwitchStatusEnum.D:
+        return () {
+          Fluttertoast.showToast(msg: "Your switch has been denied");
+        };
+        break;
+      case SwitchStatusEnum.F:
+      case SwitchStatusEnum.T:
+        return () {
+          if (model.meal.endDateTime
+              .add(Duration(hours: 1))
+              .isBefore(DateTime.now())) {
+            Fluttertoast.showToast(msg: "Time for this meal has passed!");
+          } else if (model.meal.startTimeObject
+              .subtract(outdatedTime)
+              .isAfter(DateTime.now())) {
+            Fluttertoast.showToast(
+                msg: "QR CODE will be available 8 hours before the meal");
+          } else {
+            model.secretCode = "1";
+          }
+        };
+        break;
+      case SwitchStatusEnum.U:
+        return () {
+          Fluttertoast.showToast(msg: "Your Switch was not approved!");
+        };
+        break;
+      default:
+        return () {};
+    }
+  }
+
+  Widget _showQRButton(YourMenuCardModel model) {
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: 4,
       ),
       child: GestureDetector(
-        onTap: _getQROnTap(),
+        onTap: onQRTap(model),
         child: Container(
           decoration: BoxDecoration(
             color: _getQRBackgroundColor(),
@@ -594,48 +380,6 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
         break;
       default:
         return Colors.transparent;
-    }
-  }
-
-  VoidCallback _getQROnTap() {
-    switch (widget.meal.switchStatus.status) {
-      case SwitchStatusEnum.N:
-        return () {};
-        break;
-      case SwitchStatusEnum.A:
-        return () {};
-        break;
-      case SwitchStatusEnum.D:
-        return () {
-          Fluttertoast.showToast(msg: "Your switch has been denied");
-        };
-        break;
-      case SwitchStatusEnum.F:
-      case SwitchStatusEnum.T:
-        return () {
-          if (widget.meal.endDateTime
-              .add(Duration(hours: 1))
-              .isBefore(DateTime.now())) {
-            Fluttertoast.showToast(msg: "Time for this meal has passed!");
-          } else if (widget.meal.startTimeObject
-              .subtract(outdatedTime)
-              .isAfter(DateTime.now())) {
-            Fluttertoast.showToast(
-                msg: "QR CODE will be available 8 hours before the meal");
-          } else {
-            setState(() {
-              _secretCode = "1";
-            });
-          }
-        };
-        break;
-      case SwitchStatusEnum.U:
-        return () {
-          Fluttertoast.showToast(msg: "Your Switch was not approved!");
-        };
-        break;
-      default:
-        return () {};
     }
   }
 }

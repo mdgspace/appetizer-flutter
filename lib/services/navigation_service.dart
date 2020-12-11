@@ -27,7 +27,11 @@ class NavigationService {
     );
   }
 
-  bool pop() {
+  void popUntilFirstScreen() {
+    return navigatorKey.currentState.popUntil((route) => route.isFirst);
+  }
+
+  void pop() {
     return navigatorKey.currentState.pop();
   }
 }
