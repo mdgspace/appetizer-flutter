@@ -21,7 +21,7 @@ import 'package:appetizer/ui/user_feedback/new_feedback.dart';
 import 'package:appetizer/ui/user_feedback/user_feedback.dart';
 import 'package:flutter/material.dart';
 
-class Router {
+class AppetizerRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case 'on_boarding':

@@ -33,7 +33,7 @@ Future<void> main() async {
       .then((_) {
     runApp(
       MaterialApp(
-        onGenerateRoute: Router.generateRoute,
+        onGenerateRoute: AppetizerRouter.generateRoute,
         builder: (context, child) => Navigator(
           key: locator<DialogService>().dialogNavigationKey,
           onGenerateRoute: (settings) => MaterialPageRoute(
