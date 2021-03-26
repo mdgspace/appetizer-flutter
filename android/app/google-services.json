@@ -8,78 +8,6 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:894433555865:android:8e770508c49189a8",
-        "android_client_info": {
-          "package_name": "co.sdslabs.mdg.appetizer"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "894433555865-k3o4ukbm8p3qippfa12rrlrdj8i07886.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDV93GXLPGFLE8Yxa5gZT1KVan5Nj55t3w"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "894433555865-k3o4ukbm8p3qippfa12rrlrdj8i07886.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "894433555865-krst9b05rabqfj5h1amslpfrsc2kfeug.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "co.sdslabs.mdg.appetizer.debug"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:894433555865:android:3221af7f4c8470e2",
-        "android_client_info": {
-          "package_name": "co.sdslabs.mdg.appetizer.debug"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "894433555865-k3o4ukbm8p3qippfa12rrlrdj8i07886.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDV93GXLPGFLE8Yxa5gZT1KVan5Nj55t3w"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "894433555865-k3o4ukbm8p3qippfa12rrlrdj8i07886.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "894433555865-krst9b05rabqfj5h1amslpfrsc2kfeug.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "co.sdslabs.mdg.appetizer.debug"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
         "mobilesdk_app_id": "1:894433555865:android:dba310c5a78f5f307c0f08",
         "android_client_info": {
           "package_name": "com.example.appetizer"
@@ -87,13 +15,21 @@
       },
       "oauth_client": [
         {
+          "client_id": "894433555865-imgqok3q84dp9itlca9vlf9pck7jhdbk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.appetizer",
+            "certificate_hash": "5427c3564b9683cd9929f5a737cbf6caa51480ba"
+          }
+        },
+        {
           "client_id": "894433555865-k3o4ukbm8p3qippfa12rrlrdj8i07886.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDV93GXLPGFLE8Yxa5gZT1KVan5Nj55t3w"
+          "current_key": "AIzaSyCBKOLX15rc4_2nSarM9Rqb2NkzaI6exlY"
         }
       ],
       "services": {
@@ -104,10 +40,46 @@
               "client_type": 3
             },
             {
-              "client_id": "894433555865-krst9b05rabqfj5h1amslpfrsc2kfeug.apps.googleusercontent.com",
+              "client_id": "894433555865-62cpq3pc4bokd4t70guk5e6reooeglt4.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "co.sdslabs.mdg.appetizer.debug"
+                "bundle_id": "mdg.iitr.appetizer"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:894433555865:android:978757054abf79a67c0f08",
+        "android_client_info": {
+          "package_name": "in.ac.iitr.mdg.appetizer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "894433555865-k3o4ukbm8p3qippfa12rrlrdj8i07886.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCBKOLX15rc4_2nSarM9Rqb2NkzaI6exlY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "894433555865-k3o4ukbm8p3qippfa12rrlrdj8i07886.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "894433555865-62cpq3pc4bokd4t70guk5e6reooeglt4.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "mdg.iitr.appetizer"
               }
             }
           ]

@@ -60,8 +60,8 @@ class MultimessingApi {
 
     try {
       await ApiUtils.addTokenToHeaders(headers);
-      var response =
-          await client.post(uri, headers: headers, body: jsonEncode(json));
+      var response = await client.post(Uri.parse(uri),
+          headers: headers, body: jsonEncode(json));
       if (response.statusCode == 201) {
         return true;
       }
@@ -81,7 +81,7 @@ class MultimessingApi {
 
     try {
       await ApiUtils.addTokenToHeaders(headers);
-      final response = await client.delete(uri, headers: headers);
+      final response = await client.delete(Uri.parse(uri), headers: headers);
       if (response.statusCode >= 200 && response.statusCode < 210) {
         return true;
       }

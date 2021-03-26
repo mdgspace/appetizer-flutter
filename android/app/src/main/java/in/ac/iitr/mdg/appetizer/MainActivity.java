@@ -1,4 +1,4 @@
-package com.example.appetizer;
+package in.ac.iitr.mdg.appetizer;
 
 import android.os.Bundle;
 
