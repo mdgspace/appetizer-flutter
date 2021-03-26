@@ -46,7 +46,7 @@ class _EditProfileState extends State<EditProfile> {
                         color: appiBrown,
                         alignment: Alignment.topRight,
                         child: SvgPicture.asset(
-                          'assets/icons/IITRLogo.svg',
+                          'assets/icons/iitr_logo.svg',
                           height: 160,
                           width: 160,
                         ),

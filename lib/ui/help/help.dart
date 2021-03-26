@@ -44,7 +44,8 @@ class Help extends StatelessWidget {
                         padding: const EdgeInsets.only(bottom: 16),
                         child: Material(
                           child: Image(
-                            image: AssetImage("assets/icons/appetizerlogo.png"),
+                            image:
+                                AssetImage("assets/icons/appetizer_logo.png"),
                             width: 100,
                           ),
                           elevation: 2,
@@ -54,7 +55,7 @@ class Help extends StatelessWidget {
                         ),
                       ),
                       Image(
-                        image: AssetImage("assets/images/AppetizerText.png"),
+                        image: AssetImage("assets/images/appetizer_text.png"),
                         width: 100,
                       ),
                       Padding(

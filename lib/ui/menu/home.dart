@@ -217,7 +217,7 @@ class _HomeState extends State<Home> {
               color: appiBrown,
               image: new DecorationImage(
                 alignment: Alignment.topRight,
-                image: AssetImage('assets/images/iit roorkee 1.png'),
+                image: AssetImage('assets/images/iitr.png'),
               ),
             ),
             child: Row(
@@ -287,7 +287,7 @@ class _HomeState extends State<Home> {
                   GestureDetector(
                     child: ListTile(
                       leading: Image(
-                        image: AssetImage("assets/icons/leaves@1x.png"),
+                        image: AssetImage("assets/icons/leaves.png"),
                         width: 24,
                         height: 24,
                       ),
@@ -306,7 +306,7 @@ class _HomeState extends State<Home> {
                   GestureDetector(
                     child: ListTile(
                       leading: Image(
-                        image: AssetImage("assets/icons/leaves@1x.png"),
+                        image: AssetImage("assets/icons/leaves.png"),
                         width: 24,
                         height: 24,
                       ),
@@ -465,7 +465,7 @@ class _HomeState extends State<Home> {
       onPressed: model.onCheckoutTap,
       backgroundColor: appiYellowLogo,
       child: Image.asset(
-        "assets/images/checkOut.png",
+        "assets/images/check_out.png",
         height: 25,
         width: 25,
       ),

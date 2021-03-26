@@ -125,7 +125,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                               child: Align(
                                 alignment: Alignment.bottomCenter,
                                 child: SvgPicture.asset(
-                                  "assets/images/happyChef.svg",
+                                  "assets/images/happy_chef.svg",
                                 ),
                               ),
                             ),
@@ -138,7 +138,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                               child: Align(
                                 alignment: Alignment.bottomCenter,
                                 child: SvgPicture.asset(
-                                  "assets/images/sadChef.svg",
+                                  "assets/images/sad_chef.svg",
                                 ),
                               ),
                             ),

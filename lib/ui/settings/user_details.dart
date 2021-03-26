@@ -88,7 +88,7 @@ class UserDetails extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.fromLTRB(8.0, 4.0, 10.0, 4.0),
                         child: SvgPicture.asset(
-                          'assets/icons/redIITRLogo.svg',
+                          'assets/icons/red_iitr_logo.svg',
                           width: MediaQuery.of(context).size.width * 0.08,
                           color: const Color.fromRGBO(234, 87, 87, 1),
                         ),

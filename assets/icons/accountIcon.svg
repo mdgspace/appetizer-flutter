@@ -1,9 +1,0 @@
-<svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="36" cy="36" r="36" fill="#27AE60"/>
-    <mask id="mask0" maskUnits="userSpaceOnUse" x="2" y="2" width="68" height="68">
-        <circle cx="36" cy="36" r="33.0492" fill="#C4C4C4"/>
-    </mask>
-    <g mask="url(#mask0)">
-        <path d="M36 33.6C41.28 33.6 45.6 29.28 45.6 24C45.6 18.72 41.28 14.4 36 14.4C30.72 14.4 26.4 18.72 26.4 24C26.4 29.28 30.72 33.6 36 33.6ZM36 38.4C29.64 38.4 16.8 41.64 16.8 48V52.8H55.2V48C55.2 41.64 42.36 38.4 36 38.4Z" fill="white"/>
-    </g>
-</svg>

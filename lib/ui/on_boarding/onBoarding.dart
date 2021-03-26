@@ -55,7 +55,7 @@ class _OnBoarding extends State<OnBoarding> {
                 Padding(
                   padding: EdgeInsets.fromLTRB(8, 5, 8, 5),
                   child: Image(
-                    image: AssetImage("assets/images/onBoarding1.png"),
+                    image: AssetImage("assets/images/on_boarding_1.png"),
                   ),
                 ),
                 Container(
@@ -98,7 +98,7 @@ class _OnBoarding extends State<OnBoarding> {
                 Padding(
                   padding: EdgeInsets.fromLTRB(8, 5, 8, 5),
                   child: Image(
-                    image: AssetImage("assets/images/onBoarding2.png"),
+                    image: AssetImage("assets/images/on_boarding_2.png"),
                   ),
                 ),
                 Container(
@@ -141,7 +141,7 @@ class _OnBoarding extends State<OnBoarding> {
                 Padding(
                   padding: EdgeInsets.fromLTRB(8, 5, 8, 5),
                   child: Image(
-                    image: AssetImage("assets/images/onBoarding3.png"),
+                    image: AssetImage("assets/images/on_boarding_3.png"),
                   ),
                 ),
                 Container(
@@ -184,7 +184,7 @@ class _OnBoarding extends State<OnBoarding> {
                 Padding(
                   padding: EdgeInsets.all(8),
                   child: Image(
-                    image: AssetImage("assets/images/onBoarding4.png"),
+                    image: AssetImage("assets/images/on_boarding_4.png"),
                   ),
                 ),
                 Container(
