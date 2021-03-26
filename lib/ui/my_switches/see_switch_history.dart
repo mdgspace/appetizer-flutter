@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 
 class SeeSwitchHistory extends StatelessWidget {
-  final String token;
-
-  const SeeSwitchHistory({Key key, this.token}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(

@@ -18,12 +18,12 @@ class Approve {
   });
 
   factory Approve.fromJson(Map<String, dynamic> json) => new Approve(
-    weekId: json["week_id"],
-    isApproved: json["is_approved"],
-  );
+        weekId: json["week_id"],
+        isApproved: json["is_approved"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "week_id": weekId,
-    "is_approved": isApproved,
-  };
+        "week_id": weekId,
+        "is_approved": isApproved,
+      };
 }

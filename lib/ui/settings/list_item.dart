@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-class SettingsPageListItems extends StatelessWidget{
-
+class SettingsPageListItems extends StatelessWidget {
   final IconData _iconData;
   final String _title;
 
@@ -15,7 +14,7 @@ class SettingsPageListItems extends StatelessWidget{
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.fromLTRB(16.0,12.0,16.0,12.0),
+            padding: const EdgeInsets.fromLTRB(16.0, 12.0, 16.0, 12.0),
             child: Icon(
               _iconData,
               color: const Color.fromRGBO(252, 193, 21, 1),
@@ -23,7 +22,7 @@ class SettingsPageListItems extends StatelessWidget{
             ),
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(16.0,12.0,16.0,12.0),
+            padding: const EdgeInsets.fromLTRB(16.0, 12.0, 16.0, 12.0),
             child: Text(
               "$_title",
               style: TextStyle(
@@ -37,10 +36,8 @@ class SettingsPageListItems extends StatelessWidget{
       decoration: BoxDecoration(
           border: Border(
               bottom: BorderSide(
-                color: const Color.fromRGBO(128, 128, 128, 0.5),
-              )
-          )
-      ),
+        color: const Color.fromRGBO(128, 128, 128, 0.5),
+      ))),
     );
   }
 }

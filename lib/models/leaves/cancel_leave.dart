@@ -4,7 +4,8 @@
 
 import 'dart:convert';
 
-CancelLeave cancelLeaveFromJson(String str) => CancelLeave.fromJson(json.decode(str));
+CancelLeave cancelLeaveFromJson(String str) =>
+    CancelLeave.fromJson(json.decode(str));
 
 String cancelLeaveToJson(CancelLeave data) => json.encode(data.toJson());
 
@@ -16,10 +17,10 @@ class CancelLeave {
   });
 
   factory CancelLeave.fromJson(Map<String, dynamic> json) => new CancelLeave(
-    detail: json["detail"],
-  );
+        detail: json["detail"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "detail": detail,
-  };
+        "detail": detail,
+      };
 }

@@ -10,7 +10,6 @@ final accentTextTheme = TextTheme(
       fontFamily: "OpenSans"),
   //used for username in nav drawer
   display2: TextStyle(
-
     color: Colors.white,
     fontSize: 22,
   ),
@@ -30,7 +29,7 @@ final accentTextTheme = TextTheme(
     fontWeight: FontWeight.w500,
   ),
 );
-final primaryTextTheme =  TextTheme(
+final primaryTextTheme = TextTheme(
   //display1 theme is used for the Login Button
   display1: new TextStyle(
     fontWeight: FontWeight.w900,

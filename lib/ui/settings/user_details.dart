@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:appetizer/colors.dart';
 
-
 class UserDetails extends StatelessWidget {
   final String _name;
   final String _enrollmentNo;
@@ -42,16 +41,14 @@ class UserDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      //color: Colors.blue,
-      //height: MediaQuery.of(context).size.height * 0.32,
       child: Padding(
         padding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 30.0),
         child: Wrap(
           children: <Widget>[
             Card(
-              //color: Colors.blue,
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0)),
+                borderRadius: BorderRadius.circular(10.0),
+              ),
               child: Column(
                 children: <Widget>[
                   Row(
@@ -91,7 +88,7 @@ class UserDetails extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.fromLTRB(8.0, 4.0, 10.0, 4.0),
                         child: SvgPicture.asset(
-                          'assets/icons/redIITRLogo.svg',
+                          'assets/icons/red_iitr_logo.svg',
                           width: MediaQuery.of(context).size.width * 0.08,
                           color: const Color.fromRGBO(234, 87, 87, 1),
                         ),
@@ -104,18 +101,14 @@ class UserDetails extends StatelessWidget {
                     width: MediaQuery.of(context).size.width,
                   ),
                   Container(
-                    //color: Colors.yellow,
                     child: Padding(
                       padding: EdgeInsets.only(top: 7, bottom: 7),
                       child: Row(
-                        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Flexible(
                             child: Container(
                               alignment: Alignment.center,
-                              //color: Colors.red,
                               child: Column(
-                                //crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   cardListItem("Enrollment No: ",
                                       "$_enrollmentNo", context),

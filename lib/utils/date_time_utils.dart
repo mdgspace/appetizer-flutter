@@ -1,7 +1,6 @@
 import 'package:intl/intl.dart';
 
 class DateTimeUtils {
-
   static String getWeekDayName(DateTime _dateTime) {
     return DateFormat('EEEE').format(_dateTime);
   }

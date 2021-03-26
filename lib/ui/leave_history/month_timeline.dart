@@ -42,16 +42,14 @@ class MonthTimeline extends StatelessWidget {
             ),
           ),
           Positioned(
-            left: 0.0,
-            top: 0.0,
-            child: ListView.builder(
-              itemCount: _monthData.leaveDetails.length,
-              itemBuilder: (context, index){
-                return _monthData.leaveDetails[index];
-              },
-
-            )
-          )
+              left: 0.0,
+              top: 0.0,
+              child: ListView.builder(
+                itemCount: _monthData.leaveDetails.length,
+                itemBuilder: (context, index) {
+                  return _monthData.leaveDetails[index];
+                },
+              ))
         ],
       ),
     );

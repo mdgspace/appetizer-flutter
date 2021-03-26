@@ -1,27 +1,17 @@
 import 'dart:async';
 import 'dart:io';
-import 'package:appetizer/models/user/user_details_shared_pref.dart';
-import 'package:appetizer/ui/components/alert_dialog.dart';
-import 'package:appetizer/ui/components/inherited_data.dart';
-import 'package:appetizer/ui/password/choose_new_password.dart';
-import 'package:appetizer/ui/password/forgot_password.dart';
+import 'package:appetizer/colors.dart';
+import 'package:appetizer/enums/view_state.dart';
+import 'package:appetizer/ui/base_view.dart';
 import 'package:appetizer/globals.dart';
-import 'package:appetizer/services/user.dart';
-import 'package:appetizer/utils/check_connectivity.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:appetizer/viewmodels/login_models/login_model.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import '../../colors.dart';
-import '../../globals.dart';
-import '../help/help.dart';
-import '../menu/home.dart';
 
 class Login extends StatefulWidget {
   final String code;
@@ -39,22 +29,18 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
   Animation _chefWrongAnimation;
   Animation _chefCorrectAnimation;
 
-  bool areCredentialsCorrect;
-
-  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   final _formKey = new GlobalKey<FormState>();
 
   String url =
       "http://people.iitr.ernet.in/oauth/?client_id=0a6fb094b8fe79ce0217&redirect_url=appetizer://mess.iitr.ac.in/oauth/";
 
   String _enrollmentNo, _password;
-  bool isLoading;
-  bool isLoginButtonTapped = false;
-  bool _isLoginSuccessful = false;
+
   FlareActor flareActor = FlareActor(
     "flare_files/login_appetizer.flr",
     animation: "idle",
   );
+
   bool _obscureText = true;
 
   // Toggles the password show status
@@ -64,13 +50,18 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
     });
   }
 
-  @override
-  void initState() {
-    super.initState();
-    showConnectivityStatus();
+  void resetLogin(LoginModel model) {
+    _formKey.currentState.reset();
+    showSnackBar(loginViewScaffoldKey, model.errorMessage);
+  }
+
+  void onModelReady(LoginModel model) {
+    Future.delayed(Duration(seconds: 1), () {
+      model.currentUser = null;
+    });
     if (widget.code != null && widget.code != "") {
       SchedulerBinding.instance
-          .addPostFrameCallback((_) => verifyUser(context));
+          .addPostFrameCallback((_) => model.verifyUser(widget.code));
     }
 
     _chefCorrectController =
@@ -78,21 +69,22 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
     _chefWrongController =
         AnimationController(vsync: this, duration: Duration(seconds: 3));
 
-    _chefCorrectAnimation =
-        Tween(begin: 1.0, end: 0.21).animate(CurvedAnimation(
-      parent: _chefCorrectController,
-      curve: Curves.fastOutSlowIn,
-    ));
+    _chefCorrectAnimation = Tween(begin: 1.0, end: 0.21).animate(
+      CurvedAnimation(
+        parent: _chefCorrectController,
+        curve: Curves.fastOutSlowIn,
+      ),
+    );
 
-    _chefWrongAnimation = Tween(begin: 1.0, end: 0.21).animate(CurvedAnimation(
-      parent: _chefWrongController,
-      curve: Curves.fastOutSlowIn,
-    ));
+    _chefWrongAnimation = Tween(begin: 1.0, end: 0.21).animate(
+      CurvedAnimation(
+        parent: _chefWrongController,
+        curve: Curves.fastOutSlowIn,
+      ),
+    );
   }
 
-  @override
-  void dispose() {
-    super.dispose();
+  void onModelDestroy() {
     _chefWrongController.dispose();
     _chefCorrectController.dispose();
   }
@@ -101,92 +93,107 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
 
-    return Scaffold(
-      key: _scaffoldKey,
-      body: Column(
-        children: <Widget>[
-          Expanded(
-            child: AnimatedBuilder(
-              animation: areCredentialsCorrect == null
-                  ? _chefWrongAnimation
-                  : areCredentialsCorrect
-                      ? _chefCorrectAnimation
-                      : _chefWrongAnimation,
-              builder: (BuildContext context, Widget child) {
-                return Container(
-                  color: appiBrown,
-                  child: SafeArea(
-                    child: Container(
-                      color: appiBrown,
-                      child: Stack(
-                        children: <Widget>[
-                          flareActor,
-                          Transform(
-                            transform: Matrix4.translationValues(
-                                _chefCorrectAnimation.value * width, 0, 0),
-                            child: Align(
+    return BaseView<LoginModel>(
+      onModelReady: (model) => onModelReady(model),
+      onModelDestroy: (model) => onModelDestroy(),
+      builder: (context, model, child) => Scaffold(
+        key: loginViewScaffoldKey,
+        body: Column(
+          children: <Widget>[
+            Expanded(
+              child: AnimatedBuilder(
+                animation: model.areCredentialsCorrect == null
+                    ? _chefWrongAnimation
+                    : model.areCredentialsCorrect
+                        ? _chefCorrectAnimation
+                        : _chefWrongAnimation,
+                builder: (BuildContext context, Widget child) {
+                  return Container(
+                    color: appiBrown,
+                    child: SafeArea(
+                      child: Container(
+                        color: appiBrown,
+                        child: Stack(
+                          children: <Widget>[
+                            flareActor,
+                            Transform(
+                              transform: Matrix4.translationValues(
+                                _chefCorrectAnimation.value * width,
+                                0,
+                                0,
+                              ),
+                              child: Align(
                                 alignment: Alignment.bottomCenter,
                                 child: SvgPicture.asset(
-                                    "assets/images/happyChef.svg")),
-                          ),
-                          Transform(
-                            transform: Matrix4.translationValues(
-                                _chefWrongAnimation.value * width, 0, 0),
-                            child: Align(
+                                  "assets/images/happy_chef.svg",
+                                ),
+                              ),
+                            ),
+                            Transform(
+                              transform: Matrix4.translationValues(
+                                _chefWrongAnimation.value * width,
+                                0,
+                                0,
+                              ),
+                              child: Align(
                                 alignment: Alignment.bottomCenter,
                                 child: SvgPicture.asset(
-                                    "assets/images/sadChef.svg")),
-                          ),
-                          Align(
-                            alignment: Alignment.topCenter,
-                            child: Text(
-                              "Appetizer",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
+                                  "assets/images/sad_chef.svg",
+                                ),
+                              ),
+                            ),
+                            Align(
+                              alignment: Alignment.topCenter,
+                              child: Text(
+                                "Appetizer",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
                                   fontSize: 50.0,
                                   fontFamily: 'Lobster_Two',
-                                  color: Colors.white),
+                                  color: Colors.white,
+                                ),
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                );
-              },
+                  );
+                },
+              ),
             ),
-          ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(20.0, 0, 20.0, 0),
-              child: new Form(
-                key: _formKey,
-                child: ListView(
-                  children: <Widget>[
-                    _showEnrollmentInput(),
-                    _showPasswordInput(),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 45),
-                      child: _showLoginButton(),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(13, 15, 13, 15),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          _helpButton(),
-                          _showDash(),
-                          _forgotPasswordButton(),
-                        ],
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(20.0, 0, 20.0, 0),
+                child: new Form(
+                  key: _formKey,
+                  child: ListView(
+                    children: <Widget>[
+                      _showEnrollmentInput(),
+                      _showPasswordInput(),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 45),
+                        child: _showLoginButton(model),
                       ),
-                    ),
-                    _showChannelIButton(),
-                  ],
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(13, 15, 13, 15),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            _helpButton(model),
+                            _showDash(model),
+                            _forgotPasswordButton(model),
+                          ],
+                        ),
+                      ),
+                      _showChannelIButton(model),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -240,9 +247,8 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
     );
   }
 
-  Widget _showLoginButton() {
-    showConnectivityStatus();
-    return (isLoginButtonTapped)
+  Widget _showLoginButton(LoginModel model) {
+    return (model.state == ViewState.Busy)
         ? new FlatButton(
             padding: EdgeInsets.all(8),
             color: appiYellow,
@@ -256,7 +262,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
               style: Theme.of(context).accentTextTheme.display1,
             ),
             onPressed: () {})
-        : (_isLoginSuccessful)
+        : (model.isLoginSuccessful)
             ? new FlatButton(
                 padding: EdgeInsets.all(8),
                 color: Colors.white,
@@ -282,12 +288,14 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                   'LOGIN',
                   style: Theme.of(context).primaryTextTheme.display1,
                 ),
-                onPressed: _validateAndSubmit,
+                onPressed: () {
+                  _validateAndSubmit(model);
+                },
               );
   }
 
-  Widget _helpButton() {
-    return (_isLoginSuccessful)
+  Widget _helpButton(LoginModel model) {
+    return (model.isLoginSuccessful)
         ? Container()
         : SizedBox(
             height: 25.0,
@@ -296,13 +304,15 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                 'Help',
                 style: Theme.of(context).primaryTextTheme.display3,
               ),
-              onTap: _help,
+              onTap: () {
+                Navigator.pushNamed(context, "help");
+              },
             ),
           );
   }
 
-  Widget _showDash() {
-    return (_isLoginSuccessful)
+  Widget _showDash(LoginModel model) {
+    return (model.isLoginSuccessful)
         ? Container()
         : SizedBox(
             height: 25.0,
@@ -311,13 +321,15 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                 '  |  ',
                 style: Theme.of(context).primaryTextTheme.display4,
               ),
-              onTap: _help,
+              onTap: () {
+                Navigator.pushNamed(context, "help");
+              },
             ),
           );
   }
 
-  Widget _forgotPasswordButton() {
-    return (_isLoginSuccessful)
+  Widget _forgotPasswordButton(LoginModel model) {
+    return (model.isLoginSuccessful)
         ? Container()
         : SizedBox(
             height: 25.0,
@@ -326,13 +338,15 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                 'Forgot Password?',
                 style: Theme.of(context).primaryTextTheme.display3,
               ),
-              onTap: _forgotPassword,
+              onTap: () {
+                Navigator.pushNamed(context, "forgot_pass");
+              },
             ),
           );
   }
 
-  Widget _showChannelIButton() {
-    return (_isLoginSuccessful)
+  Widget _showChannelIButton(LoginModel model) {
+    return (model.isLoginSuccessful)
         ? Container()
         : new FlatButton(
             padding: EdgeInsets.all(12),
@@ -350,30 +364,23 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
           );
   }
 
-  void _validateAndSubmit() {
+  void _validateAndSubmit(LoginModel model) {
     if (_validateAndSave()) {
-      setState(() {
-        isLoginButtonTapped = true;
-      });
       FocusScope.of(context).requestFocus(new FocusNode());
-      userLogin(_enrollmentNo, _password).then((loginCredentials) async {
-        if (loginCredentials.enrNo.toString() == _enrollmentNo) {
-          isCheckedOut = loginCredentials.isCheckedOut;
-          saveUserDetails(
-            loginCredentials.enrNo.toString(),
-            loginCredentials.name,
-            loginCredentials.token,
-            loginCredentials.branch,
-            loginCredentials.hostelName,
-            loginCredentials.roomNo,
-            loginCredentials.email,
-            loginCredentials.contactNo,
-          );
-          if (areCredentialsCorrect == null) {
+      model
+          .loginWithEnrollmentAndPassword(
+        enrollment: _enrollmentNo,
+        password: _password,
+      )
+          .then((_) async {
+        if (model.isLoginSuccessful) {
+          if (model.areCredentialsCorrect == null) {
             _chefCorrectController.forward();
             setState(() {
-              flareActor = FlareActor("flare_files/login_appetizer.flr",
-                  animation: "Initial To Right");
+              flareActor = FlareActor(
+                "flare_files/login_appetizer.flr",
+                animation: "Initial To Right",
+              );
             });
           } else {
             _chefWrongController.duration = Duration(milliseconds: 600);
@@ -382,57 +389,33 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
             await Future.delayed(Duration(milliseconds: 100));
             _chefCorrectController.forward();
             setState(() {
-              flareActor = FlareActor("flare_files/login_appetizer.flr",
-                  animation: "Wrong To Right");
+              flareActor = FlareActor(
+                "flare_files/login_appetizer.flr",
+                animation: "Wrong To Right",
+              );
             });
           }
-          setState(() {
-            areCredentialsCorrect = true;
-          });
-          _showSnackBar(context, "Login Successful");
-          setState(() {
-            _isLoginSuccessful = true;
-            isLoginButtonTapped = false;
-          });
-          FirebaseMessaging fcm = FirebaseMessaging();
-          fcm.getToken().then((fcmToken) {
-            print(fcmToken);
-            userMePatchFCM(loginCredentials.token, fcmToken).then((me) {
-              userMeGet(loginCredentials.token).then((me) {
-                fcm.subscribeToTopic("release-" + me.hostelCode);
-              });
-            });
-          });
+          model.areCredentialsCorrect = true;
+          showSnackBar(loginViewScaffoldKey, "Login Successful");
           await new Future.delayed(const Duration(seconds: 5));
-          Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) {
-            return InheritedData(
-              userDetails: UserDetailsSharedPref.fromData(
-                  loginCredentials.enrNo.toString(),
-                  loginCredentials.name,
-                  loginCredentials.token,
-                  loginCredentials.branch,
-                  loginCredentials.hostelName,
-                  loginCredentials.roomNo,
-                  loginCredentials.email,
-                  loginCredentials.contactNo),
-              child: Home(
-                token: loginCredentials.token,
-              ),
-            );
-          }));
+          Navigator.pushReplacementNamed(
+            context,
+            "home",
+            arguments: model.login.token,
+          );
         } else {
+          resetLogin(model);
           setState(() {
             _chefWrongController.reset();
             _chefCorrectController.reset();
-            areCredentialsCorrect = false;
-            isLoginButtonTapped = false;
           });
+          model.areCredentialsCorrect = false;
           _chefWrongController.forward();
-          _showSnackBar(context, "Incorrect authentication credentials.");
           setState(() {
-            flareActor = FlareActor("flare_files/login_appetizer.flr",
-                animation: "Initial To Wrong");
+            flareActor = FlareActor(
+              "flare_files/login_appetizer.flr",
+              animation: "Initial To Wrong",
+            );
           });
         }
       });
@@ -449,108 +432,8 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
     return false;
   }
 
-  Future<void> saveUserDetails(
-      String enrNo,
-      String username,
-      String token,
-      String branch,
-      String hostelName,
-      String roomNo,
-      String email,
-      String contactNo) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString("token", token);
-    prefs.setString("enrNo", enrNo);
-    prefs.setString("username", username);
-    prefs.setString("branch", branch);
-    prefs.setString("hostelName", hostelName);
-    prefs.setString("roomNo", roomNo);
-    prefs.setString("email", email);
-    prefs.setString("contactNo", contactNo);
-  }
-
   void _channelILogin() {
-    //FlutterWebBrowser.openWebPage(url: url);
     launch(url);
     exit(0);
-  }
-
-  Future verifyUser(BuildContext context) async {
-    showCustomDialog(context, "Fetching Details");
-    var oauthResponse = await oAuthRedirect(widget.code);
-    print("Code " + widget.code);
-    if (oauthResponse != null) {
-      if (oauthResponse.isNew) {
-        Navigator.pop(context);
-        showCustomDialog(context, "Redirecting");
-        await new Future.delayed(
-          new Duration(milliseconds: 500),
-        );
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) {
-          return ChooseNewPass(
-            name: oauthResponse.studentData.name,
-            enr: oauthResponse.studentData.enrNo,
-            email: oauthResponse.studentData.email,
-            contactNo: oauthResponse.studentData.contactNo,
-          );
-        }));
-      } else {
-        if (oauthResponse.token != null) {
-          print(oauthResponse.isNew);
-          print(oauthResponse.token);
-          Navigator.pop(context);
-          showCustomDialog(context, "Logging You In");
-          saveUserDetails(
-            oauthResponse.studentData.enrNo.toString(),
-            oauthResponse.studentData.name,
-            oauthResponse.token,
-            oauthResponse.studentData.branch,
-            oauthResponse.studentData.hostelName,
-            oauthResponse.studentData.roomNo,
-            oauthResponse.studentData.email,
-            oauthResponse.studentData.contactNo,
-          );
-          setState(() {
-            _isLoginSuccessful = true;
-            isLoginButtonTapped = false;
-          });
-          await new Future.delayed(const Duration(milliseconds: 500));
-          Navigator.pop(context);
-          Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) {
-            return InheritedData(
-              userDetails: UserDetailsSharedPref.fromData(
-                  oauthResponse.studentData.enrNo.toString(),
-                  oauthResponse.studentData.name,
-                  oauthResponse.token,
-                  oauthResponse.studentData.branch,
-                  oauthResponse.studentData.hostelName,
-                  oauthResponse.studentData.roomNo,
-                  oauthResponse.studentData.email,
-                  oauthResponse.studentData.contactNo),
-              child: Home(
-                token: oauthResponse.token,
-              ),
-            );
-          }));
-        }
-      }
-    }
-  }
-
-  Future _help() async {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => Help()));
-  }
-
-  Future _forgotPassword() async {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => ForgotPass()));
-  }
-
-  void _showSnackBar(BuildContext context, String message) {
-    _scaffoldKey.currentState.showSnackBar(SnackBar(
-      content: Text(message),
-    ));
   }
 }

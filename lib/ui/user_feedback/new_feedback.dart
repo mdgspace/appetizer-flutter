@@ -1,10 +1,11 @@
-import 'package:appetizer/services/feedback.dart';
-import 'package:appetizer/ui/components/alert_dialog.dart';
+import 'package:appetizer/globals.dart';
+import 'package:appetizer/services/api/feedback.dart';
+import 'package:appetizer/ui/base_view.dart';
+import 'package:appetizer/utils/always_disabled_focus_node.dart';
 import 'package:appetizer/utils/date_time_utils.dart';
+import 'package:appetizer/viewmodels/feedback_models/new_feedback_model.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:appetizer/colors.dart';
-
 
 class NewFeedback extends StatefulWidget {
   @override
@@ -14,165 +15,146 @@ class NewFeedback extends StatefulWidget {
 class _NewFeedbackState extends State<NewFeedback> {
   final _formKey = new GlobalKey<FormState>();
 
-  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   String title, feedbackType = "gn", description;
   DateTime date = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: _scaffoldKey,
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          color: const Color.fromRGBO(255, 193, 7, 1),
-          onPressed: () => Navigator.pop(context, false),
-        ),
-        title: Text(
-          "New Feedback",
-          style: TextStyle(color: Colors.white),
-        ),
-        actions: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(left: 15, right: 15),
-            child: new Icon(
-              Icons.attachment,
-              color: appiYellow,
-            ),
+    return BaseView<NewFeedbackModel>(
+      builder: (context, model, child) => Scaffold(
+        key: newFeedbackViewScaffoldKey,
+        appBar: AppBar(
+          title: Text(
+            "New Feedback",
+            style: TextStyle(color: Colors.white),
           ),
-          GestureDetector(
-            onTap: _validateForm,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 15, right: 20),
+          actions: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(left: 15, right: 15),
               child: new Icon(
-                Icons.send,
+                Icons.attachment,
                 color: appiYellow,
               ),
             ),
-          ),
-        ],
-        backgroundColor: const Color.fromRGBO(121, 85, 72, 1),
-      ),
-      body: SingleChildScrollView(
-        child: Center(
+            GestureDetector(
+              onTap: () {
+                FocusScope.of(context).requestFocus(new FocusNode());
+                _validateForm(model);
+              },
+              child: Padding(
+                padding: const EdgeInsets.only(left: 15, right: 20),
+                child: new Icon(
+                  Icons.send,
+                  color: appiYellow,
+                ),
+              ),
+            ),
+          ],
+        ),
+        body: SingleChildScrollView(
           child: Container(
-            child: Padding(
-              padding: const EdgeInsets.all(35.0),
-              child: Form(
-                key: _formKey,
-                child: new Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    //new Expanded(child: new Container()),
-                    new Text(
-                      "Title",
-                    ),
-                    Container(
-                      child: new TextFormField(
-                        decoration: InputDecoration(hintText: "Enter Title"),
-                        validator: (value) {
-                          if (value.isEmpty) {
-                            return "Title can\'t be empty";
-                          }
-                          return null;
-                        },
-                        onSaved: (value) {
-                          title = value;
-                        },
-                      ),
-                    ),
-                    //new Expanded(child: new Container()),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 40),
-                      child: new Text(
-                        "Type of Feedback",
-                      ),
-                    ),
-                    DropdownButton<String>(
-                      hint: new Text(
-                        resolveFeedbackTypeCode(feedbackType),
-                        style: TextStyle(color: Colors.black),
-                      ),
-                      items: ["gn", "am", "hc", "tm", "wm", "ws", "dn"]
-                          .map((String value) {
-                        //print(value);
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Container(
-                            child: Text(resolveFeedbackTypeCode(value)),
-                          ),
-                        );
-                      }).toList(),
-                      //value: feedbackType,
-                      onChanged: (String newValue) {
-                        setState(() {
-                          feedbackType = newValue;
-                        });
+            padding: const EdgeInsets.all(36),
+            child: Form(
+              key: _formKey,
+              child: new Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  new Text(
+                    "Title",
+                  ),
+                  Container(
+                    child: new TextFormField(
+                      decoration: InputDecoration(hintText: "Enter Title"),
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return "Title can\'t be empty";
+                        }
+                        return null;
+                      },
+                      onSaved: (value) {
+                        title = value;
                       },
                     ),
-                    //new Expanded(child: new Container()),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 30),
-                      child: new Text(
-                        "Date",
-                      ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 24),
+                    child: new Text(
+                      "Type of Feedback",
                     ),
-                    Container(
-                      child: new TextField(
-                        decoration: InputDecoration(
-                          hintText: date.day.toString() +
-                              " " +
-                              DateTimeUtils.getMonthName(date) +
-                              " " +
-                              date.year.toString(),
-                          hintStyle: new TextStyle(
-                            color: Colors.black,
+                  ),
+                  DropdownButton<String>(
+                    hint: new Text(
+                      FeedbackApi.resolveFeedbackTypeCode(feedbackType),
+                      style: TextStyle(color: Colors.black),
+                    ),
+                    items: ["gn", "am", "hc", "tm", "wm", "ws", "dn"]
+                        .map((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Container(
+                          child: Text(
+                            FeedbackApi.resolveFeedbackTypeCode(value),
                           ),
                         ),
-                        onTap: () => _selectDate(context),
-                      ),
+                      );
+                    }).toList(),
+                    onChanged: (String newValue) {
+                      setState(() {
+                        feedbackType = newValue;
+                      });
+                    },
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 24),
+                    child: new Text(
+                      "Date",
                     ),
-                    //new Expanded(child: new Container()),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 45),
-                      child: new Text(
-                        "Description",
+                  ),
+                  Container(
+                    child: new TextField(
+                      focusNode: AlwaysDisabledFocusNode(),
+                      decoration: InputDecoration(
+                        hintText: date.day.toString() +
+                            " " +
+                            DateTimeUtils.getMonthName(date) +
+                            " " +
+                            date.year.toString(),
+                        hintStyle: new TextStyle(
+                          color: Colors.black,
+                        ),
                       ),
+                      onTap: () => _selectDate(context),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 15),
-                      child: TextFormField(
-                        decoration:
-                            InputDecoration(border: OutlineInputBorder()),
-                        maxLines: 7,
-                        validator: (value) {
-                          if (value.length < 50) {
-                            return "Description must be atleast 50 charecters";
-                          }
-                          return null;
-                        },
-                        onSaved: (value) {
-                          description = value;
-                        },
-                      ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 24),
+                    child: new Text(
+                      "Description",
                     ),
-                    /*Padding(
-                      padding: const EdgeInsets.only(top: 10),
-                      child: new Text(
-                        "Description must be atleast 50 charecters",
-                      ),
-                    ),*/
-                    //new Expanded(child: new Container()),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 35),
-                      child: new Center(
-                          child: new Image.asset(
-                              "assets/icons/feedback_dish.png")),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 12),
+                    child: TextFormField(
+                      decoration: InputDecoration(border: OutlineInputBorder()),
+                      maxLines: 7,
+                      validator: (value) {
+                        if (value.length < 50) {
+                          return "Description must be atleast 50 charecters";
+                        }
+                        return null;
+                      },
+                      onSaved: (value) {
+                        description = value;
+                      },
                     ),
-
-                    //new Expanded(child: new Container()),
-                  ],
-                ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 24),
+                    child: new Center(
+                      child: new Image.asset("assets/icons/feedback_dish.png"),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
@@ -181,26 +163,11 @@ class _NewFeedbackState extends State<NewFeedback> {
     );
   }
 
-  void _validateForm() {
+  void _validateForm(NewFeedbackModel model) {
     final form = _formKey.currentState;
     if (form.validate()) {
       form.save();
-      submitFeedback();
-    }
-  }
-
-  Future submitFeedback() async {
-    showCustomDialog(context, "Sending Feedback");
-    var prefs = await getUserDetails();
-    var response = await newFeedBack(
-        prefs.getString("token"), feedbackType, title, description, date);
-    print(response);
-    await new Future.delayed(new Duration(seconds: 2));
-    if (response.id != null) {
-      Navigator.pop(context);
-      _showSnackBar(context, "Thank You For Your Feedback!");
-      await new Future.delayed(new Duration(seconds: 1));
-      Navigator.pop(context);
+      model.postNewFeedback(feedbackType, title, description, date);
     }
   }
 
@@ -215,15 +182,4 @@ class _NewFeedbackState extends State<NewFeedback> {
         date = picked.toLocal();
       });
   }
-
-  void _showSnackBar(BuildContext context, String message) {
-    _scaffoldKey.currentState.showSnackBar(SnackBar(
-      content: Text(message),
-    ));
-  }
-}
-
-Future<SharedPreferences> getUserDetails() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  return prefs;
 }

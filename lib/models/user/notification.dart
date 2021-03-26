@@ -4,7 +4,8 @@
 
 import 'dart:convert';
 
-Notification notificationFromJson(String str) => Notification.fromJson(json.decode(str));
+Notification notificationFromJson(String str) =>
+    Notification.fromJson(json.decode(str));
 
 String notificationToJson(Notification data) => json.encode(data.toJson());
 
@@ -22,18 +23,19 @@ class Notification {
   });
 
   factory Notification.fromJson(Map<String, dynamic> json) => new Notification(
-    count: json["count"],
-    hasNext: json["has_next"],
-    hasPrevious: json["has_previous"],
-    results: new List<Result>.from(json["results"].map((x) => Result.fromJson(x))),
-  );
+        count: json["count"],
+        hasNext: json["has_next"],
+        hasPrevious: json["has_previous"],
+        results: new List<Result>.from(
+            json["results"].map((x) => Result.fromJson(x))),
+      );
 
   Map<String, dynamic> toJson() => {
-    "count": count,
-    "has_next": hasNext,
-    "has_previous": hasPrevious,
-    "results": new List<dynamic>.from(results.map((x) => x.toJson())),
-  };
+        "count": count,
+        "has_next": hasNext,
+        "has_previous": hasPrevious,
+        "results": new List<dynamic>.from(results.map((x) => x.toJson())),
+      };
 }
 
 class Result {
@@ -50,16 +52,16 @@ class Result {
   });
 
   factory Result.fromJson(Map<String, dynamic> json) => new Result(
-    id: json["id"],
-    dateCreated: json["date_created"],
-    title: json["title"],
-    message: json["message"],
-  );
+        id: json["id"],
+        dateCreated: json["date_created"],
+        title: json["title"],
+        message: json["message"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "date_created": dateCreated,
-    "title": title,
-    "message": message,
-  };
+        "id": id,
+        "date_created": dateCreated,
+        "title": title,
+        "message": message,
+      };
 }

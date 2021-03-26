@@ -1,54 +1,44 @@
-import 'package:appetizer/colors.dart';
-import 'package:appetizer/services/user.dart';
+import 'package:appetizer/enums/view_state.dart';
+import 'package:appetizer/globals.dart';
+import 'package:appetizer/ui/base_view.dart';
+import 'package:appetizer/ui/components/error_widget.dart';
+import 'package:appetizer/ui/components/progress_bar.dart';
 import 'package:appetizer/utils/date_time_utils.dart';
+import 'package:appetizer/viewmodels/notification_models/notifications_model.dart';
 import 'package:flutter/material.dart';
 
 import 'notification.dart';
 
 class NotificationHistory extends StatelessWidget {
-  final String token;
-
-  const NotificationHistory({Key key, this.token}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return BaseView<NotificationsModel>(
+      onModelReady: (model) => model.getNotifications(),
+      builder: (context, model, child) => Scaffold(
+        key: notificationHistoryViewScaffoldKey,
         appBar: AppBar(
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back),
-            color: const Color.fromRGBO(255, 193, 7, 1),
-            onPressed: () => Navigator.pop(context, false),
-          ),
           title: Text(
-            "Notification History",
+            "Notifications History",
             style: TextStyle(color: Colors.white),
           ),
-          backgroundColor: const Color.fromRGBO(121, 85, 72, 1),
         ),
-        body: SafeArea(child: notificationList()));
-  }
-
-  Widget notificationList() {
-    return FutureBuilder(
-        future: getNotifications(token),
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (snapshot.data == null) {
-            return Container(
-              child: Center(
-                  child: CircularProgressIndicator(
-                valueColor: new AlwaysStoppedAnimation<Color>(appiYellow),
-              )),
-            );
-          } else {
-            return ListView.builder(
-                itemCount: snapshot.data.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return MessNotification(
-                      snapshot.data[index].title,
-                      snapshot.data[index].message,
-                      DateTimeUtils.dateTime(snapshot.data[index].dateCreated));
-                });
-          }
-        });
+        body: SafeArea(
+          child: model.state == ViewState.Busy
+              ? ProgressBar()
+              : model.state == ViewState.Error
+                  ? AppiErrorWidget(message: model.errorMessage)
+                  : ListView.builder(
+                      itemCount: model.notifications.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return MessNotification(
+                            model.notifications[index].title,
+                            model.notifications[index].message,
+                            DateTimeUtils.dateTime(
+                                model.notifications[index].dateCreated));
+                      },
+                    ),
+        ),
+      ),
+    );
   }
 }

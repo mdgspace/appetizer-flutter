@@ -1,6 +1,6 @@
-import 'package:appetizer/change_notifiers/menu_model.dart';
 import 'package:appetizer/models/menu/week.dart';
 import 'package:appetizer/utils/date_time_utils.dart';
+import 'package:appetizer/viewmodels/menu_models/your_menu_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:appetizer/colors.dart';
@@ -25,14 +25,15 @@ class _WeekMenuState extends State<WeekMenu> {
     }
     return Scaffold(
       appBar: AppBar(
-        elevation: 0,
         centerTitle: true,
         title: Text(
           "Mess Menu",
           style: new TextStyle(
-              color: Colors.white, fontSize: 25.0, fontFamily: 'Lobster_Two'),
+            color: Colors.white,
+            fontSize: 25.0,
+            fontFamily: 'Lobster_Two',
+          ),
         ),
-        backgroundColor: appiBrown,
         iconTheme: new IconThemeData(color: appiYellow),
       ),
       body: Column(

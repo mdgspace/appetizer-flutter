@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class NoLeaves extends StatelessWidget{
+class NoLeaves extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
         Container(
-          height: MediaQuery.of(context).size.height/4,
+          height: MediaQuery.of(context).size.height / 4,
         ),
         Text(
           'You have no upcoming leaves',

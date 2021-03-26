@@ -4,7 +4,8 @@
 
 import 'dart:convert';
 
-MonthlyRebate monthlyRebateFromJson(String str) => MonthlyRebate.fromJson(json.decode(str));
+MonthlyRebate monthlyRebateFromJson(String str) =>
+    MonthlyRebate.fromJson(json.decode(str));
 
 String monthlyRebateToJson(MonthlyRebate data) => json.encode(data.toJson());
 
@@ -15,11 +16,12 @@ class MonthlyRebate {
     this.rebate,
   });
 
-  factory MonthlyRebate.fromJson(Map<String, dynamic> json) => new MonthlyRebate(
-    rebate: json["rebate"],
-  );
+  factory MonthlyRebate.fromJson(Map<String, dynamic> json) =>
+      new MonthlyRebate(
+        rebate: json["rebate"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "rebate": rebate,
-  };
+        "rebate": rebate,
+      };
 }

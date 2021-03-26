@@ -29,9 +29,16 @@ class LeaveDetailsData {
   final String meal;
   final String day;
 
-  LeaveDetailsData({this.singleLeave, this.consecutiveLeaves, this.mealFrom,
-    this.mealTo, this.dayFrom, this.dayTo, this.dateFrom, this.dateTo,
-    this.date, this.meal, this.day});
-
-
+  LeaveDetailsData(
+      {this.singleLeave,
+      this.consecutiveLeaves,
+      this.mealFrom,
+      this.mealTo,
+      this.dayFrom,
+      this.dayTo,
+      this.dateFrom,
+      this.dateTo,
+      this.date,
+      this.meal,
+      this.day});
 }

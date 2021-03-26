@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.appetizer">
+    package="in.ac.iitr.mdg.appetizer">
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <!-- io.flutter.app.FlutterApplication is an android.app.Application that
@@ -9,6 +9,7 @@
          FlutterApplication and put your custom class here. -->
     <application
         android:name="io.flutter.app.FlutterApplication"
+        android:usesCleartextTraffic="true"
         android:label="appetizer"
         android:icon="@mipmap/launcher_icon">
         <meta-data

@@ -11,8 +11,6 @@ class SingleLeaveTimelineCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-
     return Container(
       height: 60,
       //width: MediaQuery.of(context).size.width * 0.75,
