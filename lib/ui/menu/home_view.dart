@@ -12,21 +12,21 @@ import 'package:appetizer/ui/notification_history/noti_history_screen.dart';
 import 'package:appetizer/ui/settings/settings_screen.dart';
 import 'package:appetizer/ui/user_feedback/user_feedback.dart';
 import 'package:appetizer/viewmodels/current_date_model.dart';
-import 'package:appetizer/viewmodels/home_model.dart';
+import 'package:appetizer/viewmodels/home_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class Home extends StatefulWidget {
+class HomeView extends StatefulWidget {
   static const String id = 'home_view';
   final String token;
 
-  const Home({Key key, this.token}) : super(key: key);
+  const HomeView({Key key, this.token}) : super(key: key);
 
   @override
-  _HomeState createState() => _HomeState();
+  _HomeViewState createState() => _HomeViewState();
 }
 
-class _HomeState extends State<Home> {
+class _HomeViewState extends State<HomeView> {
   String selectedHostelName;
   CurrentDateModel currentDateModel;
 
@@ -38,8 +38,11 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return BaseView<HomeModel>(
-      onModelReady: (model) async => model.onModelReady(),
+    return BaseView<HomeViewModel>(
+      onModelReady: (model) {
+        model.fetchInitialCheckedStatus();
+        model.setSwitchableHostels();
+      },
       builder: (context, model, child) => MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (context) => currentDateModel),
@@ -129,7 +132,7 @@ class _HomeState extends State<Home> {
     );
   }
 
-  Widget _appBar(context, HomeModel model) {
+  Widget _appBar(context, HomeViewModel model) {
     return AppBar(
       centerTitle: true,
       title: Container(
@@ -209,7 +212,7 @@ class _HomeState extends State<Home> {
     );
   }
 
-  Widget _drawer(context, HomeModel model) {
+  Widget _drawer(context, HomeViewModel model) {
     return Drawer(
       child: Column(
         children: <Widget>[
@@ -461,7 +464,7 @@ class _HomeState extends State<Home> {
     );
   }
 
-  Widget _fab(context, HomeModel model) {
+  Widget _fab(context, HomeViewModel model) {
     return FloatingActionButton(
       onPressed: model.onCheckoutTap,
       backgroundColor: appiYellowLogo,

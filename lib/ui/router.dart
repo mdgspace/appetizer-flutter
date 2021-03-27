@@ -3,7 +3,7 @@ import 'package:appetizer/ui/FAQ/faq_view.dart';
 import 'package:appetizer/ui/help/help.dart';
 import 'package:appetizer/ui/leave_history/leave_history_screen.dart';
 import 'package:appetizer/ui/login/login.dart';
-import 'package:appetizer/ui/menu/home.dart';
+import 'package:appetizer/ui/menu/home_view.dart';
 import 'package:appetizer/ui/multimessing/confirmed_switch_screen.dart';
 import 'package:appetizer/ui/multimessing/switchable_meals_screen.dart';
 import 'package:appetizer/ui/my_leaves/my_leaves_screen.dart';
@@ -33,10 +33,10 @@ class AppetizerRouter {
             code: code,
           ),
         );
-      case Home.id:
+      case HomeView.id:
         var token = settings.arguments as String;
         return MaterialPageRoute(
-          builder: (_) => Home(
+          builder: (_) => HomeView(
             token: token,
           ),
         );

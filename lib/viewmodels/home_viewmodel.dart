@@ -14,7 +14,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class HomeModel extends BaseModel {
+class HomeViewModel extends BaseModel {
   final MultimessingApi _multimessingApi = locator<MultimessingApi>();
   final UserApi _userApi = locator<UserApi>();
   final LeaveApi _leaveApi = locator<LeaveApi>();
@@ -44,7 +44,7 @@ class HomeModel extends BaseModel {
       });
       notifyListeners();
     } on Failure catch (f) {
-      print(f.message);
+      setState(ViewState.Error);
       setErrorMessage(f.message);
       await Fluttertoast.showToast(msg: f.message);
     }
@@ -56,7 +56,7 @@ class HomeModel extends BaseModel {
       isCheckedOut = userDetails.isCheckedOut;
       notifyListeners();
     } on Failure catch (f) {
-      print(f.message);
+      setState(ViewState.Error);
       setErrorMessage(f.message);
     }
   }
@@ -80,16 +80,9 @@ class HomeModel extends BaseModel {
         }
       }
     } on Failure catch (f) {
-      print(f.message);
-      setErrorMessage(f.message);
       setState(ViewState.Error);
+      setErrorMessage(f.message);
     }
-  }
-
-  Future onModelReady() async {
-    await checkVersion();
-    await setSwitchableHostels();
-    await fetchInitialCheckedStatus();
   }
 
   Future logout() async {
@@ -98,9 +91,8 @@ class HomeModel extends BaseModel {
       await _userApi.userLogout();
       setState(ViewState.Idle);
     } on Failure catch (f) {
-      print(f.message);
-      setErrorMessage(f.message);
       setState(ViewState.Error);
+      setErrorMessage(f.message);
     }
   }
 
@@ -123,24 +115,24 @@ class HomeModel extends BaseModel {
     }
   }
 
-  Future toggleCheckState() async {
+  Future checkout() async {
     try {
       isCheckedOut = await _leaveApi.check();
     } on Failure catch (f) {
-      print(f.message);
-      setErrorMessage(f.message);
       setState(ViewState.Error);
+      setErrorMessage(f.message);
     }
   }
 
   Future onCheckoutTap() async {
     var dialogResponse = await _dialogService.showConfirmationDialog(
-        title: 'Check Out',
-        description: 'Are you sure you would like to check out?',
-        confirmationTitle: 'CHECK OUT');
+      title: 'Check Out',
+      description: 'Are you sure you would like to check out?',
+      confirmationTitle: 'CHECK OUT',
+    );
 
     if (dialogResponse.confirmed) {
-      await toggleCheckState();
+      await checkout();
       if (isCheckedOut) {
         SnackBarUtils.showDark('You have checked out');
       }

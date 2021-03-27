@@ -13,7 +13,7 @@ import 'package:appetizer/services/remote_config_service.dart';
 import 'package:appetizer/viewmodels/faq/faq_viewmodel.dart';
 import 'package:appetizer/viewmodels/feedback/new_feedback_viewmodel.dart';
 import 'package:appetizer/viewmodels/feedback/user_feedback_viewmodel.dart';
-import 'package:appetizer/viewmodels/home_model.dart';
+import 'package:appetizer/viewmodels/home_viewmodel.dart';
 import 'package:appetizer/viewmodels/leaves/leave_status_card_viewmodel.dart';
 import 'package:appetizer/viewmodels/leaves/leave_timeline_viewmodel.dart';
 import 'package:appetizer/viewmodels/leaves/my_leaves_viewmodel.dart';
@@ -82,7 +82,7 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => ConfirmSwitchPopupModel());
   locator.registerFactory(() => MySwitchesModel());
   locator.registerFactory(() => SwitchStatusCardModel());
-  locator.registerFactory(() => HomeModel());
+  locator.registerFactory(() => HomeViewModel());
   locator.registerFactory(() => YourMenuCardViewModel());
   locator.registerFactory(() => OtherMenuCardViewModel());
 }

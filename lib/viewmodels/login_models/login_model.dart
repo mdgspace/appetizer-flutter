@@ -4,7 +4,7 @@ import 'package:appetizer/models/user/login.dart';
 import 'package:appetizer/models/user/oauth.dart';
 import 'package:appetizer/services/api/user.dart';
 import 'package:appetizer/services/dialog_service.dart';
-import 'package:appetizer/ui/menu/home.dart';
+import 'package:appetizer/ui/menu/home_view.dart';
 import 'package:appetizer/ui/password/choose_new_password.dart';
 import 'package:appetizer/utils/user_details.dart';
 import 'package:appetizer/viewmodels/base_model.dart';
@@ -103,7 +103,7 @@ class LoginModel extends BaseModel {
               studentData, oauthResponse.token);
           await Future.delayed(const Duration(milliseconds: 500));
           _dialogService.popDialog();
-          await Get.offNamed(Home.id, arguments: oauthResponse.token);
+          await Get.offNamed(HomeView.id, arguments: oauthResponse.token);
         }
       }
     }
