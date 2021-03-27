@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:appetizer/colors.dart';
 import 'package:appetizer/enums/view_state.dart';
 import 'package:appetizer/ui/base_view.dart';
-import 'package:appetizer/viewmodels/multimessing_models/qr_genrator_model.dart';
+import 'package:appetizer/viewmodels/multimessing/qr_genrator_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -20,7 +20,7 @@ class QRWidget extends StatefulWidget {
 class QRWidgetState extends State<QRWidget> {
   @override
   Widget build(BuildContext context) {
-    return BaseView<QRGeneratorModel>(
+    return BaseView<QRGeneratorViewModel>(
       onModelReady: (model) => model.fetchSecretCode(widget.switchId),
       builder: (context, model, child) => model.state != ViewState.Idle
           ? Container(
@@ -28,8 +28,7 @@ class QRWidgetState extends State<QRWidget> {
               child: Center(
                 child: model.state == ViewState.Busy
                     ? CircularProgressIndicator(
-                        valueColor:
-                            AlwaysStoppedAnimation<Color>(appiYellow),
+                        valueColor: AlwaysStoppedAnimation<Color>(appiYellow),
                       )
                     : Text('No Secret was fetched'),
               ),

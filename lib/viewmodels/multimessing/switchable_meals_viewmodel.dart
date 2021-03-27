@@ -1,11 +1,11 @@
 import 'package:appetizer/enums/view_state.dart';
 import 'package:appetizer/locator.dart';
 import 'package:appetizer/models/failure_model.dart';
-import 'package:appetizer/models/multimessing/meal_switch_from_your_meals.dart';
-import 'package:appetizer/services/api/multimessing.dart';
+import 'package:appetizer/models/multimessing/switchable_meal.dart';
+import 'package:appetizer/services/api/multimessing_api.dart';
 import 'package:appetizer/viewmodels/base_model.dart';
 
-class SwitchableMealsModel extends BaseModel {
+class SwitchableMealsViewModel extends BaseModel {
   final MultimessingApi _multimessingApi = locator<MultimessingApi>();
 
   bool _isMealSwitched;
@@ -17,13 +17,11 @@ class SwitchableMealsModel extends BaseModel {
     notifyListeners();
   }
 
-  List<SwitchableMealsForYourMeal> _listOfSwitchableMeals;
+  List<SwitchableMeal> _listOfSwitchableMeals;
 
-  List<SwitchableMealsForYourMeal> get listOfSwitchableMeals =>
-      _listOfSwitchableMeals;
+  List<SwitchableMeal> get listOfSwitchableMeals => _listOfSwitchableMeals;
 
-  set listOfSwitchableMeals(
-      List<SwitchableMealsForYourMeal> listOfSwitchableMeals) {
+  set listOfSwitchableMeals(List<SwitchableMeal> listOfSwitchableMeals) {
     _listOfSwitchableMeals = listOfSwitchableMeals;
     notifyListeners();
   }
@@ -34,21 +32,19 @@ class SwitchableMealsModel extends BaseModel {
       isMealSwitched = await _multimessingApi.switchMeals(id, toHostel);
       setState(ViewState.Idle);
     } on Failure catch (f) {
-      print(f.message);
-      setErrorMessage(f.message);
       setState(ViewState.Error);
+      setErrorMessage(f.message);
     }
   }
 
   Future getSwitchableMeals(int id) async {
     setState(ViewState.Busy);
     try {
-      listOfSwitchableMeals = await _multimessingApi.listSwitchableMeals(id);
+      listOfSwitchableMeals = await _multimessingApi.getSwitchableMeals(id);
       setState(ViewState.Idle);
     } on Failure catch (f) {
-      print(f.message);
-      setErrorMessage(f.message);
       setState(ViewState.Error);
+      setErrorMessage(f.message);
     }
   }
 }

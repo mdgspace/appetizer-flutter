@@ -1,6 +1,6 @@
 import 'package:appetizer/colors.dart';
 import 'package:appetizer/enums/view_state.dart';
-import 'package:appetizer/models/multimessing/meal_switch_from_your_meals.dart';
+import 'package:appetizer/models/multimessing/switchable_meal.dart';
 import 'package:appetizer/services/dialog_service.dart';
 import 'package:appetizer/ui/base_view.dart';
 import 'package:appetizer/ui/components/appetizer_error_widget.dart';
@@ -8,7 +8,7 @@ import 'package:appetizer/ui/components/appetizer_progress_widget.dart';
 import 'package:appetizer/ui/menu_screens/week_menu_screen.dart';
 import 'package:appetizer/ui/multimessing/confirmed_switch_screen.dart';
 import 'package:appetizer/utils/get_hostel_code.dart';
-import 'package:appetizer/viewmodels/multimessing_models/switchable_meals_model.dart';
+import 'package:appetizer/viewmodels/multimessing/switchable_meals_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -72,8 +72,8 @@ class _SwitchableMealsState extends State<SwitchableMealsScreen> {
   }
 
   List<TableRow> _tableBody(
-      List<SwitchableMealsForYourMeal> listOfSwitchableMealsForYourMeal,
-      SwitchableMealsModel model) {
+      List<SwitchableMeal> listOfSwitchableMealsForYourMeal,
+      SwitchableMealsViewModel model) {
     var _body = <TableRow>[];
     _body.add(_tableHeader());
     listOfSwitchableMealsForYourMeal.forEach((meal) {
@@ -82,8 +82,8 @@ class _SwitchableMealsState extends State<SwitchableMealsScreen> {
     return _body;
   }
 
-  TableRow _getTableRow(SwitchableMealsForYourMeal _switchableMealsFromYourMeal,
-      SwitchableMealsModel model) {
+  TableRow _getTableRow(SwitchableMeal _switchableMealsFromYourMeal,
+      SwitchableMealsViewModel model) {
     return TableRow(
       children: [
         TableCell(
@@ -197,7 +197,7 @@ class _SwitchableMealsState extends State<SwitchableMealsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BaseView<SwitchableMealsModel>(
+    return BaseView<SwitchableMealsViewModel>(
       onModelReady: (model) => model.getSwitchableMeals(widget.mealId),
       builder: (context, model, child) => Scaffold(
         appBar: AppBar(

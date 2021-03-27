@@ -1,28 +1,23 @@
-// To parse this JSON data, do
-//
-//     final switchDetails = switchDetailsFromJson(jsonString);
-
 import 'dart:convert';
 
-SwitchDetails switchDetailsFromJson(String str) =>
-    SwitchDetails.fromJson(json.decode(str));
+Switch switchFromJson(String str) => Switch.fromJson(json.decode(str));
 
-String switchDetailsToJson(SwitchDetails data) => json.encode(data.toJson());
+String switchToJson(Switch data) => json.encode(data.toJson());
 
-class SwitchDetails {
+class Switch {
   int id;
   int toMeal;
   String secretCode;
   String status;
 
-  SwitchDetails({
+  Switch({
     this.id,
     this.toMeal,
     this.secretCode,
     this.status,
   });
 
-  factory SwitchDetails.fromJson(Map<String, dynamic> json) => SwitchDetails(
+  factory Switch.fromJson(Map<String, dynamic> json) => Switch(
         id: json['id'],
         toMeal: json['to_meal'],
         secretCode: json['secret_code'],

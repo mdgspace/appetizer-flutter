@@ -3,10 +3,8 @@ import 'dart:convert';
 import 'package:appetizer/config/environment_config.dart';
 import 'package:appetizer/constants.dart';
 import 'package:appetizer/models/failure_model.dart';
-import 'package:appetizer/models/multimessing/meal_switch_from_your_meals.dart';
-import 'package:appetizer/models/multimessing/remaining_switch_count.dart';
-import 'package:appetizer/models/multimessing/switch_details.dart';
-import 'package:appetizer/models/multimessing/switchable_hostels.dart';
+import 'package:appetizer/models/multimessing/switchable_meal.dart';
+import 'package:appetizer/models/multimessing/switch.dart';
 import 'package:appetizer/utils/api_utils.dart';
 import 'package:http/http.dart' as http;
 
@@ -14,14 +12,13 @@ class MultimessingApi {
   var headers = {'Content-Type': 'application/json'};
   http.Client client = http.Client();
 
-  Future<List<SwitchableMealsForYourMeal>> listSwitchableMeals(int id) async {
+  Future<List<SwitchableMeal>> getSwitchableMeals(int id) async {
     var endpoint = '/api/menu/switch_meal/$id';
     var uri = EnvironmentConfig.BASE_URL + endpoint;
     try {
       await ApiUtils.addTokenToHeaders(headers);
       var jsonResponse = await ApiUtils.get(uri, headers: headers);
-      var switchableMeals =
-          switchableMealsForYourMealFromJson(json.encode(jsonResponse));
+      var switchableMeals = switchableMealsFromJson(json.encode(jsonResponse));
       return switchableMeals;
     } on FormatException catch (e) {
       print(e.message);
@@ -32,14 +29,14 @@ class MultimessingApi {
     }
   }
 
-  Future<SwitchCount> remainingSwitches() async {
+  Future<int> remainingSwitches() async {
     var endPoint = '/api/leave/switch/count/remaining/';
     var uri = EnvironmentConfig.BASE_URL + endPoint;
 
     try {
       await ApiUtils.addTokenToHeaders(headers);
       var jsonResponse = await ApiUtils.get(uri, headers: headers);
-      var switchCount = SwitchCount.fromJson(jsonResponse);
+      var switchCount = jsonResponse['switches'];
       return switchCount;
     } on FormatException catch (e) {
       print(e.message);
@@ -95,13 +92,13 @@ class MultimessingApi {
     }
   }
 
-  Future<SwitchDetails> getSwitchDetails(int id) async {
+  Future<Switch> getSwitchDetails(int id) async {
     var endpoint = '/api/leave/switch/$id';
     var uri = EnvironmentConfig.BASE_URL + endpoint;
     try {
       await ApiUtils.addTokenToHeaders(headers);
       final jsonResponse = await ApiUtils.get(uri, headers: headers);
-      var switchDetails = SwitchDetails.fromJson(jsonResponse);
+      var switchDetails = Switch.fromJson(jsonResponse);
       return switchDetails;
     } on FormatException catch (e) {
       print(e.message);
@@ -118,8 +115,8 @@ class MultimessingApi {
     try {
       await ApiUtils.addTokenToHeaders(headers);
       var jsonResponse = await ApiUtils.get(uri, headers: headers);
-      var switchableHostels =
-          switchableHostelsFromJson(json.encode(jsonResponse));
+      var switchableHostels = List<List<dynamic>>.from(
+          jsonResponse.map((x) => List<dynamic>.from(x.map((x) => x))));
       return switchableHostels;
     } on FormatException catch (e) {
       print(e.message);

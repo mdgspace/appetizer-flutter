@@ -1,5 +1,5 @@
 import 'package:appetizer/models/menu/week.dart';
-import 'package:appetizer/services/api/multimessing.dart';
+import 'package:appetizer/services/api/multimessing_api.dart';
 import 'package:appetizer/services/dialog_service.dart';
 import 'package:appetizer/ui/multimessing/confirm_switch_popup_screen.dart';
 import 'package:appetizer/utils/menu_utils.dart';

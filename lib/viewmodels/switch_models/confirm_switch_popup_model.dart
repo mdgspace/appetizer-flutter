@@ -3,7 +3,7 @@ import 'package:appetizer/locator.dart';
 import 'package:appetizer/models/failure_model.dart';
 import 'package:appetizer/models/menu/week.dart';
 import 'package:appetizer/services/api/menu_api.dart';
-import 'package:appetizer/services/api/multimessing.dart';
+import 'package:appetizer/services/api/multimessing_api.dart';
 import 'package:appetizer/viewmodels/base_model.dart';
 
 class ConfirmSwitchPopupModel extends BaseModel {

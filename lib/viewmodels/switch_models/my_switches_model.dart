@@ -1,18 +1,17 @@
 import 'package:appetizer/enums/view_state.dart';
 import 'package:appetizer/locator.dart';
 import 'package:appetizer/models/failure_model.dart';
-import 'package:appetizer/models/multimessing/remaining_switch_count.dart';
-import 'package:appetizer/services/api/multimessing.dart';
+import 'package:appetizer/services/api/multimessing_api.dart';
 import 'package:appetizer/viewmodels/base_model.dart';
 
 class MySwitchesModel extends BaseModel {
   final MultimessingApi _multimessingApi = locator<MultimessingApi>();
 
-  SwitchCount _switchCount;
+  int _switchCount;
 
-  SwitchCount get switchCount => _switchCount;
+  int get switchCount => _switchCount;
 
-  set switchCount(SwitchCount switchCount) {
+  set switchCount(int switchCount) {
     _switchCount = switchCount;
     notifyListeners();
   }

@@ -1,19 +1,13 @@
-// To parse this JSON data, do
-//
-//     final switchableMealsForYourMeal = switchableMealsForYourMealFromJson(jsonString);
-
 import 'dart:convert';
 
-List<SwitchableMealsForYourMeal> switchableMealsForYourMealFromJson(
-        String str) =>
-    List<SwitchableMealsForYourMeal>.from(
-        json.decode(str).map((x) => SwitchableMealsForYourMeal.fromJson(x)));
+List<SwitchableMeal> switchableMealsFromJson(String str) =>
+    List<SwitchableMeal>.from(
+        json.decode(str).map((x) => SwitchableMeal.fromJson(x)));
 
-String switchableMealsForYourMealToJson(
-        List<SwitchableMealsForYourMeal> data) =>
+String switchableMealsToJson(List<SwitchableMeal> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class SwitchableMealsForYourMeal {
+class SwitchableMeal {
   int id;
   String type;
   List<Item> items;
@@ -23,7 +17,7 @@ class SwitchableMealsForYourMeal {
   dynamic wastage;
   String hostelName;
 
-  SwitchableMealsForYourMeal({
+  SwitchableMeal({
     this.id,
     this.type,
     this.items,
@@ -34,8 +28,7 @@ class SwitchableMealsForYourMeal {
     this.hostelName,
   });
 
-  factory SwitchableMealsForYourMeal.fromJson(Map<String, dynamic> json) =>
-      SwitchableMealsForYourMeal(
+  factory SwitchableMeal.fromJson(Map<String, dynamic> json) => SwitchableMeal(
         id: json['id'],
         type: json['type'],
         items: List<Item>.from(json['items'].map((x) => Item.fromJson(x))),

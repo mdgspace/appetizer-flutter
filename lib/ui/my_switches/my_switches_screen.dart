@@ -26,7 +26,7 @@ class MySwitches extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    SwitchStatusCard(model.switchCount?.count),
+                    SwitchStatusCard(model.switchCount),
                   ],
                 ),
               ),

@@ -1,10 +1,10 @@
 import 'package:appetizer/enums/view_state.dart';
 import 'package:appetizer/locator.dart';
 import 'package:appetizer/models/failure_model.dart';
-import 'package:appetizer/services/api/multimessing.dart';
+import 'package:appetizer/services/api/multimessing_api.dart';
 import 'package:appetizer/viewmodels/base_model.dart';
 
-class QRGeneratorModel extends BaseModel {
+class QRGeneratorViewModel extends BaseModel {
   final MultimessingApi _multimessingApi = locator<MultimessingApi>();
 
   String _secretCode;
@@ -23,9 +23,8 @@ class QRGeneratorModel extends BaseModel {
       secretCode = switchDetails.secretCode;
       setState(ViewState.Idle);
     } on Failure catch (f) {
-      print(f.message);
-      setErrorMessage(f.message);
       setState(ViewState.Error);
+      setErrorMessage(f.message);
     }
   }
 }
