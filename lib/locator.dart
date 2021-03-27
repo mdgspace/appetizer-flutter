@@ -33,9 +33,9 @@ import 'package:appetizer/viewmodels/rebates/rebate_history_viewmodel.dart';
 import 'package:appetizer/viewmodels/settings/edit_profile_viewmodel.dart';
 import 'package:appetizer/viewmodels/settings/settings_viewmodel.dart';
 import 'package:appetizer/viewmodels/startup_viewmodel.dart';
-import 'package:appetizer/viewmodels/switch_models/confirm_switch_popup_model.dart';
-import 'package:appetizer/viewmodels/switch_models/my_switches_model.dart';
-import 'package:appetizer/viewmodels/switch_models/switch_status_card_model.dart';
+import 'package:appetizer/viewmodels/switches/confirm_switch_popup_viewmodel.dart';
+import 'package:appetizer/viewmodels/switches/my_switches_viewmodel.dart';
+import 'package:appetizer/viewmodels/switches/switch_status_card_viewmodel.dart';
 import 'package:get_it/get_it.dart';
 
 GetIt locator = GetIt.instance;
@@ -79,9 +79,9 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => RebateHistoryViewModel());
   locator.registerFactory(() => EditProfileViewModel());
   locator.registerFactory(() => SettingsViewModel());
-  locator.registerFactory(() => ConfirmSwitchPopupModel());
-  locator.registerFactory(() => MySwitchesModel());
-  locator.registerFactory(() => SwitchStatusCardModel());
+  locator.registerFactory(() => ConfirmSwitchPopupViewModel());
+  locator.registerFactory(() => MySwitchesViewModel());
+  locator.registerFactory(() => SwitchStatusCardViewModel());
   locator.registerFactory(() => HomeViewModel());
   locator.registerFactory(() => YourMenuCardViewModel());
   locator.registerFactory(() => OtherMenuCardViewModel());

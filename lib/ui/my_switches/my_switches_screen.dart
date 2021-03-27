@@ -1,7 +1,7 @@
 import 'package:appetizer/ui/base_view.dart';
 import 'package:appetizer/ui/my_switches/see_switch_history.dart';
 import 'package:appetizer/ui/my_switches/switch_status_card.dart';
-import 'package:appetizer/viewmodels/switch_models/my_switches_model.dart';
+import 'package:appetizer/viewmodels/switches/my_switches_viewmodel.dart';
 import 'package:flutter/material.dart';
 
 class MySwitches extends StatelessWidget {
@@ -9,7 +9,7 @@ class MySwitches extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BaseView<MySwitchesModel>(
+    return BaseView<MySwitchesViewModel>(
       onModelReady: (model) => model.getRemainingSwitches(),
       builder: (context, model, child) => Scaffold(
         appBar: AppBar(

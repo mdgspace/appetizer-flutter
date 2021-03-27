@@ -9,7 +9,7 @@ import 'package:appetizer/ui/multimessing/confirmed_switch_screen.dart';
 import 'package:appetizer/utils/date_time_utils.dart';
 import 'package:appetizer/utils/get_hostel_code.dart';
 import 'package:appetizer/utils/menu_utils.dart';
-import 'package:appetizer/viewmodels/switch_models/confirm_switch_popup_model.dart';
+import 'package:appetizer/viewmodels/switches/confirm_switch_popup_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -74,7 +74,7 @@ class _ConfirmSwitchPopupScreenState extends State<ConfirmSwitchPopupScreen> {
 
   @override
   Widget build(BuildContext context) {
-    VoidCallback _onConfirmSwitchPressed(ConfirmSwitchPopupModel model) {
+    VoidCallback _onConfirmSwitchPressed(ConfirmSwitchPopupViewModel model) {
       return () async {
         DialogService().showCustomProgressDialog(title: 'Switching Meals');
         await model.switchMeals(
@@ -105,7 +105,7 @@ class _ConfirmSwitchPopupScreenState extends State<ConfirmSwitchPopupScreen> {
       };
     }
 
-    return BaseView<ConfirmSwitchPopupModel>(
+    return BaseView<ConfirmSwitchPopupViewModel>(
       onModelReady: (model) => model.getMenuWeekMultimessing(
         DateTimeUtils.getWeekNumber(widget.meal.startDateTime),
         hostelCodeMap[model.currentUser.hostelName],
@@ -118,7 +118,7 @@ class _ConfirmSwitchPopupScreenState extends State<ConfirmSwitchPopupScreen> {
                 ? AppetizerErrorWidget(errorMessage: model.errorMessage)
                 : Builder(
                     builder: (context) {
-                      model.menuWeekMultimessing.days.forEach((dayMenu) {
+                      model.weekMenuMultimessing.days.forEach((dayMenu) {
                         var mealDateString =
                             dayMenu.date.toString().substring(0, 10);
                         dayMenu.meals.forEach((mealMenu) {

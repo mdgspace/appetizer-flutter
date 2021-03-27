@@ -6,7 +6,7 @@ import 'package:appetizer/services/api/menu_api.dart';
 import 'package:appetizer/services/api/multimessing_api.dart';
 import 'package:appetizer/viewmodels/base_model.dart';
 
-class ConfirmSwitchPopupModel extends BaseModel {
+class ConfirmSwitchPopupViewModel extends BaseModel {
   final MultimessingApi _multimessingApi = locator<MultimessingApi>();
   final MenuApi _menuApi = locator<MenuApi>();
 
@@ -19,12 +19,12 @@ class ConfirmSwitchPopupModel extends BaseModel {
     notifyListeners();
   }
 
-  WeekMenu _menuWeekMultimessing;
+  WeekMenu _weekMenuMultimessing;
 
-  WeekMenu get menuWeekMultimessing => _menuWeekMultimessing;
+  WeekMenu get weekMenuMultimessing => _weekMenuMultimessing;
 
-  set menuWeekMultimessing(WeekMenu menuWeekMultimessing) {
-    _menuWeekMultimessing = menuWeekMultimessing;
+  set weekMenuMultimessing(WeekMenu weekMenuMultimessing) {
+    _weekMenuMultimessing = weekMenuMultimessing;
     notifyListeners();
   }
 
@@ -43,7 +43,7 @@ class ConfirmSwitchPopupModel extends BaseModel {
   Future getMenuWeekMultimessing(int weekId, String hostelCode) async {
     setState(ViewState.Busy);
     try {
-      menuWeekMultimessing =
+      weekMenuMultimessing =
           await _menuApi.weekMenuMultiMessing(weekId, hostelCode);
       setState(ViewState.Idle);
     } on Failure catch (f) {

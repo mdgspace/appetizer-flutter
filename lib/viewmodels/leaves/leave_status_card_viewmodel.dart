@@ -15,8 +15,8 @@ class LeaveStatusCardViewModel extends BaseModel {
   Future fetchInitialCheckStatus() async {
     setState(ViewState.Busy);
     try {
-      var me = await _userApi.getCurrentUser();
-      isCheckedOut = me.isCheckedOut;
+      var user = await _userApi.getCurrentUser();
+      isCheckedOut = user.isCheckedOut;
       setState(ViewState.Idle);
     } on Failure catch (f) {
       setState(ViewState.Error);

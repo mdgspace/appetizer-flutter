@@ -1,7 +1,7 @@
 import 'package:appetizer/colors.dart';
 import 'package:appetizer/globals.dart';
 import 'package:appetizer/ui/base_view.dart';
-import 'package:appetizer/viewmodels/switch_models/switch_status_card_model.dart';
+import 'package:appetizer/viewmodels/switches/switch_status_card_viewmodel.dart';
 import 'package:flutter/material.dart';
 
 class SwitchStatusCard extends StatefulWidget {
@@ -16,7 +16,7 @@ class SwitchStatusCard extends StatefulWidget {
 class _SwitchStatusCardState extends State<SwitchStatusCard> {
   @override
   Widget build(BuildContext context) {
-    return BaseView<SwitchStatusCardModel>(
+    return BaseView<SwitchStatusCardViewModel>(
       builder: (context, model, child) => Globals.isCheckedOut != null
           ? Column(
               children: <Widget>[

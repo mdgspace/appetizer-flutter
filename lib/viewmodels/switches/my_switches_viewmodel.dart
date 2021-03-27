@@ -4,7 +4,7 @@ import 'package:appetizer/models/failure_model.dart';
 import 'package:appetizer/services/api/multimessing_api.dart';
 import 'package:appetizer/viewmodels/base_model.dart';
 
-class MySwitchesModel extends BaseModel {
+class MySwitchesViewModel extends BaseModel {
   final MultimessingApi _multimessingApi = locator<MultimessingApi>();
 
   int _switchCount;
@@ -22,9 +22,8 @@ class MySwitchesModel extends BaseModel {
       switchCount = await _multimessingApi.remainingSwitches();
       setState(ViewState.Idle);
     } on Failure catch (f) {
-      print(f.message);
-      setErrorMessage(f.message);
       setState(ViewState.Error);
+      setErrorMessage(f.message);
     }
   }
 }
