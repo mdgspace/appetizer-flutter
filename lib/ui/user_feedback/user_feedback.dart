@@ -24,22 +24,22 @@ class _UserFeedbackState extends State<UserFeedback> {
   Widget build(BuildContext context) {
     return BaseView<UserFeedbackModel>(
       onModelReady: (model) {
-        inboxWidget = new List<Widget>();
-        submittedWidget = new List<Widget>();
+        inboxWidget = <Widget>[];
+        submittedWidget = <Widget>[];
         getLists(model);
       },
       builder: (context, model, child) => Scaffold(
         key: userFeedbackViewScaffoldKey,
         appBar: AppBar(
           title: Text(
-            "Feedback",
+            'Feedback',
             style: TextStyle(color: Colors.white),
           ),
         ),
         body: SafeArea(
-          child: new ListView(
+          child: ListView(
             children: <Widget>[
-              new RaisedButton(
+              RaisedButton(
                 onPressed: () {
                   Navigator.pushReplacement(
                     context,
@@ -49,9 +49,9 @@ class _UserFeedbackState extends State<UserFeedback> {
                   );
                 },
                 color: Colors.white,
-                child: new Row(
+                child: Row(
                   children: <Widget>[
-                    new Icon(
+                    Icon(
                       Icons.edit,
                       color: appiYellow,
                       size: 24,
@@ -59,9 +59,9 @@ class _UserFeedbackState extends State<UserFeedback> {
                     Padding(
                       padding: const EdgeInsets.only(
                           left: 30.0, right: 25, top: 20, bottom: 20),
-                      child: new Text(
-                        "New Feedback",
-                        style: new TextStyle(
+                      child: Text(
+                        'New Feedback',
+                        style: TextStyle(
                           color: Colors.black.withOpacity(0.7),
                           fontSize: 18,
                         ),
@@ -70,21 +70,21 @@ class _UserFeedbackState extends State<UserFeedback> {
                   ],
                 ),
               ),
-              new ExpansionTile(
+              ExpansionTile(
                 onExpansionChanged: onExpansionChangedInbox,
-                title: new Row(
+                title: Row(
                   children: <Widget>[
-                    new Image.asset(
-                      "assets/icons/inbox_logo.png",
+                    Image.asset(
+                      'assets/icons/inbox_logo.png',
                       height: 24,
                       width: 24,
                     ),
                     Padding(
                       padding: const EdgeInsets.only(
                           left: 30.0, right: 25, top: 15, bottom: 15),
-                      child: new Text(
-                        "Inbox",
-                        style: new TextStyle(
+                      child: Text(
+                        'Inbox',
+                        style: TextStyle(
                           color: color1,
                           fontSize: 18,
                         ),
@@ -101,11 +101,11 @@ class _UserFeedbackState extends State<UserFeedback> {
                   ),
                 ],
               ),
-              new ExpansionTile(
+              ExpansionTile(
                 onExpansionChanged: onExpansionChangedSubmit,
-                title: new Row(
+                title: Row(
                   children: <Widget>[
-                    new Icon(
+                    Icon(
                       Icons.send,
                       size: 24,
                       color: appiYellow,
@@ -113,9 +113,9 @@ class _UserFeedbackState extends State<UserFeedback> {
                     Padding(
                       padding: const EdgeInsets.only(
                           left: 30.0, right: 25, top: 15, bottom: 15),
-                      child: new Text(
-                        "Submitted",
-                        style: new TextStyle(
+                      child: Text(
+                        'Submitted',
+                        style: TextStyle(
                           color: color2,
                           fontSize: 18,
                         ),
@@ -151,23 +151,23 @@ class _UserFeedbackState extends State<UserFeedback> {
   }
 
   List<Widget> convertToWidgetResponse(List<Response> list) {
-    List<Widget> temp = new List<Widget>();
+    var temp = <Widget>[];
     print(list);
 
-    for (int i = list.length - 1; i >= 0; i--) {
-      DateTime date =
+    for (var i = list.length - 1; i >= 0; i--) {
+      var date =
           DateTime.fromMillisecondsSinceEpoch(list[i].dateCreated).toLocal();
-      temp.add(new ListTile(
-        title: new Text(
+      temp.add(ListTile(
+        title: Text(
           list[i].message,
-          style: new TextStyle(
+          style: TextStyle(
             fontWeight: FontWeight.bold,
           ),
         ),
-        trailing: new Text(date.day.toString() +
-            "/" +
+        trailing: Text(date.day.toString() +
+            '/' +
             date.month.toString() +
-            "/" +
+            '/' +
             date.year.toString().substring(2, 4)),
       ));
     }
@@ -175,26 +175,26 @@ class _UserFeedbackState extends State<UserFeedback> {
   }
 
   List<Widget> convertToWidgetFeedBack(List<Feedbacks> list) {
-    List<Widget> temp = new List<Widget>();
+    var temp = <Widget>[];
 
-    for (int i = list.length - 1; i >= 0; i--) {
-      DateTime date =
+    for (var i = list.length - 1; i >= 0; i--) {
+      var date =
           DateTime.fromMillisecondsSinceEpoch(list[i].dateIssue).toLocal();
       String feedbackTypeName =
           FeedbackApi.resolveFeedbackTypeCode(list[i].type);
-      temp.add(new ListTile(
-        title: new Text(
+      temp.add(ListTile(
+        title: Text(
           list[i].title,
-          style: new TextStyle(
+          style: TextStyle(
             fontWeight: FontWeight.bold,
           ),
         ),
         subtitle:
-            new Text(feedbackTypeName ?? "" + " - #" + list[i].id.toString()),
-        trailing: new Text(date.day.toString() +
-            "/" +
+            Text(feedbackTypeName ?? '' ' - #' + list[i].id.toString()),
+        trailing: Text(date.day.toString() +
+            '/' +
             date.month.toString() +
-            "/" +
+            '/' +
             date.year.toString().substring(2, 4)),
       ));
     }

@@ -5,7 +5,7 @@
 import 'dart:convert';
 
 List<Response> responseFromJson(String str) =>
-    new List<Response>.from(json.decode(str).map((x) => Response.fromJson(x)));
+    List<Response>.from(json.decode(str).map((x) => Response.fromJson(x)));
 //Response responsesFromJson(String str) => Response.fromJson(json.decode(str));
 String responsesToJson(Response data) => json.encode(data.toJson());
 
@@ -20,15 +20,15 @@ class Response {
     this.dateCreated,
   });
 
-  factory Response.fromJson(Map<String, dynamic> json) => new Response(
-        message: json["message"],
-        isRead: json["is_read"],
-        dateCreated: json["date_created"],
+  factory Response.fromJson(Map<String, dynamic> json) => Response(
+        message: json['message'],
+        isRead: json['is_read'],
+        dateCreated: json['date_created'],
       );
 
   Map<String, dynamic> toJson() => {
-        "message": message,
-        "is_read": isRead,
-        "date_created": dateCreated,
+        'message': message,
+        'is_read': isRead,
+        'date_created': dateCreated,
       };
 }

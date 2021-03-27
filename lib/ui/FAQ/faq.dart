@@ -6,6 +6,7 @@ class Faq extends StatelessWidget {
 
   const Faq({Key key, this.question, this.answer}) : super(key: key);
 
+  @override
   Widget build(BuildContext context) {
     return Container(
       child: Padding(

@@ -25,7 +25,7 @@ class CurrentDateModel with ChangeNotifier {
     } else {
       _weekDidChange = false;
     }
-    print("CurrentDateModel: $_dateTime");
+    print('CurrentDateModel: $_dateTime');
     notifyListeners();
   }
 }

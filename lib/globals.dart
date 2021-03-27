@@ -2,41 +2,38 @@ import 'package:appetizer/colors.dart';
 import 'package:flutter/material.dart';
 
 final GlobalKey<ScaffoldState> loginViewScaffoldKey =
-    new GlobalKey<ScaffoldState>();
-final GlobalKey<ScaffoldState> menuViewScaffoldKey =
-    new GlobalKey<ScaffoldState>();
+    GlobalKey<ScaffoldState>();
+final GlobalKey<ScaffoldState> menuViewScaffoldKey = GlobalKey<ScaffoldState>();
 final GlobalKey<ScaffoldState> myLeavesViewScaffoldKey =
-    new GlobalKey<ScaffoldState>();
-final GlobalKey<ScaffoldState> faqViewScaffoldKey =
-    new GlobalKey<ScaffoldState>();
+    GlobalKey<ScaffoldState>();
+final GlobalKey<ScaffoldState> faqViewScaffoldKey = GlobalKey<ScaffoldState>();
 final GlobalKey<ScaffoldState> newFeedbackViewScaffoldKey =
-    new GlobalKey<ScaffoldState>();
+    GlobalKey<ScaffoldState>();
 final GlobalKey<ScaffoldState> userFeedbackViewScaffoldKey =
-    new GlobalKey<ScaffoldState>();
+    GlobalKey<ScaffoldState>();
 final GlobalKey<ScaffoldState> leavesHistoryViewScaffoldKey =
-    new GlobalKey<ScaffoldState>();
-final GlobalKey<ScaffoldState> homeViewScaffoldKey =
-    new GlobalKey<ScaffoldState>();
+    GlobalKey<ScaffoldState>();
+final GlobalKey<ScaffoldState> homeViewScaffoldKey = GlobalKey<ScaffoldState>();
 final GlobalKey<ScaffoldState> myRebatesViewScaffoldKey =
-    new GlobalKey<ScaffoldState>();
+    GlobalKey<ScaffoldState>();
 final GlobalKey<ScaffoldState> rebatesHistoryViewScaffoldKey =
-    new GlobalKey<ScaffoldState>();
+    GlobalKey<ScaffoldState>();
 final GlobalKey<ScaffoldState> notificationHistoryViewScaffoldKey =
-    new GlobalKey<ScaffoldState>();
+    GlobalKey<ScaffoldState>();
 final GlobalKey<ScaffoldState> settingsViewScaffoldKey =
-    new GlobalKey<ScaffoldState>();
+    GlobalKey<ScaffoldState>();
 final GlobalKey<ScaffoldState> editProfileViewScaffoldKey =
-    new GlobalKey<ScaffoldState>();
+    GlobalKey<ScaffoldState>();
 final GlobalKey<ScaffoldState> resetPasswordViewScaffoldKey =
-    new GlobalKey<ScaffoldState>();
+    GlobalKey<ScaffoldState>();
 final GlobalKey<ScaffoldState> chooseNewPasswordViewScaffoldKey =
-    new GlobalKey<ScaffoldState>();
+    GlobalKey<ScaffoldState>();
 final GlobalKey<ScaffoldState> forgotPasswordViewScaffoldKey =
-    new GlobalKey<ScaffoldState>();
+    GlobalKey<ScaffoldState>();
 final GlobalKey<ScaffoldState> confirmSwitchPopupViewScaffoldKey =
-    new GlobalKey<ScaffoldState>();
+    GlobalKey<ScaffoldState>();
 final GlobalKey<ScaffoldState> switchableMealsViewScaffoldKey =
-    new GlobalKey<ScaffoldState>();
+    GlobalKey<ScaffoldState>();
 
 bool isCheckedOut = false;
 
@@ -55,7 +52,7 @@ Map<int, Color> primarySwatchColor = {
 
 Duration outdatedTime = Duration(hours: 12);
 
-String url = "http://appetizer-mdg.herokuapp.com";
+String url = 'http://appetizer-mdg.herokuapp.com';
 
 void showSnackBar(GlobalKey<ScaffoldState> _scaffoldKey, String _message) {
   _scaffoldKey.currentState.showSnackBar(

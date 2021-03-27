@@ -7,8 +7,8 @@ import 'package:appetizer/services/dialog_service.dart';
 import 'package:appetizer/viewmodels/base_model.dart';
 
 class ResetPasswordModel extends BaseModel {
-  UserApi _userApi = locator<UserApi>();
-  DialogService _dialogService = locator<DialogService>();
+  final UserApi _userApi = locator<UserApi>();
+  final DialogService _dialogService = locator<DialogService>();
 
   bool _isUserPasswordReset;
 
@@ -25,12 +25,12 @@ class ResetPasswordModel extends BaseModel {
       var userPasswordResetDetail =
           await _userApi.userPasswordReset(oldPassword, newPassword);
       isUserPasswordReset =
-          userPasswordResetDetail.detail == "password changed successfully"
+          userPasswordResetDetail.detail == 'password changed successfully'
               ? true
               : false;
       setState(ViewState.Idle);
       showSnackBar(
-          resetPasswordViewScaffoldKey, "Password changed successfully");
+          resetPasswordViewScaffoldKey, 'Password changed successfully');
     } on Failure catch (f) {
       print(f.message);
       setErrorMessage(f.message);
@@ -40,7 +40,7 @@ class ResetPasswordModel extends BaseModel {
   }
 
   Future onResetPasswordTapped(String oldPassword, String newPassword) async {
-    _dialogService.showCustomProgressDialog(title: "Updating Password");
+    _dialogService.showCustomProgressDialog(title: 'Updating Password');
     await resetPassword(oldPassword, newPassword);
     _dialogService.dialogNavigationKey.currentState.pop();
   }

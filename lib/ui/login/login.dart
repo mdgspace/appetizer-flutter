@@ -29,16 +29,16 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
   Animation _chefWrongAnimation;
   Animation _chefCorrectAnimation;
 
-  final _formKey = new GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
 
   String url =
-      "http://people.iitr.ernet.in/oauth/?client_id=0a6fb094b8fe79ce0217&redirect_url=appetizer://mess.iitr.ac.in/oauth/";
+      'http://people.iitr.ernet.in/oauth/?client_id=0a6fb094b8fe79ce0217&redirect_url=appetizer://mess.iitr.ac.in/oauth/';
 
   String _enrollmentNo, _password;
 
   FlareActor flareActor = FlareActor(
-    "assets/flare/login_appetizer.flr",
-    animation: "idle",
+    'assets/flare/login_appetizer.flr',
+    animation: 'idle',
   );
 
   bool _obscureText = true;
@@ -59,7 +59,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
     Future.delayed(Duration(seconds: 1), () {
       model.currentUser = null;
     });
-    if (widget.code != null && widget.code != "") {
+    if (widget.code != null && widget.code != '') {
       SchedulerBinding.instance
           .addPostFrameCallback((_) => model.verifyUser(widget.code));
     }
@@ -125,7 +125,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                               child: Align(
                                 alignment: Alignment.bottomCenter,
                                 child: SvgPicture.asset(
-                                  "assets/images/happy_chef.svg",
+                                  'assets/images/happy_chef.svg',
                                 ),
                               ),
                             ),
@@ -138,14 +138,14 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                               child: Align(
                                 alignment: Alignment.bottomCenter,
                                 child: SvgPicture.asset(
-                                  "assets/images/sad_chef.svg",
+                                  'assets/images/sad_chef.svg',
                                 ),
                               ),
                             ),
                             Align(
                               alignment: Alignment.topCenter,
                               child: Text(
-                                "Appetizer",
+                                'Appetizer',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontSize: 50.0,
@@ -165,7 +165,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(20.0, 0, 20.0, 0),
-                child: new Form(
+                child: Form(
                   key: _formKey,
                   child: ListView(
                     children: <Widget>[
@@ -199,14 +199,14 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
   }
 
   Widget _showEnrollmentInput() {
-    return new TextFormField(
+    return TextFormField(
       maxLines: 1,
       keyboardType: TextInputType.number,
       autofocus: false,
-      decoration: new InputDecoration(
-        labelText: "Enrollment No.",
-        labelStyle: Theme.of(context).primaryTextTheme.subhead,
-        icon: new Icon(
+      decoration: InputDecoration(
+        labelText: 'Enrollment No.',
+        labelStyle: Theme.of(context).primaryTextTheme.subtitle1,
+        icon: Icon(
           Icons.person,
           color: appiGreyIcon,
           size: 39,
@@ -221,21 +221,21 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
   Widget _showPasswordInput() {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 0.0),
-      child: new TextFormField(
+      child: TextFormField(
         maxLines: 1,
         obscureText: _obscureText,
         autofocus: false,
-        decoration: new InputDecoration(
+        decoration: InputDecoration(
           suffixIcon: GestureDetector(
-            child: new Icon(
+            onTap: _toggle,
+            child: Icon(
               _obscureText ? Icons.visibility_off : Icons.visibility,
               color: appiGreyIcon,
             ),
-            onTap: _toggle,
           ),
-          labelText: "Password",
-          labelStyle: Theme.of(context).primaryTextTheme.subhead,
-          icon: new Icon(
+          labelText: 'Password',
+          labelStyle: Theme.of(context).primaryTextTheme.subtitle1,
+          icon: Icon(
             Icons.lock,
             color: appiGreyIcon,
             size: 39,
@@ -249,48 +249,50 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
 
   Widget _showLoginButton(LoginModel model) {
     return (model.state == ViewState.Busy)
-        ? new FlatButton(
+        ? FlatButton(
             padding: EdgeInsets.all(8),
             color: appiYellow,
-            shape: new Border.all(
+            shape: Border.all(
               width: 2,
               color: appiYellow,
               style: BorderStyle.solid,
             ),
-            child: new Text(
+            onPressed: () {},
+            child: Text(
               'Authenticating...',
-              style: Theme.of(context).accentTextTheme.display1,
+              style: Theme.of(context).accentTextTheme.headline4,
             ),
-            onPressed: () {})
+          )
         : (model.isLoginSuccessful)
-            ? new FlatButton(
+            ? FlatButton(
                 padding: EdgeInsets.all(8),
                 color: Colors.white,
-                shape: new Border.all(
+                shape: Border.all(
                   width: 2,
                   color: appiYellow,
                   style: BorderStyle.solid,
                 ),
-                child: new Text(
+                onPressed: () {},
+                child: Text(
                   'Logged In Successfully',
-                  style: Theme.of(context).primaryTextTheme.display1,
+                  style: Theme.of(context).primaryTextTheme.headline4,
                 ),
-                onPressed: () {})
-            : new FlatButton(
+              )
+            : FlatButton(
                 padding: EdgeInsets.all(8),
                 color: Colors.white,
-                shape: new Border.all(
+                shape: Border.all(
                   width: 2,
                   color: appiYellow,
                   style: BorderStyle.solid,
-                ),
-                child: new Text(
-                  'LOGIN',
-                  style: Theme.of(context).primaryTextTheme.display1,
                 ),
                 onPressed: () {
                   _validateAndSubmit(model);
                 },
+                child: Text(
+                  'LOGIN',
+                  style: Theme.of(context).primaryTextTheme.headline4,
+                ),
               );
   }
 
@@ -299,14 +301,14 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
         ? Container()
         : SizedBox(
             height: 25.0,
-            child: new GestureDetector(
-              child: new Text(
-                'Help',
-                style: Theme.of(context).primaryTextTheme.display3,
-              ),
+            child: GestureDetector(
               onTap: () {
-                Navigator.pushNamed(context, "help");
+                Navigator.pushNamed(context, 'help');
               },
+              child: Text(
+                'Help',
+                style: Theme.of(context).primaryTextTheme.headline2,
+              ),
             ),
           );
   }
@@ -316,14 +318,14 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
         ? Container()
         : SizedBox(
             height: 25.0,
-            child: new GestureDetector(
-              child: new Text(
-                '  |  ',
-                style: Theme.of(context).primaryTextTheme.display4,
-              ),
+            child: GestureDetector(
               onTap: () {
-                Navigator.pushNamed(context, "help");
+                Navigator.pushNamed(context, 'help');
               },
+              child: Text(
+                '  |  ',
+                style: Theme.of(context).primaryTextTheme.headline1,
+              ),
             ),
           );
   }
@@ -333,14 +335,14 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
         ? Container()
         : SizedBox(
             height: 25.0,
-            child: new GestureDetector(
-              child: new Text(
-                'Forgot Password?',
-                style: Theme.of(context).primaryTextTheme.display3,
-              ),
+            child: GestureDetector(
               onTap: () {
-                Navigator.pushNamed(context, "forgot_pass");
+                Navigator.pushNamed(context, 'forgot_pass');
               },
+              child: Text(
+                'Forgot Password?',
+                style: Theme.of(context).primaryTextTheme.headline2,
+              ),
             ),
           );
   }
@@ -348,25 +350,25 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
   Widget _showChannelIButton(LoginModel model) {
     return (model.isLoginSuccessful)
         ? Container()
-        : new FlatButton(
+        : FlatButton(
             padding: EdgeInsets.all(12),
             color: appiYellow,
-            shape: new Border.all(
+            shape: Border.all(
               width: 2,
               color: appiYellow,
               style: BorderStyle.solid,
             ),
-            child: new Text(
-              'SIGNUP WITH CHANNEL-I',
-              style: Theme.of(context).primaryTextTheme.display2,
-            ),
             onPressed: _channelILogin,
+            child: Text(
+              'SIGNUP WITH CHANNEL-I',
+              style: Theme.of(context).primaryTextTheme.headline3,
+            ),
           );
   }
 
   void _validateAndSubmit(LoginModel model) {
     if (_validateAndSave()) {
-      FocusScope.of(context).requestFocus(new FocusNode());
+      FocusScope.of(context).requestFocus(FocusNode());
       model
           .loginWithEnrollmentAndPassword(
         enrollment: _enrollmentNo,
@@ -375,32 +377,32 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
           .then((_) async {
         if (model.isLoginSuccessful) {
           if (model.areCredentialsCorrect == null) {
-            _chefCorrectController.forward();
+            await _chefCorrectController.forward();
             setState(() {
               flareActor = FlareActor(
-                "assets/flare/login_appetizer.flr",
-                animation: "Initial To Right",
+                'assets/flare/login_appetizer.flr',
+                animation: 'Initial To Right',
               );
             });
           } else {
             _chefWrongController.duration = Duration(milliseconds: 600);
             _chefCorrectController.duration = Duration(milliseconds: 1200);
-            _chefWrongController.reverse();
+            await _chefWrongController.reverse();
             await Future.delayed(Duration(milliseconds: 100));
-            _chefCorrectController.forward();
+            await _chefCorrectController.forward();
             setState(() {
               flareActor = FlareActor(
-                "assets/flare/login_appetizer.flr",
-                animation: "Wrong To Right",
+                'assets/flare/login_appetizer.flr',
+                animation: 'Wrong To Right',
               );
             });
           }
           model.areCredentialsCorrect = true;
-          showSnackBar(loginViewScaffoldKey, "Login Successful");
-          await new Future.delayed(const Duration(seconds: 5));
-          Navigator.pushReplacementNamed(
+          showSnackBar(loginViewScaffoldKey, 'Login Successful');
+          await Future.delayed(const Duration(seconds: 5));
+          await Navigator.pushReplacementNamed(
             context,
-            "home",
+            'home',
             arguments: model.login.token,
           );
         } else {
@@ -410,11 +412,11 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
             _chefCorrectController.reset();
           });
           model.areCredentialsCorrect = false;
-          _chefWrongController.forward();
+          await _chefWrongController.forward();
           setState(() {
             flareActor = FlareActor(
-              "assets/flare/login_appetizer.flr",
-              animation: "Initial To Wrong",
+              'assets/flare/login_appetizer.flr',
+              animation: 'Initial To Wrong',
             );
           });
         }

@@ -16,7 +16,7 @@ class FaqList extends StatelessWidget {
         key: faqViewScaffoldKey,
         appBar: AppBar(
           title: Text(
-            "FAQs",
+            'FAQs',
             style: TextStyle(color: Colors.white),
           ),
         ),

@@ -11,7 +11,7 @@ class ForgotPass extends StatefulWidget {
 }
 
 class _ForgotPassState extends State<ForgotPass> {
-  var formKey = new GlobalKey<FormState>();
+  var formKey = GlobalKey<FormState>();
   String _email;
 
   @override
@@ -59,12 +59,12 @@ class _ForgotPassState extends State<ForgotPass> {
                   Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Text(
-                      "Forgot Password?",
+                      'Forgot Password?',
                       textAlign: TextAlign.center,
-                      style: new TextStyle(
+                      style: TextStyle(
                         fontSize: 24.0,
                         color: Colors.black,
-                        fontFamily: "OpenSans",
+                        fontFamily: 'OpenSans',
                       ),
                     ),
                   ),
@@ -72,10 +72,10 @@ class _ForgotPassState extends State<ForgotPass> {
                     padding: const EdgeInsets.only(left: 48, right: 48),
                     child: Text(
                       passInstruction,
-                      style: new TextStyle(
+                      style: TextStyle(
                         fontSize: 14.0,
                         color: appiGreyIcon.withOpacity(0.9),
-                        fontFamily: "OpenSans",
+                        fontFamily: 'OpenSans',
                       ),
                       textAlign: TextAlign.center,
                     ),
@@ -94,9 +94,9 @@ class _ForgotPassState extends State<ForgotPass> {
                               size: 36,
                               color: appiGreyIcon,
                             ),
-                            labelText: "Email address",
+                            labelText: 'Email address',
                             labelStyle:
-                                Theme.of(context).primaryTextTheme.subhead,
+                                Theme.of(context).primaryTextTheme.subtitle1,
                             focusedBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
                                   color: appiYellow, style: BorderStyle.solid),
@@ -106,7 +106,7 @@ class _ForgotPassState extends State<ForgotPass> {
                           style: TextStyle(
                               fontWeight: FontWeight.w400, fontSize: 16),
                           onSaved: (String value) {
-                            this._email = value;
+                            _email = value;
                           }),
                     ),
                   ),
@@ -118,19 +118,19 @@ class _ForgotPassState extends State<ForgotPass> {
                         width: 2,
                       ),
                       splashColor: appiYellow,
-                      child: ListTile(
-                        title: Text(
-                          "SEND INSTRUCTIONS",
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context).primaryTextTheme.caption,
-                        ),
-                      ),
                       onPressed: () {
                         formKey.currentState.save();
                         if (formKey.currentState.validate()) {
                           model.sendResetEmail(_email);
                         }
                       },
+                      child: ListTile(
+                        title: Text(
+                          'SEND INSTRUCTIONS',
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context).primaryTextTheme.caption,
+                        ),
+                      ),
                     ),
                   )
                 ],
@@ -145,10 +145,11 @@ class _ForgotPassState extends State<ForgotPass> {
   String validateEmail(String value) {
     Pattern pattern =
         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-    RegExp regex = new RegExp(pattern);
-    if (!regex.hasMatch(value))
+    var regex = RegExp(pattern);
+    if (!regex.hasMatch(value)) {
       return 'Enter Valid Email';
-    else
+    } else {
       return null;
+    }
   }
 }

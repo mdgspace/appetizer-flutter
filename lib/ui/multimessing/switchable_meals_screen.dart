@@ -39,7 +39,7 @@ class _SwitchableMealsState extends State<SwitchableMealsScreen> {
                 child: Padding(
                   padding: const EdgeInsets.all(18.0),
                   child: Text(
-                    "BHAWAN",
+                    'BHAWAN',
                     style: getHeaderTextStyle(),
                   ),
                 ),
@@ -47,7 +47,7 @@ class _SwitchableMealsState extends State<SwitchableMealsScreen> {
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Text(
-                  "MENU",
+                  'MENU',
                   style: getHeaderTextStyle(),
                 ),
               ),
@@ -62,7 +62,7 @@ class _SwitchableMealsState extends State<SwitchableMealsScreen> {
   }
 
   Widget _getItemsWidget(List<Item> items) {
-    List<Widget> _itemsWidgetList = [];
+    var _itemsWidgetList = <Widget>[];
     items.forEach((item) {
       _itemsWidgetList.add(Text('${item.name}'));
     });
@@ -74,7 +74,7 @@ class _SwitchableMealsState extends State<SwitchableMealsScreen> {
   List<TableRow> _tableBody(
       List<SwitchableMealsForYourMeal> listOfSwitchableMealsForYourMeal,
       SwitchableMealsModel model) {
-    List<TableRow> _body = [];
+    var _body = <TableRow>[];
     _body.add(_tableHeader());
     listOfSwitchableMealsForYourMeal.forEach((meal) {
       _body.add(_getTableRow(meal, model));
@@ -106,11 +106,6 @@ class _SwitchableMealsState extends State<SwitchableMealsScreen> {
               ),
               _getItemsWidget(_switchableMealsFromYourMeal.items),
               GestureDetector(
-                child: Image.asset(
-                  "assets/icons/switch_active.png",
-                  width: 30,
-                  scale: 2,
-                ),
                 onTap: () {
                   showDialog(
                     context: context,
@@ -119,37 +114,31 @@ class _SwitchableMealsState extends State<SwitchableMealsScreen> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),
-                        title: new Text(
-                          "Confirm Switch",
+                        title: Text(
+                          'Confirm Switch',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        content: new Text(
-                          "Are you sure you want to switch this meal?",
+                        content: Text(
+                          'Are you sure you want to switch this meal?',
                         ),
                         actions: <Widget>[
-                          new FlatButton(
+                          FlatButton(
                             onPressed: () {
                               Navigator.pop(alertContext);
                             },
-                            child: new Text(
-                              "CANCEL",
+                            child: Text(
+                              'CANCEL',
                               style: TextStyle(
                                   color: appiYellow,
                                   fontWeight: FontWeight.bold),
                             ),
                           ),
-                          new FlatButton(
-                            child: new Text(
-                              "SWITCH",
-                              style: TextStyle(
-                                  color: appiYellow,
-                                  fontWeight: FontWeight.bold),
-                            ),
+                          FlatButton(
                             onPressed: () async {
                               Navigator.pop(alertContext);
-                              showCustomDialog(context, "Switching Meals");
+                              showCustomDialog(context, 'Switching Meals');
                               await model.switchMeals(
                                 widget.id,
                                 hostelCodeMap[
@@ -165,7 +154,7 @@ class _SwitchableMealsState extends State<SwitchableMealsScreen> {
                               //       .getOtherMenu(widget.weekId);
                               // }
                               if (model.isMealSwitched) {
-                                Navigator.push(
+                                await Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) =>
@@ -175,17 +164,28 @@ class _SwitchableMealsState extends State<SwitchableMealsScreen> {
                               }
                               if (model.state == ViewState.Error) {
                                 Navigator.pop(context);
-                                Fluttertoast.showToast(
+                                await Fluttertoast.showToast(
                                   msg: model.errorMessage,
                                 );
                               }
                             },
+                            child: Text(
+                              'SWITCH',
+                              style: TextStyle(
+                                  color: appiYellow,
+                                  fontWeight: FontWeight.bold),
+                            ),
                           ),
                         ],
                       );
                     },
                   );
                 },
+                child: Image.asset(
+                  'assets/icons/switch_active.png',
+                  width: 30,
+                  scale: 2,
+                ),
               )
             ],
           ),
@@ -203,8 +203,8 @@ class _SwitchableMealsState extends State<SwitchableMealsScreen> {
         appBar: AppBar(
           centerTitle: true,
           title: Text(
-            "Mess Menu",
-            style: new TextStyle(
+            'Mess Menu',
+            style: TextStyle(
               color: Colors.white,
               fontSize: 25.0,
               fontFamily: 'Lobster_Two',
@@ -214,9 +214,6 @@ class _SwitchableMealsState extends State<SwitchableMealsScreen> {
             Padding(
               padding: const EdgeInsets.all(16),
               child: GestureDetector(
-                child: Container(
-                  child: Image.asset("assets/icons/week_menu.png"),
-                ),
                 onTap: () {
                   Navigator.push(
                     context,
@@ -225,10 +222,13 @@ class _SwitchableMealsState extends State<SwitchableMealsScreen> {
                     ),
                   );
                 },
+                child: Container(
+                  child: Image.asset('assets/icons/week_menu.png'),
+                ),
               ),
             )
           ],
-          iconTheme: new IconThemeData(color: appiYellow),
+          iconTheme: IconThemeData(color: appiYellow),
         ),
         body: model.state == ViewState.Busy
             ? ProgressBar()

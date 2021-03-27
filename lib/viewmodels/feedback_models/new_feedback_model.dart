@@ -9,9 +9,9 @@ import 'package:appetizer/services/navigation_service.dart';
 import 'package:appetizer/viewmodels/base_model.dart';
 
 class NewFeedbackModel extends BaseModel {
-  FeedbackApi _feedbackApi = locator<FeedbackApi>();
-  DialogService _dialogService = locator<DialogService>();
-  NavigationService _navigationService = locator<NavigationService>();
+  final FeedbackApi _feedbackApi = locator<FeedbackApi>();
+  final DialogService _dialogService = locator<DialogService>();
+  final NavigationService _navigationService = locator<NavigationService>();
 
   Feedback _newFeedback;
 
@@ -24,14 +24,14 @@ class NewFeedbackModel extends BaseModel {
 
   Future postNewFeedback(String feedbackType, String title, String description,
       DateTime date) async {
-    _dialogService.showCustomProgressDialog(title: "Sending Feedback");
+    _dialogService.showCustomProgressDialog(title: 'Sending Feedback');
     setState(ViewState.Busy);
     try {
       newFeedback = await _feedbackApi.newFeedBack(
           feedbackType, title, description, date);
       setState(ViewState.Idle);
       _dialogService.dialogNavigationKey.currentState.pop();
-      showSnackBar(newFeedbackViewScaffoldKey, "Thank You For Your Feedback!");
+      showSnackBar(newFeedbackViewScaffoldKey, 'Thank You For Your Feedback!');
       Future.delayed(Duration(seconds: 1), _navigationService.pop);
     } on Failure catch (f) {
       print(f.message);

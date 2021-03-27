@@ -10,9 +10,9 @@ import 'package:appetizer/services/dialog_service.dart';
 import 'package:appetizer/viewmodels/base_model.dart';
 
 class LeaveStatusCardModel extends BaseModel {
-  UserApi _userApi = locator<UserApi>();
-  LeaveApi _leaveApi = locator<LeaveApi>();
-  DialogService _dialogService = locator<DialogService>();
+  final UserApi _userApi = locator<UserApi>();
+  final LeaveApi _leaveApi = locator<LeaveApi>();
+  final DialogService _dialogService = locator<DialogService>();
 
   // bool _isCheckedOut;
   String _imageUrl;
@@ -34,7 +34,7 @@ class LeaveStatusCardModel extends BaseModel {
   Future setInitialValues() async {
     setState(ViewState.Busy);
     try {
-      Me me = await _userApi.userMeGet();
+      var me = await _userApi.userMeGet();
       setState(ViewState.Idle);
       isCheckedOut = me.isCheckedOut;
       imageUrl = me.imageUrl;
@@ -48,7 +48,7 @@ class LeaveStatusCardModel extends BaseModel {
   Future toggleCheckState() async {
     setState(ViewState.Busy);
     try {
-      Check check = await _leaveApi.check();
+      var check = await _leaveApi.check();
       isCheckedOut = check.isCheckedOut;
       setState(ViewState.Idle);
     } on Failure catch (f) {
@@ -61,19 +61,21 @@ class LeaveStatusCardModel extends BaseModel {
   Future onCheckTapped() async {
     if (!isCheckedOut) {
       var dialogResponse = await _dialogService.showConfirmationDialog(
-          title: "Check Out",
-          description: "Are you sure you would like to check out?",
-          confirmationTitle: "CHECK OUT");
+          title: 'Check Out',
+          description: 'Are you sure you would like to check out?',
+          confirmationTitle: 'CHECK OUT');
 
       if (dialogResponse.confirmed) {
         await toggleCheckState();
-        if (isCheckedOut)
-          showSnackBar(myLeavesViewScaffoldKey, "You have checked out");
+        if (isCheckedOut) {
+          showSnackBar(myLeavesViewScaffoldKey, 'You have checked out');
+        }
       }
     } else {
       await toggleCheckState();
-      if (!isCheckedOut)
-        showSnackBar(myLeavesViewScaffoldKey, "You have checked in");
+      if (!isCheckedOut) {
+        showSnackBar(myLeavesViewScaffoldKey, 'You have checked in');
+      }
     }
   }
 }

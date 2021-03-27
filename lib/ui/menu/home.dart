@@ -70,7 +70,7 @@ class _HomeState extends State<Home> {
                                 child: Align(
                                   alignment: Alignment.centerLeft,
                                   child: Text(
-                                    "You are currently Checked-Out",
+                                    'You are currently Checked-Out',
                                     style: TextStyle(
                                         color: Colors.white, fontSize: 14),
                                   ),
@@ -90,7 +90,7 @@ class _HomeState extends State<Home> {
                                 padding:
                                     const EdgeInsets.fromLTRB(16, 4, 16, 4),
                                 child: Text(
-                                  "CHECK-IN",
+                                  'CHECK-IN',
                                   style: TextStyle(
                                       color: Colors.white, fontSize: 14),
                                 ),
@@ -114,7 +114,7 @@ class _HomeState extends State<Home> {
                             context);
                       }
                     },
-                    child: model.selectedHostel == "Your Meals"
+                    child: model.selectedHostel == 'Your Meals'
                         ? YourMenu()
                         : OtherMenu(hostelName: model.selectedHostel),
                   ),
@@ -146,9 +146,9 @@ class _HomeState extends State<Home> {
               ),
               value: selectedHostelName,
               hint: Text(
-                "       Your Meals",
+                '       Your Meals',
                 textAlign: TextAlign.center,
-                style: new TextStyle(
+                style: TextStyle(
                   color: Colors.white,
                   fontSize: 25.0,
                   fontFamily: 'Lobster_Two',
@@ -164,7 +164,7 @@ class _HomeState extends State<Home> {
                       child: Text(
                         hostelName,
                         textAlign: TextAlign.center,
-                        style: new TextStyle(
+                        style: TextStyle(
                           color: Colors.white,
                           fontSize: 25.0,
                           fontFamily: 'Lobster_Two',
@@ -188,11 +188,6 @@ class _HomeState extends State<Home> {
         Padding(
           padding: const EdgeInsets.fromLTRB(8, 8, 16, 8),
           child: GestureDetector(
-            child: Container(
-              height: 23,
-              width: 23,
-              child: Image.asset("assets/icons/week_menu.png"),
-            ),
             onTap: () {
               // Navigator.push(
               //     context,
@@ -200,11 +195,16 @@ class _HomeState extends State<Home> {
               //         builder: (context) => ChangeNotifierProvider.value(
               //             value: menuModel, child: WeekMenu())));
             },
+            child: Container(
+              height: 23,
+              width: 23,
+              child: Image.asset('assets/icons/week_menu.png'),
+            ),
           ),
         )
       ],
       backgroundColor: appiBrown,
-      iconTheme: new IconThemeData(color: appiYellow),
+      iconTheme: IconThemeData(color: appiYellow),
     );
   }
 
@@ -215,7 +215,7 @@ class _HomeState extends State<Home> {
           DrawerHeader(
             decoration: BoxDecoration(
               color: appiBrown,
-              image: new DecorationImage(
+              image: DecorationImage(
                 alignment: Alignment.topRight,
                 image: AssetImage('assets/images/iitr.png'),
               ),
@@ -241,17 +241,17 @@ class _HomeState extends State<Home> {
                         Padding(
                           padding: const EdgeInsets.only(top: 8),
                           child: Text(
-                            model.currentUser?.name ?? "",
+                            model.currentUser?.name ?? '',
                             overflow: TextOverflow.ellipsis,
-                            style: Theme.of(context).accentTextTheme.display2,
+                            style: Theme.of(context).accentTextTheme.headline3,
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top: 8, bottom: 4),
                           child: Text(
-                            model.currentUser?.enrNo.toString() ?? "",
+                            model.currentUser?.enrNo.toString() ?? '',
                             overflow: TextOverflow.ellipsis,
-                            style: Theme.of(context).accentTextTheme.display3,
+                            style: Theme.of(context).accentTextTheme.headline2,
                           ),
                         )
                       ],
@@ -266,14 +266,6 @@ class _HomeState extends State<Home> {
               child: Column(
                 children: <Widget>[
                   GestureDetector(
-                    child: ListTile(
-                      leading: Image(
-                        image: AssetImage("assets/icons/feedback.png"),
-                        width: 24,
-                        height: 24,
-                      ),
-                      title: Text("FeedBack"),
-                    ),
                     onTap: () {
                       Navigator.pop(context);
                       Navigator.push(
@@ -283,16 +275,16 @@ class _HomeState extends State<Home> {
                         ),
                       );
                     },
-                  ),
-                  GestureDetector(
                     child: ListTile(
                       leading: Image(
-                        image: AssetImage("assets/icons/leaves.png"),
+                        image: AssetImage('assets/icons/feedback.png'),
                         width: 24,
                         height: 24,
                       ),
-                      title: Text("Leaves"),
+                      title: Text('FeedBack'),
                     ),
+                  ),
+                  GestureDetector(
                     onTap: () {
                       Navigator.pop(context);
                       Navigator.push(
@@ -302,16 +294,16 @@ class _HomeState extends State<Home> {
                         ),
                       );
                     },
-                  ),
-                  GestureDetector(
                     child: ListTile(
                       leading: Image(
-                        image: AssetImage("assets/icons/leaves.png"),
+                        image: AssetImage('assets/icons/leaves.png'),
                         width: 24,
                         height: 24,
                       ),
-                      title: Text("Switches"),
+                      title: Text('Leaves'),
                     ),
+                  ),
+                  GestureDetector(
                     onTap: () {
                       Navigator.pop(context);
                       Navigator.push(
@@ -321,16 +313,16 @@ class _HomeState extends State<Home> {
                         ),
                       );
                     },
+                    child: ListTile(
+                      leading: Image(
+                        image: AssetImage('assets/icons/leaves.png'),
+                        width: 24,
+                        height: 24,
+                      ),
+                      title: Text('Switches'),
+                    ),
                   ),
                   GestureDetector(
-                    child: ListTile(
-                      leading: Icon(
-                        Icons.attach_money,
-                        color: appiYellow,
-                        size: 24,
-                      ),
-                      title: Text("Rebates"),
-                    ),
                     onTap: () {
                       Navigator.pop(context);
                       Navigator.push(
@@ -340,16 +332,16 @@ class _HomeState extends State<Home> {
                         ),
                       );
                     },
+                    child: ListTile(
+                      leading: Icon(
+                        Icons.attach_money,
+                        color: appiYellow,
+                        size: 24,
+                      ),
+                      title: Text('Rebates'),
+                    ),
                   ),
                   GestureDetector(
-                    child: ListTile(
-                      leading: Image(
-                        image: AssetImage("assets/icons/notification.png"),
-                        width: 24,
-                        height: 24,
-                      ),
-                      title: Text("Notification History"),
-                    ),
                     onTap: () {
                       Navigator.pop(context);
                       Navigator.push(
@@ -359,16 +351,16 @@ class _HomeState extends State<Home> {
                         ),
                       );
                     },
-                  ),
-                  GestureDetector(
                     child: ListTile(
                       leading: Image(
-                        image: AssetImage("assets/icons/setting.png"),
+                        image: AssetImage('assets/icons/notification.png'),
                         width: 24,
                         height: 24,
                       ),
-                      title: Text("Settings"),
+                      title: Text('Notification History'),
                     ),
+                  ),
+                  GestureDetector(
                     onTap: () {
                       Navigator.pop(context);
                       Navigator.push(
@@ -378,16 +370,16 @@ class _HomeState extends State<Home> {
                         ),
                       );
                     },
+                    child: ListTile(
+                      leading: Image(
+                        image: AssetImage('assets/icons/setting.png'),
+                        width: 24,
+                        height: 24,
+                      ),
+                      title: Text('Settings'),
+                    ),
                   ),
                   GestureDetector(
-                    child: ListTile(
-                      leading: Icon(
-                        Icons.help_outline,
-                        color: appiYellow,
-                        size: 24,
-                      ),
-                      title: Text("FAQ"),
-                    ),
                     onTap: () {
                       Navigator.pop(context);
                       Navigator.push(
@@ -397,6 +389,14 @@ class _HomeState extends State<Home> {
                         ),
                       );
                     },
+                    child: ListTile(
+                      leading: Icon(
+                        Icons.help_outline,
+                        color: appiYellow,
+                        size: 24,
+                      ),
+                      title: Text('FAQ'),
+                    ),
                   ),
                   GestureDetector(
                     child: ListTile(
@@ -405,7 +405,7 @@ class _HomeState extends State<Home> {
                           color: appiYellow,
                           size: 24,
                         ),
-                        title: Text("Log Out"),
+                        title: Text('Log Out'),
                         onTap: () {
                           Navigator.pop(context);
                           model.onLogoutTap();
@@ -432,7 +432,7 @@ class _HomeState extends State<Home> {
                 Row(
                   children: <Widget>[
                     Text(
-                      "Made with ",
+                      'Made with ',
                       style: TextStyle(
                         fontSize: 12,
                         color: appiGreyIcon,
@@ -444,7 +444,7 @@ class _HomeState extends State<Home> {
                       size: 12,
                     ),
                     Text(
-                      " by MDG",
+                      ' by MDG',
                       style: TextStyle(
                         fontSize: 12,
                         color: appiGreyIcon,
@@ -465,7 +465,7 @@ class _HomeState extends State<Home> {
       onPressed: model.onCheckoutTap,
       backgroundColor: appiYellowLogo,
       child: Image.asset(
-        "assets/images/check_out.png",
+        'assets/images/check_out.png',
         height: 25,
         width: 25,
       ),

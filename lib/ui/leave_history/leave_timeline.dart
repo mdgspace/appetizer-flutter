@@ -15,8 +15,8 @@ class LeaveTimeline extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final currentMonthAndYear = Provider.of<YearAndMonthModel>(context);
-    int year = currentMonthAndYear.currentYearSelected;
-    int month = monthStringToMonthInt(currentMonthAndYear.currentMonthSelected);
+    var year = currentMonthAndYear.currentYearSelected;
+    var month = monthStringToMonthInt(currentMonthAndYear.currentMonthSelected);
 
     return BaseView<LeaveTimelineModel>(
       onModelReady: (model) => model.getLeaveList(year, month),
@@ -28,7 +28,7 @@ class LeaveTimeline extends StatelessWidget {
                 )
               : Builder(
                   builder: (context) {
-                    List leavesArray = [];
+                    var leavesArray = [];
                     for (var leaves in model.leaveList.results) {
                       if (leaves.mealCount != 1) {
                         leavesArray.add(

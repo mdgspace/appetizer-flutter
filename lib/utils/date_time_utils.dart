@@ -10,12 +10,12 @@ class DateTimeUtils {
   }
 
   static int getWeekNumber(DateTime dateTime) {
-    int dayOfYear = int.parse(DateFormat("D").format(dateTime));
+    var dayOfYear = int.parse(DateFormat('D').format(dateTime));
     return ((dayOfYear - dateTime.weekday + 10) / 7).floor();
   }
 
   static String dateTime(int timeStamp) {
-    String dateTimeString = DateTime.fromMillisecondsSinceEpoch(timeStamp)
+    var dateTimeString = DateTime.fromMillisecondsSinceEpoch(timeStamp)
         .toLocal()
         .toString()
         .substring(0, 19);

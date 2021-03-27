@@ -76,7 +76,7 @@ class _YourMenuState extends State<YourMenu> {
             height: MediaQuery.of(context).size.height * 0.75,
             child: Center(
               child: Text(
-                "The menu for this day has not been uploaded yet!",
+                'The menu for this day has not been uploaded yet!',
               ),
             ),
           ),

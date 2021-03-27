@@ -19,7 +19,7 @@ class _WeekMenuState extends State<WeekMenu> {
     try {
       Provider.of<YourMenuModel>(context, listen: false);
     } on ProviderNotFoundException {
-      print("Caught ProviderNotFoundException WeekMenu");
+      print('Caught ProviderNotFoundException WeekMenu');
       Navigator.pop(context);
       return Container();
     }
@@ -27,14 +27,14 @@ class _WeekMenuState extends State<WeekMenu> {
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-          "Mess Menu",
-          style: new TextStyle(
+          'Mess Menu',
+          style: TextStyle(
             color: Colors.white,
             fontSize: 25.0,
             fontFamily: 'Lobster_Two',
           ),
         ),
-        iconTheme: new IconThemeData(color: appiYellow),
+        iconTheme: IconThemeData(color: appiYellow),
       ),
       body: Column(
         children: <Widget>[
@@ -94,16 +94,16 @@ class _WeekMenuState extends State<WeekMenu> {
                   )),
                 );
               } else {
-                List<Widget> rows = [];
+                var rows = <Widget>[];
                 menu.currentWeekYourMeals.days.forEach((day) {
-                  List<String> breakfast = [];
-                  List<String> lunch = [];
-                  List<String> dinner = [];
+                  var breakfast = <String>[];
+                  var lunch = <String>[];
+                  var dinner = <String>[];
 
                   day.meals.forEach(
                     (meal) {
                       meal.items
-                          .forEach((f) => print("item ${f.name} ${meal.type}"));
+                          .forEach((f) => print('item ${f.name} ${meal.type}'));
                       switch (meal.type) {
                         case MealType.B:
                           meal.items
@@ -219,7 +219,7 @@ class _WeekMenuState extends State<WeekMenu> {
       );
     }
 
-    final List<Widget> _rowEntries = [
+    final _rowEntries = <Widget>[
       Expanded(flex: 5, child: dateWidget),
       Expanded(flex: 12, child: subMapper(breakfast)),
       Expanded(flex: 12, child: subMapper(lunch)),

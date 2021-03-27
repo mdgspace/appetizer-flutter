@@ -9,17 +9,17 @@ import 'package:appetizer/utils/api_utils.dart';
 import 'package:http/http.dart' as http;
 
 class LeaveApi {
-  var headers = {"Content-Type": "application/json"};
-  http.Client client = new http.Client();
+  var headers = {'Content-Type': 'application/json'};
+  http.Client client = http.Client();
 
   Future<LeaveCount> remainingLeaves() async {
-    String endPoint = "/api/leave/count/remaining/";
-    String uri = url + endPoint;
+    var endPoint = '/api/leave/count/remaining/';
+    var uri = url + endPoint;
 
     try {
       await ApiUtils.addTokenToHeaders(headers);
       var jsonResponse = await ApiUtils.get(uri, headers: headers);
-      LeaveCount leaveCount = new LeaveCount.fromJson(jsonResponse);
+      var leaveCount = LeaveCount.fromJson(jsonResponse);
       return leaveCount;
     } on FormatException catch (e) {
       print(e.message);
@@ -33,16 +33,16 @@ class LeaveApi {
   Future<LeaveList> leaveList(int year, int month) async {
     String endPoint;
     if (month == 0) {
-      endPoint = "/api/leave/all/?year=$year";
+      endPoint = '/api/leave/all/?year=$year';
     } else {
-      endPoint = "/api/leave/all/?year=$year&month=$month";
+      endPoint = '/api/leave/all/?year=$year&month=$month';
     }
-    String uri = url + endPoint;
+    var uri = url + endPoint;
 
     try {
       await ApiUtils.addTokenToHeaders(headers);
       var jsonResponse = await ApiUtils.get(uri, headers: headers);
-      LeaveList leaveList = new LeaveList.fromJson(jsonResponse);
+      var leaveList = LeaveList.fromJson(jsonResponse);
       return leaveList;
     } on FormatException catch (e) {
       print(e.message);
@@ -54,14 +54,14 @@ class LeaveApi {
   }
 
   Future<Check> check() async {
-    String endPoint = "/api/leave/check/";
-    String uri = url + endPoint;
+    var endPoint = '/api/leave/check/';
+    var uri = url + endPoint;
 
     try {
       await ApiUtils.addTokenToHeaders(headers);
-      var json = {"is_checked_out": true};
+      var json = {'is_checked_out': true};
       var jsonResponse = await ApiUtils.post(uri, headers: headers, body: json);
-      Check check = new Check.fromJson(jsonResponse);
+      var check = Check.fromJson(jsonResponse);
       return check;
     } on FormatException catch (e) {
       print(e.message);
@@ -73,16 +73,16 @@ class LeaveApi {
   }
 
   Future<CreateLeave> leave(String id) async {
-    String endPoint = "/api/leave/";
-    String uri = url + endPoint;
+    var endPoint = '/api/leave/';
+    var uri = url + endPoint;
     var json = {
-      "meal": id,
+      'meal': id,
     };
 
     try {
       await ApiUtils.addTokenToHeaders(headers);
       var jsonResponse = await ApiUtils.post(uri, headers: headers, body: json);
-      CreateLeave leave = new CreateLeave.fromJson(jsonResponse);
+      var leave = CreateLeave.fromJson(jsonResponse);
       return leave;
     } on FormatException catch (e) {
       print(e.message);
@@ -94,8 +94,8 @@ class LeaveApi {
   }
 
   Future<bool> cancelLeave(int id) async {
-    String endPoint = "/api/leave/meal/$id";
-    String uri = url + endPoint;
+    var endPoint = '/api/leave/meal/$id';
+    var uri = url + endPoint;
 
     try {
       await ApiUtils.addTokenToHeaders(headers);

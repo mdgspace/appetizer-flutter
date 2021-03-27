@@ -7,19 +7,15 @@ class LocalStorageService {
   static LocalStorageService _instance;
   static SharedPreferences _preferences;
 
-  static const String userKey = "logged_in_user";
-  static const String tokenKey = "token";
-  static const String isLoggedInKey = "is_logged_in";
-  static const String isFirstTimeLoginKey = "is_first_time_login";
+  static const String userKey = 'logged_in_user';
+  static const String tokenKey = 'token';
+  static const String isLoggedInKey = 'is_logged_in';
+  static const String isFirstTimeLoginKey = 'is_first_time_login';
 
   static Future<LocalStorageService> getInstance() async {
-    if (_instance == null) {
-      _instance = LocalStorageService();
-    }
+    _instance ??= LocalStorageService();
 
-    if (_preferences == null) {
-      _preferences = await SharedPreferences.getInstance();
-    }
+    _preferences ??= await SharedPreferences.getInstance();
 
     return _instance;
   }

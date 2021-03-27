@@ -5,7 +5,7 @@ import 'package:appetizer/services/api/multimessing.dart';
 import 'package:appetizer/viewmodels/base_model.dart';
 
 class QRGeneratorModel extends BaseModel {
-  MultimessingApi _multimessingApi = locator<MultimessingApi>();
+  final MultimessingApi _multimessingApi = locator<MultimessingApi>();
 
   String _secretCode;
 

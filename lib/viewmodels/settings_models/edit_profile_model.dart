@@ -9,8 +9,8 @@ import 'package:appetizer/utils/user_details.dart';
 import 'package:appetizer/viewmodels/base_model.dart';
 
 class EditProfileModel extends BaseModel {
-  UserApi _userApi = locator<UserApi>();
-  DialogService _dialogService = locator<DialogService>();
+  final UserApi _userApi = locator<UserApi>();
+  final DialogService _dialogService = locator<DialogService>();
 
   Me _updatedUserDetails;
 
@@ -27,7 +27,7 @@ class EditProfileModel extends BaseModel {
       updatedUserDetails = await _userApi.userMePatch(email, contactNo);
       currentUser = UserDetailsUtils.getLoginModelFromMe(updatedUserDetails);
       setState(ViewState.Idle);
-      showSnackBar(editProfileViewScaffoldKey, "User details updated");
+      showSnackBar(editProfileViewScaffoldKey, 'User details updated');
     } on Failure catch (f) {
       print(f.message);
       setErrorMessage(f.message);
@@ -37,7 +37,7 @@ class EditProfileModel extends BaseModel {
   }
 
   Future saveUserDetails(String email, String contactNo) async {
-    _dialogService.showCustomProgressDialog(title: "Saving User Details");
+    _dialogService.showCustomProgressDialog(title: 'Saving User Details');
     await updateUserDetails(email, contactNo);
     _dialogService.dialogNavigationKey.currentState.pop();
   }

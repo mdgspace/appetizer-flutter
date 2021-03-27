@@ -12,7 +12,7 @@ class SettingsPageFooter extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              "Made with ",
+              'Made with ',
               style: TextStyle(
                 color: const Color.fromRGBO(130, 130, 130, 0.9),
                 fontSize: 16.0,
@@ -26,7 +26,7 @@ class SettingsPageFooter extends StatelessWidget {
               ),
             ),
             Text(
-              " by MDG",
+              ' by MDG',
               style: TextStyle(
                 color: const Color.fromRGBO(130, 130, 130, 0.9),
                 fontSize: 16.0,

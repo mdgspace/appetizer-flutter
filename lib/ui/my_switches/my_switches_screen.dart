@@ -12,7 +12,7 @@ class MySwitches extends StatelessWidget {
       builder: (context, model, child) => Scaffold(
         appBar: AppBar(
           title: Text(
-            "My Switches",
+            'My Switches',
             style: TextStyle(color: Colors.white),
           ),
         ),

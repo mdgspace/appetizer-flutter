@@ -10,16 +10,16 @@ void showCustomDialog(BuildContext context, String message) {
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.all(12),
-            child: new Row(
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                new CircularProgressIndicator(
-                  valueColor: new AlwaysStoppedAnimation<Color>(appiYellow),
+                CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(appiYellow),
                 ),
                 Center(
-                  child: new Text(
+                  child: Text(
                     message,
-                    style: new TextStyle(
+                    style: TextStyle(
                       fontSize: 18,
                     ),
                   ),

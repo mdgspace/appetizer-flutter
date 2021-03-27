@@ -79,8 +79,8 @@ class YourMenuModel extends BaseModel {
   Future<Database> get _db async => await AppDatabase.instance.database;
 
   Future<void> updateMealDb(Week weekMenu) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    int mealKey = await _mealStore.add(await _db, weekMenu.toJson());
-    prefs.setInt("mealKey", mealKey);
+    var prefs = await SharedPreferences.getInstance();
+    var mealKey = await _mealStore.add(await _db, weekMenu.toJson());
+    await prefs.setInt('mealKey', mealKey);
   }
 }

@@ -18,7 +18,7 @@ class NotificationHistory extends StatelessWidget {
         key: notificationHistoryViewScaffoldKey,
         appBar: AppBar(
           title: Text(
-            "Notifications History",
+            'Notifications History',
             style: TextStyle(color: Colors.white),
           ),
         ),

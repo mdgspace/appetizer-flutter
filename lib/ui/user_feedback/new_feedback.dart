@@ -13,9 +13,9 @@ class NewFeedback extends StatefulWidget {
 }
 
 class _NewFeedbackState extends State<NewFeedback> {
-  final _formKey = new GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
 
-  String title, feedbackType = "gn", description;
+  String title, feedbackType = 'gn', description;
   DateTime date = DateTime.now();
 
   @override
@@ -25,25 +25,25 @@ class _NewFeedbackState extends State<NewFeedback> {
         key: newFeedbackViewScaffoldKey,
         appBar: AppBar(
           title: Text(
-            "New Feedback",
+            'New Feedback',
             style: TextStyle(color: Colors.white),
           ),
           actions: <Widget>[
             Padding(
               padding: const EdgeInsets.only(left: 15, right: 15),
-              child: new Icon(
+              child: Icon(
                 Icons.attachment,
                 color: appiYellow,
               ),
             ),
             GestureDetector(
               onTap: () {
-                FocusScope.of(context).requestFocus(new FocusNode());
+                FocusScope.of(context).requestFocus(FocusNode());
                 _validateForm(model);
               },
               child: Padding(
                 padding: const EdgeInsets.only(left: 15, right: 20),
-                child: new Icon(
+                child: Icon(
                   Icons.send,
                   color: appiYellow,
                 ),
@@ -56,15 +56,15 @@ class _NewFeedbackState extends State<NewFeedback> {
             padding: const EdgeInsets.all(36),
             child: Form(
               key: _formKey,
-              child: new Column(
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  new Text(
-                    "Title",
+                  Text(
+                    'Title',
                   ),
                   Container(
-                    child: new TextFormField(
-                      decoration: InputDecoration(hintText: "Enter Title"),
+                    child: TextFormField(
+                      decoration: InputDecoration(hintText: 'Enter Title'),
                       validator: (value) {
                         if (value.isEmpty) {
                           return "Title can\'t be empty";
@@ -78,16 +78,16 @@ class _NewFeedbackState extends State<NewFeedback> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 24),
-                    child: new Text(
-                      "Type of Feedback",
+                    child: Text(
+                      'Type of Feedback',
                     ),
                   ),
                   DropdownButton<String>(
-                    hint: new Text(
+                    hint: Text(
                       FeedbackApi.resolveFeedbackTypeCode(feedbackType),
                       style: TextStyle(color: Colors.black),
                     ),
-                    items: ["gn", "am", "hc", "tm", "wm", "ws", "dn"]
+                    items: ['gn', 'am', 'hc', 'tm', 'wm', 'ws', 'dn']
                         .map((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
@@ -106,20 +106,20 @@ class _NewFeedbackState extends State<NewFeedback> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 24),
-                    child: new Text(
-                      "Date",
+                    child: Text(
+                      'Date',
                     ),
                   ),
                   Container(
-                    child: new TextField(
+                    child: TextField(
                       focusNode: AlwaysDisabledFocusNode(),
                       decoration: InputDecoration(
                         hintText: date.day.toString() +
-                            " " +
+                            ' ' +
                             DateTimeUtils.getMonthName(date) +
-                            " " +
+                            ' ' +
                             date.year.toString(),
-                        hintStyle: new TextStyle(
+                        hintStyle: TextStyle(
                           color: Colors.black,
                         ),
                       ),
@@ -128,8 +128,8 @@ class _NewFeedbackState extends State<NewFeedback> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 24),
-                    child: new Text(
-                      "Description",
+                    child: Text(
+                      'Description',
                     ),
                   ),
                   Padding(
@@ -139,7 +139,7 @@ class _NewFeedbackState extends State<NewFeedback> {
                       maxLines: 7,
                       validator: (value) {
                         if (value.length < 50) {
-                          return "Description must be atleast 50 charecters";
+                          return 'Description must be atleast 50 charecters';
                         }
                         return null;
                       },
@@ -150,8 +150,8 @@ class _NewFeedbackState extends State<NewFeedback> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 24),
-                    child: new Center(
-                      child: new Image.asset("assets/icons/feedback_dish.png"),
+                    child: Center(
+                      child: Image.asset('assets/icons/feedback_dish.png'),
                     ),
                   ),
                 ],
@@ -172,14 +172,15 @@ class _NewFeedbackState extends State<NewFeedback> {
   }
 
   Future<Null> _selectDate(BuildContext context) async {
-    final DateTime picked = await showDatePicker(
+    final picked = await showDatePicker(
         context: context,
         initialDate: date,
         firstDate: DateTime(2015, 8),
         lastDate: DateTime(2101));
-    if (picked != null && picked != date)
+    if (picked != null && picked != date) {
       setState(() {
         date = picked.toLocal();
       });
+    }
   }
 }

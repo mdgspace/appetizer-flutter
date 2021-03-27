@@ -14,9 +14,9 @@ class ChooseNewPass extends StatefulWidget {
 }
 
 class _ChooseNewPassState extends State<ChooseNewPass> {
-  var formKey = new GlobalKey<FormState>();
+  var formKey = GlobalKey<FormState>();
   String password, email, contactNo;
-  TextEditingController _newPasswordController = new TextEditingController();
+  final TextEditingController _newPasswordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class _ChooseNewPassState extends State<ChooseNewPass> {
             color: appiYellow,
           ),
           title: Text(
-            "Choose New Password",
+            'Choose New Password',
             style: TextStyle(color: Colors.white),
           ),
         ),
@@ -38,7 +38,7 @@ class _ChooseNewPassState extends State<ChooseNewPass> {
               padding: const EdgeInsets.only(left: 40, right: 40),
               child: Form(
                 key: formKey,
-                child: new Column(
+                child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     _choosePassword(),
@@ -61,24 +61,24 @@ class _ChooseNewPassState extends State<ChooseNewPass> {
   Widget _choosePassword() {
     return Padding(
       padding: const EdgeInsets.only(top: 48),
-      child: new Row(
+      child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          new Text(
-            "Hi ",
+          Text(
+            'Hi ',
             style: TextStyle(
               fontSize: 16,
             ),
           ),
-          new Text(
-            widget.studentData.name.split(" ")[0],
-            style: new TextStyle(
+          Text(
+            widget.studentData.name.split(' ')[0],
+            style: TextStyle(
               color: appiYellow,
               fontSize: 16,
             ),
           ),
-          new Text(
-            ", Choose You Password",
+          Text(
+            ', Choose You Password',
             style: TextStyle(
               fontSize: 16,
             ),
@@ -91,8 +91,8 @@ class _ChooseNewPassState extends State<ChooseNewPass> {
   Widget _subTitle() {
     return Padding(
       padding: const EdgeInsets.only(top: 48),
-      child: new Text(
-        " Password should be of atleast 8 \n charecters",
+      child: Text(
+        ' Password should be of atleast 8 \n charecters',
         style: TextStyle(
           fontSize: 16,
           color: Colors.red,
@@ -105,12 +105,12 @@ class _ChooseNewPassState extends State<ChooseNewPass> {
   Widget _showNewPasswordInput() {
     return Padding(
       padding: const EdgeInsets.only(top: 48.0),
-      child: new TextFormField(
+      child: TextFormField(
         controller: _newPasswordController,
         obscureText: true,
-        decoration: new InputDecoration(
-          labelText: "New Password",
-          icon: new Icon(
+        decoration: InputDecoration(
+          labelText: 'New Password',
+          icon: Icon(
             Icons.lock,
             color: Colors.grey,
           ),
@@ -119,7 +119,7 @@ class _ChooseNewPassState extends State<ChooseNewPass> {
           if (value.isEmpty) {
             return "Password can\'t be empty";
           } else if (value.length < 8) {
-            return "Password is too short";
+            return 'Password is too short';
           }
           return null;
         },
@@ -131,11 +131,11 @@ class _ChooseNewPassState extends State<ChooseNewPass> {
   Widget _showConfirmPasswordInput() {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0.0, 48.0, 0.0, 0.0),
-      child: new TextFormField(
+      child: TextFormField(
         obscureText: true,
-        decoration: new InputDecoration(
-          labelText: "Confirm Password",
-          icon: new Icon(
+        decoration: InputDecoration(
+          labelText: 'Confirm Password',
+          icon: Icon(
             Icons.lock,
             color: Colors.grey,
           ),
@@ -145,7 +145,7 @@ class _ChooseNewPassState extends State<ChooseNewPass> {
             return 'Password can\'t be empty';
           }
           if (value != _newPasswordController.text) {
-            return "Passwords do not match";
+            return 'Passwords do not match';
           }
           return null;
         },
@@ -157,12 +157,12 @@ class _ChooseNewPassState extends State<ChooseNewPass> {
   Widget _showEmailInput() {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0.0, 48.0, 0.0, 0.0),
-      child: new TextFormField(
+      child: TextFormField(
         initialValue: widget.studentData.email,
         keyboardType: TextInputType.emailAddress,
-        decoration: new InputDecoration(
-          labelText: "Email",
-          icon: new Icon(
+        decoration: InputDecoration(
+          labelText: 'Email',
+          icon: Icon(
             Icons.email,
             color: Colors.grey,
           ),
@@ -170,7 +170,7 @@ class _ChooseNewPassState extends State<ChooseNewPass> {
         validator: (value) {
           Pattern pattern =
               r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-          RegExp regex = new RegExp(pattern);
+          var regex = RegExp(pattern);
           if (!regex.hasMatch(value)) return 'Enter Valid Email';
           return null;
         },
@@ -182,12 +182,12 @@ class _ChooseNewPassState extends State<ChooseNewPass> {
   Widget _showContactNoInput() {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0.0, 48.0, 0.0, 0.0),
-      child: new TextFormField(
+      child: TextFormField(
         initialValue: widget.studentData.contactNo,
         keyboardType: TextInputType.number,
-        decoration: new InputDecoration(
-          labelText: "Contact No",
-          icon: new Icon(
+        decoration: InputDecoration(
+          labelText: 'Contact No',
+          icon: Icon(
             Icons.person,
             color: Colors.grey,
           ),
@@ -196,7 +196,7 @@ class _ChooseNewPassState extends State<ChooseNewPass> {
           if (value.isEmpty) {
             return "Contact No can\'t be empty";
           } else if (value.length != 10) {
-            return "Please check the entered number";
+            return 'Please check the entered number';
           }
           return null;
         },
@@ -206,27 +206,27 @@ class _ChooseNewPassState extends State<ChooseNewPass> {
   }
 
   Widget _showConfirmButton(NewPasswordModel model) {
-    return new RaisedButton(
+    return RaisedButton(
       elevation: 5.0,
       color: Colors.white,
-      shape: new RoundedRectangleBorder(
+      shape: RoundedRectangleBorder(
         side: BorderSide(
           color: appiYellow,
           style: BorderStyle.solid,
           width: 2,
         ),
-        borderRadius: new BorderRadius.circular(40.0),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(15.0),
-        child: new Text(
-          'CONFIRM',
-          style: new TextStyle(fontSize: 15.0, color: appiYellow),
-        ),
+        borderRadius: BorderRadius.circular(40.0),
       ),
       onPressed: () {
         _validateAndSave(model);
       },
+      child: Padding(
+        padding: const EdgeInsets.all(15.0),
+        child: Text(
+          'CONFIRM',
+          style: TextStyle(fontSize: 15.0, color: appiYellow),
+        ),
+      ),
     );
   }
 

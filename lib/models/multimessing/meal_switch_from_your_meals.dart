@@ -36,25 +36,25 @@ class SwitchableMealsForYourMeal {
 
   factory SwitchableMealsForYourMeal.fromJson(Map<String, dynamic> json) =>
       SwitchableMealsForYourMeal(
-        id: json["id"],
-        type: json["type"],
-        items: List<Item>.from(json["items"].map((x) => Item.fromJson(x))),
-        startTime: json["start_time"],
-        endTime: json["end_time"],
-        leaveStatus: json["leave_status"],
-        wastage: json["wastage"],
-        hostelName: json["hostel_name"],
+        id: json['id'],
+        type: json['type'],
+        items: List<Item>.from(json['items'].map((x) => Item.fromJson(x))),
+        startTime: json['start_time'],
+        endTime: json['end_time'],
+        leaveStatus: json['leave_status'],
+        wastage: json['wastage'],
+        hostelName: json['hostel_name'],
       );
 
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "type": type,
-        "items": List<dynamic>.from(items.map((x) => x.toJson())),
-        "start_time": startTime,
-        "end_time": endTime,
-        "leave_status": leaveStatus,
-        "wastage": wastage,
-        "hostel_name": hostelName,
+        'id': id,
+        'type': type,
+        'items': List<dynamic>.from(items.map((x) => x.toJson())),
+        'start_time': startTime,
+        'end_time': endTime,
+        'leave_status': leaveStatus,
+        'wastage': wastage,
+        'hostel_name': hostelName,
       };
 }
 
@@ -70,14 +70,14 @@ class Item {
   });
 
   factory Item.fromJson(Map<String, dynamic> json) => Item(
-        id: json["id"],
-        type: json["type"],
-        name: json["name"],
+        id: json['id'],
+        type: json['type'],
+        name: json['name'],
       );
 
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "type": type,
-        "name": name,
+        'id': id,
+        'type': type,
+        'name': name,
       };
 }

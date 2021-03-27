@@ -13,16 +13,16 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
-  var _formKey = new GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
   String _email, _contactNo;
 
   String shareText =
-      "Let me recommend you this application:\n https://play.google.com/store/apps/details?id=co.sdslabs.mdg.appetizer&hl=en";
+      'Let me recommend you this application:\n https://play.google.com/store/apps/details?id=co.sdslabs.mdg.appetizer&hl=en';
 
-  AppBar _appBar = AppBar(
+  final AppBar _appBar = AppBar(
     title: Text(
-      "Edit Profile",
-      style: new TextStyle(color: Colors.white),
+      'Edit Profile',
+      style: TextStyle(color: Colors.white),
     ),
     backgroundColor: Colors.transparent,
   );
@@ -84,11 +84,11 @@ class _EditProfileState extends State<EditProfile> {
                       Padding(
                         padding: const EdgeInsets.all(16.0),
                         child: Text(
-                          "Edit Profile",
+                          'Edit Profile',
                           textAlign: TextAlign.center,
                           style: Theme.of(context)
                               .primaryTextTheme
-                              .display1
+                              .headline4
                               .copyWith(
                                 color: Colors.black,
                                 fontWeight: FontWeight.w500,
@@ -119,16 +119,16 @@ class _EditProfileState extends State<EditProfile> {
           width: 2,
         ),
         splashColor: Colors.transparent,
-        child: ListTile(
-          title: Text(
-            "Save Details",
-            textAlign: TextAlign.center,
-            style: Theme.of(context).primaryTextTheme.display1,
-          ),
-        ),
         onPressed: () {
           _validateAndSave(model);
         },
+        child: ListTile(
+          title: Text(
+            'Save Details',
+            textAlign: TextAlign.center,
+            style: Theme.of(context).primaryTextTheme.headline4,
+          ),
+        ),
       ),
     );
   }
@@ -136,15 +136,15 @@ class _EditProfileState extends State<EditProfile> {
   Widget _showContactNoInput(EditProfileModel model) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(15, 15, 15, 15),
-      child: new TextFormField(
+      child: TextFormField(
         maxLines: 1,
         keyboardType: TextInputType.number,
         initialValue: model.currentUser.contactNo,
         autofocus: false,
-        decoration: new InputDecoration(
-          labelText: "Contact No",
-          labelStyle: Theme.of(context).primaryTextTheme.subhead,
-          icon: new Icon(
+        decoration: InputDecoration(
+          labelText: 'Contact No',
+          labelStyle: Theme.of(context).primaryTextTheme.subtitle1,
+          icon: Icon(
             Icons.person,
             color: appiGreyIcon,
             size: 30,
@@ -154,7 +154,7 @@ class _EditProfileState extends State<EditProfile> {
           if (value.isEmpty) {
             return "Contact No can\'t be empty";
           } else if (value.length != 10) {
-            return "Please check the entered number";
+            return 'Please check the entered number';
           }
           return null;
         },
@@ -166,15 +166,15 @@ class _EditProfileState extends State<EditProfile> {
   Widget _showEmailInput(EditProfileModel model) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(15, 15, 15, 15),
-      child: new TextFormField(
+      child: TextFormField(
         maxLines: 1,
         keyboardType: TextInputType.number,
         initialValue: model.currentUser.email,
         autofocus: false,
-        decoration: new InputDecoration(
-          labelText: "Email",
-          labelStyle: Theme.of(context).primaryTextTheme.subhead,
-          icon: new Icon(
+        decoration: InputDecoration(
+          labelText: 'Email',
+          labelStyle: Theme.of(context).primaryTextTheme.subtitle1,
+          icon: Icon(
             Icons.mail,
             color: appiGreyIcon,
             size: 30,
@@ -183,7 +183,7 @@ class _EditProfileState extends State<EditProfile> {
         validator: (value) {
           Pattern pattern =
               r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-          RegExp regex = new RegExp(pattern);
+          var regex = RegExp(pattern);
           if (!regex.hasMatch(value)) return 'Enter Valid Email';
           return null;
         },
@@ -197,7 +197,7 @@ class _EditProfileState extends State<EditProfile> {
     if (form.validate()) {
       form.save();
       form.reset();
-      FocusScope.of(context).requestFocus(new FocusNode());
+      FocusScope.of(context).requestFocus(FocusNode());
       await model.saveUserDetails(_email, _contactNo);
       Future.delayed(Duration(seconds: 1), () {
         Navigator.pop(context);

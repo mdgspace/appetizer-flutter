@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 Widget getDayAndDateForCard(DateTime mealStartDateTime) {
-  DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
-  String mealDateTimeString =
+  var dateFormat = DateFormat('yyyy-MM-dd HH:mm:ss');
+  var mealDateTimeString =
       mealStartDateTime.toString().substring(0, 10) + ' 00:00:00';
-  DateTime mealDateTime = dateFormat.parse(mealDateTimeString);
+  var mealDateTime = dateFormat.parse(mealDateTimeString);
 
   return Padding(
     padding: const EdgeInsets.symmetric(
@@ -19,9 +19,9 @@ Widget getDayAndDateForCard(DateTime mealStartDateTime) {
         ),
         Text(
           DateTimeUtils.getMonthName(mealDateTime) +
-              " " +
+              ' ' +
               mealDateTime.day.toString() +
-              "," +
+              ',' +
               mealDateTime.year.toString(),
         ),
       ],

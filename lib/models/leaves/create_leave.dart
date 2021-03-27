@@ -16,11 +16,11 @@ class CreateLeave {
     this.meal,
   });
 
-  factory CreateLeave.fromJson(Map<String, dynamic> json) => new CreateLeave(
-        meal: json["meal"],
+  factory CreateLeave.fromJson(Map<String, dynamic> json) => CreateLeave(
+        meal: json['meal'],
       );
 
   Map<String, dynamic> toJson() => {
-        "meal": meal,
+        'meal': meal,
       };
 }

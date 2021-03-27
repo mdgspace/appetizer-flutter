@@ -12,12 +12,12 @@ class StartUpViewModel extends BaseModel {
       locator<LocalStorageService>();
   final NavigationService _navigationService = locator<NavigationService>();
 
-  static const platform = const MethodChannel('app.channel.shared.data');
+  static const platform = MethodChannel('app.channel.shared.data');
   String _code;
 
   Future getIntent() async {
     try {
-      _code = await platform.invokeMethod("getCode");
+      _code = await platform.invokeMethod('getCode');
     } on Exception catch (e) {
       print(e);
     }
@@ -30,15 +30,15 @@ class StartUpViewModel extends BaseModel {
 
     if (_localStorageService.isFirstTimeLogin) {
       _localStorageService.isFirstTimeLogin = false;
-      _navigationService.pushNamedAndRemoveUntil('on_boarding');
+      await _navigationService.pushNamedAndRemoveUntil('on_boarding');
     } else {
       if (_localStorageService.isLoggedIn) {
-        _navigationService.pushNamedAndRemoveUntil(
+        await _navigationService.pushNamedAndRemoveUntil(
           'home',
           arguments: _localStorageService.token,
         );
       } else {
-        _navigationService.pushNamedAndRemoveUntil(
+        await _navigationService.pushNamedAndRemoveUntil(
           'login',
           arguments: _code,
         );

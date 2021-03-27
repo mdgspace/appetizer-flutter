@@ -61,8 +61,8 @@ class LoginModel extends BaseModel {
       isLoggedIn = true;
       isCheckedOut = login.isCheckedOut;
       currentUser = login;
-      FirebaseMessaging fcm = FirebaseMessaging();
-      fcm.subscribeToTopic("release-" + login.hostelCode);
+      var fcm = FirebaseMessaging();
+      await fcm.subscribeToTopic('release-' + login.hostelCode);
       setState(ViewState.Idle);
     } on Failure catch (f) {
       print(f.message);
@@ -83,27 +83,27 @@ class LoginModel extends BaseModel {
   }
 
   Future verifyUser(String code) async {
-    _dialogService.showCustomProgressDialog(title: "Fetching Details");
+    _dialogService.showCustomProgressDialog(title: 'Fetching Details');
     await getOAuthResponse(code);
-    print("Code " + code);
+    print('Code ' + code);
     if (oauthResponse != null) {
       StudentData studentData = oauthResponse.studentData;
       if (oauthResponse.isNew) {
         _dialogService.dialogNavigationKey.currentState.pop();
-        _dialogService.showCustomProgressDialog(title: "Redirecting");
-        await new Future.delayed(new Duration(milliseconds: 500));
+        _dialogService.showCustomProgressDialog(title: 'Redirecting');
+        await Future.delayed(Duration(milliseconds: 500));
         _dialogService.dialogNavigationKey.currentState.pop();
-        _navigationService.pushReplacementNamed('choose_new_pass',
+        await _navigationService.pushReplacementNamed('choose_new_pass',
             arguments: studentData);
       } else {
         if (oauthResponse.token != null) {
           _dialogService.dialogNavigationKey.currentState.pop();
-          _dialogService.showCustomProgressDialog(title: "Logging You In");
+          _dialogService.showCustomProgressDialog(title: 'Logging You In');
           currentUser = UserDetailsUtils.getLoginFromStudentData(
               studentData, oauthResponse.token);
-          await new Future.delayed(const Duration(milliseconds: 500));
+          await Future.delayed(const Duration(milliseconds: 500));
           _dialogService.dialogNavigationKey.currentState.pop();
-          _navigationService.pushReplacementNamed(
+          await _navigationService.pushReplacementNamed(
             'home',
             arguments: oauthResponse.token,
           );

@@ -21,7 +21,7 @@ class SwitchConfirmationMealCard extends StatefulWidget {
 class _SwitchConfirmationMealCardState
     extends State<SwitchConfirmationMealCard> {
   List<Widget> _itemWidgetList() {
-    List<Widget> list = [];
+    var list = <Widget>[];
     widget.menuItems.forEach((icon, string) {
       list.add(_menuListItem(string, icon));
     });
@@ -90,7 +90,7 @@ class _SwitchConfirmationMealCardState
                               children: <Widget>[
                                 Text(
                                   widget.meal.title,
-                                  style: new TextStyle(
+                                  style: TextStyle(
                                       color: appiYellow, fontSize: 24),
                                 ),
                                 getDayAndDateForCard(widget.meal.startDateTime),

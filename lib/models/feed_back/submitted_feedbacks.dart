@@ -24,19 +24,19 @@ class SubmittedFeedbacksList {
   });
 
   factory SubmittedFeedbacksList.fromJson(Map<String, dynamic> json) =>
-      new SubmittedFeedbacksList(
-        count: json["count"],
-        hasNext: json["has_next"],
-        hasPrevious: json["has_previous"],
-        feedbacks: new List<Feedbacks>.from(
-            json["results"].map((x) => Feedbacks.fromJson(x))),
+      SubmittedFeedbacksList(
+        count: json['count'],
+        hasNext: json['has_next'],
+        hasPrevious: json['has_previous'],
+        feedbacks: List<Feedbacks>.from(
+            json['results'].map((x) => Feedbacks.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
-        "count": count,
-        "has_next": hasNext,
-        "has_previous": hasPrevious,
-        "results": new List<dynamic>.from(feedbacks.map((x) => x.toJson())),
+        'count': count,
+        'has_next': hasNext,
+        'has_previous': hasPrevious,
+        'results': List<dynamic>.from(feedbacks.map((x) => x.toJson())),
       };
 }
 
@@ -63,27 +63,27 @@ class Feedbacks {
     this.response,
   });
 
-  factory Feedbacks.fromJson(Map<String, dynamic> json) => new Feedbacks(
-        id: json["id"],
-        type: json["type"],
-        title: json["title"],
-        message: json["message"],
-        timestamp: json["timestamp"],
-        mealId: json["meal_id"],
-        imageUrl: json["image_url"],
-        dateIssue: json["date_issue"],
-        response: json["response"],
+  factory Feedbacks.fromJson(Map<String, dynamic> json) => Feedbacks(
+        id: json['id'],
+        type: json['type'],
+        title: json['title'],
+        message: json['message'],
+        timestamp: json['timestamp'],
+        mealId: json['meal_id'],
+        imageUrl: json['image_url'],
+        dateIssue: json['date_issue'],
+        response: json['response'],
       );
 
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "type": type,
-        "title": title,
-        "message": message,
-        "timestamp": timestamp,
-        "meal_id": mealId,
-        "image_url": imageUrl,
-        "date_issue": dateIssue,
-        "response": response,
+        'id': id,
+        'type': type,
+        'title': title,
+        'message': message,
+        'timestamp': timestamp,
+        'meal_id': mealId,
+        'image_url': imageUrl,
+        'date_issue': dateIssue,
+        'response': response,
       };
 }

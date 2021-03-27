@@ -15,11 +15,11 @@ class Detail {
     this.detail,
   });
 
-  factory Detail.fromJson(Map<String, dynamic> json) => new Detail(
-        detail: json["detail"],
+  factory Detail.fromJson(Map<String, dynamic> json) => Detail(
+        detail: json['detail'],
       );
 
   Map<String, dynamic> toJson() => {
-        "detail": detail,
+        'detail': detail,
       };
 }

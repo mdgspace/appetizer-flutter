@@ -16,11 +16,11 @@ class LeaveCount {
     this.count,
   });
 
-  factory LeaveCount.fromJson(Map<String, dynamic> json) => new LeaveCount(
-        count: json["count"],
+  factory LeaveCount.fromJson(Map<String, dynamic> json) => LeaveCount(
+        count: json['count'],
       );
 
   Map<String, dynamic> toJson() => {
-        "count": count,
+        'count': count,
       };
 }

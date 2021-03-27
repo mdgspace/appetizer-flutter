@@ -19,7 +19,7 @@ class MyRebates extends StatelessWidget {
         key: myRebatesViewScaffoldKey,
         appBar: AppBar(
           title: Text(
-            "My Rebates",
+            'My Rebates',
             style: TextStyle(color: Colors.white),
           ),
           backgroundColor: const Color.fromRGBO(121, 85, 72, 1),
@@ -35,7 +35,7 @@ class MyRebates extends StatelessWidget {
                         child: Center(
                           child: CircularProgressIndicator(
                             valueColor:
-                                new AlwaysStoppedAnimation<Color>(appiYellow),
+                                AlwaysStoppedAnimation<Color>(appiYellow),
                           ),
                         ),
                       ),

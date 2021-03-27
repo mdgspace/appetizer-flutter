@@ -1,61 +1,61 @@
 int monthStringToMonthInt(String month) {
   switch (month) {
-    case "January":
+    case 'January':
       {
         return 1;
       }
       break;
-    case "February":
+    case 'February':
       {
         return 2;
       }
       break;
-    case "March":
+    case 'March':
       {
         return 3;
       }
       break;
-    case "April":
+    case 'April':
       {
         return 4;
       }
       break;
-    case "May":
+    case 'May':
       {
         return 5;
       }
       break;
-    case "June":
+    case 'June':
       {
         return 6;
       }
       break;
-    case "July":
+    case 'July':
       {
         return 7;
       }
       break;
-    case "August":
+    case 'August':
       {
         return 8;
       }
       break;
-    case "September":
+    case 'September':
       {
         return 9;
       }
       break;
-    case "October":
+    case 'October':
       {
         return 10;
       }
       break;
-    case "Novemver":
+    case 'Novemver':
       {
         return 11;
       }
       break;
-    case "December":
+    case 'December':
       {
         return 12;
       }

@@ -16,11 +16,11 @@ class CancelLeave {
     this.detail,
   });
 
-  factory CancelLeave.fromJson(Map<String, dynamic> json) => new CancelLeave(
-        detail: json["detail"],
+  factory CancelLeave.fromJson(Map<String, dynamic> json) => CancelLeave(
+        detail: json['detail'],
       );
 
   Map<String, dynamic> toJson() => {
-        "detail": detail,
+        'detail': detail,
       };
 }

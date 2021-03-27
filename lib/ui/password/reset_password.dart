@@ -13,10 +13,10 @@ class ResetPassword extends StatefulWidget {
 class _ResetPasswordState extends State<ResetPassword> {
   bool _obscureText1 = true;
   bool _obscureText2 = true;
-  String oldPassword = "";
-  String newPassword = "";
+  String oldPassword = '';
+  String newPassword = '';
 
-  final _formKey = new GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
 
   void _toggle1() {
     setState(() {
@@ -48,7 +48,7 @@ class _ResetPasswordState extends State<ResetPassword> {
         resizeToAvoidBottomInset: true,
         appBar: AppBar(
           title: Text(
-            "Reset Password",
+            'Reset Password',
             style: TextStyle(
               color: Colors.white,
             ),
@@ -73,11 +73,11 @@ class _ResetPasswordState extends State<ResetPassword> {
                   ),
                   Padding(
                     padding: const EdgeInsets.all(16.0),
-                    child: Text("Reset Password",
+                    child: Text('Reset Password',
                         textAlign: TextAlign.center,
                         style: Theme.of(context)
                             .primaryTextTheme
-                            .display1
+                            .headline4
                             .copyWith(
                                 color: Colors.black,
                                 fontWeight: FontWeight.w500)),
@@ -86,10 +86,10 @@ class _ResetPasswordState extends State<ResetPassword> {
                     padding: const EdgeInsets.only(left: 48, right: 48),
                     child: Text(
                       forgotInstruction,
-                      style: new TextStyle(
+                      style: TextStyle(
                         fontSize: 16.0,
                         color: appiRed.withOpacity(0.9),
-                        fontFamily: "OpenSans",
+                        fontFamily: 'OpenSans',
                       ),
                       textAlign: TextAlign.center,
                     ),
@@ -101,24 +101,24 @@ class _ResetPasswordState extends State<ResetPassword> {
                         Padding(
                           padding:
                               const EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 0.0),
-                          child: new TextFormField(
+                          child: TextFormField(
                             maxLines: 1,
                             obscureText: _obscureText1,
                             autofocus: false,
-                            decoration: new InputDecoration(
+                            decoration: InputDecoration(
                               suffixIcon: GestureDetector(
-                                child: new Icon(
+                                onTap: _toggle1,
+                                child: Icon(
                                   _obscureText1
                                       ? Icons.visibility_off
                                       : Icons.visibility,
                                   color: appiGreyIcon,
                                 ),
-                                onTap: _toggle1,
                               ),
-                              labelText: "Old Password",
+                              labelText: 'Old Password',
                               labelStyle:
-                                  Theme.of(context).primaryTextTheme.subhead,
-                              icon: new Icon(
+                                  Theme.of(context).primaryTextTheme.subtitle1,
+                              icon: Icon(
                                 Icons.lock,
                                 color: appiGreyIcon,
                                 size: 30,
@@ -133,24 +133,24 @@ class _ResetPasswordState extends State<ResetPassword> {
                         Padding(
                           padding:
                               const EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 0.0),
-                          child: new TextFormField(
+                          child: TextFormField(
                             maxLines: 1,
                             obscureText: _obscureText2,
                             autofocus: false,
-                            decoration: new InputDecoration(
+                            decoration: InputDecoration(
                               suffixIcon: GestureDetector(
-                                child: new Icon(
+                                onTap: _toggle2,
+                                child: Icon(
                                   _obscureText2
                                       ? Icons.visibility_off
                                       : Icons.visibility,
                                   color: appiGreyIcon,
                                 ),
-                                onTap: _toggle2,
                               ),
-                              labelText: "New Password",
+                              labelText: 'New Password',
                               labelStyle:
-                                  Theme.of(context).primaryTextTheme.subhead,
-                              icon: new Icon(
+                                  Theme.of(context).primaryTextTheme.subtitle1,
+                              icon: Icon(
                                 Icons.lock,
                                 color: appiGreyIcon,
                                 size: 30,
@@ -171,19 +171,11 @@ class _ResetPasswordState extends State<ResetPassword> {
                               width: 2,
                             ),
                             splashColor: Colors.transparent,
-                            child: ListTile(
-                              title: Text(
-                                "Reset Password",
-                                textAlign: TextAlign.center,
-                                style:
-                                    Theme.of(context).primaryTextTheme.display1,
-                              ),
-                            ),
                             onPressed: () async {
                               if (_validateAndSave()) {
                                 _formKey.currentState.reset();
                                 FocusScope.of(context)
-                                    .requestFocus(new FocusNode());
+                                    .requestFocus(FocusNode());
                                 await model.onResetPasswordTapped(
                                     oldPassword, newPassword);
                                 Future.delayed(Duration(seconds: 1), () {
@@ -191,6 +183,14 @@ class _ResetPasswordState extends State<ResetPassword> {
                                 });
                               }
                             },
+                            child: ListTile(
+                              title: Text(
+                                'Reset Password',
+                                textAlign: TextAlign.center,
+                                style:
+                                    Theme.of(context).primaryTextTheme.headline4,
+                              ),
+                            ),
                           ),
                         )
                       ],

@@ -13,10 +13,10 @@ import 'package:flutter/rendering.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class YourMenuCardModel extends BaseModel {
-  LeaveApi _leaveApi = locator<LeaveApi>();
-  MultimessingApi _multimessingApi = locator<MultimessingApi>();
-  DialogService _dialogService = locator<DialogService>();
-  NavigationService _navigationService = locator<NavigationService>();
+  final LeaveApi _leaveApi = locator<LeaveApi>();
+  final MultimessingApi _multimessingApi = locator<MultimessingApi>();
+  final DialogService _dialogService = locator<DialogService>();
+  final NavigationService _navigationService = locator<NavigationService>();
 
   Meal _meal;
   DailyItems _dailyItems;
@@ -96,12 +96,12 @@ class YourMenuCardModel extends BaseModel {
   Future cancelLeave(int id) async {
     try {
       isLeaveCancelled = await _leaveApi.cancelLeave(id);
-      if (isLeaveCancelled) Fluttertoast.showToast(msg: "Leave Cancelled");
+      if (isLeaveCancelled) await Fluttertoast.showToast(msg: 'Leave Cancelled');
     } on Failure catch (f) {
       print(f.message);
       setErrorMessage(f.message);
       setState(ViewState.Error);
-      Fluttertoast.showToast(msg: errorMessage);
+      await Fluttertoast.showToast(msg: errorMessage);
       mealLeaveStatus = !mealLeaveStatus;
     }
   }
@@ -109,13 +109,14 @@ class YourMenuCardModel extends BaseModel {
   Future leaveMeal(int id) async {
     try {
       createLeave = await _leaveApi.leave(id.toString());
-      if (createLeave.meal == meal.id)
-        Fluttertoast.showToast(msg: "Meal Skipped");
+      if (createLeave.meal == meal.id) {
+        await Fluttertoast.showToast(msg: 'Meal Skipped');
+      }
     } on Failure catch (f) {
       print(f.message);
       setErrorMessage(f.message);
       setState(ViewState.Error);
-      Fluttertoast.showToast(msg: errorMessage);
+      await Fluttertoast.showToast(msg: errorMessage);
       mealLeaveStatus = !mealLeaveStatus;
     }
   }
@@ -123,12 +124,12 @@ class YourMenuCardModel extends BaseModel {
   Future cancelSwitch(int id) async {
     try {
       isSwitchCancelled = await _multimessingApi.cancelSwitch(id);
-      Fluttertoast.showToast(msg: "Switch Cancelled");
+      await Fluttertoast.showToast(msg: 'Switch Cancelled');
     } on Failure catch (f) {
       print(f.message);
       setErrorMessage(f.message);
       setState(ViewState.Error);
-      Fluttertoast.showToast(msg: errorMessage);
+      await Fluttertoast.showToast(msg: errorMessage);
     }
   }
 
@@ -138,31 +139,31 @@ class YourMenuCardModel extends BaseModel {
       if (value) {
         if (!isLeaveToggleOutdated) {
           var _dialogResponse = await _dialogService.showConfirmationDialog(
-              title: "Cancel Leave",
-              description: "Are you sure you would like to cancel this leave?",
-              confirmationTitle: "CANCEL LEAVE");
+              title: 'Cancel Leave',
+              description: 'Are you sure you would like to cancel this leave?',
+              confirmationTitle: 'CANCEL LEAVE');
 
           if (_dialogResponse.confirmed) {
-            _dialogService.showCustomProgressDialog(title: "Cancelling Leave");
+            _dialogService.showCustomProgressDialog(title: 'Cancelling Leave');
             await cancelLeave(meal.id);
             _dialogService.dialogNavigationKey.currentState.pop();
           } else {
             mealLeaveStatus = !mealLeaveStatus;
           }
         } else {
-          Fluttertoast.showToast(
+          await Fluttertoast.showToast(
               msg:
-                  "Leave status cannot be changed less than ${outdatedTime.inHours} hours before the meal time");
+                  'Leave status cannot be changed less than ${outdatedTime.inHours} hours before the meal time');
         }
       } else {
         if (!isLeaveToggleOutdated) {
           var _dialogResponse = await _dialogService.showConfirmationDialog(
-              title: "Leave Meal",
-              description: "Are you sure you would like to leave this meal?",
-              confirmationTitle: "SKIP MEAL");
+              title: 'Leave Meal',
+              description: 'Are you sure you would like to leave this meal?',
+              confirmationTitle: 'SKIP MEAL');
 
           if (_dialogResponse.confirmed) {
-            _dialogService.showCustomProgressDialog(title: "Leaving Meal");
+            _dialogService.showCustomProgressDialog(title: 'Leaving Meal');
             await leaveMeal(meal.id);
             _dialogService.dialogNavigationKey.currentState.pop();
           } else {
@@ -176,20 +177,20 @@ class YourMenuCardModel extends BaseModel {
   Future onSwitchChanged() async {
     if (!isLeaveToggleOutdated) {
       if (mealSwitchStatus) {
-        _navigationService.pushNamed('switchable_meals_screen',
+        await _navigationService.pushNamed('switchable_meals_screen',
             arguments: meal.id);
       } else {
         if (meal.switchStatus.status == SwitchStatusEnum.T ||
             meal.switchStatus.status == SwitchStatusEnum.F) {
           var _dialogResponse = await _dialogService.showConfirmationDialog(
-            title: "Cancel Switch",
-            description: "Are you sure you want to cancel this switch?",
-            confirmationTitle: "YES",
-            cancelTitle: "NO",
+            title: 'Cancel Switch',
+            description: 'Are you sure you want to cancel this switch?',
+            confirmationTitle: 'YES',
+            cancelTitle: 'NO',
           );
 
           if (_dialogResponse.confirmed) {
-            _dialogService.showCustomProgressDialog(title: "Cancelling Switch");
+            _dialogService.showCustomProgressDialog(title: 'Cancelling Switch');
             await cancelSwitch(meal.switchStatus.id);
             _dialogService.dialogNavigationKey.currentState.pop();
             if (isSwitchCancelled) {
@@ -210,7 +211,7 @@ class YourMenuCardModel extends BaseModel {
         break;
       case SwitchStatusEnum.D:
         return () {
-          Fluttertoast.showToast(msg: "Your switch has been denied");
+          Fluttertoast.showToast(msg: 'Your switch has been denied');
         };
         break;
       case SwitchStatusEnum.F:
@@ -219,20 +220,20 @@ class YourMenuCardModel extends BaseModel {
           if (meal.endDateTime
               .add(Duration(hours: 1))
               .isBefore(DateTime.now())) {
-            Fluttertoast.showToast(msg: "Time for this meal has passed!");
+            Fluttertoast.showToast(msg: 'Time for this meal has passed!');
           } else if (meal.startTimeObject
               .subtract(outdatedTime)
               .isAfter(DateTime.now())) {
             Fluttertoast.showToast(
-                msg: "QR CODE will be available 8 hours before the meal");
+                msg: 'QR CODE will be available 8 hours before the meal');
           } else {
-            secretCode = "1";
+            secretCode = '1';
           }
         };
         break;
       case SwitchStatusEnum.U:
         return () {
-          Fluttertoast.showToast(msg: "Your Switch was not approved!");
+          Fluttertoast.showToast(msg: 'Your Switch was not approved!');
         };
         break;
       default:

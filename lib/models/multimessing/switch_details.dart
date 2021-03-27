@@ -23,16 +23,16 @@ class SwitchDetails {
   });
 
   factory SwitchDetails.fromJson(Map<String, dynamic> json) => SwitchDetails(
-        id: json["id"],
-        toMeal: json["to_meal"],
-        secretCode: json["secret_code"],
-        status: json["status"],
+        id: json['id'],
+        toMeal: json['to_meal'],
+        secretCode: json['secret_code'],
+        status: json['status'],
       );
 
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "to_meal": toMeal,
-        "secret_code": secretCode,
-        "status": status,
+        'id': id,
+        'to_meal': toMeal,
+        'secret_code': secretCode,
+        'status': status,
       };
 }

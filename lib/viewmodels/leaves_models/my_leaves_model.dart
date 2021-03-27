@@ -6,7 +6,7 @@ import 'package:appetizer/services/api/leave.dart';
 import 'package:appetizer/viewmodels/base_model.dart';
 
 class MyLeavesModel extends BaseModel {
-  LeaveApi _leaveApi = locator<LeaveApi>();
+  final LeaveApi _leaveApi = locator<LeaveApi>();
 
   LeaveCount _leaveCount;
 

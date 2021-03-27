@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class NavigationService {
   final GlobalKey<NavigatorState> navigatorKey =
-      new GlobalKey<NavigatorState>();
+      GlobalKey<NavigatorState>();
 
   Future<dynamic> pushNamed(String routeName, {Object arguments}) {
     return navigatorKey.currentState.pushNamed(

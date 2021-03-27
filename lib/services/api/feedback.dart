@@ -10,18 +10,17 @@ import 'package:appetizer/utils/api_utils.dart';
 import 'package:http/http.dart' as http;
 
 class FeedbackApi {
-  var headers = {"Content-Type": "application/json"};
-  http.Client client = new http.Client();
+  var headers = {'Content-Type': 'application/json'};
+  http.Client client = http.Client();
 
   Future<List<Feedbacks>> submittedFeedBacks() async {
-    String endpoint = "/api/feedback/all/";
-    String uri = url + endpoint;
+    var endpoint = '/api/feedback/all/';
+    var uri = url + endpoint;
 
     try {
       await ApiUtils.addTokenToHeaders(headers);
       var jsonResponse = await ApiUtils.get(uri, headers: headers);
-      SubmittedFeedbacksList list =
-          new SubmittedFeedbacksList.fromJson(jsonResponse);
+      var list = SubmittedFeedbacksList.fromJson(jsonResponse);
       return list.feedbacks;
     } on FormatException catch (e) {
       print(e.message);
@@ -33,13 +32,13 @@ class FeedbackApi {
   }
 
   Future<List<Response>> responseOfFeedBacks() async {
-    String endpoint = "/api/feedback/response/list/";
-    String uri = url + endpoint;
+    var endpoint = '/api/feedback/response/list/';
+    var uri = url + endpoint;
 
     try {
       await ApiUtils.addTokenToHeaders(headers);
       var jsonResponse = await ApiUtils.get(uri, headers: headers);
-      List<Response> list = responseFromJson(json.encode(jsonResponse));
+      var list = responseFromJson(json.encode(jsonResponse));
       return list;
     } on FormatException catch (e) {
       print(e.message);
@@ -52,19 +51,19 @@ class FeedbackApi {
 
   Future<Feedback> newFeedBack(
       String type, String title, String message, DateTime dateIssue) async {
-    String endpoint = "/api/feedback/";
-    String uri = url + endpoint;
+    var endpoint = '/api/feedback/';
+    var uri = url + endpoint;
     var json = {
-      "type": type,
-      "title": title,
-      "message": message,
-      "date_issue": dateIssue.millisecondsSinceEpoch.toString()
+      'type': type,
+      'title': title,
+      'message': message,
+      'date_issue': dateIssue.millisecondsSinceEpoch.toString()
     };
 
     try {
       await ApiUtils.addTokenToHeaders(headers);
       var jsonResponse = await ApiUtils.post(uri, headers: headers, body: json);
-      Feedback feedback = new Feedback.fromJson(jsonResponse);
+      var feedback = Feedback.fromJson(jsonResponse);
       return feedback;
     } on FormatException catch (e) {
       print(e.message);
@@ -77,20 +76,20 @@ class FeedbackApi {
 
   static resolveFeedbackTypeCode(String str) {
     switch (str) {
-      case "gn":
-        return "General";
-      case "am":
-        return "Ambience";
-      case "hc":
-        return "Hygiene and Cleanliness";
-      case "tm":
-        return "Mess Timings";
-      case "wm":
-        return "Weekly Menu";
-      case "ws":
-        return "Worker and Services";
-      case "dn":
-        return "Diet and Nutrition";
+      case 'gn':
+        return 'General';
+      case 'am':
+        return 'Ambience';
+      case 'hc':
+        return 'Hygiene and Cleanliness';
+      case 'tm':
+        return 'Mess Timings';
+      case 'wm':
+        return 'Weekly Menu';
+      case 'ws':
+        return 'Worker and Services';
+      case 'dn':
+        return 'Diet and Nutrition';
     }
   }
 }

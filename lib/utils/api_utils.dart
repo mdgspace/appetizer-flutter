@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiUtils {
-  static http.Client client = new http.Client();
+  static http.Client client = http.Client();
 
   /// Returns JSON GET response
   static Future<dynamic> get(String uri, {Map<String, String> headers}) async {
@@ -133,8 +133,8 @@ class ApiUtils {
   }
 
   static Future<void> addTokenToHeaders(Map<String, String> headers) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String token = prefs.getString("token");
-    headers.addAll({"Authorization": "Token $token"});
+    var prefs = await SharedPreferences.getInstance();
+    var token = prefs.getString('token');
+    headers.addAll({'Authorization': 'Token $token'});
   }
 }

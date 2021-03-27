@@ -25,7 +25,7 @@ class AppDatabase {
     if (_dbOpenCompleter == null) {
       _dbOpenCompleter = Completer();
       // Calling _openDatabase will also complete the completer with database instance
-      _openDatabase();
+      await _openDatabase();
     }
     // If the database is already opened, awaiting the future will happen instantly.
     // Otherwise, awaiting the returned future will take some time - until complete() is called

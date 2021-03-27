@@ -7,8 +7,8 @@ import 'package:appetizer/services/api/multimessing.dart';
 import 'package:appetizer/viewmodels/base_model.dart';
 
 class ConfirmSwitchPopupModel extends BaseModel {
-  MultimessingApi _multimessingApi = locator<MultimessingApi>();
-  MenuApi _menuApi = locator<MenuApi>();
+  final MultimessingApi _multimessingApi = locator<MultimessingApi>();
+  final MenuApi _menuApi = locator<MenuApi>();
 
   bool _isMealSwitched;
 

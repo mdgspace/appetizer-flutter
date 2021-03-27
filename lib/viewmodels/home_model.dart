@@ -17,16 +17,16 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HomeModel extends BaseModel {
-  MultimessingApi _multimessingApi = locator<MultimessingApi>();
-  UserApi _userApi = locator<UserApi>();
-  LeaveApi _leaveApi = locator<LeaveApi>();
-  VersionCheckApi _versionCheckApi = locator<VersionCheckApi>();
-  PushNotificationService _pushNotificationService =
+  final MultimessingApi _multimessingApi = locator<MultimessingApi>();
+  final UserApi _userApi = locator<UserApi>();
+  final LeaveApi _leaveApi = locator<LeaveApi>();
+  final VersionCheckApi _versionCheckApi = locator<VersionCheckApi>();
+  final PushNotificationService _pushNotificationService =
       locator<PushNotificationService>();
-  NavigationService _navigationService = locator<NavigationService>();
-  DialogService _dialogService = locator<DialogService>();
+  final NavigationService _navigationService = locator<NavigationService>();
+  final DialogService _dialogService = locator<DialogService>();
 
-  String _selectedHostel = "Your Meals";
+  String _selectedHostel = 'Your Meals';
 
   String get selectedHostel => _selectedHostel;
 
@@ -35,7 +35,7 @@ class HomeModel extends BaseModel {
     notifyListeners();
   }
 
-  List<String> _switchableHostelsList = ["Your Meals"];
+  final List<String> _switchableHostelsList = ['Your Meals'];
 
   List<String> get switchableHostelsList => _switchableHostelsList;
 
@@ -49,7 +49,7 @@ class HomeModel extends BaseModel {
     } on Failure catch (f) {
       print(f.message);
       setErrorMessage(f.message);
-      Fluttertoast.showToast(msg: f.message);
+      await Fluttertoast.showToast(msg: f.message);
     }
   }
 
@@ -66,15 +66,15 @@ class HomeModel extends BaseModel {
 
   Future checkVersion() async {
     try {
-      VersionCheck _versionCheck =
+      var _versionCheck =
           await _versionCheckApi.checkVersion(appetizerVersion);
       if (_versionCheck.isExpired) {
-        DialogResponse _dialogResponse =
+        var _dialogResponse =
             await _dialogService.showConfirmationDialog(
-          title: "Current Version Expired",
+          title: 'Current Version Expired',
           description:
-              "Your Appetizer App is out of date. You need to update the app to continue!",
-          confirmationTitle: "UPDATE",
+              'Your Appetizer App is out of date. You need to update the app to continue!',
+          confirmationTitle: 'UPDATE',
         );
         if (_dialogResponse.confirmed) {
           if (await canLaunch(googlePlayLink)) {
@@ -92,7 +92,7 @@ class HomeModel extends BaseModel {
   }
 
   Future onModelReady() async {
-    checkVersion();
+    await checkVersion();
     await setSwitchableHostels();
     await fetchInitialCheckedStatus();
   }
@@ -111,18 +111,18 @@ class HomeModel extends BaseModel {
 
   Future onLogoutTap() async {
     var _dialog = await _dialogService.showConfirmationDialog(
-      title: "Log Out",
-      description: "Are you sure you want to log out?",
-      confirmationTitle: "LOGOUT",
+      title: 'Log Out',
+      description: 'Are you sure you want to log out?',
+      confirmationTitle: 'LOGOUT',
     );
 
     if (_dialog.confirmed) {
-      _dialogService.showCustomProgressDialog(title: "Logging You Out");
+      _dialogService.showCustomProgressDialog(title: 'Logging You Out');
       await logout();
       _dialogService.dialogNavigationKey.currentState.pop();
-      _pushNotificationService.fcm
-          .unsubscribeFromTopic("release-" + currentUser.hostelCode);
-      _navigationService.pushNamedAndRemoveUntil("login");
+      await _pushNotificationService.fcm
+          .unsubscribeFromTopic('release-' + currentUser.hostelCode);
+      await _navigationService.pushNamedAndRemoveUntil('login');
       isLoggedIn = false;
       token = null;
     }
@@ -130,7 +130,7 @@ class HomeModel extends BaseModel {
 
   Future toggleCheckState() async {
     try {
-      Check check = await _leaveApi.check();
+      var check = await _leaveApi.check();
       isCheckedOut = check.isCheckedOut;
     } on Failure catch (f) {
       print(f.message);
@@ -141,14 +141,15 @@ class HomeModel extends BaseModel {
 
   Future onCheckoutTap() async {
     var dialogResponse = await _dialogService.showConfirmationDialog(
-        title: "Check Out",
-        description: "Are you sure you would like to check out?",
-        confirmationTitle: "CHECK OUT");
+        title: 'Check Out',
+        description: 'Are you sure you would like to check out?',
+        confirmationTitle: 'CHECK OUT');
 
     if (dialogResponse.confirmed) {
       await toggleCheckState();
-      if (isCheckedOut)
-        showSnackBar(homeViewScaffoldKey, "You have checked out");
+      if (isCheckedOut) {
+        showSnackBar(homeViewScaffoldKey, 'You have checked out');
+      }
     }
   }
 }

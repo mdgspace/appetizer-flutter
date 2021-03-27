@@ -29,9 +29,9 @@ class QRWidgetState extends State<QRWidget> {
                 child: model.state == ViewState.Busy
                     ? CircularProgressIndicator(
                         valueColor:
-                            new AlwaysStoppedAnimation<Color>(appiYellow),
+                            AlwaysStoppedAnimation<Color>(appiYellow),
                       )
-                    : Text("No Secret was fetched"),
+                    : Text('No Secret was fetched'),
               ),
             )
           : _contentWidget(model.secretCode),
@@ -46,7 +46,7 @@ class QRWidgetState extends State<QRWidget> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 32),
                 child: Text(
-                  "QR code not availaible right now. Check out later!",
+                  'QR code not availaible right now. Check out later!',
                   textAlign: TextAlign.center,
                 ),
               ),

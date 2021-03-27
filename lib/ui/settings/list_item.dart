@@ -10,6 +10,11 @@ class SettingsPageListItems extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 54.0,
+      decoration: BoxDecoration(
+          border: Border(
+              bottom: BorderSide(
+        color: const Color.fromRGBO(128, 128, 128, 0.5),
+      ))),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
@@ -24,7 +29,7 @@ class SettingsPageListItems extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.fromLTRB(16.0, 12.0, 16.0, 12.0),
             child: Text(
-              "$_title",
+              '$_title',
               style: TextStyle(
                 color: const Color.fromRGBO(94, 94, 94, 1),
                 fontSize: 16.0,
@@ -33,11 +38,6 @@ class SettingsPageListItems extends StatelessWidget {
           )
         ],
       ),
-      decoration: BoxDecoration(
-          border: Border(
-              bottom: BorderSide(
-        color: const Color.fromRGBO(128, 128, 128, 0.5),
-      ))),
     );
   }
 }

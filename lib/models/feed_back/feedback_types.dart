@@ -5,11 +5,11 @@
 import 'dart:convert';
 
 List<FeedbackType> feedbackTypeFromJson(String str) =>
-    new List<FeedbackType>.from(
+    List<FeedbackType>.from(
         json.decode(str).map((x) => FeedbackType.fromJson(x)));
 
 String feedbackTypeToJson(List<FeedbackType> data) =>
-    json.encode(new List<dynamic>.from(data.map((x) => x.toJson())));
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class FeedbackType {
   int id;
@@ -22,15 +22,15 @@ class FeedbackType {
     this.name,
   });
 
-  factory FeedbackType.fromJson(Map<String, dynamic> json) => new FeedbackType(
-        id: json["id"],
-        code: json["code"],
-        name: json["name"],
+  factory FeedbackType.fromJson(Map<String, dynamic> json) => FeedbackType(
+        id: json['id'],
+        code: json['code'],
+        name: json['name'],
       );
 
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "code": code,
-        "name": name,
+        'id': id,
+        'code': code,
+        'name': name,
       };
 }

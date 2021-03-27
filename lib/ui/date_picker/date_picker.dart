@@ -47,7 +47,7 @@ class _DatePickerState extends State<DatePicker> {
         return DateRow(_currentRowWidgets(dateModel.dateTime), widget.padding);
       },
       onPageChanged: (index) {
-        print("PAGE: $index");
+        print('PAGE: $index');
         if (index < indexState) {
           dateModel.setDateTime(
               dateModel.dateTime.subtract(Duration(days: 7)), context);
@@ -68,7 +68,7 @@ class _DatePickerState extends State<DatePicker> {
   }
 
   List<DateTime> _currentRowDates(anchor) {
-    List<DateTime> _dateList = List(7);
+    var _dateList = List<DateTime>(7);
     for (int i = anchor.weekday - 1; i >= 1; i--) {
       _dateList[i - 1] = anchor.subtract(Duration(days: (anchor.weekday - i)));
     }

@@ -21,19 +21,19 @@ class LeaveList {
     this.results,
   });
 
-  factory LeaveList.fromJson(Map<String, dynamic> json) => new LeaveList(
-        count: json["count"],
-        hasNext: json["has_next"],
-        hasPrevious: json["has_previous"],
-        results: new List<Result>.from(
-            json["results"].map((x) => Result.fromJson(x))),
+  factory LeaveList.fromJson(Map<String, dynamic> json) => LeaveList(
+        count: json['count'],
+        hasNext: json['has_next'],
+        hasPrevious: json['has_previous'],
+        results: List<Result>.from(
+            json['results'].map((x) => Result.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
-        "count": count,
-        "has_next": hasNext,
-        "has_previous": hasPrevious,
-        "results": new List<dynamic>.from(results.map((x) => x.toJson())),
+        'count': count,
+        'has_next': hasNext,
+        'has_previous': hasPrevious,
+        'results': List<dynamic>.from(results.map((x) => x.toJson())),
       };
 }
 
@@ -58,25 +58,25 @@ class Result {
     this.endDatetime,
   });
 
-  factory Result.fromJson(Map<String, dynamic> json) => new Result(
-        id: json["id"],
-        dateCreated: json["date_created"],
-        startMealType: json["start_meal_type"],
-        startDatetime: json["start_datetime"],
-        status: json["status"],
-        mealCount: json["meal_count"],
-        endMealType: json["end_meal_type"],
-        endDatetime: json["end_datetime"],
+  factory Result.fromJson(Map<String, dynamic> json) => Result(
+        id: json['id'],
+        dateCreated: json['date_created'],
+        startMealType: json['start_meal_type'],
+        startDatetime: json['start_datetime'],
+        status: json['status'],
+        mealCount: json['meal_count'],
+        endMealType: json['end_meal_type'],
+        endDatetime: json['end_datetime'],
       );
 
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "date_created": dateCreated,
-        "start_meal_type": startMealType,
-        "start_datetime": startDatetime,
-        "status": status,
-        "meal_count": mealCount,
-        "end_meal_type": endMealType,
-        "end_datetime": endDatetime,
+        'id': id,
+        'date_created': dateCreated,
+        'start_meal_type': startMealType,
+        'start_datetime': startDatetime,
+        'status': status,
+        'meal_count': mealCount,
+        'end_meal_type': endMealType,
+        'end_datetime': endDatetime,
       };
 }

@@ -4,7 +4,7 @@ import 'package:appetizer/models/dialog_models.dart';
 import 'package:flutter/material.dart';
 
 class DialogService {
-  GlobalKey<NavigatorState> _dialogNavigationKey = GlobalKey<NavigatorState>();
+  final GlobalKey<NavigatorState> _dialogNavigationKey = GlobalKey<NavigatorState>();
   Function(DialogRequest) _showDialogListener;
   Completer _dialogCompleter;
 

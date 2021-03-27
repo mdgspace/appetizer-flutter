@@ -11,7 +11,7 @@ class NoMealsScreen extends StatelessWidget {
           padding: const EdgeInsets.all(50.0),
           child: Container(
             width: MediaQuery.of(context).size.width * 0.8,
-            child: Image.asset("assets/images/no_menu_wrapper.jpeg"),
+            child: Image.asset('assets/images/no_menu_wrapper.jpeg'),
           ),
         ),
       ),

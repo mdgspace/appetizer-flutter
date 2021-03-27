@@ -8,11 +8,12 @@ class DialogManager extends StatefulWidget {
   final Widget child;
   DialogManager({Key key, this.child}) : super(key: key);
 
+  @override
   _DialogManagerState createState() => _DialogManagerState();
 }
 
 class _DialogManagerState extends State<DialogManager> {
-  DialogService _dialogService = locator<DialogService>();
+  final DialogService _dialogService = locator<DialogService>();
 
   @override
   void initState() {
@@ -37,17 +38,17 @@ class _DialogManagerState extends State<DialogManager> {
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.all(12),
-                  child: new Row(
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
-                      new CircularProgressIndicator(
+                      CircularProgressIndicator(
                         valueColor:
-                            new AlwaysStoppedAnimation<Color>(appiYellow),
+                            AlwaysStoppedAnimation<Color>(appiYellow),
                       ),
                       Center(
-                        child: new Text(
+                        child: Text(
                           request.title,
-                          style: new TextStyle(
+                          style: TextStyle(
                             fontSize: 18,
                           ),
                         ),
@@ -71,6 +72,11 @@ class _DialogManagerState extends State<DialogManager> {
               actions: <Widget>[
                 if (isConfirmationDialog)
                   FlatButton(
+                    onPressed: () {
+                      _dialogService.dialogComplete(
+                        DialogResponse(confirmed: false),
+                      );
+                    },
                     child: Text(
                       request.cancelTitle,
                       style: TextStyle(
@@ -78,13 +84,13 @@ class _DialogManagerState extends State<DialogManager> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    onPressed: () {
-                      _dialogService.dialogComplete(
-                        DialogResponse(confirmed: false),
-                      );
-                    },
                   ),
                 FlatButton(
+                  onPressed: () {
+                    _dialogService.dialogComplete(
+                      DialogResponse(confirmed: true),
+                    );
+                  },
                   child: Text(
                     request.buttonTitle,
                     style: TextStyle(
@@ -92,11 +98,6 @@ class _DialogManagerState extends State<DialogManager> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  onPressed: () {
-                    _dialogService.dialogComplete(
-                      DialogResponse(confirmed: true),
-                    );
-                  },
                 ),
               ],
             ),

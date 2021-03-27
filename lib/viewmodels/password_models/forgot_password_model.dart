@@ -8,9 +8,9 @@ import 'package:appetizer/services/navigation_service.dart';
 import 'package:appetizer/viewmodels/base_model.dart';
 
 class ForgotPasswordModel extends BaseModel {
-  UserApi _userApi = locator<UserApi>();
-  DialogService _dialogService = locator<DialogService>();
-  NavigationService _navigationService = locator<NavigationService>();
+  final UserApi _userApi = locator<UserApi>();
+  final DialogService _dialogService = locator<DialogService>();
+  final NavigationService _navigationService = locator<NavigationService>();
 
   bool _isResetEmailSent;
 
@@ -22,15 +22,15 @@ class ForgotPasswordModel extends BaseModel {
   }
 
   Future sendResetEmail(String email) async {
-    _dialogService.showCustomProgressDialog(title: "Sending Email");
+    _dialogService.showCustomProgressDialog(title: 'Sending Email');
     setState(ViewState.Busy);
     try {
       var resetEmailDetail = await _userApi.userReset(email);
       isResetEmailSent =
-          resetEmailDetail.detail == "link has been emailed" ? true : false;
+          resetEmailDetail.detail == 'link has been emailed' ? true : false;
       setState(ViewState.Idle);
-      showSnackBar(forgotPasswordViewScaffoldKey, "link has been emailed");
-      Future.delayed(new Duration(seconds: 1), _navigationService.pop);
+      showSnackBar(forgotPasswordViewScaffoldKey, 'link has been emailed');
+      Future.delayed(Duration(seconds: 1), _navigationService.pop);
     } on Failure catch (f) {
       print(f.message);
       setErrorMessage(f.message);

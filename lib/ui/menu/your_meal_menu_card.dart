@@ -161,7 +161,7 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
                                 children: <Widget>[
                                   Text(
                                     widget.meal.title,
-                                    style: new TextStyle(
+                                    style: TextStyle(
                                       color: appiYellow,
                                       fontSize: 24,
                                     ),
@@ -215,15 +215,15 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
         ? Padding(
             padding: const EdgeInsets.all(8),
             child: InkWell(
-              child: Image.asset(
-                "assets/icons/feedback_button.png",
-                height: 25,
-                width: 25,
-              ),
               onTap: () {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => NewFeedback()));
               },
+              child: Image.asset(
+                'assets/icons/feedback_button.png',
+                height: 25,
+                width: 25,
+              ),
             ),
           )
         : !isCheckedOut
@@ -233,14 +233,14 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
                     {
                       Fluttertoast.showToast(
                         msg:
-                            "Leave status cannot be changed less than ${outdatedTime.inHours} hours before the meal time",
+                            'Leave status cannot be changed less than ${outdatedTime.inHours} hours before the meal time',
                       )
                     }
                   else if (!model.mealSwitchStatus)
                     {
                       Fluttertoast.showToast(
                           msg:
-                              "Leave Status cannot be changed when Switch is active !!")
+                              'Leave Status cannot be changed when Switch is active !!')
                     }
                 },
                 child: Switch(
@@ -260,15 +260,15 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
       padding: const EdgeInsets.symmetric(horizontal: 12),
       child: widget.meal.isSwitchable
           ? GestureDetector(
+              onTap: model.onSwitchChanged,
               child: Image.asset(
                 widget.meal.isLeaveToggleOutdated
-                    ? "assets/icons/switch_inactive.png"
+                    ? 'assets/icons/switch_inactive.png'
                     : model.mealSwitchStatus
-                        ? "assets/icons/switch_active.png"
-                        : "assets/icons/switch_crossed_active.png",
+                        ? 'assets/icons/switch_active.png'
+                        : 'assets/icons/switch_crossed_active.png',
                 width: 30,
               ),
-              onTap: model.onSwitchChanged,
             )
           : Container(),
     );
@@ -287,7 +287,7 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
             child: Padding(
               padding: const EdgeInsets.all(8),
               child: Text(
-                "S",
+                'S',
                 style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
@@ -306,7 +306,7 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
         break;
       case SwitchStatusEnum.D:
         return () {
-          Fluttertoast.showToast(msg: "Your switch has been denied");
+          Fluttertoast.showToast(msg: 'Your switch has been denied');
         };
         break;
       case SwitchStatusEnum.F:
@@ -315,20 +315,20 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
           if (model.meal.endDateTime
               .add(Duration(hours: 1))
               .isBefore(DateTime.now())) {
-            Fluttertoast.showToast(msg: "Time for this meal has passed!");
+            Fluttertoast.showToast(msg: 'Time for this meal has passed!');
           } else if (model.meal.startTimeObject
               .subtract(outdatedTime)
               .isAfter(DateTime.now())) {
             Fluttertoast.showToast(
-                msg: "QR CODE will be available 8 hours before the meal");
+                msg: 'QR CODE will be available 8 hours before the meal');
           } else {
-            model.secretCode = "1";
+            model.secretCode = '1';
           }
         };
         break;
       case SwitchStatusEnum.U:
         return () {
-          Fluttertoast.showToast(msg: "Your Switch was not approved!");
+          Fluttertoast.showToast(msg: 'Your Switch was not approved!');
         };
         break;
       default:
@@ -351,7 +351,7 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
           child: widget.meal.switchStatus.status == SwitchStatusEnum.N
               ? Container()
               : Image.asset(
-                  "assets/icons/qr_image.png",
+                  'assets/icons/qr_image.png',
                   height: 40,
                   width: 40,
                 ),

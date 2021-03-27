@@ -29,7 +29,7 @@ Future<void> main() async {
   // Register all the models and services before the app starts
   await setupLocator();
 
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {
     runApp(
       MaterialApp(

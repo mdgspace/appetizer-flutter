@@ -16,6 +16,14 @@ class SeeRebateHistory extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(2.0),
         child: GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => RebateHistoryScreen(),
+              ),
+            );
+          },
           child: GestureDetector(
             onTap: () {
               Navigator.push(
@@ -52,14 +60,6 @@ class SeeRebateHistory extends StatelessWidget {
               ],
             ),
           ),
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => RebateHistoryScreen(),
-              ),
-            );
-          },
         ),
       ),
     );

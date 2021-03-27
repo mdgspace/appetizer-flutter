@@ -118,7 +118,7 @@ class _SwitchStatusCardState extends State<SwitchStatusCard> {
                                 padding: EdgeInsets.symmetric(
                                     horizontal: 20, vertical: 5),
                                 child: Container(
-                                    decoration: new BoxDecoration(
+                                    decoration: BoxDecoration(
                                       shape: BoxShape.circle,
                                     ),
                                     child: Icon(

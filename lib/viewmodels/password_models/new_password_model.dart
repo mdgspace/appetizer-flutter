@@ -9,9 +9,9 @@ import 'package:appetizer/utils/user_details.dart';
 import 'package:appetizer/viewmodels/base_model.dart';
 
 class NewPasswordModel extends BaseModel {
-  UserApi _userApi = locator<UserApi>();
-  DialogService _dialogService = locator<DialogService>();
-  NavigationService _navigationService = locator<NavigationService>();
+  final UserApi _userApi = locator<UserApi>();
+  final DialogService _dialogService = locator<DialogService>();
+  final NavigationService _navigationService = locator<NavigationService>();
 
   OauthResponse _oauthResponse;
 
@@ -38,18 +38,18 @@ class NewPasswordModel extends BaseModel {
 
   Future loginUser(
       int enr, String password, String email, int contactNo) async {
-    _dialogService.showCustomProgressDialog(title: "Logging You In");
+    _dialogService.showCustomProgressDialog(title: 'Logging You In');
     await oAuthComplete(enr, password, email, contactNo);
     _dialogService.dialogNavigationKey.currentState.pop();
     if (oauthResponse.token != null) {
-      StudentData studentData = oauthResponse.studentData;
+      var studentData = oauthResponse.studentData;
       currentUser = UserDetailsUtils.getLoginFromStudentData(
           studentData, oauthResponse.token);
-      _navigationService.pushReplacementNamed('home',
+      await _navigationService.pushReplacementNamed('home',
           arguments: oauthResponse.token);
     } else {
       //TODO
-      print("Error");
+      print('Error');
     }
   }
 }

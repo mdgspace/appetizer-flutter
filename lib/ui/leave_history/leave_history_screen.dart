@@ -14,7 +14,7 @@ class MyLeavesHistory extends StatelessWidget {
         key: leavesHistoryViewScaffoldKey,
         appBar: AppBar(
           title: Text(
-            "Leave History",
+            'Leave History',
             style: TextStyle(color: Colors.white),
           ),
         ),

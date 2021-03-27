@@ -16,6 +16,7 @@ class SeeSwitchHistory extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(2.0),
           child: GestureDetector(
+            onTap: () {},
             child: GestureDetector(
               onTap: () {},
               child: Row(
@@ -38,7 +39,6 @@ class SeeSwitchHistory extends StatelessWidget {
                 ],
               ),
             ),
-            onTap: () {},
           ),
         ),
       ),

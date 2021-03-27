@@ -10,27 +10,27 @@ class MenuCardUtils {
       radius: 16,
       backgroundColor: Colors.transparent,
       child: Image.asset(
-        "assets/icons/meal_icon" +
+        'assets/icons/meal_icon' +
             (math.Random().nextInt(5) + 1).toString() +
-            ".jpg",
+            '.jpg',
         scale: 2.5,
       ),
     );
   }
 
   static String _dataToJoinedString(final data) {
-    List<String> dailyItemsList = [];
-    String dailyItems = "";
+    var dailyItemsList = <String>[];
+    var dailyItems = '';
     for (var i = 0; i < data.length; i++) {
       var name = data[i].name;
       dailyItemsList.add(name);
-      dailyItems = dailyItemsList.join(" , ");
+      dailyItems = dailyItemsList.join(' , ');
     }
     return dailyItems;
   }
 
   static Map<MealType, String> getDailyItemsMap(DailyItems dailyItems) {
-    Map<MealType, String> dailyItemsMap = {
+    var dailyItemsMap = <MealType, String>{
       MealType.B: _dataToJoinedString(dailyItems.breakfast),
       MealType.L: _dataToJoinedString(dailyItems.lunch),
       MealType.S: _dataToJoinedString(dailyItems.snack),
@@ -68,7 +68,7 @@ class MenuCardUtils {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  "$itemName",
+                  '$itemName',
                 ),
                 Divider(
                   height: 8.0,
@@ -88,15 +88,15 @@ class MenuCardUtils {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            "${meal.title}",
-            style: new TextStyle(
+            '${meal.title}',
+            style: TextStyle(
               color: appiYellow,
               fontSize: 24,
             ),
           ),
           Text(
-            "${meal.hostelName}",
-            style: new TextStyle(
+            '${meal.hostelName}',
+            style: TextStyle(
               color: appiBrown,
             ),
           ),
@@ -115,7 +115,7 @@ class MenuCardUtils {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                "${dailyItemsMap[meal.type]}",
+                '${dailyItemsMap[meal.type]}',
                 style: TextStyle(color: Color.fromRGBO(0, 0, 0, .54)),
               ),
             ),
@@ -126,28 +126,28 @@ class MenuCardUtils {
   }
 
   static getMapMenuItems(Meal meal) {
-    Map<CircleAvatar, String> map = {};
+    var map = <CircleAvatar, String>{};
     meal.items.forEach((mealItem) {
       map.putIfAbsent(
         CircleAvatar(
           radius: 16,
           backgroundColor: Colors.transparent,
           child: Image.asset(
-            "assets/icons/meal_icon" +
+            'assets/icons/meal_icon' +
                 (math.Random().nextInt(5) + 1).toString() +
-                ".jpg",
+                '.jpg',
             scale: 2.5,
           ),
         ),
         () => mealItem.name,
       );
     });
-    print("returning: $map");
+    print('returning: $map');
     return map;
   }
 
   static List<Widget> itemWidgetList(Meal meal) {
-    List<Widget> list = [];
+    var list = <Widget>[];
     meal.items.forEach((mealItem) {
       list.add(
         _menuListItem(
@@ -171,7 +171,7 @@ class MenuCardUtils {
                     padding: const EdgeInsets.all(4.0),
                     child: Center(
                       child: Text(
-                        "Special Meal",
+                        'Special Meal',
                         style: TextStyle(
                           color: appiBrown,
                         ),

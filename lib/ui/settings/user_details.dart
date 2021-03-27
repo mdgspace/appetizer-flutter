@@ -22,14 +22,14 @@ class UserDetails extends StatelessWidget {
         children: <Widget>[
           Text(
             title,
-            style: Theme.of(context).accentTextTheme.title,
+            style: Theme.of(context).accentTextTheme.headline6,
           ),
           Flexible(
             child: Container(
               child: Text(
                 subTitle,
                 overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).accentTextTheme.subtitle,
+                style: Theme.of(context).accentTextTheme.subtitle2,
               ),
             ),
           ),
@@ -61,7 +61,7 @@ class UserDetails extends StatelessWidget {
                             padding:
                                 const EdgeInsets.fromLTRB(12.0, 6.0, 8.0, 1.0),
                             child: Text(
-                              "$_name",
+                              '$_name',
                               style: TextStyle(
                                 fontSize: 16,
                                 color: appiLightGreyText,
@@ -74,7 +74,7 @@ class UserDetails extends StatelessWidget {
                             child: Container(
                               width: MediaQuery.of(context).size.width / 1.4,
                               child: Text(
-                                "INDIAN INSTITUTE OF TECHNOLOGY, ROORKEE",
+                                'INDIAN INSTITUTE OF TECHNOLOGY, ROORKEE',
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
                                   color: appiDarkGreyText,
@@ -110,13 +110,13 @@ class UserDetails extends StatelessWidget {
                               alignment: Alignment.center,
                               child: Column(
                                 children: <Widget>[
-                                  cardListItem("Enrollment No: ",
-                                      "$_enrollmentNo", context),
-                                  cardListItem("Branch: ", "$_branch", context),
-                                  cardListItem("Hostel: ", "$_hostel", context),
+                                  cardListItem('Enrollment No: ',
+                                      '$_enrollmentNo', context),
+                                  cardListItem('Branch: ', '$_branch', context),
+                                  cardListItem('Hostel: ', '$_hostel', context),
                                   cardListItem(
-                                      "Room No : ", "$_roomNo", context),
-                                  cardListItem("Email: ", "$_email", context),
+                                      'Room No : ', '$_roomNo', context),
+                                  cardListItem('Email: ', '$_email', context),
                                 ],
                               ),
                             ),
@@ -124,7 +124,7 @@ class UserDetails extends StatelessWidget {
                           Padding(
                             padding: EdgeInsets.all(10),
                             child: Container(
-                              decoration: new BoxDecoration(
+                              decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                               ),
                               child: Icon(

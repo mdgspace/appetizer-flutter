@@ -7,7 +7,7 @@ import 'package:appetizer/services/api/user.dart';
 import 'package:appetizer/viewmodels/base_model.dart';
 
 class SwitchStatusCardModel extends BaseModel {
-  UserApi _userApi = locator<UserApi>();
+  final UserApi _userApi = locator<UserApi>();
 
   // bool _isCheckedOut;
   String _imageUrl;
@@ -29,7 +29,7 @@ class SwitchStatusCardModel extends BaseModel {
   Future setInitialValues() async {
     setState(ViewState.Busy);
     try {
-      Me me = await _userApi.userMeGet();
+      var me = await _userApi.userMeGet();
       setState(ViewState.Idle);
       isCheckedOut = me.isCheckedOut;
       imageUrl = me.imageUrl;

@@ -7,8 +7,8 @@ import 'package:appetizer/services/local_storage_service.dart';
 class UserDetailsUtils {
   static Login getLoginModelFromMe(Me userDetails) {
     userDetails.toJson().addAll({
-      "token": locator<LocalStorageService>().token,
-      "is_new": locator<LocalStorageService>().currentUser.isNew,
+      'token': locator<LocalStorageService>().token,
+      'is_new': locator<LocalStorageService>().currentUser.isNew,
     });
     return Login.fromJson(userDetails.toJson());
   }
@@ -19,8 +19,8 @@ class UserDetailsUtils {
 
   static Login getLoginFromStudentData(StudentData studentData, String token) {
     studentData.toJson().addAll({
-      "token": token,
-      "is_new": locator<LocalStorageService>().currentUser.isNew,
+      'token': token,
+      'is_new': locator<LocalStorageService>().currentUser.isNew,
     });
     return Login.fromJson(studentData.toJson());
   }

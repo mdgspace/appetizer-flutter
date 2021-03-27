@@ -15,7 +15,7 @@ class MyLeaves extends StatelessWidget {
         key: myLeavesViewScaffoldKey,
         appBar: AppBar(
           title: Text(
-            "My Leaves",
+            'My Leaves',
             style: TextStyle(color: Colors.white),
           ),
         ),

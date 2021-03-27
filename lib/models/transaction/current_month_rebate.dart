@@ -17,11 +17,11 @@ class MonthlyRebate {
   });
 
   factory MonthlyRebate.fromJson(Map<String, dynamic> json) =>
-      new MonthlyRebate(
-        rebate: json["rebate"],
+      MonthlyRebate(
+        rebate: json['rebate'],
       );
 
   Map<String, dynamic> toJson() => {
-        "rebate": rebate,
+        'rebate': rebate,
       };
 }

@@ -12,11 +12,11 @@ import 'package:appetizer/utils/user_details.dart';
 import 'package:appetizer/viewmodels/base_model.dart';
 
 class SettingsModel extends BaseModel {
-  UserApi _userApi = locator<UserApi>();
-  PushNotificationService _pushNotificationService =
+  final UserApi _userApi = locator<UserApi>();
+  final PushNotificationService _pushNotificationService =
       locator<PushNotificationService>();
-  NavigationService _navigationService = locator<NavigationService>();
-  DialogService _dialogService = locator<DialogService>();
+  final NavigationService _navigationService = locator<NavigationService>();
+  final DialogService _dialogService = locator<DialogService>();
 
   Me _userDetails;
 
@@ -68,18 +68,18 @@ class SettingsModel extends BaseModel {
 
   Future onLogoutTap() async {
     var _dialog = await _dialogService.showConfirmationDialog(
-      title: "Log Out",
-      description: "Are you sure you want to log out?",
-      confirmationTitle: "LOGOUT",
+      title: 'Log Out',
+      description: 'Are you sure you want to log out?',
+      confirmationTitle: 'LOGOUT',
     );
 
     if (_dialog.confirmed) {
-      _dialogService.showCustomProgressDialog(title: "Logging You Out");
+      _dialogService.showCustomProgressDialog(title: 'Logging You Out');
       await logout();
       _dialogService.dialogNavigationKey.currentState.pop();
-      _pushNotificationService.fcm
-          .unsubscribeFromTopic("release-" + currentUser.hostelCode);
-      _navigationService.pushNamedAndRemoveUntil("login");
+      await _pushNotificationService.fcm
+          .unsubscribeFromTopic('release-' + currentUser.hostelCode);
+      await _navigationService.pushNamedAndRemoveUntil('login');
       isLoggedIn = false;
       token = null;
     }

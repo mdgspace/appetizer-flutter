@@ -11,13 +11,13 @@ class DayMenu extends StatefulWidget {
   // 0->Your 1->Other
   final int menuType;
   DayMenu(this.day, this.dailyItems, this.menuType) {
-    DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
-    String date = day.date.toString().substring(0, 10);
-    for (int i = 0; i < day.meals.length; i++) {
-      DateTime mealStartDateTime =
-          dateFormat.parse(date + " " + day.meals[i].startTime);
-      DateTime mealEndDateTime =
-          dateFormat.parse(date + " " + day.meals[i].endTime);
+    var dateFormat = DateFormat('yyyy-MM-dd HH:mm:ss');
+    var date = day.date.toString().substring(0, 10);
+    for (var i = 0; i < day.meals.length; i++) {
+      var mealStartDateTime =
+          dateFormat.parse(date + ' ' + day.meals[i].startTime);
+      var mealEndDateTime =
+          dateFormat.parse(date + ' ' + day.meals[i].endTime);
       day.meals[i].startDateTime = mealStartDateTime;
       day.meals[i].endDateTime = mealEndDateTime;
       if (!mealStartDateTime.isAfter(DateTime.now())) {
@@ -65,8 +65,8 @@ class _DayMenuState extends State<DayMenu> {
         ],
       );
     } else {
-      assert(true, "INVALID MENU TYPE");
-      return Text("INVALID MENU TYPE");
+      assert(true, 'INVALID MENU TYPE');
+      return Text('INVALID MENU TYPE');
     }
   }
 }

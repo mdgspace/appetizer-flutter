@@ -16,11 +16,11 @@ class SwitchCount {
     this.count,
   });
 
-  factory SwitchCount.fromJson(Map<String, dynamic> json) => new SwitchCount(
-        count: json["switches"],
+  factory SwitchCount.fromJson(Map<String, dynamic> json) => SwitchCount(
+        count: json['switches'],
       );
 
   Map<String, dynamic> toJson() => {
-        "switches": count,
+        'switches': count,
       };
 }

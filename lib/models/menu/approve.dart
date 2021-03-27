@@ -17,13 +17,13 @@ class Approve {
     this.isApproved,
   });
 
-  factory Approve.fromJson(Map<String, dynamic> json) => new Approve(
-        weekId: json["week_id"],
-        isApproved: json["is_approved"],
+  factory Approve.fromJson(Map<String, dynamic> json) => Approve(
+        weekId: json['week_id'],
+        isApproved: json['is_approved'],
       );
 
   Map<String, dynamic> toJson() => {
-        "week_id": weekId,
-        "is_approved": isApproved,
+        'week_id': weekId,
+        'is_approved': isApproved,
       };
 }

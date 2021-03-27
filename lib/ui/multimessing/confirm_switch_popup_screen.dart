@@ -47,10 +47,10 @@ class _ConfirmSwitchPopupScreenState extends State<ConfirmSwitchPopupScreen> {
   }
 
   Map<String, MealType> titleToMealTypeMap = {
-    "Breakfast": MealType.B,
-    "Lunch": MealType.L,
-    "Snacks": MealType.S,
-    "Dinner": MealType.D,
+    'Breakfast': MealType.B,
+    'Lunch': MealType.L,
+    'Snacks': MealType.S,
+    'Dinner': MealType.D,
   };
 
   TextStyle getSwitchToOrFromStyle() {
@@ -63,7 +63,7 @@ class _ConfirmSwitchPopupScreenState extends State<ConfirmSwitchPopupScreen> {
   AppBar _getAppBar() {
     return AppBar(
       title: Text(
-        "Confirm Meal Switch",
+        'Confirm Meal Switch',
         style: TextStyle(
           color: Colors.white,
         ),
@@ -77,7 +77,7 @@ class _ConfirmSwitchPopupScreenState extends State<ConfirmSwitchPopupScreen> {
   Widget build(BuildContext context) {
     VoidCallback _onConfirmSwitchPressed(ConfirmSwitchPopupModel model) {
       return () async {
-        showCustomDialog(context, "Switching Meals");
+        showCustomDialog(context, 'Switching Meals');
         await model.switchMeals(
           currentHostelMealId,
           hostelCodeMap[widget.meal.hostelName],
@@ -90,7 +90,7 @@ class _ConfirmSwitchPopupScreenState extends State<ConfirmSwitchPopupScreen> {
         //   DateTimeUtils.getWeekNumber(widget.meal.startDateTime),
         // );
         if (model.isMealSwitched) {
-          Navigator.push(
+          await Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => ConfirmedSwitchScreen(),
@@ -99,7 +99,7 @@ class _ConfirmSwitchPopupScreenState extends State<ConfirmSwitchPopupScreen> {
         }
         if (model.state == ViewState.Error) {
           Navigator.pop(context);
-          Fluttertoast.showToast(
+          await Fluttertoast.showToast(
             msg: model.errorMessage,
           );
         }
@@ -121,7 +121,7 @@ class _ConfirmSwitchPopupScreenState extends State<ConfirmSwitchPopupScreen> {
                 : Builder(
                     builder: (context) {
                       model.menuWeekMultimessing.days.forEach((dayMenu) {
-                        String mealDateString =
+                        var mealDateString =
                             dayMenu.date.toString().substring(0, 10);
                         dayMenu.meals.forEach((mealMenu) {
                           if (mealDateString ==
@@ -151,7 +151,7 @@ class _ConfirmSwitchPopupScreenState extends State<ConfirmSwitchPopupScreen> {
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 16),
                                   child: Text(
-                                    "Switch From",
+                                    'Switch From',
                                     style: getSwitchToOrFromStyle(),
                                   ),
                                 ),
@@ -165,7 +165,7 @@ class _ConfirmSwitchPopupScreenState extends State<ConfirmSwitchPopupScreen> {
                                     padding: const EdgeInsets.all(16.0),
                                     child: Center(
                                       child: Image.asset(
-                                        "assets/icons/switch_active.png",
+                                        'assets/icons/switch_active.png',
                                         scale: 1.5,
                                       ),
                                     ),
@@ -175,7 +175,7 @@ class _ConfirmSwitchPopupScreenState extends State<ConfirmSwitchPopupScreen> {
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 16),
                                   child: Text(
-                                    "Switch To",
+                                    'Switch To',
                                     style: getSwitchToOrFromStyle(),
                                   ),
                                 ),

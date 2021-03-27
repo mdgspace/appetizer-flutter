@@ -31,27 +31,27 @@ class Feedback {
     this.response,
   });
 
-  factory Feedback.fromJson(Map<String, dynamic> json) => new Feedback(
-        id: json["id"],
-        type: json["type"],
-        title: json["title"],
-        message: json["message"],
-        timestamp: json["timestamp"],
-        mealId: json["meal_id"],
-        imageUrl: json["image_url"],
-        dateIssue: json["date_issue"],
-        response: json["response"],
+  factory Feedback.fromJson(Map<String, dynamic> json) => Feedback(
+        id: json['id'],
+        type: json['type'],
+        title: json['title'],
+        message: json['message'],
+        timestamp: json['timestamp'],
+        mealId: json['meal_id'],
+        imageUrl: json['image_url'],
+        dateIssue: json['date_issue'],
+        response: json['response'],
       );
 
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "type": type,
-        "title": title,
-        "message": message,
-        "timestamp": timestamp,
-        "meal_id": mealId,
-        "image_url": imageUrl,
-        "date_issue": dateIssue,
-        "response": response,
+        'id': id,
+        'type': type,
+        'title': title,
+        'message': message,
+        'timestamp': timestamp,
+        'meal_id': mealId,
+        'image_url': imageUrl,
+        'date_issue': dateIssue,
+        'response': response,
       };
 }

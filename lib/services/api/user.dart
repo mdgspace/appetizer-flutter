@@ -14,15 +14,15 @@ import 'package:appetizer/models/user/me.dart';
 import 'package:appetizer/models/user/notification.dart';
 
 class UserApi {
-  var headers = {"Content-Type": "application/json"};
-  http.Client client = new http.Client();
+  var headers = {'Content-Type': 'application/json'};
+  http.Client client = http.Client();
 
   Future<Login> userLogin(String id, String pass) async {
-    String endpoint = "/api/user/login/";
-    String uri = url + endpoint;
+    var endpoint = '/api/user/login/';
+    var uri = url + endpoint;
     var json = {
-      "enr": id,
-      "password": pass,
+      'enr': id,
+      'password': pass,
     };
     try {
       var jsonResponse = await ApiUtils.post(
@@ -30,7 +30,7 @@ class UserApi {
         headers: headers,
         body: json,
       );
-      Login login = new Login.fromJson(jsonResponse);
+      var login = Login.fromJson(jsonResponse);
       return login;
     } on ForbiddenException catch (e) {
       print(e.message);
@@ -45,15 +45,15 @@ class UserApi {
   }
 
   Future<Detail> userLogout() async {
-    String endpoint = "/api/user/logout/";
-    String uri = url + endpoint;
+    var endpoint = '/api/user/logout/';
+    var uri = url + endpoint;
     try {
       await ApiUtils.addTokenToHeaders(headers);
       var jsonResponse = await ApiUtils.post(
         uri,
         headers: headers,
       );
-      Detail detail = new Detail.fromJson(jsonResponse);
+      var detail = Detail.fromJson(jsonResponse);
       return detail;
     } on FormatException catch (e) {
       print(e.message);
@@ -65,15 +65,15 @@ class UserApi {
   }
 
   Future<TokenStatus> checkTokenStatus() async {
-    String endpoint = "/api/user/me/";
-    String uri = url + endpoint;
+    var endpoint = '/api/user/me/';
+    var uri = url + endpoint;
     try {
       await ApiUtils.addTokenToHeaders(headers);
       var jsonResponse = await ApiUtils.get(
         uri,
         headers: headers,
       );
-      if (jsonResponse["detail"] == "Invalid token.") {
+      if (jsonResponse['detail'] == 'Invalid token.') {
         return TokenStatus.INVALID_TOKEN;
       }
       return TokenStatus.OK;
@@ -87,18 +87,18 @@ class UserApi {
   }
 
   Future<Me> userMeGet() async {
-    String endpoint = "/api/user/me/";
-    String uri = url + endpoint;
+    var endpoint = '/api/user/me/';
+    var uri = url + endpoint;
     try {
       await ApiUtils.addTokenToHeaders(headers);
       var jsonResponse = await ApiUtils.get(
         uri,
         headers: headers,
       );
-      if (jsonResponse["detail"] == "Invalid token.") {
+      if (jsonResponse['detail'] == 'Invalid token.') {
         return null;
       }
-      Me me = new Me.fromJson(jsonResponse);
+      var me = Me.fromJson(jsonResponse);
       return me;
     } on FormatException catch (e) {
       print(e.message);
@@ -110,11 +110,11 @@ class UserApi {
   }
 
   Future<Me> userMePatch(String email, String contactNo) async {
-    String endpoint = "/api/user/me/";
-    String uri = url + endpoint;
+    var endpoint = '/api/user/me/';
+    var uri = url + endpoint;
     var json = {
-      "email": email,
-      "contactNo": contactNo,
+      'email': email,
+      'contactNo': contactNo,
     };
     try {
       await ApiUtils.addTokenToHeaders(headers);
@@ -123,7 +123,7 @@ class UserApi {
         headers: headers,
         body: json,
       );
-      Me me = new Me.fromJson(jsonResponse);
+      var me = Me.fromJson(jsonResponse);
       return me;
     } on FormatException catch (e) {
       print(e.message);
@@ -135,9 +135,9 @@ class UserApi {
   }
 
   Future<Me> userMePatchFCM(String fcmToken) async {
-    String endpoint = "/api/user/me/";
-    String uri = url + endpoint;
-    var json = {"fcm_token": fcmToken};
+    var endpoint = '/api/user/me/';
+    var uri = url + endpoint;
+    var json = {'fcm_token': fcmToken};
     try {
       await ApiUtils.addTokenToHeaders(headers);
       var jsonResponse = await ApiUtils.patch(
@@ -145,7 +145,7 @@ class UserApi {
         headers: headers,
         body: json,
       );
-      Me me = new Me.fromJson(jsonResponse);
+      var me = Me.fromJson(jsonResponse);
       return me;
     } on FormatException catch (e) {
       print(e.message);
@@ -157,15 +157,15 @@ class UserApi {
   }
 
   Future<Image> userImage() async {
-    String endpoint = "/api/user/me/image/";
-    String uri = url + endpoint;
+    var endpoint = '/api/user/me/image/';
+    var uri = url + endpoint;
     try {
       await ApiUtils.addTokenToHeaders(headers);
       var jsonResponse = await ApiUtils.get(
         uri,
         headers: headers,
       );
-      Image image = new Image.fromJson(jsonResponse);
+      var image = Image.fromJson(jsonResponse);
       return image;
     } on FormatException catch (e) {
       print(e.message);
@@ -177,11 +177,11 @@ class UserApi {
   }
 
   Future<Detail> userPasswordReset(String oldPass, String newPass) async {
-    String endpoint = "/api/user/me/password/";
-    String uri = url + endpoint;
+    var endpoint = '/api/user/me/password/';
+    var uri = url + endpoint;
     var json = {
-      "old_password": oldPass,
-      "new_password": newPass,
+      'old_password': oldPass,
+      'new_password': newPass,
     };
 
     try {
@@ -191,7 +191,7 @@ class UserApi {
         headers: headers,
         body: json,
       );
-      Detail detail = new Detail.fromJson(jsonResponse);
+      var detail = Detail.fromJson(jsonResponse);
       return detail;
     } on FormatException catch (e) {
       print(e.message);
@@ -203,17 +203,17 @@ class UserApi {
   }
 
   Future<Detail> userReset(String email) async {
-    String endpoint = "/api/user/me/password/reset/";
-    String uri = url + endpoint;
+    var endpoint = '/api/user/me/password/reset/';
+    var uri = url + endpoint;
     var json = {
-      "email": email,
+      'email': email,
     };
     try {
       var jsonResponse = await ApiUtils.post(
         uri,
         body: json,
       );
-      Detail detail = new Detail.fromJson(jsonResponse);
+      var detail = Detail.fromJson(jsonResponse);
       return detail;
     } on FormatException catch (e) {
       print(e.message);
@@ -225,16 +225,16 @@ class UserApi {
   }
 
   Future oAuthRedirect(String code) async {
-    String endpoint = "/api/user/oauth/redirect/?code=$code";
-    String uri = url + endpoint;
+    var endpoint = '/api/user/oauth/redirect/?code=$code';
+    var uri = url + endpoint;
     try {
       var jsonResponse = await ApiUtils.get(
         uri,
       );
-      OauthResponseNewUser newUserDetails =
-          new OauthResponseNewUser.fromJson(jsonResponse);
+      var newUserDetails =
+          OauthResponseNewUser.fromJson(jsonResponse);
       if (!newUserDetails.isNew) {
-        OauthResponse userDetails = new OauthResponse.fromJson(jsonResponse);
+        var userDetails = OauthResponse.fromJson(jsonResponse);
         return userDetails;
       }
       return newUserDetails;
@@ -249,14 +249,14 @@ class UserApi {
 
   Future<OauthResponse> oAuthComplete(
       int enrNo, String password, String email, int contactNo) async {
-    String endpoint = "/api/user/oauth/complete/";
-    String uri = url + endpoint;
+    var endpoint = '/api/user/oauth/complete/';
+    var uri = url + endpoint;
     print(url);
     var json = {
-      "enr": enrNo,
-      "password": password,
-      "email": email,
-      "contact_no": contactNo,
+      'enr': enrNo,
+      'password': password,
+      'email': email,
+      'contact_no': contactNo,
     };
     try {
       var jsonResponse = await ApiUtils.post(
@@ -264,7 +264,7 @@ class UserApi {
         headers: headers,
         body: json,
       );
-      OauthResponse userDetails = new OauthResponse.fromJson(jsonResponse);
+      var userDetails = OauthResponse.fromJson(jsonResponse);
       return userDetails;
     } on FormatException catch (e) {
       print(e.message);
@@ -276,12 +276,12 @@ class UserApi {
   }
 
   Future<List<Result>> getNotifications() async {
-    String endpoint = "/api/user/message/list/";
-    String uri = url + endpoint;
+    var endpoint = '/api/user/message/list/';
+    var uri = url + endpoint;
     try {
       await ApiUtils.addTokenToHeaders(headers);
       var jsonResponse = await ApiUtils.get(uri, headers: headers);
-      Notification notification = new Notification.fromJson(jsonResponse);
+      var notification = Notification.fromJson(jsonResponse);
       return notification.results;
     } on FormatException catch (e) {
       print(e.message);

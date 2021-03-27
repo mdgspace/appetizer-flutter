@@ -21,17 +21,17 @@ class Check {
     this.isCheckedOut,
   });
 
-  factory Check.fromJson(Map<String, dynamic> json) => new Check(
-        checkoutTime: json["checkout_time"],
-        checkinTime: json["checkin_time"],
-        user: json["user"],
-        isCheckedOut: json["is_checked_out"],
+  factory Check.fromJson(Map<String, dynamic> json) => Check(
+        checkoutTime: json['checkout_time'],
+        checkinTime: json['checkin_time'],
+        user: json['user'],
+        isCheckedOut: json['is_checked_out'],
       );
 
   Map<String, dynamic> toJson() => {
-        "checkout_time": checkoutTime,
-        "checkin_time": checkinTime,
-        "user": user,
-        "is_checked_out": isCheckedOut,
+        'checkout_time': checkoutTime,
+        'checkin_time': checkinTime,
+        'user': user,
+        'is_checked_out': isCheckedOut,
       };
 }

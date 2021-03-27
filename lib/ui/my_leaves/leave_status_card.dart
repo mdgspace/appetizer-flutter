@@ -115,7 +115,7 @@ class _LeaveStatusCardState extends State<LeaveStatusCard> {
                               padding: EdgeInsets.symmetric(
                                   horizontal: 20, vertical: 5),
                               child: Container(
-                                decoration: new BoxDecoration(
+                                decoration: BoxDecoration(
                                   shape: BoxShape.circle,
                                 ),
                                 child: Padding(
@@ -142,6 +142,7 @@ class _LeaveStatusCardState extends State<LeaveStatusCard> {
                               color: (isCheckedOut)
                                   ? const Color.fromRGBO(34, 139, 34, 1)
                                   : const Color.fromRGBO(235, 87, 87, 1),
+                              onPressed: model.onCheckTapped,
                               child: Padding(
                                 padding: const EdgeInsets.all(10.0),
                                 child: Text(
@@ -152,7 +153,6 @@ class _LeaveStatusCardState extends State<LeaveStatusCard> {
                                   ),
                                 ),
                               ),
-                              onPressed: model.onCheckTapped,
                             ),
                           ),
                         ),
@@ -163,9 +163,9 @@ class _LeaveStatusCardState extends State<LeaveStatusCard> {
                 Container(
                   width: MediaQuery.of(context).size.width - 8,
                   child: (isCheckedOut)
-                      ? InfoMessage("Check-in to start taking meals again")
+                      ? InfoMessage('Check-in to start taking meals again')
                       : InfoMessage(
-                          "Check-out to leave upcoming meals in sequence"),
+                          'Check-out to leave upcoming meals in sequence'),
                 )
               ],
             )

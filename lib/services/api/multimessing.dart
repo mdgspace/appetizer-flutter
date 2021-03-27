@@ -11,16 +11,16 @@ import 'package:appetizer/utils/api_utils.dart';
 import 'package:http/http.dart' as http;
 
 class MultimessingApi {
-  var headers = {"Content-Type": "application/json"};
-  http.Client client = new http.Client();
+  var headers = {'Content-Type': 'application/json'};
+  http.Client client = http.Client();
 
   Future<List<SwitchableMealsForYourMeal>> listSwitchableMeals(int id) async {
-    String endpoint = "/api/menu/switch_meal/$id";
-    String uri = url + endpoint;
+    var endpoint = '/api/menu/switch_meal/$id';
+    var uri = url + endpoint;
     try {
       await ApiUtils.addTokenToHeaders(headers);
       var jsonResponse = await ApiUtils.get(uri, headers: headers);
-      List<SwitchableMealsForYourMeal> switchableMeals =
+      var switchableMeals =
           switchableMealsForYourMealFromJson(json.encode(jsonResponse));
       return switchableMeals;
     } on FormatException catch (e) {
@@ -33,13 +33,13 @@ class MultimessingApi {
   }
 
   Future<SwitchCount> remainingSwitches() async {
-    String endPoint = "/api/leave/switch/count/remaining/";
-    String uri = url + endPoint;
+    var endPoint = '/api/leave/switch/count/remaining/';
+    var uri = url + endPoint;
 
     try {
       await ApiUtils.addTokenToHeaders(headers);
       var jsonResponse = await ApiUtils.get(uri, headers: headers);
-      SwitchCount switchCount = new SwitchCount.fromJson(jsonResponse);
+      var switchCount = SwitchCount.fromJson(jsonResponse);
       return switchCount;
     } on FormatException catch (e) {
       print(e.message);
@@ -51,11 +51,11 @@ class MultimessingApi {
   }
 
   Future<bool> switchMeals(int mealId, String toHostel) async {
-    String endPoint = "/api/leave/switch/";
-    String uri = url + endPoint;
+    var endPoint = '/api/leave/switch/';
+    var uri = url + endPoint;
     var json = {
-      "from_meal": mealId,
-      "to_hostel": toHostel,
+      'from_meal': mealId,
+      'to_hostel': toHostel,
     };
 
     try {
@@ -76,8 +76,8 @@ class MultimessingApi {
   }
 
   Future<bool> cancelSwitch(int id) async {
-    String endPoint = "/api/leave/switch/$id";
-    String uri = url + endPoint;
+    var endPoint = '/api/leave/switch/$id';
+    var uri = url + endPoint;
 
     try {
       await ApiUtils.addTokenToHeaders(headers);
@@ -96,12 +96,12 @@ class MultimessingApi {
   }
 
   Future<SwitchDetails> getSwitchDetails(int id) async {
-    String endpoint = "/api/leave/switch/$id";
-    String uri = url + endpoint;
+    var endpoint = '/api/leave/switch/$id';
+    var uri = url + endpoint;
     try {
       await ApiUtils.addTokenToHeaders(headers);
       final jsonResponse = await ApiUtils.get(uri, headers: headers);
-      SwitchDetails switchDetails = SwitchDetails.fromJson(jsonResponse);
+      var switchDetails = SwitchDetails.fromJson(jsonResponse);
       return switchDetails;
     } on FormatException catch (e) {
       print(e.message);
@@ -113,12 +113,12 @@ class MultimessingApi {
   }
 
   Future<List<List<dynamic>>> switchableHostels() async {
-    String endPoint = "/api/user/multimessing/hostels";
-    String uri = url + endPoint;
+    var endPoint = '/api/user/multimessing/hostels';
+    var uri = url + endPoint;
     try {
       await ApiUtils.addTokenToHeaders(headers);
       var jsonResponse = await ApiUtils.get(uri, headers: headers);
-      List<List<dynamic>> switchableHostels =
+      var switchableHostels =
           switchableHostelsFromJson(json.encode(jsonResponse));
       return switchableHostels;
     } on FormatException catch (e) {

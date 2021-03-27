@@ -17,14 +17,14 @@ import 'edit_profile.dart';
 
 class Settings extends StatelessWidget {
   final String shareText =
-      "Let me recommend you this application:\n https://play.google.com/store/apps/details?id=co.sdslabs.mdg.appetizer&hl=en";
+      'Let me recommend you this application:\n https://play.google.com/store/apps/details?id=co.sdslabs.mdg.appetizer&hl=en';
 
   @override
   Widget build(BuildContext context) {
-    AppBar appBar = AppBar(
+    var appBar = AppBar(
       title: Text(
-        "Settings",
-        style: new TextStyle(color: Colors.white),
+        'Settings',
+        style: TextStyle(color: Colors.white),
       ),
       backgroundColor: Colors.transparent,
     );
@@ -63,23 +63,23 @@ class Settings extends StatelessWidget {
                           ? Container(
                               height: MediaQuery.of(context).size.height / 2 -
                                   appBar.preferredSize.height,
+                              alignment: Alignment.center,
                               child: Padding(
                                 padding:
                                     const EdgeInsets.fromLTRB(16, 0, 16, 30),
                                 child: Center(
                                   child: CircularProgressIndicator(
                                     valueColor:
-                                        new AlwaysStoppedAnimation<Color>(
+                                        AlwaysStoppedAnimation<Color>(
                                       appiYellow,
                                     ),
                                   ),
                                 ),
                               ),
-                              alignment: Alignment.center,
                             )
                           : Builder(
                               builder: (context) {
-                                Me userDetails = model.userDetails;
+                                var userDetails = model.userDetails;
                                 return Container(
                                   height:
                                       MediaQuery.of(context).size.height / 2 -
@@ -102,8 +102,6 @@ class Settings extends StatelessWidget {
                           child: ListView(
                             children: <Widget>[
                               GestureDetector(
-                                child: SettingsPageListItems(
-                                    Icons.person, "Edit Profile"),
                                 onTap: () {
                                   Navigator.push(
                                     context,
@@ -112,10 +110,10 @@ class Settings extends StatelessWidget {
                                     ),
                                   );
                                 },
+                                child: SettingsPageListItems(
+                                    Icons.person, 'Edit Profile'),
                               ),
                               GestureDetector(
-                                child: SettingsPageListItems(
-                                    Icons.lock, "Reset Password"),
                                 onTap: () {
                                   Navigator.push(
                                     context,
@@ -124,9 +122,10 @@ class Settings extends StatelessWidget {
                                     ),
                                   );
                                 },
+                                child: SettingsPageListItems(
+                                    Icons.lock, 'Reset Password'),
                               ),
                               GestureDetector(
-                                child: SettingsPageListItems(Icons.help, "FAQ"),
                                 onTap: () {
                                   Navigator.push(
                                     context,
@@ -135,10 +134,9 @@ class Settings extends StatelessWidget {
                                     ),
                                   );
                                 },
+                                child: SettingsPageListItems(Icons.help, 'FAQ'),
                               ),
                               GestureDetector(
-                                child:
-                                    SettingsPageListItems(Icons.info, "About"),
                                 onTap: () {
                                   Navigator.push(
                                     context,
@@ -147,10 +145,10 @@ class Settings extends StatelessWidget {
                                     ),
                                   );
                                 },
+                                child:
+                                    SettingsPageListItems(Icons.info, 'About'),
                               ),
                               GestureDetector(
-                                child: SettingsPageListItems(
-                                    Icons.share, "Share/Tell a friend"),
                                 onTap: () {
                                   final RenderBox box =
                                       context.findRenderObject();
@@ -161,13 +159,15 @@ class Settings extends StatelessWidget {
                                             box.size,
                                   );
                                 },
+                                child: SettingsPageListItems(
+                                    Icons.share, 'Share/Tell a friend'),
                               ),
                               GestureDetector(
+                                onTap: model.onLogoutTap,
                                 child: SettingsPageListItems(
                                   Icons.exit_to_app,
-                                  "Log Out",
+                                  'Log Out',
                                 ),
-                                onTap: model.onLogoutTap,
                               ),
                               SettingsPageFooter(),
                             ],

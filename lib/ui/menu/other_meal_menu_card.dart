@@ -117,15 +117,6 @@ class _OtherMealsMenuCardState extends State<OtherMealsMenuCard> {
       padding: const EdgeInsets.symmetric(horizontal: 12),
       child: widget.meal.isSwitchable
           ? GestureDetector(
-              child: Image.asset(
-                widget.meal.isLeaveToggleOutdated
-                    ? "assets/icons/switch_inactive.png"
-                    : widget.meal.switchStatus.status == SwitchStatusEnum.N
-                        ? "assets/icons/switch_active.png"
-                        : "assets/icons/switch_crossed_active.png",
-                width: 30,
-                scale: 2,
-              ),
               onTap: widget.meal.isLeaveToggleOutdated
                   ? null
                   : widget.meal.switchStatus.status == SwitchStatusEnum.N
@@ -157,39 +148,33 @@ class _OtherMealsMenuCardState extends State<OtherMealsMenuCard> {
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(8),
                                     ),
-                                    title: new Text(
-                                      "Cancel Switch",
+                                    title: Text(
+                                      'Cancel Switch',
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
-                                    content: new Text(
-                                      "Are you sure you want to cancel this switch?",
+                                    content: Text(
+                                      'Are you sure you want to cancel this switch?',
                                     ),
                                     actions: <Widget>[
-                                      new FlatButton(
+                                      FlatButton(
                                         onPressed: () {
                                           Navigator.pop(alertContext);
                                         },
-                                        child: new Text(
-                                          "NO",
+                                        child: Text(
+                                          'NO',
                                           style: TextStyle(
                                               color: appiYellow,
                                               fontWeight: FontWeight.bold),
                                         ),
                                       ),
-                                      new FlatButton(
-                                        child: new Text(
-                                          "YES",
-                                          style: TextStyle(
-                                              color: appiYellow,
-                                              fontWeight: FontWeight.bold),
-                                        ),
+                                      FlatButton(
                                         onPressed: () async {
                                           Navigator.pop(alertContext);
                                           showCustomDialog(
-                                              context, "Cancelling Switch");
-                                          MultimessingApi()
+                                              context, 'Cancelling Switch');
+                                          await MultimessingApi()
                                               .cancelSwitch(
                                                   widget.meal.switchStatus.id)
                                               .then((switchCancelResponse) {
@@ -212,10 +197,16 @@ class _OtherMealsMenuCardState extends State<OtherMealsMenuCard> {
                                             } else {
                                               Fluttertoast.showToast(
                                                   msg:
-                                                      "Unable to cancel the switch");
+                                                      'Unable to cancel the switch');
                                             }
                                           });
                                         },
+                                        child: Text(
+                                          'YES',
+                                          style: TextStyle(
+                                              color: appiYellow,
+                                              fontWeight: FontWeight.bold),
+                                        ),
                                       ),
                                     ],
                                   );
@@ -223,6 +214,15 @@ class _OtherMealsMenuCardState extends State<OtherMealsMenuCard> {
                               );
                             }
                           : null,
+              child: Image.asset(
+                widget.meal.isLeaveToggleOutdated
+                    ? 'assets/icons/switch_inactive.png'
+                    : widget.meal.switchStatus.status == SwitchStatusEnum.N
+                        ? 'assets/icons/switch_active.png'
+                        : 'assets/icons/switch_crossed_active.png',
+                width: 30,
+                scale: 2,
+              ),
             )
           : Container(),
     );

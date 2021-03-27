@@ -32,7 +32,7 @@ class _RebateHistoryScreenState extends State<RebateHistoryScreen> {
         key: rebatesHistoryViewScaffoldKey,
         appBar: AppBar(
           title: Text(
-            "Rebate History",
+            'Rebate History',
             style: TextStyle(color: Colors.white),
           ),
         ),
@@ -50,7 +50,7 @@ class _RebateHistoryScreenState extends State<RebateHistoryScreen> {
                         child: Center(
                           child: CircularProgressIndicator(
                             valueColor:
-                                new AlwaysStoppedAnimation<Color>(appiYellow),
+                                AlwaysStoppedAnimation<Color>(appiYellow),
                           ),
                         ),
                       )

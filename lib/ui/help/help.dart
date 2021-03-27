@@ -4,11 +4,11 @@ import '../../strings.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Help extends StatelessWidget {
-  final String version = "Version 1.6.2r";
+  final String version = 'Version 1.6.2r';
 
   final AppBar _appBar = AppBar(
     title: Text(
-      "About Us",
+      'About Us',
       style: TextStyle(color: Colors.white),
     ),
   );
@@ -26,15 +26,15 @@ class Help extends StatelessWidget {
                 _appBar.preferredSize.height -
                 8),
             color: appiBrown,
-            child: new Stack(
+            child: Stack(
               children: <Widget>[
                 Positioned(
-                  child: Image(
-                    image: AssetImage("assets/images/about_pattern.png"),
-                    width: 280,
-                  ),
                   right: 0,
                   bottom: 0,
+                  child: Image(
+                    image: AssetImage('assets/images/about_pattern.png'),
+                    width: 280,
+                  ),
                 ),
                 Center(
                   child: Column(
@@ -43,19 +43,19 @@ class Help extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(bottom: 16),
                         child: Material(
-                          child: Image(
-                            image:
-                                AssetImage("assets/icons/appetizer_logo.png"),
-                            width: 100,
-                          ),
                           elevation: 2,
                           shape: RoundedRectangleBorder(
-                              borderRadius: new BorderRadius.circular(22.0)),
+                              borderRadius: BorderRadius.circular(22.0)),
                           clipBehavior: Clip.antiAlias,
+                          child: Image(
+                            image:
+                                AssetImage('assets/icons/appetizer_logo.png'),
+                            width: 100,
+                          ),
                         ),
                       ),
                       Image(
-                        image: AssetImage("assets/images/appetizer_text.png"),
+                        image: AssetImage('assets/images/appetizer_text.png'),
                         width: 100,
                       ),
                       Padding(
@@ -79,7 +79,7 @@ class Help extends StatelessWidget {
               child: Column(
                 children: <Widget>[
                   Text(
-                    "Developed by",
+                    'Developed by',
                     style: TextStyle(
                       color: appiGreyIcon.withOpacity(0.9),
                       fontFamily: 'OpenSans',
@@ -112,6 +112,7 @@ class Help extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           GestureDetector(
+                            onTap: () => launchGithubUrl(),
                             child: Padding(
                               padding: EdgeInsets.all(16),
                               child: Image(
@@ -119,9 +120,9 @@ class Help extends StatelessWidget {
                                 width: 48,
                               ),
                             ),
-                            onTap: () => launchGithubUrl(),
                           ),
                           GestureDetector(
+                            onTap: () => launchFbUrl(),
                             child: Padding(
                               padding: EdgeInsets.all(16),
                               child: Image(
@@ -129,9 +130,9 @@ class Help extends StatelessWidget {
                                 width: 48,
                               ),
                             ),
-                            onTap: () => launchFbUrl(),
                           ),
                           GestureDetector(
+                            onTap: () => launchWebUrl(),
                             child: Padding(
                               padding: EdgeInsets.all(16),
                               child: Image(
@@ -139,7 +140,6 @@ class Help extends StatelessWidget {
                                 width: 48,
                               ),
                             ),
-                            onTap: () => launchWebUrl(),
                           ),
                         ],
                       ),

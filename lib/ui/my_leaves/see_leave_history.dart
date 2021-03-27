@@ -19,6 +19,14 @@ class SeeLeavesHistory extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(2.0),
           child: GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MyLeavesHistory(),
+                ),
+              );
+            },
             child: GestureDetector(
               onTap: () {
                 Navigator.push(
@@ -55,14 +63,6 @@ class SeeLeavesHistory extends StatelessWidget {
                 ],
               ),
             ),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => MyLeavesHistory(),
-                ),
-              );
-            },
           ),
         ),
       ),

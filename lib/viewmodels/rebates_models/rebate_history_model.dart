@@ -6,7 +6,7 @@ import 'package:appetizer/services/api/transaction.dart';
 import 'package:appetizer/viewmodels/base_model.dart';
 
 class RebateHistoryModel extends BaseModel {
-  TransactionApi _transactionApi = locator<TransactionApi>();
+  final TransactionApi _transactionApi = locator<TransactionApi>();
 
   YearlyRebate _yearlyRebate;
 
