@@ -1,11 +1,11 @@
 import 'package:appetizer/enums/view_state.dart';
 import 'package:appetizer/globals.dart';
-import 'package:appetizer/models/feed_back/responses.dart';
-import 'package:appetizer/models/feed_back/submitted_feedbacks.dart';
-import 'package:appetizer/services/api/feedback.dart';
+import 'package:appetizer/models/feedback/appetizer_feedback.dart';
+import 'package:appetizer/models/feedback/feedback_response.dart';
 import 'package:appetizer/ui/base_view.dart';
 import 'package:appetizer/ui/user_feedback/new_feedback.dart';
-import 'package:appetizer/viewmodels/feedback_models/user_feedback_model.dart';
+import 'package:appetizer/utils/feedback_utils.dart';
+import 'package:appetizer/viewmodels/feedback/user_feedback_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:appetizer/colors.dart';
 
@@ -22,7 +22,7 @@ class _UserFeedbackState extends State<UserFeedback> {
 
   @override
   Widget build(BuildContext context) {
-    return BaseView<UserFeedbackModel>(
+    return BaseView<UserFeedbackViewModel>(
       onModelReady: (model) {
         inboxWidget = <Widget>[];
         submittedWidget = <Widget>[];
@@ -139,7 +139,7 @@ class _UserFeedbackState extends State<UserFeedback> {
     );
   }
 
-  getLists(UserFeedbackModel model) async {
+  getLists(UserFeedbackViewModel model) async {
     await model.getResponseOfFeedbacks();
     await model.getSubmittedFeedbacks();
     if (model.state != ViewState.Error) {
@@ -150,7 +150,7 @@ class _UserFeedbackState extends State<UserFeedback> {
     }
   }
 
-  List<Widget> convertToWidgetResponse(List<Response> list) {
+  List<Widget> convertToWidgetResponse(List<FeedbackResponse> list) {
     var temp = <Widget>[];
     print(list);
 
@@ -174,14 +174,14 @@ class _UserFeedbackState extends State<UserFeedback> {
     return temp;
   }
 
-  List<Widget> convertToWidgetFeedBack(List<Feedbacks> list) {
+  List<Widget> convertToWidgetFeedBack(List<AppetizerFeedback> list) {
     var temp = <Widget>[];
 
     for (var i = list.length - 1; i >= 0; i--) {
       var date =
           DateTime.fromMillisecondsSinceEpoch(list[i].dateIssue).toLocal();
-      String feedbackTypeName =
-          FeedbackApi.resolveFeedbackTypeCode(list[i].type);
+      var feedbackTypeName =
+          FeedbackUtils.resolveFeedbackTypeCode(list[i].type);
       temp.add(ListTile(
         title: Text(
           list[i].title,
@@ -189,8 +189,7 @@ class _UserFeedbackState extends State<UserFeedback> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        subtitle:
-            Text(feedbackTypeName ?? '' ' - #' + list[i].id.toString()),
+        subtitle: Text(feedbackTypeName ?? '' ' - #' + list[i].id.toString()),
         trailing: Text(date.day.toString() +
             '/' +
             date.month.toString() +

@@ -1,28 +1,28 @@
 import 'package:appetizer/enums/view_state.dart';
 import 'package:appetizer/locator.dart';
 import 'package:appetizer/models/failure_model.dart';
-import 'package:appetizer/models/feed_back/responses.dart';
-import 'package:appetizer/models/feed_back/submitted_feedbacks.dart';
-import 'package:appetizer/services/api/feedback.dart';
+import 'package:appetizer/models/feedback/appetizer_feedback.dart';
+import 'package:appetizer/models/feedback/feedback_response.dart';
+import 'package:appetizer/services/api/feedback_api.dart';
 import 'package:appetizer/viewmodels/base_model.dart';
 
-class UserFeedbackModel extends BaseModel {
+class UserFeedbackViewModel extends BaseModel {
   final FeedbackApi _feedbackApi = locator<FeedbackApi>();
 
-  List<Response> _responseOfFeedbacks;
+  List<FeedbackResponse> _responseOfFeedbacks;
 
-  List<Response> get responseOfFeedbacks => _responseOfFeedbacks;
+  List<FeedbackResponse> get responseOfFeedbacks => _responseOfFeedbacks;
 
-  set responseOfFeedBacks(List<Response> responseOfFeedBacks) {
+  set responseOfFeedBacks(List<FeedbackResponse> responseOfFeedBacks) {
     _responseOfFeedbacks = responseOfFeedBacks;
     notifyListeners();
   }
 
-  List<Feedbacks> _submittedFeedbacks;
+  List<AppetizerFeedback> _submittedFeedbacks;
 
-  List<Feedbacks> get submittedFeedbacks => _submittedFeedbacks;
+  List<AppetizerFeedback> get submittedFeedbacks => _submittedFeedbacks;
 
-  set submittedFeedbacks(List<Feedbacks> submittedFeedbacks) {
+  set submittedFeedbacks(List<AppetizerFeedback> submittedFeedbacks) {
     _submittedFeedbacks = submittedFeedbacks;
     notifyListeners();
   }

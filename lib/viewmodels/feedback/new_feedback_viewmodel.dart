@@ -2,22 +2,22 @@ import 'package:appetizer/enums/view_state.dart';
 import 'package:appetizer/globals.dart';
 import 'package:appetizer/locator.dart';
 import 'package:appetizer/models/failure_model.dart';
-import 'package:appetizer/models/feed_back/feed_back.dart';
-import 'package:appetizer/services/api/feedback.dart';
+import 'package:appetizer/models/feedback/appetizer_feedback.dart';
+import 'package:appetizer/services/api/feedback_api.dart';
 import 'package:appetizer/services/dialog_service.dart';
 import 'package:appetizer/services/navigation_service.dart';
 import 'package:appetizer/viewmodels/base_model.dart';
 
-class NewFeedbackModel extends BaseModel {
+class NewFeedbackViewModel extends BaseModel {
   final FeedbackApi _feedbackApi = locator<FeedbackApi>();
   final DialogService _dialogService = locator<DialogService>();
   final NavigationService _navigationService = locator<NavigationService>();
 
-  Feedback _newFeedback;
+  AppetizerFeedback _newFeedback;
 
-  Feedback get newFeedback => _newFeedback;
+  AppetizerFeedback get newFeedback => _newFeedback;
 
-  set newFeedback(Feedback newFeedback) {
+  set newFeedback(AppetizerFeedback newFeedback) {
     _newFeedback = newFeedback;
     notifyListeners();
   }

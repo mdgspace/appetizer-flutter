@@ -1,14 +1,4 @@
-// To parse this JSON data, do
-//
-//     final feedback = feedbackFromJson(jsonString);
-
-import 'dart:convert';
-
-Feedback feedbackFromJson(String str) => Feedback.fromJson(json.decode(str));
-
-String feedbackToJson(Feedback data) => json.encode(data.toJson());
-
-class Feedback {
+class AppetizerFeedback {
   int id;
   String type;
   String title;
@@ -19,7 +9,7 @@ class Feedback {
   int dateIssue;
   dynamic response;
 
-  Feedback({
+  AppetizerFeedback({
     this.id,
     this.type,
     this.title,
@@ -31,7 +21,8 @@ class Feedback {
     this.response,
   });
 
-  factory Feedback.fromJson(Map<String, dynamic> json) => Feedback(
+  factory AppetizerFeedback.fromJson(Map<String, dynamic> json) =>
+      AppetizerFeedback(
         id: json['id'],
         type: json['type'],
         title: json['title'],

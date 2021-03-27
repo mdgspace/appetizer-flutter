@@ -1,9 +1,9 @@
 import 'package:appetizer/globals.dart';
-import 'package:appetizer/services/api/feedback.dart';
 import 'package:appetizer/ui/base_view.dart';
 import 'package:appetizer/utils/always_disabled_focus_node.dart';
 import 'package:appetizer/utils/date_time_utils.dart';
-import 'package:appetizer/viewmodels/feedback_models/new_feedback_model.dart';
+import 'package:appetizer/utils/feedback_utils.dart';
+import 'package:appetizer/viewmodels/feedback/new_feedback_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:appetizer/colors.dart';
 
@@ -20,7 +20,7 @@ class _NewFeedbackState extends State<NewFeedback> {
 
   @override
   Widget build(BuildContext context) {
-    return BaseView<NewFeedbackModel>(
+    return BaseView<NewFeedbackViewModel>(
       builder: (context, model, child) => Scaffold(
         key: newFeedbackViewScaffoldKey,
         appBar: AppBar(
@@ -84,7 +84,7 @@ class _NewFeedbackState extends State<NewFeedback> {
                   ),
                   DropdownButton<String>(
                     hint: Text(
-                      FeedbackApi.resolveFeedbackTypeCode(feedbackType),
+                      FeedbackUtils.resolveFeedbackTypeCode(feedbackType),
                       style: TextStyle(color: Colors.black),
                     ),
                     items: ['gn', 'am', 'hc', 'tm', 'wm', 'ws', 'dn']
@@ -93,7 +93,7 @@ class _NewFeedbackState extends State<NewFeedback> {
                         value: value,
                         child: Container(
                           child: Text(
-                            FeedbackApi.resolveFeedbackTypeCode(value),
+                            FeedbackUtils.resolveFeedbackTypeCode(value),
                           ),
                         ),
                       );
@@ -163,7 +163,7 @@ class _NewFeedbackState extends State<NewFeedback> {
     );
   }
 
-  void _validateForm(NewFeedbackModel model) {
+  void _validateForm(NewFeedbackViewModel model) {
     final form = _formKey.currentState;
     if (form.validate()) {
       form.save();

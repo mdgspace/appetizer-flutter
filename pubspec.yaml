@@ -21,7 +21,7 @@ dependencies:
   fluttertoast: ^3.1.2
   get_it: ^6.0.0
   http: ^0.13.1
-  intl: any
+  intl: ^0.16.1
   path_provider: ^1.6.28
   pedantic: ^1.11.0
   provider: ^4.0.2

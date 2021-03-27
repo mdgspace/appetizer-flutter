@@ -1,5 +1,5 @@
 import 'package:appetizer/services/analytics_service.dart';
-import 'package:appetizer/services/api/feedback.dart';
+import 'package:appetizer/services/api/feedback_api.dart';
 import 'package:appetizer/services/api/leave.dart';
 import 'package:appetizer/services/api/menu.dart';
 import 'package:appetizer/services/api/multimessing.dart';
@@ -12,8 +12,8 @@ import 'package:appetizer/services/navigation_service.dart';
 import 'package:appetizer/services/push_notification_service.dart';
 import 'package:appetizer/services/remote_config_service.dart';
 import 'package:appetizer/viewmodels/faq_models/faq_model.dart';
-import 'package:appetizer/viewmodels/feedback_models/new_feedback_model.dart';
-import 'package:appetizer/viewmodels/feedback_models/user_feedback_model.dart';
+import 'package:appetizer/viewmodels/feedback/new_feedback_viewmodel.dart';
+import 'package:appetizer/viewmodels/feedback/user_feedback_viewmodel.dart';
 import 'package:appetizer/viewmodels/home_model.dart';
 import 'package:appetizer/viewmodels/leaves_models/leave_status_card_model.dart';
 import 'package:appetizer/viewmodels/leaves_models/leave_timeline_model.dart';
@@ -64,8 +64,8 @@ Future<void> setupLocator() async {
 
   locator.registerFactory(() => StartUpViewModel());
   locator.registerFactory(() => FaqModel());
-  locator.registerFactory(() => NewFeedbackModel());
-  locator.registerFactory(() => UserFeedbackModel());
+  locator.registerFactory(() => NewFeedbackViewModel());
+  locator.registerFactory(() => UserFeedbackViewModel());
   locator.registerFactory(() => LeaveStatusCardModel());
   locator.registerFactory(() => LeaveTimelineModel());
   locator.registerFactory(() => MyLeavesModel());
