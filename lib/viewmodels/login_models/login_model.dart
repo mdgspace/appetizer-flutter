@@ -89,20 +89,20 @@ class LoginModel extends BaseModel {
     if (oauthResponse != null) {
       StudentData studentData = oauthResponse.studentData;
       if (oauthResponse.isNew) {
-        _dialogService.dialogNavigationKey.currentState.pop();
+        _dialogService.popDialog();
         _dialogService.showCustomProgressDialog(title: 'Redirecting');
         await Future.delayed(Duration(milliseconds: 500));
-        _dialogService.dialogNavigationKey.currentState.pop();
+        _dialogService.popDialog();
         await _navigationService.pushReplacementNamed('choose_new_pass',
             arguments: studentData);
       } else {
         if (oauthResponse.token != null) {
-          _dialogService.dialogNavigationKey.currentState.pop();
+          _dialogService.popDialog();
           _dialogService.showCustomProgressDialog(title: 'Logging You In');
           currentUser = UserDetailsUtils.getLoginFromStudentData(
               studentData, oauthResponse.token);
           await Future.delayed(const Duration(milliseconds: 500));
-          _dialogService.dialogNavigationKey.currentState.pop();
+          _dialogService.popDialog();
           await _navigationService.pushReplacementNamed(
             'home',
             arguments: oauthResponse.token,

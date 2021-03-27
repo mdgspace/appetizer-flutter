@@ -1,4 +1,3 @@
-import 'package:appetizer/globals.dart';
 import 'package:appetizer/ui/base_view.dart';
 import 'package:appetizer/utils/always_disabled_focus_node.dart';
 import 'package:appetizer/utils/date_time_utils.dart';
@@ -22,7 +21,6 @@ class _NewFeedbackState extends State<NewFeedback> {
   Widget build(BuildContext context) {
     return BaseView<NewFeedbackViewModel>(
       builder: (context, model, child) => Scaffold(
-        key: newFeedbackViewScaffoldKey,
         appBar: AppBar(
           title: Text(
             'New Feedback',
@@ -167,7 +165,7 @@ class _NewFeedbackState extends State<NewFeedback> {
     final form = _formKey.currentState;
     if (form.validate()) {
       form.save();
-      model.postNewFeedback(feedbackType, title, description, date);
+      model.addFeedback(feedbackType, title, description, date);
     }
   }
 

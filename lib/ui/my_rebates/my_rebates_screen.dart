@@ -1,6 +1,5 @@
 import 'package:appetizer/colors.dart';
 import 'package:appetizer/enums/view_state.dart';
-import 'package:appetizer/globals.dart';
 import 'package:appetizer/ui/base_view.dart';
 import 'package:appetizer/ui/components/error_widget.dart';
 import 'package:appetizer/utils/date_time_utils.dart';
@@ -16,7 +15,6 @@ class MyRebates extends StatelessWidget {
     return BaseView<MyRebatesModel>(
       onModelReady: (model) => model.getMonthlyRebate(),
       builder: (context, model, child) => Scaffold(
-        key: myRebatesViewScaffoldKey,
         appBar: AppBar(
           title: Text(
             'My Rebates',

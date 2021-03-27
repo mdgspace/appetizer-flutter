@@ -40,7 +40,7 @@ class NewPasswordModel extends BaseModel {
       int enr, String password, String email, int contactNo) async {
     _dialogService.showCustomProgressDialog(title: 'Logging You In');
     await oAuthComplete(enr, password, email, contactNo);
-    _dialogService.dialogNavigationKey.currentState.pop();
+    _dialogService.popDialog();
     if (oauthResponse.token != null) {
       var studentData = oauthResponse.studentData;
       currentUser = UserDetailsUtils.getLoginFromStudentData(

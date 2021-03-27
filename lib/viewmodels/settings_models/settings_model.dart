@@ -76,7 +76,7 @@ class SettingsModel extends BaseModel {
     if (_dialog.confirmed) {
       _dialogService.showCustomProgressDialog(title: 'Logging You Out');
       await logout();
-      _dialogService.dialogNavigationKey.currentState.pop();
+      _dialogService.popDialog();
       await _pushNotificationService.fcm
           .unsubscribeFromTopic('release-' + currentUser.hostelCode);
       await _navigationService.pushNamedAndRemoveUntil('login');

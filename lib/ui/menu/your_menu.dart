@@ -27,7 +27,7 @@ class _YourMenuState extends State<YourMenu> {
 
     UserApi().userMeGet().then((me) {
       setState(() {
-        isCheckedOut = me.isCheckedOut;
+        Globals.isCheckedOut = me.isCheckedOut;
       });
     });
   }

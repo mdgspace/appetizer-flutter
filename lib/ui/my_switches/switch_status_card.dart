@@ -17,7 +17,7 @@ class _SwitchStatusCardState extends State<SwitchStatusCard> {
   @override
   Widget build(BuildContext context) {
     return BaseView<SwitchStatusCardModel>(
-      builder: (context, model, child) => isCheckedOut != null
+      builder: (context, model, child) => Globals.isCheckedOut != null
           ? Column(
               children: <Widget>[
                 Padding(
@@ -99,11 +99,11 @@ class _SwitchStatusCardState extends State<SwitchStatusCard> {
                                         ),
                                       ),
                                       Text(
-                                        (isCheckedOut)
+                                        (Globals.isCheckedOut)
                                             ? 'CHECKED-OUT'
                                             : 'CHECKED-IN',
                                         style: TextStyle(
-                                          color: (isCheckedOut)
+                                          color: (Globals.isCheckedOut)
                                               ? const Color.fromRGBO(
                                                   235, 87, 87, 1)
                                               : const Color.fromRGBO(

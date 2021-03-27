@@ -1,7 +1,7 @@
 import 'dart:convert';
 
+import 'package:appetizer/config/environment_config.dart';
 import 'package:appetizer/constants.dart';
-import 'package:appetizer/globals.dart';
 import 'package:appetizer/models/failure_model.dart';
 import 'package:appetizer/models/multimessing/meal_switch_from_your_meals.dart';
 import 'package:appetizer/models/multimessing/remaining_switch_count.dart';
@@ -16,7 +16,7 @@ class MultimessingApi {
 
   Future<List<SwitchableMealsForYourMeal>> listSwitchableMeals(int id) async {
     var endpoint = '/api/menu/switch_meal/$id';
-    var uri = url + endpoint;
+    var uri = EnvironmentConfig.BASE_URL + endpoint;
     try {
       await ApiUtils.addTokenToHeaders(headers);
       var jsonResponse = await ApiUtils.get(uri, headers: headers);
@@ -34,7 +34,7 @@ class MultimessingApi {
 
   Future<SwitchCount> remainingSwitches() async {
     var endPoint = '/api/leave/switch/count/remaining/';
-    var uri = url + endPoint;
+    var uri = EnvironmentConfig.BASE_URL + endPoint;
 
     try {
       await ApiUtils.addTokenToHeaders(headers);
@@ -52,7 +52,7 @@ class MultimessingApi {
 
   Future<bool> switchMeals(int mealId, String toHostel) async {
     var endPoint = '/api/leave/switch/';
-    var uri = url + endPoint;
+    var uri = EnvironmentConfig.BASE_URL + endPoint;
     var json = {
       'from_meal': mealId,
       'to_hostel': toHostel,
@@ -77,7 +77,7 @@ class MultimessingApi {
 
   Future<bool> cancelSwitch(int id) async {
     var endPoint = '/api/leave/switch/$id';
-    var uri = url + endPoint;
+    var uri = EnvironmentConfig.BASE_URL + endPoint;
 
     try {
       await ApiUtils.addTokenToHeaders(headers);
@@ -97,7 +97,7 @@ class MultimessingApi {
 
   Future<SwitchDetails> getSwitchDetails(int id) async {
     var endpoint = '/api/leave/switch/$id';
-    var uri = url + endpoint;
+    var uri = EnvironmentConfig.BASE_URL + endpoint;
     try {
       await ApiUtils.addTokenToHeaders(headers);
       final jsonResponse = await ApiUtils.get(uri, headers: headers);
@@ -114,7 +114,7 @@ class MultimessingApi {
 
   Future<List<List<dynamic>>> switchableHostels() async {
     var endPoint = '/api/user/multimessing/hostels';
-    var uri = url + endPoint;
+    var uri = EnvironmentConfig.BASE_URL + endPoint;
     try {
       await ApiUtils.addTokenToHeaders(headers);
       var jsonResponse = await ApiUtils.get(uri, headers: headers);

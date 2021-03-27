@@ -1,10 +1,10 @@
 import 'package:appetizer/enums/view_state.dart';
-import 'package:appetizer/globals.dart';
 import 'package:appetizer/locator.dart';
 import 'package:appetizer/models/failure_model.dart';
 import 'package:appetizer/models/user/me.dart';
 import 'package:appetizer/services/api/user.dart';
 import 'package:appetizer/services/dialog_service.dart';
+import 'package:appetizer/utils/snackbar_utils.dart';
 import 'package:appetizer/utils/user_details.dart';
 import 'package:appetizer/viewmodels/base_model.dart';
 
@@ -27,18 +27,18 @@ class EditProfileModel extends BaseModel {
       updatedUserDetails = await _userApi.userMePatch(email, contactNo);
       currentUser = UserDetailsUtils.getLoginModelFromMe(updatedUserDetails);
       setState(ViewState.Idle);
-      showSnackBar(editProfileViewScaffoldKey, 'User details updated');
+      SnackBarUtils.showDark('User details updated');
     } on Failure catch (f) {
       print(f.message);
       setErrorMessage(f.message);
       setState(ViewState.Error);
-      showSnackBar(editProfileViewScaffoldKey, errorMessage);
+      SnackBarUtils.showDark(errorMessage);
     }
   }
 
   Future saveUserDetails(String email, String contactNo) async {
     _dialogService.showCustomProgressDialog(title: 'Saving User Details');
     await updateUserDetails(email, contactNo);
-    _dialogService.dialogNavigationKey.currentState.pop();
+    _dialogService.popDialog();
   }
 }

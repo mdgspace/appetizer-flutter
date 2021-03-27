@@ -1,5 +1,5 @@
+import 'package:appetizer/config/environment_config.dart';
 import 'package:appetizer/constants.dart';
-import 'package:appetizer/globals.dart';
 import 'package:appetizer/models/failure_model.dart';
 import 'package:appetizer/models/leaves/create_leave.dart';
 import 'package:appetizer/models/leaves/check.dart';
@@ -14,7 +14,7 @@ class LeaveApi {
 
   Future<LeaveCount> remainingLeaves() async {
     var endPoint = '/api/leave/count/remaining/';
-    var uri = url + endPoint;
+    var uri = EnvironmentConfig.BASE_URL + endPoint;
 
     try {
       await ApiUtils.addTokenToHeaders(headers);
@@ -37,7 +37,7 @@ class LeaveApi {
     } else {
       endPoint = '/api/leave/all/?year=$year&month=$month';
     }
-    var uri = url + endPoint;
+    var uri = EnvironmentConfig.BASE_URL + endPoint;
 
     try {
       await ApiUtils.addTokenToHeaders(headers);
@@ -55,7 +55,7 @@ class LeaveApi {
 
   Future<Check> check() async {
     var endPoint = '/api/leave/check/';
-    var uri = url + endPoint;
+    var uri = EnvironmentConfig.BASE_URL + endPoint;
 
     try {
       await ApiUtils.addTokenToHeaders(headers);
@@ -74,7 +74,7 @@ class LeaveApi {
 
   Future<CreateLeave> leave(String id) async {
     var endPoint = '/api/leave/';
-    var uri = url + endPoint;
+    var uri = EnvironmentConfig.BASE_URL + endPoint;
     var json = {
       'meal': id,
     };
@@ -95,7 +95,7 @@ class LeaveApi {
 
   Future<bool> cancelLeave(int id) async {
     var endPoint = '/api/leave/meal/$id';
-    var uri = url + endPoint;
+    var uri = EnvironmentConfig.BASE_URL + endPoint;
 
     try {
       await ApiUtils.addTokenToHeaders(headers);

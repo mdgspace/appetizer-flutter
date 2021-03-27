@@ -1,9 +1,7 @@
-import 'package:appetizer/globals.dart';
 import 'package:appetizer/ui/base_view.dart';
 import 'package:appetizer/viewmodels/password_models/reset_password_model.dart';
 import 'package:flutter/material.dart';
 import 'package:appetizer/colors.dart';
-import 'package:appetizer/strings.dart';
 
 class ResetPassword extends StatefulWidget {
   @override
@@ -44,7 +42,6 @@ class _ResetPasswordState extends State<ResetPassword> {
   Widget build(BuildContext context) {
     return BaseView<ResetPasswordModel>(
       builder: (context, model, child) => Scaffold(
-        key: resetPasswordViewScaffoldKey,
         resizeToAvoidBottomInset: true,
         appBar: AppBar(
           title: Text(
@@ -85,7 +82,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                   Padding(
                     padding: const EdgeInsets.only(left: 48, right: 48),
                     child: Text(
-                      forgotInstruction,
+                      'Password should be of atleast 8 characters',
                       style: TextStyle(
                         fontSize: 16.0,
                         color: appiRed.withOpacity(0.9),
@@ -187,8 +184,9 @@ class _ResetPasswordState extends State<ResetPassword> {
                               title: Text(
                                 'Reset Password',
                                 textAlign: TextAlign.center,
-                                style:
-                                    Theme.of(context).primaryTextTheme.headline4,
+                                style: Theme.of(context)
+                                    .primaryTextTheme
+                                    .headline4,
                               ),
                             ),
                           ),

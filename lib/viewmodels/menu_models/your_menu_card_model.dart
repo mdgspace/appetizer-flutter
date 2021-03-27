@@ -96,7 +96,9 @@ class YourMenuCardModel extends BaseModel {
   Future cancelLeave(int id) async {
     try {
       isLeaveCancelled = await _leaveApi.cancelLeave(id);
-      if (isLeaveCancelled) await Fluttertoast.showToast(msg: 'Leave Cancelled');
+      if (isLeaveCancelled) {
+        await Fluttertoast.showToast(msg: 'Leave Cancelled');
+      }
     } on Failure catch (f) {
       print(f.message);
       setErrorMessage(f.message);
@@ -146,14 +148,14 @@ class YourMenuCardModel extends BaseModel {
           if (_dialogResponse.confirmed) {
             _dialogService.showCustomProgressDialog(title: 'Cancelling Leave');
             await cancelLeave(meal.id);
-            _dialogService.dialogNavigationKey.currentState.pop();
+            _dialogService.popDialog();
           } else {
             mealLeaveStatus = !mealLeaveStatus;
           }
         } else {
           await Fluttertoast.showToast(
               msg:
-                  'Leave status cannot be changed less than ${outdatedTime.inHours} hours before the meal time');
+                  'Leave status cannot be changed less than ${Globals.outdatedTime.inHours} hours before the meal time');
         }
       } else {
         if (!isLeaveToggleOutdated) {
@@ -165,7 +167,7 @@ class YourMenuCardModel extends BaseModel {
           if (_dialogResponse.confirmed) {
             _dialogService.showCustomProgressDialog(title: 'Leaving Meal');
             await leaveMeal(meal.id);
-            _dialogService.dialogNavigationKey.currentState.pop();
+            _dialogService.popDialog();
           } else {
             mealLeaveStatus = !mealLeaveStatus;
           }
@@ -192,7 +194,7 @@ class YourMenuCardModel extends BaseModel {
           if (_dialogResponse.confirmed) {
             _dialogService.showCustomProgressDialog(title: 'Cancelling Switch');
             await cancelSwitch(meal.switchStatus.id);
-            _dialogService.dialogNavigationKey.currentState.pop();
+            _dialogService.popDialog();
             if (isSwitchCancelled) {
               _navigationService.popUntilFirstScreen();
               mealSwitchStatus = true;
@@ -222,7 +224,7 @@ class YourMenuCardModel extends BaseModel {
               .isBefore(DateTime.now())) {
             Fluttertoast.showToast(msg: 'Time for this meal has passed!');
           } else if (meal.startTimeObject
-              .subtract(outdatedTime)
+              .subtract(Globals.outdatedTime)
               .isAfter(DateTime.now())) {
             Fluttertoast.showToast(
                 msg: 'QR CODE will be available 8 hours before the meal');

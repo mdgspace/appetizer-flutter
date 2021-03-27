@@ -1,9 +1,9 @@
 import 'package:appetizer/enums/view_state.dart';
-import 'package:appetizer/globals.dart';
 import 'package:appetizer/locator.dart';
 import 'package:appetizer/models/failure_model.dart';
 import 'package:appetizer/services/api/user.dart';
 import 'package:appetizer/services/dialog_service.dart';
+import 'package:appetizer/utils/snackbar_utils.dart';
 import 'package:appetizer/viewmodels/base_model.dart';
 
 class ResetPasswordModel extends BaseModel {
@@ -29,19 +29,18 @@ class ResetPasswordModel extends BaseModel {
               ? true
               : false;
       setState(ViewState.Idle);
-      showSnackBar(
-          resetPasswordViewScaffoldKey, 'Password changed successfully');
+      SnackBarUtils.showDark('Password changed successfully');
     } on Failure catch (f) {
       print(f.message);
       setErrorMessage(f.message);
       setState(ViewState.Error);
-      showSnackBar(resetPasswordViewScaffoldKey, errorMessage);
+      SnackBarUtils.showDark(errorMessage);
     }
   }
 
   Future onResetPasswordTapped(String oldPassword, String newPassword) async {
     _dialogService.showCustomProgressDialog(title: 'Updating Password');
     await resetPassword(oldPassword, newPassword);
-    _dialogService.dialogNavigationKey.currentState.pop();
+    _dialogService.popDialog();
   }
 }

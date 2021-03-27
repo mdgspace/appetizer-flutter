@@ -33,7 +33,7 @@ class FeedbackApi {
 
   Future<List<FeedbackResponse>> responseOfFeedBacks() async {
     var endpoint = '/api/feedback/response/list/';
-    var uri = url + endpoint;
+    var uri = EnvironmentConfig.BASE_URL + endpoint;
 
     try {
       await ApiUtils.addTokenToHeaders(headers);

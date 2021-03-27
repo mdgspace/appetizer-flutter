@@ -1,4 +1,3 @@
-import 'package:appetizer/globals.dart';
 import 'package:appetizer/ui/base_view.dart';
 import 'package:appetizer/viewmodels/leaves_models/my_leaves_model.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +11,6 @@ class MyLeaves extends StatelessWidget {
     return BaseView<MyLeavesModel>(
       onModelReady: (model) => model.getRemainingLeaves(),
       builder: (context, model, child) => Scaffold(
-        key: myLeavesViewScaffoldKey,
         appBar: AppBar(
           title: Text(
             'My Leaves',

@@ -34,7 +34,7 @@ import 'package:appetizer/viewmodels/rebates_models/my_rebates_model.dart';
 import 'package:appetizer/viewmodels/rebates_models/rebate_history_model.dart';
 import 'package:appetizer/viewmodels/settings_models/edit_profile_model.dart';
 import 'package:appetizer/viewmodels/settings_models/settings_model.dart';
-import 'package:appetizer/viewmodels/startup_view_model.dart';
+import 'package:appetizer/viewmodels/startup_viewmodel.dart';
 import 'package:appetizer/viewmodels/switch_models/confirm_switch_popup_model.dart';
 import 'package:appetizer/viewmodels/switch_models/my_switches_model.dart';
 import 'package:appetizer/viewmodels/switch_models/switch_status_card_model.dart';

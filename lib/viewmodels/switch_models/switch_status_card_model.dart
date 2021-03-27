@@ -2,7 +2,6 @@ import 'package:appetizer/enums/view_state.dart';
 import 'package:appetizer/globals.dart';
 import 'package:appetizer/locator.dart';
 import 'package:appetizer/models/failure_model.dart';
-import 'package:appetizer/models/user/me.dart';
 import 'package:appetizer/services/api/user.dart';
 import 'package:appetizer/viewmodels/base_model.dart';
 

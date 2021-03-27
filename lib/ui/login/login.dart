@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:appetizer/colors.dart';
 import 'package:appetizer/enums/view_state.dart';
 import 'package:appetizer/ui/base_view.dart';
-import 'package:appetizer/globals.dart';
+import 'package:appetizer/utils/snackbar_utils.dart';
 import 'package:appetizer/viewmodels/login_models/login_model.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/animation.dart';
@@ -52,7 +52,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
 
   void resetLogin(LoginModel model) {
     _formKey.currentState.reset();
-    showSnackBar(loginViewScaffoldKey, model.errorMessage);
+    SnackBarUtils.showDark(model.errorMessage);
   }
 
   void onModelReady(LoginModel model) {
@@ -97,7 +97,6 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
       onModelReady: (model) => onModelReady(model),
       onModelDestroy: (model) => onModelDestroy(),
       builder: (context, model, child) => Scaffold(
-        key: loginViewScaffoldKey,
         body: Column(
           children: <Widget>[
             Expanded(
@@ -398,7 +397,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
             });
           }
           model.areCredentialsCorrect = true;
-          showSnackBar(loginViewScaffoldKey, 'Login Successful');
+          SnackBarUtils.showDark('Login Successful');
           await Future.delayed(const Duration(seconds: 5));
           await Navigator.pushReplacementNamed(
             context,

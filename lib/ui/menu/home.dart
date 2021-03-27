@@ -44,8 +44,8 @@ class _HomeState extends State<Home> {
           ChangeNotifierProvider(create: (context) => currentDateModel),
         ],
         child: Scaffold(
-          key: homeViewScaffoldKey,
-          floatingActionButton: !isCheckedOut ? _fab(context, model) : null,
+          floatingActionButton:
+              !Globals.isCheckedOut ? _fab(context, model) : null,
           appBar: _appBar(context, model),
           body: SafeArea(
             child: Column(
@@ -57,7 +57,7 @@ class _HomeState extends State<Home> {
                     padding: 0,
                   ),
                 ),
-                isCheckedOut == true
+                Globals.isCheckedOut == true
                     ? Container(
                         width: MediaQuery.of(context).size.width,
                         color: appiRed,

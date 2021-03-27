@@ -2,11 +2,10 @@ import 'package:appetizer/enums/view_state.dart';
 import 'package:appetizer/globals.dart';
 import 'package:appetizer/locator.dart';
 import 'package:appetizer/models/failure_model.dart';
-import 'package:appetizer/models/leaves/check.dart';
-import 'package:appetizer/models/user/me.dart';
 import 'package:appetizer/services/api/leave.dart';
 import 'package:appetizer/services/api/user.dart';
 import 'package:appetizer/services/dialog_service.dart';
+import 'package:appetizer/utils/snackbar_utils.dart';
 import 'package:appetizer/viewmodels/base_model.dart';
 
 class LeaveStatusCardModel extends BaseModel {
@@ -68,13 +67,13 @@ class LeaveStatusCardModel extends BaseModel {
       if (dialogResponse.confirmed) {
         await toggleCheckState();
         if (isCheckedOut) {
-          showSnackBar(myLeavesViewScaffoldKey, 'You have checked out');
+          SnackBarUtils.showDark('You have checked out');
         }
       }
     } else {
       await toggleCheckState();
       if (!isCheckedOut) {
-        showSnackBar(myLeavesViewScaffoldKey, 'You have checked in');
+        SnackBarUtils.showDark('You have checked in');
       }
     }
   }

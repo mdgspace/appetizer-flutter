@@ -1,4 +1,3 @@
-import 'package:appetizer/globals.dart';
 import 'package:appetizer/ui/base_view.dart';
 import 'package:appetizer/ui/settings/user_details.dart';
 import 'package:appetizer/viewmodels/settings_models/edit_profile_model.dart';
@@ -31,7 +30,6 @@ class _EditProfileState extends State<EditProfile> {
   Widget build(BuildContext context) {
     return BaseView<EditProfileModel>(
       builder: (context, model, child) => Scaffold(
-        key: editProfileViewScaffoldKey,
         resizeToAvoidBottomInset: true,
         body: SingleChildScrollView(
           child: Column(

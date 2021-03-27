@@ -1,6 +1,4 @@
 import 'package:appetizer/enums/view_state.dart';
-import 'package:appetizer/globals.dart';
-import 'package:appetizer/models/user/me.dart';
 import 'package:appetizer/ui/FAQ/faq_screen.dart';
 import 'package:appetizer/ui/base_view.dart';
 import 'package:appetizer/ui/settings/list_item.dart';
@@ -49,7 +47,6 @@ class Settings extends StatelessWidget {
             ),
           ),
           Scaffold(
-            key: settingsViewScaffoldKey,
             backgroundColor: Colors.transparent,
             appBar: appBar,
             body: SingleChildScrollView(
@@ -69,8 +66,7 @@ class Settings extends StatelessWidget {
                                     const EdgeInsets.fromLTRB(16, 0, 16, 30),
                                 child: Center(
                                   child: CircularProgressIndicator(
-                                    valueColor:
-                                        AlwaysStoppedAnimation<Color>(
+                                    valueColor: AlwaysStoppedAnimation<Color>(
                                       appiYellow,
                                     ),
                                   ),

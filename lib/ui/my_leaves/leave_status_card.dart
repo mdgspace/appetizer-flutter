@@ -18,7 +18,7 @@ class _LeaveStatusCardState extends State<LeaveStatusCard> {
   @override
   Widget build(BuildContext context) {
     return BaseView<LeaveStatusCardModel>(
-      builder: (context, model, child) => isCheckedOut != null
+      builder: (context, model, child) => Globals.isCheckedOut != null
           ? Column(
               children: <Widget>[
                 Padding(
@@ -96,11 +96,11 @@ class _LeaveStatusCardState extends State<LeaveStatusCard> {
                                       ),
                                     ),
                                     Text(
-                                      (isCheckedOut)
+                                      (Globals.isCheckedOut)
                                           ? 'CHECKED-OUT'
                                           : 'CHECKED-IN',
                                       style: TextStyle(
-                                        color: (isCheckedOut)
+                                        color: (Globals.isCheckedOut)
                                             ? const Color.fromRGBO(
                                                 235, 87, 87, 1)
                                             : const Color.fromRGBO(
@@ -139,14 +139,16 @@ class _LeaveStatusCardState extends State<LeaveStatusCard> {
                           child: Container(
                             width: MediaQuery.of(context).size.width / 2,
                             child: RaisedButton(
-                              color: (isCheckedOut)
+                              color: (Globals.isCheckedOut)
                                   ? const Color.fromRGBO(34, 139, 34, 1)
                                   : const Color.fromRGBO(235, 87, 87, 1),
                               onPressed: model.onCheckTapped,
                               child: Padding(
                                 padding: const EdgeInsets.all(10.0),
                                 child: Text(
-                                  (isCheckedOut) ? 'CHECK IN' : 'CHECK OUT',
+                                  (Globals.isCheckedOut)
+                                      ? 'CHECK IN'
+                                      : 'CHECK OUT',
                                   style: TextStyle(
                                     color:
                                         const Color.fromRGBO(255, 255, 255, 1),
@@ -162,7 +164,7 @@ class _LeaveStatusCardState extends State<LeaveStatusCard> {
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width - 8,
-                  child: (isCheckedOut)
+                  child: (Globals.isCheckedOut)
                       ? InfoMessage('Check-in to start taking meals again')
                       : InfoMessage(
                           'Check-out to leave upcoming meals in sequence'),

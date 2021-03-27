@@ -1,6 +1,6 @@
+import 'package:appetizer/config/environment_config.dart';
 import 'package:appetizer/constants.dart';
 import 'package:appetizer/enums/token_status.dart';
-import 'package:appetizer/globals.dart';
 import 'package:appetizer/models/detail.dart';
 import 'package:appetizer/models/failure_model.dart';
 import 'package:appetizer/models/user/oauth.dart';
@@ -19,7 +19,7 @@ class UserApi {
 
   Future<Login> userLogin(String id, String pass) async {
     var endpoint = '/api/user/login/';
-    var uri = url + endpoint;
+    var uri = EnvironmentConfig.BASE_URL + endpoint;
     var json = {
       'enr': id,
       'password': pass,
@@ -46,7 +46,7 @@ class UserApi {
 
   Future<Detail> userLogout() async {
     var endpoint = '/api/user/logout/';
-    var uri = url + endpoint;
+    var uri = EnvironmentConfig.BASE_URL + endpoint;
     try {
       await ApiUtils.addTokenToHeaders(headers);
       var jsonResponse = await ApiUtils.post(
@@ -66,7 +66,7 @@ class UserApi {
 
   Future<TokenStatus> checkTokenStatus() async {
     var endpoint = '/api/user/me/';
-    var uri = url + endpoint;
+    var uri = EnvironmentConfig.BASE_URL + endpoint;
     try {
       await ApiUtils.addTokenToHeaders(headers);
       var jsonResponse = await ApiUtils.get(
@@ -88,7 +88,7 @@ class UserApi {
 
   Future<Me> userMeGet() async {
     var endpoint = '/api/user/me/';
-    var uri = url + endpoint;
+    var uri = EnvironmentConfig.BASE_URL + endpoint;
     try {
       await ApiUtils.addTokenToHeaders(headers);
       var jsonResponse = await ApiUtils.get(
@@ -111,7 +111,7 @@ class UserApi {
 
   Future<Me> userMePatch(String email, String contactNo) async {
     var endpoint = '/api/user/me/';
-    var uri = url + endpoint;
+    var uri = EnvironmentConfig.BASE_URL + endpoint;
     var json = {
       'email': email,
       'contactNo': contactNo,
@@ -136,7 +136,7 @@ class UserApi {
 
   Future<Me> userMePatchFCM(String fcmToken) async {
     var endpoint = '/api/user/me/';
-    var uri = url + endpoint;
+    var uri = EnvironmentConfig.BASE_URL + endpoint;
     var json = {'fcm_token': fcmToken};
     try {
       await ApiUtils.addTokenToHeaders(headers);
@@ -158,7 +158,7 @@ class UserApi {
 
   Future<Image> userImage() async {
     var endpoint = '/api/user/me/image/';
-    var uri = url + endpoint;
+    var uri = EnvironmentConfig.BASE_URL + endpoint;
     try {
       await ApiUtils.addTokenToHeaders(headers);
       var jsonResponse = await ApiUtils.get(
@@ -178,7 +178,7 @@ class UserApi {
 
   Future<Detail> userPasswordReset(String oldPass, String newPass) async {
     var endpoint = '/api/user/me/password/';
-    var uri = url + endpoint;
+    var uri = EnvironmentConfig.BASE_URL + endpoint;
     var json = {
       'old_password': oldPass,
       'new_password': newPass,
@@ -204,7 +204,7 @@ class UserApi {
 
   Future<Detail> userReset(String email) async {
     var endpoint = '/api/user/me/password/reset/';
-    var uri = url + endpoint;
+    var uri = EnvironmentConfig.BASE_URL + endpoint;
     var json = {
       'email': email,
     };
@@ -226,13 +226,12 @@ class UserApi {
 
   Future oAuthRedirect(String code) async {
     var endpoint = '/api/user/oauth/redirect/?code=$code';
-    var uri = url + endpoint;
+    var uri = EnvironmentConfig.BASE_URL + endpoint;
     try {
       var jsonResponse = await ApiUtils.get(
         uri,
       );
-      var newUserDetails =
-          OauthResponseNewUser.fromJson(jsonResponse);
+      var newUserDetails = OauthResponseNewUser.fromJson(jsonResponse);
       if (!newUserDetails.isNew) {
         var userDetails = OauthResponse.fromJson(jsonResponse);
         return userDetails;
@@ -250,8 +249,7 @@ class UserApi {
   Future<OauthResponse> oAuthComplete(
       int enrNo, String password, String email, int contactNo) async {
     var endpoint = '/api/user/oauth/complete/';
-    var uri = url + endpoint;
-    print(url);
+    var uri = EnvironmentConfig.BASE_URL + endpoint;
     var json = {
       'enr': enrNo,
       'password': password,
@@ -277,7 +275,7 @@ class UserApi {
 
   Future<List<Result>> getNotifications() async {
     var endpoint = '/api/user/message/list/';
-    var uri = url + endpoint;
+    var uri = EnvironmentConfig.BASE_URL + endpoint;
     try {
       await ApiUtils.addTokenToHeaders(headers);
       var jsonResponse = await ApiUtils.get(uri, headers: headers);

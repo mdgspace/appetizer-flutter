@@ -1,6 +1,5 @@
 import 'package:appetizer/colors.dart';
 import 'package:appetizer/enums/view_state.dart';
-import 'package:appetizer/globals.dart';
 import 'package:appetizer/models/multimessing/meal_switch_from_your_meals.dart';
 import 'package:appetizer/ui/base_view.dart';
 import 'package:appetizer/ui/components/alert_dialog.dart';
@@ -199,7 +198,6 @@ class _SwitchableMealsState extends State<SwitchableMealsScreen> {
     return BaseView<SwitchableMealsModel>(
       onModelReady: (model) => model.getSwitchableMeals(widget.id),
       builder: (context, model, child) => Scaffold(
-        key: switchableMealsViewScaffoldKey,
         appBar: AppBar(
           centerTitle: true,
           title: Text(

@@ -1,5 +1,3 @@
-import 'package:appetizer/globals.dart';
-import 'package:appetizer/strings.dart';
 import 'package:appetizer/ui/base_view.dart';
 import 'package:appetizer/viewmodels/password_models/forgot_password_model.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +16,6 @@ class _ForgotPassState extends State<ForgotPass> {
   Widget build(BuildContext context) {
     return BaseView<ForgotPasswordModel>(
       builder: (context, model, child) => Scaffold(
-        key: forgotPasswordViewScaffoldKey,
         resizeToAvoidBottomInset: true,
         body: SingleChildScrollView(
           child: Column(
@@ -71,7 +68,7 @@ class _ForgotPassState extends State<ForgotPass> {
                   Padding(
                     padding: const EdgeInsets.only(left: 48, right: 48),
                     child: Text(
-                      passInstruction,
+                      'Enter your email below to receive your password reset instructions',
                       style: TextStyle(
                         fontSize: 14.0,
                         color: appiGreyIcon.withOpacity(0.9),

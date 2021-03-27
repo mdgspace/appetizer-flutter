@@ -1,10 +1,7 @@
 import 'package:appetizer/enums/view_state.dart';
 import 'package:appetizer/globals.dart';
 import 'package:appetizer/locator.dart';
-import 'package:appetizer/models/dialog_models.dart';
 import 'package:appetizer/models/failure_model.dart';
-import 'package:appetizer/models/leaves/check.dart';
-import 'package:appetizer/models/version_check.dart';
 import 'package:appetizer/services/api/leave.dart';
 import 'package:appetizer/services/api/multimessing.dart';
 import 'package:appetizer/services/api/user.dart';
@@ -12,6 +9,7 @@ import 'package:appetizer/services/api/version_check.dart';
 import 'package:appetizer/services/dialog_service.dart';
 import 'package:appetizer/services/navigation_service.dart';
 import 'package:appetizer/services/push_notification_service.dart';
+import 'package:appetizer/utils/snackbar_utils.dart';
 import 'package:appetizer/viewmodels/base_model.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -66,11 +64,9 @@ class HomeModel extends BaseModel {
 
   Future checkVersion() async {
     try {
-      var _versionCheck =
-          await _versionCheckApi.checkVersion(appetizerVersion);
+      var _versionCheck = await _versionCheckApi.checkVersion(appetizerVersion);
       if (_versionCheck.isExpired) {
-        var _dialogResponse =
-            await _dialogService.showConfirmationDialog(
+        var _dialogResponse = await _dialogService.showConfirmationDialog(
           title: 'Current Version Expired',
           description:
               'Your Appetizer App is out of date. You need to update the app to continue!',
@@ -119,7 +115,7 @@ class HomeModel extends BaseModel {
     if (_dialog.confirmed) {
       _dialogService.showCustomProgressDialog(title: 'Logging You Out');
       await logout();
-      _dialogService.dialogNavigationKey.currentState.pop();
+      _dialogService.popDialog();
       await _pushNotificationService.fcm
           .unsubscribeFromTopic('release-' + currentUser.hostelCode);
       await _navigationService.pushNamedAndRemoveUntil('login');
@@ -148,7 +144,7 @@ class HomeModel extends BaseModel {
     if (dialogResponse.confirmed) {
       await toggleCheckState();
       if (isCheckedOut) {
-        showSnackBar(homeViewScaffoldKey, 'You have checked out');
+        SnackBarUtils.showDark('You have checked out');
       }
     }
   }

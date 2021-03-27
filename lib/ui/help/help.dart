@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../../colors.dart';
-import '../../strings.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Help extends StatelessWidget {
@@ -97,7 +96,7 @@ class Help extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.all(8),
                     child: Text(
-                      mdgFull,
+                      'Mobile Development Group, IIT Roorkee',
                       style: TextStyle(
                         fontFamily: 'OpenSans',
                         fontSize: 14,

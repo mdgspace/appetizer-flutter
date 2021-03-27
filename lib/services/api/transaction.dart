@@ -1,7 +1,7 @@
 import 'dart:convert';
 
+import 'package:appetizer/config/environment_config.dart';
 import 'package:appetizer/constants.dart';
-import 'package:appetizer/globals.dart';
 import 'package:appetizer/models/failure_model.dart';
 import 'package:appetizer/models/transaction/current_month_rebate.dart';
 import 'package:appetizer/models/transaction/yearly_rebate.dart';
@@ -15,7 +15,7 @@ class TransactionApi {
 
   Future<MonthlyRebate> getMonthlyRebate() async {
     var endPoint = '/api/transaction/rebate/current/';
-    var uri = url + endPoint;
+    var uri = EnvironmentConfig.BASE_URL + endPoint;
 
     try {
       await ApiUtils.addTokenToHeaders(headers);
@@ -33,7 +33,7 @@ class TransactionApi {
 
   Future<YearlyRebate> getYearlyRebate(int year) async {
     var endPoint = '/api/transaction/list/expenses/?year=$year';
-    var uri = url + endPoint;
+    var uri = EnvironmentConfig.BASE_URL + endPoint;
 
     try {
       await ApiUtils.addTokenToHeaders(headers);
@@ -51,7 +51,7 @@ class TransactionApi {
 
   Future<List<Faq>> getFAQ() async {
     var endPoint = '/api/faqs/';
-    var uri = url + endPoint;
+    var uri = EnvironmentConfig.BASE_URL + endPoint;
 
     try {
       await ApiUtils.addTokenToHeaders(headers);

@@ -31,7 +31,7 @@ class _OtherMenuState extends State<OtherMenu> {
 
     UserApi().userMeGet().then((me) {
       setState(() {
-        isCheckedOut = me.isCheckedOut;
+        Globals.isCheckedOut = me.isCheckedOut;
       });
     });
   }

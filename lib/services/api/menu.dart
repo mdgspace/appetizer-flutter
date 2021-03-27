@@ -1,6 +1,6 @@
+import 'package:appetizer/config/environment_config.dart';
 import 'package:appetizer/constants.dart';
 import 'package:appetizer/database/app_database.dart';
-import 'package:appetizer/globals.dart';
 import 'package:appetizer/models/failure_model.dart';
 import 'package:appetizer/models/menu/approve.dart';
 import 'package:appetizer/models/menu/week.dart';
@@ -15,7 +15,7 @@ class MenuApi {
 
   Future<Week> menuWeekMultiMessing(int weekId, String hostelCode) async {
     var endpoint = '/api/menu/week/v2?hostel=$hostelCode&week_id=$weekId';
-    var uri = url + endpoint;
+    var uri = EnvironmentConfig.BASE_URL + endpoint;
 
     try {
       await ApiUtils.addTokenToHeaders(headers);
@@ -36,7 +36,7 @@ class MenuApi {
 
   Future<Week> menuWeekForYourMeals(int weekId) async {
     var endpoint = '/api/menu/my_week/?week_id=$weekId';
-    var uri = url + endpoint;
+    var uri = EnvironmentConfig.BASE_URL + endpoint;
 
     try {
       await ApiUtils.addTokenToHeaders(headers);
@@ -81,7 +81,7 @@ class MenuApi {
 
   Future<Week> menuWeekById(String weekId, String year) async {
     var endpoint = '/api/menu/week/?week_id=$weekId&year=$year';
-    var uri = url + endpoint;
+    var uri = EnvironmentConfig.BASE_URL + endpoint;
 
     try {
       await ApiUtils.addTokenToHeaders(headers);
@@ -102,7 +102,7 @@ class MenuApi {
 
   Future<Day> menuDay(int week, int dayOfWeek) async {
     var endpoint = '/api/menu/$week/$dayOfWeek';
-    var uri = url + endpoint;
+    var uri = EnvironmentConfig.BASE_URL + endpoint;
 
     try {
       await ApiUtils.addTokenToHeaders(headers);
@@ -123,7 +123,7 @@ class MenuApi {
 
   Future<Meal> menuMeal(String week, String dayOfWeek, String meal) async {
     var endpoint = '/api/menu/$week/$dayOfWeek/$meal';
-    var uri = url + endpoint;
+    var uri = EnvironmentConfig.BASE_URL + endpoint;
 
     try {
       await ApiUtils.addTokenToHeaders(headers);
@@ -144,7 +144,7 @@ class MenuApi {
 
   Future<Meal> menuNextMeal() async {
     var endpoint = '/api/menu/meal/next/';
-    var uri = url + endpoint;
+    var uri = EnvironmentConfig.BASE_URL + endpoint;
 
     try {
       await ApiUtils.addTokenToHeaders(headers);
@@ -165,7 +165,7 @@ class MenuApi {
 
   Future<Meal> newMealItem(String type, String name) async {
     var endpoint = '/api/menu/m/item/';
-    var uri = url + endpoint;
+    var uri = EnvironmentConfig.BASE_URL + endpoint;
     var json = {'type': type, 'name': name};
 
     try {
@@ -189,7 +189,7 @@ class MenuApi {
   Future<Approve> weekApprove(
       String weekId, bool isApproved, String year) async {
     var endpoint = '/api/menu/m/week/approve/';
-    var uri = url + endpoint;
+    var uri = EnvironmentConfig.BASE_URL + endpoint;
     var json = {'week_id': weekId, 'is_approved': isApproved, 'year': year};
 
     try {
@@ -212,7 +212,7 @@ class MenuApi {
 
   Future<List<MealItem>> allMealItems() async {
     var endpoint = '/api/menu/m/items/';
-    var uri = url + endpoint;
+    var uri = EnvironmentConfig.BASE_URL + endpoint;
 
     try {
       await ApiUtils.addTokenToHeaders(headers);

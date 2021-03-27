@@ -3,8 +3,8 @@ import 'package:appetizer/models/menu/week.dart';
 import 'package:appetizer/ui/base_view.dart';
 import 'package:appetizer/ui/multimessing/qr_generator_widget.dart';
 import 'package:appetizer/ui/user_feedback/new_feedback.dart';
+import 'package:appetizer/utils/color_utils.dart';
 import 'package:appetizer/utils/get_day_and_date_for_meal_card.dart';
-import 'package:appetizer/utils/get_leave_color_from_leave_status.dart';
 import 'package:appetizer/utils/menu_utils.dart';
 import 'package:appetizer/viewmodels/menu_models/your_menu_card_model.dart';
 import 'package:appetizer/viewmodels/menu_models/your_menu_model.dart';
@@ -226,14 +226,14 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
               ),
             ),
           )
-        : !isCheckedOut
+        : !Globals.isCheckedOut
             ? GestureDetector(
                 onHorizontalDragStart: (d) => {
                   if (model.isLeaveToggleOutdated)
                     {
                       Fluttertoast.showToast(
                         msg:
-                            'Leave status cannot be changed less than ${outdatedTime.inHours} hours before the meal time',
+                            'Leave status cannot be changed less than ${Globals.outdatedTime.inHours} hours before the meal time',
                       )
                     }
                   else if (!model.mealSwitchStatus)
@@ -275,13 +275,14 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
   }
 
   Widget _skippedFlagComponent() {
-    return (!(getLeaveColorFromLeaveStatus(widget.meal.leaveStatus?.status) ==
+    return (!(ColorUtils.getLeaveColorFromLeaveStatus(
+                    widget.meal.leaveStatus?.status) ==
                 Colors.white) &&
             widget.meal.isOutdated)
         ? Container(
             decoration: BoxDecoration(
-              color:
-                  getLeaveColorFromLeaveStatus(widget.meal.leaveStatus?.status),
+              color: ColorUtils.getLeaveColorFromLeaveStatus(
+                  widget.meal.leaveStatus?.status),
               shape: BoxShape.circle,
             ),
             child: Padding(
@@ -317,7 +318,7 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
               .isBefore(DateTime.now())) {
             Fluttertoast.showToast(msg: 'Time for this meal has passed!');
           } else if (model.meal.startTimeObject
-              .subtract(outdatedTime)
+              .subtract(Globals.outdatedTime)
               .isAfter(DateTime.now())) {
             Fluttertoast.showToast(
                 msg: 'QR CODE will be available 8 hours before the meal');

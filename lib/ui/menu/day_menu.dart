@@ -16,8 +16,7 @@ class DayMenu extends StatefulWidget {
     for (var i = 0; i < day.meals.length; i++) {
       var mealStartDateTime =
           dateFormat.parse(date + ' ' + day.meals[i].startTime);
-      var mealEndDateTime =
-          dateFormat.parse(date + ' ' + day.meals[i].endTime);
+      var mealEndDateTime = dateFormat.parse(date + ' ' + day.meals[i].endTime);
       day.meals[i].startDateTime = mealStartDateTime;
       day.meals[i].endDateTime = mealEndDateTime;
       if (!mealStartDateTime.isAfter(DateTime.now())) {
@@ -25,7 +24,9 @@ class DayMenu extends StatefulWidget {
       } else {
         day.meals[i].isOutdated = false;
       }
-      if (!mealStartDateTime.subtract(outdatedTime).isAfter(DateTime.now())) {
+      if (!mealStartDateTime
+          .subtract(Globals.outdatedTime)
+          .isAfter(DateTime.now())) {
         day.meals[i].isLeaveToggleOutdated = true;
       } else {
         day.meals[i].isLeaveToggleOutdated = false;

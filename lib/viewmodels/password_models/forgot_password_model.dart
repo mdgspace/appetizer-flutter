@@ -1,10 +1,10 @@
 import 'package:appetizer/enums/view_state.dart';
-import 'package:appetizer/globals.dart';
 import 'package:appetizer/locator.dart';
 import 'package:appetizer/models/failure_model.dart';
 import 'package:appetizer/services/api/user.dart';
 import 'package:appetizer/services/dialog_service.dart';
 import 'package:appetizer/services/navigation_service.dart';
+import 'package:appetizer/utils/snackbar_utils.dart';
 import 'package:appetizer/viewmodels/base_model.dart';
 
 class ForgotPasswordModel extends BaseModel {
@@ -29,13 +29,12 @@ class ForgotPasswordModel extends BaseModel {
       isResetEmailSent =
           resetEmailDetail.detail == 'link has been emailed' ? true : false;
       setState(ViewState.Idle);
-      showSnackBar(forgotPasswordViewScaffoldKey, 'link has been emailed');
+      SnackBarUtils.showDark('link has been emailed');
       Future.delayed(Duration(seconds: 1), _navigationService.pop);
     } on Failure catch (f) {
-      print(f.message);
-      setErrorMessage(f.message);
       setState(ViewState.Error);
-      showSnackBar(forgotPasswordViewScaffoldKey, errorMessage);
+      setErrorMessage(f.message);
+      SnackBarUtils.showDark(errorMessage);
     }
   }
 }

@@ -19,6 +19,7 @@ dependencies:
   flutter_svg: ^0.19.3
   flutter_swiper: ^1.1.6
   fluttertoast: ^3.1.2
+  get: ^3.25.6
   get_it: ^6.0.0
   http: ^0.13.1
   intl: ^0.16.1

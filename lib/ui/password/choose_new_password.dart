@@ -1,4 +1,3 @@
-import 'package:appetizer/globals.dart';
 import 'package:appetizer/models/user/oauth.dart';
 import 'package:appetizer/ui/base_view.dart';
 import 'package:appetizer/viewmodels/password_models/new_password_model.dart';
@@ -22,7 +21,6 @@ class _ChooseNewPassState extends State<ChooseNewPass> {
   Widget build(BuildContext context) {
     return BaseView<NewPasswordModel>(
       builder: (context, model, child) => Scaffold(
-        key: chooseNewPasswordViewScaffoldKey,
         appBar: AppBar(
           iconTheme: IconThemeData(
             color: appiYellow,
