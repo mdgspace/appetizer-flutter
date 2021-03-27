@@ -8,7 +8,7 @@ import 'package:appetizer/ui/components/appetizer_progress_widget.dart';
 import 'package:appetizer/ui/menu/day_menu.dart';
 import 'package:appetizer/utils/get_hostel_code.dart';
 import 'package:appetizer/viewmodels/current_date_model.dart';
-import 'package:appetizer/viewmodels/menu_models/other_menu_model.dart';
+import 'package:appetizer/viewmodels/menu/other_menu_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -45,9 +45,9 @@ class _OtherMenuState extends State<OtherMenu> {
 
   @override
   Widget build(BuildContext context) {
-    return BaseView<OtherMenuModel>(
+    return BaseView<OtherMenuViewModel>(
       onModelReady: (model) =>
-          model.getOtherMenu(weekId, hostelCodeMap[widget.hostelName]),
+          model.fetchHostelWeekMenu(weekId, hostelCodeMap[widget.hostelName]),
       builder: (context, model, child) => model.state == ViewState.Busy
           ? AppetizerProgressWidget()
           : model.state == ViewState.Error

@@ -12,21 +12,12 @@ import 'package:flutter/rendering.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
-class YourMenuCardModel extends BaseModel {
+class YourMenuCardViewModel extends BaseModel {
   final LeaveApi _leaveApi = locator<LeaveApi>();
   final MultimessingApi _multimessingApi = locator<MultimessingApi>();
   final DialogService _dialogService = locator<DialogService>();
 
   Meal _meal;
-  DailyItems _dailyItems;
-  bool _mealLeaveStatus;
-  bool _mealSwitchStatus;
-  String _secretCode;
-  bool _isLeaveToggleOutdated;
-
-  bool _isLeaveCancelled;
-
-  bool _isSwitchCancelled;
 
   Meal get meal => _meal;
 
@@ -35,12 +26,16 @@ class YourMenuCardModel extends BaseModel {
     notifyListeners();
   }
 
+  DailyItems _dailyItems;
+
   DailyItems get dailyItems => _dailyItems;
 
   set dailyItems(DailyItems dailyItems) {
     _dailyItems = dailyItems;
     notifyListeners();
   }
+
+  bool _mealLeaveStatus;
 
   bool get mealLeaveStatus => _mealLeaveStatus;
 
@@ -49,12 +44,16 @@ class YourMenuCardModel extends BaseModel {
     notifyListeners();
   }
 
+  bool _mealSwitchStatus;
+
   bool get mealSwitchStatus => _mealSwitchStatus;
 
   set mealSwitchStatus(bool mealSwitchStatus) {
     _mealSwitchStatus = mealSwitchStatus;
     notifyListeners();
   }
+
+  String _secretCode;
 
   String get secretCode => _secretCode;
 
@@ -63,6 +62,8 @@ class YourMenuCardModel extends BaseModel {
     notifyListeners();
   }
 
+  bool _isLeaveToggleOutdated;
+
   bool get isLeaveToggleOutdated => _isLeaveToggleOutdated;
 
   set isLeaveToggleOutdated(bool isLeaveToogleOutdated) {
@@ -70,12 +71,16 @@ class YourMenuCardModel extends BaseModel {
     notifyListeners();
   }
 
+  bool _isLeaveCancelled;
+
   bool get isLeaveCancelled => _isLeaveCancelled;
 
   set isLeaveCancelled(bool isLeaveCancelled) {
     _isLeaveCancelled = isLeaveCancelled;
     notifyListeners();
   }
+
+  bool _isSwitchCancelled;
 
   bool get isSwitchCancelled => _isSwitchCancelled;
 
@@ -106,9 +111,8 @@ class YourMenuCardModel extends BaseModel {
         await Fluttertoast.showToast(msg: 'Meal Skipped');
       }
     } on Failure catch (f) {
-      print(f.message);
-      setErrorMessage(f.message);
       setState(ViewState.Error);
+      setErrorMessage(f.message);
       await Fluttertoast.showToast(msg: errorMessage);
       mealLeaveStatus = !mealLeaveStatus;
     }
@@ -119,9 +123,8 @@ class YourMenuCardModel extends BaseModel {
       isSwitchCancelled = await _multimessingApi.cancelSwitch(id);
       await Fluttertoast.showToast(msg: 'Switch Cancelled');
     } on Failure catch (f) {
-      print(f.message);
-      setErrorMessage(f.message);
       setState(ViewState.Error);
+      setErrorMessage(f.message);
       await Fluttertoast.showToast(msg: errorMessage);
     }
   }
@@ -132,9 +135,10 @@ class YourMenuCardModel extends BaseModel {
       if (value) {
         if (!isLeaveToggleOutdated) {
           var _dialogResponse = await _dialogService.showConfirmationDialog(
-              title: 'Cancel Leave',
-              description: 'Are you sure you would like to cancel this leave?',
-              confirmationTitle: 'CANCEL LEAVE');
+            title: 'Cancel Leave',
+            description: 'Are you sure you would like to cancel this leave?',
+            confirmationTitle: 'CANCEL LEAVE',
+          );
 
           if (_dialogResponse.confirmed) {
             _dialogService.showCustomProgressDialog(title: 'Cancelling Leave');
@@ -145,15 +149,17 @@ class YourMenuCardModel extends BaseModel {
           }
         } else {
           await Fluttertoast.showToast(
-              msg:
-                  'Leave status cannot be changed less than ${Globals.outdatedTime.inHours} hours before the meal time');
+            msg:
+                'Leave status cannot be changed less than ${Globals.outdatedTime.inHours} hours before the meal time',
+          );
         }
       } else {
         if (!isLeaveToggleOutdated) {
           var _dialogResponse = await _dialogService.showConfirmationDialog(
-              title: 'Leave Meal',
-              description: 'Are you sure you would like to leave this meal?',
-              confirmationTitle: 'SKIP MEAL');
+            title: 'Leave Meal',
+            description: 'Are you sure you would like to leave this meal?',
+            confirmationTitle: 'SKIP MEAL',
+          );
 
           if (_dialogResponse.confirmed) {
             _dialogService.showCustomProgressDialog(title: 'Leaving Meal');
@@ -177,8 +183,6 @@ class YourMenuCardModel extends BaseModel {
           var _dialogResponse = await _dialogService.showConfirmationDialog(
             title: 'Cancel Switch',
             description: 'Are you sure you want to cancel this switch?',
-            confirmationTitle: 'YES',
-            cancelTitle: 'NO',
           );
 
           if (_dialogResponse.confirmed) {

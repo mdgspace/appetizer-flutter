@@ -3,8 +3,8 @@ import 'package:appetizer/services/api/multimessing.dart';
 import 'package:appetizer/services/dialog_service.dart';
 import 'package:appetizer/ui/multimessing/confirm_switch_popup_screen.dart';
 import 'package:appetizer/utils/menu_utils.dart';
-import 'package:appetizer/viewmodels/menu_models/other_menu_model.dart';
-import 'package:appetizer/viewmodels/menu_models/your_menu_model.dart';
+import 'package:appetizer/viewmodels/menu/other_menu_viewmodel.dart';
+import 'package:appetizer/viewmodels/menu/your_menu_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
@@ -21,8 +21,8 @@ class OtherMealsMenuCard extends StatefulWidget {
 }
 
 class _OtherMealsMenuCardState extends State<OtherMealsMenuCard> {
-  OtherMenuModel otherMenuModel;
-  YourMenuModel yourMenuModel;
+  OtherMenuViewModel otherMenuModel;
+  YourMenuViewModel yourMenuModel;
 
   @override
   void initState() {

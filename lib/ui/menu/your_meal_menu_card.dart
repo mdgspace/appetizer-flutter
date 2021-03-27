@@ -6,8 +6,8 @@ import 'package:appetizer/ui/user_feedback/new_feedback.dart';
 import 'package:appetizer/utils/color_utils.dart';
 import 'package:appetizer/utils/get_day_and_date_for_meal_card.dart';
 import 'package:appetizer/utils/menu_utils.dart';
-import 'package:appetizer/viewmodels/menu_models/your_menu_card_model.dart';
-import 'package:appetizer/viewmodels/menu_models/your_menu_model.dart';
+import 'package:appetizer/viewmodels/menu/your_menu_card_viewmodel.dart';
+import 'package:appetizer/viewmodels/menu/your_menu_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
@@ -24,9 +24,9 @@ class YourMealsMenuCard extends StatefulWidget {
 }
 
 class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
-  YourMenuModel yourMenuModel;
+  YourMenuViewModel yourMenuModel;
 
-  void onModelReady(YourMenuCardModel model) {
+  void onModelReady(YourMenuCardViewModel model) {
     model.meal = widget.meal;
     model.dailyItems = widget.dailyItems;
 
@@ -43,14 +43,14 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
     }
   }
 
-  void onDidChangeDependencies(YourMenuCardModel model) {
-    final yourMenuModel = Provider.of<YourMenuModel>(context);
+  void onDidChangeDependencies(YourMenuCardViewModel model) {
+    final yourMenuModel = Provider.of<YourMenuViewModel>(context);
     if (this.yourMenuModel != yourMenuModel) {
       this.yourMenuModel = yourMenuModel;
     }
   }
 
-  void onDidUpdateWidget(Widget oldWidget, YourMenuCardModel model) {
+  void onDidUpdateWidget(Widget oldWidget, YourMenuCardViewModel model) {
     if (widget.meal != null) {
       model.mealLeaveStatus =
           widget.meal.leaveStatus.status == LeaveStatusEnum.N ? true : false;
@@ -65,7 +65,7 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
 
   @override
   Widget build(BuildContext context) {
-    return BaseView<YourMenuCardModel>(
+    return BaseView<YourMenuCardViewModel>(
       onModelReady: (model) => onModelReady(model),
       onDidChangeDependencies: (model) => onDidChangeDependencies(model),
       onDidUpdateWidget: (oldWidget, model) =>
@@ -130,7 +130,7 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
     );
   }
 
-  Widget _getQRCard(YourMenuCardModel model) {
+  Widget _getQRCard(YourMenuCardViewModel model) {
     return Card(
       margin: EdgeInsets.fromLTRB(12, 4, 12, 4),
       elevation: 2,
@@ -210,7 +210,7 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
     );
   }
 
-  Widget _feedbackOrToggleComponent(YourMenuCardModel model) {
+  Widget _feedbackOrToggleComponent(YourMenuCardViewModel model) {
     return widget.meal.isOutdated
         ? Padding(
             padding: const EdgeInsets.all(8),
@@ -255,7 +255,7 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
             : Container();
   }
 
-  Widget _getSwitchIcon(YourMenuCardModel model) {
+  Widget _getSwitchIcon(YourMenuCardViewModel model) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12),
       child: widget.meal.isSwitchable
@@ -299,7 +299,7 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
         : Container();
   }
 
-  VoidCallback onQRTap(YourMenuCardModel model) {
+  VoidCallback onQRTap(YourMenuCardViewModel model) {
     switch (model.meal.switchStatus.status) {
       case SwitchStatusEnum.N:
       case SwitchStatusEnum.A:
@@ -337,7 +337,7 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
     }
   }
 
-  Widget _showQRButton(YourMenuCardModel model) {
+  Widget _showQRButton(YourMenuCardViewModel model) {
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: 4,

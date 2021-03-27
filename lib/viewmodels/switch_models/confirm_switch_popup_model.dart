@@ -2,7 +2,7 @@ import 'package:appetizer/enums/view_state.dart';
 import 'package:appetizer/locator.dart';
 import 'package:appetizer/models/failure_model.dart';
 import 'package:appetizer/models/menu/week.dart';
-import 'package:appetizer/services/api/menu.dart';
+import 'package:appetizer/services/api/menu_api.dart';
 import 'package:appetizer/services/api/multimessing.dart';
 import 'package:appetizer/viewmodels/base_model.dart';
 
@@ -19,11 +19,11 @@ class ConfirmSwitchPopupModel extends BaseModel {
     notifyListeners();
   }
 
-  Week _menuWeekMultimessing;
+  WeekMenu _menuWeekMultimessing;
 
-  Week get menuWeekMultimessing => _menuWeekMultimessing;
+  WeekMenu get menuWeekMultimessing => _menuWeekMultimessing;
 
-  set menuWeekMultimessing(Week menuWeekMultimessing) {
+  set menuWeekMultimessing(WeekMenu menuWeekMultimessing) {
     _menuWeekMultimessing = menuWeekMultimessing;
     notifyListeners();
   }
@@ -44,7 +44,7 @@ class ConfirmSwitchPopupModel extends BaseModel {
     setState(ViewState.Busy);
     try {
       menuWeekMultimessing =
-          await _menuApi.menuWeekMultiMessing(weekId, hostelCode);
+          await _menuApi.weekMenuMultiMessing(weekId, hostelCode);
       setState(ViewState.Idle);
     } on Failure catch (f) {
       print(f.message);

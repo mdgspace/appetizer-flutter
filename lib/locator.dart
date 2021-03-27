@@ -1,7 +1,7 @@
 import 'package:appetizer/services/analytics_service.dart';
 import 'package:appetizer/services/api/feedback_api.dart';
 import 'package:appetizer/services/api/leave_api.dart';
-import 'package:appetizer/services/api/menu.dart';
+import 'package:appetizer/services/api/menu_api.dart';
 import 'package:appetizer/services/api/multimessing.dart';
 import 'package:appetizer/services/api/transaction.dart';
 import 'package:appetizer/services/api/user.dart';
@@ -18,11 +18,10 @@ import 'package:appetizer/viewmodels/leaves/leave_status_card_viewmodel.dart';
 import 'package:appetizer/viewmodels/leaves/leave_timeline_viewmodel.dart';
 import 'package:appetizer/viewmodels/leaves/my_leaves_viewmodel.dart';
 import 'package:appetizer/viewmodels/login_models/login_model.dart';
-import 'package:appetizer/viewmodels/menu_models/menu_cards_model.dart';
-import 'package:appetizer/viewmodels/menu_models/other_menu_card_model.dart';
-import 'package:appetizer/viewmodels/menu_models/other_menu_model.dart';
-import 'package:appetizer/viewmodels/menu_models/your_menu_card_model.dart';
-import 'package:appetizer/viewmodels/menu_models/your_menu_model.dart';
+import 'package:appetizer/viewmodels/menu/other_menu_card_viewmodel.dart';
+import 'package:appetizer/viewmodels/menu/other_menu_viewmodel.dart';
+import 'package:appetizer/viewmodels/menu/your_menu_card_viewmodel.dart';
+import 'package:appetizer/viewmodels/menu/your_menu_viewmodel.dart';
 import 'package:appetizer/viewmodels/multimessing_models/qr_genrator_model.dart';
 import 'package:appetizer/viewmodels/multimessing_models/switchable_meals_model.dart';
 import 'package:appetizer/viewmodels/notification_models/notifications_model.dart';
@@ -68,9 +67,8 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => LeaveTimelineViewModel());
   locator.registerFactory(() => MyLeavesViewModel());
   locator.registerFactory(() => LoginModel());
-  locator.registerFactory(() => MenuCardsModel());
-  locator.registerFactory(() => OtherMenuModel());
-  locator.registerFactory(() => YourMenuModel());
+  locator.registerFactory(() => OtherMenuViewModel());
+  locator.registerFactory(() => YourMenuViewModel());
   locator.registerFactory(() => QRGeneratorModel());
   locator.registerFactory(() => SwitchableMealsModel());
   locator.registerFactory(() => NotificationsModel());
@@ -85,6 +83,6 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => MySwitchesModel());
   locator.registerFactory(() => SwitchStatusCardModel());
   locator.registerFactory(() => HomeModel());
-  locator.registerFactory(() => YourMenuCardModel());
-  locator.registerFactory(() => OtherMenuCardModel());
+  locator.registerFactory(() => YourMenuCardViewModel());
+  locator.registerFactory(() => OtherMenuCardViewModel());
 }

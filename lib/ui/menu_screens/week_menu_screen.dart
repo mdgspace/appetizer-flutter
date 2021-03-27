@@ -1,6 +1,6 @@
 import 'package:appetizer/models/menu/week.dart';
 import 'package:appetizer/utils/date_time_utils.dart';
-import 'package:appetizer/viewmodels/menu_models/your_menu_model.dart';
+import 'package:appetizer/viewmodels/menu/your_menu_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:appetizer/colors.dart';
@@ -17,7 +17,7 @@ class _WeekMenuState extends State<WeekMenu> {
 
     //FIXME: setState() or markNeedsBuild() called during build exception, when using Navigator.pop(context) fix that.
     try {
-      Provider.of<YourMenuModel>(context, listen: false);
+      Provider.of<YourMenuViewModel>(context, listen: false);
     } on ProviderNotFoundException {
       print('Caught ProviderNotFoundException WeekMenu');
       Navigator.pop(context);
@@ -82,7 +82,7 @@ class _WeekMenuState extends State<WeekMenu> {
               ],
             ),
           ),
-          Consumer<YourMenuModel>(
+          Consumer<YourMenuViewModel>(
             builder: (BuildContext context, menu, Widget child) {
               if (menu.currentWeekYourMeals == null) {
                 return Container(

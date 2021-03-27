@@ -1,12 +1,9 @@
 import 'dart:convert';
 
+import 'package:appetizer/enums/enum_values.dart';
 import 'package:intl/intl.dart';
 
-Week confirmFromJson(String str) => Week.fromJson(json.decode(str));
-
-String confirmToJson(Week data) => json.encode(data.toJson());
-
-class Week {
+class WeekMenu {
   int weekId;
   int year;
   dynamic name;
@@ -15,7 +12,7 @@ class Week {
   List<Day> days;
   bool isApproved;
 
-  Week({
+  WeekMenu({
     this.weekId,
     this.year,
     this.name,
@@ -25,7 +22,7 @@ class Week {
     this.isApproved,
   });
 
-  factory Week.fromJson(Map<String, dynamic> json) => Week(
+  factory WeekMenu.fromJson(Map<String, dynamic> json) => WeekMenu(
         weekId: json['week_id'],
         year: json['year'],
         name: json['name'],
@@ -65,12 +62,12 @@ class DailyItems {
         id: json['id'],
         breakfast: List<MealItem>.from(
             json['breakfast'].map((x) => MealItem.fromJson(x))),
-        lunch: List<MealItem>.from(
-            json['lunch'].map((x) => MealItem.fromJson(x))),
+        lunch:
+            List<MealItem>.from(json['lunch'].map((x) => MealItem.fromJson(x))),
         dinner: List<MealItem>.from(
             json['dinner'].map((x) => MealItem.fromJson(x))),
-        snack: List<MealItem>.from(
-            json['snack'].map((x) => MealItem.fromJson(x))),
+        snack:
+            List<MealItem>.from(json['snack'].map((x) => MealItem.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -163,8 +160,6 @@ class Day {
 }
 
 class Meal {
-  //WARNING secretCode is always null (backend side)
-  //TODO: (aseem) remove secretCode while making sure nothing breaks
   int id;
   MealType type;
   CostType costType;
@@ -197,8 +192,8 @@ class Meal {
         id: json['id'],
         type: mealTypeValues.map[json['type']],
         costType: costTypeValues.map[json['cost_type']],
-        items: List<MealItem>.from(
-            json['items'].map((x) => MealItem.fromJson(x))),
+        items:
+            List<MealItem>.from(json['items'].map((x) => MealItem.fromJson(x))),
         startTime: json['start_time'],
         endTime: json['end_time'],
         leaveStatus: LeaveStatus.fromJson(json['leave_status']),
@@ -268,7 +263,6 @@ class Meal {
   final DateFormat _timeFormat = DateFormat('HH:mm:ss');
 
   DateTime _startDateTime;
-  DateTime _endDateTime;
 
   DateTime get startDateTime => _startDateTime;
 
@@ -276,18 +270,12 @@ class Meal {
     _startDateTime = value;
   }
 
+  DateTime _endDateTime;
+
   DateTime get endDateTime => _endDateTime;
 
   set endDateTime(DateTime value) {
     _endDateTime = value;
-  }
-
-  String _secretCodeMeal;
-
-  String get secretCodeMeal => _secretCodeMeal;
-
-  set secretCodeMeal(String value) {
-    _secretCodeMeal = value;
   }
 }
 
@@ -360,15 +348,3 @@ enum MealType { B, L, S, D }
 
 final mealTypeValues = EnumValues(
     {'B': MealType.B, 'D': MealType.D, 'L': MealType.L, 'S': MealType.S});
-
-class EnumValues<T> {
-  Map<String, T> map;
-  Map<T, String> reverseMap;
-
-  EnumValues(this.map);
-
-  Map<T, String> get reverse {
-    reverseMap ??= map.map((k, v) => MapEntry(v, k));
-    return reverseMap;
-  }
-}

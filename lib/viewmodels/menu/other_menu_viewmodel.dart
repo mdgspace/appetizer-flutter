@@ -2,14 +2,13 @@ import 'package:appetizer/enums/view_state.dart';
 import 'package:appetizer/locator.dart';
 import 'package:appetizer/models/failure_model.dart';
 import 'package:appetizer/models/menu/week.dart';
-import 'package:appetizer/services/api/menu.dart';
+import 'package:appetizer/services/api/menu_api.dart';
 import 'package:appetizer/viewmodels/base_model.dart';
 
-class OtherMenuModel extends BaseModel {
+class OtherMenuViewModel extends BaseModel {
   final MenuApi _menuApi = locator<MenuApi>();
 
   String _hostelCode;
-  Week _hostelWeekMenu;
 
   String get hostelCode => _hostelCode;
 
@@ -18,22 +17,23 @@ class OtherMenuModel extends BaseModel {
     notifyListeners();
   }
 
-  Week get hostelWeekMenu => _hostelWeekMenu;
+  WeekMenu _hostelWeekMenu;
 
-  set hostelWeekMenu(Week hostelWeekMenu) {
+  WeekMenu get hostelWeekMenu => _hostelWeekMenu;
+
+  set hostelWeekMenu(WeekMenu hostelWeekMenu) {
     _hostelWeekMenu = hostelWeekMenu;
     notifyListeners();
   }
 
-  Future<void> getOtherMenu(int weekId, String hostelCode) async {
+  Future<void> fetchHostelWeekMenu(int weekId, String hostelCode) async {
     setState(ViewState.Busy);
     try {
-      hostelWeekMenu = await _menuApi.menuWeekMultiMessing(weekId, hostelCode);
+      hostelWeekMenu = await _menuApi.weekMenuMultiMessing(weekId, hostelCode);
       setState(ViewState.Idle);
     } on Failure catch (f) {
-      print(f.message);
-      setErrorMessage(f.message);
       setState(ViewState.Error);
+      setErrorMessage(f.message);
     }
   }
 }

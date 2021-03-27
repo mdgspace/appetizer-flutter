@@ -7,7 +7,7 @@ import 'package:appetizer/ui/components/appetizer_error_widget.dart';
 import 'package:appetizer/ui/components/appetizer_progress_widget.dart';
 import 'package:appetizer/ui/menu/day_menu.dart';
 import 'package:appetizer/viewmodels/current_date_model.dart';
-import 'package:appetizer/viewmodels/menu_models/your_menu_model.dart';
+import 'package:appetizer/viewmodels/menu/your_menu_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -41,7 +41,7 @@ class _YourMenuState extends State<YourMenu> {
 
   @override
   Widget build(BuildContext context) {
-    return BaseView<YourMenuModel>(
+    return BaseView<YourMenuViewModel>(
       onModelReady: (model) => model.selectedWeekMenuYourMeals(weekId),
       builder: (context, model, child) => model.state == ViewState.Busy
           ? AppetizerProgressWidget()
