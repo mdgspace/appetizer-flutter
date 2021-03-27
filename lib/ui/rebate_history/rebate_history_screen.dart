@@ -1,6 +1,6 @@
 import 'package:appetizer/enums/view_state.dart';
 import 'package:appetizer/ui/base_view.dart';
-import 'package:appetizer/ui/components/error_widget.dart';
+import 'package:appetizer/ui/components/appetizer_error_widget.dart';
 import 'package:appetizer/utils/date_time_utils.dart';
 import 'package:appetizer/viewmodels/rebates_models/rebate_history_model.dart';
 import 'package:flutter/material.dart';
@@ -55,7 +55,7 @@ class _RebateHistoryScreenState extends State<RebateHistoryScreen> {
                         ),
                       )
                     : model.state == ViewState.Error
-                        ? AppiErrorWidget(message: model.errorMessage)
+                        ? AppetizerErrorWidget(errorMessage: model.errorMessage)
                         : ListView.builder(
                             itemCount: model.yearlyRebate.count,
                             itemBuilder: (BuildContext context, int index) {

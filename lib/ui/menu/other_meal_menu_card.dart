@@ -1,6 +1,6 @@
 import 'package:appetizer/models/menu/week.dart';
 import 'package:appetizer/services/api/multimessing.dart';
-import 'package:appetizer/ui/components/alert_dialog.dart';
+import 'package:appetizer/services/dialog_service.dart';
 import 'package:appetizer/ui/multimessing/confirm_switch_popup_screen.dart';
 import 'package:appetizer/utils/menu_utils.dart';
 import 'package:appetizer/viewmodels/menu_models/other_menu_model.dart';
@@ -172,8 +172,9 @@ class _OtherMealsMenuCardState extends State<OtherMealsMenuCard> {
                                       FlatButton(
                                         onPressed: () async {
                                           Navigator.pop(alertContext);
-                                          showCustomDialog(
-                                              context, 'Cancelling Switch');
+                                          DialogService()
+                                              .showCustomProgressDialog(
+                                                  title: 'Cancelling Switch');
                                           await MultimessingApi()
                                               .cancelSwitch(
                                                   widget.meal.switchStatus.id)

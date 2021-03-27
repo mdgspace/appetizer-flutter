@@ -1,5 +1,5 @@
 import 'package:appetizer/models/user/oauth.dart';
-import 'package:appetizer/ui/FAQ/faq_screen.dart';
+import 'package:appetizer/ui/FAQ/faq_view.dart';
 import 'package:appetizer/ui/help/help.dart';
 import 'package:appetizer/ui/leave_history/leave_history_screen.dart';
 import 'package:appetizer/ui/login/login.dart';
@@ -56,8 +56,8 @@ class AppetizerRouter {
         return MaterialPageRoute(builder: (_) => NotificationHistory());
       case Settings.id:
         return MaterialPageRoute(builder: (_) => Settings());
-      case FaqList.id:
-        return MaterialPageRoute(builder: (_) => FaqList());
+      case FaqView.id:
+        return MaterialPageRoute(builder: (_) => FaqView());
       case Help.id:
         return MaterialPageRoute(builder: (_) => Help());
       case EditProfile.id:

@@ -10,7 +10,7 @@ import 'package:appetizer/services/dialog_service.dart';
 import 'package:appetizer/services/local_storage_service.dart';
 import 'package:appetizer/services/push_notification_service.dart';
 import 'package:appetizer/services/remote_config_service.dart';
-import 'package:appetizer/viewmodels/faq_models/faq_model.dart';
+import 'package:appetizer/viewmodels/faq/faq_viewmodel.dart';
 import 'package:appetizer/viewmodels/feedback/new_feedback_viewmodel.dart';
 import 'package:appetizer/viewmodels/feedback/user_feedback_viewmodel.dart';
 import 'package:appetizer/viewmodels/home_model.dart';
@@ -61,7 +61,7 @@ Future<void> setupLocator() async {
   locator.registerSingleton<LocalStorageService>(localStorageService);
 
   locator.registerFactory(() => StartUpViewModel());
-  locator.registerFactory(() => FaqModel());
+  locator.registerFactory(() => FaqViewModel());
   locator.registerFactory(() => NewFeedbackViewModel());
   locator.registerFactory(() => UserFeedbackViewModel());
   locator.registerFactory(() => LeaveStatusCardModel());

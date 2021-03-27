@@ -3,8 +3,8 @@ import 'package:appetizer/globals.dart';
 import 'package:appetizer/models/menu/week.dart';
 import 'package:appetizer/services/api/user.dart';
 import 'package:appetizer/ui/base_view.dart';
-import 'package:appetizer/ui/components/error_widget.dart';
-import 'package:appetizer/ui/components/progress_bar.dart';
+import 'package:appetizer/ui/components/appetizer_error_widget.dart';
+import 'package:appetizer/ui/components/appetizer_progress_widget.dart';
 import 'package:appetizer/ui/menu/day_menu.dart';
 import 'package:appetizer/utils/get_hostel_code.dart';
 import 'package:appetizer/viewmodels/current_date_model.dart';
@@ -49,9 +49,9 @@ class _OtherMenuState extends State<OtherMenu> {
       onModelReady: (model) =>
           model.getOtherMenu(weekId, hostelCodeMap[widget.hostelName]),
       builder: (context, model, child) => model.state == ViewState.Busy
-          ? ProgressBar()
+          ? AppetizerProgressWidget()
           : model.state == ViewState.Error
-              ? AppiErrorWidget()
+              ? AppetizerErrorWidget()
               : Builder(
                   builder: (context) {
                     Day currentDayMeal;

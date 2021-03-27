@@ -1,7 +1,7 @@
 import 'package:appetizer/enums/view_state.dart';
 import 'package:appetizer/ui/base_view.dart';
-import 'package:appetizer/ui/components/error_widget.dart';
-import 'package:appetizer/ui/components/progress_bar.dart';
+import 'package:appetizer/ui/components/appetizer_error_widget.dart';
+import 'package:appetizer/ui/components/appetizer_progress_widget.dart';
 import 'package:appetizer/ui/leave_history/multiple_leave_timeline_card.dart';
 import 'package:appetizer/ui/leave_history/single_leave_timeline_card.dart';
 import 'package:appetizer/utils/date_time_utils.dart';
@@ -21,10 +21,10 @@ class LeaveTimeline extends StatelessWidget {
     return BaseView<LeaveTimelineModel>(
       onModelReady: (model) => model.getLeaveList(year, month),
       builder: (context, model, child) => model.state == ViewState.Busy
-          ? ProgressBar()
+          ? AppetizerProgressWidget()
           : model.state == ViewState.Error
-              ? AppiErrorWidget(
-                  message: model.errorMessage,
+              ? AppetizerErrorWidget(
+                  errorMessage: model.errorMessage,
                 )
               : Builder(
                   builder: (context) {

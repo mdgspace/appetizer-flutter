@@ -3,9 +3,10 @@ import 'package:appetizer/locator.dart';
 import 'package:appetizer/models/failure_model.dart';
 import 'package:appetizer/models/transaction/faq.dart';
 import 'package:appetizer/services/api/transaction.dart';
+import 'package:appetizer/utils/snackbar_utils.dart';
 import 'package:appetizer/viewmodels/base_model.dart';
 
-class FaqModel extends BaseModel {
+class FaqViewModel extends BaseModel {
   final TransactionApi _transactionApi = locator<TransactionApi>();
 
   List<Faq> _faqs;
@@ -23,9 +24,9 @@ class FaqModel extends BaseModel {
       faqs = await _transactionApi.getFAQ();
       setState(ViewState.Idle);
     } on Failure catch (f) {
-      print(f.message);
-      setErrorMessage(f.message);
       setState(ViewState.Error);
+      setErrorMessage(f.message);
+      SnackBarUtils.showDark(f.message);
     }
   }
 }

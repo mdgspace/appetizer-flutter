@@ -1,6 +1,6 @@
 import 'package:appetizer/colors.dart';
 import 'package:appetizer/globals.dart';
-import 'package:appetizer/ui/FAQ/faq_screen.dart';
+import 'package:appetizer/ui/FAQ/faq_view.dart';
 import 'package:appetizer/ui/base_view.dart';
 import 'package:appetizer/ui/date_picker/date_picker.dart';
 import 'package:appetizer/ui/menu/other_menu.dart';
@@ -386,7 +386,7 @@ class _HomeState extends State<Home> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => FaqList(),
+                          builder: (context) => FaqView(),
                         ),
                       );
                     },

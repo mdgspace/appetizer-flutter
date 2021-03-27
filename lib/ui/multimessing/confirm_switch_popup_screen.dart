@@ -1,9 +1,9 @@
 import 'package:appetizer/enums/view_state.dart';
 import 'package:appetizer/models/menu/week.dart';
+import 'package:appetizer/services/dialog_service.dart';
 import 'package:appetizer/ui/base_view.dart';
-import 'package:appetizer/ui/components/alert_dialog.dart';
-import 'package:appetizer/ui/components/error_widget.dart';
-import 'package:appetizer/ui/components/progress_bar.dart';
+import 'package:appetizer/ui/components/appetizer_error_widget.dart';
+import 'package:appetizer/ui/components/appetizer_progress_widget.dart';
 import 'package:appetizer/ui/components/switch_confirmation_meal_card.dart';
 import 'package:appetizer/ui/multimessing/confirmed_switch_screen.dart';
 import 'package:appetizer/utils/date_time_utils.dart';
@@ -76,7 +76,7 @@ class _ConfirmSwitchPopupScreenState extends State<ConfirmSwitchPopupScreen> {
   Widget build(BuildContext context) {
     VoidCallback _onConfirmSwitchPressed(ConfirmSwitchPopupModel model) {
       return () async {
-        showCustomDialog(context, 'Switching Meals');
+        DialogService().showCustomProgressDialog(title: 'Switching Meals');
         await model.switchMeals(
           currentHostelMealId,
           hostelCodeMap[widget.meal.hostelName],
@@ -113,9 +113,9 @@ class _ConfirmSwitchPopupScreenState extends State<ConfirmSwitchPopupScreen> {
       builder: (context, model, child) => Scaffold(
         appBar: _getAppBar(),
         body: model.state == ViewState.Busy
-            ? ProgressBar()
+            ? AppetizerProgressWidget()
             : model.state == ViewState.Error
-                ? AppiErrorWidget(message: model.errorMessage)
+                ? AppetizerErrorWidget(errorMessage: model.errorMessage)
                 : Builder(
                     builder: (context) {
                       model.menuWeekMultimessing.days.forEach((dayMenu) {

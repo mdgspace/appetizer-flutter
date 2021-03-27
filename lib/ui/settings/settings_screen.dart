@@ -1,5 +1,5 @@
 import 'package:appetizer/enums/view_state.dart';
-import 'package:appetizer/ui/FAQ/faq_screen.dart';
+import 'package:appetizer/ui/FAQ/faq_view.dart';
 import 'package:appetizer/ui/base_view.dart';
 import 'package:appetizer/ui/settings/list_item.dart';
 import 'package:appetizer/ui/settings/page_footer.dart';
@@ -128,7 +128,7 @@ class Settings extends StatelessWidget {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => FaqList(),
+                                      builder: (context) => FaqView(),
                                     ),
                                   );
                                 },
