@@ -37,7 +37,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
   String _enrollmentNo, _password;
 
   FlareActor flareActor = FlareActor(
-    "flare_files/login_appetizer.flr",
+    "assets/flare/login_appetizer.flr",
     animation: "idle",
   );
 
@@ -378,7 +378,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
             _chefCorrectController.forward();
             setState(() {
               flareActor = FlareActor(
-                "flare_files/login_appetizer.flr",
+                "assets/flare/login_appetizer.flr",
                 animation: "Initial To Right",
               );
             });
@@ -390,7 +390,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
             _chefCorrectController.forward();
             setState(() {
               flareActor = FlareActor(
-                "flare_files/login_appetizer.flr",
+                "assets/flare/login_appetizer.flr",
                 animation: "Wrong To Right",
               );
             });
@@ -413,7 +413,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
           _chefWrongController.forward();
           setState(() {
             flareActor = FlareActor(
-              "flare_files/login_appetizer.flr",
+              "assets/flare/login_appetizer.flr",
               animation: "Initial To Wrong",
             );
           });

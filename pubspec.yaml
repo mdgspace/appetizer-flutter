@@ -45,9 +45,9 @@ flutter:
   uses-material-design: true
 
   assets:
-    - flare_files/login_appetizer.flr
     - assets/images/
     - assets/icons/
+    - assets/flare/
 
   fonts:
     - family: OpenSans
