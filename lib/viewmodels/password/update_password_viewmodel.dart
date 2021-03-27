@@ -1,12 +1,12 @@
 import 'package:appetizer/enums/view_state.dart';
 import 'package:appetizer/locator.dart';
 import 'package:appetizer/models/failure_model.dart';
-import 'package:appetizer/services/api/user.dart';
+import 'package:appetizer/services/api/user_api.dart';
 import 'package:appetizer/services/dialog_service.dart';
 import 'package:appetizer/utils/snackbar_utils.dart';
 import 'package:appetizer/viewmodels/base_model.dart';
 
-class ResetPasswordModel extends BaseModel {
+class UpdatePasswordViewModel extends BaseModel {
   final UserApi _userApi = locator<UserApi>();
   final DialogService _dialogService = locator<DialogService>();
 
@@ -23,7 +23,7 @@ class ResetPasswordModel extends BaseModel {
     setState(ViewState.Busy);
     try {
       var userPasswordResetDetail =
-          await _userApi.userPasswordReset(oldPassword, newPassword);
+          await _userApi.resetUserPassword(oldPassword, newPassword);
       isUserPasswordReset =
           userPasswordResetDetail.detail == 'password changed successfully'
               ? true

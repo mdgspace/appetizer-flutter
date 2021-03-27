@@ -1,6 +1,6 @@
 import 'package:appetizer/enums/view_state.dart';
 import 'package:appetizer/locator.dart';
-import 'package:appetizer/models/user/login.dart';
+import 'package:appetizer/models/user/user.dart';
 import 'package:appetizer/services/local_storage_service.dart';
 import 'package:appetizer/services/remote_config_service.dart';
 import 'package:flutter/material.dart';
@@ -11,9 +11,9 @@ class BaseModel extends ChangeNotifier {
   final LocalStorageService _localStorageService =
       locator<LocalStorageService>();
 
-  Login get currentUser => _localStorageService.currentUser;
+  User get currentUser => _localStorageService.currentUser;
 
-  set currentUser(Login currentUser) {
+  set currentUser(User currentUser) {
     _localStorageService.currentUser = currentUser;
     notifyListeners();
   }

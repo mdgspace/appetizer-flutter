@@ -2,18 +2,17 @@ import 'package:appetizer/enums/view_state.dart';
 import 'package:appetizer/ui/base_view.dart';
 import 'package:appetizer/ui/components/appetizer_error_widget.dart';
 import 'package:appetizer/ui/components/appetizer_progress_widget.dart';
+import 'package:appetizer/ui/notification_history/notification.dart';
 import 'package:appetizer/utils/date_time_utils.dart';
-import 'package:appetizer/viewmodels/notification_models/notifications_model.dart';
+import 'package:appetizer/viewmodels/notifications/notifications_viewmodel.dart';
 import 'package:flutter/material.dart';
-
-import 'notification.dart';
 
 class NotificationHistory extends StatelessWidget {
   static const String id = 'notification_history_view';
 
   @override
   Widget build(BuildContext context) {
-    return BaseView<NotificationsModel>(
+    return BaseView<NotificationsViewModel>(
       onModelReady: (model) => model.getNotifications(),
       builder: (context, model, child) => Scaffold(
         appBar: AppBar(

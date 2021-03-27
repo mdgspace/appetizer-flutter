@@ -1,14 +1,10 @@
-// To parse this JSON data, do
-//
-//     final login = loginFromJson(jsonString);
-
 import 'dart:convert';
 
-Login loginFromJson(String str) => Login.fromJson(json.decode(str));
+User userFromJson(String str) => User.fromJson(json.decode(str));
 
-String loginToJson(Login data) => json.encode(data.toJson());
+String userToJson(User data) => json.encode(data.toJson());
 
-class Login {
+class User {
   String email;
   String hostelName;
   String hostelCode;
@@ -29,7 +25,7 @@ class Login {
   String token;
   bool isNew;
 
-  Login({
+  User({
     this.email,
     this.hostelName,
     this.hostelCode,
@@ -51,7 +47,7 @@ class Login {
     this.isNew,
   });
 
-  factory Login.fromJson(Map<String, dynamic> json) => Login(
+  factory User.fromJson(Map<String, dynamic> json) => User(
         email: json['email'],
         hostelName: json['hostel_name'],
         hostelCode: json['hostel_code'],

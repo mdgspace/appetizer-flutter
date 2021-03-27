@@ -1,6 +1,6 @@
 import 'package:appetizer/ui/base_view.dart';
 import 'package:appetizer/ui/settings/user_details.dart';
-import 'package:appetizer/viewmodels/settings_models/edit_profile_model.dart';
+import 'package:appetizer/viewmodels/settings/edit_profile_viewmodel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -30,7 +30,7 @@ class _EditProfileState extends State<EditProfile> {
 
   @override
   Widget build(BuildContext context) {
-    return BaseView<EditProfileModel>(
+    return BaseView<EditProfileViewModel>(
       builder: (context, model, child) => Scaffold(
         resizeToAvoidBottomInset: true,
         body: SingleChildScrollView(
@@ -109,7 +109,7 @@ class _EditProfileState extends State<EditProfile> {
     );
   }
 
-  Widget _showConfirmButton(EditProfileModel model) {
+  Widget _showConfirmButton(EditProfileViewModel model) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(15, 15, 15, 15),
       child: OutlineButton(
@@ -133,7 +133,7 @@ class _EditProfileState extends State<EditProfile> {
     );
   }
 
-  Widget _showContactNoInput(EditProfileModel model) {
+  Widget _showContactNoInput(EditProfileViewModel model) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(15, 15, 15, 15),
       child: TextFormField(
@@ -163,7 +163,7 @@ class _EditProfileState extends State<EditProfile> {
     );
   }
 
-  Widget _showEmailInput(EditProfileModel model) {
+  Widget _showEmailInput(EditProfileViewModel model) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(15, 15, 15, 15),
       child: TextFormField(
@@ -192,7 +192,7 @@ class _EditProfileState extends State<EditProfile> {
     );
   }
 
-  Future<void> _validateAndSave(EditProfileModel model) async {
+  Future<void> _validateAndSave(EditProfileViewModel model) async {
     final form = _formKey.currentState;
     if (form.validate()) {
       form.save();

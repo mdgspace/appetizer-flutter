@@ -1,7 +1,7 @@
 import 'package:appetizer/enums/view_state.dart';
 import 'package:appetizer/globals.dart';
 import 'package:appetizer/models/menu/week.dart';
-import 'package:appetizer/services/api/user.dart';
+import 'package:appetizer/services/api/user_api.dart';
 import 'package:appetizer/ui/base_view.dart';
 import 'package:appetizer/ui/components/appetizer_error_widget.dart';
 import 'package:appetizer/ui/components/appetizer_progress_widget.dart';
@@ -25,7 +25,7 @@ class _YourMenuState extends State<YourMenu> {
   void initState() {
     super.initState();
 
-    UserApi().userMeGet().then((me) {
+    UserApi().getCurrentUser().then((me) {
       setState(() {
         Globals.isCheckedOut = me.isCheckedOut;
       });

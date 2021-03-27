@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:appetizer/models/user/login.dart';
+import 'package:appetizer/models/user/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LocalStorageService {
@@ -46,16 +46,16 @@ class LocalStorageService {
     }
   }
 
-  Login get currentUser {
+  User get currentUser {
     var userJson = _getFromDisk(userKey);
     if (userJson == null) {
       return null;
     }
 
-    return Login.fromJson(json.decode(userJson));
+    return User.fromJson(json.decode(userJson));
   }
 
-  set currentUser(Login userToSave) {
+  set currentUser(User userToSave) {
     _saveToDisk(userKey, json.encode(userToSave?.toJson()));
   }
 

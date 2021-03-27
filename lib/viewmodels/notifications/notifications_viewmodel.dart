@@ -2,17 +2,17 @@ import 'package:appetizer/enums/view_state.dart';
 import 'package:appetizer/locator.dart';
 import 'package:appetizer/models/failure_model.dart';
 import 'package:appetizer/models/user/notification.dart';
-import 'package:appetizer/services/api/user.dart';
+import 'package:appetizer/services/api/user_api.dart';
 import 'package:appetizer/viewmodels/base_model.dart';
 
-class NotificationsModel extends BaseModel {
+class NotificationsViewModel extends BaseModel {
   final UserApi _userApi = locator<UserApi>();
 
-  List<Result> _notifications;
+  List<Notification> _notifications;
 
-  List<Result> get notifications => _notifications;
+  List<Notification> get notifications => _notifications;
 
-  set notifications(List<Result> notifications) {
+  set notifications(List<Notification> notifications) {
     _notifications = notifications;
     notifyListeners();
   }

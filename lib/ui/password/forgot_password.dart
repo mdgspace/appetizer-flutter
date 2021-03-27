@@ -1,5 +1,5 @@
 import 'package:appetizer/ui/base_view.dart';
-import 'package:appetizer/viewmodels/password_models/forgot_password_model.dart';
+import 'package:appetizer/viewmodels/password/forgot_password_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:appetizer/colors.dart';
 
@@ -16,7 +16,7 @@ class _ForgotPassState extends State<ForgotPass> {
 
   @override
   Widget build(BuildContext context) {
-    return BaseView<ForgotPasswordModel>(
+    return BaseView<ForgotPasswordViewModel>(
       builder: (context, model, child) => Scaffold(
         resizeToAvoidBottomInset: true,
         body: SingleChildScrollView(

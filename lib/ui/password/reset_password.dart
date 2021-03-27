@@ -1,5 +1,5 @@
 import 'package:appetizer/ui/base_view.dart';
-import 'package:appetizer/viewmodels/password_models/reset_password_model.dart';
+import 'package:appetizer/viewmodels/password/update_password_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:appetizer/colors.dart';
 
@@ -42,7 +42,7 @@ class _ResetPasswordState extends State<ResetPassword> {
 
   @override
   Widget build(BuildContext context) {
-    return BaseView<ResetPasswordModel>(
+    return BaseView<UpdatePasswordViewModel>(
       builder: (context, model, child) => Scaffold(
         resizeToAvoidBottomInset: true,
         appBar: AppBar(

@@ -1,15 +1,4 @@
-// To parse this JSON data, do
-//
-//     final versionCheck = versionCheckFromJson(jsonString);
-
-import 'dart:convert';
-
-VersionCheck versionCheckFromJson(String str) =>
-    VersionCheck.fromJson(json.decode(str));
-
-String versionCheckToJson(VersionCheck data) => json.encode(data.toJson());
-
-class VersionCheck {
+class AppetizerVersion {
   String number;
   String platform;
   dynamic expiryDate;
@@ -17,7 +6,7 @@ class VersionCheck {
   bool isLatest;
   int dateCreated;
 
-  VersionCheck({
+  AppetizerVersion({
     this.number,
     this.platform,
     this.expiryDate,
@@ -26,7 +15,8 @@ class VersionCheck {
     this.dateCreated,
   });
 
-  factory VersionCheck.fromJson(Map<String, dynamic> json) => VersionCheck(
+  factory AppetizerVersion.fromJson(Map<String, dynamic> json) =>
+      AppetizerVersion(
         number: json['number'],
         platform: json['platform'],
         expiryDate: json['expiry_date'],

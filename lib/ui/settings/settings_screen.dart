@@ -4,7 +4,7 @@ import 'package:appetizer/ui/base_view.dart';
 import 'package:appetizer/ui/settings/list_item.dart';
 import 'package:appetizer/ui/settings/page_footer.dart';
 import 'package:appetizer/ui/settings/user_details.dart';
-import 'package:appetizer/viewmodels/settings_models/settings_model.dart';
+import 'package:appetizer/viewmodels/settings/settings_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:share/share.dart';
@@ -29,7 +29,7 @@ class Settings extends StatelessWidget {
       backgroundColor: Colors.transparent,
     );
 
-    return BaseView<SettingsModel>(
+    return BaseView<SettingsViewModel>(
       onModelReady: (model) => model.getUserDetails(),
       builder: (context, model, child) => Stack(
         children: <Widget>[

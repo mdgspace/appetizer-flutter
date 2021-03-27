@@ -1,24 +1,23 @@
 import 'package:appetizer/enums/view_state.dart';
 import 'package:appetizer/locator.dart';
 import 'package:appetizer/models/failure_model.dart';
-import 'package:appetizer/models/user/oauth.dart';
-import 'package:appetizer/services/api/user.dart';
+import 'package:appetizer/models/user/oauth_user.dart';
+import 'package:appetizer/services/api/user_api.dart';
 import 'package:appetizer/services/dialog_service.dart';
 import 'package:appetizer/ui/menu/home_view.dart';
-import 'package:appetizer/utils/user_details.dart';
 import 'package:appetizer/viewmodels/base_model.dart';
 import 'package:get/get.dart';
 
-class NewPasswordModel extends BaseModel {
+class NewPasswordViewModel extends BaseModel {
   final UserApi _userApi = locator<UserApi>();
   final DialogService _dialogService = locator<DialogService>();
 
-  OauthResponse _oauthResponse;
+  OAuthUser _oauthUser;
 
-  OauthResponse get oauthResponse => _oauthResponse;
+  OAuthUser get oauthUser => _oauthUser;
 
-  set oauthResponse(OauthResponse oauthResponse) {
-    _oauthResponse = oauthResponse;
+  set oauthUser(OAuthUser oauthUser) {
+    _oauthUser = oauthUser;
     notifyListeners();
   }
 
@@ -26,13 +25,11 @@ class NewPasswordModel extends BaseModel {
       int enr, String password, String email, int contactNo) async {
     setState(ViewState.Busy);
     try {
-      oauthResponse =
-          await _userApi.oAuthComplete(enr, password, email, contactNo);
+      oauthUser = await _userApi.oAuthComplete(enr, password, email, contactNo);
       setState(ViewState.Idle);
     } on Failure catch (f) {
-      print(f.message);
-      setErrorMessage(f.message);
       setState(ViewState.Error);
+      setErrorMessage(f.message);
     }
   }
 
@@ -41,14 +38,13 @@ class NewPasswordModel extends BaseModel {
     _dialogService.showCustomProgressDialog(title: 'Logging You In');
     await oAuthComplete(enr, password, email, contactNo);
     _dialogService.popDialog();
-    if (oauthResponse.token != null) {
-      var studentData = oauthResponse.studentData;
-      currentUser = UserDetailsUtils.getLoginFromStudentData(
-          studentData, oauthResponse.token);
-      await Get.offNamed(HomeView.id, arguments: oauthResponse.token);
+    if (oauthUser.token != null) {
+      var studentData = oauthUser.studentData;
+      currentUser = studentData;
+      await Get.offNamed(HomeView.id, arguments: oauthUser.token);
     } else {
-      //TODO
-      print('Error');
+      setState(ViewState.Error);
+      setErrorMessage('Invalid Request');
     }
   }
 }

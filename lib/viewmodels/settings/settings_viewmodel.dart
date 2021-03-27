@@ -1,55 +1,42 @@
 import 'package:appetizer/constants.dart';
 import 'package:appetizer/enums/view_state.dart';
 import 'package:appetizer/locator.dart';
-import 'package:appetizer/models/detail.dart';
 import 'package:appetizer/models/failure_model.dart';
-import 'package:appetizer/models/user/me.dart';
-import 'package:appetizer/services/api/user.dart';
+import 'package:appetizer/models/user/user.dart';
+import 'package:appetizer/services/api/user_api.dart';
 import 'package:appetizer/services/dialog_service.dart';
 import 'package:appetizer/services/push_notification_service.dart';
 import 'package:appetizer/ui/login/login.dart';
-import 'package:appetizer/utils/user_details.dart';
 import 'package:appetizer/viewmodels/base_model.dart';
 import 'package:get/get.dart';
 
-class SettingsModel extends BaseModel {
+class SettingsViewModel extends BaseModel {
   final UserApi _userApi = locator<UserApi>();
   final PushNotificationService _pushNotificationService =
       locator<PushNotificationService>();
   final DialogService _dialogService = locator<DialogService>();
 
-  Me _userDetails;
+  User _userDetails;
 
-  Me get userDetails => _userDetails;
+  User get userDetails => _userDetails;
 
-  set userDetails(Me userDetails) {
+  set userDetails(User userDetails) {
     _userDetails = userDetails;
-    notifyListeners();
-  }
-
-  Detail _userLogoutDetail;
-
-  Detail get userLogoutDetail => _userLogoutDetail;
-
-  set userLogoutDetail(Detail userLogoutDetail) {
-    _userLogoutDetail = userLogoutDetail;
     notifyListeners();
   }
 
   Future getUserDetails() async {
     setState(ViewState.Busy);
     try {
-      userDetails = await _userApi.userMeGet();
+      userDetails = await _userApi.getCurrentUser();
       setState(ViewState.Idle);
     } on Failure catch (f) {
-      print(f.message);
       if (f.message == Constants.NO_INTERNET_CONNECTION) {
-        userDetails =
-            UserDetailsUtils.getMeFromLoggedInUserDetails(currentUser);
+        userDetails = currentUser;
         setState(ViewState.Idle);
       } else {
-        setErrorMessage(f.message);
         setState(ViewState.Error);
+        setErrorMessage(f.message);
       }
     }
   }
@@ -60,9 +47,8 @@ class SettingsModel extends BaseModel {
       await _userApi.userLogout();
       setState(ViewState.Idle);
     } on Failure catch (f) {
-      print(f.message);
-      setErrorMessage(f.message);
       setState(ViewState.Error);
+      setErrorMessage(f.message);
     }
   }
 

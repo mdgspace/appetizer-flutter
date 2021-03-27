@@ -4,7 +4,7 @@ import 'package:appetizer/colors.dart';
 import 'package:appetizer/enums/view_state.dart';
 import 'package:appetizer/ui/base_view.dart';
 import 'package:appetizer/utils/snackbar_utils.dart';
-import 'package:appetizer/viewmodels/login_models/login_model.dart';
+import 'package:appetizer/viewmodels/login/login_viewmodel.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
@@ -51,12 +51,12 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
     });
   }
 
-  void resetLogin(LoginModel model) {
+  void resetLogin(LoginViewModel model) {
     _formKey.currentState.reset();
     SnackBarUtils.showDark(model.errorMessage);
   }
 
-  void onModelReady(LoginModel model) {
+  void onModelReady(LoginViewModel model) {
     Future.delayed(Duration(seconds: 1), () {
       model.currentUser = null;
     });
@@ -94,7 +94,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
 
-    return BaseView<LoginModel>(
+    return BaseView<LoginViewModel>(
       onModelReady: (model) => onModelReady(model),
       onModelDestroy: (model) => onModelDestroy(),
       builder: (context, model, child) => Scaffold(
@@ -247,7 +247,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
     );
   }
 
-  Widget _showLoginButton(LoginModel model) {
+  Widget _showLoginButton(LoginViewModel model) {
     return (model.state == ViewState.Busy)
         ? FlatButton(
             padding: EdgeInsets.all(8),
@@ -296,7 +296,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
               );
   }
 
-  Widget _helpButton(LoginModel model) {
+  Widget _helpButton(LoginViewModel model) {
     return (model.isLoginSuccessful)
         ? Container()
         : SizedBox(
@@ -313,7 +313,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
           );
   }
 
-  Widget _showDash(LoginModel model) {
+  Widget _showDash(LoginViewModel model) {
     return (model.isLoginSuccessful)
         ? Container()
         : SizedBox(
@@ -330,7 +330,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
           );
   }
 
-  Widget _forgotPasswordButton(LoginModel model) {
+  Widget _forgotPasswordButton(LoginViewModel model) {
     return (model.isLoginSuccessful)
         ? Container()
         : SizedBox(
@@ -347,7 +347,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
           );
   }
 
-  Widget _showChannelIButton(LoginModel model) {
+  Widget _showChannelIButton(LoginViewModel model) {
     return (model.isLoginSuccessful)
         ? Container()
         : FlatButton(
@@ -366,7 +366,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
           );
   }
 
-  void _validateAndSubmit(LoginModel model) {
+  void _validateAndSubmit(LoginViewModel model) {
     if (_validateAndSave()) {
       FocusScope.of(context).requestFocus(FocusNode());
       model
@@ -403,7 +403,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
           await Navigator.pushReplacementNamed(
             context,
             'home',
-            arguments: model.login.token,
+            arguments: model.user.token,
           );
         } else {
           resetLogin(model);

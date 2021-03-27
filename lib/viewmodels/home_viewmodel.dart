@@ -3,8 +3,8 @@ import 'package:appetizer/locator.dart';
 import 'package:appetizer/models/failure_model.dart';
 import 'package:appetizer/services/api/leave_api.dart';
 import 'package:appetizer/services/api/multimessing_api.dart';
-import 'package:appetizer/services/api/user.dart';
-import 'package:appetizer/services/api/version_check.dart';
+import 'package:appetizer/services/api/user_api.dart';
+import 'package:appetizer/services/api/version_check_api.dart';
 import 'package:appetizer/services/dialog_service.dart';
 import 'package:appetizer/services/push_notification_service.dart';
 import 'package:appetizer/ui/login/login.dart';
@@ -52,7 +52,7 @@ class HomeViewModel extends BaseModel {
 
   Future fetchInitialCheckedStatus() async {
     try {
-      var userDetails = await _userApi.userMeGet();
+      var userDetails = await _userApi.getCurrentUser();
       isCheckedOut = userDetails.isCheckedOut;
       notifyListeners();
     } on Failure catch (f) {

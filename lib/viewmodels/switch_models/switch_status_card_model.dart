@@ -1,8 +1,7 @@
 import 'package:appetizer/enums/view_state.dart';
-import 'package:appetizer/globals.dart';
 import 'package:appetizer/locator.dart';
 import 'package:appetizer/models/failure_model.dart';
-import 'package:appetizer/services/api/user.dart';
+import 'package:appetizer/services/api/user_api.dart';
 import 'package:appetizer/viewmodels/base_model.dart';
 
 class SwitchStatusCardModel extends BaseModel {
@@ -28,7 +27,7 @@ class SwitchStatusCardModel extends BaseModel {
   Future setInitialValues() async {
     setState(ViewState.Busy);
     try {
-      var me = await _userApi.userMeGet();
+      var me = await _userApi.getCurrentUser();
       setState(ViewState.Idle);
       isCheckedOut = me.isCheckedOut;
       imageUrl = me.imageUrl;

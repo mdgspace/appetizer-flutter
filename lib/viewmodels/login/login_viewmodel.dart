@@ -1,27 +1,26 @@
 import 'package:appetizer/enums/view_state.dart';
 import 'package:appetizer/locator.dart';
-import 'package:appetizer/models/user/login.dart';
-import 'package:appetizer/models/user/oauth.dart';
-import 'package:appetizer/services/api/user.dart';
+import 'package:appetizer/models/user/oauth_user.dart';
+import 'package:appetizer/models/user/user.dart';
+import 'package:appetizer/services/api/user_api.dart';
 import 'package:appetizer/services/dialog_service.dart';
 import 'package:appetizer/ui/menu/home_view.dart';
 import 'package:appetizer/ui/password/choose_new_password.dart';
-import 'package:appetizer/utils/user_details.dart';
 import 'package:appetizer/viewmodels/base_model.dart';
 import 'package:appetizer/models/failure_model.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
 
-class LoginModel extends BaseModel {
+class LoginViewModel extends BaseModel {
   final UserApi _userApi = locator<UserApi>();
   final DialogService _dialogService = locator<DialogService>();
 
-  Login _login;
+  User _user;
 
-  Login get login => _login;
+  User get user => _user;
 
-  set login(Login login) {
-    _login = login;
+  set user(User user) {
+    _user = user;
     notifyListeners();
   }
 
@@ -43,12 +42,12 @@ class LoginModel extends BaseModel {
     notifyListeners();
   }
 
-  var _oauthResponse;
+  var _oauthUser;
 
-  get oauthResponse => _oauthResponse;
+  OAuthUser get oauthUser => _oauthUser;
 
-  set oauthResponse(var oauthResponse) {
-    _oauthResponse = oauthResponse;
+  set oauthUser(OAuthUser oauthUser) {
+    _oauthUser = oauthUser;
     notifyListeners();
   }
 
@@ -56,54 +55,50 @@ class LoginModel extends BaseModel {
       {String enrollment, String password}) async {
     setState(ViewState.Busy);
     try {
-      login = await _userApi.userLogin(enrollment, password);
+      user = await _userApi.userLogin(enrollment, password);
       isLoginSuccessful = true;
-      token = login.token;
+      token = user.token;
       isLoggedIn = true;
-      isCheckedOut = login.isCheckedOut;
-      currentUser = login;
+      isCheckedOut = user.isCheckedOut;
+      currentUser = user;
       var fcm = FirebaseMessaging();
-      await fcm.subscribeToTopic('release-' + login.hostelCode);
+      await fcm.subscribeToTopic('release-' + user.hostelCode);
       setState(ViewState.Idle);
     } on Failure catch (f) {
-      print(f.message);
-      isLoginSuccessful = false;
-      setErrorMessage(f.message);
       setState(ViewState.Error);
+      setErrorMessage(f.message);
+      isLoginSuccessful = false;
     }
   }
 
   Future getOAuthResponse(String code) async {
     try {
-      oauthResponse = await _userApi.oAuthRedirect(code);
+      oauthUser = await _userApi.oAuthRedirect(code);
     } on Failure catch (f) {
-      print(f.message);
-      setErrorMessage(f.message);
       setState(ViewState.Error);
+      setErrorMessage(f.message);
     }
   }
 
   Future verifyUser(String code) async {
     _dialogService.showCustomProgressDialog(title: 'Fetching Details');
     await getOAuthResponse(code);
-    print('Code ' + code);
-    if (oauthResponse != null) {
-      StudentData studentData = oauthResponse.studentData;
-      if (oauthResponse.isNew) {
+    if (oauthUser != null) {
+      var studentData = oauthUser.studentData;
+      if (oauthUser.isNew) {
         _dialogService.popDialog();
         _dialogService.showCustomProgressDialog(title: 'Redirecting');
         await Future.delayed(Duration(milliseconds: 500));
         _dialogService.popDialog();
         await Get.offNamed(ChooseNewPass.id, arguments: studentData);
       } else {
-        if (oauthResponse.token != null) {
+        if (oauthUser.token != null) {
           _dialogService.popDialog();
           _dialogService.showCustomProgressDialog(title: 'Logging You In');
-          currentUser = UserDetailsUtils.getLoginFromStudentData(
-              studentData, oauthResponse.token);
+          currentUser = studentData;
           await Future.delayed(const Duration(milliseconds: 500));
           _dialogService.popDialog();
-          await Get.offNamed(HomeView.id, arguments: oauthResponse.token);
+          await Get.offNamed(HomeView.id, arguments: oauthUser.token);
         }
       }
     }

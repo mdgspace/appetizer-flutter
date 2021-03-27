@@ -1,14 +1,14 @@
-import 'package:appetizer/models/user/oauth.dart';
+import 'package:appetizer/models/user/user.dart';
 import 'package:appetizer/ui/base_view.dart';
-import 'package:appetizer/viewmodels/password_models/new_password_model.dart';
+import 'package:appetizer/viewmodels/password/new_password_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:appetizer/colors.dart';
 
 class ChooseNewPass extends StatefulWidget {
   static const String id = 'choose_new_password_view';
-  final StudentData studentData;
+  final User user;
 
-  const ChooseNewPass({Key key, this.studentData}) : super(key: key);
+  const ChooseNewPass({Key key, this.user}) : super(key: key);
   @override
   State<StatefulWidget> createState() => _ChooseNewPassState();
 }
@@ -20,7 +20,7 @@ class _ChooseNewPassState extends State<ChooseNewPass> {
 
   @override
   Widget build(BuildContext context) {
-    return BaseView<NewPasswordModel>(
+    return BaseView<NewPasswordViewModel>(
       builder: (context, model, child) => Scaffold(
         appBar: AppBar(
           iconTheme: IconThemeData(
@@ -70,7 +70,7 @@ class _ChooseNewPassState extends State<ChooseNewPass> {
             ),
           ),
           Text(
-            widget.studentData.name.split(' ')[0],
+            widget.user.name.split(' ')[0],
             style: TextStyle(
               color: appiYellow,
               fontSize: 16,
@@ -157,7 +157,7 @@ class _ChooseNewPassState extends State<ChooseNewPass> {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0.0, 48.0, 0.0, 0.0),
       child: TextFormField(
-        initialValue: widget.studentData.email,
+        initialValue: widget.user.email,
         keyboardType: TextInputType.emailAddress,
         decoration: InputDecoration(
           labelText: 'Email',
@@ -182,7 +182,7 @@ class _ChooseNewPassState extends State<ChooseNewPass> {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0.0, 48.0, 0.0, 0.0),
       child: TextFormField(
-        initialValue: widget.studentData.contactNo,
+        initialValue: widget.user.contactNo,
         keyboardType: TextInputType.number,
         decoration: InputDecoration(
           labelText: 'Contact No',
@@ -204,7 +204,7 @@ class _ChooseNewPassState extends State<ChooseNewPass> {
     );
   }
 
-  Widget _showConfirmButton(NewPasswordModel model) {
+  Widget _showConfirmButton(NewPasswordViewModel model) {
     return RaisedButton(
       elevation: 5.0,
       color: Colors.white,
@@ -229,12 +229,11 @@ class _ChooseNewPassState extends State<ChooseNewPass> {
     );
   }
 
-  void _validateAndSave(NewPasswordModel model) {
+  void _validateAndSave(NewPasswordViewModel model) {
     final form = formKey.currentState;
     if (form.validate()) {
       form.save();
-      model.loginUser(
-          widget.studentData.enrNo, password, email, int.parse(contactNo));
+      model.loginUser(widget.user.enrNo, password, email, int.parse(contactNo));
     }
   }
 }
