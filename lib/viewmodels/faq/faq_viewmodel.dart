@@ -2,7 +2,7 @@ import 'package:appetizer/enums/view_state.dart';
 import 'package:appetizer/locator.dart';
 import 'package:appetizer/models/failure_model.dart';
 import 'package:appetizer/models/transaction/faq.dart';
-import 'package:appetizer/services/api/transaction.dart';
+import 'package:appetizer/services/api/transaction_api.dart';
 import 'package:appetizer/utils/snackbar_utils.dart';
 import 'package:appetizer/viewmodels/base_model.dart';
 

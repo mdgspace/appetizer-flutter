@@ -1,33 +1,31 @@
-// To parse this JSON data, do
-//
-//     final yearlyRebate = yearlyRebateFromJson(jsonString);
-
 import 'dart:convert';
 
-YearlyRebate yearlyRebateFromJson(String str) =>
-    YearlyRebate.fromJson(json.decode(str));
+PaginatedYearlyRebate paginatedYearlyRebateFromJson(String str) =>
+    PaginatedYearlyRebate.fromJson(json.decode(str));
 
-String yearlyRebateToJson(YearlyRebate data) => json.encode(data.toJson());
+String paginatedYearlyRebateToJson(PaginatedYearlyRebate data) =>
+    json.encode(data.toJson());
 
-class YearlyRebate {
+class PaginatedYearlyRebate {
   int count;
   bool hasNext;
   bool hasPrevious;
-  List<Result> results;
+  List<YearlyRebate> results;
 
-  YearlyRebate({
+  PaginatedYearlyRebate({
     this.count,
     this.hasNext,
     this.hasPrevious,
     this.results,
   });
 
-  factory YearlyRebate.fromJson(Map<String, dynamic> json) => YearlyRebate(
+  factory PaginatedYearlyRebate.fromJson(Map<String, dynamic> json) =>
+      PaginatedYearlyRebate(
         count: json['count'],
         hasNext: json['has_next'],
         hasPrevious: json['has_previous'],
-        results: List<Result>.from(
-            json['results'].map((x) => Result.fromJson(x))),
+        results: List<YearlyRebate>.from(
+            json['results'].map((x) => YearlyRebate.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -38,7 +36,7 @@ class YearlyRebate {
       };
 }
 
-class Result {
+class YearlyRebate {
   int monthId;
   int year;
   dynamic bill;
@@ -46,7 +44,7 @@ class Result {
   int rebate;
   int startDate;
 
-  Result({
+  YearlyRebate({
     this.monthId,
     this.year,
     this.bill,
@@ -55,7 +53,7 @@ class Result {
     this.startDate,
   });
 
-  factory Result.fromJson(Map<String, dynamic> json) => Result(
+  factory YearlyRebate.fromJson(Map<String, dynamic> json) => YearlyRebate(
         monthId: json['month_id'],
         year: json['year'],
         bill: json['bill'],

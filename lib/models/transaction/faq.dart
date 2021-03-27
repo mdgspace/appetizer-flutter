@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final faq = faqFromJson(jsonString);
-
 import 'dart:convert';
 
 List<Faq> faqFromJson(String str) =>

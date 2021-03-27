@@ -1,26 +1,25 @@
 import 'package:appetizer/enums/view_state.dart';
 import 'package:appetizer/locator.dart';
 import 'package:appetizer/models/failure_model.dart';
-import 'package:appetizer/models/transaction/yearly_rebate.dart';
-import 'package:appetizer/services/api/transaction.dart';
+import 'package:appetizer/services/api/transaction_api.dart';
 import 'package:appetizer/viewmodels/base_model.dart';
 
-class RebateHistoryModel extends BaseModel {
+class MyRebatesViewModel extends BaseModel {
   final TransactionApi _transactionApi = locator<TransactionApi>();
 
-  YearlyRebate _yearlyRebate;
+  int _monthlyRebate;
 
-  YearlyRebate get yearlyRebate => _yearlyRebate;
+  int get monthlyRebate => _monthlyRebate;
 
-  set yearlyRebate(YearlyRebate yearlyRebate) {
-    _yearlyRebate = yearlyRebate;
+  set monthlyRebate(int monthlyRebate) {
+    _monthlyRebate = monthlyRebate;
     notifyListeners();
   }
 
-  Future getYearlyRebate(int year) async {
+  Future getMonthlyRebate() async {
     setState(ViewState.Busy);
     try {
-      yearlyRebate = await _transactionApi.getYearlyRebate(year);
+      monthlyRebate = await _transactionApi.getMonthlyRebate();
       setState(ViewState.Idle);
     } on Failure catch (f) {
       print(f.message);

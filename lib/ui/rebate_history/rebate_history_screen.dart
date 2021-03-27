@@ -2,7 +2,7 @@ import 'package:appetizer/enums/view_state.dart';
 import 'package:appetizer/ui/base_view.dart';
 import 'package:appetizer/ui/components/appetizer_error_widget.dart';
 import 'package:appetizer/utils/date_time_utils.dart';
-import 'package:appetizer/viewmodels/rebates_models/rebate_history_model.dart';
+import 'package:appetizer/viewmodels/rebates/rebate_history_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:appetizer/colors.dart';
 import 'rebate_history_card.dart';
@@ -27,7 +27,7 @@ class _RebateHistoryScreenState extends State<RebateHistoryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BaseView<RebateHistoryModel>(
+    return BaseView<RebateHistoryViewModel>(
       onModelReady: (model) => model.getYearlyRebate(currentItemSelected),
       builder: (context, model, child) => Scaffold(
         appBar: AppBar(

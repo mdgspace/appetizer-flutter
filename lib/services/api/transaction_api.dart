@@ -3,8 +3,7 @@ import 'dart:convert';
 import 'package:appetizer/config/environment_config.dart';
 import 'package:appetizer/constants.dart';
 import 'package:appetizer/models/failure_model.dart';
-import 'package:appetizer/models/transaction/current_month_rebate.dart';
-import 'package:appetizer/models/transaction/yearly_rebate.dart';
+import 'package:appetizer/models/transaction/paginated_yearly_rebate.dart';
 import 'package:appetizer/models/transaction/faq.dart';
 import 'package:appetizer/utils/api_utils.dart';
 import 'package:http/http.dart' as http;
@@ -13,14 +12,14 @@ class TransactionApi {
   var headers = {'Content-Type': 'application/json'};
   http.Client client = http.Client();
 
-  Future<MonthlyRebate> getMonthlyRebate() async {
+  Future<int> getMonthlyRebate() async {
     var endPoint = '/api/transaction/rebate/current/';
     var uri = EnvironmentConfig.BASE_URL + endPoint;
 
     try {
       await ApiUtils.addTokenToHeaders(headers);
       var jsonResponse = await ApiUtils.get(uri, headers: headers);
-      var monthlyRebate = MonthlyRebate.fromJson(jsonResponse);
+      var monthlyRebate = jsonResponse['rebate'];
       return monthlyRebate;
     } on FormatException catch (e) {
       print(e.message);
@@ -31,15 +30,15 @@ class TransactionApi {
     }
   }
 
-  Future<YearlyRebate> getYearlyRebate(int year) async {
+  Future<PaginatedYearlyRebate> getYearlyRebate(int year) async {
     var endPoint = '/api/transaction/list/expenses/?year=$year';
     var uri = EnvironmentConfig.BASE_URL + endPoint;
 
     try {
       await ApiUtils.addTokenToHeaders(headers);
       var jsonResponse = await ApiUtils.get(uri, headers: headers);
-      var yearlyRebate = YearlyRebate.fromJson(jsonResponse);
-      return yearlyRebate;
+      var paginatedYearlyRebate = PaginatedYearlyRebate.fromJson(jsonResponse);
+      return paginatedYearlyRebate;
     } on FormatException catch (e) {
       print(e.message);
       throw Failure(Constants.BAD_RESPONSE_FORMAT);
