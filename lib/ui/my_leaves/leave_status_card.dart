@@ -1,7 +1,7 @@
 import 'package:appetizer/globals.dart';
 import 'package:appetizer/ui/base_view.dart';
 import 'package:appetizer/ui/my_leaves/info_message.dart';
-import 'package:appetizer/viewmodels/leaves_models/leave_status_card_model.dart';
+import 'package:appetizer/viewmodels/leaves/leave_status_card_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:appetizer/colors.dart';
 
@@ -17,7 +17,7 @@ class LeaveStatusCard extends StatefulWidget {
 class _LeaveStatusCardState extends State<LeaveStatusCard> {
   @override
   Widget build(BuildContext context) {
-    return BaseView<LeaveStatusCardModel>(
+    return BaseView<LeaveStatusCardViewModel>(
       builder: (context, model, child) => Globals.isCheckedOut != null
           ? Column(
               children: <Widget>[

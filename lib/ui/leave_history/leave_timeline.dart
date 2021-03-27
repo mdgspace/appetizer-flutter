@@ -6,7 +6,7 @@ import 'package:appetizer/ui/leave_history/multiple_leave_timeline_card.dart';
 import 'package:appetizer/ui/leave_history/single_leave_timeline_card.dart';
 import 'package:appetizer/utils/date_time_utils.dart';
 import 'package:appetizer/utils/month_string_to_month_int.dart';
-import 'package:appetizer/viewmodels/leaves_models/leave_timeline_model.dart';
+import 'package:appetizer/viewmodels/leaves/leave_timeline_viewmodel.dart';
 import 'package:appetizer/viewmodels/year_and_month_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -18,8 +18,8 @@ class LeaveTimeline extends StatelessWidget {
     var year = currentMonthAndYear.currentYearSelected;
     var month = monthStringToMonthInt(currentMonthAndYear.currentMonthSelected);
 
-    return BaseView<LeaveTimelineModel>(
-      onModelReady: (model) => model.getLeaveList(year, month),
+    return BaseView<LeaveTimelineViewModel>(
+      onModelReady: (model) => model.fetchLeaves(year, month),
       builder: (context, model, child) => model.state == ViewState.Busy
           ? AppetizerProgressWidget()
           : model.state == ViewState.Error
@@ -29,7 +29,7 @@ class LeaveTimeline extends StatelessWidget {
               : Builder(
                   builder: (context) {
                     var leavesArray = [];
-                    for (var leaves in model.leaveList.results) {
+                    for (var leaves in model.paginatedLeaves.results) {
                       if (leaves.mealCount != 1) {
                         leavesArray.add(
                           MultipleLeaveTimelineCard(

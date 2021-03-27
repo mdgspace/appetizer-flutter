@@ -2,9 +2,8 @@ import 'package:appetizer/enums/view_state.dart';
 import 'package:appetizer/globals.dart';
 import 'package:appetizer/locator.dart';
 import 'package:appetizer/models/failure_model.dart';
-import 'package:appetizer/models/leaves/create_leave.dart';
 import 'package:appetizer/models/menu/week.dart';
-import 'package:appetizer/services/api/leave.dart';
+import 'package:appetizer/services/api/leave_api.dart';
 import 'package:appetizer/services/api/multimessing.dart';
 import 'package:appetizer/services/dialog_service.dart';
 import 'package:appetizer/ui/multimessing/switchable_meals_screen.dart';
@@ -26,7 +25,6 @@ class YourMenuCardModel extends BaseModel {
   bool _isLeaveToggleOutdated;
 
   bool _isLeaveCancelled;
-  CreateLeave _createLeave;
 
   bool _isSwitchCancelled;
 
@@ -79,13 +77,6 @@ class YourMenuCardModel extends BaseModel {
     notifyListeners();
   }
 
-  CreateLeave get createLeave => _createLeave;
-
-  set createLeave(CreateLeave createLeave) {
-    _createLeave = createLeave;
-    notifyListeners();
-  }
-
   bool get isSwitchCancelled => _isSwitchCancelled;
 
   set isSwitchCancelled(bool isSwitchCancelled) {
@@ -110,8 +101,8 @@ class YourMenuCardModel extends BaseModel {
 
   Future leaveMeal(int id) async {
     try {
-      createLeave = await _leaveApi.leave(id.toString());
-      if (createLeave.meal == meal.id) {
+      var _leaveCreated = await _leaveApi.leave(id.toString());
+      if (_leaveCreated == true) {
         await Fluttertoast.showToast(msg: 'Meal Skipped');
       }
     } on Failure catch (f) {

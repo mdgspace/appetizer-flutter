@@ -1,5 +1,5 @@
 import 'package:appetizer/ui/base_view.dart';
-import 'package:appetizer/viewmodels/leaves_models/my_leaves_model.dart';
+import 'package:appetizer/viewmodels/leaves/my_leaves_viewmodel.dart';
 import 'package:flutter/material.dart';
 
 import 'leave_status_card.dart';
@@ -10,7 +10,7 @@ class MyLeaves extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BaseView<MyLeavesModel>(
+    return BaseView<MyLeavesViewModel>(
       onModelReady: (model) => model.getRemainingLeaves(),
       builder: (context, model, child) => Scaffold(
         appBar: AppBar(
@@ -27,7 +27,7 @@ class MyLeaves extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    LeaveStatusCard(model.leaveCount?.count),
+                    LeaveStatusCard(model.leaveCount),
                   ],
                 ),
               ),

@@ -1,20 +1,20 @@
 import 'package:appetizer/models/feedback/appetizer_feedback.dart';
 
-class PaginatedSubmittedFeedbacks {
+class PaginatedFeedbacks {
   int count;
   bool hasNext;
   bool hasPrevious;
   List<AppetizerFeedback> feedbacks;
 
-  PaginatedSubmittedFeedbacks({
+  PaginatedFeedbacks({
     this.count,
     this.hasNext,
     this.hasPrevious,
     this.feedbacks,
   });
 
-  factory PaginatedSubmittedFeedbacks.fromJson(Map<String, dynamic> json) =>
-      PaginatedSubmittedFeedbacks(
+  factory PaginatedFeedbacks.fromJson(Map<String, dynamic> json) =>
+      PaginatedFeedbacks(
         count: json['count'],
         hasNext: json['has_next'],
         hasPrevious: json['has_previous'],

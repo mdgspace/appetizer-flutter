@@ -1,18 +1,17 @@
 import 'package:appetizer/enums/view_state.dart';
 import 'package:appetizer/locator.dart';
 import 'package:appetizer/models/failure_model.dart';
-import 'package:appetizer/models/leaves/remaining_leave_count.dart';
-import 'package:appetizer/services/api/leave.dart';
+import 'package:appetizer/services/api/leave_api.dart';
 import 'package:appetizer/viewmodels/base_model.dart';
 
-class MyLeavesModel extends BaseModel {
+class MyLeavesViewModel extends BaseModel {
   final LeaveApi _leaveApi = locator<LeaveApi>();
 
-  LeaveCount _leaveCount;
+  int _leaveCount;
 
-  LeaveCount get leaveCount => _leaveCount;
+  int get leaveCount => _leaveCount;
 
-  set leaveCount(LeaveCount leaveCount) {
+  set leaveCount(int leaveCount) {
     _leaveCount = leaveCount;
     notifyListeners();
   }
@@ -23,9 +22,8 @@ class MyLeavesModel extends BaseModel {
       leaveCount = await _leaveApi.remainingLeaves();
       setState(ViewState.Idle);
     } on Failure catch (f) {
-      print(f.message);
-      setErrorMessage(f.message);
       setState(ViewState.Error);
+      setErrorMessage(f.message);
     }
   }
 }

@@ -1,10 +1,7 @@
 import 'package:appetizer/config/environment_config.dart';
 import 'package:appetizer/constants.dart';
 import 'package:appetizer/models/failure_model.dart';
-import 'package:appetizer/models/leaves/create_leave.dart';
-import 'package:appetizer/models/leaves/check.dart';
-import 'package:appetizer/models/leaves/leave_list.dart';
-import 'package:appetizer/models/leaves/remaining_leave_count.dart';
+import 'package:appetizer/models/leaves/paginated_leaves.dart';
 import 'package:appetizer/utils/api_utils.dart';
 import 'package:http/http.dart' as http;
 
@@ -12,15 +9,15 @@ class LeaveApi {
   var headers = {'Content-Type': 'application/json'};
   http.Client client = http.Client();
 
-  Future<LeaveCount> remainingLeaves() async {
+  Future<int> remainingLeaves() async {
     var endPoint = '/api/leave/count/remaining/';
     var uri = EnvironmentConfig.BASE_URL + endPoint;
 
     try {
       await ApiUtils.addTokenToHeaders(headers);
       var jsonResponse = await ApiUtils.get(uri, headers: headers);
-      var leaveCount = LeaveCount.fromJson(jsonResponse);
-      return leaveCount;
+      var count = jsonResponse['count'];
+      return count;
     } on FormatException catch (e) {
       print(e.message);
       throw Failure(Constants.BAD_RESPONSE_FORMAT);
@@ -30,7 +27,7 @@ class LeaveApi {
     }
   }
 
-  Future<LeaveList> leaveList(int year, int month) async {
+  Future<PaginatedLeaves> getLeaves(int year, int month) async {
     String endPoint;
     if (month == 0) {
       endPoint = '/api/leave/all/?year=$year';
@@ -42,7 +39,7 @@ class LeaveApi {
     try {
       await ApiUtils.addTokenToHeaders(headers);
       var jsonResponse = await ApiUtils.get(uri, headers: headers);
-      var leaveList = LeaveList.fromJson(jsonResponse);
+      var leaveList = PaginatedLeaves.fromJson(jsonResponse);
       return leaveList;
     } on FormatException catch (e) {
       print(e.message);
@@ -53,16 +50,16 @@ class LeaveApi {
     }
   }
 
-  Future<Check> check() async {
+  Future<bool> check() async {
     var endPoint = '/api/leave/check/';
     var uri = EnvironmentConfig.BASE_URL + endPoint;
+    var json = {'is_checked_out': true};
 
     try {
       await ApiUtils.addTokenToHeaders(headers);
-      var json = {'is_checked_out': true};
       var jsonResponse = await ApiUtils.post(uri, headers: headers, body: json);
-      var check = Check.fromJson(jsonResponse);
-      return check;
+      var isCheckedOut = jsonResponse['is_checked_out'];
+      return isCheckedOut;
     } on FormatException catch (e) {
       print(e.message);
       throw Failure(Constants.BAD_RESPONSE_FORMAT);
@@ -72,18 +69,15 @@ class LeaveApi {
     }
   }
 
-  Future<CreateLeave> leave(String id) async {
+  Future leave(String id) async {
     var endPoint = '/api/leave/';
     var uri = EnvironmentConfig.BASE_URL + endPoint;
-    var json = {
-      'meal': id,
-    };
+    var json = {'meal': id};
 
     try {
       await ApiUtils.addTokenToHeaders(headers);
-      var jsonResponse = await ApiUtils.post(uri, headers: headers, body: json);
-      var leave = CreateLeave.fromJson(jsonResponse);
-      return leave;
+      await ApiUtils.post(uri, headers: headers, body: json);
+      return true;
     } on FormatException catch (e) {
       print(e.message);
       throw Failure(Constants.BAD_RESPONSE_FORMAT);

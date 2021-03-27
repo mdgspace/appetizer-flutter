@@ -1,10 +1,9 @@
 import 'package:appetizer/config/environment_config.dart';
 import 'package:appetizer/constants.dart';
-import 'package:appetizer/globals.dart';
 import 'package:appetizer/models/failure_model.dart';
 import 'package:appetizer/models/feedback/appetizer_feedback.dart';
 import 'package:appetizer/models/feedback/feedback_response.dart';
-import 'package:appetizer/models/feedback/submitted_feedbacks.dart';
+import 'package:appetizer/models/feedback/paginated_feedbacks.dart';
 import 'package:appetizer/utils/api_utils.dart';
 import 'package:http/http.dart' as http;
 
@@ -19,8 +18,7 @@ class FeedbackApi {
     try {
       await ApiUtils.addTokenToHeaders(headers);
       var jsonResponse = await ApiUtils.get(uri, headers: headers);
-      var paginatedFeedbacks =
-          PaginatedSubmittedFeedbacks.fromJson(jsonResponse);
+      var paginatedFeedbacks = PaginatedFeedbacks.fromJson(jsonResponse);
       return paginatedFeedbacks.feedbacks;
     } on FormatException catch (e) {
       print(e.message);

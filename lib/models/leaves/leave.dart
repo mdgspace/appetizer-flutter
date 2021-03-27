@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final leave = leaveFromJson(jsonString);
-
 import 'dart:convert';
 
 Leave leaveFromJson(String str) => Leave.fromJson(json.decode(str));
@@ -13,8 +9,8 @@ class Leave {
   double dateCreated;
   String startMealType;
   String endMealType;
-  double startDatetime;
-  double endDatetime;
+  int startDatetime;
+  int endDatetime;
   int mealCount;
   String status;
 
