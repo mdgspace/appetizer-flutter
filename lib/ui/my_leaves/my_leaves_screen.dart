@@ -6,6 +6,8 @@ import 'leave_status_card.dart';
 import 'see_leave_history.dart';
 
 class MyLeaves extends StatelessWidget {
+  static const String id = 'my_leaves_view';
+
   @override
   Widget build(BuildContext context) {
     return BaseView<MyLeavesModel>(

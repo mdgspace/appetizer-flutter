@@ -3,6 +3,8 @@ import '../../colors.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Help extends StatelessWidget {
+  static const String id = 'help_view';
+
   final String version = 'Version 1.6.2r';
 
   final AppBar _appBar = AppBar(

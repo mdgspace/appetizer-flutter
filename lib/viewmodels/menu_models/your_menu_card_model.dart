@@ -7,16 +7,16 @@ import 'package:appetizer/models/menu/week.dart';
 import 'package:appetizer/services/api/leave.dart';
 import 'package:appetizer/services/api/multimessing.dart';
 import 'package:appetizer/services/dialog_service.dart';
-import 'package:appetizer/services/navigation_service.dart';
+import 'package:appetizer/ui/multimessing/switchable_meals_screen.dart';
 import 'package:appetizer/viewmodels/base_model.dart';
 import 'package:flutter/rendering.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 
 class YourMenuCardModel extends BaseModel {
   final LeaveApi _leaveApi = locator<LeaveApi>();
   final MultimessingApi _multimessingApi = locator<MultimessingApi>();
   final DialogService _dialogService = locator<DialogService>();
-  final NavigationService _navigationService = locator<NavigationService>();
 
   Meal _meal;
   DailyItems _dailyItems;
@@ -179,8 +179,7 @@ class YourMenuCardModel extends BaseModel {
   Future onSwitchChanged() async {
     if (!isLeaveToggleOutdated) {
       if (mealSwitchStatus) {
-        await _navigationService.pushNamed('switchable_meals_screen',
-            arguments: meal.id);
+        await Get.toNamed(SwitchableMealsScreen.id, arguments: meal.id);
       } else {
         if (meal.switchStatus.status == SwitchStatusEnum.T ||
             meal.switchStatus.status == SwitchStatusEnum.F) {
@@ -196,7 +195,7 @@ class YourMenuCardModel extends BaseModel {
             await cancelSwitch(meal.switchStatus.id);
             _dialogService.popDialog();
             if (isSwitchCancelled) {
-              _navigationService.popUntilFirstScreen();
+              Get.key.currentState.popUntil((route) => route.isFirst);
               mealSwitchStatus = true;
             }
           }

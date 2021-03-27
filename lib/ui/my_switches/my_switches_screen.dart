@@ -5,6 +5,8 @@ import 'package:appetizer/viewmodels/switch_models/my_switches_model.dart';
 import 'package:flutter/material.dart';
 
 class MySwitches extends StatelessWidget {
+  static const String id = 'my_switches_view';
+
   @override
   Widget build(BuildContext context) {
     return BaseView<MySwitchesModel>(

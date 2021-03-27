@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:appetizer/colors.dart';
 
 class UserFeedback extends StatefulWidget {
+  static const String id = 'user_feedback_view';
+
   @override
   _UserFeedbackState createState() => _UserFeedbackState();
 }

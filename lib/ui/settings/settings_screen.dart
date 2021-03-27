@@ -14,6 +14,8 @@ import 'package:appetizer/ui/help/help.dart';
 import 'edit_profile.dart';
 
 class Settings extends StatelessWidget {
+  static const String id = 'settings_view';
+
   final String shareText =
       'Let me recommend you this application:\n https://play.google.com/store/apps/details?id=co.sdslabs.mdg.appetizer&hl=en';
 

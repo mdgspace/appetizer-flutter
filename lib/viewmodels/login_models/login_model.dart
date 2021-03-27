@@ -4,15 +4,16 @@ import 'package:appetizer/models/user/login.dart';
 import 'package:appetizer/models/user/oauth.dart';
 import 'package:appetizer/services/api/user.dart';
 import 'package:appetizer/services/dialog_service.dart';
-import 'package:appetizer/services/navigation_service.dart';
+import 'package:appetizer/ui/menu/home.dart';
+import 'package:appetizer/ui/password/choose_new_password.dart';
 import 'package:appetizer/utils/user_details.dart';
 import 'package:appetizer/viewmodels/base_model.dart';
 import 'package:appetizer/models/failure_model.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:get/get.dart';
 
 class LoginModel extends BaseModel {
   final UserApi _userApi = locator<UserApi>();
-  final NavigationService _navigationService = locator<NavigationService>();
   final DialogService _dialogService = locator<DialogService>();
 
   Login _login;
@@ -93,8 +94,7 @@ class LoginModel extends BaseModel {
         _dialogService.showCustomProgressDialog(title: 'Redirecting');
         await Future.delayed(Duration(milliseconds: 500));
         _dialogService.popDialog();
-        await _navigationService.pushReplacementNamed('choose_new_pass',
-            arguments: studentData);
+        await Get.offNamed(ChooseNewPass.id, arguments: studentData);
       } else {
         if (oauthResponse.token != null) {
           _dialogService.popDialog();
@@ -103,10 +103,7 @@ class LoginModel extends BaseModel {
               studentData, oauthResponse.token);
           await Future.delayed(const Duration(milliseconds: 500));
           _dialogService.popDialog();
-          await _navigationService.pushReplacementNamed(
-            'home',
-            arguments: oauthResponse.token,
-          );
+          await Get.offNamed(Home.id, arguments: oauthResponse.token);
         }
       }
     }

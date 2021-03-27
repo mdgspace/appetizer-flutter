@@ -5,6 +5,8 @@ import 'leave_dropdown_filter.dart';
 import 'leave_timeline.dart';
 
 class MyLeavesHistory extends StatelessWidget {
+  static const String id = 'my_leaves_history_view';
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(

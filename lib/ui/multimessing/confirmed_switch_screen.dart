@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class ConfirmedSwitchScreen extends StatefulWidget {
+  static const String id = 'confirmed_switch_view';
+
   @override
   _ConfirmedSwitchScreenState createState() => _ConfirmedSwitchScreenState();
 }

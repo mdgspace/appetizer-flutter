@@ -10,6 +10,8 @@ import 'monthly_balance.dart';
 import 'see_rebate_history.dart';
 
 class MyRebates extends StatelessWidget {
+  static const String id = 'my_rebates_view';
+
   @override
   Widget build(BuildContext context) {
     return BaseView<MyRebatesModel>(

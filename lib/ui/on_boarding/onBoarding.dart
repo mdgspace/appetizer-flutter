@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 
 class OnBoarding extends StatefulWidget {
+  static const String id = 'on_boarding_view';
+
   @override
   _OnBoarding createState() => _OnBoarding();
 }

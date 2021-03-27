@@ -14,6 +14,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Login extends StatefulWidget {
+  static const String id = 'login_view';
   final String code;
 
   const Login({Key key, this.code}) : super(key: key);

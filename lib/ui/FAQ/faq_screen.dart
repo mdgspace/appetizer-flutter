@@ -7,6 +7,8 @@ import 'package:appetizer/viewmodels/faq_models/faq_model.dart';
 import 'package:flutter/material.dart';
 
 class FaqList extends StatelessWidget {
+  static const String id = 'faq_view';
+
   @override
   Widget build(BuildContext context) {
     return BaseView<FaqModel>(

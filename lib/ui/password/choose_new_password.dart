@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:appetizer/colors.dart';
 
 class ChooseNewPass extends StatefulWidget {
+  static const String id = 'choose_new_password_view';
   final StudentData studentData;
 
   const ChooseNewPass({Key key, this.studentData}) : super(key: key);

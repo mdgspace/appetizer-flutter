@@ -6,16 +6,16 @@ import 'package:appetizer/models/failure_model.dart';
 import 'package:appetizer/models/user/me.dart';
 import 'package:appetizer/services/api/user.dart';
 import 'package:appetizer/services/dialog_service.dart';
-import 'package:appetizer/services/navigation_service.dart';
 import 'package:appetizer/services/push_notification_service.dart';
+import 'package:appetizer/ui/login/login.dart';
 import 'package:appetizer/utils/user_details.dart';
 import 'package:appetizer/viewmodels/base_model.dart';
+import 'package:get/get.dart';
 
 class SettingsModel extends BaseModel {
   final UserApi _userApi = locator<UserApi>();
   final PushNotificationService _pushNotificationService =
       locator<PushNotificationService>();
-  final NavigationService _navigationService = locator<NavigationService>();
   final DialogService _dialogService = locator<DialogService>();
 
   Me _userDetails;
@@ -79,7 +79,7 @@ class SettingsModel extends BaseModel {
       _dialogService.popDialog();
       await _pushNotificationService.fcm
           .unsubscribeFromTopic('release-' + currentUser.hostelCode);
-      await _navigationService.pushNamedAndRemoveUntil('login');
+      await Get.offAllNamed(Login.id);
       isLoggedIn = false;
       token = null;
     }

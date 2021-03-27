@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'notification.dart';
 
 class NotificationHistory extends StatelessWidget {
+  static const String id = 'notification_history_view';
+
   @override
   Widget build(BuildContext context) {
     return BaseView<NotificationsModel>(

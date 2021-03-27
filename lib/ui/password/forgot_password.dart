@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:appetizer/colors.dart';
 
 class ForgotPass extends StatefulWidget {
+  static const String id = 'forgot_password_view';
+
   @override
   State<StatefulWidget> createState() => _ForgotPassState();
 }

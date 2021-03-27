@@ -17,6 +17,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
+  static const String id = 'home_view';
   final String token;
 
   const Home({Key key, this.token}) : super(key: key);

@@ -8,6 +8,8 @@ import 'package:appetizer/colors.dart';
 import 'rebate_history_card.dart';
 
 class RebateHistoryScreen extends StatefulWidget {
+  static const String id = 'rebates_history_view';
+
   @override
   _RebateHistoryScreenState createState() => _RebateHistoryScreenState();
 }

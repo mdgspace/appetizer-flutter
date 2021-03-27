@@ -24,62 +24,63 @@ import 'package:flutter/material.dart';
 class AppetizerRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
-      case 'on_boarding':
+      case OnBoarding.id:
         return MaterialPageRoute(builder: (_) => OnBoarding());
-      case 'login':
+      case Login.id:
         var code = settings.arguments as String;
         return MaterialPageRoute(
           builder: (_) => Login(
             code: code,
           ),
         );
-      case 'home':
+      case Home.id:
         var token = settings.arguments as String;
         return MaterialPageRoute(
           builder: (_) => Home(
             token: token,
           ),
         );
-      case 'user_feedback':
+      case UserFeedback.id:
         return MaterialPageRoute(builder: (_) => UserFeedback());
-      case 'my_leaves':
+      case MyLeaves.id:
         return MaterialPageRoute(builder: (_) => MyLeaves());
-      case 'my_leaves_history':
+      case MyLeavesHistory.id:
         return MaterialPageRoute(builder: (_) => MyLeavesHistory());
-      case 'my_switches':
+      case MySwitches.id:
         return MaterialPageRoute(builder: (_) => MySwitches());
-      case 'my_rebates':
+      case MyRebates.id:
         return MaterialPageRoute(builder: (_) => MyRebates());
-      case 'rebates_history_screen':
+      case RebateHistoryScreen.id:
         return MaterialPageRoute(builder: (_) => RebateHistoryScreen());
-      case 'notification_history':
+      case NotificationHistory.id:
         return MaterialPageRoute(builder: (_) => NotificationHistory());
-      case 'settings':
+      case Settings.id:
         return MaterialPageRoute(builder: (_) => Settings());
-      case 'faq_list':
+      case FaqList.id:
         return MaterialPageRoute(builder: (_) => FaqList());
-      case 'help':
+      case Help.id:
         return MaterialPageRoute(builder: (_) => Help());
-      case 'edit_profile':
+      case EditProfile.id:
         return MaterialPageRoute(builder: (_) => EditProfile());
-      case 'forgot_pass':
+      case ForgotPass.id:
         return MaterialPageRoute(builder: (_) => ForgotPass());
-      case 'choose_new_pass':
+      case ChooseNewPass.id:
         var studentData = settings.arguments as StudentData;
         return MaterialPageRoute(
           builder: (_) => ChooseNewPass(
             studentData: studentData,
           ),
         );
-      case 'reset_password':
+      case ResetPassword.id:
         return MaterialPageRoute(builder: (_) => ResetPassword());
-      case 'confirmed_switch_screen':
+      case ConfirmedSwitchScreen.id:
         return MaterialPageRoute(builder: (_) => ConfirmedSwitchScreen());
-      case 'new_feedback':
+      case NewFeedback.id:
         return MaterialPageRoute(builder: (_) => NewFeedback());
-      case 'switchable_meals_screen':
-        var id = settings.arguments as int;
-        return MaterialPageRoute(builder: (_) => SwitchableMealsScreen(id: id));
+      case SwitchableMealsScreen.id:
+        var _mealId = settings.arguments as int;
+        return MaterialPageRoute(
+            builder: (_) => SwitchableMealsScreen(mealId: _mealId));
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

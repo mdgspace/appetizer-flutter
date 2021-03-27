@@ -13,9 +13,10 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class SwitchableMealsScreen extends StatefulWidget {
-  final int id;
+  static const String id = 'on_boarding';
+  final int mealId;
 
-  const SwitchableMealsScreen({Key key, this.id}) : super(key: key);
+  const SwitchableMealsScreen({Key key, this.mealId}) : super(key: key);
 
   @override
   _SwitchableMealsState createState() => _SwitchableMealsState();
@@ -139,7 +140,7 @@ class _SwitchableMealsState extends State<SwitchableMealsScreen> {
                               Navigator.pop(alertContext);
                               showCustomDialog(context, 'Switching Meals');
                               await model.switchMeals(
-                                widget.id,
+                                widget.mealId,
                                 hostelCodeMap[
                                     _switchableMealsFromYourMeal.hostelName],
                               );
@@ -196,7 +197,7 @@ class _SwitchableMealsState extends State<SwitchableMealsScreen> {
   @override
   Widget build(BuildContext context) {
     return BaseView<SwitchableMealsModel>(
-      onModelReady: (model) => model.getSwitchableMeals(widget.id),
+      onModelReady: (model) => model.getSwitchableMeals(widget.mealId),
       builder: (context, model, child) => Scaffold(
         appBar: AppBar(
           centerTitle: true,

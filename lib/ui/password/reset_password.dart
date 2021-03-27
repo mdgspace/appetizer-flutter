@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:appetizer/colors.dart';
 
 class ResetPassword extends StatefulWidget {
+  static const String id = 'reset_password_view';
+
   @override
   _ResetPasswordState createState() => _ResetPasswordState();
 }

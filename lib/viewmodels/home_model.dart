@@ -1,5 +1,4 @@
 import 'package:appetizer/enums/view_state.dart';
-import 'package:appetizer/globals.dart';
 import 'package:appetizer/locator.dart';
 import 'package:appetizer/models/failure_model.dart';
 import 'package:appetizer/services/api/leave.dart';
@@ -7,11 +6,12 @@ import 'package:appetizer/services/api/multimessing.dart';
 import 'package:appetizer/services/api/user.dart';
 import 'package:appetizer/services/api/version_check.dart';
 import 'package:appetizer/services/dialog_service.dart';
-import 'package:appetizer/services/navigation_service.dart';
 import 'package:appetizer/services/push_notification_service.dart';
+import 'package:appetizer/ui/login/login.dart';
 import 'package:appetizer/utils/snackbar_utils.dart';
 import 'package:appetizer/viewmodels/base_model.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HomeModel extends BaseModel {
@@ -21,7 +21,6 @@ class HomeModel extends BaseModel {
   final VersionCheckApi _versionCheckApi = locator<VersionCheckApi>();
   final PushNotificationService _pushNotificationService =
       locator<PushNotificationService>();
-  final NavigationService _navigationService = locator<NavigationService>();
   final DialogService _dialogService = locator<DialogService>();
 
   String _selectedHostel = 'Your Meals';
@@ -118,7 +117,7 @@ class HomeModel extends BaseModel {
       _dialogService.popDialog();
       await _pushNotificationService.fcm
           .unsubscribeFromTopic('release-' + currentUser.hostelCode);
-      await _navigationService.pushNamedAndRemoveUntil('login');
+      await Get.offAllNamed(Login.id);
       isLoggedIn = false;
       token = null;
     }

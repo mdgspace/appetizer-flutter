@@ -7,6 +7,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:appetizer/colors.dart';
 
 class EditProfile extends StatefulWidget {
+  static const String id = 'edit_profile_view';
+
   @override
   _EditProfileState createState() => _EditProfileState();
 }

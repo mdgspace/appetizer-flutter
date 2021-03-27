@@ -4,14 +4,14 @@ import 'package:appetizer/models/failure_model.dart';
 import 'package:appetizer/models/user/oauth.dart';
 import 'package:appetizer/services/api/user.dart';
 import 'package:appetizer/services/dialog_service.dart';
-import 'package:appetizer/services/navigation_service.dart';
+import 'package:appetizer/ui/menu/home.dart';
 import 'package:appetizer/utils/user_details.dart';
 import 'package:appetizer/viewmodels/base_model.dart';
+import 'package:get/get.dart';
 
 class NewPasswordModel extends BaseModel {
   final UserApi _userApi = locator<UserApi>();
   final DialogService _dialogService = locator<DialogService>();
-  final NavigationService _navigationService = locator<NavigationService>();
 
   OauthResponse _oauthResponse;
 
@@ -45,8 +45,7 @@ class NewPasswordModel extends BaseModel {
       var studentData = oauthResponse.studentData;
       currentUser = UserDetailsUtils.getLoginFromStudentData(
           studentData, oauthResponse.token);
-      await _navigationService.pushReplacementNamed('home',
-          arguments: oauthResponse.token);
+      await Get.offNamed(Home.id, arguments: oauthResponse.token);
     } else {
       //TODO
       print('Error');
