@@ -1,5 +1,5 @@
 import 'package:appetizer/globals.dart';
-import 'package:appetizer/models/menu/week.dart';
+import 'package:appetizer/models/menu/week_menu.dart';
 import 'package:appetizer/ui/menu/components/other_meal_menu_card.dart';
 import 'package:appetizer/ui/menu/components/your_meal_menu_card.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +10,7 @@ class DayMenu extends StatefulWidget {
   final DailyItems dailyItems;
   // 0->Your 1->Other
   final int menuType;
+
   DayMenu(this.day, this.dailyItems, this.menuType) {
     var dateFormat = DateFormat('yyyy-MM-dd HH:mm:ss');
     var date = day.date.toString().substring(0, 10);
@@ -46,28 +47,47 @@ class _DayMenuState extends State<DayMenu> {
         child: Column(
           children: <Widget>[
             YourMealsMenuCard(
-                widget.day.mealMap[MealType.B], widget.dailyItems),
+              widget.day.mealMap[MealType.B],
+              widget.dailyItems,
+            ),
             YourMealsMenuCard(
-                widget.day.mealMap[MealType.L], widget.dailyItems),
+              widget.day.mealMap[MealType.L],
+              widget.dailyItems,
+            ),
             YourMealsMenuCard(
-                widget.day.mealMap[MealType.S], widget.dailyItems),
+              widget.day.mealMap[MealType.S],
+              widget.dailyItems,
+            ),
             YourMealsMenuCard(
-                widget.day.mealMap[MealType.D], widget.dailyItems),
+              widget.day.mealMap[MealType.D],
+              widget.dailyItems,
+            ),
           ],
         ),
       );
     } else if (widget.menuType == 1) {
       return Column(
         children: <Widget>[
-          OtherMealsMenuCard(widget.day.mealMap[MealType.B], widget.dailyItems),
-          OtherMealsMenuCard(widget.day.mealMap[MealType.L], widget.dailyItems),
-          OtherMealsMenuCard(widget.day.mealMap[MealType.S], widget.dailyItems),
-          OtherMealsMenuCard(widget.day.mealMap[MealType.D], widget.dailyItems),
+          OtherMealsMenuCard(
+            widget.day.mealMap[MealType.B],
+            widget.dailyItems,
+          ),
+          OtherMealsMenuCard(
+            widget.day.mealMap[MealType.L],
+            widget.dailyItems,
+          ),
+          OtherMealsMenuCard(
+            widget.day.mealMap[MealType.S],
+            widget.dailyItems,
+          ),
+          OtherMealsMenuCard(
+            widget.day.mealMap[MealType.D],
+            widget.dailyItems,
+          ),
         ],
       );
     } else {
-      assert(true, 'INVALID MENU TYPE');
-      return Text('INVALID MENU TYPE');
+      return Container();
     }
   }
 }

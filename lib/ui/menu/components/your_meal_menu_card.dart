@@ -1,5 +1,5 @@
 import 'package:appetizer/globals.dart';
-import 'package:appetizer/models/menu/week.dart';
+import 'package:appetizer/models/menu/week_menu.dart';
 import 'package:appetizer/ui/base_view.dart';
 import 'package:appetizer/ui/multimessing/qr_generator_widget.dart';
 import 'package:appetizer/ui/user_feedback/new_feedback.dart';

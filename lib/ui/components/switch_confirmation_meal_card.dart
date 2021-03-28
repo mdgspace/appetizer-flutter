@@ -1,5 +1,5 @@
 import 'package:appetizer/colors.dart';
-import 'package:appetizer/models/menu/week.dart';
+import 'package:appetizer/models/menu/week_menu.dart';
 import 'package:appetizer/utils/get_day_and_date_for_meal_card.dart';
 import 'package:flutter/material.dart';
 

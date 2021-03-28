@@ -1,4 +1,4 @@
-import 'package:appetizer/models/menu/week.dart';
+import 'package:appetizer/models/menu/week_menu.dart';
 import 'package:appetizer/utils/date_time_utils.dart';
 import 'package:appetizer/viewmodels/menu/your_menu_viewmodel.dart';
 import 'package:flutter/material.dart';

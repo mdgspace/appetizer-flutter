@@ -1,7 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:appetizer/colors.dart';
-import 'package:appetizer/models/menu/week.dart';
+import 'package:appetizer/models/menu/week_menu.dart';
 import 'package:flutter/material.dart';
 
 class MenuCardUtils {
