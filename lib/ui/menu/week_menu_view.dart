@@ -5,17 +5,16 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:appetizer/colors.dart';
 
-class WeekMenu extends StatefulWidget {
+class WeekMenuView extends StatefulWidget {
   @override
-  _WeekMenuState createState() => _WeekMenuState();
+  _WeekMenuViewState createState() => _WeekMenuViewState();
 }
 
-class _WeekMenuState extends State<WeekMenu> {
+class _WeekMenuViewState extends State<WeekMenuView> {
   @override
   Widget build(BuildContext context) {
     final _headerTextStyle = TextStyle(color: Color(0xffFFC107), fontSize: 16);
 
-    //FIXME: setState() or markNeedsBuild() called during build exception, when using Navigator.pop(context) fix that.
     try {
       Provider.of<YourMenuViewModel>(context, listen: false);
     } on ProviderNotFoundException {

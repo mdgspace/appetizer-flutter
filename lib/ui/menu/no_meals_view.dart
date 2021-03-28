@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class NoMealsScreen extends StatelessWidget {
+class NoMealsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(

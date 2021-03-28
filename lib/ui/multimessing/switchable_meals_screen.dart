@@ -5,7 +5,7 @@ import 'package:appetizer/services/dialog_service.dart';
 import 'package:appetizer/ui/base_view.dart';
 import 'package:appetizer/ui/components/appetizer_error_widget.dart';
 import 'package:appetizer/ui/components/appetizer_progress_widget.dart';
-import 'package:appetizer/ui/menu_screens/week_menu_screen.dart';
+import 'package:appetizer/ui/menu/week_menu_view.dart';
 import 'package:appetizer/ui/multimessing/confirmed_switch_screen.dart';
 import 'package:appetizer/utils/get_hostel_code.dart';
 import 'package:appetizer/viewmodels/multimessing/switchable_meals_viewmodel.dart';
@@ -218,7 +218,7 @@ class _SwitchableMealsState extends State<SwitchableMealsScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => WeekMenu(),
+                      builder: (context) => WeekMenuView(),
                     ),
                   );
                 },

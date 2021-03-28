@@ -7,7 +7,7 @@ import 'package:appetizer/ui/components/appetizer_error_widget.dart';
 import 'package:appetizer/ui/components/appetizer_progress_widget.dart';
 import 'package:appetizer/ui/menu/day_menu.dart';
 import 'package:appetizer/utils/get_hostel_code.dart';
-import 'package:appetizer/viewmodels/current_date_model.dart';
+import 'package:appetizer/viewmodels/date_picker_viewmodel.dart';
 import 'package:appetizer/viewmodels/menu/other_menu_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -39,8 +39,8 @@ class _OtherMenuState extends State<OtherMenu> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    weekId = Provider.of<CurrentDateModel>(context).weekId;
-    selectedDateTime = Provider.of<CurrentDateModel>(context).dateTime;
+    weekId = Provider.of<DatePickerViewModel>(context).weekId;
+    selectedDateTime = Provider.of<DatePickerViewModel>(context).dateTime;
   }
 
   @override

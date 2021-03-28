@@ -1,8 +1,8 @@
-import 'package:appetizer/colors.dart';
+import 'package:appetizer/app_theme.dart';
 import 'package:appetizer/globals.dart';
 import 'package:appetizer/ui/FAQ/faq_view.dart';
 import 'package:appetizer/ui/base_view.dart';
-import 'package:appetizer/ui/date_picker/date_picker.dart';
+import 'package:appetizer/ui/components/appetizer_date_picker.dart';
 import 'package:appetizer/ui/menu/other_menu.dart';
 import 'package:appetizer/ui/menu/your_menu.dart';
 import 'package:appetizer/ui/my_leaves/my_leaves_screen.dart';
@@ -11,10 +11,9 @@ import 'package:appetizer/ui/my_switches/my_switches_screen.dart';
 import 'package:appetizer/ui/notification_history/noti_history_screen.dart';
 import 'package:appetizer/ui/settings/settings_screen.dart';
 import 'package:appetizer/ui/user_feedback/user_feedback.dart';
-import 'package:appetizer/viewmodels/current_date_model.dart';
 import 'package:appetizer/viewmodels/home_viewmodel.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:get/get.dart';
 
 class HomeView extends StatefulWidget {
   static const String id = 'home_view';
@@ -27,138 +26,109 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
+  HomeViewModel _model;
   String selectedHostelName;
-  CurrentDateModel currentDateModel;
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    currentDateModel = CurrentDateModel();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return BaseView<HomeViewModel>(
-      onModelReady: (model) {
-        model.fetchInitialCheckedStatus();
-        model.setSwitchableHostels();
-      },
-      builder: (context, model, child) => MultiProvider(
-        providers: [
-          ChangeNotifierProvider(create: (context) => currentDateModel),
-        ],
-        child: Scaffold(
-          floatingActionButton:
-              !Globals.isCheckedOut ? _fab(context, model) : null,
-          appBar: _appBar(context, model),
-          body: SafeArea(
-            child: Column(
-              children: <Widget>[
-                Container(
-                  height: 90,
-                  width: MediaQuery.of(context).size.width,
-                  child: DatePicker(
-                    padding: 0,
-                  ),
-                ),
-                Globals.isCheckedOut == true
-                    ? Container(
-                        width: MediaQuery.of(context).size.width,
-                        color: appiRed,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
-                              child: Center(
-                                child: Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    'You are currently Checked-Out',
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 14),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => MyLeaves(),
-                                  ),
-                                );
-                              },
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.fromLTRB(16, 4, 16, 4),
-                                child: Text(
-                                  'CHECK-IN',
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 14),
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                      )
-                    : Container(),
-                Flexible(
-                  child: GestureDetector(
-                    onHorizontalDragEnd: (d) {
-                      if (d.velocity.pixelsPerSecond.dx < -500) {
-                        currentDateModel.setDateTime(
-                            currentDateModel.dateTime.add(Duration(days: 1)),
-                            context);
-                      } else if (d.velocity.pixelsPerSecond.dx > 500) {
-                        currentDateModel.setDateTime(
-                            currentDateModel.dateTime
-                                .subtract(Duration(days: 1)),
-                            context);
-                      }
-                    },
-                    child: model.selectedHostel == 'Your Meals'
-                        ? YourMenu()
-                        : OtherMenu(hostelName: model.selectedHostel),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          drawer: _drawer(context, model),
-        ),
+  Widget _buildFAB() {
+    return FloatingActionButton(
+      onPressed: _model.onCheckoutTap,
+      backgroundColor: AppTheme.primary,
+      child: Image.asset(
+        'assets/images/check_out.png',
+        height: 24,
+        width: 24,
       ),
     );
   }
 
-  Widget _appBar(context, HomeViewModel model) {
+  Widget _buildDatePicker() {
+    return Container(
+      height: 90,
+      width: MediaQuery.of(context).size.width,
+      child: AppetizerDatePicker(
+        onDateChanged: (date) {},
+      ),
+    );
+  }
+
+  Widget _buildCheckedOutComponent() {
+    if (Globals.isCheckedOut == true) {
+      return Container(
+        width: MediaQuery.of(context).size.width,
+        color: AppTheme.red,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                vertical: 4,
+                horizontal: 16,
+              ),
+              child: Center(
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'You are currently Checked-Out',
+                    style: AppTheme.subtitle2.copyWith(
+                      color: AppTheme.white,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            GestureDetector(
+              onTap: () => Get.toNamed(MyLeaves.id),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 4,
+                  horizontal: 16,
+                ),
+                child: Text(
+                  'CHECK-IN',
+                  style: AppTheme.subtitle2.copyWith(
+                    color: AppTheme.white,
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
+      );
+    }
+
+    return Container();
+  }
+
+  Widget _buildAppBar() {
     return AppBar(
       centerTitle: true,
+      backgroundColor: AppTheme.secondary,
       title: Container(
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(50),
-            border: Border.all(color: Colors.black.withOpacity(0.25))),
+          borderRadius: BorderRadius.circular(50),
+          border: Border.all(
+            color: Colors.black.withOpacity(0.25),
+          ),
+        ),
         child: Theme(
-          data: ThemeData(canvasColor: appiBrown),
+          data: ThemeData(canvasColor: AppTheme.secondary),
           child: Center(
             child: DropdownButton<String>(
               underline: Container(),
               icon: Icon(
                 Icons.arrow_drop_down,
-                color: Colors.white,
+                color: AppTheme.white,
               ),
               value: selectedHostelName,
               hint: Text(
                 '       Your Meals',
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 25.0,
+                style: AppTheme.headline1.copyWith(
+                  color: AppTheme.white,
                   fontFamily: 'Lobster_Two',
                 ),
               ),
-              items: model.switchableHostelsList.map((String hostelName) {
+              items: _model.switchableHostelsList.map((String hostelName) {
                 return DropdownMenuItem<String>(
                   value: hostelName,
                   child: Align(
@@ -168,9 +138,8 @@ class _HomeViewState extends State<HomeView> {
                       child: Text(
                         hostelName,
                         textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 25.0,
+                        style: AppTheme.headline1.copyWith(
+                          color: AppTheme.white,
                           fontFamily: 'Lobster_Two',
                         ),
                       ),
@@ -179,10 +148,8 @@ class _HomeViewState extends State<HomeView> {
                 );
               }).toList(),
               onChanged: (String _selectedHostelName) {
-                setState(() {
-                  selectedHostelName = _selectedHostelName;
-                });
-                model.selectedHostel = _selectedHostelName;
+                setState(() => selectedHostelName = _selectedHostelName);
+                _model.selectedHostel = _selectedHostelName;
               },
             ),
           ),
@@ -190,288 +157,194 @@ class _HomeViewState extends State<HomeView> {
       ),
       actions: <Widget>[
         Padding(
-          padding: const EdgeInsets.fromLTRB(8, 8, 16, 8),
+          padding: const EdgeInsets.all(8),
           child: GestureDetector(
-            onTap: () {
-              // Navigator.push(
-              //     context,
-              //     MaterialPageRoute(
-              //         builder: (context) => ChangeNotifierProvider.value(
-              //             value: menuModel, child: WeekMenu())));
-            },
+            onTap: () {},
             child: Container(
-              height: 23,
-              width: 23,
+              height: 24,
+              width: 24,
               child: Image.asset('assets/icons/week_menu.png'),
             ),
           ),
         )
       ],
-      backgroundColor: appiBrown,
-      iconTheme: IconThemeData(color: appiYellow),
     );
   }
 
-  Widget _drawer(context, HomeViewModel model) {
-    return Drawer(
-      child: Column(
+  Widget _buildDrawerHeader() {
+    return DrawerHeader(
+      decoration: BoxDecoration(
+        color: AppTheme.secondary,
+        image: DecorationImage(
+          alignment: Alignment.topRight,
+          image: AssetImage('assets/images/iitr.png'),
+        ),
+      ),
+      child: Row(
         children: <Widget>[
-          DrawerHeader(
-            decoration: BoxDecoration(
-              color: appiBrown,
-              image: DecorationImage(
-                alignment: Alignment.topRight,
-                image: AssetImage('assets/images/iitr.png'),
-              ),
-            ),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: <Widget>[
-                Container(
-                  padding: EdgeInsets.only(bottom: 14.0),
-                  child: Icon(
-                    Icons.account_circle,
-                    size: 80,
-                    color: appiYellow,
-                  ),
-                ),
-                Flexible(
-                  child: Container(
-                    padding: EdgeInsets.only(bottom: 16, left: 8),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(top: 8),
-                          child: Text(
-                            model.currentUser?.name ?? '',
-                            overflow: TextOverflow.ellipsis,
-                            style: Theme.of(context).accentTextTheme.headline3,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 8, bottom: 4),
-                          child: Text(
-                            model.currentUser?.enrNo.toString() ?? '',
-                            overflow: TextOverflow.ellipsis,
-                            style: Theme.of(context).accentTextTheme.headline2,
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                )
-              ],
-            ),
+          Icon(
+            Icons.account_circle,
+            size: 80,
+            color: AppTheme.primary,
           ),
-          Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                children: <Widget>[
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context);
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => UserFeedback(),
-                        ),
-                      );
-                    },
-                    child: ListTile(
-                      leading: Image(
-                        image: AssetImage('assets/icons/feedback.png'),
-                        width: 24,
-                        height: 24,
-                      ),
-                      title: Text('FeedBack'),
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context);
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => MyLeaves(),
-                        ),
-                      );
-                    },
-                    child: ListTile(
-                      leading: Image(
-                        image: AssetImage('assets/icons/leaves.png'),
-                        width: 24,
-                        height: 24,
-                      ),
-                      title: Text('Leaves'),
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context);
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => MySwitches(),
-                        ),
-                      );
-                    },
-                    child: ListTile(
-                      leading: Image(
-                        image: AssetImage('assets/icons/leaves.png'),
-                        width: 24,
-                        height: 24,
-                      ),
-                      title: Text('Switches'),
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context);
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => MyRebates(),
-                        ),
-                      );
-                    },
-                    child: ListTile(
-                      leading: Icon(
-                        Icons.attach_money,
-                        color: appiYellow,
-                        size: 24,
-                      ),
-                      title: Text('Rebates'),
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context);
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => NotificationHistory(),
-                        ),
-                      );
-                    },
-                    child: ListTile(
-                      leading: Image(
-                        image: AssetImage('assets/icons/notification.png'),
-                        width: 24,
-                        height: 24,
-                      ),
-                      title: Text('Notification History'),
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context);
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Settings(),
-                        ),
-                      );
-                    },
-                    child: ListTile(
-                      leading: Image(
-                        image: AssetImage('assets/icons/setting.png'),
-                        width: 24,
-                        height: 24,
-                      ),
-                      title: Text('Settings'),
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context);
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => FaqView(),
-                        ),
-                      );
-                    },
-                    child: ListTile(
-                      leading: Icon(
-                        Icons.help_outline,
-                        color: appiYellow,
-                        size: 24,
-                      ),
-                      title: Text('FAQ'),
-                    ),
-                  ),
-                  GestureDetector(
-                    child: ListTile(
-                        leading: Icon(
-                          Icons.exit_to_app,
-                          color: appiYellow,
-                          size: 24,
-                        ),
-                        title: Text('Log Out'),
-                        onTap: () {
-                          Navigator.pop(context);
-                          model.onLogoutTap();
-                        }),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.all(8),
-            alignment: Alignment.bottomLeft,
+          SizedBox(width: 8),
+          Flexible(
             child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  model.appetizerVersion,
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: appiGreyIcon,
+                  _model.currentUser?.name ?? '',
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTheme.headline3.copyWith(
+                    color: AppTheme.white,
                   ),
-                  textAlign: TextAlign.left,
                 ),
-                Row(
-                  children: <Widget>[
-                    Text(
-                      'Made with ',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: appiGreyIcon,
-                      ),
-                    ),
-                    Icon(
-                      Icons.favorite,
-                      color: appiRed,
-                      size: 12,
-                    ),
-                    Text(
-                      ' by MDG',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: appiGreyIcon,
-                      ),
-                    ),
-                  ],
+                SizedBox(height: 8),
+                Text(
+                  _model.currentUser?.enrNo.toString() ?? '',
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTheme.headline3.copyWith(
+                    color: AppTheme.white,
+                  ),
                 )
               ],
             ),
-          ),
+          )
         ],
       ),
     );
   }
 
-  Widget _fab(context, HomeViewModel model) {
-    return FloatingActionButton(
-      onPressed: model.onCheckoutTap,
-      backgroundColor: appiYellowLogo,
-      child: Image.asset(
-        'assets/images/check_out.png',
-        height: 25,
-        width: 25,
+  Widget _buildDrawerComponent(
+      {String iconPath, String title, VoidCallback onTap}) {
+    return ListTile(
+      onTap: onTap,
+      leading: Image(
+        image: AssetImage(iconPath),
+        width: 24,
+        height: 24,
+      ),
+      title: Text(title),
+    );
+  }
+
+  Widget _buildMadeByMdgComponent() {
+    return Container(
+      padding: EdgeInsets.all(16),
+      alignment: Alignment.bottomLeft,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            _model.appetizerVersion,
+            style: AppTheme.overline,
+            textAlign: TextAlign.left,
+          ),
+          Row(
+            children: <Widget>[
+              Text(
+                'Made with ',
+                style: AppTheme.subtitle2,
+              ),
+              Icon(
+                Icons.favorite,
+                color: AppTheme.red,
+              ),
+              Text(
+                ' by MDG',
+                style: AppTheme.subtitle2,
+              ),
+            ],
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDrawer() {
+    return Drawer(
+      child: Column(
+        children: <Widget>[
+          _buildDrawerHeader(),
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  _buildDrawerComponent(
+                    onTap: () => Get.toNamed(UserFeedback.id),
+                    iconPath: 'assets/icons/feedback.png',
+                    title: 'Feedback',
+                  ),
+                  _buildDrawerComponent(
+                    onTap: () => Get.toNamed(MyLeaves.id),
+                    iconPath: 'assets/icons/leaves.png',
+                    title: 'Leaves',
+                  ),
+                  _buildDrawerComponent(
+                    onTap: () => Get.toNamed(MySwitches.id),
+                    iconPath: 'assets/icons/leaves.png',
+                    title: 'Switches',
+                  ),
+                  _buildDrawerComponent(
+                    onTap: () => Get.toNamed(MyRebates.id),
+                    iconPath: 'assets/icons/feedback.png',
+                    title: 'Rebates',
+                  ),
+                  _buildDrawerComponent(
+                    onTap: () => Get.toNamed(NotificationHistory.id),
+                    iconPath: 'assets/icons/notification.png',
+                    title: 'Notification History',
+                  ),
+                  _buildDrawerComponent(
+                    onTap: () => Get.toNamed(Settings.id),
+                    iconPath: 'assets/icons/setting.png',
+                    title: 'Settings',
+                  ),
+                  _buildDrawerComponent(
+                    onTap: () => Get.toNamed(FaqView.id),
+                    iconPath: 'assets/icons/feedback.png',
+                    title: 'FAQ',
+                  ),
+                  _buildDrawerComponent(
+                    onTap: () => _model.onLogoutTap(),
+                    iconPath: 'assets/icons/feedback.png',
+                    title: 'Logout',
+                  ),
+                ],
+              ),
+            ),
+          ),
+          _buildMadeByMdgComponent(),
+        ],
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BaseView<HomeViewModel>(
+      onModelReady: (model) {
+        _model = model;
+        _model.fetchInitialCheckedStatus();
+        _model.setSwitchableHostels();
+      },
+      builder: (context, model, child) => Scaffold(
+        floatingActionButton: !Globals.isCheckedOut ? _buildFAB() : null,
+        appBar: _buildAppBar(),
+        drawer: _buildDrawer(),
+        body: SafeArea(
+          child: Column(
+            children: <Widget>[
+              _buildDatePicker(),
+              _buildCheckedOutComponent(),
+              _model.selectedHostel == 'Your Meals'
+                  ? YourMenu()
+                  : OtherMenu(hostelName: model.selectedHostel),
+            ],
+          ),
+        ),
       ),
     );
   }

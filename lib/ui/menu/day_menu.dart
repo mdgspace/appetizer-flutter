@@ -1,7 +1,7 @@
 import 'package:appetizer/globals.dart';
 import 'package:appetizer/models/menu/week.dart';
-import 'package:appetizer/ui/menu/other_meal_menu_card.dart';
-import 'package:appetizer/ui/menu/your_meal_menu_card.dart';
+import 'package:appetizer/ui/menu/components/other_meal_menu_card.dart';
+import 'package:appetizer/ui/menu/components/your_meal_menu_card.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
