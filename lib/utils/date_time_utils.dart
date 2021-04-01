@@ -24,10 +24,8 @@ class DateTimeUtils {
   }
 
   static String dateTime(int timeStamp) {
-    var dateTimeString = DateTime.fromMillisecondsSinceEpoch(timeStamp)
-        .toLocal()
-        .toString()
-        .substring(0, 19);
-    return dateTimeString;
+    return DateFormat.yMd()
+        .add_jms()
+        .format(DateTime.fromMillisecondsSinceEpoch(timeStamp));
   }
 }

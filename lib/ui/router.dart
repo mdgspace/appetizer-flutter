@@ -9,7 +9,7 @@ import 'package:appetizer/ui/multimessing/switchable_meals_view.dart';
 import 'package:appetizer/ui/my_leaves/my_leaves_screen.dart';
 import 'package:appetizer/ui/my_rebates/my_rebates_screen.dart';
 import 'package:appetizer/ui/my_switches/my_switches_screen.dart';
-import 'package:appetizer/ui/notification_history/noti_history_screen.dart';
+import 'package:appetizer/ui/notification_history/notification_history_view.dart';
 import 'package:appetizer/ui/on_boarding/onBoarding.dart';
 import 'package:appetizer/ui/password/choose_new_password.dart';
 import 'package:appetizer/ui/password/forgot_password.dart';
@@ -52,8 +52,8 @@ class AppetizerRouter {
         return MaterialPageRoute(builder: (_) => MyRebates());
       case RebateHistoryScreen.id:
         return MaterialPageRoute(builder: (_) => RebateHistoryScreen());
-      case NotificationHistory.id:
-        return MaterialPageRoute(builder: (_) => NotificationHistory());
+      case NotificationHistoryView.id:
+        return MaterialPageRoute(builder: (_) => NotificationHistoryView());
       case Settings.id:
         return MaterialPageRoute(builder: (_) => Settings());
       case FaqView.id:
