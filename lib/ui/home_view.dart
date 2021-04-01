@@ -10,7 +10,7 @@ import 'package:appetizer/ui/my_rebates/my_rebates_screen.dart';
 import 'package:appetizer/ui/my_switches/my_switches_screen.dart';
 import 'package:appetizer/ui/notification_history/notification_history_view.dart';
 import 'package:appetizer/ui/settings/settings_screen.dart';
-import 'package:appetizer/ui/user_feedback/user_feedback.dart';
+import 'package:appetizer/ui/user_feedback/user_feedback_view.dart';
 import 'package:appetizer/viewmodels/home_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -277,7 +277,7 @@ class _HomeViewState extends State<HomeView> {
               child: Column(
                 children: <Widget>[
                   _buildDrawerComponent(
-                    onTap: () => Get.toNamed(UserFeedback.id),
+                    onTap: () => Get.toNamed(UserFeedbackView.id),
                     iconPath: 'assets/icons/feedback.png',
                     title: 'Feedback',
                   ),

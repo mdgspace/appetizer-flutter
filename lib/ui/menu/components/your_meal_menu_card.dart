@@ -3,7 +3,7 @@ import 'package:appetizer/globals.dart';
 import 'package:appetizer/models/menu/week_menu.dart';
 import 'package:appetizer/ui/base_view.dart';
 import 'package:appetizer/ui/multimessing/components/qr_widget.dart';
-import 'package:appetizer/ui/user_feedback/new_feedback.dart';
+import 'package:appetizer/ui/user_feedback/new_feedback_view.dart';
 import 'package:appetizer/utils/color_utils.dart';
 import 'package:appetizer/utils/menu_ui_utils.dart';
 import 'package:appetizer/viewmodels/menu/your_menu_card_viewmodel.dart';
@@ -135,7 +135,7 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
       return Padding(
         padding: const EdgeInsets.all(8),
         child: InkWell(
-          onTap: () => Get.toNamed(NewFeedback.id),
+          onTap: () => Get.toNamed(NewFeedbackView.id),
           child: Image.asset(
             'assets/icons/feedback_button.png',
             height: 25,

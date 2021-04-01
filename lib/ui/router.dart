@@ -17,8 +17,8 @@ import 'package:appetizer/ui/password/reset_password_view.dart';
 import 'package:appetizer/ui/rebate_history/rebate_history_screen.dart';
 import 'package:appetizer/ui/settings/edit_profile.dart';
 import 'package:appetizer/ui/settings/settings_screen.dart';
-import 'package:appetizer/ui/user_feedback/new_feedback.dart';
-import 'package:appetizer/ui/user_feedback/user_feedback.dart';
+import 'package:appetizer/ui/user_feedback/new_feedback_view.dart';
+import 'package:appetizer/ui/user_feedback/user_feedback_view.dart';
 import 'package:flutter/material.dart';
 
 class AppetizerRouter {
@@ -40,8 +40,8 @@ class AppetizerRouter {
             token: token,
           ),
         );
-      case UserFeedback.id:
-        return MaterialPageRoute(builder: (_) => UserFeedback());
+      case UserFeedbackView.id:
+        return MaterialPageRoute(builder: (_) => UserFeedbackView());
       case MyLeaves.id:
         return MaterialPageRoute(builder: (_) => MyLeaves());
       case MyLeavesHistory.id:
@@ -75,8 +75,8 @@ class AppetizerRouter {
         return MaterialPageRoute(builder: (_) => ResetPasswordView());
       case SwitchConfirmedView.id:
         return MaterialPageRoute(builder: (_) => SwitchConfirmedView());
-      case NewFeedback.id:
-        return MaterialPageRoute(builder: (_) => NewFeedback());
+      case NewFeedbackView.id:
+        return MaterialPageRoute(builder: (_) => NewFeedbackView());
       case SwitchableMealsView.id:
         var _mealId = settings.arguments as int;
         return MaterialPageRoute(
