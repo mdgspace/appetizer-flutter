@@ -12,8 +12,8 @@ import 'package:appetizer/ui/my_switches/my_switches_screen.dart';
 import 'package:appetizer/ui/notification_history/notification_history_view.dart';
 import 'package:appetizer/ui/on_boarding/on_boarding_view.dart';
 import 'package:appetizer/ui/password/choose_new_password.dart';
-import 'package:appetizer/ui/password/forgot_password.dart';
-import 'package:appetizer/ui/password/reset_password.dart';
+import 'package:appetizer/ui/password/forgot_password_view.dart';
+import 'package:appetizer/ui/password/reset_password_view.dart';
 import 'package:appetizer/ui/rebate_history/rebate_history_screen.dart';
 import 'package:appetizer/ui/settings/edit_profile.dart';
 import 'package:appetizer/ui/settings/settings_screen.dart';
@@ -62,17 +62,17 @@ class AppetizerRouter {
         return MaterialPageRoute(builder: (_) => HelpView());
       case EditProfile.id:
         return MaterialPageRoute(builder: (_) => EditProfile());
-      case ForgotPass.id:
-        return MaterialPageRoute(builder: (_) => ForgotPass());
-      case ChooseNewPass.id:
+      case ForgotPasswordView.id:
+        return MaterialPageRoute(builder: (_) => ForgotPasswordView());
+      case ChooseNewPasswordView.id:
         var user = settings.arguments as User;
         return MaterialPageRoute(
-          builder: (_) => ChooseNewPass(
+          builder: (_) => ChooseNewPasswordView(
             user: user,
           ),
         );
-      case ResetPassword.id:
-        return MaterialPageRoute(builder: (_) => ResetPassword());
+      case ResetPasswordView.id:
+        return MaterialPageRoute(builder: (_) => ResetPasswordView());
       case SwitchConfirmedView.id:
         return MaterialPageRoute(builder: (_) => SwitchConfirmedView());
       case NewFeedback.id:

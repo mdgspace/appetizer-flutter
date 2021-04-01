@@ -91,7 +91,7 @@ class LoginViewModel extends BaseModel {
         _dialogService.showCustomProgressDialog(title: 'Redirecting');
         await Future.delayed(Duration(milliseconds: 500));
         _dialogService.popDialog();
-        await Get.offNamed(ChooseNewPass.id, arguments: studentData);
+        await Get.offNamed(ChooseNewPasswordView.id, arguments: studentData);
       } else {
         if (oauthUser.token != null) {
           _dialogService.popDialog();

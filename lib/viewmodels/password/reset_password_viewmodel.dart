@@ -5,8 +5,9 @@ import 'package:appetizer/services/api/user_api.dart';
 import 'package:appetizer/services/dialog_service.dart';
 import 'package:appetizer/utils/snackbar_utils.dart';
 import 'package:appetizer/viewmodels/base_model.dart';
+import 'package:get/get.dart';
 
-class UpdatePasswordViewModel extends BaseModel {
+class ResetPasswordViewModel extends BaseModel {
   final UserApi _userApi = locator<UserApi>();
   final DialogService _dialogService = locator<DialogService>();
 
@@ -42,5 +43,9 @@ class UpdatePasswordViewModel extends BaseModel {
     _dialogService.showCustomProgressDialog(title: 'Updating Password');
     await resetPassword(oldPassword, newPassword);
     _dialogService.popDialog();
+
+    if (state == ViewState.Idle) {
+      Get.back();
+    }
   }
 }

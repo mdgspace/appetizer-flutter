@@ -1,239 +1,127 @@
+import 'package:appetizer/app_theme.dart';
 import 'package:appetizer/models/user/user.dart';
 import 'package:appetizer/ui/base_view.dart';
-import 'package:appetizer/viewmodels/password/new_password_viewmodel.dart';
+import 'package:appetizer/ui/components/appetizer_app_bar.dart';
+import 'package:appetizer/ui/components/appetizer_outline_button.dart';
+import 'package:appetizer/ui/components/appetizer_password_field.dart';
+import 'package:appetizer/ui/components/appetizer_text_field.dart';
+import 'package:appetizer/utils/validators.dart';
+import 'package:appetizer/viewmodels/password/choose_new_password_viewmodel.dart';
 import 'package:flutter/material.dart';
-import 'package:appetizer/colors.dart';
 
-class ChooseNewPass extends StatefulWidget {
+class ChooseNewPasswordView extends StatefulWidget {
   static const String id = 'choose_new_password_view';
   final User user;
 
-  const ChooseNewPass({Key key, this.user}) : super(key: key);
+  const ChooseNewPasswordView({Key key, this.user}) : super(key: key);
+
   @override
-  State<StatefulWidget> createState() => _ChooseNewPassState();
+  State<StatefulWidget> createState() => _ChooseNewPasswordViewState();
 }
 
-class _ChooseNewPassState extends State<ChooseNewPass> {
-  var formKey = GlobalKey<FormState>();
-  String password, email, contactNo;
-  final TextEditingController _newPasswordController = TextEditingController();
+class _ChooseNewPasswordViewState extends State<ChooseNewPasswordView> {
+  final _formKey = GlobalKey<FormState>();
+
+  String _newPassword, _email, _contactNo;
 
   @override
   Widget build(BuildContext context) {
     return BaseView<NewPasswordViewModel>(
       builder: (context, model, child) => Scaffold(
-        appBar: AppBar(
-          iconTheme: IconThemeData(
-            color: appiYellow,
-          ),
-          title: Text(
-            'Choose New Password',
-            style: TextStyle(color: Colors.white),
-          ),
-        ),
-        body: SafeArea(
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.only(left: 40, right: 40),
-              child: Form(
-                key: formKey,
+        resizeToAvoidBottomInset: true,
+        appBar: AppetizerAppBar(title: 'Choose Password'),
+        body: ListView(
+          children: <Widget>[
+            Form(
+              key: _formKey,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    _choosePassword(),
-                    _subTitle(),
-                    _showNewPasswordInput(),
-                    _showConfirmPasswordInput(),
-                    _showEmailInput(),
-                    _showContactNoInput(),
-                    _showConfirmButton(model),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      child: Text(
+                        'Hi ${(widget?.user?.name ?? '').split(' ')[0]}, Choose Your Password!',
+                        textAlign: TextAlign.center,
+                        style: AppTheme.headline3,
+                      ),
+                    ),
+                    Text(
+                      'Password should be of atleast 8 charecters',
+                      textAlign: TextAlign.center,
+                      style: AppTheme.subtitle1.copyWith(
+                        color: AppTheme.red,
+                      ),
+                    ),
+                    SizedBox(height: 16),
+                    AppetizerPasswordField(
+                      iconData: Icons.lock,
+                      label: 'New Password',
+                      validator: (value) =>
+                          value.isEmpty ? 'Password can\'t be empty' : null,
+                      onSaved: (value) => _newPassword = value,
+                    ),
+                    SizedBox(height: 16),
+                    AppetizerPasswordField(
+                      iconData: Icons.lock,
+                      label: 'Confirm Password',
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Password can\'t be empty';
+                        }
+                        if (value != _newPassword) {
+                          return 'Passwords do not match';
+                        }
+                        return null;
+                      },
+                    ),
+                    SizedBox(height: 16),
+                    AppetizerTextField(
+                      initialValue: widget?.user?.email,
+                      iconData: Icons.email,
+                      label: 'Email Address',
+                      validator: (value) => !Validators.isEmailValid(_email)
+                          ? 'Please enter a valid e-mail'
+                          : null,
+                      onSaved: (value) => _email = value,
+                    ),
+                    SizedBox(height: 16),
+                    AppetizerTextField(
+                      initialValue: widget?.user?.contactNo,
+                      iconData: Icons.phone,
+                      label: 'Contact Number',
+                      validator: (value) =>
+                          !Validators.isPhoneNumberValid(_contactNo)
+                              ? 'Please enter a valid contact no.'
+                              : null,
+                      onSaved: (value) => _contactNo = value,
+                    ),
+                    SizedBox(height: 32),
+                    Container(
+                      width: double.maxFinite,
+                      child: AppetizerOutineButton(
+                        title: 'Confirm',
+                        onPressed: () async {
+                          if (Validators.validateAndSaveForm(_formKey)) {
+                            _formKey.currentState.reset();
+                            FocusScope.of(context).requestFocus(FocusNode());
+                            await model.loginUser(
+                              widget.user.enrNo,
+                              _newPassword,
+                              _email,
+                              int.parse(_contactNo),
+                            );
+                          }
+                        },
+                      ),
+                    ),
                   ],
                 ),
               ),
             ),
-          ),
+          ],
         ),
       ),
     );
-  }
-
-  Widget _choosePassword() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 48),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Text(
-            'Hi ',
-            style: TextStyle(
-              fontSize: 16,
-            ),
-          ),
-          Text(
-            widget.user.name.split(' ')[0],
-            style: TextStyle(
-              color: appiYellow,
-              fontSize: 16,
-            ),
-          ),
-          Text(
-            ', Choose You Password',
-            style: TextStyle(
-              fontSize: 16,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _subTitle() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 48),
-      child: Text(
-        ' Password should be of atleast 8 \n charecters',
-        style: TextStyle(
-          fontSize: 16,
-          color: Colors.red,
-        ),
-        textAlign: TextAlign.center,
-      ),
-    );
-  }
-
-  Widget _showNewPasswordInput() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 48.0),
-      child: TextFormField(
-        controller: _newPasswordController,
-        obscureText: true,
-        decoration: InputDecoration(
-          labelText: 'New Password',
-          icon: Icon(
-            Icons.lock,
-            color: Colors.grey,
-          ),
-        ),
-        validator: (value) {
-          if (value.isEmpty) {
-            return "Password can\'t be empty";
-          } else if (value.length < 8) {
-            return 'Password is too short';
-          }
-          return null;
-        },
-        onSaved: (value) => password = value,
-      ),
-    );
-  }
-
-  Widget _showConfirmPasswordInput() {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(0.0, 48.0, 0.0, 0.0),
-      child: TextFormField(
-        obscureText: true,
-        decoration: InputDecoration(
-          labelText: 'Confirm Password',
-          icon: Icon(
-            Icons.lock,
-            color: Colors.grey,
-          ),
-        ),
-        validator: (value) {
-          if (value.isEmpty) {
-            return 'Password can\'t be empty';
-          }
-          if (value != _newPasswordController.text) {
-            return 'Passwords do not match';
-          }
-          return null;
-        },
-        onSaved: (value) => password = value,
-      ),
-    );
-  }
-
-  Widget _showEmailInput() {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(0.0, 48.0, 0.0, 0.0),
-      child: TextFormField(
-        initialValue: widget.user.email,
-        keyboardType: TextInputType.emailAddress,
-        decoration: InputDecoration(
-          labelText: 'Email',
-          icon: Icon(
-            Icons.email,
-            color: Colors.grey,
-          ),
-        ),
-        validator: (value) {
-          Pattern pattern =
-              r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-          var regex = RegExp(pattern);
-          if (!regex.hasMatch(value)) return 'Enter Valid Email';
-          return null;
-        },
-        onSaved: (value) => email = value,
-      ),
-    );
-  }
-
-  Widget _showContactNoInput() {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(0.0, 48.0, 0.0, 0.0),
-      child: TextFormField(
-        initialValue: widget.user.contactNo,
-        keyboardType: TextInputType.number,
-        decoration: InputDecoration(
-          labelText: 'Contact No',
-          icon: Icon(
-            Icons.person,
-            color: Colors.grey,
-          ),
-        ),
-        validator: (value) {
-          if (value.isEmpty) {
-            return "Contact No can\'t be empty";
-          } else if (value.length != 10) {
-            return 'Please check the entered number';
-          }
-          return null;
-        },
-        onSaved: (value) => contactNo = value,
-      ),
-    );
-  }
-
-  Widget _showConfirmButton(NewPasswordViewModel model) {
-    return RaisedButton(
-      elevation: 5.0,
-      color: Colors.white,
-      shape: RoundedRectangleBorder(
-        side: BorderSide(
-          color: appiYellow,
-          style: BorderStyle.solid,
-          width: 2,
-        ),
-        borderRadius: BorderRadius.circular(40.0),
-      ),
-      onPressed: () {
-        _validateAndSave(model);
-      },
-      child: Padding(
-        padding: const EdgeInsets.all(15.0),
-        child: Text(
-          'CONFIRM',
-          style: TextStyle(fontSize: 15.0, color: appiYellow),
-        ),
-      ),
-    );
-  }
-
-  void _validateAndSave(NewPasswordViewModel model) {
-    final form = formKey.currentState;
-    if (form.validate()) {
-      form.save();
-      model.loginUser(widget.user.enrNo, password, email, int.parse(contactNo));
-    }
   }
 }

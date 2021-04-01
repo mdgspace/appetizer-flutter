@@ -10,7 +10,7 @@ import 'package:appetizer/ui/components/appetizer_primary_button.dart';
 import 'package:appetizer/ui/components/appetizer_text_field.dart';
 import 'package:appetizer/ui/help/help_view.dart';
 import 'package:appetizer/ui/home_view.dart';
-import 'package:appetizer/ui/password/forgot_password.dart';
+import 'package:appetizer/ui/password/forgot_password_view.dart';
 import 'package:appetizer/utils/snackbar_utils.dart';
 import 'package:appetizer/utils/validators.dart';
 import 'package:appetizer/viewmodels/login/login_viewmodel.dart';
@@ -143,7 +143,7 @@ class _LoginViewState extends State<LoginView> with TickerProviderStateMixin {
     if (_model.isLoginSuccessful) return Container();
 
     return GestureDetector(
-      onTap: () => Get.toNamed(ForgotPass.id),
+      onTap: () => Get.toNamed(ForgotPasswordView.id),
       child: Text(
         'Forgot Password?',
         style: AppTheme.bodyText1.copyWith(

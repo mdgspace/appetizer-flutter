@@ -1,6 +1,7 @@
 import 'package:appetizer/enums/view_state.dart';
 import 'package:appetizer/ui/FAQ/faq_view.dart';
 import 'package:appetizer/ui/base_view.dart';
+import 'package:appetizer/ui/password/reset_password_view.dart';
 import 'package:appetizer/ui/settings/list_item.dart';
 import 'package:appetizer/ui/settings/page_footer.dart';
 import 'package:appetizer/ui/settings/user_details.dart';
@@ -8,7 +9,6 @@ import 'package:appetizer/viewmodels/settings/settings_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:share/share.dart';
-import 'package:appetizer/ui/password/reset_password.dart';
 import 'package:appetizer/colors.dart';
 import 'package:appetizer/ui/help/help_view.dart';
 import 'edit_profile.dart';
@@ -116,7 +116,7 @@ class Settings extends StatelessWidget {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => ResetPassword(),
+                                      builder: (context) => ResetPasswordView(),
                                     ),
                                   );
                                 },
