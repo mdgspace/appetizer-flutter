@@ -13,17 +13,17 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class Login extends StatefulWidget {
+class LoginView extends StatefulWidget {
   static const String id = 'login_view';
   final String code;
 
-  const Login({Key key, this.code}) : super(key: key);
+  const LoginView({Key key, this.code}) : super(key: key);
 
   @override
-  _LoginState createState() => _LoginState();
+  _LoginViewState createState() => _LoginViewState();
 }
 
-class _LoginState extends State<Login> with TickerProviderStateMixin {
+class _LoginViewState extends State<LoginView> with TickerProviderStateMixin {
   AnimationController _chefWrongController;
   AnimationController _chefCorrectController;
 

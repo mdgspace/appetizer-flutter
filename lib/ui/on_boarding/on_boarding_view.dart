@@ -1,5 +1,5 @@
 import 'package:appetizer/app_theme.dart';
-import 'package:appetizer/ui/login/login.dart';
+import 'package:appetizer/ui/login/login_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:get/get.dart';
@@ -59,7 +59,7 @@ class _OnBoarding extends State<OnBoardingView> {
       appBar: AppBar(
         actions: <Widget>[
           GestureDetector(
-            onTap: () => Get.offAllNamed(Login.id),
+            onTap: () => Get.offAllNamed(LoginView.id),
             child: Container(
               alignment: Alignment.centerRight,
               padding: EdgeInsets.all(16),

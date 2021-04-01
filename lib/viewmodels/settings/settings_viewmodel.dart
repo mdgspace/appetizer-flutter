@@ -6,7 +6,7 @@ import 'package:appetizer/models/user/user.dart';
 import 'package:appetizer/services/api/user_api.dart';
 import 'package:appetizer/services/dialog_service.dart';
 import 'package:appetizer/services/push_notification_service.dart';
-import 'package:appetizer/ui/login/login.dart';
+import 'package:appetizer/ui/login/login_view.dart';
 import 'package:appetizer/viewmodels/base_model.dart';
 import 'package:get/get.dart';
 
@@ -65,7 +65,7 @@ class SettingsViewModel extends BaseModel {
       _dialogService.popDialog();
       await _pushNotificationService.fcm
           .unsubscribeFromTopic('release-' + currentUser.hostelCode);
-      await Get.offAllNamed(Login.id);
+      await Get.offAllNamed(LoginView.id);
       isLoggedIn = false;
       token = null;
     }

@@ -10,7 +10,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:share/share.dart';
 import 'package:appetizer/ui/password/reset_password.dart';
 import 'package:appetizer/colors.dart';
-import 'package:appetizer/ui/help/help.dart';
+import 'package:appetizer/ui/help/help_view.dart';
 import 'edit_profile.dart';
 
 class Settings extends StatelessWidget {

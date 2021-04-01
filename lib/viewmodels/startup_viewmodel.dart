@@ -2,7 +2,7 @@ import 'package:appetizer/locator.dart';
 import 'package:appetizer/services/local_storage_service.dart';
 import 'package:appetizer/services/push_notification_service.dart';
 import 'package:appetizer/services/remote_config_service.dart';
-import 'package:appetizer/ui/login/login.dart';
+import 'package:appetizer/ui/login/login_view.dart';
 import 'package:appetizer/ui/home_view.dart';
 import 'package:appetizer/ui/on_boarding/on_boarding_view.dart';
 import 'package:appetizer/viewmodels/base_model.dart';
@@ -42,7 +42,7 @@ class StartUpViewModel extends BaseModel {
         await Get.offAllNamed(HomeView.id,
             arguments: _localStorageService.token);
       } else {
-        await Get.offAllNamed(Login.id, arguments: _code);
+        await Get.offAllNamed(LoginView.id, arguments: _code);
       }
     }
   }

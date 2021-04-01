@@ -1,8 +1,8 @@
 import 'package:appetizer/models/user/user.dart';
 import 'package:appetizer/ui/FAQ/faq_view.dart';
-import 'package:appetizer/ui/help/help.dart';
+import 'package:appetizer/ui/help/help_view.dart';
 import 'package:appetizer/ui/leave_history/leave_history_screen.dart';
-import 'package:appetizer/ui/login/login.dart';
+import 'package:appetizer/ui/login/login_view.dart';
 import 'package:appetizer/ui/home_view.dart';
 import 'package:appetizer/ui/multimessing/switch_confirmed_view.dart';
 import 'package:appetizer/ui/multimessing/switchable_meals_view.dart';
@@ -26,10 +26,10 @@ class AppetizerRouter {
     switch (settings.name) {
       case OnBoardingView.id:
         return MaterialPageRoute(builder: (_) => OnBoardingView());
-      case Login.id:
+      case LoginView.id:
         var code = settings.arguments as String;
         return MaterialPageRoute(
-          builder: (_) => Login(
+          builder: (_) => LoginView(
             code: code,
           ),
         );
