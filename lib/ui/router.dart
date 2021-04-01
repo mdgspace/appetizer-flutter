@@ -10,7 +10,7 @@ import 'package:appetizer/ui/my_leaves/my_leaves_screen.dart';
 import 'package:appetizer/ui/my_rebates/my_rebates_screen.dart';
 import 'package:appetizer/ui/my_switches/my_switches_screen.dart';
 import 'package:appetizer/ui/notification_history/notification_history_view.dart';
-import 'package:appetizer/ui/on_boarding/onBoarding.dart';
+import 'package:appetizer/ui/on_boarding/on_boarding_view.dart';
 import 'package:appetizer/ui/password/choose_new_password.dart';
 import 'package:appetizer/ui/password/forgot_password.dart';
 import 'package:appetizer/ui/password/reset_password.dart';
@@ -24,8 +24,8 @@ import 'package:flutter/material.dart';
 class AppetizerRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
-      case OnBoarding.id:
-        return MaterialPageRoute(builder: (_) => OnBoarding());
+      case OnBoardingView.id:
+        return MaterialPageRoute(builder: (_) => OnBoardingView());
       case Login.id:
         var code = settings.arguments as String;
         return MaterialPageRoute(

@@ -4,7 +4,7 @@ import 'package:appetizer/services/push_notification_service.dart';
 import 'package:appetizer/services/remote_config_service.dart';
 import 'package:appetizer/ui/login/login.dart';
 import 'package:appetizer/ui/home_view.dart';
-import 'package:appetizer/ui/on_boarding/onBoarding.dart';
+import 'package:appetizer/ui/on_boarding/on_boarding_view.dart';
 import 'package:appetizer/viewmodels/base_model.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -36,7 +36,7 @@ class StartUpViewModel extends BaseModel {
 
     if (_localStorageService.isFirstTimeLogin) {
       _localStorageService.isFirstTimeLogin = false;
-      await Get.offAllNamed(OnBoarding.id);
+      await Get.offAllNamed(OnBoardingView.id);
     } else {
       if (_localStorageService.isLoggedIn) {
         await Get.offAllNamed(HomeView.id,

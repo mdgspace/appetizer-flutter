@@ -5,12 +5,14 @@ class AppetizerAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final double elevation;
   final bool centerTile;
+  final List<Widget> actions;
 
   const AppetizerAppBar({
     Key key,
     @required this.title,
     this.elevation = 0,
     this.centerTile,
+    this.actions,
   }) : super(key: key);
 
   @override
@@ -24,6 +26,7 @@ class AppetizerAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       centerTitle: centerTile,
       elevation: elevation,
+      actions: actions,
     );
   }
 
