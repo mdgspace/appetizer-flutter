@@ -18,8 +18,8 @@ class AppetizerAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       title: Text(
         title,
-        style: AppTheme.headline4.copyWith(
-          color: AppTheme.primary,
+        style: AppTheme.headline3.copyWith(
+          color: AppTheme.white,
         ),
       ),
       centerTitle: centerTile,

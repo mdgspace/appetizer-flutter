@@ -58,8 +58,8 @@ class AppetizerRouter {
         return MaterialPageRoute(builder: (_) => Settings());
       case FaqView.id:
         return MaterialPageRoute(builder: (_) => FaqView());
-      case Help.id:
-        return MaterialPageRoute(builder: (_) => Help());
+      case HelpView.id:
+        return MaterialPageRoute(builder: (_) => HelpView());
       case EditProfile.id:
         return MaterialPageRoute(builder: (_) => EditProfile());
       case ForgotPass.id:

@@ -14,6 +14,7 @@ import 'package:appetizer/viewmodels/date_picker_viewmodel.dart';
 import 'package:appetizer/viewmodels/faq/faq_viewmodel.dart';
 import 'package:appetizer/viewmodels/feedback/new_feedback_viewmodel.dart';
 import 'package:appetizer/viewmodels/feedback/user_feedback_viewmodel.dart';
+import 'package:appetizer/viewmodels/help/help_viewmodel.dart';
 import 'package:appetizer/viewmodels/home_viewmodel.dart';
 import 'package:appetizer/viewmodels/leaves/leave_status_card_viewmodel.dart';
 import 'package:appetizer/viewmodels/leaves/leave_timeline_viewmodel.dart';
@@ -63,6 +64,7 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => StartUpViewModel());
   locator.registerFactory(() => DatePickerViewModel());
   locator.registerFactory(() => FaqViewModel());
+  locator.registerFactory(() => HelpViewModel());
   locator.registerFactory(() => NewFeedbackViewModel());
   locator.registerFactory(() => UserFeedbackViewModel());
   locator.registerFactory(() => LeaveStatusCardViewModel());

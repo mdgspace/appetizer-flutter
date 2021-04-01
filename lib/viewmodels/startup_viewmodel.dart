@@ -1,6 +1,7 @@
 import 'package:appetizer/locator.dart';
 import 'package:appetizer/services/local_storage_service.dart';
 import 'package:appetizer/services/push_notification_service.dart';
+import 'package:appetizer/services/remote_config_service.dart';
 import 'package:appetizer/ui/login/login.dart';
 import 'package:appetizer/ui/home_view.dart';
 import 'package:appetizer/ui/on_boarding/onBoarding.dart';
@@ -11,6 +12,8 @@ import 'package:get/get.dart';
 class StartUpViewModel extends BaseModel {
   final PushNotificationService _pushNotificationService =
       locator<PushNotificationService>();
+  final RemoteConfigService _remoteConfigService =
+      locator<RemoteConfigService>();
   final LocalStorageService _localStorageService =
       locator<LocalStorageService>();
 
@@ -27,6 +30,7 @@ class StartUpViewModel extends BaseModel {
 
   Future handleStartUpLogic() async {
     await _pushNotificationService.initialise();
+    await _remoteConfigService.initialise();
 
     await getIntent();
 
