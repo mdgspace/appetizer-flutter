@@ -6,7 +6,7 @@ import 'package:appetizer/models/menu/week_menu.dart';
 import 'package:appetizer/services/api/leave_api.dart';
 import 'package:appetizer/services/api/multimessing_api.dart';
 import 'package:appetizer/services/dialog_service.dart';
-import 'package:appetizer/ui/multimessing/switchable_meals_screen.dart';
+import 'package:appetizer/ui/multimessing/switchable_meals_view.dart';
 import 'package:appetizer/viewmodels/base_model.dart';
 import 'package:flutter/rendering.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -86,6 +86,19 @@ class YourMenuCardViewModel extends BaseModel {
 
   set isSwitchCancelled(bool isSwitchCancelled) {
     _isSwitchCancelled = isSwitchCancelled;
+    notifyListeners();
+  }
+
+  void updateMealLeaveAndSwitchStatus(Meal meal) {
+    if (meal != null) {
+      _mealLeaveStatus =
+          _meal.leaveStatus.status == LeaveStatusEnum.N ? true : false;
+      _mealSwitchStatus =
+          _meal.switchStatus.status == SwitchStatusEnum.N ? true : false;
+    } else {
+      _mealLeaveStatus = true;
+      _mealSwitchStatus = false;
+    }
     notifyListeners();
   }
 
@@ -176,7 +189,7 @@ class YourMenuCardViewModel extends BaseModel {
   Future onSwitchChanged() async {
     if (!isLeaveToggleOutdated) {
       if (mealSwitchStatus) {
-        await Get.toNamed(SwitchableMealsScreen.id, arguments: meal.id);
+        await Get.toNamed(SwitchableMealsView.id, arguments: meal.id);
       } else {
         if (meal.switchStatus.status == SwitchStatusEnum.T ||
             meal.switchStatus.status == SwitchStatusEnum.F) {
@@ -199,7 +212,20 @@ class YourMenuCardViewModel extends BaseModel {
     }
   }
 
-  VoidCallback onQRTap() {
+  void onSwitchDragged() {
+    if (isLeaveToggleOutdated) {
+      Fluttertoast.showToast(
+        msg:
+            'Leave status cannot be changed less than ${Globals.outdatedTime.inHours} hours before the meal time',
+      );
+    } else if (!mealSwitchStatus) {
+      Fluttertoast.showToast(
+        msg: 'Leave Status cannot be changed when Switch is active !!',
+      );
+    }
+  }
+
+  VoidCallback onQRTapped() {
     switch (meal.switchStatus.status) {
       case SwitchStatusEnum.N:
       case SwitchStatusEnum.A:
@@ -217,7 +243,7 @@ class YourMenuCardViewModel extends BaseModel {
               .add(Duration(hours: 1))
               .isBefore(DateTime.now())) {
             Fluttertoast.showToast(msg: 'Time for this meal has passed!');
-          } else if (meal.startTimeObject
+          } else if (meal.startTime
               .subtract(Globals.outdatedTime)
               .isAfter(DateTime.now())) {
             Fluttertoast.showToast(

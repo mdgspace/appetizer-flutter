@@ -20,7 +20,7 @@ class DialogService {
         ),
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 48, horizontal: 16),
+            padding: const EdgeInsets.symmetric(vertical: 36, horizontal: 16),
             child: Column(
               children: [
                 Icon(
@@ -33,7 +33,7 @@ class DialogService {
                 SizedBox(height: 16),
                 Text(
                   request.title,
-                  style: AppTheme.headline5,
+                  style: AppTheme.headline3,
                   textAlign: TextAlign.center,
                 ),
               ],
@@ -70,12 +70,12 @@ class DialogService {
         ),
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 48, horizontal: 16),
+            padding: const EdgeInsets.symmetric(vertical: 36, horizontal: 16),
             child: Column(
               children: [
                 Text(
                   request.title,
-                  style: AppTheme.headline5,
+                  style: AppTheme.headline3,
                   textAlign: TextAlign.center,
                 ),
                 if (request.description != null) ...[
@@ -189,8 +189,8 @@ class DialogService {
   Future<DialogResponse> showConfirmationDialog({
     String title,
     String description,
-    String confirmationTitle = 'Yes',
-    String cancelTitle = 'No',
+    String confirmationTitle = 'YES',
+    String cancelTitle = 'NO',
   }) {
     _dialogCompleter = Completer<DialogResponse>();
     _showConfirmationDialog(

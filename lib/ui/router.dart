@@ -3,9 +3,9 @@ import 'package:appetizer/ui/FAQ/faq_view.dart';
 import 'package:appetizer/ui/help/help.dart';
 import 'package:appetizer/ui/leave_history/leave_history_screen.dart';
 import 'package:appetizer/ui/login/login.dart';
-import 'package:appetizer/ui/menu/home_view.dart';
-import 'package:appetizer/ui/multimessing/confirmed_switch_screen.dart';
-import 'package:appetizer/ui/multimessing/switchable_meals_screen.dart';
+import 'package:appetizer/ui/home_view.dart';
+import 'package:appetizer/ui/multimessing/switch_confirmed_view.dart';
+import 'package:appetizer/ui/multimessing/switchable_meals_view.dart';
 import 'package:appetizer/ui/my_leaves/my_leaves_screen.dart';
 import 'package:appetizer/ui/my_rebates/my_rebates_screen.dart';
 import 'package:appetizer/ui/my_switches/my_switches_screen.dart';
@@ -73,14 +73,14 @@ class AppetizerRouter {
         );
       case ResetPassword.id:
         return MaterialPageRoute(builder: (_) => ResetPassword());
-      case ConfirmedSwitchScreen.id:
-        return MaterialPageRoute(builder: (_) => ConfirmedSwitchScreen());
+      case SwitchConfirmedView.id:
+        return MaterialPageRoute(builder: (_) => SwitchConfirmedView());
       case NewFeedback.id:
         return MaterialPageRoute(builder: (_) => NewFeedback());
-      case SwitchableMealsScreen.id:
+      case SwitchableMealsView.id:
         var _mealId = settings.arguments as int;
         return MaterialPageRoute(
-            builder: (_) => SwitchableMealsScreen(mealId: _mealId));
+            builder: (_) => SwitchableMealsView(mealId: _mealId));
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

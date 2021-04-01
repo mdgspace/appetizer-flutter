@@ -24,4 +24,27 @@ class ColorUtils {
         return AppTheme.white;
     }
   }
+
+  static Color getSwitchColorFromSwitchStatus(SwitchStatus switchStatus) {
+    switch (switchStatus.status) {
+      case SwitchStatusEnum.N:
+        return Colors.transparent;
+        break;
+      case SwitchStatusEnum.A:
+        return Colors.greenAccent;
+        break;
+      case SwitchStatusEnum.D:
+        return Colors.redAccent;
+        break;
+      case SwitchStatusEnum.T:
+      case SwitchStatusEnum.F:
+        return AppTheme.primary;
+        break;
+      case SwitchStatusEnum.U:
+        return AppTheme.grey;
+        break;
+      default:
+        return Colors.transparent;
+    }
+  }
 }

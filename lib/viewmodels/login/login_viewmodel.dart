@@ -1,10 +1,11 @@
 import 'package:appetizer/enums/view_state.dart';
+import 'package:appetizer/globals.dart';
 import 'package:appetizer/locator.dart';
 import 'package:appetizer/models/user/oauth_user.dart';
 import 'package:appetizer/models/user/user.dart';
 import 'package:appetizer/services/api/user_api.dart';
 import 'package:appetizer/services/dialog_service.dart';
-import 'package:appetizer/ui/menu/home_view.dart';
+import 'package:appetizer/ui/home_view.dart';
 import 'package:appetizer/ui/password/choose_new_password.dart';
 import 'package:appetizer/viewmodels/base_model.dart';
 import 'package:appetizer/models/failure_model.dart';
@@ -59,7 +60,7 @@ class LoginViewModel extends BaseModel {
       isLoginSuccessful = true;
       token = user.token;
       isLoggedIn = true;
-      isCheckedOut = user.isCheckedOut;
+      Globals.isCheckedOut = user.isCheckedOut;
       currentUser = user;
       var fcm = FirebaseMessaging();
       await fcm.subscribeToTopic('release-' + user.hostelCode);

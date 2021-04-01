@@ -1,11 +1,14 @@
+import 'package:appetizer/app_theme.dart';
 import 'package:appetizer/models/menu/week_menu.dart';
+import 'package:appetizer/ui/components/appetizer_progress_widget.dart';
 import 'package:appetizer/utils/date_time_utils.dart';
 import 'package:appetizer/viewmodels/menu/your_menu_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:appetizer/colors.dart';
 
 class WeekMenuView extends StatefulWidget {
+  static const String id = 'week_menu_view';
+
   @override
   _WeekMenuViewState createState() => _WeekMenuViewState();
 }
@@ -13,42 +16,32 @@ class WeekMenuView extends StatefulWidget {
 class _WeekMenuViewState extends State<WeekMenuView> {
   @override
   Widget build(BuildContext context) {
-    final _headerTextStyle = TextStyle(color: Color(0xffFFC107), fontSize: 16);
-
-    try {
-      Provider.of<YourMenuViewModel>(context, listen: false);
-    } on ProviderNotFoundException {
-      print('Caught ProviderNotFoundException WeekMenu');
-      Navigator.pop(context);
-      return Container();
-    }
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: Text(
           'Mess Menu',
-          style: TextStyle(
+          style: AppTheme.headline1.copyWith(
             color: Colors.white,
-            fontSize: 25.0,
             fontFamily: 'Lobster_Two',
           ),
         ),
-        iconTheme: IconThemeData(color: appiYellow),
       ),
       body: Column(
+        mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Container(
             padding: EdgeInsets.all(8.0),
-            decoration: BoxDecoration(
-              color: appiBrown,
-            ),
+            decoration: BoxDecoration(color: AppTheme.secondary),
             child: Row(
               children: <Widget>[
                 Expanded(
                   flex: 5,
                   child: Text(
                     'Day'.toUpperCase(),
-                    style: _headerTextStyle,
+                    style: AppTheme.bodyText1.copyWith(
+                      color: AppTheme.primary,
+                    ),
                   ),
                 ),
                 Expanded(
@@ -56,7 +49,9 @@ class _WeekMenuViewState extends State<WeekMenuView> {
                   child: Center(
                     child: Text(
                       'Breakfast'.toUpperCase(),
-                      style: _headerTextStyle,
+                      style: AppTheme.bodyText1.copyWith(
+                        color: AppTheme.primary,
+                      ),
                     ),
                   ),
                 ),
@@ -65,7 +60,9 @@ class _WeekMenuViewState extends State<WeekMenuView> {
                   child: Center(
                     child: Text(
                       'Lunch'.toUpperCase(),
-                      style: _headerTextStyle,
+                      style: AppTheme.bodyText1.copyWith(
+                        color: AppTheme.primary,
+                      ),
                     ),
                   ),
                 ),
@@ -74,7 +71,9 @@ class _WeekMenuViewState extends State<WeekMenuView> {
                   child: Center(
                     child: Text(
                       'Dinner'.toUpperCase(),
-                      style: _headerTextStyle,
+                      style: AppTheme.bodyText1.copyWith(
+                        color: AppTheme.primary,
+                      ),
                     ),
                   ),
                 ),
@@ -82,27 +81,20 @@ class _WeekMenuViewState extends State<WeekMenuView> {
             ),
           ),
           Consumer<YourMenuViewModel>(
-            builder: (BuildContext context, menu, Widget child) {
-              if (menu.currentWeekYourMeals == null) {
-                return Container(
-                  height: MediaQuery.of(context).size.height / 1.5,
-                  width: MediaQuery.of(context).size.width,
-                  child: Center(
-                      child: CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(appiYellow),
-                  )),
-                );
+            builder: (context, model, child) {
+              if (model.currentWeekYourMeals == null) {
+                return AppetizerProgressWidget();
               } else {
-                var rows = <Widget>[];
-                menu.currentWeekYourMeals.days.forEach((day) {
+                var _mealCells = <Widget>[];
+                model.currentWeekYourMeals.dayMenus.forEach((dayMenu) {
                   var breakfast = <String>[];
                   var lunch = <String>[];
                   var dinner = <String>[];
 
-                  day.meals.forEach(
+                  dayMenu.meals.forEach(
                     (meal) {
-                      meal.items
-                          .forEach((f) => print('item ${f.name} ${meal.type}'));
+                      meal.items.forEach(
+                          (item) => print('item ${item.name} ${meal.type}'));
                       switch (meal.type) {
                         case MealType.B:
                           meal.items
@@ -119,21 +111,19 @@ class _WeekMenuViewState extends State<WeekMenuView> {
                       }
                     },
                   );
-                  rows.add(_buildTableRow(
-                      DateTimeUtils.getWeekDayName(day.date)
-                          .substring(0, 1)
-                          .toUpperCase(),
-                      day.date.day,
-                      breakfast,
-                      lunch,
-                      dinner,
-                      context));
+
+                  _mealCells.add(_buildTableRow(
+                    date: dayMenu.date,
+                    breakfast: breakfast,
+                    lunch: lunch,
+                    dinner: dinner,
+                  ));
                 });
 
                 return Flexible(
                   child: ListView(
                     shrinkWrap: true,
-                    children: rows,
+                    children: _mealCells,
                   ),
                 );
               }
@@ -144,73 +134,81 @@ class _WeekMenuViewState extends State<WeekMenuView> {
     );
   }
 
-  _buildTableRow(String day, int date, List<String> breakfast,
-      List<String> lunch, List<String> dinner, context) {
-    final height = (MediaQuery.of(context).size.height -
-            AppBar().preferredSize.height * 2.12) /
-        7;
-    final screenHeight = MediaQuery.of(context).size.height;
-    final dateWidget = Container(
-        height: height,
+  Widget _buildTableRow({
+    DateTime date,
+    List<String> breakfast,
+    List<String> lunch,
+    List<String> dinner,
+  }) {
+    final height = MediaQuery.of(context).size.height;
+    final cellHeight = (height - AppBar().preferredSize.height * 2.12) / 7;
+
+    Widget _buildDateColumn() {
+      return Container(
+        height: cellHeight,
         padding: const EdgeInsets.all(8.0),
         decoration: BoxDecoration(
-            color: Color(0xfff5f5f5),
-            border: Border(right: BorderSide(color: Color(0xff828282)))),
+          color: AppTheme.lightGrey,
+          border: Border.all(color: AppTheme.grey),
+        ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Container(
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: AppTheme.white,
                 shape: BoxShape.circle,
-                border: Border.all(color: Color(0xfff6f6f6)),
+                border: Border.all(color: AppTheme.lightGrey),
               ),
               child: Center(
                 child: Padding(
                   padding: const EdgeInsets.all(12.0),
                   child: Center(
-                      child: Text(
-                    day,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 12,
+                    child: Text(
+                      DateTimeUtils.getWeekDayName(date)
+                          .substring(0, 1)
+                          .toUpperCase(),
+                      textAlign: TextAlign.center,
+                      style: AppTheme.bodyText2,
                     ),
-                  )),
+                  ),
                 ),
               ),
             ),
             Text(
-              date.toString(),
-              style: TextStyle(
-                  color: Color(0xff333333),
-                  fontSize: screenHeight < 600 ? 0.0 : 12.0),
+              date.day.toString(),
+              style: AppTheme.overline.copyWith(
+                fontSize: height < 600 ? 0.0 : 12.0,
+              ),
             ),
           ],
-        ));
+        ),
+      );
+    }
 
-    subMapper(List<String> list) {
+    Widget _buildMealItemsColumn(List<String> items) {
       return Container(
-        height: height,
+        height: cellHeight,
         decoration: BoxDecoration(
-            color: Colors.white,
-            border: Border(
-                bottom: BorderSide(color: Color(0xff828282)),
-                right: BorderSide(color: Color(0xff828282)))),
-        padding: const EdgeInsets.all(0.0),
+          color: Colors.white,
+          border: Border.all(color: AppTheme.grey),
+        ),
         child: Align(
           alignment: Alignment.centerLeft,
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: list
-                  .map((str) => Center(
-                        child: Text(
-                          str,
-                          style: TextStyle(fontSize: 10),
-                          textAlign: TextAlign.center,
-                        ),
-                      ))
+              children: items
+                  .map(
+                    (item) => Center(
+                      child: Text(
+                        item,
+                        style: AppTheme.overline,
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  )
                   .toList(),
             ),
           ),
@@ -218,15 +216,14 @@ class _WeekMenuViewState extends State<WeekMenuView> {
       );
     }
 
-    final _rowEntries = <Widget>[
-      Expanded(flex: 5, child: dateWidget),
-      Expanded(flex: 12, child: subMapper(breakfast)),
-      Expanded(flex: 12, child: subMapper(lunch)),
-      Expanded(flex: 12, child: subMapper(dinner))
-    ];
-
     return Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: _rowEntries);
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        Expanded(flex: 5, child: _buildDateColumn()),
+        Expanded(flex: 12, child: _buildMealItemsColumn(breakfast)),
+        Expanded(flex: 12, child: _buildMealItemsColumn(lunch)),
+        Expanded(flex: 12, child: _buildMealItemsColumn(dinner))
+      ],
+    );
   }
 }

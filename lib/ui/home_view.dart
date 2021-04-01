@@ -3,8 +3,8 @@ import 'package:appetizer/globals.dart';
 import 'package:appetizer/ui/FAQ/faq_view.dart';
 import 'package:appetizer/ui/base_view.dart';
 import 'package:appetizer/ui/components/appetizer_date_picker.dart';
-import 'package:appetizer/ui/menu/other_menu.dart';
-import 'package:appetizer/ui/menu/your_menu.dart';
+import 'package:appetizer/ui/menu/other_menu_view.dart';
+import 'package:appetizer/ui/menu/your_menu_view.dart';
 import 'package:appetizer/ui/my_leaves/my_leaves_screen.dart';
 import 'package:appetizer/ui/my_rebates/my_rebates_screen.dart';
 import 'package:appetizer/ui/my_switches/my_switches_screen.dart';
@@ -28,6 +28,7 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   HomeViewModel _model;
   String selectedHostelName;
+  DateTime _selectedDateTime;
 
   Widget _buildFAB() {
     return FloatingActionButton(
@@ -46,7 +47,7 @@ class _HomeViewState extends State<HomeView> {
       height: 90,
       width: MediaQuery.of(context).size.width,
       child: AppetizerDatePicker(
-        onDateChanged: (date) {},
+        onDateChanged: (date) => setState(() => _selectedDateTime = date),
       ),
     );
   }
@@ -220,7 +221,10 @@ class _HomeViewState extends State<HomeView> {
   Widget _buildDrawerComponent(
       {String iconPath, String title, VoidCallback onTap}) {
     return ListTile(
-      onTap: onTap,
+      onTap: () {
+        Get.back();
+        onTap();
+      },
       leading: Image(
         image: AssetImage(iconPath),
         width: 24,
@@ -340,8 +344,13 @@ class _HomeViewState extends State<HomeView> {
               _buildDatePicker(),
               _buildCheckedOutComponent(),
               _model.selectedHostel == 'Your Meals'
-                  ? YourMenu()
-                  : OtherMenu(hostelName: model.selectedHostel),
+                  ? YourMenuView(
+                      selectedDateTime: _selectedDateTime ?? DateTime.now(),
+                    )
+                  : OtherMenuView(
+                      hostelName: model.selectedHostel,
+                      selectedDateTime: _selectedDateTime ?? DateTime.now(),
+                    ),
             ],
           ),
         ),

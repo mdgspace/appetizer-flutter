@@ -10,7 +10,7 @@ class AppetizerAppBar extends StatelessWidget implements PreferredSizeWidget {
     Key key,
     @required this.title,
     this.elevation = 0,
-    this.centerTile = false,
+    this.centerTile,
   }) : super(key: key);
 
   @override
@@ -18,7 +18,9 @@ class AppetizerAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       title: Text(
         title,
-        style: AppTheme.headline5.copyWith(color: AppTheme.primary),
+        style: AppTheme.headline4.copyWith(
+          color: AppTheme.primary,
+        ),
       ),
       centerTitle: centerTile,
       elevation: elevation,

@@ -53,13 +53,4 @@ class BaseModel extends ChangeNotifier {
     _errorMessage = errorMessage;
     notifyListeners();
   }
-
-  bool _isCheckedOut = false;
-
-  bool get isCheckedOut => _isCheckedOut;
-
-  set isCheckedOut(bool isCheckedOut) {
-    _isCheckedOut = isCheckedOut;
-    notifyListeners();
-  }
 }

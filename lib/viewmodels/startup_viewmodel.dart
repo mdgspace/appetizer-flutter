@@ -2,7 +2,7 @@ import 'package:appetizer/locator.dart';
 import 'package:appetizer/services/local_storage_service.dart';
 import 'package:appetizer/services/push_notification_service.dart';
 import 'package:appetizer/ui/login/login.dart';
-import 'package:appetizer/ui/menu/home_view.dart';
+import 'package:appetizer/ui/home_view.dart';
 import 'package:appetizer/ui/on_boarding/onBoarding.dart';
 import 'package:appetizer/viewmodels/base_model.dart';
 import 'package:flutter/services.dart';

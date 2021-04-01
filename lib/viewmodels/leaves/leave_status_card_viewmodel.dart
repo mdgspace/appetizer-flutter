@@ -1,4 +1,5 @@
 import 'package:appetizer/enums/view_state.dart';
+import 'package:appetizer/globals.dart';
 import 'package:appetizer/locator.dart';
 import 'package:appetizer/models/failure_model.dart';
 import 'package:appetizer/services/api/leave_api.dart';
@@ -16,7 +17,7 @@ class LeaveStatusCardViewModel extends BaseModel {
     setState(ViewState.Busy);
     try {
       var user = await _userApi.getCurrentUser();
-      isCheckedOut = user.isCheckedOut;
+      Globals.isCheckedOut = user.isCheckedOut;
       setState(ViewState.Idle);
     } on Failure catch (f) {
       setState(ViewState.Error);
@@ -27,7 +28,7 @@ class LeaveStatusCardViewModel extends BaseModel {
   Future toggleCheckState() async {
     setState(ViewState.Busy);
     try {
-      isCheckedOut = await _leaveApi.check();
+      Globals.isCheckedOut = await _leaveApi.check();
       setState(ViewState.Idle);
     } on Failure catch (f) {
       setState(ViewState.Error);
@@ -36,7 +37,7 @@ class LeaveStatusCardViewModel extends BaseModel {
   }
 
   Future onCheckTapped() async {
-    if (!isCheckedOut) {
+    if (!Globals.isCheckedOut) {
       var dialogResponse = await _dialogService.showConfirmationDialog(
         title: 'Check Out',
         description: 'Are you sure you would like to check out?',
@@ -45,13 +46,13 @@ class LeaveStatusCardViewModel extends BaseModel {
 
       if (dialogResponse.confirmed) {
         await toggleCheckState();
-        if (isCheckedOut) {
+        if (Globals.isCheckedOut) {
           SnackBarUtils.showDark('You have checked out');
         }
       }
     } else {
       await toggleCheckState();
-      if (!isCheckedOut) {
+      if (!Globals.isCheckedOut) {
         SnackBarUtils.showDark('You have checked in');
       }
     }

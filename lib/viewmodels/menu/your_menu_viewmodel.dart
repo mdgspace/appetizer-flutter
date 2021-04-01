@@ -1,10 +1,12 @@
 import 'package:appetizer/constants.dart';
 import 'package:appetizer/database/app_database.dart';
 import 'package:appetizer/enums/view_state.dart';
+import 'package:appetizer/globals.dart';
 import 'package:appetizer/locator.dart';
 import 'package:appetizer/models/failure_model.dart';
 import 'package:appetizer/models/menu/week_menu.dart';
 import 'package:appetizer/services/api/menu_api.dart';
+import 'package:appetizer/services/api/user_api.dart';
 import 'package:appetizer/utils/date_time_utils.dart';
 import 'package:appetizer/viewmodels/base_model.dart';
 import 'package:sembast/sembast.dart';
@@ -12,6 +14,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class YourMenuViewModel extends BaseModel {
   final MenuApi _menuApi = locator<MenuApi>();
+  final UserApi _userApi = locator<UserApi>();
 
   WeekMenu _currentWeekYourMeals;
 
@@ -29,6 +32,17 @@ class YourMenuViewModel extends BaseModel {
   set selectedWeekYourMeals(WeekMenu selectedWeekYourMeals) {
     _selectedWeekYourMeals = selectedWeekYourMeals;
     notifyListeners();
+  }
+
+  Future fetchInitialCheckedStatus() async {
+    try {
+      var userDetails = await _userApi.getCurrentUser();
+      Globals.isCheckedOut = userDetails.isCheckedOut;
+      notifyListeners();
+    } on Failure catch (f) {
+      setState(ViewState.Error);
+      setErrorMessage(f.message);
+    }
   }
 
   Future<void> currentWeekMenuYourMeals() async {

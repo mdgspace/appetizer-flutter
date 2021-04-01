@@ -1,6 +1,15 @@
 import 'package:intl/intl.dart';
 
 class DateTimeUtils {
+  static String getDashedDate(DateTime dateTime) {
+    return DateFormat('yyyy-MM-dd').format(dateTime);
+  }
+
+  static DateTime getDateTimeFromDateAndTime(DateTime date, String time) {
+    return DateFormat('yyyy-MM-dd HH:mm:ss')
+        .parse('${date.toString().substring(0, 10)} $time');
+  }
+
   static String getWeekDayName(DateTime _dateTime) {
     return DateFormat('EEEE').format(_dateTime);
   }

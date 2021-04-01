@@ -4,7 +4,7 @@ import 'package:appetizer/models/failure_model.dart';
 import 'package:appetizer/models/user/oauth_user.dart';
 import 'package:appetizer/services/api/user_api.dart';
 import 'package:appetizer/services/dialog_service.dart';
-import 'package:appetizer/ui/menu/home_view.dart';
+import 'package:appetizer/ui/home_view.dart';
 import 'package:appetizer/viewmodels/base_model.dart';
 import 'package:get/get.dart';
 

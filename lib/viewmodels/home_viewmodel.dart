@@ -1,4 +1,5 @@
 import 'package:appetizer/enums/view_state.dart';
+import 'package:appetizer/globals.dart';
 import 'package:appetizer/locator.dart';
 import 'package:appetizer/models/failure_model.dart';
 import 'package:appetizer/services/api/leave_api.dart';
@@ -53,7 +54,7 @@ class HomeViewModel extends BaseModel {
   Future fetchInitialCheckedStatus() async {
     try {
       var userDetails = await _userApi.getCurrentUser();
-      isCheckedOut = userDetails.isCheckedOut;
+      Globals.isCheckedOut = userDetails.isCheckedOut;
       notifyListeners();
     } on Failure catch (f) {
       setState(ViewState.Error);
@@ -117,7 +118,7 @@ class HomeViewModel extends BaseModel {
 
   Future checkout() async {
     try {
-      isCheckedOut = await _leaveApi.check();
+      Globals.isCheckedOut = await _leaveApi.check();
     } on Failure catch (f) {
       setState(ViewState.Error);
       setErrorMessage(f.message);
@@ -133,7 +134,7 @@ class HomeViewModel extends BaseModel {
 
     if (dialogResponse.confirmed) {
       await checkout();
-      if (isCheckedOut) {
+      if (Globals.isCheckedOut) {
         SnackBarUtils.showDark('You have checked out');
       }
     }

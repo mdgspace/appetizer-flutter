@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:appetizer/enums/enum_values.dart';
+import 'package:appetizer/globals.dart';
+import 'package:appetizer/utils/date_time_utils.dart';
 import 'package:intl/intl.dart';
 
 class WeekMenu {
@@ -9,7 +11,7 @@ class WeekMenu {
   dynamic name;
   String hostelName;
   DailyItems dailyItems;
-  List<Day> days;
+  List<DayMenu> dayMenus;
   bool isApproved;
 
   WeekMenu({
@@ -18,7 +20,7 @@ class WeekMenu {
     this.name,
     this.hostelName,
     this.dailyItems,
-    this.days,
+    this.dayMenus,
     this.isApproved,
   });
 
@@ -28,7 +30,8 @@ class WeekMenu {
         name: json['name'],
         hostelName: json['hostel_name'],
         dailyItems: DailyItems.fromJson(json['daily_items']),
-        days: List<Day>.from(json['days'].map((x) => Day.fromJson(x))),
+        dayMenus:
+            List<DayMenu>.from(json['days'].map((x) => DayMenu.fromJson(x))),
         isApproved: json['is_approved'],
       );
 
@@ -38,7 +41,7 @@ class WeekMenu {
         'name': name,
         'hostel_name': hostelName,
         'daily_items': dailyItems.toJson(),
-        'days': List<dynamic>.from(days.map((x) => x.toJson())),
+        'days': List<dynamic>.from(dayMenus.map((x) => x.toJson())),
         'is_approved': isApproved,
       };
 }
@@ -61,13 +64,17 @@ class DailyItems {
   factory DailyItems.fromJson(Map<String, dynamic> json) => DailyItems(
         id: json['id'],
         breakfast: List<MealItem>.from(
-            json['breakfast'].map((x) => MealItem.fromJson(x))),
-        lunch:
-            List<MealItem>.from(json['lunch'].map((x) => MealItem.fromJson(x))),
+          json['breakfast'].map((x) => MealItem.fromJson(x)),
+        ),
+        lunch: List<MealItem>.from(
+          json['lunch'].map((x) => MealItem.fromJson(x)),
+        ),
         dinner: List<MealItem>.from(
-            json['dinner'].map((x) => MealItem.fromJson(x))),
-        snack:
-            List<MealItem>.from(json['snack'].map((x) => MealItem.fromJson(x))),
+          json['dinner'].map((x) => MealItem.fromJson(x)),
+        ),
+        snack: List<MealItem>.from(
+          json['snack'].map((x) => MealItem.fromJson(x)),
+        ),
       );
 
   Map<String, dynamic> toJson() => {
@@ -120,43 +127,42 @@ final breakfastTypeValues = EnumValues({
   'str': MealItemType.STR
 });
 
-class Day {
+class DayMenu {
   int id;
   int dayId;
   DateTime date;
   List<Meal> meals;
-  Map<MealType, Meal> _mealMap;
+  Map<MealType, Meal> mealMap;
 
-  Day({
+  DayMenu({
     this.id,
     this.dayId,
     this.date,
     this.meals,
   }) {
-    _mealMap = {};
+    mealMap = {};
     meals.forEach((meal) {
-      _mealMap[meal.type] = meal;
+      mealMap[meal.type] = meal;
     });
   }
 
-  DateFormat dateFormat = DateFormat('yyyy-MM-dd HH:mm:ss');
-
-  factory Day.fromJson(Map<String, dynamic> json) => Day(
+  factory DayMenu.fromJson(Map<String, dynamic> json) => DayMenu(
         id: json['id'],
         dayId: json['day_id'],
         date: DateTime.parse(json['date']),
-        meals: List<Meal>.from(json['meals'].map((x) => Meal.fromJson(x))),
+        meals: List<Meal>.from(
+          json['meals'].map(
+            (meal) => Meal.fromJson(meal, DateTime.parse(json['date'])),
+          ),
+        ),
       );
 
   Map<String, dynamic> toJson() => {
         'id': id,
         'day_id': dayId,
-        'date':
-            "${date.year.toString().padLeft(4, '0')}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}",
+        'date': DateTimeUtils.getDashedDate(date),
         'meals': List<dynamic>.from(meals.map((x) => x.toJson())),
       };
-
-  Map<MealType, Meal> get mealMap => _mealMap;
 }
 
 class Meal {
@@ -164,14 +170,18 @@ class Meal {
   MealType type;
   CostType costType;
   List<MealItem> items;
-  String startTime;
-  String endTime;
+  DateTime startTime;
+  DateTime endTime;
   LeaveStatus leaveStatus;
   dynamic wastage;
   bool isSwitchable;
   SwitchStatus switchStatus;
   String hostelName;
   String secretCode;
+  bool isOutdated;
+  bool isLeaveToggleOutdated;
+  DateTime startDateTime;
+  DateTime endDateTime;
 
   Meal({
     this.id,
@@ -186,22 +196,37 @@ class Meal {
     this.switchStatus,
     this.hostelName,
     this.secretCode,
+    this.isOutdated,
+    this.isLeaveToggleOutdated,
+    this.startDateTime,
+    this.endDateTime,
   });
 
-  factory Meal.fromJson(Map<String, dynamic> json) => Meal(
+  factory Meal.fromJson(Map<String, dynamic> json, DateTime date) => Meal(
         id: json['id'],
         type: mealTypeValues.map[json['type']],
         costType: costTypeValues.map[json['cost_type']],
         items:
             List<MealItem>.from(json['items'].map((x) => MealItem.fromJson(x))),
-        startTime: json['start_time'],
-        endTime: json['end_time'],
+        startTime: DateFormat('HH:mm:ss').parse(json['start_time']),
+        endTime: DateFormat('HH:mm:ss').parse(json['end_time']),
         leaveStatus: LeaveStatus.fromJson(json['leave_status']),
         wastage: json['wastage'],
         isSwitchable: json['is_switchable'],
         switchStatus: SwitchStatus.fromJson(json['switch_status']),
         hostelName: json['hostel_name'],
         secretCode: json['secret_code'],
+        isOutdated:
+            !DateTimeUtils.getDateTimeFromDateAndTime(date, json['start_time'])
+                .isAfter(DateTime.now()),
+        isLeaveToggleOutdated:
+            !DateTimeUtils.getDateTimeFromDateAndTime(date, json['end_time'])
+                .subtract(Globals.outdatedTime)
+                .isAfter(DateTime.now()),
+        startDateTime:
+            DateTimeUtils.getDateTimeFromDateAndTime(date, json['start_time']),
+        endDateTime:
+            DateTimeUtils.getDateTimeFromDateAndTime(date, json['end_time']),
       );
 
   Map<String, dynamic> toJson() => {
@@ -230,52 +255,7 @@ class Meal {
       case MealType.D:
         return 'Dinner';
     }
-    print("Meal type didn't match returning 'Meal'");
     return 'Meal';
-  }
-
-  bool _isOutdated;
-
-  bool get isOutdated => _isOutdated;
-
-  set isOutdated(bool value) {
-    _isOutdated = value;
-  }
-
-  bool _isLeaveToggleOutdated;
-
-  bool get isLeaveToggleOutdated => _isLeaveToggleOutdated;
-
-  set isLeaveToggleOutdated(bool value) {
-    _isLeaveToggleOutdated = value;
-  }
-
-  bool get mealSwitchStatusBool =>
-      switchStatus.status == SwitchStatusEnum.N ? true : false;
-
-  bool get mealLeaveStatusBool =>
-      leaveStatus.status == LeaveStatusEnum.N ? true : false;
-
-  DateTime get startTimeObject => _timeFormat.parse(startTime);
-
-  DateTime get endTimeObject => _timeFormat.parse(endTime);
-
-  final DateFormat _timeFormat = DateFormat('HH:mm:ss');
-
-  DateTime _startDateTime;
-
-  DateTime get startDateTime => _startDateTime;
-
-  set startDateTime(DateTime value) {
-    _startDateTime = value;
-  }
-
-  DateTime _endDateTime;
-
-  DateTime get endDateTime => _endDateTime;
-
-  set endDateTime(DateTime value) {
-    _endDateTime = value;
   }
 }
 

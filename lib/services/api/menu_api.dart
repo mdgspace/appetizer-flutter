@@ -90,15 +90,15 @@ class MenuApi {
     }
   }
 
-  Future<Day> dayMenu(int week, int dayOfWeek) async {
+  Future<DayMenu> dayMenu(int week, int dayOfWeek) async {
     var endpoint = '/api/menu/$week/$dayOfWeek';
     var uri = EnvironmentConfig.BASE_URL + endpoint;
 
     try {
       await ApiUtils.addTokenToHeaders(headers);
       var jsonResponse = await ApiUtils.get(uri, headers: headers);
-      var day = Day.fromJson(jsonResponse);
-      return day;
+      var dayMenu = DayMenu.fromJson(jsonResponse);
+      return dayMenu;
     } on FormatException catch (e) {
       print(e.message);
       throw Failure(Constants.BAD_RESPONSE_FORMAT);
