@@ -76,7 +76,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
                     AppetizerTextField(
                       iconData: Icons.email,
                       label: 'Email Address',
-                      validator: (value) => !Validators.isEmailValid(_email)
+                      validator: (value) => !Validators.isEmailValid(value)
                           ? 'Please enter a valid e-mail'
                           : null,
                       onSaved: (value) => _email = value,

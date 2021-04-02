@@ -80,7 +80,7 @@ class _ChooseNewPasswordViewState extends State<ChooseNewPasswordView> {
                       initialValue: widget?.user?.email,
                       iconData: Icons.email,
                       label: 'Email Address',
-                      validator: (value) => !Validators.isEmailValid(_email)
+                      validator: (value) => !Validators.isEmailValid(value)
                           ? 'Please enter a valid e-mail'
                           : null,
                       onSaved: (value) => _email = value,
@@ -91,7 +91,7 @@ class _ChooseNewPasswordViewState extends State<ChooseNewPasswordView> {
                       iconData: Icons.phone,
                       label: 'Contact Number',
                       validator: (value) =>
-                          !Validators.isPhoneNumberValid(_contactNo)
+                          !Validators.isPhoneNumberValid(value)
                               ? 'Please enter a valid contact no.'
                               : null,
                       onSaved: (value) => _contactNo = value,
