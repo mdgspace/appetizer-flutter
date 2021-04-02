@@ -2,12 +2,20 @@ import 'package:appetizer/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class MonthlyBalanceCard extends StatelessWidget {
+class MonthlyRebateCard extends StatelessWidget {
   final int balanceConsumed;
   final int rebate;
   final int additionalMeal;
+  final String month;
+  final int year;
 
-  MonthlyBalanceCard({this.balanceConsumed, this.rebate, this.additionalMeal});
+  MonthlyRebateCard({
+    this.balanceConsumed,
+    this.rebate,
+    this.additionalMeal,
+    this.month,
+    this.year,
+  });
 
   @override
   Widget build(BuildContext context) {

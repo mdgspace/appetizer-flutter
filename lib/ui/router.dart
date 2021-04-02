@@ -7,14 +7,14 @@ import 'package:appetizer/ui/home_view.dart';
 import 'package:appetizer/ui/multimessing/switch_confirmed_view.dart';
 import 'package:appetizer/ui/multimessing/switchable_meals_view.dart';
 import 'package:appetizer/ui/my_leaves/my_leaves_view.dart';
-import 'package:appetizer/ui/my_rebates/my_rebates_view.dart';
 import 'package:appetizer/ui/my_switches/my_switches_view.dart';
 import 'package:appetizer/ui/notification_history/notification_history_view.dart';
 import 'package:appetizer/ui/on_boarding/on_boarding_view.dart';
 import 'package:appetizer/ui/password/choose_new_password.dart';
 import 'package:appetizer/ui/password/forgot_password_view.dart';
 import 'package:appetizer/ui/password/reset_password_view.dart';
-import 'package:appetizer/ui/rebate_history/rebate_history_screen.dart';
+import 'package:appetizer/ui/rebates/my_rebates_view.dart';
+import 'package:appetizer/ui/rebates/rebates_history_view.dart';
 import 'package:appetizer/ui/settings/edit_profile_view.dart';
 import 'package:appetizer/ui/settings/settings_view.dart';
 import 'package:appetizer/ui/user_feedback/new_feedback_view.dart';
@@ -50,8 +50,8 @@ class AppetizerRouter {
         return MaterialPageRoute(builder: (_) => MySwitches());
       case MyRebatesView.id:
         return MaterialPageRoute(builder: (_) => MyRebatesView());
-      case RebateHistoryScreen.id:
-        return MaterialPageRoute(builder: (_) => RebateHistoryScreen());
+      case RebatesHistoryView.id:
+        return MaterialPageRoute(builder: (_) => RebatesHistoryView());
       case NotificationHistoryView.id:
         return MaterialPageRoute(builder: (_) => NotificationHistoryView());
       case Settings.id:

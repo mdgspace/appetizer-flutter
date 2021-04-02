@@ -1,14 +1,14 @@
 import 'package:appetizer/app_theme.dart';
 import 'package:appetizer/ui/base_view.dart';
 import 'package:appetizer/ui/components/appetizer_app_bar.dart';
-import 'package:appetizer/ui/my_rebates/components/monthly_balance_card.dart';
-import 'package:appetizer/ui/rebate_history/rebate_history_screen.dart';
+import 'package:appetizer/ui/rebates/components/monthly_rebate_card.dart';
+import 'package:appetizer/ui/rebates/rebates_history_view.dart';
 import 'package:appetizer/viewmodels/rebates/my_rebates_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class MyRebatesView extends StatelessWidget {
-  static const String id = 'my_rebates_view';
+  static const String id = 'rebates_view';
 
   Widget _buildRebatesHistoryComponent() {
     return SafeArea(
@@ -20,7 +20,7 @@ class MyRebatesView extends StatelessWidget {
         ),
         child: GestureDetector(
           behavior: HitTestBehavior.translucent,
-          onTap: () => Get.toNamed(RebateHistoryScreen.id),
+          onTap: () => Get.toNamed(RebatesHistoryView.id),
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Row(
@@ -48,7 +48,7 @@ class MyRebatesView extends StatelessWidget {
         body: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            MonthlyBalanceCard(
+            MonthlyRebateCard(
               balanceConsumed: 0,
               rebate: model.monthlyRebate,
               additionalMeal: 0,

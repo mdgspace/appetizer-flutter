@@ -5,7 +5,7 @@ import 'package:appetizer/models/transaction/paginated_yearly_rebate.dart';
 import 'package:appetizer/services/api/transaction_api.dart';
 import 'package:appetizer/viewmodels/base_model.dart';
 
-class RebateHistoryViewModel extends BaseModel {
+class RebatesHistoryViewModel extends BaseModel {
   final TransactionApi _transactionApi = locator<TransactionApi>();
 
   PaginatedYearlyRebate _yearlyRebate;

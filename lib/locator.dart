@@ -31,7 +31,7 @@ import 'package:appetizer/viewmodels/password/forgot_password_viewmodel.dart';
 import 'package:appetizer/viewmodels/password/choose_new_password_viewmodel.dart';
 import 'package:appetizer/viewmodels/password/reset_password_viewmodel.dart';
 import 'package:appetizer/viewmodels/rebates/my_rebates_viewmodel.dart';
-import 'package:appetizer/viewmodels/rebates/rebate_history_viewmodel.dart';
+import 'package:appetizer/viewmodels/rebates/rebates_history_viewmodel.dart';
 import 'package:appetizer/viewmodels/settings/edit_profile_viewmodel.dart';
 import 'package:appetizer/viewmodels/settings/settings_viewmodel.dart';
 import 'package:appetizer/viewmodels/startup_viewmodel.dart';
@@ -80,7 +80,7 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => NewPasswordViewModel());
   locator.registerFactory(() => ResetPasswordViewModel());
   locator.registerFactory(() => MyRebatesViewModel());
-  locator.registerFactory(() => RebateHistoryViewModel());
+  locator.registerFactory(() => RebatesHistoryViewModel());
   locator.registerFactory(() => EditProfileViewModel());
   locator.registerFactory(() => SettingsViewModel());
   locator.registerFactory(() => ConfirmSwitchPopupViewModel());
