@@ -3,13 +3,13 @@ import 'package:appetizer/globals.dart';
 import 'package:appetizer/ui/FAQ/faq_view.dart';
 import 'package:appetizer/ui/base_view.dart';
 import 'package:appetizer/ui/components/appetizer_date_picker.dart';
+import 'package:appetizer/ui/leaves/my_leaves_view.dart';
 import 'package:appetizer/ui/menu/other_menu_view.dart';
 import 'package:appetizer/ui/menu/your_menu_view.dart';
-import 'package:appetizer/ui/my_leaves/my_leaves_view.dart';
-import 'package:appetizer/ui/my_switches/my_switches_view.dart';
 import 'package:appetizer/ui/notification_history/notification_history_view.dart';
 import 'package:appetizer/ui/rebates/my_rebates_view.dart';
 import 'package:appetizer/ui/settings/settings_view.dart';
+import 'package:appetizer/ui/switches/my_switches_view.dart';
 import 'package:appetizer/ui/user_feedback/user_feedback_view.dart';
 import 'package:appetizer/viewmodels/home_viewmodel.dart';
 import 'package:flutter/material.dart';
@@ -287,7 +287,7 @@ class _HomeViewState extends State<HomeView> {
                     title: 'Leaves',
                   ),
                   _buildDrawerComponent(
-                    onTap: () => Get.toNamed(MySwitches.id),
+                    onTap: () => Get.toNamed(MySwitchesView.id),
                     iconPath: 'assets/icons/leaves.png',
                     title: 'Switches',
                   ),
@@ -302,7 +302,7 @@ class _HomeViewState extends State<HomeView> {
                     title: 'Notification History',
                   ),
                   _buildDrawerComponent(
-                    onTap: () => Get.toNamed(Settings.id),
+                    onTap: () => Get.toNamed(SettingsView.id),
                     iconPath: 'assets/icons/setting.png',
                     title: 'Settings',
                   ),

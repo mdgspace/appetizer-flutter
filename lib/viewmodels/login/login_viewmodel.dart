@@ -6,7 +6,7 @@ import 'package:appetizer/models/user/user.dart';
 import 'package:appetizer/services/api/user_api.dart';
 import 'package:appetizer/services/dialog_service.dart';
 import 'package:appetizer/ui/home_view.dart';
-import 'package:appetizer/ui/password/choose_new_password.dart';
+import 'package:appetizer/ui/password/choose_new_password_view.dart';
 import 'package:appetizer/viewmodels/base_model.dart';
 import 'package:appetizer/models/failure_model.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';

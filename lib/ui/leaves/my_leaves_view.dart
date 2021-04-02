@@ -3,7 +3,7 @@ import 'package:appetizer/globals.dart';
 import 'package:appetizer/ui/base_view.dart';
 import 'package:appetizer/ui/components/appetizer_app_bar.dart';
 import 'package:appetizer/ui/leave_history/leave_history_screen.dart';
-import 'package:appetizer/ui/my_leaves/components/leave_status_card.dart';
+import 'package:appetizer/ui/leaves/components/leave_status_card.dart';
 import 'package:appetizer/viewmodels/leaves/my_leaves_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

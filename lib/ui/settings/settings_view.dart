@@ -14,7 +14,7 @@ import 'package:get/get.dart';
 import 'package:share/share.dart';
 import 'package:appetizer/ui/help/help_view.dart';
 
-class Settings extends StatelessWidget {
+class SettingsView extends StatelessWidget {
   static const String id = 'settings_view';
 
   Widget _buildListItem({IconData iconData, String title, VoidCallback onTap}) {
