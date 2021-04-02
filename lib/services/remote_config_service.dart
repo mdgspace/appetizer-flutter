@@ -1,14 +1,11 @@
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 
 const String APPI_VERSION = 'appetizer_flutter_version';
-const String GOOGLE_PLAY_LINK = 'appetizer_flutter_play_link';
+const String APP_LINK = 'appetizer_link';
 
 class RemoteConfigService {
   final RemoteConfig _remoteConfig;
-  final defaults = <String, dynamic>{
-    APPI_VERSION: '2.0.0',
-    GOOGLE_PLAY_LINK: ''
-  };
+  final defaults = <String, dynamic>{APPI_VERSION: '2.0.0', APP_LINK: ''};
 
   static RemoteConfigService _instance;
 
@@ -25,7 +22,7 @@ class RemoteConfigService {
 
   String get appetizerVersion => _remoteConfig.getString(APPI_VERSION);
 
-  String get googlePlayLink => _remoteConfig.getString(GOOGLE_PLAY_LINK);
+  String get appetizerLink => _remoteConfig.getString(APP_LINK);
 
   Future initialise() async {
     try {

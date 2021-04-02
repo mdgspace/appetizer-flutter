@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 class AppetizerAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final double elevation;
+  final Color backgroundColor;
   final bool centerTile;
   final List<Widget> actions;
 
@@ -11,6 +12,7 @@ class AppetizerAppBar extends StatelessWidget implements PreferredSizeWidget {
     Key key,
     @required this.title,
     this.elevation = 0,
+    this.backgroundColor,
     this.centerTile,
     this.actions,
   }) : super(key: key);
@@ -18,6 +20,7 @@ class AppetizerAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      backgroundColor: backgroundColor,
       title: Text(
         title,
         style: AppTheme.headline3.copyWith(

@@ -15,8 +15,8 @@ import 'package:appetizer/ui/password/choose_new_password.dart';
 import 'package:appetizer/ui/password/forgot_password_view.dart';
 import 'package:appetizer/ui/password/reset_password_view.dart';
 import 'package:appetizer/ui/rebate_history/rebate_history_screen.dart';
-import 'package:appetizer/ui/settings/edit_profile.dart';
-import 'package:appetizer/ui/settings/settings_screen.dart';
+import 'package:appetizer/ui/settings/edit_profile_view.dart';
+import 'package:appetizer/ui/settings/settings_view.dart';
 import 'package:appetizer/ui/user_feedback/new_feedback_view.dart';
 import 'package:appetizer/ui/user_feedback/user_feedback_view.dart';
 import 'package:flutter/material.dart';
@@ -60,8 +60,8 @@ class AppetizerRouter {
         return MaterialPageRoute(builder: (_) => FaqView());
       case HelpView.id:
         return MaterialPageRoute(builder: (_) => HelpView());
-      case EditProfile.id:
-        return MaterialPageRoute(builder: (_) => EditProfile());
+      case EditProfileView.id:
+        return MaterialPageRoute(builder: (_) => EditProfileView());
       case ForgotPasswordView.id:
         return MaterialPageRoute(builder: (_) => ForgotPasswordView());
       case ChooseNewPasswordView.id:

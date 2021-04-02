@@ -34,7 +34,7 @@ class BaseModel extends ChangeNotifier {
 
   String get appetizerVersion => _remoteConfigService.appetizerVersion;
 
-  String get googlePlayLink => _remoteConfigService.googlePlayLink;
+  String get appetizerLink => _remoteConfigService.appetizerLink;
 
   ViewState _state = ViewState.Idle;
 

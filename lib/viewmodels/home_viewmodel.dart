@@ -73,10 +73,10 @@ class HomeViewModel extends BaseModel {
           confirmationTitle: 'UPDATE',
         );
         if (_dialogResponse.confirmed) {
-          if (await canLaunch(googlePlayLink)) {
-            await launch(googlePlayLink);
+          if (await canLaunch(appetizerLink)) {
+            await launch(appetizerLink);
           } else {
-            throw 'Could not launch $googlePlayLink';
+            throw 'Could not launch $appetizerLink';
           }
         }
       }

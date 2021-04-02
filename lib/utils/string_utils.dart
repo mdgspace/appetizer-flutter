@@ -28,4 +28,8 @@ class StringUtils {
   static String hostelNameToCode(String name) {
     return _hostelMap[name];
   }
+
+  static String appLinkToShareText(String link) {
+    return 'Let me recommend you this application:\n $link';
+  }
 }
