@@ -22,9 +22,8 @@ class MyRebatesViewModel extends BaseModel {
       monthlyRebate = await _transactionApi.getMonthlyRebate();
       setState(ViewState.Idle);
     } on Failure catch (f) {
-      print(f.message);
-      setErrorMessage(f.message);
       setState(ViewState.Error);
+      setErrorMessage(f.message);
     }
   }
 }
