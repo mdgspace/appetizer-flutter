@@ -108,17 +108,10 @@ class _UserFeedbackViewState extends State<UserFeedbackView> {
                     ),
                   ],
                 ),
-                children: <Widget>[
-                  Container(
-                    height:
-                        model.responseOfFeedbacks.length * 60.toDouble() + 20,
-                    child: ListView(
-                      children: model.responseOfFeedbacks
-                          .map((response) => _buildResponse(response))
-                          .toList(),
-                    ),
-                  ),
-                ],
+                children: model.responseOfFeedbacks
+                        ?.map((response) => _buildResponse(response))
+                        ?.toList() ??
+                    [],
               ),
               ExpansionTile(
                 onExpansionChanged: (value) =>
@@ -142,17 +135,10 @@ class _UserFeedbackViewState extends State<UserFeedbackView> {
                     ),
                   ],
                 ),
-                children: <Widget>[
-                  Container(
-                    height:
-                        model.submittedFeedbacks.length * 60.toDouble() + 20,
-                    child: ListView(
-                      children: model.submittedFeedbacks
-                          .map((feedback) => _buildFeedback(feedback))
-                          .toList(),
-                    ),
-                  ),
-                ],
+                children: model.submittedFeedbacks
+                        ?.map((feedback) => _buildFeedback(feedback))
+                        ?.toList() ??
+                    [],
               ),
             ],
           ),
