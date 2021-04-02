@@ -5,7 +5,7 @@ import 'package:appetizer/ui/base_view.dart';
 import 'package:appetizer/ui/components/appetizer_date_picker.dart';
 import 'package:appetizer/ui/menu/other_menu_view.dart';
 import 'package:appetizer/ui/menu/your_menu_view.dart';
-import 'package:appetizer/ui/my_leaves/my_leaves_screen.dart';
+import 'package:appetizer/ui/my_leaves/my_leaves_view.dart';
 import 'package:appetizer/ui/my_rebates/my_rebates_screen.dart';
 import 'package:appetizer/ui/my_switches/my_switches_screen.dart';
 import 'package:appetizer/ui/notification_history/notification_history_view.dart';
@@ -78,7 +78,7 @@ class _HomeViewState extends State<HomeView> {
               ),
             ),
             GestureDetector(
-              onTap: () => Get.toNamed(MyLeaves.id),
+              onTap: () => Get.toNamed(MyLeavesView.id),
               child: Padding(
                 padding: const EdgeInsets.symmetric(
                   vertical: 4,
@@ -282,7 +282,7 @@ class _HomeViewState extends State<HomeView> {
                     title: 'Feedback',
                   ),
                   _buildDrawerComponent(
-                    onTap: () => Get.toNamed(MyLeaves.id),
+                    onTap: () => Get.toNamed(MyLeavesView.id),
                     iconPath: 'assets/icons/leaves.png',
                     title: 'Leaves',
                   ),

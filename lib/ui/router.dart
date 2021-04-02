@@ -6,7 +6,7 @@ import 'package:appetizer/ui/login/login_view.dart';
 import 'package:appetizer/ui/home_view.dart';
 import 'package:appetizer/ui/multimessing/switch_confirmed_view.dart';
 import 'package:appetizer/ui/multimessing/switchable_meals_view.dart';
-import 'package:appetizer/ui/my_leaves/my_leaves_screen.dart';
+import 'package:appetizer/ui/my_leaves/my_leaves_view.dart';
 import 'package:appetizer/ui/my_rebates/my_rebates_screen.dart';
 import 'package:appetizer/ui/my_switches/my_switches_screen.dart';
 import 'package:appetizer/ui/notification_history/notification_history_view.dart';
@@ -42,8 +42,8 @@ class AppetizerRouter {
         );
       case UserFeedbackView.id:
         return MaterialPageRoute(builder: (_) => UserFeedbackView());
-      case MyLeaves.id:
-        return MaterialPageRoute(builder: (_) => MyLeaves());
+      case MyLeavesView.id:
+        return MaterialPageRoute(builder: (_) => MyLeavesView());
       case MyLeavesHistory.id:
         return MaterialPageRoute(builder: (_) => MyLeavesHistory());
       case MySwitches.id:
