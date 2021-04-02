@@ -7,7 +7,7 @@ import 'package:appetizer/ui/menu/other_menu_view.dart';
 import 'package:appetizer/ui/menu/your_menu_view.dart';
 import 'package:appetizer/ui/my_leaves/my_leaves_view.dart';
 import 'package:appetizer/ui/my_rebates/my_rebates_screen.dart';
-import 'package:appetizer/ui/my_switches/my_switches_screen.dart';
+import 'package:appetizer/ui/my_switches/my_switches_view.dart';
 import 'package:appetizer/ui/notification_history/notification_history_view.dart';
 import 'package:appetizer/ui/settings/settings_view.dart';
 import 'package:appetizer/ui/user_feedback/user_feedback_view.dart';

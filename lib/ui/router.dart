@@ -8,7 +8,7 @@ import 'package:appetizer/ui/multimessing/switch_confirmed_view.dart';
 import 'package:appetizer/ui/multimessing/switchable_meals_view.dart';
 import 'package:appetizer/ui/my_leaves/my_leaves_view.dart';
 import 'package:appetizer/ui/my_rebates/my_rebates_screen.dart';
-import 'package:appetizer/ui/my_switches/my_switches_screen.dart';
+import 'package:appetizer/ui/my_switches/my_switches_view.dart';
 import 'package:appetizer/ui/notification_history/notification_history_view.dart';
 import 'package:appetizer/ui/on_boarding/on_boarding_view.dart';
 import 'package:appetizer/ui/password/choose_new_password.dart';
