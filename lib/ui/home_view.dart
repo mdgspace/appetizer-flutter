@@ -332,7 +332,6 @@ class _HomeViewState extends State<HomeView> {
       onModelReady: (model) {
         _model = model;
         _model.fetchInitialCheckedStatus();
-        _model.setSwitchableHostels();
       },
       builder: (context, model, child) => Scaffold(
         floatingActionButton: !Globals.isCheckedOut ? _buildFAB() : null,
