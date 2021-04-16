@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:appetizer/app_theme.dart';
-import 'package:appetizer/colors.dart';
 import 'package:appetizer/enums/view_state.dart';
 import 'package:appetizer/ui/base_view.dart';
 import 'package:appetizer/ui/components/appetizer_outline_button.dart';
@@ -245,7 +244,7 @@ class _LoginViewState extends State<LoginView> with TickerProviderStateMixin {
                     color: AppTheme.secondary,
                     child: SafeArea(
                       child: Container(
-                        color: appiBrown,
+                        color: AppTheme.secondary,
                         child: Stack(
                           children: <Widget>[
                             _flareActor,
