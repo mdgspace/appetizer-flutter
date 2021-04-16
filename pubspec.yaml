@@ -21,13 +21,14 @@ dependencies:
   fluttertoast: ^3.1.2
   get: ^3.25.6
   get_it: ^6.0.0
-  http: ^0.13.1
+  http: ^0.12.0
   intl: ^0.16.1
   path_provider: ^1.6.28
   pedantic: ^1.11.0
   provider: ^4.0.2
   qr_flutter: ^4.0.0
   sembast: ^2.1.2
+  sentry_flutter: ^4.0.0
   share: ^2.0.1
   shared_preferences: ^0.5.3
   uni_links: ^0.4.0

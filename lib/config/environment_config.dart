@@ -3,4 +3,6 @@ class EnvironmentConfig {
     'BASE_URL',
     defaultValue: 'http://appetizer-mdg.herokuapp.com',
   );
+
+  static const String SENTRY_DSN = String.fromEnvironment('SENTRY_DSN');
 }

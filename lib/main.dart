@@ -1,4 +1,5 @@
 import 'package:appetizer/app_theme.dart';
+import 'package:appetizer/config/environment_config.dart';
 import 'package:appetizer/locator.dart';
 import 'package:appetizer/services/analytics_service.dart';
 import 'package:appetizer/ui/router.dart';
@@ -6,6 +7,7 @@ import 'package:appetizer/ui/startup_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' as fs;
 import 'package:get/get.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 /*
  *  Architectural Design GuideLines -
@@ -24,7 +26,13 @@ Future<void> main() async {
   // Register all the models and services before the app starts
   await setupLocator();
 
-  runApp(Appetizer());
+  await SentryFlutter.init(
+    (options) {
+      options.dsn = EnvironmentConfig.SENTRY_DSN;
+    },
+    // Init your App.
+    appRunner: () => runApp(Appetizer()),
+  );
 }
 
 class Appetizer extends StatelessWidget {
