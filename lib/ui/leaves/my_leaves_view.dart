@@ -2,7 +2,7 @@ import 'package:appetizer/app_theme.dart';
 import 'package:appetizer/globals.dart';
 import 'package:appetizer/ui/base_view.dart';
 import 'package:appetizer/ui/components/appetizer_app_bar.dart';
-import 'package:appetizer/ui/leave_history/leave_history_screen.dart';
+import 'package:appetizer/ui/leaves/leave_history_view.dart';
 import 'package:appetizer/ui/leaves/components/leave_status_card.dart';
 import 'package:appetizer/viewmodels/leaves/my_leaves_viewmodel.dart';
 import 'package:flutter/material.dart';
@@ -43,7 +43,7 @@ class MyLeavesView extends StatelessWidget {
         ),
         child: GestureDetector(
           behavior: HitTestBehavior.translucent,
-          onTap: () => Get.toNamed(MyLeavesHistory.id),
+          onTap: () => Get.toNamed(LeavesHistoryView.id),
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Row(

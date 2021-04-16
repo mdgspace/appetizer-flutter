@@ -82,11 +82,11 @@ class _WeekMenuViewState extends State<WeekMenuView> {
           ),
           Consumer<YourMenuViewModel>(
             builder: (context, model, child) {
-              if (model.currentWeekYourMeals == null) {
+              if (model.selectedWeekMenu == null) {
                 return AppetizerProgressWidget();
               } else {
                 var _mealCells = <Widget>[];
-                model.currentWeekYourMeals.dayMenus.forEach((dayMenu) {
+                model.selectedWeekMenu.dayMenus.forEach((dayMenu) {
                   var breakfast = <String>[];
                   var lunch = <String>[];
                   var dinner = <String>[];

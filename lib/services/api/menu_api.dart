@@ -72,8 +72,8 @@ class MenuApi {
     }
   }
 
-  Future<WeekMenu> weekMenuById(String weekId, String year) async {
-    var endpoint = '/api/menu/week/?week_id=$weekId&year=$year';
+  Future<WeekMenu> weekMenuByWeekId(int weekId) async {
+    var endpoint = '/api/menu/week/?week_id=$weekId';
     var uri = EnvironmentConfig.BASE_URL + endpoint;
 
     try {

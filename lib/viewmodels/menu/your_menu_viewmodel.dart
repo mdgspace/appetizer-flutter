@@ -16,21 +16,21 @@ class YourMenuViewModel extends BaseModel {
   final MenuApi _menuApi = locator<MenuApi>();
   final UserApi _userApi = locator<UserApi>();
 
-  WeekMenu _currentWeekYourMeals;
+  WeekMenu _selectedWeekMenuYourMeals;
 
-  WeekMenu get currentWeekYourMeals => _currentWeekYourMeals;
+  WeekMenu get selectedWeekMenuYourMeals => _selectedWeekMenuYourMeals;
 
-  set currentWeekYourMeals(WeekMenu currentWeekYourMeals) {
-    _currentWeekYourMeals = currentWeekYourMeals;
+  set selectedWeekMenuYourMeals(WeekMenu selectedWeekMenuYourMeals) {
+    _selectedWeekMenuYourMeals = selectedWeekMenuYourMeals;
     notifyListeners();
   }
 
-  WeekMenu _selectedWeekYourMeals;
+  WeekMenu _selectedWeekMenu;
 
-  WeekMenu get selectedWeekYourMeals => _selectedWeekYourMeals;
+  WeekMenu get selectedWeekMenu => _selectedWeekMenu;
 
-  set selectedWeekYourMeals(WeekMenu selectedWeekYourMeals) {
-    _selectedWeekYourMeals = selectedWeekYourMeals;
+  set selectedWeekMenu(WeekMenu selectedWeekMenu) {
+    _selectedWeekMenu = selectedWeekMenu;
     notifyListeners();
   }
 
@@ -45,16 +45,16 @@ class YourMenuViewModel extends BaseModel {
     }
   }
 
-  Future<void> currentWeekMenuYourMeals() async {
+  Future<void> fetchSelectedWeekMenuYourMeals(int weekId) async {
     setState(ViewState.Busy);
     try {
-      currentWeekYourMeals = await _menuApi
-          .weekMenuForYourMeals(DateTimeUtils.getWeekNumber(DateTime.now()));
+      _selectedWeekMenuYourMeals = await _menuApi.weekMenuForYourMeals(weekId);
       setState(ViewState.Idle);
     } on Failure catch (f) {
-      if (f.message == Constants.NO_INTERNET_CONNECTION) {
-        currentWeekYourMeals = await _menuApi.weekMenuFromDb();
-        await updateMealDb(currentWeekYourMeals);
+      if (f.message == Constants.NO_INTERNET_CONNECTION &&
+          weekId == DateTimeUtils.getWeekNumber(DateTime.now())) {
+        selectedWeekMenuYourMeals = await _menuApi.weekMenuFromDb();
+        await updateMealDb(_selectedWeekMenuYourMeals);
         setState(ViewState.Idle);
       } else {
         setState(ViewState.Error);
@@ -63,16 +63,16 @@ class YourMenuViewModel extends BaseModel {
     }
   }
 
-  Future<void> selectedWeekMenuYourMeals(int weekId) async {
+  Future<void> fetchSelectedWeekMenu(int weekId) async {
     setState(ViewState.Busy);
     try {
-      selectedWeekYourMeals = await _menuApi.weekMenuForYourMeals(weekId);
+      _selectedWeekMenu = await _menuApi.weekMenuByWeekId(weekId);
       setState(ViewState.Idle);
     } on Failure catch (f) {
       if (f.message == Constants.NO_INTERNET_CONNECTION &&
           weekId == DateTimeUtils.getWeekNumber(DateTime.now())) {
-        selectedWeekYourMeals = await _menuApi.weekMenuFromDb();
-        await updateMealDb(selectedWeekYourMeals);
+        selectedWeekMenu = await _menuApi.weekMenuFromDb();
+        await updateMealDb(_selectedWeekMenu);
         setState(ViewState.Idle);
       } else {
         setState(ViewState.Error);

@@ -1,7 +1,7 @@
 import 'package:appetizer/models/user/user.dart';
 import 'package:appetizer/ui/FAQ/faq_view.dart';
 import 'package:appetizer/ui/help/help_view.dart';
-import 'package:appetizer/ui/leave_history/leave_history_screen.dart';
+import 'package:appetizer/ui/leaves/leave_history_view.dart';
 import 'package:appetizer/ui/leaves/my_leaves_view.dart';
 import 'package:appetizer/ui/login/login_view.dart';
 import 'package:appetizer/ui/home_view.dart';
@@ -44,8 +44,8 @@ class AppetizerRouter {
         return MaterialPageRoute(builder: (_) => UserFeedbackView());
       case MyLeavesView.id:
         return MaterialPageRoute(builder: (_) => MyLeavesView());
-      case MyLeavesHistory.id:
-        return MaterialPageRoute(builder: (_) => MyLeavesHistory());
+      case LeavesHistoryView.id:
+        return MaterialPageRoute(builder: (_) => LeavesHistoryView());
       case MySwitchesView.id:
         return MaterialPageRoute(builder: (_) => MySwitchesView());
       case MyRebatesView.id:

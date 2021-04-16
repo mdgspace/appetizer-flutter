@@ -23,7 +23,7 @@ class _YourMenuViewState extends State<YourMenuView> {
     return BaseView<YourMenuViewModel>(
       onModelReady: (model) {
         model.fetchInitialCheckedStatus();
-        model.selectedWeekMenuYourMeals(
+        model.fetchSelectedWeekMenu(
           DateTimeUtils.getWeekNumber(widget.selectedDateTime),
         );
       },
@@ -32,7 +32,7 @@ class _YourMenuViewState extends State<YourMenuView> {
           switch (model.state) {
             case ViewState.Idle:
               DayMenu selectedDayMenu;
-              model.selectedWeekYourMeals.dayMenus.forEach((dayMenu) {
+              model.selectedWeekMenuYourMeals.dayMenus.forEach((dayMenu) {
                 if (dayMenu.date.weekday == widget.selectedDateTime.weekday) {
                   selectedDayMenu = dayMenu;
                 }
@@ -40,7 +40,7 @@ class _YourMenuViewState extends State<YourMenuView> {
               if (selectedDayMenu == null) {
                 return _menuUnavailableForSingleDay();
               }
-              final dailyItems = model.selectedWeekYourMeals.dailyItems;
+              final dailyItems = model.selectedWeekMenuYourMeals.dailyItems;
               return YourDayMenuView(
                 dayMenu: selectedDayMenu,
                 dailyItems: dailyItems,
@@ -52,7 +52,7 @@ class _YourMenuViewState extends State<YourMenuView> {
             case ViewState.Error:
               return AppetizerErrorWidget(
                 errorMessage: model.errorMessage,
-                onRetryPressed: () => model.selectedWeekMenuYourMeals(
+                onRetryPressed: () => model.fetchSelectedWeekMenu(
                   DateTimeUtils.getWeekNumber(widget.selectedDateTime),
                 ),
               );
