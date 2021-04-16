@@ -8,6 +8,9 @@ on:
     branches:
       - master
 
+env:
+  GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
+
 jobs:
   build:
     # This job will run on ubuntu virtual machine
@@ -32,6 +35,9 @@ jobs:
 
       # Statically analyze the Dart code for any errors.
       - run: flutter analyze .
+
+      # Save google-services.json
+      - run: echo "${GOOGLE_SERVICES_JSON}" | base64 --decode > android/app/google-services.json
 
       # Build apk.
       - run: flutter build apk
