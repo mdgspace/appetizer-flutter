@@ -1,6 +1,6 @@
 import 'package:appetizer/enums/view_state.dart';
 import 'package:appetizer/locator.dart';
-import 'package:appetizer/models/user/login.dart';
+import 'package:appetizer/models/user/user.dart';
 import 'package:appetizer/services/local_storage_service.dart';
 import 'package:appetizer/services/remote_config_service.dart';
 import 'package:flutter/material.dart';
@@ -11,9 +11,9 @@ class BaseModel extends ChangeNotifier {
   final LocalStorageService _localStorageService =
       locator<LocalStorageService>();
 
-  Login get currentUser => _localStorageService.currentUser;
+  User get currentUser => _localStorageService.currentUser;
 
-  set currentUser(Login currentUser) {
+  set currentUser(User currentUser) {
     _localStorageService.currentUser = currentUser;
     notifyListeners();
   }
@@ -34,7 +34,7 @@ class BaseModel extends ChangeNotifier {
 
   String get appetizerVersion => _remoteConfigService.appetizerVersion;
 
-  String get googlePlayLink => _remoteConfigService.googlePlayLink;
+  String get appetizerLink => _remoteConfigService.appetizerLink;
 
   ViewState _state = ViewState.Idle;
 
@@ -45,21 +45,12 @@ class BaseModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  String _errorMessage = "";
+  String _errorMessage = '';
 
   String get errorMessage => _errorMessage;
 
   void setErrorMessage(String errorMessage) {
     _errorMessage = errorMessage;
-    notifyListeners();
-  }
-
-  bool _isCheckedOut = false;
-
-  bool get isCheckedOut => _isCheckedOut;
-
-  set isCheckedOut(bool isCheckedOut) {
-    _isCheckedOut = isCheckedOut;
     notifyListeners();
   }
 }

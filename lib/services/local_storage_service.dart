@@ -1,25 +1,21 @@
 import 'dart:convert';
 
-import 'package:appetizer/models/user/login.dart';
+import 'package:appetizer/models/user/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LocalStorageService {
   static LocalStorageService _instance;
   static SharedPreferences _preferences;
 
-  static const String userKey = "logged_in_user";
-  static const String tokenKey = "token";
-  static const String isLoggedInKey = "is_logged_in";
-  static const String isFirstTimeLoginKey = "is_first_time_login";
+  static const String userKey = 'logged_in_user';
+  static const String tokenKey = 'token';
+  static const String isLoggedInKey = 'is_logged_in';
+  static const String isFirstTimeLoginKey = 'is_first_time_login';
 
   static Future<LocalStorageService> getInstance() async {
-    if (_instance == null) {
-      _instance = LocalStorageService();
-    }
+    _instance ??= LocalStorageService();
 
-    if (_preferences == null) {
-      _preferences = await SharedPreferences.getInstance();
-    }
+    _preferences ??= await SharedPreferences.getInstance();
 
     return _instance;
   }
@@ -50,16 +46,16 @@ class LocalStorageService {
     }
   }
 
-  Login get currentUser {
+  User get currentUser {
     var userJson = _getFromDisk(userKey);
     if (userJson == null) {
       return null;
     }
 
-    return Login.fromJson(json.decode(userJson));
+    return User.fromJson(json.decode(userJson));
   }
 
-  set currentUser(Login userToSave) {
+  set currentUser(User userToSave) {
     _saveToDisk(userKey, json.encode(userToSave?.toJson()));
   }
 

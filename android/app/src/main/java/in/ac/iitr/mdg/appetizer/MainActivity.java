@@ -1,46 +1,35 @@
 package in.ac.iitr.mdg.appetizer;
 
 import android.os.Bundle;
-
-import io.flutter.app.FlutterActivity;
-import io.flutter.plugins.GeneratedPluginRegistrant;
-
 import android.content.Intent;
 import android.os.Bundle;
-
 import java.nio.ByteBuffer;
-
 import android.net.Uri;
-
-import io.flutter.app.FlutterActivity;
-import io.flutter.plugin.common.ActivityLifecycleListener;
-import io.flutter.plugin.common.MethodCall;
-import io.flutter.plugin.common.MethodChannel;
-import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
+import androidx.annotation.NonNull;
+import io.flutter.embedding.android.FlutterActivity;
+import io.flutter.embedding.engine.FlutterEngine;
 import io.flutter.plugins.GeneratedPluginRegistrant;
+import io.flutter.plugin.common.ActivityLifecycleListener;
+import io.flutter.plugin.common.MethodChannel;
 
 public class MainActivity extends FlutterActivity {
-
-
     private Intent intentFilterIntent;
     private Uri intentUri;
     private String sharedText;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        GeneratedPluginRegistrant.registerWith(this);
+    public void configureFlutterEngine(@NonNull FlutterEngine flutterEngine) {
+        GeneratedPluginRegistrant.registerWith(flutterEngine);
         getIntentFilter();
-        new MethodChannel(getFlutterView(), "app.channel.shared.data").setMethodCallHandler(
-                new MethodCallHandler() {
-                    @Override
-                    public void onMethodCall(MethodCall call, MethodChannel.Result result) {
+        new MethodChannel(flutterEngine.getDartExecutor().getBinaryMessenger(), "app.channel.shared.data")
+                .setMethodCallHandler(
+                    (call, result) -> {
                         if (call.method.contentEquals("getCode")) {
                             result.success(sharedText);
                             sharedText = null;
                         }
-                    }
-                });
+                }
+        );
     }
 
     private void getIntentFilter() {

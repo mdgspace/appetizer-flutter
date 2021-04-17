@@ -1,14 +1,10 @@
-// To parse this JSON data, do
-//
-//     final faq = faqFromJson(jsonString);
-
 import 'dart:convert';
 
 List<Faq> faqFromJson(String str) =>
-    new List<Faq>.from(json.decode(str).map((x) => Faq.fromJson(x)));
+    List<Faq>.from(json.decode(str).map((x) => Faq.fromJson(x)));
 
 String faqToJson(List<Faq> data) =>
-    json.encode(new List<dynamic>.from(data.map((x) => x.toJson())));
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class Faq {
   int id;
@@ -21,15 +17,15 @@ class Faq {
     this.answer,
   });
 
-  factory Faq.fromJson(Map<String, dynamic> json) => new Faq(
-        id: json["id"],
-        question: json["question"],
-        answer: json["answer"],
+  factory Faq.fromJson(Map<String, dynamic> json) => Faq(
+        id: json['id'],
+        question: json['question'],
+        answer: json['answer'],
       );
 
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "question": question,
-        "answer": answer,
+        'id': id,
+        'question': question,
+        'answer': answer,
       };
 }

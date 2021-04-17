@@ -5,12 +5,14 @@ class DialogRequest {
   final String description;
   final String buttonTitle;
   final String cancelTitle;
+  final bool isFailure;
 
   DialogRequest({
     @required this.title,
     this.description,
     this.buttonTitle,
     this.cancelTitle,
+    this.isFailure,
   });
 }
 

@@ -9,44 +9,44 @@ class AppException implements Exception {
   String get pefix => _prefix;
 
   @override
-  String toString() => "$_prefix : $_message";
+  String toString() => '$_prefix : $_message';
 }
 
 class BadRequestException extends AppException {
-  BadRequestException([message]) : super(message, "Invalid Request");
+  BadRequestException([message]) : super(message, 'Invalid Request');
 }
 
 class UnauthorizedException extends AppException {
-  UnauthorizedException([message]) : super(message, "Unauthorized");
+  UnauthorizedException([message]) : super(message, 'Unauthorized');
 }
 
 class ForbiddenException extends AppException {
-  ForbiddenException([String message]) : super(message, "Forbidden");
+  ForbiddenException([String message]) : super(message, 'Forbidden');
 }
 
 class NotFoundException extends AppException {
-  NotFoundException([String message]) : super(message, "Not Found");
+  NotFoundException([String message]) : super(message, 'Not Found');
 }
 
 class ConflictException extends AppException {
-  ConflictException([String message]) : super(message, "Conflict");
+  ConflictException([String message]) : super(message, 'Conflict');
 }
 
 class InternalServerErrorException extends AppException {
   InternalServerErrorException([String message])
-      : super(message, "Internal Server Error");
+      : super(message, 'Internal Server Error');
 }
 
 class ServiceUnavailableException extends AppException {
   ServiceUnavailableException([String message])
-      : super(message, "Service Unavailable");
+      : super(message, 'Service Unavailable');
 }
 
 class InvalidInputException extends AppException {
-  InvalidInputException([String message]) : super(message, "Invalid Input");
+  InvalidInputException([String message]) : super(message, 'Invalid Input');
 }
 
 class FetchDataException extends AppException {
   FetchDataException([String message])
-      : super(message, "Error During Communication");
+      : super(message, 'Error During Communication');
 }
