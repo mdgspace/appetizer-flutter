@@ -1,10 +1,12 @@
 import 'package:appetizer/app_theme.dart';
+import 'package:appetizer/enums/view_state.dart';
 import 'package:appetizer/models/menu/week_menu.dart';
+import 'package:appetizer/ui/base_view.dart';
+import 'package:appetizer/ui/components/appetizer_error_widget.dart';
 import 'package:appetizer/ui/components/appetizer_progress_widget.dart';
 import 'package:appetizer/utils/date_time_utils.dart';
-import 'package:appetizer/viewmodels/menu/your_menu_viewmodel.dart';
+import 'package:appetizer/viewmodels/menu/week_menu_viewmodel.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class WeekMenuView extends StatefulWidget {
   static const String id = 'week_menu_view';
@@ -14,120 +16,53 @@ class WeekMenuView extends StatefulWidget {
 }
 
 class _WeekMenuViewState extends State<WeekMenuView> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text(
-          'Mess Menu',
-          style: AppTheme.headline1.copyWith(
-            color: Colors.white,
-            fontFamily: 'Lobster_Two',
-          ),
-        ),
-      ),
-      body: Column(
-        mainAxisSize: MainAxisSize.min,
+  Widget _buildWeekMenuHeader() {
+    return Container(
+      padding: EdgeInsets.all(8.0),
+      decoration: BoxDecoration(color: AppTheme.secondary),
+      child: Row(
         children: <Widget>[
-          Container(
-            padding: EdgeInsets.all(8.0),
-            decoration: BoxDecoration(color: AppTheme.secondary),
-            child: Row(
-              children: <Widget>[
-                Expanded(
-                  flex: 5,
-                  child: Text(
-                    'Day'.toUpperCase(),
-                    style: AppTheme.bodyText1.copyWith(
-                      color: AppTheme.primary,
-                    ),
-                  ),
-                ),
-                Expanded(
-                  flex: 12,
-                  child: Center(
-                    child: Text(
-                      'Breakfast'.toUpperCase(),
-                      style: AppTheme.bodyText1.copyWith(
-                        color: AppTheme.primary,
-                      ),
-                    ),
-                  ),
-                ),
-                Expanded(
-                  flex: 12,
-                  child: Center(
-                    child: Text(
-                      'Lunch'.toUpperCase(),
-                      style: AppTheme.bodyText1.copyWith(
-                        color: AppTheme.primary,
-                      ),
-                    ),
-                  ),
-                ),
-                Expanded(
-                  flex: 12,
-                  child: Center(
-                    child: Text(
-                      'Dinner'.toUpperCase(),
-                      style: AppTheme.bodyText1.copyWith(
-                        color: AppTheme.primary,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+          Expanded(
+            flex: 5,
+            child: Text(
+              'Day'.toUpperCase(),
+              style: AppTheme.bodyText1.copyWith(
+                color: AppTheme.primary,
+              ),
             ),
           ),
-          Consumer<YourMenuViewModel>(
-            builder: (context, model, child) {
-              if (model.selectedWeekMenu == null) {
-                return AppetizerProgressWidget();
-              } else {
-                var _mealCells = <Widget>[];
-                model.selectedWeekMenu.dayMenus.forEach((dayMenu) {
-                  var breakfast = <String>[];
-                  var lunch = <String>[];
-                  var dinner = <String>[];
-
-                  dayMenu.meals.forEach(
-                    (meal) {
-                      meal.items.forEach(
-                          (item) => print('item ${item.name} ${meal.type}'));
-                      switch (meal.type) {
-                        case MealType.B:
-                          meal.items
-                              .forEach((item) => breakfast.add(item.name));
-                          break;
-                        case MealType.L:
-                          meal.items.forEach((item) => lunch.add(item.name));
-                          break;
-                        case MealType.S:
-                          break;
-                        case MealType.D:
-                          meal.items.forEach((item) => dinner.add(item.name));
-                          break;
-                      }
-                    },
-                  );
-
-                  _mealCells.add(_buildTableRow(
-                    date: dayMenu.date,
-                    breakfast: breakfast,
-                    lunch: lunch,
-                    dinner: dinner,
-                  ));
-                });
-
-                return Flexible(
-                  child: ListView(
-                    shrinkWrap: true,
-                    children: _mealCells,
-                  ),
-                );
-              }
-            },
+          Expanded(
+            flex: 12,
+            child: Center(
+              child: Text(
+                'Breakfast'.toUpperCase(),
+                style: AppTheme.bodyText1.copyWith(
+                  color: AppTheme.primary,
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 12,
+            child: Center(
+              child: Text(
+                'Lunch'.toUpperCase(),
+                style: AppTheme.bodyText1.copyWith(
+                  color: AppTheme.primary,
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 12,
+            child: Center(
+              child: Text(
+                'Dinner'.toUpperCase(),
+                style: AppTheme.bodyText1.copyWith(
+                  color: AppTheme.primary,
+                ),
+              ),
+            ),
           ),
         ],
       ),
@@ -224,6 +159,90 @@ class _WeekMenuViewState extends State<WeekMenuView> {
         Expanded(flex: 12, child: _buildMealItemsColumn(lunch)),
         Expanded(flex: 12, child: _buildMealItemsColumn(dinner))
       ],
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BaseView<WeekMenuViewModel>(
+      onModelReady: (model) => model.fetchCurrentWeekMenu(),
+      builder: (context, model, child) => Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          title: Text(
+            'Mess Menu',
+            style: AppTheme.headline1.copyWith(
+              color: Colors.white,
+              fontFamily: 'Lobster_Two',
+            ),
+          ),
+        ),
+        body: Column(
+          children: [
+            _buildWeekMenuHeader(),
+            Expanded(
+              child: () {
+                switch (model.state) {
+                  case ViewState.Idle:
+                    var _mealCells = <Widget>[];
+                    model.currentWeekMenu.dayMenus.forEach((dayMenu) {
+                      var breakfast = <String>[];
+                      var lunch = <String>[];
+                      var dinner = <String>[];
+
+                      dayMenu.meals.forEach(
+                        (meal) {
+                          meal.items.forEach((item) =>
+                              print('item ${item.name} ${meal.type}'));
+                          switch (meal.type) {
+                            case MealType.B:
+                              meal.items
+                                  .forEach((item) => breakfast.add(item.name));
+                              break;
+                            case MealType.L:
+                              meal.items
+                                  .forEach((item) => lunch.add(item.name));
+                              break;
+                            case MealType.S:
+                              break;
+                            case MealType.D:
+                              meal.items
+                                  .forEach((item) => dinner.add(item.name));
+                              break;
+                          }
+                        },
+                      );
+
+                      _mealCells.add(_buildTableRow(
+                        date: dayMenu.date,
+                        breakfast: breakfast,
+                        lunch: lunch,
+                        dinner: dinner,
+                      ));
+                    });
+
+                    return ListView(
+                      shrinkWrap: true,
+                      children: _mealCells,
+                    );
+                    break;
+                  case ViewState.Busy:
+                    return AppetizerProgressWidget();
+                    break;
+                  case ViewState.Error:
+                    return AppetizerErrorWidget(
+                      errorMessage: model.errorMessage,
+                      onRetryPressed: () => model.fetchCurrentWeekMenu(),
+                    );
+                    break;
+                  default:
+                    return Container();
+                }
+              }(),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

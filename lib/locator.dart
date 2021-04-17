@@ -22,6 +22,7 @@ import 'package:appetizer/viewmodels/leaves/my_leaves_viewmodel.dart';
 import 'package:appetizer/viewmodels/login/login_viewmodel.dart';
 import 'package:appetizer/viewmodels/menu/other_menu_card_viewmodel.dart';
 import 'package:appetizer/viewmodels/menu/other_menu_viewmodel.dart';
+import 'package:appetizer/viewmodels/menu/week_menu_viewmodel.dart';
 import 'package:appetizer/viewmodels/menu/your_menu_card_viewmodel.dart';
 import 'package:appetizer/viewmodels/menu/your_menu_viewmodel.dart';
 import 'package:appetizer/viewmodels/multimessing/qr_genrator_viewmodel.dart';
@@ -73,6 +74,7 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => LoginViewModel());
   locator.registerFactory(() => OtherMenuViewModel());
   locator.registerFactory(() => YourMenuViewModel());
+  locator.registerFactory(() => WeekMenuViewModel());
   locator.registerFactory(() => QRGeneratorViewModel());
   locator.registerFactory(() => SwitchableMealsViewModel());
   locator.registerFactory(() => NotificationsViewModel());

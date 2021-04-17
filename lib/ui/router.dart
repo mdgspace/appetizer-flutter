@@ -5,6 +5,7 @@ import 'package:appetizer/ui/leaves/leave_history_view.dart';
 import 'package:appetizer/ui/leaves/my_leaves_view.dart';
 import 'package:appetizer/ui/login/login_view.dart';
 import 'package:appetizer/ui/home_view.dart';
+import 'package:appetizer/ui/menu/week_menu_view.dart';
 import 'package:appetizer/ui/multimessing/switch_confirmed_view.dart';
 import 'package:appetizer/ui/multimessing/switchable_meals_view.dart';
 import 'package:appetizer/ui/notification_history/notification_history_view.dart';
@@ -40,6 +41,8 @@ class AppetizerRouter {
             token: token,
           ),
         );
+      case WeekMenuView.id:
+        return MaterialPageRoute(builder: (_) => WeekMenuView());
       case UserFeedbackView.id:
         return MaterialPageRoute(builder: (_) => UserFeedbackView());
       case MyLeavesView.id:

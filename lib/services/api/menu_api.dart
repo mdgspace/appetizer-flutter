@@ -90,6 +90,24 @@ class MenuApi {
     }
   }
 
+  Future<WeekMenu> currentWeekMenu() async {
+    var endpoint = '/api/menu/week/';
+    var uri = EnvironmentConfig.BASE_URL + endpoint;
+
+    try {
+      await ApiUtils.addTokenToHeaders(headers);
+      var jsonResponse = await ApiUtils.get(uri, headers: headers);
+      var weekMenu = WeekMenu.fromJson(jsonResponse);
+      return weekMenu;
+    } on FormatException catch (e) {
+      print(e.message);
+      throw Failure(Constants.BAD_RESPONSE_FORMAT);
+    } on Exception catch (e) {
+      print(e.toString());
+      throw Failure(Constants.GENERIC_FAILURE);
+    }
+  }
+
   Future<DayMenu> dayMenu(int week, int dayOfWeek) async {
     var endpoint = '/api/menu/$week/$dayOfWeek';
     var uri = EnvironmentConfig.BASE_URL + endpoint;

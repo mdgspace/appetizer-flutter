@@ -5,11 +5,11 @@ import 'package:appetizer/ui/base_view.dart';
 import 'package:appetizer/ui/components/appetizer_date_picker.dart';
 import 'package:appetizer/ui/leaves/my_leaves_view.dart';
 import 'package:appetizer/ui/menu/other_menu_view.dart';
+import 'package:appetizer/ui/menu/week_menu_view.dart';
 import 'package:appetizer/ui/menu/your_menu_view.dart';
 import 'package:appetizer/ui/notification_history/notification_history_view.dart';
 import 'package:appetizer/ui/rebates/my_rebates_view.dart';
 import 'package:appetizer/ui/settings/settings_view.dart';
-import 'package:appetizer/ui/switches/my_switches_view.dart';
 import 'package:appetizer/ui/user_feedback/user_feedback_view.dart';
 import 'package:appetizer/viewmodels/home_viewmodel.dart';
 import 'package:flutter/material.dart';
@@ -160,7 +160,7 @@ class _HomeViewState extends State<HomeView> {
         Padding(
           padding: const EdgeInsets.all(8),
           child: GestureDetector(
-            onTap: () {},
+            onTap: () => Get.toNamed(WeekMenuView.id),
             child: Container(
               height: 24,
               width: 24,
@@ -219,17 +219,15 @@ class _HomeViewState extends State<HomeView> {
   }
 
   Widget _buildDrawerComponent(
-      {String iconPath, String title, VoidCallback onTap}) {
+      {String iconPath, IconData iconData, String title, VoidCallback onTap}) {
     return ListTile(
       onTap: () {
         Get.back();
         onTap();
       },
-      leading: Image(
-        image: AssetImage(iconPath),
-        width: 24,
-        height: 24,
-      ),
+      leading: iconPath != null
+          ? Image(image: AssetImage(iconPath), width: 24, height: 24)
+          : Icon(iconData, size: 24, color: AppTheme.primary),
       title: Text(title),
     );
   }
@@ -286,14 +284,14 @@ class _HomeViewState extends State<HomeView> {
                     iconPath: 'assets/icons/leaves.png',
                     title: 'Leaves',
                   ),
-                  _buildDrawerComponent(
-                    onTap: () => Get.toNamed(MySwitchesView.id),
-                    iconPath: 'assets/icons/leaves.png',
-                    title: 'Switches',
-                  ),
+                  // _buildDrawerComponent(
+                  //   onTap: () => Get.toNamed(MySwitchesView.id),
+                  //   iconPath: 'assets/icons/leaves.png',
+                  //   title: 'Switches',
+                  // ),
                   _buildDrawerComponent(
                     onTap: () => Get.toNamed(MyRebatesView.id),
-                    iconPath: 'assets/icons/feedback.png',
+                    iconData: Icons.attach_money,
                     title: 'Rebates',
                   ),
                   _buildDrawerComponent(
@@ -308,12 +306,12 @@ class _HomeViewState extends State<HomeView> {
                   ),
                   _buildDrawerComponent(
                     onTap: () => Get.toNamed(FaqView.id),
-                    iconPath: 'assets/icons/feedback.png',
+                    iconData: Icons.help_outline,
                     title: 'FAQ',
                   ),
                   _buildDrawerComponent(
                     onTap: () => _model.onLogoutTap(),
-                    iconPath: 'assets/icons/feedback.png',
+                    iconData: Icons.logout,
                     title: 'Logout',
                   ),
                 ],
