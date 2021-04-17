@@ -16,8 +16,7 @@ class OtherDayMenuView extends StatefulWidget {
 class _OtherDayMenuViewState extends State<OtherDayMenuView> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
+    return ListView(
       children: <Widget>[
         OtherMealsMenuCard(
           widget.dayMenu.mealMap[MealType.B],

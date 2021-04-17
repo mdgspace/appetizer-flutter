@@ -212,7 +212,7 @@ class Meal {
         endTime: DateFormat('HH:mm:ss').parse(json['end_time']),
         leaveStatus: LeaveStatus.fromJson(json['leave_status']),
         wastage: json['wastage'],
-        isSwitchable: json['is_switchable'],
+        isSwitchable: json['is_switchable'] ?? false,
         switchStatus: SwitchStatus.fromJson(json['switch_status']),
         hostelName: json['hostel_name'],
         secretCode: json['secret_code'],
@@ -269,8 +269,10 @@ class LeaveStatus {
   });
 
   factory LeaveStatus.fromJson(Map<String, dynamic> json) => LeaveStatus(
-        id: json['id'],
-        status: leaveStatusValues.map[json['status']],
+        id: json != null ? json['id'] : null,
+        status: json != null
+            ? leaveStatusValues.map[json['status'] ?? 'N']
+            : LeaveStatusEnum.N,
       );
 
   Map<String, dynamic> toJson() => {
@@ -289,8 +291,10 @@ class SwitchStatus {
   });
 
   factory SwitchStatus.fromJson(Map<String, dynamic> json) => SwitchStatus(
-        id: json['id'],
-        status: switchStatusValues.map[json['status']],
+        id: json != null ? json['id'] : null,
+        status: json != null
+            ? switchStatusValues.map[json['status'] ?? 'N']
+            : SwitchStatusEnum.N,
       );
 
   Map<String, dynamic> toJson() => {

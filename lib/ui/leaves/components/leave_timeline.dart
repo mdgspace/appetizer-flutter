@@ -4,7 +4,7 @@ import 'package:appetizer/ui/components/appetizer_error_widget.dart';
 import 'package:appetizer/ui/components/appetizer_progress_widget.dart';
 import 'package:appetizer/ui/leaves/components/multiple_leave_timeline_card.dart';
 import 'package:appetizer/ui/leaves/components/single_leave_timeline_card.dart';
-import 'package:appetizer/utils/date_time_utils.dart';
+import 'package:appetizer/utils/string_utils.dart';
 import 'package:appetizer/viewmodels/leaves/leave_timeline_viewmodel.dart';
 import 'package:flutter/material.dart';
 
@@ -17,50 +17,33 @@ class LeaveTimeline extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseView<LeaveTimelineViewModel>(
-      onModelReady: (model) => model.fetchLeaves(year, 1),
+      onModelReady: (model) =>
+          model.fetchLeaves(year, StringUtils.monthStringToInt(month)),
+      onDidUpdateWidget: (_, model) =>
+          model.fetchLeaves(year, StringUtils.monthStringToInt(month)),
       builder: (context, model, child) => () {
         switch (model.state) {
           case ViewState.Idle:
             var _leaves = model.paginatedLeaves.results.map((leave) {
-              if (leave.mealCount != 1) {
+              if (leave.mealCount > 1) {
                 return MultipleLeaveTimelineCard(
-                  leave.startMealType,
-                  leave.endMealType,
-                  DateTimeUtils.getWeekDayName(
-                    DateTime.fromMillisecondsSinceEpoch(
-                      leave.startDatetime,
-                    ),
-                  ).substring(0, 3).toUpperCase(),
-                  DateTimeUtils.getWeekDayName(
-                    DateTime.fromMillisecondsSinceEpoch(
-                      leave.endDatetime,
-                    ),
-                  ).substring(0, 3).toUpperCase(),
-                  DateTime.fromMillisecondsSinceEpoch(
-                    leave.startDatetime,
-                  ).toLocal().day,
-                  DateTime.fromMillisecondsSinceEpoch(
-                    leave.endDatetime,
-                  ).toLocal().day,
-                  leave.mealCount,
+                  mealFrom: leave.startMealType,
+                  mealTo: leave.endMealType,
+                  dateFrom: leave.startDatetime,
+                  dateTo: leave.endDatetime,
+                  consecutiveLeaves: leave.mealCount,
                 );
               } else {
                 return SingleLeaveTimelineCard(
-                  leave.startMealType,
-                  DateTimeUtils.getWeekDayName(
-                    DateTime.fromMillisecondsSinceEpoch(
-                      leave.startDatetime,
-                    ),
-                  ).substring(0, 3).toUpperCase(),
-                  DateTime.fromMillisecondsSinceEpoch(
-                    leave.startDatetime,
-                  ).toLocal().day,
+                  meal: leave.startMealType,
+                  leaveDate: leave.startDatetime,
                 );
               }
             }).toList();
-            return ListView.builder(
+            return ListView.separated(
               itemCount: _leaves.length,
               itemBuilder: (context, index) => _leaves[index],
+              separatorBuilder: (context, index) => Divider(height: 0),
             );
             break;
           case ViewState.Busy:

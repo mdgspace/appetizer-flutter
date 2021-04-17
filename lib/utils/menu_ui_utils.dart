@@ -15,12 +15,13 @@ class MenuUIUtils {
             color: AppTheme.primary,
           ),
         ),
-        Text(
-          '${meal.hostelName}',
-          style: AppTheme.bodyText1.copyWith(
-            color: AppTheme.secondary,
+        if (meal.hostelName != null)
+          Text(
+            '${meal.hostelName}',
+            style: AppTheme.bodyText1.copyWith(
+              color: AppTheme.secondary,
+            ),
           ),
-        ),
       ],
     );
   }
@@ -66,7 +67,10 @@ class MenuUIUtils {
                 SizedBox(width: 4),
                 Expanded(
                   child: Container(
-                    child: Text('${item.name}'),
+                    child: Text(
+                      '${item.name}',
+                      style: AppTheme.bodyText1,
+                    ),
                   ),
                 ),
               ],
@@ -76,7 +80,7 @@ class MenuUIUtils {
     );
   }
 
-  static Widget specialMealBanner(CostType costType) {
+  static Widget buildSpecialMealBanner(CostType costType) {
     if (costType == CostType.S) {
       return Container(
         width: double.maxFinite,

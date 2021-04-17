@@ -1,165 +1,187 @@
 import 'package:appetizer/app_theme.dart';
+import 'package:appetizer/utils/date_time_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:timeline_tile/timeline_tile.dart';
 
 class MultipleLeaveTimelineCard extends StatelessWidget {
   final String mealFrom;
   final String mealTo;
   final String dayFrom;
   final String dayTo;
-  final int dateFrom;
-  final int dateTo;
+  final DateTime dateFrom;
+  final DateTime dateTo;
   final int consecutiveLeaves;
 
-  MultipleLeaveTimelineCard(
+  MultipleLeaveTimelineCard({
     this.mealFrom,
     this.mealTo,
-    this.dayFrom,
-    this.dayTo,
+    dayFrom,
+    dayTo,
     this.dateFrom,
     this.dateTo,
     this.consecutiveLeaves,
-  );
+  })  : dayFrom = DateTimeUtils.getWeekDayName(dateFrom)
+            .substring(0, 3)
+            .toUpperCase(),
+        dayTo =
+            DateTimeUtils.getWeekDayName(dateTo).substring(0, 3).toUpperCase();
 
-  Widget _buildLeaveDetails() {
+  Widget _buildStartChild() {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(
+          DateFormat.LLL().format(dateTo),
+          style: AppTheme.bodyText1,
+        ),
+        Text(
+          dateTo.year.toString(),
+          style: AppTheme.bodyText1,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildEndChild() {
     return Container(
-      height: 200,
-      decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(color: AppTheme.lightGrey),
-        ),
+      height: 160,
+      padding: const EdgeInsets.symmetric(vertical: 16).add(
+        EdgeInsets.only(right: 24, left: 8),
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Text(
-                  '$mealTo',
-                  style: AppTheme.subtitle1,
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(
-                      '$dayTo',
-                      style: AppTheme.bodyText2,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Text(
+                '$mealTo',
+                style: AppTheme.subtitle1,
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    '$dayTo',
+                    style: AppTheme.bodyText2,
+                  ),
+                  Text(
+                    '${dateTo.toLocal().day}',
+                    style: AppTheme.bodyText2.copyWith(
+                      fontWeight: FontWeight.w600,
                     ),
-                    Text(
-                      '$dateTo',
-                      style: AppTheme.bodyText2.copyWith(
-                        fontWeight: FontWeight.w600,
-                      ),
+                  ),
+                ],
+              )
+            ],
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Text(
+                '$mealFrom',
+                style: AppTheme.subtitle1,
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    '$dayFrom',
+                    style: AppTheme.bodyText2,
+                  ),
+                  Text(
+                    '${dateFrom.toLocal().day}',
+                    style: AppTheme.bodyText2.copyWith(
+                      fontWeight: FontWeight.w600,
                     ),
-                  ],
-                )
-              ],
-            ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Text(
-                  '$mealFrom',
-                  style: AppTheme.subtitle1,
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(
-                      '$dayFrom',
-                      style: AppTheme.bodyText2,
-                    ),
-                    Text(
-                      '$dateFrom',
-                      style: AppTheme.bodyText2.copyWith(
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ],
-                )
-              ],
-            ),
-          ],
-        ),
+                  ),
+                ],
+              )
+            ],
+          ),
+        ],
       ),
     );
   }
 
   Widget _buildTimelineIcon() {
     return Container(
-      height: 200,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Container(
-              height: 8,
-              width: 8,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(color: AppTheme.primary),
-              ),
+      height: 160,
+      child: Column(
+        children: <Widget>[
+          SizedBox(
+            height: 28,
+            child: VerticalDivider(),
+          ),
+          Container(
+            height: 8,
+            width: 8,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              border: Border.all(color: AppTheme.primary),
             ),
-            Expanded(
-              child: VerticalDivider(
-                color: AppTheme.primary,
-                width: 2,
-              ),
+          ),
+          Expanded(
+            child: VerticalDivider(
+              color: AppTheme.primary,
+              width: 2,
             ),
-            Container(
-              height: 40,
-              width: 40,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(color: AppTheme.primary),
-              ),
-              child: Center(
-                child: Text(
-                  '$consecutiveLeaves',
-                  style: AppTheme.headline1.copyWith(
-                    color: AppTheme.primary,
-                  ),
+          ),
+          Container(
+            height: 40,
+            width: 40,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              border: Border.all(color: AppTheme.primary),
+            ),
+            child: Center(
+              child: Text(
+                '$consecutiveLeaves',
+                style: AppTheme.headline1.copyWith(
+                  color: AppTheme.primary,
                 ),
               ),
             ),
-            Expanded(
-              child: VerticalDivider(
-                color: AppTheme.primary,
-                width: 2,
-              ),
+          ),
+          Expanded(
+            child: VerticalDivider(
+              color: AppTheme.primary,
+              width: 2,
             ),
-            Container(
-              height: 8,
-              width: 8,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(color: AppTheme.primary),
-              ),
+          ),
+          Container(
+            height: 8,
+            width: 8,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              border: Border.all(color: AppTheme.primary),
             ),
-          ],
-        ),
+          ),
+          SizedBox(
+            height: 28,
+            child: VerticalDivider(),
+          ),
+        ],
       ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: <Widget>[
-        Positioned.fill(
-          left: 80,
-          child: _buildLeaveDetails(),
-        ),
-        Positioned.fill(
-          left: 80,
-          child: _buildTimelineIcon(),
-        ),
-      ],
+    return TimelineTile(
+      alignment: TimelineAlign.manual,
+      lineXY: 0.2,
+      indicatorStyle: IndicatorStyle(
+        width: 40,
+        height: 160,
+        drawGap: true,
+        indicator: _buildTimelineIcon(),
+      ),
+      startChild: _buildStartChild(),
+      endChild: _buildEndChild(),
     );
   }
 }

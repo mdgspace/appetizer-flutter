@@ -31,6 +31,7 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
           child: Row(
             children: <Widget>[
               MenuUIUtils.buildtitleAndBhawanNameComponent(widget.meal),
+              SizedBox(width: 8),
               _buildSkippedFlagComponent(),
             ],
           ),
@@ -70,7 +71,7 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
             widget.meal,
             widget.dailyItems,
           ),
-          MenuUIUtils.specialMealBanner(
+          MenuUIUtils.buildSpecialMealBanner(
             widget.meal.costType,
           ),
         ],

@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class StringUtils {
   static final Map<String, String> _hostelMap = {
     'Azad Bhawan': 'AZ',
@@ -31,5 +33,10 @@ class StringUtils {
 
   static String appLinkToShareText(String link) {
     return 'Let me recommend you this application:\n $link';
+  }
+
+  static int monthStringToInt(String month) {
+    if (month == 'All') return 0;
+    return DateFormat.MMMM().parse(month).month;
   }
 }

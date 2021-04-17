@@ -32,7 +32,7 @@ class _YourMenuViewState extends State<YourMenuView> {
           switch (model.state) {
             case ViewState.Idle:
               DayMenu selectedDayMenu;
-              model.selectedWeekMenuYourMeals.dayMenus.forEach((dayMenu) {
+              model.selectedWeekMenu.dayMenus.forEach((dayMenu) {
                 if (dayMenu.date.weekday == widget.selectedDateTime.weekday) {
                   selectedDayMenu = dayMenu;
                 }
@@ -40,7 +40,7 @@ class _YourMenuViewState extends State<YourMenuView> {
               if (selectedDayMenu == null) {
                 return _menuUnavailableForSingleDay();
               }
-              final dailyItems = model.selectedWeekMenuYourMeals.dailyItems;
+              final dailyItems = model.selectedWeekMenu.dailyItems;
               return YourDayMenuView(
                 dayMenu: selectedDayMenu,
                 dailyItems: dailyItems,

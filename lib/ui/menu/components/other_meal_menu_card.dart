@@ -77,7 +77,7 @@ class _OtherMealsMenuCardState extends State<OtherMealsMenuCard> {
                 widget.meal,
                 widget.dailyItems,
               ),
-              MenuUIUtils.specialMealBanner(
+              MenuUIUtils.buildSpecialMealBanner(
                 widget.meal.costType,
               ),
             ],
