@@ -92,9 +92,9 @@ class YourMenuCardViewModel extends BaseModel {
   void updateMealLeaveAndSwitchStatus(Meal meal) {
     if (meal != null) {
       _mealLeaveStatus =
-          _meal.leaveStatus.status == LeaveStatusEnum.N ? true : false;
+          _meal?.leaveStatus?.status == LeaveStatusEnum.N ? true : false;
       _mealSwitchStatus =
-          _meal.switchStatus.status == SwitchStatusEnum.N ? true : false;
+          _meal?.switchStatus?.status == SwitchStatusEnum.N ? true : false;
     } else {
       _mealLeaveStatus = true;
       _mealSwitchStatus = false;

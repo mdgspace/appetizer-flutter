@@ -18,12 +18,26 @@ class YourMenuView extends StatefulWidget {
 }
 
 class _YourMenuViewState extends State<YourMenuView> {
+  YourMenuViewModel _model;
+
+  @override
+  void didUpdateWidget(covariant YourMenuView oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (DateTimeUtils.getWeekNumber(oldWidget.selectedDateTime) !=
+        DateTimeUtils.getWeekNumber(widget.selectedDateTime)) {
+      _model.fetchSelectedWeekMenu(
+        DateTimeUtils.getWeekNumber(widget.selectedDateTime),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return BaseView<YourMenuViewModel>(
       onModelReady: (model) {
-        model.fetchInitialCheckedStatus();
-        model.fetchSelectedWeekMenu(
+        _model = model;
+        _model.fetchInitialCheckedStatus();
+        _model.fetchSelectedWeekMenu(
           DateTimeUtils.getWeekNumber(widget.selectedDateTime),
         );
       },

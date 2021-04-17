@@ -20,12 +20,27 @@ class OtherMenuView extends StatefulWidget {
 }
 
 class _OtherMenuViewState extends State<OtherMenuView> {
+  OtherMenuViewModel _model;
+
+  @override
+  void didUpdateWidget(covariant OtherMenuView oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (DateTimeUtils.getWeekNumber(oldWidget.selectedDateTime) !=
+        DateTimeUtils.getWeekNumber(widget.selectedDateTime)) {
+      _model.fetchHostelWeekMenu(
+        DateTimeUtils.getWeekNumber(widget.selectedDateTime),
+        StringUtils.hostelNameToCode(widget.hostelName),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return BaseView<OtherMenuViewModel>(
       onModelReady: (model) {
-        model.fetchInitialCheckedStatus();
-        model.fetchHostelWeekMenu(
+        _model = model;
+        _model.fetchInitialCheckedStatus();
+        _model.fetchHostelWeekMenu(
           DateTimeUtils.getWeekNumber(widget.selectedDateTime),
           StringUtils.hostelNameToCode(widget.hostelName),
         );
