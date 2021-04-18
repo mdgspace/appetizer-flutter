@@ -59,13 +59,10 @@ class _LeaveStatusCardState extends State<LeaveStatusCard> {
                             style: AppTheme.bodyText1,
                           ),
                           Text(
-                            (Globals.isCheckedOut)
-                                ? 'CHECKED-OUT'
-                                : 'CHECKED-IN',
+                            (isCheckedOut) ? 'CHECKED-OUT' : 'CHECKED-IN',
                             style: AppTheme.subtitle1.copyWith(
-                              color: Globals.isCheckedOut
-                                  ? AppTheme.red
-                                  : AppTheme.green,
+                              color:
+                                  isCheckedOut ? AppTheme.red : AppTheme.green,
                             ),
                           ),
                         ],
@@ -86,12 +83,12 @@ class _LeaveStatusCardState extends State<LeaveStatusCard> {
               padding: const EdgeInsets.all(4),
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  primary: Globals.isCheckedOut ? AppTheme.green : AppTheme.red,
+                  primary: isCheckedOut ? AppTheme.green : AppTheme.red,
                   padding: const EdgeInsets.all(10),
                 ),
                 onPressed: model.onCheckTapped,
                 child: Text(
-                  (Globals.isCheckedOut) ? 'CHECK IN' : 'CHECK OUT',
+                  (isCheckedOut) ? 'CHECK IN' : 'CHECK OUT',
                   style: AppTheme.headline4.copyWith(
                     color: AppTheme.white,
                   ),

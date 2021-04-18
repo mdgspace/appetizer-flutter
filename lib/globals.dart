@@ -1,5 +1,2 @@
-class Globals {
-  static bool isCheckedOut = false;
-
-  static Duration outdatedTime = Duration(hours: 12);
-}
+bool isCheckedOut = false;
+Duration outdatedTime = Duration(hours: 12);
