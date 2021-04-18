@@ -14,10 +14,24 @@ Follow these instructions to build and run the project
 
 A detailed guide for multiple platforms setup could be find [here](https://flutter.dev/docs/get-started/install/)
 
+### Cloning From GitHub
+
+To clone the repository, either use the Git GUI if you have one installed or enter the following commands:
+
+```sh
+git clone https://github.com/mdg-iitr/Appetizer-flutter.git
+cd Appetizer-flutter
+```
+
+**Note:** If you want to contribute, first fork the original repository and clone your **forked** repository into your local machine. If you don't do this, you will not be able to make commits or change any files.
+
+```sh
+git clone https://github.com/<username>/Appetizer-flutter.git
+cd Appetizer-flutter
+```
+
 ### Next Steps
 
-- Clone this repository.
-- `cd` into `Appetizer-flutter`.
 - `flutter pub get` to get all the dependencies.
 - `flutter run`
 
@@ -29,7 +43,14 @@ This project uses flutter version 2.0.4 and hence the support for compile time v
 2. Add Android & iOS app with the appropriate `package_name` & `bundle_identifier`.
 3. Download `google-services.json` from firebase and place in `android/app/`.
 
-Note: The Google Services Configuration section is mandatory to get started. To get hold of the above secrets/files drop a message on slack with clear requirements and we'll take care of that.
+#### Sentry Configuration
+
+Appetizer uses **Sentry** to track errors and performance monitoring.
+
+1. Create a [sentry.io](https://sentry.io) project to get hold of `SENTRY_DSN`.
+2. `SENTRY_DSN` can be configured to use with `--dart-defines`. Details of the `dart-defines` are as mentioned above. `SENTRY_DSN`
+
+**Note**: The _Google Services Configuration_ section is mandatory to get started but the _Sentry Configuration_ part is optional.
 
 ## Project Structure
 
@@ -73,11 +94,18 @@ Appetizer-flutter/lib/
 
 We would love to hear from you! We communicate on the following platforms:
 
-[![Slack](https://img.shields.io/badge/chat-on_slack-purple.svg?style=for-the-badge&logo=slack)](https://join.slack.com/t/mdg-open/shared_invite/zt-epxyukj9-reVHrkSahH3rmWl9llTh5g)
+[![Slack](https://img.shields.io/badge/chat-on_slack-purple.svg?style=for-the-badge&logo=slack)](https://join.slack.com/t/mdg-open/shared_invite/zt-oda9nlwx-mwwqzjCVRDfyUmuGWVrl7A)
 
-## Contributing
+## How to Contribute
 
-Whether you have some feauture requests/ideas, code improvements, refactoring, performance improvements, help is always Welcome. The more is done, better it gets.
+Whether you have some feauture requests/ideas, code improvements, refactoring, performance improvements, help is always Welcome. There are just a few small guidelines you need to follow.
+
+- When contributing to this repository, please first discuss the change you wish to make via the issues section before starting any major work.
+- Ask for this issue to be assigned to you by any of the maintainers before getting started (given that the issue hasn't already been assigned to someone else). If the issue has not been active for more than 10 days, a reassign can be requested.
+- Once you have started work on any issue open a WIP pull request addressing that issue so that we know that someone is working on it.
+- While writing any code for this project ensure that it is well formated and consistent with the architecture of the rest of the project.
+- Please make sure that you use the standard [dart nomeclature](https://dart.dev/guides/language/effective-dart/style).
+- Appetizer uses [pedantic](https://pub.dev/packages/pedantic) for linting purposes. So, make sure the linting warnings are taken care of before commiting or creating a PR.
 
 If you found any bugs, consider opening an [issue](https://github.com/mdg-iitr/Appetizer-flutter/issues/new).
 
