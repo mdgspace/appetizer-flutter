@@ -41,7 +41,7 @@
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data
                 android:scheme="appetizer"
-                android:host="mess.iitr.ac.in"
+                android:host="appetizer-mdg.herokuapp.com"
                 android:pathPrefix="/oauth" />
             </intent-filter>
             <!-- App Links -->
@@ -50,7 +50,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data
-                android:host="mess.iitr.ac.in"
+                android:host="appetizer-mdg.herokuapp.com"
                 android:pathPrefix="/oauth" />
             </intent-filter>
             <intent-filter>

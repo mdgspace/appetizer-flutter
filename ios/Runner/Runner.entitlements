@@ -4,7 +4,7 @@
 <dict>
   <key>com.apple.developer.associated-domains</key>
   <array>
-    <string>applinks:mess.iitr.ac.in</string>
+    <string>applinks:appetizer-mdg.herokuapp.com</string>
   </array>
 </dict>
 </plist>
