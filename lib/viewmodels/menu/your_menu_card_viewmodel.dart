@@ -163,7 +163,7 @@ class YourMenuCardViewModel extends BaseModel {
         } else {
           await Fluttertoast.showToast(
             msg:
-                'Leave status cannot be changed less than ${Globals.outdatedTime.inHours} hours before the meal time',
+                'Leave status cannot be changed less than ${outdatedTime.inHours} hours before the meal time',
           );
         }
       } else {
@@ -216,7 +216,7 @@ class YourMenuCardViewModel extends BaseModel {
     if (isLeaveToggleOutdated) {
       Fluttertoast.showToast(
         msg:
-            'Leave status cannot be changed less than ${Globals.outdatedTime.inHours} hours before the meal time',
+            'Leave status cannot be changed less than ${outdatedTime.inHours} hours before the meal time',
       );
     } else if (!mealSwitchStatus) {
       Fluttertoast.showToast(
@@ -244,7 +244,7 @@ class YourMenuCardViewModel extends BaseModel {
               .isBefore(DateTime.now())) {
             Fluttertoast.showToast(msg: 'Time for this meal has passed!');
           } else if (meal.startTime
-              .subtract(Globals.outdatedTime)
+              .subtract(outdatedTime)
               .isAfter(DateTime.now())) {
             Fluttertoast.showToast(
                 msg: 'QR CODE will be available 8 hours before the meal');

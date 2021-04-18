@@ -74,7 +74,7 @@ class MyLeavesView extends StatelessWidget {
             Column(
               children: [
                 LeaveStatusCard(model.leaveCount),
-                (Globals.isCheckedOut)
+                (isCheckedOut)
                     ? _buildInfoComponent(
                         'Check-in to start taking meals again')
                     : _buildInfoComponent(

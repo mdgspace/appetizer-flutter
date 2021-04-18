@@ -60,7 +60,7 @@ class LoginViewModel extends BaseModel {
       isLoginSuccessful = true;
       token = user.token;
       isLoggedIn = true;
-      Globals.isCheckedOut = user.isCheckedOut;
+      isCheckedOut = user.isCheckedOut;
       currentUser = user;
       var fcm = FirebaseMessaging();
       await fcm.subscribeToTopic('release-' + user.hostelCode);

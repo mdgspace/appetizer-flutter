@@ -56,11 +56,9 @@ class _SwitchStatusCardState extends State<SwitchStatusCard> {
                         style: AppTheme.bodyText1,
                       ),
                       Text(
-                        (Globals.isCheckedOut) ? 'CHECKED-OUT' : 'CHECKED-IN',
+                        (isCheckedOut) ? 'CHECKED-OUT' : 'CHECKED-IN',
                         style: AppTheme.subtitle1.copyWith(
-                          color: Globals.isCheckedOut
-                              ? AppTheme.red
-                              : AppTheme.green,
+                          color: isCheckedOut ? AppTheme.red : AppTheme.green,
                         ),
                       ),
                     ],

@@ -54,7 +54,7 @@ class HomeViewModel extends BaseModel {
   Future fetchInitialCheckedStatus() async {
     try {
       var userDetails = await _userApi.getCurrentUser();
-      Globals.isCheckedOut = userDetails.isCheckedOut;
+      isCheckedOut = userDetails.isCheckedOut;
       notifyListeners();
     } on Failure catch (f) {
       setState(ViewState.Error);
@@ -118,7 +118,7 @@ class HomeViewModel extends BaseModel {
 
   Future checkout() async {
     try {
-      Globals.isCheckedOut = await _leaveApi.check();
+      isCheckedOut = await _leaveApi.check();
     } on Failure catch (f) {
       setState(ViewState.Error);
       setErrorMessage(f.message);
@@ -134,7 +134,7 @@ class HomeViewModel extends BaseModel {
 
     if (dialogResponse.confirmed) {
       await checkout();
-      if (Globals.isCheckedOut) {
+      if (isCheckedOut) {
         SnackBarUtils.showDark('You have checked out');
       }
     }

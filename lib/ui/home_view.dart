@@ -53,7 +53,7 @@ class _HomeViewState extends State<HomeView> {
   }
 
   Widget _buildCheckedOutComponent() {
-    if (Globals.isCheckedOut == true) {
+    if (isCheckedOut == true) {
       return Container(
         width: MediaQuery.of(context).size.width,
         color: AppTheme.red,
@@ -332,7 +332,7 @@ class _HomeViewState extends State<HomeView> {
         _model.fetchInitialCheckedStatus();
       },
       builder: (context, model, child) => Scaffold(
-        floatingActionButton: !Globals.isCheckedOut ? _buildFAB() : null,
+        floatingActionButton: !isCheckedOut ? _buildFAB() : null,
         appBar: _buildAppBar(),
         drawer: _buildDrawer(),
         body: SafeArea(

@@ -17,7 +17,7 @@ class LeaveStatusCardViewModel extends BaseModel {
     setState(ViewState.Busy);
     try {
       var user = await _userApi.getCurrentUser();
-      Globals.isCheckedOut = user.isCheckedOut;
+      isCheckedOut = user.isCheckedOut;
       setState(ViewState.Idle);
     } on Failure catch (f) {
       setState(ViewState.Error);
@@ -28,7 +28,7 @@ class LeaveStatusCardViewModel extends BaseModel {
   Future toggleCheckState() async {
     setState(ViewState.Busy);
     try {
-      Globals.isCheckedOut = await _leaveApi.check();
+      isCheckedOut = await _leaveApi.check();
       setState(ViewState.Idle);
     } on Failure catch (f) {
       setState(ViewState.Error);
@@ -37,7 +37,7 @@ class LeaveStatusCardViewModel extends BaseModel {
   }
 
   Future onCheckTapped() async {
-    if (!Globals.isCheckedOut) {
+    if (!isCheckedOut) {
       var dialogResponse = await _dialogService.showConfirmationDialog(
         title: 'Check Out',
         description: 'Are you sure you would like to check out?',
@@ -46,13 +46,13 @@ class LeaveStatusCardViewModel extends BaseModel {
 
       if (dialogResponse.confirmed) {
         await toggleCheckState();
-        if (Globals.isCheckedOut) {
+        if (isCheckedOut) {
           SnackBarUtils.showDark('You have checked out');
         }
       }
     } else {
       await toggleCheckState();
-      if (!Globals.isCheckedOut) {
+      if (!isCheckedOut) {
         SnackBarUtils.showDark('You have checked in');
       }
     }

@@ -32,7 +32,7 @@ class OtherMenuViewModel extends BaseModel {
   Future fetchInitialCheckedStatus() async {
     try {
       var userDetails = await _userApi.getCurrentUser();
-      Globals.isCheckedOut = userDetails.isCheckedOut;
+      isCheckedOut = userDetails.isCheckedOut;
       notifyListeners();
     } on Failure catch (f) {
       setState(ViewState.Error);
