@@ -1,7 +1,7 @@
 class EnvironmentConfig {
   static const String BASE_URL = String.fromEnvironment(
     'BASE_URL',
-    defaultValue: 'http://appetizer-mdg.herokuapp.com',
+    defaultValue: 'https://appetizer-mdg.herokuapp.com',
   );
 
   static const String OAUTH_CLIENT_ID = String.fromEnvironment(
