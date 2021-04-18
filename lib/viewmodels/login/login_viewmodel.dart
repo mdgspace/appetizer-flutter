@@ -96,10 +96,12 @@ class LoginViewModel extends BaseModel {
         if (oauthUser.token != null) {
           _dialogService.popDialog();
           _dialogService.showCustomProgressDialog(title: 'Logging You In');
+          token = oauthUser.token;
+          isLoggedIn = true;
           currentUser = studentData;
           await Future.delayed(const Duration(milliseconds: 500));
           _dialogService.popDialog();
-          await Get.offNamed(HomeView.id, arguments: oauthUser.token);
+          await Get.offAllNamed(HomeView.id, arguments: oauthUser.token);
         }
       }
     }
