@@ -45,7 +45,7 @@ class _LoginViewState extends State<LoginView> with TickerProviderStateMixin {
   final _formKey = GlobalKey<FormState>();
 
   String omniportSignUpURL =
-      'https://internet.channeli.in/oauth/authorise/?client_id=${EnvironmentConfig.OAUTH_CLIENT_ID}&redirect_url=https://appetizer-mdg.herokuapp.com/oauth/';
+      'https://channeli.in/oauth/authorise/?client_id=${EnvironmentConfig.OAUTH_CLIENT_ID}&redirect_uri=https://appetizer-mdg.herokuapp.com/oauth/';
 
   String _enrollmentNo, _password;
 

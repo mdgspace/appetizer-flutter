@@ -9,11 +9,14 @@
          FlutterApplication and put your custom class here. -->
     <application
         android:usesCleartextTraffic="true"
-        android:label="appetizer"
+        android:label="Appetizer"
         android:icon="@mipmap/launcher_icon">
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@mipmap/launcher_icon" />
+        <meta-data
+            android:name="asset_statements"
+            android:resource="@string/asset_statements"/>
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
