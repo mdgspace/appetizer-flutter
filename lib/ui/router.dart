@@ -35,12 +35,7 @@ class AppetizerRouter {
           ),
         );
       case HomeView.id:
-        var token = settings.arguments as String;
-        return MaterialPageRoute(
-          builder: (_) => HomeView(
-            token: token,
-          ),
-        );
+        return MaterialPageRoute(builder: (_) => HomeView());
       case WeekMenuView.id:
         return MaterialPageRoute(builder: (_) => WeekMenuView());
       case UserFeedbackView.id:

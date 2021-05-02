@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:appetizer/app_theme.dart';
+import 'package:appetizer/config/environment_config.dart';
 import 'package:appetizer/enums/view_state.dart';
 import 'package:appetizer/ui/base_view.dart';
 import 'package:appetizer/ui/components/appetizer_outline_button.dart';
@@ -43,8 +44,8 @@ class _LoginViewState extends State<LoginView> with TickerProviderStateMixin {
 
   final _formKey = GlobalKey<FormState>();
 
-  String url =
-      'http://people.iitr.ernet.in/oauth/?client_id=0a6fb094b8fe79ce0217&redirect_url=appetizer://mess.iitr.ac.in/oauth/';
+  String omniportSignUpURL =
+      'https://channeli.in/oauth/authorise/?client_id=${EnvironmentConfig.OAUTH_CLIENT_ID}&redirect_uri=https://appetizer-mdg.herokuapp.com/oauth/';
 
   String _enrollmentNo, _password;
 
@@ -152,13 +153,13 @@ class _LoginViewState extends State<LoginView> with TickerProviderStateMixin {
     );
   }
 
-  Widget _showChannelIButton() {
+  Widget _buildChannelIButton() {
     if (_model.isLoginSuccessful) return Container();
 
     return AppetizerPrimaryButton(
       title: 'SIGNUP WITH CHANNEL-I',
       onPressed: () {
-        launch(url);
+        launch(omniportSignUpURL);
         exit(0);
       },
     );
@@ -310,7 +311,7 @@ class _LoginViewState extends State<LoginView> with TickerProviderStateMixin {
                         ),
                       ),
                       SizedBox(height: 16),
-                      _showChannelIButton(),
+                      _buildChannelIButton(),
                     ],
                   ),
                 ),

@@ -187,7 +187,7 @@ class UserApi {
   }
 
   Future<OAuthUser> oAuthRedirect(String code) async {
-    var endpoint = '/api/user/oauth/redirect/?code=$code';
+    var endpoint = '/api/user/oauth/omniport/redirect/?code=$code';
     var uri = EnvironmentConfig.BASE_URL + endpoint;
     try {
       var jsonResponse = await ApiUtils.get(uri);
@@ -204,7 +204,7 @@ class UserApi {
 
   Future<OAuthUser> oAuthComplete(
       int enrNo, String password, String email, int contactNo) async {
-    var endpoint = '/api/user/oauth/complete/';
+    var endpoint = '/oauth/complete';
     var uri = EnvironmentConfig.BASE_URL + endpoint;
     var json = {
       'enr': enrNo,
