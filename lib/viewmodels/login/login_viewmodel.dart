@@ -7,6 +7,7 @@ import 'package:appetizer/services/api/user_api.dart';
 import 'package:appetizer/services/dialog_service.dart';
 import 'package:appetizer/ui/home_view.dart';
 import 'package:appetizer/ui/password/choose_new_password_view.dart';
+import 'package:appetizer/utils/snackbar_utils.dart';
 import 'package:appetizer/viewmodels/base_model.dart';
 import 'package:appetizer/models/failure_model.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -78,31 +79,30 @@ class LoginViewModel extends BaseModel {
     } on Failure catch (f) {
       setState(ViewState.Error);
       setErrorMessage(f.message);
+      SnackBarUtils.showDark(f.message);
     }
   }
 
   Future verifyUser(String code) async {
     _dialogService.showCustomProgressDialog(title: 'Fetching Details');
     await getOAuthResponse(code);
+    _dialogService.popDialog();
+
     if (oauthUser != null) {
       var studentData = oauthUser.studentData;
       if (oauthUser.isNew) {
-        _dialogService.popDialog();
         _dialogService.showCustomProgressDialog(title: 'Redirecting');
         await Future.delayed(Duration(milliseconds: 500));
         _dialogService.popDialog();
         await Get.offNamed(ChooseNewPasswordView.id, arguments: studentData);
-      } else {
-        if (oauthUser.token != null) {
-          _dialogService.popDialog();
-          _dialogService.showCustomProgressDialog(title: 'Logging You In');
-          token = oauthUser.token;
-          isLoggedIn = true;
-          currentUser = studentData;
-          await Future.delayed(const Duration(milliseconds: 500));
-          _dialogService.popDialog();
-          await Get.offAllNamed(HomeView.id, arguments: oauthUser.token);
-        }
+      } else if (oauthUser.token != null) {
+        _dialogService.showCustomProgressDialog(title: 'Logging You In');
+        token = oauthUser.token;
+        isLoggedIn = true;
+        currentUser = studentData;
+        await Future.delayed(const Duration(milliseconds: 500));
+        _dialogService.popDialog();
+        await Get.offAllNamed(HomeView.id);
       }
     }
   }
