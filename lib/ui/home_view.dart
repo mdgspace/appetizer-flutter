@@ -17,9 +17,6 @@ import 'package:get/get.dart';
 
 class HomeView extends StatefulWidget {
   static const String id = 'home_view';
-  final String token;
-
-  const HomeView({Key key, this.token}) : super(key: key);
 
   @override
   _HomeViewState createState() => _HomeViewState();

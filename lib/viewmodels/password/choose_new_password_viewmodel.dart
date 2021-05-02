@@ -40,6 +40,8 @@ class NewPasswordViewModel extends BaseModel {
     _dialogService.popDialog();
     if (oauthUser.token != null) {
       var studentData = oauthUser.studentData;
+      token = oauthUser.token;
+      isLoggedIn = true;
       currentUser = studentData;
       await Get.offNamed(HomeView.id, arguments: oauthUser.token);
     } else {
