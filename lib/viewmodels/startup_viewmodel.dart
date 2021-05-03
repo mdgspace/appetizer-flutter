@@ -21,31 +21,33 @@ class StartUpViewModel extends BaseModel {
 
   StreamSubscription _uniLinksSubscription;
 
-  Future initUniLinks() async {
+  Future initUniLinksAndStartup() async {
     // check initialUri
     try {
       var _uri = await getInitialUri();
-      await _handleUniLink(_uri);
+      await _handleUniLinkAndStartup(_uri);
     } on Exception {
       return;
     }
 
     // Attach a listener to the stream
     _uniLinksSubscription = getUriLinksStream().listen(
-      (Uri uri) => _handleUniLink(uri),
+      (Uri uri) => _handleUniLinkAndStartup(uri),
       onError: (err) {
         return;
       },
     );
   }
 
-  Future<void> _handleUniLink(Uri uri) async {
+  Future<void> _handleUniLinkAndStartup(Uri uri) async {
     if (uri != null) {
       var _params = uri.toString().split('?').last.split('&');
       if (_params.first.contains('code')) {
         var _code = _params.first.split('=').last;
         await Get.offAllNamed(LoginView.id, arguments: _code);
       }
+    } else {
+      await handleStartUpLogic();
     }
   }
 

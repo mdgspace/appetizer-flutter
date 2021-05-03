@@ -7,10 +7,7 @@ class StartUpView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseView<StartUpViewModel>(
-      onModelReady: (model) async {
-        await model.initUniLinks();
-        await model.handleStartUpLogic();
-      },
+      onModelReady: (model) => model.initUniLinksAndStartup(),
       builder: (context, model, child) => Scaffold(
         backgroundColor: AppTheme.primary,
         body: Center(
