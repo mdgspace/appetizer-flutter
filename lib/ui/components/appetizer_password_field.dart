@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 class AppetizerPasswordField extends StatefulWidget {
   final String label;
   final IconData iconData;
+  final Function(String) onChanged;
   final Function(String) validator;
   final Function(String) onSaved;
 
@@ -11,6 +12,7 @@ class AppetizerPasswordField extends StatefulWidget {
     Key key,
     this.label,
     this.iconData,
+    this.onChanged,
     this.validator,
     this.onSaved,
   }) : super(key: key);
@@ -52,6 +54,7 @@ class _AppetizerPasswordFieldState extends State<AppetizerPasswordField> {
         labelText: widget.label,
         labelStyle: AppTheme.subtitle1,
       ),
+      onChanged: widget.onChanged,
       validator: widget.validator,
       onSaved: widget.onSaved,
     );
