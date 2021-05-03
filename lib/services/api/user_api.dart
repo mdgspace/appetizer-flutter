@@ -204,7 +204,7 @@ class UserApi {
 
   Future<OAuthUser> oAuthComplete(
       int enrNo, String password, String email, int contactNo) async {
-    var endpoint = '/oauth/complete';
+    var endpoint = '/api/user/oauth/complete/';
     var uri = EnvironmentConfig.BASE_URL + endpoint;
     var json = {
       'enr': enrNo,

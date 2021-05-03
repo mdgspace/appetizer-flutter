@@ -43,7 +43,7 @@ class NewPasswordViewModel extends BaseModel {
       token = oauthUser.token;
       isLoggedIn = true;
       currentUser = studentData;
-      await Get.offNamed(HomeView.id, arguments: oauthUser.token);
+      await Get.offNamed(HomeView.id);
     } else {
       setState(ViewState.Error);
       setErrorMessage('Invalid Request');

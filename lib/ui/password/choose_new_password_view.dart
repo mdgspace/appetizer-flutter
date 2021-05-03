@@ -57,6 +57,7 @@ class _ChooseNewPasswordViewState extends State<ChooseNewPasswordView> {
                     AppetizerPasswordField(
                       iconData: Icons.lock,
                       label: 'New Password',
+                      onChanged: (value) => _newPassword = value,
                       validator: (value) =>
                           value.isEmpty ? 'Password can\'t be empty' : null,
                       onSaved: (value) => _newPassword = value,
@@ -77,6 +78,7 @@ class _ChooseNewPasswordViewState extends State<ChooseNewPasswordView> {
                     ),
                     SizedBox(height: 16),
                     AppetizerTextField(
+                      keyboardType: TextInputType.emailAddress,
                       initialValue: widget?.user?.email,
                       iconData: Icons.email,
                       label: 'Email Address',
@@ -87,6 +89,7 @@ class _ChooseNewPasswordViewState extends State<ChooseNewPasswordView> {
                     ),
                     SizedBox(height: 16),
                     AppetizerTextField(
+                      keyboardType: TextInputType.number,
                       initialValue: widget?.user?.contactNo,
                       iconData: Icons.phone,
                       label: 'Contact Number',

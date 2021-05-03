@@ -197,7 +197,7 @@ class _LoginViewState extends State<LoginView> with TickerProviderStateMixin {
         _model.areCredentialsCorrect = true;
         SnackBarUtils.showDark('Login Successful');
         await Future.delayed(const Duration(seconds: 5));
-        await Get.offAllNamed(HomeView.id, arguments: _model.user.token);
+        await Get.offAllNamed(HomeView.id);
       } else {
         _formKey.currentState.reset();
         SnackBarUtils.showDark(_model.errorMessage);

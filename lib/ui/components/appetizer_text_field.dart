@@ -6,6 +6,7 @@ class AppetizerTextField extends StatelessWidget {
   final num maxLines;
   final String label;
   final IconData iconData;
+  final Function(String) onChanged;
   final Function(String) validator;
   final Function(String) onSaved;
   final TextInputType keyboardType;
@@ -16,6 +17,7 @@ class AppetizerTextField extends StatelessWidget {
     this.maxLines = 1,
     @required this.label,
     this.iconData,
+    this.onChanged,
     this.validator,
     this.onSaved,
     this.keyboardType = TextInputType.text,
@@ -37,6 +39,7 @@ class AppetizerTextField extends StatelessWidget {
           size: 36,
         ),
       ),
+      onChanged: onChanged,
       validator: validator,
       onSaved: onSaved,
     );
