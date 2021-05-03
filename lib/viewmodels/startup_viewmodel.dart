@@ -63,7 +63,7 @@ class StartUpViewModel extends BaseModel {
       _localStorageService.isFirstTimeLogin = false;
       await Get.offAllNamed(OnBoardingView.id);
     } else if (_localStorageService.isLoggedIn) {
-      await Get.offAllNamed(HomeView.id, arguments: _localStorageService.token);
+      await Get.offAllNamed(HomeView.id);
     } else {
       await Get.offAllNamed(LoginView.id);
     }
