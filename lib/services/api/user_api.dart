@@ -106,7 +106,7 @@ class UserApi {
     var uri = EnvironmentConfig.BASE_URL + endpoint;
     var json = {
       'email': email,
-      'contactNo': contactNo,
+      'contact_no': contactNo,
     };
 
     try {

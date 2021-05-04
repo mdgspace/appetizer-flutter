@@ -61,6 +61,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                       ),
                       SizedBox(height: 16),
                       AppetizerTextField(
+                        keyboardType: TextInputType.number,
                         initialValue: model?.currentUser?.contactNo,
                         iconData: Icons.phone,
                         label: 'Contact Number',
@@ -72,6 +73,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                       ),
                       SizedBox(height: 16),
                       AppetizerTextField(
+                        keyboardType: TextInputType.emailAddress,
                         initialValue: model?.currentUser?.email,
                         iconData: Icons.email,
                         label: 'Email Address',
@@ -87,7 +89,6 @@ class _EditProfileViewState extends State<EditProfileView> {
                           title: 'Confirm',
                           onPressed: () async {
                             if (Validators.validateAndSaveForm(_formKey)) {
-                              _formKey.currentState.reset();
                               FocusScope.of(context).requestFocus(FocusNode());
                               await model.saveUserDetails(_email, _contactNo);
                             }
