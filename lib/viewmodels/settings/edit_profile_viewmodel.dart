@@ -27,21 +27,22 @@ class EditProfileViewModel extends BaseModel {
       updatedUserDetails = await _userApi.updateUser(email, contactNo);
       currentUser = updatedUserDetails;
       setState(ViewState.Idle);
-      SnackBarUtils.showDark('User details updated');
     } on Failure catch (f) {
       setState(ViewState.Error);
       setErrorMessage(f.message);
-      SnackBarUtils.showDark(errorMessage);
     }
   }
 
-  Future saveUserDetails(String email, String contactNo) async {
+  Future onConfirmUserDetailsPressed(String email, String contactNo) async {
     _dialogService.showCustomProgressDialog(title: 'Saving User Details');
     await updateUserDetails(email, contactNo);
     _dialogService.popDialog();
 
     if (state == ViewState.Idle) {
       Get.back();
+      SnackBarUtils.showDark('User details updated');
+    } else {
+      SnackBarUtils.showDark('Unable to update user details');
     }
   }
 }

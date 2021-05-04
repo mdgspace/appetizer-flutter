@@ -8,10 +8,15 @@ class Constants {
       'You are not authorized to fetch this User';
   static const String USER_NOT_FOUND = 'No User Found';
 
+  /// MENU CONSTANTS
+  static const String MENU_NOT_FOUND = 'No Menu Found';
+
   /// GENERIC FAILURE CONSTANTS
   static const String BAD_RESPONSE_FORMAT = 'Bad Response Format';
   static const String GENERIC_FAILURE =
       'Something Wrong Occured! Please try again.';
   static const String NO_INTERNET_CONNECTION = 'No Internet Connection';
   static const String HTTP_EXCEPTION = 'Unable to fetch response';
+  static const String UNAUTHORIZED_EXCEPTION =
+      'Unauthorized to fetch the resource.';
 }

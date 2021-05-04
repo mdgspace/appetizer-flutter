@@ -1,11 +1,12 @@
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 
-const String APPI_VERSION = 'appetizer_flutter_version';
 const String APP_LINK = 'appetizer_link';
+const String IS_LEAVE_ENABLED = 'is_leave_enabled';
+const String IS_SWITCH_ENABLED = 'is_switch_enabled';
 
 class RemoteConfigService {
   final RemoteConfig _remoteConfig;
-  final defaults = <String, dynamic>{APPI_VERSION: '2.0.0', APP_LINK: ''};
+  final defaults = <String, dynamic>{};
 
   static RemoteConfigService _instance;
 
@@ -20,9 +21,13 @@ class RemoteConfigService {
   RemoteConfigService({RemoteConfig remoteConfig})
       : _remoteConfig = remoteConfig;
 
-  String get appetizerVersion => _remoteConfig.getString(APPI_VERSION);
-
   String get appetizerLink => _remoteConfig.getString(APP_LINK);
+
+  bool get isLeaveEnabled =>
+      _remoteConfig.getString(IS_LEAVE_ENABLED) == 'true' ? true : false;
+
+  bool get isSwitchEnabled =>
+      _remoteConfig.getString(IS_SWITCH_ENABLED) == 'true' ? true : false;
 
   Future initialise() async {
     try {

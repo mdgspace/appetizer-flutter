@@ -50,10 +50,29 @@ class LeaveApi {
     }
   }
 
-  Future<bool> check() async {
+  Future<bool> checkout() async {
     var endPoint = '/api/leave/check/';
     var uri = EnvironmentConfig.BASE_URL + endPoint;
     var json = {'is_checked_out': true};
+
+    try {
+      await ApiUtils.addTokenToHeaders(headers);
+      var jsonResponse = await ApiUtils.post(uri, headers: headers, body: json);
+      var isCheckedOut = jsonResponse['is_checked_out'];
+      return isCheckedOut;
+    } on FormatException catch (e) {
+      print(e.message);
+      throw Failure(Constants.BAD_RESPONSE_FORMAT);
+    } on Exception catch (e) {
+      print(e.toString());
+      throw Failure(Constants.GENERIC_FAILURE);
+    }
+  }
+
+  Future<bool> checkin() async {
+    var endPoint = '/api/leave/check/';
+    var uri = EnvironmentConfig.BASE_URL + endPoint;
+    var json = {'is_checked_out': false};
 
     try {
       await ApiUtils.addTokenToHeaders(headers);

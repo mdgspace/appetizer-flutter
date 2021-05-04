@@ -1,3 +1,4 @@
+import 'package:appetizer/constants.dart';
 import 'package:appetizer/enums/view_state.dart';
 import 'package:appetizer/globals.dart';
 import 'package:appetizer/locator.dart';
@@ -57,6 +58,9 @@ class HomeViewModel extends BaseModel {
       isCheckedOut = userDetails.isCheckedOut;
       notifyListeners();
     } on Failure catch (f) {
+      if (f.message == Constants.UNAUTHORIZED_EXCEPTION) {
+        await logoutAndClearData();
+      }
       setState(ViewState.Error);
       setErrorMessage(f.message);
     }
@@ -86,15 +90,15 @@ class HomeViewModel extends BaseModel {
     }
   }
 
-  Future logout() async {
-    setState(ViewState.Busy);
-    try {
-      await _userApi.userLogout();
-      setState(ViewState.Idle);
-    } on Failure catch (f) {
-      setState(ViewState.Error);
-      setErrorMessage(f.message);
-    }
+  Future logoutAndClearData() async {
+    _dialogService.showCustomProgressDialog(title: 'Logging You Out');
+    await _userApi.userLogout();
+    _dialogService.popDialog();
+    await _pushNotificationService.fcm
+        .unsubscribeFromTopic('release-' + currentUser.hostelCode);
+    await Get.offAllNamed(LoginView.id);
+    isLoggedIn = false;
+    token = null;
   }
 
   Future onLogoutTap() async {
@@ -104,21 +108,12 @@ class HomeViewModel extends BaseModel {
       confirmationTitle: 'LOGOUT',
     );
 
-    if (_dialog.confirmed) {
-      _dialogService.showCustomProgressDialog(title: 'Logging You Out');
-      await logout();
-      _dialogService.popDialog();
-      await _pushNotificationService.fcm
-          .unsubscribeFromTopic('release-' + currentUser.hostelCode);
-      await Get.offAllNamed(LoginView.id);
-      isLoggedIn = false;
-      token = null;
-    }
+    if (_dialog.confirmed) await logoutAndClearData();
   }
 
   Future checkout() async {
     try {
-      isCheckedOut = await _leaveApi.check();
+      isCheckedOut = await _leaveApi.checkout();
     } on Failure catch (f) {
       setState(ViewState.Error);
       setErrorMessage(f.message);
@@ -126,17 +121,22 @@ class HomeViewModel extends BaseModel {
   }
 
   Future onCheckoutTap() async {
-    var dialogResponse = await _dialogService.showConfirmationDialog(
-      title: 'Check Out',
-      description: 'Are you sure you would like to check out?',
-      confirmationTitle: 'CHECK OUT',
-    );
+    if (isLeaveEnabled) {
+      var dialogResponse = await _dialogService.showConfirmationDialog(
+        title: 'Check Out',
+        description: 'Are you sure you would like to check out?',
+        confirmationTitle: 'CHECK OUT',
+      );
 
-    if (dialogResponse.confirmed) {
-      await checkout();
-      if (isCheckedOut) {
-        SnackBarUtils.showDark('You have checked out');
+      if (dialogResponse.confirmed) {
+        await checkout();
+        if (isCheckedOut) {
+          SnackBarUtils.showDark('You have checked out');
+        }
       }
+    } else {
+      SnackBarUtils.showDark(
+          'Checkout through Appetizer is temporarily disabled!');
     }
   }
 }

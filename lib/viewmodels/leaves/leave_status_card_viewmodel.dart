@@ -28,7 +28,11 @@ class LeaveStatusCardViewModel extends BaseModel {
   Future toggleCheckState() async {
     setState(ViewState.Busy);
     try {
-      isCheckedOut = await _leaveApi.check();
+      if (isCheckedOut) {
+        isCheckedOut = await _leaveApi.checkin();
+      } else {
+        isCheckedOut = await _leaveApi.checkout();
+      }
       setState(ViewState.Idle);
     } on Failure catch (f) {
       setState(ViewState.Error);
@@ -37,24 +41,29 @@ class LeaveStatusCardViewModel extends BaseModel {
   }
 
   Future onCheckTapped() async {
-    if (!isCheckedOut) {
-      var dialogResponse = await _dialogService.showConfirmationDialog(
-        title: 'Check Out',
-        description: 'Are you sure you would like to check out?',
-        confirmationTitle: 'CHECK OUT',
-      );
+    if (isLeaveEnabled) {
+      if (!isCheckedOut) {
+        var dialogResponse = await _dialogService.showConfirmationDialog(
+          title: 'Check Out',
+          description: 'Are you sure you would like to check out?',
+          confirmationTitle: 'CHECK OUT',
+        );
 
-      if (dialogResponse.confirmed) {
+        if (dialogResponse.confirmed) {
+          await toggleCheckState();
+          if (isCheckedOut) {
+            SnackBarUtils.showDark('You have checked out');
+          }
+        }
+      } else {
         await toggleCheckState();
-        if (isCheckedOut) {
-          SnackBarUtils.showDark('You have checked out');
+        if (!isCheckedOut) {
+          SnackBarUtils.showDark('You have checked in');
         }
       }
     } else {
-      await toggleCheckState();
-      if (!isCheckedOut) {
-        SnackBarUtils.showDark('You have checked in');
-      }
+      SnackBarUtils.showDark(
+          'Checkout through Appetizer is temporarily disabled!');
     }
   }
 }

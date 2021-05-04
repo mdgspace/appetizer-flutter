@@ -38,10 +38,12 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
         ),
         Row(
           children: <Widget>[
-            _buildQRButtonComponent(),
-            widget.meal.items.isNotEmpty
-                ? _buildSwitchComponent()
-                : Container(),
+            if (_model.isSwitchEnabled) ...[
+              _buildQRButtonComponent(),
+              widget.meal.items.isNotEmpty
+                  ? _buildSwitchComponent()
+                  : Container(),
+            ],
             _buildFeedbackOrToggleComponent(),
           ],
         ),
@@ -144,7 +146,7 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
           ),
         ),
       );
-    } else if (!isCheckedOut) {
+    } else if (_model.isLeaveEnabled && !isCheckedOut) {
       GestureDetector(
         onHorizontalDragStart: (_) => _model.onSwitchDragged(),
         child: Switch(
@@ -237,13 +239,15 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
           _model.updateMealLeaveAndSwitchStatus(widget.meal);
         },
         onDidUpdateWidget: (oldWidget, model) =>
-            model.updateMealLeaveAndSwitchStatus(widget.meal),
+            _model.updateMealLeaveAndSwitchStatus(widget.meal),
         builder: (context, model, child) {
           if (widget.meal == null) return Container();
 
           return Padding(
             padding: const EdgeInsets.symmetric(vertical: 4),
-            child: model.secretCode == null ? _buildMenuCard() : _buildQRCard(),
+            child: _model.isSwitchEnabled && _model.secretCode != null
+                ? _buildQRCard()
+                : _buildMenuCard(),
           );
         });
   }

@@ -13,29 +13,15 @@ class ResetPasswordViewModel extends BaseModel {
 
   bool _isUserPasswordReset;
 
-  bool get isUserPasswordReset => _isUserPasswordReset;
-
-  set isUserPasswordReset(bool isUserPasswordReset) {
-    _isUserPasswordReset = isUserPasswordReset;
-    notifyListeners();
-  }
-
   Future resetPassword(String oldPassword, String newPassword) async {
     setState(ViewState.Busy);
     try {
-      var userPasswordResetDetail =
-          await _userApi.resetUserPassword(oldPassword, newPassword);
-      isUserPasswordReset =
-          userPasswordResetDetail.detail == 'password changed successfully'
-              ? true
-              : false;
+      await _userApi.resetUserPassword(oldPassword, newPassword);
+      _isUserPasswordReset = true;
       setState(ViewState.Idle);
-      SnackBarUtils.showDark('Password changed successfully');
     } on Failure catch (f) {
-      print(f.message);
-      setErrorMessage(f.message);
       setState(ViewState.Error);
-      SnackBarUtils.showDark(errorMessage);
+      setErrorMessage(f.message);
     }
   }
 
@@ -44,8 +30,11 @@ class ResetPasswordViewModel extends BaseModel {
     await resetPassword(oldPassword, newPassword);
     _dialogService.popDialog();
 
-    if (state == ViewState.Idle) {
+    if (_isUserPasswordReset ?? false) {
       Get.back();
+      SnackBarUtils.showDark('Password changed successfully');
+    } else {
+      SnackBarUtils.showDark('Unable to change password!');
     }
   }
 }
