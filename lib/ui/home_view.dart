@@ -326,6 +326,7 @@ class _HomeViewState extends State<HomeView> {
     return BaseView<HomeViewModel>(
       onModelReady: (model) {
         _model = model;
+        _model.checkVersion();
         _model.fetchInitialCheckedStatus();
       },
       builder: (context, model, child) => Scaffold(
