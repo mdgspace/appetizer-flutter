@@ -1,7 +1,8 @@
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 
 const String APP_LINK = 'appetizer_link';
-const String IS_CHECK_ENABLED = 'is_check_enabled';
+const String IS_LEAVE_ENABLED = 'is_leave_enabled';
+const String IS_SWITCH_ENABLED = 'is_switch_enabled';
 
 class RemoteConfigService {
   final RemoteConfig _remoteConfig;
@@ -22,8 +23,11 @@ class RemoteConfigService {
 
   String get appetizerLink => _remoteConfig.getString(APP_LINK);
 
-  bool get isCheckEnabled =>
-      _remoteConfig.getString(IS_CHECK_ENABLED) == 'true' ? true : false;
+  bool get isLeaveEnabled =>
+      _remoteConfig.getString(IS_LEAVE_ENABLED) == 'true' ? true : false;
+
+  bool get isSwitchEnabled =>
+      _remoteConfig.getString(IS_SWITCH_ENABLED) == 'true' ? true : false;
 
   Future initialise() async {
     try {

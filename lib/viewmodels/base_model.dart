@@ -38,6 +38,10 @@ class BaseModel extends ChangeNotifier {
 
   String get appetizerLink => _remoteConfigService.appetizerLink;
 
+  bool get isLeaveEnabled => _remoteConfigService.isLeaveEnabled;
+
+  bool get isSwitchEnabled => _remoteConfigService.isSwitchEnabled;
+
   ViewState _state = ViewState.Idle;
 
   ViewState get state => _state;

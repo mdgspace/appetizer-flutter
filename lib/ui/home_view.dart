@@ -10,6 +10,7 @@ import 'package:appetizer/ui/menu/your_menu_view.dart';
 import 'package:appetizer/ui/notification_history/notification_history_view.dart';
 import 'package:appetizer/ui/rebates/my_rebates_view.dart';
 import 'package:appetizer/ui/settings/settings_view.dart';
+import 'package:appetizer/ui/switches/my_switches_view.dart';
 import 'package:appetizer/ui/user_feedback/user_feedback_view.dart';
 import 'package:appetizer/viewmodels/home_viewmodel.dart';
 import 'package:flutter/material.dart';
@@ -276,21 +277,24 @@ class _HomeViewState extends State<HomeView> {
                     iconPath: 'assets/icons/feedback.png',
                     title: 'Feedback',
                   ),
-                  _buildDrawerComponent(
-                    onTap: () => Get.toNamed(MyLeavesView.id),
-                    iconPath: 'assets/icons/leaves.png',
-                    title: 'Leaves',
-                  ),
-                  // _buildDrawerComponent(
-                  //   onTap: () => Get.toNamed(MySwitchesView.id),
-                  //   iconPath: 'assets/icons/leaves.png',
-                  //   title: 'Switches',
-                  // ),
-                  _buildDrawerComponent(
-                    onTap: () => Get.toNamed(MyRebatesView.id),
-                    iconData: Icons.attach_money,
-                    title: 'Rebates',
-                  ),
+                  if (_model.isLeaveEnabled)
+                    _buildDrawerComponent(
+                      onTap: () => Get.toNamed(MyLeavesView.id),
+                      iconPath: 'assets/icons/leaves.png',
+                      title: 'Leaves',
+                    ),
+                  if (_model.isSwitchEnabled)
+                    _buildDrawerComponent(
+                      onTap: () => Get.toNamed(MySwitchesView.id),
+                      iconPath: 'assets/icons/leaves.png',
+                      title: 'Switches',
+                    ),
+                  if (_model.isLeaveEnabled)
+                    _buildDrawerComponent(
+                      onTap: () => Get.toNamed(MyRebatesView.id),
+                      iconData: Icons.attach_money,
+                      title: 'Rebates',
+                    ),
                   _buildDrawerComponent(
                     onTap: () => Get.toNamed(NotificationHistoryView.id),
                     iconPath: 'assets/icons/notification.png',
@@ -328,6 +332,7 @@ class _HomeViewState extends State<HomeView> {
         _model = model;
         _model.checkVersion();
         _model.fetchInitialCheckedStatus();
+        if (_model.isSwitchEnabled) _model.setSwitchableHostels();
       },
       builder: (context, model, child) => Scaffold(
         floatingActionButton: !isCheckedOut ? _buildFAB() : null,

@@ -41,9 +41,10 @@ class _OtherMealsMenuCardState extends State<OtherMealsMenuCard> {
         Expanded(
           child: MenuUIUtils.buildtitleAndBhawanNameComponent(widget.meal),
         ),
-        widget.meal.items.isNotEmpty && widget.meal.isSwitchable
-            ? _buildSwitchIcon()
-            : Container(),
+        if (_model.isSwitchEnabled &&
+            widget.meal.items.isNotEmpty &&
+            widget.meal.isSwitchable)
+          _buildSwitchIcon(),
       ],
     );
   }

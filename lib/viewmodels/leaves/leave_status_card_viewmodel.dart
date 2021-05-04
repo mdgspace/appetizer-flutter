@@ -5,7 +5,6 @@ import 'package:appetizer/models/failure_model.dart';
 import 'package:appetizer/services/api/leave_api.dart';
 import 'package:appetizer/services/api/user_api.dart';
 import 'package:appetizer/services/dialog_service.dart';
-import 'package:appetizer/services/remote_config_service.dart';
 import 'package:appetizer/utils/snackbar_utils.dart';
 import 'package:appetizer/viewmodels/base_model.dart';
 
@@ -13,8 +12,6 @@ class LeaveStatusCardViewModel extends BaseModel {
   final UserApi _userApi = locator<UserApi>();
   final LeaveApi _leaveApi = locator<LeaveApi>();
   final DialogService _dialogService = locator<DialogService>();
-  final RemoteConfigService _remoteConfigService =
-      locator<RemoteConfigService>();
 
   Future fetchInitialCheckStatus() async {
     setState(ViewState.Busy);
@@ -44,7 +41,7 @@ class LeaveStatusCardViewModel extends BaseModel {
   }
 
   Future onCheckTapped() async {
-    if (_remoteConfigService.isCheckEnabled) {
+    if (isLeaveEnabled) {
       if (!isCheckedOut) {
         var dialogResponse = await _dialogService.showConfirmationDialog(
           title: 'Check Out',
