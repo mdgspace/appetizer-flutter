@@ -98,7 +98,7 @@ We would love to hear from you! We communicate on the following platforms:
 
 ## How to Contribute
 
-Whether you have some feauture requests/ideas, code improvements, refactoring, performance improvements, help is always Welcome. There are just a few small guidelines you need to follow.
+Whether you have some feature requests/ideas, code improvements, refactoring, performance improvements, help is always Welcome. There are just a few small guidelines you need to follow.
 
 - When contributing to this repository, please first discuss the change you wish to make via the issues section before starting any major work.
 - Ask for this issue to be assigned to you by any of the maintainers before getting started (given that the issue hasn't already been assigned to someone else). If the issue has not been active for more than 10 days, a reassign can be requested.
