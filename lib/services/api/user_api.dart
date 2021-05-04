@@ -1,6 +1,5 @@
 import 'package:appetizer/config/environment_config.dart';
 import 'package:appetizer/constants.dart';
-import 'package:appetizer/enums/token_status.dart';
 import 'package:appetizer/models/failure_model.dart';
 import 'package:appetizer/models/user/oauth_user.dart';
 import 'package:appetizer/models/user/paginated_notifications.dart';
@@ -54,29 +53,6 @@ class UserApi {
     }
   }
 
-  Future<TokenStatus> checkTokenStatus() async {
-    var endpoint = '/api/user/me/';
-    var uri = EnvironmentConfig.BASE_URL + endpoint;
-
-    try {
-      await ApiUtils.addTokenToHeaders(headers);
-      var jsonResponse = await ApiUtils.get(
-        uri,
-        headers: headers,
-      );
-      if (jsonResponse['detail'] == 'Invalid token.') {
-        return TokenStatus.INVALID_TOKEN;
-      }
-      return TokenStatus.OK;
-    } on FormatException catch (e) {
-      print(e.message);
-      throw Failure(Constants.BAD_RESPONSE_FORMAT);
-    } on Exception catch (e) {
-      print(e.toString());
-      throw Failure(Constants.GENERIC_FAILURE);
-    }
-  }
-
   Future<User> getCurrentUser() async {
     var endpoint = '/api/user/me/';
     var uri = EnvironmentConfig.BASE_URL + endpoint;
@@ -87,9 +63,6 @@ class UserApi {
         uri,
         headers: headers,
       );
-      if (jsonResponse['detail'] == 'Invalid token.') {
-        return null;
-      }
       var user = User.fromJson(jsonResponse);
       return user;
     } on FormatException catch (e) {
