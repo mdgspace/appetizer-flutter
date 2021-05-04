@@ -19,6 +19,7 @@ class SettingsView extends StatelessWidget {
 
   Widget _buildListItem({IconData iconData, String title, VoidCallback onTap}) {
     return GestureDetector(
+      behavior: HitTestBehavior.opaque,
       onTap: onTap,
       child: Container(
         padding: const EdgeInsets.all(12),
