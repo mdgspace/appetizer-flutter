@@ -41,15 +41,15 @@ class SettingsViewModel extends BaseModel {
     }
   }
 
-  Future logout() async {
-    setState(ViewState.Busy);
-    try {
-      await _userApi.userLogout();
-      setState(ViewState.Idle);
-    } on Failure catch (f) {
-      setState(ViewState.Error);
-      setErrorMessage(f.message);
-    }
+  Future logoutAndClearData() async {
+    _dialogService.showCustomProgressDialog(title: 'Logging You Out');
+    await _userApi.userLogout();
+    _dialogService.popDialog();
+    await _pushNotificationService.fcm
+        .unsubscribeFromTopic('release-' + currentUser.hostelCode);
+    await Get.offAllNamed(LoginView.id);
+    isLoggedIn = false;
+    token = null;
   }
 
   Future onLogoutTap() async {
@@ -59,15 +59,6 @@ class SettingsViewModel extends BaseModel {
       confirmationTitle: 'LOGOUT',
     );
 
-    if (_dialog.confirmed) {
-      _dialogService.showCustomProgressDialog(title: 'Logging You Out');
-      await logout();
-      _dialogService.popDialog();
-      await _pushNotificationService.fcm
-          .unsubscribeFromTopic('release-' + currentUser.hostelCode);
-      await Get.offAllNamed(LoginView.id);
-      isLoggedIn = false;
-      token = null;
-    }
+    if (_dialog.confirmed) await logoutAndClearData();
   }
 }

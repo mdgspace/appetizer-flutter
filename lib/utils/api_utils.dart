@@ -15,6 +15,9 @@ class ApiUtils {
       final response = await client.get(Uri.parse(uri), headers: headers);
       final jsonResponse = ApiUtils.jsonResponse(response);
       return jsonResponse;
+    } on UnauthorizedException catch (e) {
+      print(e.message);
+      throw Failure(Constants.UNAUTHORIZED_EXCEPTION);
     } on SocketException catch (e) {
       print(e.message);
       throw Failure(Constants.NO_INTERNET_CONNECTION);
@@ -32,6 +35,9 @@ class ApiUtils {
           headers: headers, body: jsonEncode(body));
       final jsonResponse = ApiUtils.jsonResponse(response);
       return jsonResponse;
+    } on UnauthorizedException catch (e) {
+      print(e.message);
+      throw Failure(Constants.UNAUTHORIZED_EXCEPTION);
     } on SocketException catch (e) {
       print(e.message);
       throw Failure(Constants.NO_INTERNET_CONNECTION);
@@ -52,6 +58,9 @@ class ApiUtils {
       );
       final jsonResponse = ApiUtils.jsonResponse(response);
       return jsonResponse;
+    } on UnauthorizedException catch (e) {
+      print(e.message);
+      throw Failure(Constants.UNAUTHORIZED_EXCEPTION);
     } on SocketException catch (e) {
       print(e.message);
       throw Failure(Constants.NO_INTERNET_CONNECTION);
@@ -69,6 +78,9 @@ class ApiUtils {
           headers: headers, body: jsonEncode(body));
       final jsonResponse = ApiUtils.jsonResponse(response);
       return jsonResponse;
+    } on UnauthorizedException catch (e) {
+      print(e.message);
+      throw Failure(Constants.UNAUTHORIZED_EXCEPTION);
     } on SocketException catch (e) {
       print(e.message);
       throw Failure(Constants.NO_INTERNET_CONNECTION);
@@ -85,6 +97,9 @@ class ApiUtils {
       final response = await http.delete(Uri.parse(uri), headers: headers);
       final jsonResponse = ApiUtils.jsonResponse(response);
       return jsonResponse;
+    } on UnauthorizedException catch (e) {
+      print(e.message);
+      throw Failure(Constants.UNAUTHORIZED_EXCEPTION);
     } on SocketException catch (e) {
       print(e.message);
       throw Failure(Constants.NO_INTERNET_CONNECTION);

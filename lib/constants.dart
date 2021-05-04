@@ -17,4 +17,6 @@ class Constants {
       'Something Wrong Occured! Please try again.';
   static const String NO_INTERNET_CONNECTION = 'No Internet Connection';
   static const String HTTP_EXCEPTION = 'Unable to fetch response';
+  static const String UNAUTHORIZED_EXCEPTION =
+      'Unauthorized to fetch the resource.';
 }
