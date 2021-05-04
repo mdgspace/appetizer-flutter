@@ -8,6 +8,7 @@ import 'package:appetizer/services/api/user_api.dart';
 import 'package:appetizer/services/api/version_check_api.dart';
 import 'package:appetizer/services/dialog_service.dart';
 import 'package:appetizer/services/local_storage_service.dart';
+import 'package:appetizer/services/package_info_service.dart';
 import 'package:appetizer/services/push_notification_service.dart';
 import 'package:appetizer/services/remote_config_service.dart';
 import 'package:appetizer/viewmodels/date_picker_viewmodel.dart';
@@ -57,10 +58,13 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton(() => DialogService());
 
   var remoteConfigService = await RemoteConfigService.getInstance();
-  locator.registerSingleton(remoteConfigService);
+  locator.registerSingleton<RemoteConfigService>(remoteConfigService);
 
   var localStorageService = await LocalStorageService.getInstance();
   locator.registerSingleton<LocalStorageService>(localStorageService);
+
+  var packageInfoService = await PackageInfoService.getInstance();
+  locator.registerSingleton<PackageInfoService>(packageInfoService);
 
   locator.registerFactory(() => StartUpViewModel());
   locator.registerFactory(() => DatePickerViewModel());
