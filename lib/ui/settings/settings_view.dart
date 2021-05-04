@@ -3,6 +3,7 @@ import 'package:appetizer/enums/view_state.dart';
 import 'package:appetizer/ui/FAQ/faq_view.dart';
 import 'package:appetizer/ui/base_view.dart';
 import 'package:appetizer/ui/components/appetizer_app_bar.dart';
+import 'package:appetizer/ui/components/appetizer_error_widget.dart';
 import 'package:appetizer/ui/components/appetizer_progress_widget.dart';
 import 'package:appetizer/ui/password/reset_password_view.dart';
 import 'package:appetizer/ui/settings/edit_profile_view.dart';
@@ -80,16 +81,32 @@ class SettingsView extends StatelessWidget {
                 height: MediaQuery.of(context).size.height / 2 -
                     AppBar().preferredSize.height,
                 alignment: Alignment.center,
-                child: (model.state == ViewState.Busy)
-                    ? AppetizerProgressWidget()
-                    : UserDetailsCard(
+                child: () {
+                  switch (model.state) {
+                    case ViewState.Idle:
+                      return UserDetailsCard(
                         name: model.userDetails.name,
                         enrollmentNo: model.userDetails.enrNo.toString(),
                         branch: model.userDetails.branch,
                         hostel: model.userDetails.hostelName,
                         roomNo: model.userDetails.roomNo,
                         email: model.userDetails.email,
-                      ),
+                      );
+                      break;
+                    case ViewState.Busy:
+                      return AppetizerProgressWidget();
+                      break;
+                    case ViewState.Error:
+                      return AppetizerErrorWidget(
+                        errorMessage: model.errorMessage,
+                        onRetryPressed: model.getUserDetails,
+                        textColor: AppTheme.white,
+                      );
+                      break;
+                    default:
+                      return Container();
+                  }
+                }(),
               ),
               Container(
                 color: AppTheme.white,

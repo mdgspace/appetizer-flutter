@@ -4,9 +4,14 @@ import 'package:flutter/material.dart';
 class AppetizerErrorWidget extends StatelessWidget {
   final String errorMessage;
   final VoidCallback onRetryPressed;
+  final Color textColor;
 
-  const AppetizerErrorWidget({Key key, this.errorMessage, this.onRetryPressed})
-      : super(key: key);
+  const AppetizerErrorWidget({
+    Key key,
+    this.errorMessage,
+    this.onRetryPressed,
+    this.textColor = AppTheme.blackSecondary,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -18,7 +23,9 @@ class AppetizerErrorWidget extends StatelessWidget {
             Text(
               errorMessage ?? 'Something Wrong Occured !!',
               textAlign: TextAlign.center,
-              style: AppTheme.subtitle1,
+              style: AppTheme.subtitle1.copyWith(
+                color: textColor,
+              ),
             ),
             SizedBox(height: 8),
             if (onRetryPressed != null)
