@@ -84,7 +84,6 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                         title: 'Reset Password',
                         onPressed: () async {
                           if (Validators.validateAndSaveForm(_formKey)) {
-                            _formKey.currentState.reset();
                             FocusScope.of(context).requestFocus(FocusNode());
                             await model.onResetPasswordTapped(
                               _oldPassword,
