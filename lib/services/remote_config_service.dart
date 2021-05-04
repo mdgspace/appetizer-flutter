@@ -2,10 +2,11 @@ import 'package:firebase_remote_config/firebase_remote_config.dart';
 
 const String APPI_VERSION = 'appetizer_flutter_version';
 const String APP_LINK = 'appetizer_link';
+const String IS_CHECK_ENABLED = 'is_check_enabled';
 
 class RemoteConfigService {
   final RemoteConfig _remoteConfig;
-  final defaults = <String, dynamic>{APPI_VERSION: '2.0.0', APP_LINK: ''};
+  final defaults = <String, dynamic>{};
 
   static RemoteConfigService _instance;
 
@@ -23,6 +24,9 @@ class RemoteConfigService {
   String get appetizerVersion => _remoteConfig.getString(APPI_VERSION);
 
   String get appetizerLink => _remoteConfig.getString(APP_LINK);
+
+  bool get isCheckEnabled =>
+      _remoteConfig.getString(IS_CHECK_ENABLED) == 'true' ? true : false;
 
   Future initialise() async {
     try {

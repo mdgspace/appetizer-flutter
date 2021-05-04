@@ -8,6 +8,7 @@ import 'package:appetizer/services/api/user_api.dart';
 import 'package:appetizer/services/api/version_check_api.dart';
 import 'package:appetizer/services/dialog_service.dart';
 import 'package:appetizer/services/push_notification_service.dart';
+import 'package:appetizer/services/remote_config_service.dart';
 import 'package:appetizer/ui/login/login_view.dart';
 import 'package:appetizer/utils/snackbar_utils.dart';
 import 'package:appetizer/viewmodels/base_model.dart';
@@ -23,6 +24,8 @@ class HomeViewModel extends BaseModel {
   final PushNotificationService _pushNotificationService =
       locator<PushNotificationService>();
   final DialogService _dialogService = locator<DialogService>();
+  final RemoteConfigService _remoteConfigService =
+      locator<RemoteConfigService>();
 
   String _selectedHostel = 'Your Meals';
 
@@ -118,7 +121,7 @@ class HomeViewModel extends BaseModel {
 
   Future checkout() async {
     try {
-      isCheckedOut = await _leaveApi.check();
+      isCheckedOut = await _leaveApi.checkout();
     } on Failure catch (f) {
       setState(ViewState.Error);
       setErrorMessage(f.message);
@@ -126,17 +129,22 @@ class HomeViewModel extends BaseModel {
   }
 
   Future onCheckoutTap() async {
-    var dialogResponse = await _dialogService.showConfirmationDialog(
-      title: 'Check Out',
-      description: 'Are you sure you would like to check out?',
-      confirmationTitle: 'CHECK OUT',
-    );
+    if (_remoteConfigService.isCheckEnabled) {
+      var dialogResponse = await _dialogService.showConfirmationDialog(
+        title: 'Check Out',
+        description: 'Are you sure you would like to check out?',
+        confirmationTitle: 'CHECK OUT',
+      );
 
-    if (dialogResponse.confirmed) {
-      await checkout();
-      if (isCheckedOut) {
-        SnackBarUtils.showDark('You have checked out');
+      if (dialogResponse.confirmed) {
+        await checkout();
+        if (isCheckedOut) {
+          SnackBarUtils.showDark('You have checked out');
+        }
       }
+    } else {
+      SnackBarUtils.showDark(
+          'Checkout through Appetizer is temporarily disabled!');
     }
   }
 }
