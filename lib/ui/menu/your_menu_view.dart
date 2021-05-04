@@ -1,3 +1,4 @@
+import 'package:appetizer/constants.dart';
 import 'package:appetizer/enums/view_state.dart';
 import 'package:appetizer/models/menu/week_menu.dart';
 import 'package:appetizer/ui/base_view.dart';
@@ -52,7 +53,10 @@ class _YourMenuViewState extends State<YourMenuView> {
                 }
               });
               if (selectedDayMenu == null) {
-                return _menuUnavailableForSingleDay();
+                return AppetizerErrorWidget(
+                  errorMessage:
+                      'The menu for this day has not been uploaded yet!',
+                );
               }
               final dailyItems = model.selectedWeekMenu.dailyItems;
               return YourDayMenuView(
@@ -64,6 +68,11 @@ class _YourMenuViewState extends State<YourMenuView> {
               return AppetizerProgressWidget();
               break;
             case ViewState.Error:
+              if (model.errorMessage == Constants.MENU_NOT_FOUND) {
+                return AppetizerErrorWidget(
+                  errorMessage: 'Menu not uploaded yet!',
+                );
+              }
               return AppetizerErrorWidget(
                 errorMessage: model.errorMessage,
                 onRetryPressed: () => model.fetchSelectedWeekMenu(
@@ -75,16 +84,6 @@ class _YourMenuViewState extends State<YourMenuView> {
               return Container();
           }
         }(),
-      ),
-    );
-  }
-
-  Widget _menuUnavailableForSingleDay() {
-    return Container(
-      child: Center(
-        child: Text(
-          'The menu for this day has not been uploaded yet!',
-        ),
       ),
     );
   }

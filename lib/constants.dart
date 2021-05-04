@@ -8,6 +8,9 @@ class Constants {
       'You are not authorized to fetch this User';
   static const String USER_NOT_FOUND = 'No User Found';
 
+  /// MENU CONSTANTS
+  static const String MENU_NOT_FOUND = 'No Menu Found';
+
   /// GENERIC FAILURE CONSTANTS
   static const String BAD_RESPONSE_FORMAT = 'Bad Response Format';
   static const String GENERIC_FAILURE =

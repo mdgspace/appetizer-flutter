@@ -18,21 +18,22 @@ class AppetizerErrorWidget extends StatelessWidget {
             Text(
               errorMessage ?? 'Something Wrong Occured !!',
               textAlign: TextAlign.center,
-              style: AppTheme.headline6,
+              style: AppTheme.subtitle1,
             ),
             SizedBox(height: 8),
-            ElevatedButton(
-              onPressed: onRetryPressed,
-              style: ElevatedButton.styleFrom(
-                primary: Theme.of(context).primaryColor,
-              ),
-              child: Text(
-                'RETRY',
-                style: AppTheme.bodyText1.copyWith(
-                  color: AppTheme.white,
+            if (onRetryPressed != null)
+              ElevatedButton(
+                onPressed: onRetryPressed,
+                style: ElevatedButton.styleFrom(
+                  primary: Theme.of(context).primaryColor,
                 ),
-              ),
-            )
+                child: Text(
+                  'RETRY',
+                  style: AppTheme.bodyText1.copyWith(
+                    color: AppTheme.white,
+                  ),
+                ),
+              )
           ],
         ),
       ),

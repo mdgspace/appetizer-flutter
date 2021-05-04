@@ -4,6 +4,7 @@ import 'package:appetizer/database/app_database.dart';
 import 'package:appetizer/models/failure_model.dart';
 import 'package:appetizer/models/menu/week_menu.dart';
 import 'package:appetizer/utils/api_utils.dart';
+import 'package:appetizer/utils/app_exceptions.dart';
 import 'package:http/http.dart' as http;
 import 'package:sembast/sembast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -21,6 +22,9 @@ class MenuApi {
       var jsonResponse = await ApiUtils.get(uri, headers: headers);
       var weekMenu = WeekMenu.fromJson(jsonResponse);
       return weekMenu;
+    } on NotFoundException catch (e) {
+      print(e.message);
+      throw Failure(Constants.MENU_NOT_FOUND);
     } on FormatException catch (e) {
       print(e.message);
       throw Failure(Constants.BAD_RESPONSE_FORMAT);
@@ -39,6 +43,9 @@ class MenuApi {
       var jsonResponse = await ApiUtils.get(uri, headers: headers);
       var weekMenu = WeekMenu.fromJson(jsonResponse);
       return weekMenu;
+    } on NotFoundException catch (e) {
+      print(e.message);
+      throw Failure(Constants.MENU_NOT_FOUND);
     } on FormatException catch (e) {
       print(e.message);
       throw Failure(Constants.BAD_RESPONSE_FORMAT);
@@ -81,6 +88,9 @@ class MenuApi {
       var jsonResponse = await ApiUtils.get(uri, headers: headers);
       var weekMenu = WeekMenu.fromJson(jsonResponse);
       return weekMenu;
+    } on NotFoundException catch (e) {
+      print(e.message);
+      throw Failure(Constants.MENU_NOT_FOUND);
     } on FormatException catch (e) {
       print(e.message);
       throw Failure(Constants.BAD_RESPONSE_FORMAT);
@@ -99,6 +109,9 @@ class MenuApi {
       var jsonResponse = await ApiUtils.get(uri, headers: headers);
       var weekMenu = WeekMenu.fromJson(jsonResponse);
       return weekMenu;
+    } on NotFoundException catch (e) {
+      print(e.message);
+      throw Failure(Constants.MENU_NOT_FOUND);
     } on FormatException catch (e) {
       print(e.message);
       throw Failure(Constants.BAD_RESPONSE_FORMAT);

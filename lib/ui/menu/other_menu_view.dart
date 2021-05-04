@@ -1,3 +1,4 @@
+import 'package:appetizer/constants.dart';
 import 'package:appetizer/enums/view_state.dart';
 import 'package:appetizer/models/menu/week_menu.dart';
 import 'package:appetizer/ui/base_view.dart';
@@ -56,7 +57,10 @@ class _OtherMenuViewState extends State<OtherMenuView> {
                 }
               });
               if (selectedDayMenu == null) {
-                return _menuUnavailableForSingleDay();
+                return AppetizerErrorWidget(
+                  errorMessage:
+                      'The menu for this day has not been uploaded yet!',
+                );
               }
               final dailyItems = model.hostelWeekMenu.dailyItems;
               return OtherDayMenuView(
@@ -68,6 +72,11 @@ class _OtherMenuViewState extends State<OtherMenuView> {
               return AppetizerProgressWidget();
               break;
             case ViewState.Error:
+              if (model.errorMessage == Constants.MENU_NOT_FOUND) {
+                return AppetizerErrorWidget(
+                  errorMessage: 'Menu not uploaded yet!',
+                );
+              }
               return AppetizerErrorWidget(
                 errorMessage: model.errorMessage,
                 onRetryPressed: () => model.fetchHostelWeekMenu(
@@ -80,16 +89,6 @@ class _OtherMenuViewState extends State<OtherMenuView> {
               return Container();
           }
         }(),
-      ),
-    );
-  }
-
-  Widget _menuUnavailableForSingleDay() {
-    return Container(
-      child: Center(
-        child: Text(
-          'The menu for this day has not been uploaded yet!',
-        ),
       ),
     );
   }
