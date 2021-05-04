@@ -9,6 +9,7 @@ import 'package:appetizer/services/api/user_api.dart';
 import 'package:appetizer/services/api/version_check_api.dart';
 import 'package:appetizer/services/dialog_service.dart';
 import 'package:appetizer/services/push_notification_service.dart';
+import 'package:appetizer/services/remote_config_service.dart';
 import 'package:appetizer/ui/login/login_view.dart';
 import 'package:appetizer/utils/snackbar_utils.dart';
 import 'package:appetizer/viewmodels/base_model.dart';
@@ -24,6 +25,8 @@ class HomeViewModel extends BaseModel {
   final PushNotificationService _pushNotificationService =
       locator<PushNotificationService>();
   final DialogService _dialogService = locator<DialogService>();
+  final RemoteConfigService _remoteConfigService =
+      locator<RemoteConfigService>();
 
   String _selectedHostel = 'Your Meals';
 
