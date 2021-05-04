@@ -90,7 +90,8 @@ class _EditProfileViewState extends State<EditProfileView> {
                           onPressed: () async {
                             if (Validators.validateAndSaveForm(_formKey)) {
                               FocusScope.of(context).requestFocus(FocusNode());
-                              await model.saveUserDetails(_email, _contactNo);
+                              await model.onConfirmUserDetailsPressed(
+                                  _email, _contactNo);
                             }
                           },
                         ),
