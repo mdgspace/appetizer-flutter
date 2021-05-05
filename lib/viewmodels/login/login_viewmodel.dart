@@ -11,6 +11,7 @@ import 'package:appetizer/ui/password/choose_new_password_view.dart';
 import 'package:appetizer/utils/snackbar_utils.dart';
 import 'package:appetizer/viewmodels/base_model.dart';
 import 'package:appetizer/models/failure_model.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
 class LoginViewModel extends BaseModel {
@@ -66,7 +67,9 @@ class LoginViewModel extends BaseModel {
       isCheckedOut = user.isCheckedOut;
       currentUser = user;
       await _pushNotificationService
-          .subscribeToTopic('release-' + user.hostelCode);
+          .subscribeToTopic('${kReleaseMode ? 'release-' : 'debug-'}all');
+      await _pushNotificationService.subscribeToTopic(
+          '${kReleaseMode ? 'release-' : 'debug-'}' + user.hostelCode);
       setState(ViewState.Idle);
     } on Failure catch (f) {
       setState(ViewState.Error);
