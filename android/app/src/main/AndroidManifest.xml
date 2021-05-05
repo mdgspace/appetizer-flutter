@@ -11,7 +11,7 @@
         android:name="io.flutter.app.FlutterApplication"
         android:usesCleartextTraffic="true"
         android:label="Appetizer"
-        android:icon="@mipmap/launcher_icon">
+        android:icon="@mipmap/ic_launcher">
         <meta-data
             android:name="asset_statements"
             android:resource="@string/asset_statements"/>

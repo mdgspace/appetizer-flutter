@@ -15,7 +15,7 @@ class StartUpView extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset(
-                'assets/icons/appetizer_logo.png',
+                'assets/icons/logo_rounded.png',
                 width: 100,
               ),
               SizedBox(height: 8),

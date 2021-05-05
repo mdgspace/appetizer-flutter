@@ -42,9 +42,10 @@ dev_dependencies:
     sdk: flutter
 
 flutter_icons:
-  android: "launcher_icon"
+  image_path_android: "assets/icons/logo_rounded.png"
+  image_path_ios: "assets/icons/logo_squared.png"
+  android: true
   ios: true
-  image_path: "assets/icons/appetizer_logo.png"
 
 flutter:
   uses-material-design: true
