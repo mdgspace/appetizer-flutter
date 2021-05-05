@@ -17,6 +17,7 @@ dependencies:
   firebase_remote_config: ^0.6.0
   flare_flutter: ^1.0.0
   flutter_launcher_icons: ^0.7.2
+  flutter_native_splash: ^0.3.0
   flutter_svg: ^0.19.3
   flutter_swiper: ^1.1.6
   fluttertoast: ^3.1.2
@@ -46,6 +47,12 @@ flutter_icons:
   image_path_ios: "assets/icons/logo_squared.png"
   android: true
   ios: true
+
+flutter_native_splash:
+  color: "#ffc107"
+  background_image: "assets/images/splash_bg.png"
+  image: "assets/icons/splash_icon.png"
+  fullscreen: true
 
 flutter:
   uses-material-design: true

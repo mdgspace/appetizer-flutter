@@ -11,19 +11,14 @@ class StartUpView extends StatelessWidget {
       builder: (context, model, child) => Scaffold(
         backgroundColor: AppTheme.primary,
         body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(
-                'assets/icons/logo_rounded.png',
-                width: 100,
-              ),
-              SizedBox(height: 8),
-              Image.asset(
-                'assets/images/appetizer_text.png',
-                width: 100,
-              ),
-            ],
+          child: Text(
+            'Appetizer',
+            textAlign: TextAlign.center,
+            style: AppTheme.subtitle1.copyWith(
+              fontSize: 48.0,
+              color: AppTheme.white,
+              fontFamily: 'Lobster_Two',
+            ),
           ),
         ),
       ),
