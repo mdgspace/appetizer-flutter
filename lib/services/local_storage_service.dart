@@ -11,6 +11,7 @@ class LocalStorageService {
   static const String tokenKey = 'token';
   static const String isLoggedInKey = 'is_logged_in';
   static const String isFirstTimeLoginKey = 'is_first_time_login';
+  static const String fcmTokenKey = 'fcm_token_key';
 
   static Future<LocalStorageService> getInstance() async {
     _instance ??= LocalStorageService();
@@ -75,5 +76,11 @@ class LocalStorageService {
 
   set isFirstTimeLogin(bool isLoggedIn) {
     _saveToDisk(isFirstTimeLoginKey, isLoggedIn);
+  }
+
+  String get fcmToken => _getFromDisk(fcmTokenKey);
+
+  set fcmToken(String _fcmToken) {
+    _saveToDisk(fcmTokenKey, _fcmToken);
   }
 }

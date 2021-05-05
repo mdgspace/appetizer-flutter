@@ -5,17 +5,19 @@ import 'package:appetizer/models/user/oauth_user.dart';
 import 'package:appetizer/models/user/user.dart';
 import 'package:appetizer/services/api/user_api.dart';
 import 'package:appetizer/services/dialog_service.dart';
+import 'package:appetizer/services/push_notification_service.dart';
 import 'package:appetizer/ui/home_view.dart';
 import 'package:appetizer/ui/password/choose_new_password_view.dart';
 import 'package:appetizer/utils/snackbar_utils.dart';
 import 'package:appetizer/viewmodels/base_model.dart';
 import 'package:appetizer/models/failure_model.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
 
 class LoginViewModel extends BaseModel {
   final UserApi _userApi = locator<UserApi>();
   final DialogService _dialogService = locator<DialogService>();
+  final PushNotificationService _pushNotificationService =
+      locator<PushNotificationService>();
 
   User _user;
 
@@ -63,8 +65,8 @@ class LoginViewModel extends BaseModel {
       isLoggedIn = true;
       isCheckedOut = user.isCheckedOut;
       currentUser = user;
-      var fcm = FirebaseMessaging();
-      await fcm.subscribeToTopic('release-' + user.hostelCode);
+      await _pushNotificationService
+          .subscribeToTopic('release-' + user.hostelCode);
       setState(ViewState.Idle);
     } on Failure catch (f) {
       setState(ViewState.Error);

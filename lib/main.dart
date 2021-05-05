@@ -4,6 +4,7 @@ import 'package:appetizer/locator.dart';
 import 'package:appetizer/services/analytics_service.dart';
 import 'package:appetizer/ui/router.dart';
 import 'package:appetizer/ui/startup_view.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' as fs;
 import 'package:get/get.dart';
@@ -22,6 +23,9 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // initialize Firebase App
+  await Firebase.initializeApp();
 
   // Register all the models and services before the app starts
   await setupLocator();

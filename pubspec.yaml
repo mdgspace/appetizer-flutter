@@ -11,9 +11,10 @@ dependencies:
     sdk: flutter
   connectivity: ^0.4.6+1
   cupertino_icons: ^0.1.2
-  firebase_analytics: null
-  firebase_messaging: ^6.0.9
-  firebase_remote_config: null
+  firebase_analytics: ^7.0.1
+  firebase_core: ^0.7.0
+  firebase_messaging: ^8.0.0-dev.15
+  firebase_remote_config: ^0.6.0
   flare_flutter: ^1.0.0
   flutter_launcher_icons: ^0.7.2
   flutter_svg: ^0.19.3

@@ -45,7 +45,7 @@ class SettingsViewModel extends BaseModel {
     _dialogService.showCustomProgressDialog(title: 'Logging You Out');
     await _userApi.userLogout();
     _dialogService.popDialog();
-    await _pushNotificationService.fcm
+    await _pushNotificationService
         .unsubscribeFromTopic('release-' + currentUser.hostelCode);
     await Get.offAllNamed(LoginView.id);
     isLoggedIn = false;
