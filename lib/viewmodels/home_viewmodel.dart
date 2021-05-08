@@ -12,6 +12,7 @@ import 'package:appetizer/services/push_notification_service.dart';
 import 'package:appetizer/ui/login/login_view.dart';
 import 'package:appetizer/utils/snackbar_utils.dart';
 import 'package:appetizer/viewmodels/base_model.dart';
+import 'package:flutter/foundation.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -94,8 +95,10 @@ class HomeViewModel extends BaseModel {
     _dialogService.showCustomProgressDialog(title: 'Logging You Out');
     await _userApi.userLogout();
     _dialogService.popDialog();
-    await _pushNotificationService.fcm
-        .unsubscribeFromTopic('release-' + currentUser.hostelCode);
+    await _pushNotificationService
+        .unsubscribeFromTopic('${kReleaseMode ? 'release-' : 'debug-'}all');
+    await _pushNotificationService.unsubscribeFromTopic(
+        '${kReleaseMode ? 'release-' : 'debug-'}' + currentUser.hostelCode);
     await Get.offAllNamed(LoginView.id);
     isLoggedIn = false;
     token = null;

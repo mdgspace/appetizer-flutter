@@ -40,7 +40,7 @@ This project uses flutter version 2.0.4 and hence the support for compile time v
 #### Google Services Configuration
 
 1. Create a firebase project.
-2. Add Android & iOS app with the appropriate `package_name` & `bundle_identifier`.
+2. Add Android & iOS app with the `package_name` and `bundle_identifier` respectively as `in.ac.iitr.mdg.appetizer`.
 3. Download `google-services.json` from firebase and place in `android/app/`.
 
 #### Sentry Configuration

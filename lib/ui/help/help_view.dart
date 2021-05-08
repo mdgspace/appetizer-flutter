@@ -43,7 +43,7 @@ class HelpView extends StatelessWidget {
                               clipBehavior: Clip.antiAlias,
                               child: Image(
                                 image: AssetImage(
-                                  'assets/icons/appetizer_logo.png',
+                                  'assets/icons/logo_rounded.png',
                                 ),
                                 width: 100,
                               ),

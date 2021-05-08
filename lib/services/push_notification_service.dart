@@ -1,32 +1,51 @@
-import 'dart:io';
+import 'package:appetizer/locator.dart';
+import 'package:appetizer/services/local_storage_service.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
 class PushNotificationService {
-  final FirebaseMessaging _fcm = FirebaseMessaging();
+  final LocalStorageService _localStorageService =
+      locator<LocalStorageService>();
+  final FirebaseMessaging _fcm = FirebaseMessaging.instance;
 
-  FirebaseMessaging get fcm => _fcm;
-
-  Future initialise() async {
-    if (Platform.isIOS) {
-      // request permissions if we're on android
-      _fcm.requestNotificationPermissions(IosNotificationSettings());
-    }
-
-    _fcm.configure(
-      // Called when the app is in the foreground and we receive a push notification
-      onMessage: (Map<String, dynamic> message) async {
-        print('onMessage: $message');
-      },
-      // Called when the app has been closed comlpetely and it's opened
-      // from the push notification.
-      onLaunch: (Map<String, dynamic> message) async {
-        print('onLaunch: $message');
-      },
-      // Called when the app is in the background and it's opened
-      // from the push notification.
-      onResume: (Map<String, dynamic> message) async {
-        print('onResume: $message');
-      },
+  Future<void> initialise() async {
+    var settings = await _fcm.requestPermission(
+      alert: true,
+      announcement: false,
+      badge: true,
+      carPlay: false,
+      criticalAlert: false,
+      provisional: false,
+      sound: true,
     );
+
+    if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+      // save device token to local storage
+      _localStorageService.fcmToken = await _fcm.getToken();
+
+      // allow notifications when app is in foreground
+      await _fcm.setForegroundNotificationPresentationOptions(
+        alert: true,
+        badge: true,
+        sound: true,
+      );
+
+      // Get any messages which caused the application to open from a terminated state.
+      var _initialMessage = await _fcm.getInitialMessage();
+      if (_initialMessage != null) {
+        // app has been opened by a notification
+        await _serialiseMessageAndNavigate(_initialMessage);
+      }
+
+      // handle FCM while app is in background
+      FirebaseMessaging.onMessageOpenedApp.listen(
+          (RemoteMessage message) => _serialiseMessageAndNavigate(message));
+    }
   }
+
+  Future<void> _serialiseMessageAndNavigate(RemoteMessage message) async {}
+
+  Future<void> subscribeToTopic(String topic) => _fcm.subscribeToTopic(topic);
+
+  Future<void> unsubscribeFromTopic(String topic) =>
+      _fcm.unsubscribeFromTopic(topic);
 }
