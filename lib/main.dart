@@ -30,13 +30,18 @@ Future<void> main() async {
   // Register all the models and services before the app starts
   await setupLocator();
 
-  await SentryFlutter.init(
-    (options) {
-      options.dsn = EnvironmentConfig.SENTRY_DSN;
-    },
-    // Init your App.
-    appRunner: () => runApp(Appetizer()),
-  );
+  var _isSentryConfigured = EnvironmentConfig.SENTRY_DSN.isNotEmpty;
+  if (_isSentryConfigured) {
+    await SentryFlutter.init(
+      (options) {
+        options.dsn = EnvironmentConfig.SENTRY_DSN;
+      },
+      // Init your App.
+      appRunner: () => runApp(Appetizer()),
+    );
+  } else {
+    runApp(Appetizer());
+  }
 }
 
 class Appetizer extends StatelessWidget {
