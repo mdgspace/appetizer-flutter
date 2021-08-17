@@ -1,9 +1,8 @@
 name: CD
 
 on:
-  push:
-    branches:
-      - deploy
+  release:
+    types: [published]
 
 env:
   GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
@@ -11,11 +10,14 @@ env:
   FASTLANE_SUPPLY_JSON_KEY: ${{ secrets.FASTLANE_SUPPLY_JSON_KEY }}
   RELEASE_KEYSTORE: ${{ secrets.RELEASE_KEYSTORE }}
   RELEASE_KEYSTORE_PROPERTIES: ${{ secrets.RELEASE_KEYSTORE_PROPERTIES }}
+  RELEASE_TYPE: ${{ contains(github.event.release.tag_name, 'internal') && 'internal' || contains(github.event.release.tag_name, 'beta') && 'beta' || 'prod' }}
 
 jobs:
   deploy:
     # This job will run on ubuntu virtual machine
     runs-on: ubuntu-latest
+    # This job will run if the release is based on master branch
+    if: github.event.release.target_commitish == 'master'
     steps:
       # Setup Java environment in order to build the Android app.
       - uses: actions/checkout@v1
@@ -61,5 +63,5 @@ jobs:
       # Run fastlane internal
       - uses: maierj/fastlane-action@v1.4.0
         with:
-          lane: internal
+          lane: ${{ env.RELEASE_TYPE }}
           subdirectory: android

@@ -23,4 +23,20 @@ platform :android do
       aab: "../build/app/outputs/bundle/release/app-release.aab"
     )
   end
+
+  desc "Push a new beta build to Play Store"
+  lane :beta do
+    upload_to_play_store(
+      track: "beta",
+      aab: "../build/app/outputs/bundle/release/app-release.aab"
+    )
+  end
+
+  desc "Push a new production build to Play Store"
+  lane :prod do
+    upload_to_play_store(
+      track: "production",
+      aab: "../build/app/outputs/bundle/release/app-release.aab"
+    )
+  end
 end
