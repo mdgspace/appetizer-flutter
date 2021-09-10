@@ -12,7 +12,7 @@ class RemoteConfigService {
 
   static Future<RemoteConfigService> getInstance() async {
     _instance ??= RemoteConfigService(
-      remoteConfig: await RemoteConfig.instance,
+      remoteConfig: RemoteConfig.instance,
     );
 
     return _instance;
@@ -31,19 +31,16 @@ class RemoteConfigService {
 
   Future initialise() async {
     try {
+      await _remoteConfig.setConfigSettings(RemoteConfigSettings(
+        fetchTimeout: Duration(seconds: 60),
+        minimumFetchInterval: Duration(seconds: 0),
+      ));
       await _remoteConfig.setDefaults(defaults);
-      await _fetchAndActivate();
-    } on FetchThrottledException catch (exception) {
-      // Fetch throttled
-      print('Remote config fetch throttled: $exception');
+      await _remoteConfig.fetchAndActivate();
     } catch (exception) {
       print(
           'Unable to fetch remote config. Cached or default values will be used');
+      print('error : $exception');
     }
-  }
-
-  Future _fetchAndActivate() async {
-    await _remoteConfig.fetch(expiration: const Duration(seconds: 0));
-    await _remoteConfig.activateFetched();
   }
 }

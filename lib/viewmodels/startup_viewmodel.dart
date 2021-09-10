@@ -31,7 +31,7 @@ class StartUpViewModel extends BaseModel {
     }
 
     // Attach a listener to the stream
-    _uniLinksSubscription = getUriLinksStream().listen(
+    _uniLinksSubscription = uriLinkStream.listen(
       (Uri uri) => _handleUniLinkAndStartup(uri),
       onError: (err) {
         return;
