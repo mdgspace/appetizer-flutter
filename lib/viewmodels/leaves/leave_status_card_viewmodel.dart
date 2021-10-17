@@ -52,18 +52,18 @@ class LeaveStatusCardViewModel extends BaseModel {
         if (dialogResponse.confirmed) {
           await toggleCheckState();
           if (isCheckedOut) {
-            SnackBarUtils.showDark('You have checked out');
+            SnackBarUtils.showDark('Info', 'You have checked out');
           }
         }
       } else {
         await toggleCheckState();
         if (!isCheckedOut) {
-          SnackBarUtils.showDark('You have checked in');
+          SnackBarUtils.showDark('Info', 'You have checked in');
         }
       }
     } else {
-      SnackBarUtils.showDark(
-          'Checkout through Appetizer is temporarily disabled!');
+      SnackBarUtils.showDark('Info',
+          'Check-In/Check-Out through Appetizer is temporarily disabled!');
     }
   }
 }

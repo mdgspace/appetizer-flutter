@@ -32,9 +32,9 @@ class ResetPasswordViewModel extends BaseModel {
 
     if (_isUserPasswordReset ?? false) {
       Get.back();
-      SnackBarUtils.showDark('Password changed successfully');
+      SnackBarUtils.showDark('Info', 'Password changed successfully');
     } else {
-      SnackBarUtils.showDark('Unable to change password!');
+      SnackBarUtils.showDark('Error', 'Unable to change password!');
     }
   }
 }

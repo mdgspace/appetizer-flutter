@@ -26,7 +26,7 @@ class LeaveTimelineViewModel extends BaseModel {
     } on Failure catch (f) {
       setState(ViewState.Error);
       setErrorMessage(f.message);
-      SnackBarUtils.showDark(f.message);
+      SnackBarUtils.showDark('Error', f.message);
     }
   }
 }

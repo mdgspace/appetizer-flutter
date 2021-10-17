@@ -40,9 +40,9 @@ class EditProfileViewModel extends BaseModel {
 
     if (state == ViewState.Idle) {
       Get.back();
-      SnackBarUtils.showDark('User details updated');
+      SnackBarUtils.showDark('Info', 'User details updated');
     } else {
-      SnackBarUtils.showDark('Unable to update user details');
+      SnackBarUtils.showDark('Error', 'Unable to update user details');
     }
   }
 }

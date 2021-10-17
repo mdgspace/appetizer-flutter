@@ -30,14 +30,14 @@ class NewFeedbackViewModel extends BaseModel {
           feedbackType, title, description, date);
       setState(ViewState.Idle);
       _dialogService.popDialog();
-      SnackBarUtils.showDark('Thank You For Your Feedback!');
+      SnackBarUtils.showDark('Info', 'Thank You For Your Feedback!');
       await Future.delayed(Duration(seconds: 1));
       Get.back();
     } on Failure catch (f) {
       _dialogService.popDialog();
       setState(ViewState.Error);
       setErrorMessage(f.message);
-      SnackBarUtils.showDark(errorMessage);
+      SnackBarUtils.showDark('Error', errorMessage);
     }
   }
 }

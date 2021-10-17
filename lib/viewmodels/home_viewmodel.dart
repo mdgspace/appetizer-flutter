@@ -134,12 +134,12 @@ class HomeViewModel extends BaseModel {
       if (dialogResponse.confirmed) {
         await checkout();
         if (isCheckedOut) {
-          SnackBarUtils.showDark('You have checked out');
+          SnackBarUtils.showDark('Info', 'You have checked out');
         }
       }
     } else {
       SnackBarUtils.showDark(
-          'Checkout through Appetizer is temporarily disabled!');
+          'Info', 'Checkout through Appetizer is temporarily disabled!');
     }
   }
 }
