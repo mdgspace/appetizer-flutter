@@ -112,7 +112,7 @@ class _HomeViewState extends State<HomeView> {
         child: Theme(
           data: ThemeData(canvasColor: AppTheme.secondary),
           child: Center(
-            child: DropdownButton<String>(
+            child : _model.switchableHostelsList.isEmpty? DropdownButton<String>(
               underline: Container(),
               icon: Icon(
                 Icons.arrow_drop_down,
@@ -150,7 +150,10 @@ class _HomeViewState extends State<HomeView> {
                 setState(() => selectedHostelName = _selectedHostelName);
                 _model.selectedHostel = _selectedHostelName;
               },
-            ),
+            ): Text('Appetizer', style: AppTheme.headline1.copyWith(
+                  color: AppTheme.white,
+                  fontFamily: 'Lobster_Two',
+                ),),
           ),
         ),
       ),
