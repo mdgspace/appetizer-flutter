@@ -20,8 +20,8 @@ class _NewFeedbackViewState extends State<NewFeedbackView> {
 
   String _title, _feedbackType = 'gn', description;
   DateTime _date = DateTime.now();
- int _numOfChar =0 ;
- 
+  int _numOfChar = 0;
+
   @override
   Widget build(BuildContext context) {
     return BaseView<NewFeedbackViewModel>(
@@ -107,7 +107,7 @@ class _NewFeedbackViewState extends State<NewFeedbackView> {
                   Text('Description (Character Count: $_numOfChar)'),
                   SizedBox(height: 12),
                   TextFormField(
-                     onChanged: (value) {
+                    onChanged: (value) {
                       setState(() {
                         _numOfChar = value.length;
                       });
