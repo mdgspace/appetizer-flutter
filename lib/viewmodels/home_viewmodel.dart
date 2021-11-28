@@ -93,15 +93,17 @@ class HomeViewModel extends BaseModel {
 
   Future logoutAndClearData() async {
     _dialogService.showCustomProgressDialog(title: 'Logging You Out');
-    await _userApi.userLogout();
+    await _userApi.userLogout().catchError((err) {
+      print('error in logout: $err');
+    });
+    isLoggedIn = false;
+    token = null;
     _dialogService.popDialog();
     await _pushNotificationService
         .unsubscribeFromTopic('${kReleaseMode ? 'release-' : 'debug-'}all');
     await _pushNotificationService.unsubscribeFromTopic(
         '${kReleaseMode ? 'release-' : 'debug-'}' + currentUser.hostelCode);
     await Get.offAllNamed(LoginView.id);
-    isLoggedIn = false;
-    token = null;
   }
 
   Future onLogoutTap() async {
