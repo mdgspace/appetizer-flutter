@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:io';
+
 import 'package:appetizer/app_theme.dart';
 import 'package:appetizer/config/environment_config.dart';
 import 'package:appetizer/enums/view_state.dart';
@@ -10,6 +10,7 @@ import 'package:appetizer/ui/components/appetizer_primary_button.dart';
 import 'package:appetizer/ui/components/appetizer_text_field.dart';
 import 'package:appetizer/ui/help/help_view.dart';
 import 'package:appetizer/ui/home_view.dart';
+import 'package:appetizer/ui/login/login_webview.dart';
 import 'package:appetizer/ui/password/forgot_password_view.dart';
 import 'package:appetizer/utils/snackbar_utils.dart';
 import 'package:appetizer/utils/validators.dart';
@@ -21,7 +22,6 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class LoginView extends StatefulWidget {
   static const String id = 'login_view';
@@ -153,14 +153,16 @@ class _LoginViewState extends State<LoginView> with TickerProviderStateMixin {
     );
   }
 
-  Widget _buildChannelIButton() {
+  Widget _buildChannelIButton(LoginViewModel model) {
     if (_model.isLoginSuccessful) return Container();
 
     return AppetizerPrimaryButton(
       title: 'SIGNUP WITH CHANNEL-I',
       onPressed: () {
-        launch(omniportSignUpURL);
-        exit(0);
+        Get.toNamed(
+          LoginWebView.id,
+          arguments: model,
+        );
       },
     );
   }
@@ -311,7 +313,7 @@ class _LoginViewState extends State<LoginView> with TickerProviderStateMixin {
                         ),
                       ),
                       SizedBox(height: 16),
-                      _buildChannelIButton(),
+                      _buildChannelIButton(model),
                     ],
                   ),
                 ),
