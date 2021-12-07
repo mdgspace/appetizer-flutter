@@ -30,11 +30,8 @@ class AppetizerRouter {
       case OnBoardingView.id:
         return MaterialPageRoute(builder: (_) => OnBoardingView());
       case LoginView.id:
-        var code = settings.arguments as String;
         return MaterialPageRoute(
-          builder: (_) => LoginView(
-            code: code,
-          ),
+          builder: (_) => LoginView(),
         );
       case HomeView.id:
         return MaterialPageRoute(builder: (_) => HomeView());

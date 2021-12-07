@@ -7,7 +7,6 @@ import 'package:appetizer/services/api/user_api.dart';
 import 'package:appetizer/services/dialog_service.dart';
 import 'package:appetizer/services/push_notification_service.dart';
 import 'package:appetizer/ui/home_view.dart';
-import 'package:appetizer/ui/login/login_view.dart';
 import 'package:appetizer/ui/password/choose_new_password_view.dart';
 import 'package:appetizer/utils/snackbar_utils.dart';
 import 'package:appetizer/viewmodels/base_model.dart';
@@ -85,7 +84,7 @@ class LoginViewModel extends BaseModel {
     var _params = request.url.split('?').last.split('&');
     if (_params.first.contains('code')) {
       var _code = _params.first.split('=').last;
-      await Get.offAllNamed(LoginView.id, arguments: _code);
+      await verifyUser(_code);
     }
     return NavigationDecision.prevent;
   }
