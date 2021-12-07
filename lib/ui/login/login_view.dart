@@ -147,7 +147,7 @@ class _LoginViewState extends State<LoginView> with TickerProviderStateMixin {
     );
   }
 
-  Widget _buildChannelIButton(LoginViewModel model) {
+  Widget _buildChannelIButton() {
     if (_model.isLoginSuccessful) return Container();
 
     return AppetizerPrimaryButton(
@@ -155,7 +155,7 @@ class _LoginViewState extends State<LoginView> with TickerProviderStateMixin {
       onPressed: () {
         Get.toNamed(
           LoginWebView.id,
-          arguments: model,
+          arguments: _model,
         );
       },
     );
@@ -303,7 +303,7 @@ class _LoginViewState extends State<LoginView> with TickerProviderStateMixin {
                         ),
                       ),
                       SizedBox(height: 16),
-                      _buildChannelIButton(model),
+                      _buildChannelIButton(),
                     ],
                   ),
                 ),
