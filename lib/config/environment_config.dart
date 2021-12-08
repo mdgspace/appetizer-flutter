@@ -9,5 +9,10 @@ class EnvironmentConfig {
     defaultValue: 'llxgDXXczxfhSj5VTe4yMucMv2LtpZNFeaEfMhvc',
   );
 
+  static const String OAUTH_REDIRECT_URI = String.fromEnvironment(
+    'OAUTH_REDIRECT_URI',
+    defaultValue: 'https://appetizer-mdg.herokuapp.com/oauth/',
+  );
+
   static const String SENTRY_DSN = String.fromEnvironment('SENTRY_DSN');
 }

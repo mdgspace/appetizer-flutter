@@ -13,7 +13,6 @@ import 'package:appetizer/viewmodels/base_model.dart';
 import 'package:appetizer/models/failure_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 
 class LoginViewModel extends BaseModel {
   final UserApi _userApi = locator<UserApi>();
@@ -77,16 +76,6 @@ class LoginViewModel extends BaseModel {
       setErrorMessage(f.message);
       isLoginSuccessful = false;
     }
-  }
-
-  Future<NavigationDecision> navigationRequest(
-      NavigationRequest request) async {
-    var _params = request.url.split('?').last.split('&');
-    if (_params.first.contains('code')) {
-      var _code = _params.first.split('=').last;
-      await verifyUser(_code);
-    }
-    return NavigationDecision.prevent;
   }
 
   Future getOAuthResponse(String code) async {

@@ -9,7 +9,7 @@ import 'package:appetizer/ui/components/appetizer_primary_button.dart';
 import 'package:appetizer/ui/components/appetizer_text_field.dart';
 import 'package:appetizer/ui/help/help_view.dart';
 import 'package:appetizer/ui/home_view.dart';
-import 'package:appetizer/ui/login/login_webview.dart';
+import 'package:appetizer/ui/login/oauth_view.dart';
 import 'package:appetizer/ui/password/forgot_password_view.dart';
 import 'package:appetizer/utils/snackbar_utils.dart';
 import 'package:appetizer/utils/validators.dart';
@@ -152,11 +152,9 @@ class _LoginViewState extends State<LoginView> with TickerProviderStateMixin {
 
     return AppetizerPrimaryButton(
       title: 'SIGNUP WITH CHANNEL-I',
-      onPressed: () {
-        Get.toNamed(
-          LoginWebView.id,
-          arguments: _model,
-        );
+      onPressed: () async {
+        var _code = await Get.toNamed(OAuthView.id);
+        if (_code is String) await _model.verifyUser(_code);
       },
     );
   }
