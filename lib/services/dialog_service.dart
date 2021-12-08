@@ -82,7 +82,7 @@ class DialogService {
                   SizedBox(height: 16),
                   Text(
                     request.description,
-                    style: AppTheme.headline5,
+                    style: AppTheme.bodyText1,
                     textAlign: TextAlign.center,
                   ),
                 ],
