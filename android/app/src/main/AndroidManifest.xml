@@ -12,9 +12,6 @@
         android:usesCleartextTraffic="true"
         android:label="Appetizer"
         android:icon="@mipmap/ic_launcher">
-        <meta-data
-            android:name="asset_statements"
-            android:resource="@string/asset_statements"/>
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
@@ -31,15 +28,6 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-            <!-- App Links -->
-            <intent-filter android:autoVerify="true">
-              <action android:name="android.intent.action.VIEW" />
-              <category android:name="android.intent.category.DEFAULT" />
-              <category android:name="android.intent.category.BROWSABLE" />
-              <data
-                android:scheme="https"
-                android:host="appetizer-mdg.herokuapp.com" />
             </intent-filter>
             <intent-filter>
                 <action android:name="FLUTTER_NOTIFICATION_CLICK" />

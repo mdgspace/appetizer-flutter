@@ -1,7 +1,6 @@
 import 'dart:async';
-import 'dart:io';
+
 import 'package:appetizer/app_theme.dart';
-import 'package:appetizer/config/environment_config.dart';
 import 'package:appetizer/enums/view_state.dart';
 import 'package:appetizer/ui/base_view.dart';
 import 'package:appetizer/ui/components/appetizer_outline_button.dart';
@@ -10,6 +9,7 @@ import 'package:appetizer/ui/components/appetizer_primary_button.dart';
 import 'package:appetizer/ui/components/appetizer_text_field.dart';
 import 'package:appetizer/ui/help/help_view.dart';
 import 'package:appetizer/ui/home_view.dart';
+import 'package:appetizer/ui/login/oauth_view.dart';
 import 'package:appetizer/ui/password/forgot_password_view.dart';
 import 'package:appetizer/utils/snackbar_utils.dart';
 import 'package:appetizer/utils/validators.dart';
@@ -17,17 +17,14 @@ import 'package:appetizer/viewmodels/login/login_viewmodel.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class LoginView extends StatefulWidget {
   static const String id = 'login_view';
-  final String code;
 
-  const LoginView({Key key, this.code}) : super(key: key);
+  const LoginView({Key key}) : super(key: key);
 
   @override
   _LoginViewState createState() => _LoginViewState();
@@ -43,9 +40,6 @@ class _LoginViewState extends State<LoginView> with TickerProviderStateMixin {
   Animation _chefCorrectAnimation;
 
   final _formKey = GlobalKey<FormState>();
-
-  String omniportSignUpURL =
-      'https://channeli.in/oauth/authorise/?client_id=${EnvironmentConfig.OAUTH_CLIENT_ID}&redirect_uri=https://appetizer-mdg.herokuapp.com/oauth/';
 
   String _enrollmentNo, _password;
 
@@ -158,9 +152,9 @@ class _LoginViewState extends State<LoginView> with TickerProviderStateMixin {
 
     return AppetizerPrimaryButton(
       title: 'SIGNUP WITH CHANNEL-I',
-      onPressed: () {
-        launch(omniportSignUpURL);
-        exit(0);
+      onPressed: () async {
+        var _code = await Get.toNamed(OAuthView.id);
+        if (_code is String) await _model.verifyUser(_code);
       },
     );
   }
@@ -225,10 +219,6 @@ class _LoginViewState extends State<LoginView> with TickerProviderStateMixin {
       onModelReady: (model) {
         _model = model;
         Future.delayed(Duration(seconds: 1), () => _model.currentUser = null);
-        if (widget.code != null && widget.code != '') {
-          SchedulerBinding.instance
-              .addPostFrameCallback((_) => _model.verifyUser(widget.code));
-        }
       },
       builder: (context, model, child) => Scaffold(
         body: Column(

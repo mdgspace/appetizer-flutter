@@ -5,6 +5,7 @@ import 'package:appetizer/ui/leaves/leave_history_view.dart';
 import 'package:appetizer/ui/leaves/my_leaves_view.dart';
 import 'package:appetizer/ui/login/login_view.dart';
 import 'package:appetizer/ui/home_view.dart';
+import 'package:appetizer/ui/login/oauth_view.dart';
 import 'package:appetizer/ui/menu/week_menu_view.dart';
 import 'package:appetizer/ui/multimessing/switch_confirmed_view.dart';
 import 'package:appetizer/ui/multimessing/switchable_meals_view.dart';
@@ -28,11 +29,8 @@ class AppetizerRouter {
       case OnBoardingView.id:
         return MaterialPageRoute(builder: (_) => OnBoardingView());
       case LoginView.id:
-        var code = settings.arguments as String;
         return MaterialPageRoute(
-          builder: (_) => LoginView(
-            code: code,
-          ),
+          builder: (_) => LoginView(),
         );
       case HomeView.id:
         return MaterialPageRoute(builder: (_) => HomeView());
@@ -79,6 +77,8 @@ class AppetizerRouter {
         var _mealId = settings.arguments as int;
         return MaterialPageRoute(
             builder: (_) => SwitchableMealsView(mealId: _mealId));
+      case OAuthView.id:
+        return MaterialPageRoute(builder: (_) => OAuthView());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(
