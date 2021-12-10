@@ -3,7 +3,6 @@ import 'package:appetizer/ui/base_view.dart';
 import 'package:appetizer/utils/date_time_utils.dart';
 import 'package:appetizer/viewmodels/date_picker_viewmodel.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
 
 class AppetizerDatePicker extends StatefulWidget {
   final Function(DateTime) onDateChanged;

@@ -4,7 +4,6 @@ import 'package:appetizer/ui/base_view.dart';
 import 'package:appetizer/ui/components/appetizer_progress_widget.dart';
 import 'package:appetizer/viewmodels/multimessing/qr_genrator_viewmodel.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class QRWidget extends StatefulWidget {

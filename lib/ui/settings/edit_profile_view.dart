@@ -6,7 +6,6 @@ import 'package:appetizer/ui/components/appetizer_text_field.dart';
 import 'package:appetizer/ui/settings/components/user_details_card.dart';
 import 'package:appetizer/utils/validators.dart';
 import 'package:appetizer/viewmodels/settings/edit_profile_viewmodel.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class EditProfileView extends StatefulWidget {
