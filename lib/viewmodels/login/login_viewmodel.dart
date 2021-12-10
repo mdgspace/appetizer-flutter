@@ -29,24 +29,6 @@ class LoginViewModel extends BaseModel {
     notifyListeners();
   }
 
-  bool _isLoginSuccessful = false;
-
-  bool get isLoginSuccessful => _isLoginSuccessful;
-
-  set isLoginSuccessful(bool isLoginSuccessful) {
-    _isLoginSuccessful = isLoginSuccessful;
-    notifyListeners();
-  }
-
-  bool _areCredentialsCorrect;
-
-  bool get areCredentialsCorrect => _areCredentialsCorrect;
-
-  set areCredentialsCorrect(bool areCredentialsCorrect) {
-    _areCredentialsCorrect = areCredentialsCorrect;
-    notifyListeners();
-  }
-
   var _oauthUser;
 
   OAuthUser get oauthUser => _oauthUser;
@@ -61,21 +43,22 @@ class LoginViewModel extends BaseModel {
     setState(ViewState.Busy);
     try {
       user = await _userApi.userLogin(enrollment, password);
-      isLoginSuccessful = true;
       token = user.token;
       isLoggedIn = true;
       isCheckedOut = user.isCheckedOut;
       currentUser = user;
-      await _pushNotificationService
-          .subscribeToTopic('${kReleaseMode ? 'release-' : 'debug-'}all');
-      await _pushNotificationService.subscribeToTopic(
-          '${kReleaseMode ? 'release-' : 'debug-'}' + user.hostelCode);
       setState(ViewState.Idle);
     } on Failure catch (f) {
       setState(ViewState.Error);
       setErrorMessage(f.message);
-      isLoginSuccessful = false;
     }
+  }
+
+  void subscribeToFCMTopic() {
+    _pushNotificationService
+        .subscribeToTopic('${kReleaseMode ? 'release-' : 'debug-'}all');
+    _pushNotificationService.subscribeToTopic(
+        '${kReleaseMode ? 'release-' : 'debug-'}' + user.hostelCode);
   }
 
   Future getOAuthResponse(String code) async {
