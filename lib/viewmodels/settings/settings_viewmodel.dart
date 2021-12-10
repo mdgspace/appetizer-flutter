@@ -7,6 +7,7 @@ import 'package:appetizer/services/api/user_api.dart';
 import 'package:appetizer/services/dialog_service.dart';
 import 'package:appetizer/services/push_notification_service.dart';
 import 'package:appetizer/ui/login/login_view.dart';
+import 'package:appetizer/utils/snackbar_utils.dart';
 import 'package:appetizer/viewmodels/base_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
@@ -44,15 +45,21 @@ class SettingsViewModel extends BaseModel {
 
   Future logoutAndClearData() async {
     _dialogService.showCustomProgressDialog(title: 'Logging You Out');
-    await _userApi.userLogout();
-    _dialogService.popDialog();
-    await _pushNotificationService
-        .unsubscribeFromTopic('${kReleaseMode ? 'release-' : 'debug-'}all');
-    await _pushNotificationService.unsubscribeFromTopic(
-        '${kReleaseMode ? 'release-' : 'debug-'}' + currentUser.hostelCode);
-    await Get.offAllNamed(LoginView.id);
-    isLoggedIn = false;
-    token = null;
+    try {
+      await _userApi.userLogout();
+      isLoggedIn = false;
+      token = null;
+      await _pushNotificationService
+          .unsubscribeFromTopic('${kReleaseMode ? 'release-' : 'debug-'}all');
+      await _pushNotificationService.unsubscribeFromTopic(
+          '${kReleaseMode ? 'release-' : 'debug-'}' + currentUser.hostelCode);
+      await Get.offAllNamed(LoginView.id);
+      _dialogService.popDialog();
+    } catch (e) {
+      _dialogService.popDialog();
+      SnackBarUtils.showDark(
+          'Error', 'Unable to log you out. Please try after some time.');
+    }
   }
 
   Future onLogoutTap() async {
