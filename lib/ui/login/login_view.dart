@@ -132,10 +132,12 @@ class _LoginViewState extends State<LoginView> with TickerProviderStateMixin {
         Future.delayed(Duration(seconds: 1), () => _model.currentUser = null);
       },
       builder: (context, model, child) => Scaffold(
-        body: Column(
-          children: <Widget>[
-            Expanded(
-              child: Container(
+        body: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Container(
+                height: MediaQuery.of(context).size.height / 2,
                 width: MediaQuery.of(context).size.width,
                 color: AppTheme.secondary,
                 child: Column(
@@ -163,18 +165,22 @@ class _LoginViewState extends State<LoginView> with TickerProviderStateMixin {
                   ],
                 ),
               ),
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 16,
+                ),
                 child: Form(
                   key: _formKey,
-                  child: ListView(
+                  child: Column(
                     children: <Widget>[
                       _buildEnrollmentInput(),
                       _buildPasswordInput(),
                       SizedBox(height: 32),
-                      _buildLoginButton(),
+                      Container(
+                        width: double.maxFinite,
+                        child: _buildLoginButton(),
+                      ),
                       IntrinsicHeight(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -186,13 +192,16 @@ class _LoginViewState extends State<LoginView> with TickerProviderStateMixin {
                         ),
                       ),
                       SizedBox(height: 16),
-                      _buildChannelIButton(),
+                      Container(
+                        width: double.maxFinite,
+                        child: _buildChannelIButton(),
+                      ),
                     ],
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

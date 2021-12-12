@@ -60,7 +60,6 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
-    - assets/flare/
 
   fonts:
     - family: OpenSans
