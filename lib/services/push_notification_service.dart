@@ -20,7 +20,9 @@ class PushNotificationService {
 
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
       // save device token to local storage
-      _localStorageService.fcmToken = await _fcm.getToken();
+      _fcm.onTokenRefresh.listen((token) {
+        _localStorageService.fcmToken = token;
+      });
 
       // allow notifications when app is in foreground
       await _fcm.setForegroundNotificationPresentationOptions(
