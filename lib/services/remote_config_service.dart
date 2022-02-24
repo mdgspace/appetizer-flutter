@@ -5,20 +5,20 @@ const String IS_LEAVE_ENABLED = 'is_leave_enabled';
 const String IS_SWITCH_ENABLED = 'is_switch_enabled';
 
 class RemoteConfigService {
-  final RemoteConfig _remoteConfig;
+  final FirebaseRemoteConfig _remoteConfig;
   final defaults = <String, dynamic>{};
 
   static RemoteConfigService _instance;
 
   static Future<RemoteConfigService> getInstance() async {
     _instance ??= RemoteConfigService(
-      remoteConfig: RemoteConfig.instance,
+      remoteConfig: FirebaseRemoteConfig.instance,
     );
 
     return _instance;
   }
 
-  RemoteConfigService({RemoteConfig remoteConfig})
+  RemoteConfigService({FirebaseRemoteConfig remoteConfig})
       : _remoteConfig = remoteConfig;
 
   String get appetizerLink => _remoteConfig.getString(APP_LINK);
