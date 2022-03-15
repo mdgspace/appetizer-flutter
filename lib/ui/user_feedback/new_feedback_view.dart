@@ -18,7 +18,7 @@ class NewFeedbackView extends StatefulWidget {
 class _NewFeedbackViewState extends State<NewFeedbackView> {
   final _formKey = GlobalKey<FormState>();
 
-  String _title, _feedbackType = 'gn', description;
+  String _feedbackType = 'gn';
   DateTime _date = DateTime.now();
 
   @override
@@ -37,7 +37,7 @@ class _NewFeedbackViewState extends State<NewFeedbackView> {
               onPressed: () {
                 FocusScope.of(context).requestFocus(FocusNode());
                 if (Validators.validateAndSaveForm(_formKey)) {
-                  model.addFeedback(_feedbackType, _title, description, _date);
+                  model.addFeedback(_feedbackType, _date);
                 }
               },
             ),
@@ -53,13 +53,14 @@ class _NewFeedbackViewState extends State<NewFeedbackView> {
                 children: <Widget>[
                   Text('Title'),
                   TextFormField(
+                    controller: model.titleController,
                     decoration: InputDecoration(
                       hintText: 'Enter Title',
                       hintStyle: TextStyle(color: AppTheme.blackPrimary),
                     ),
+                    maxLength: 30,
                     validator: (value) =>
                         value.isEmpty ? "Title can\'t be empty" : null,
-                    onSaved: (value) => _title = value,
                   ),
                   SizedBox(height: 24),
                   Text('Type of Feedback'),
@@ -106,12 +107,12 @@ class _NewFeedbackViewState extends State<NewFeedbackView> {
                   Text('Description'),
                   SizedBox(height: 12),
                   TextFormField(
+                    controller: model.descriptionController,
                     decoration: InputDecoration(border: OutlineInputBorder()),
                     maxLines: 7,
                     validator: (value) => value.length < 50
                         ? 'Description must be atleast 50 charecters'
                         : null,
-                    onSaved: (value) => description = value,
                   ),
                   SizedBox(height: 16),
                   Center(
