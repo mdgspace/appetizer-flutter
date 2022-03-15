@@ -29,11 +29,13 @@ class ForgotPasswordViewModel extends BaseModel {
       setState(ViewState.Idle);
       SnackBarUtils.showDark('Info', 'link has been emailed');
       await Future.delayed(Duration(seconds: 1));
-      Get.back();
+      _dialogService.popDialog();
     } on Failure catch (f) {
       setState(ViewState.Error);
       setErrorMessage(f.message);
       SnackBarUtils.showDark('Error', errorMessage);
+      await Future.delayed(Duration(seconds: 1));
+      _dialogService.popDialog();
     }
   }
 }
