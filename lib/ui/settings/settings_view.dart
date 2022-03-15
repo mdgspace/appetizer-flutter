@@ -123,12 +123,12 @@ class SettingsView extends StatelessWidget {
                       title: 'Reset Password',
                       onTap: () => Get.toNamed(ResetPasswordView.id),
                     ),
-                    Divider(height: 0),
-                    _buildListItem(
-                      iconData: Icons.help,
-                      title: 'FAQ',
-                      onTap: () => Get.toNamed(FaqView.id),
-                    ),
+                    // Divider(height: 0),
+                    // _buildListItem(
+                    //   iconData: Icons.help,
+                    //   title: 'FAQ',
+                    //   onTap: () => Get.toNamed(FaqView.id),
+                    // ),
                     Divider(height: 0),
                     _buildListItem(
                       iconData: Icons.info,

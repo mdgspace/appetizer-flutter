@@ -305,11 +305,11 @@ class _HomeViewState extends State<HomeView> {
                     iconPath: 'assets/icons/setting.png',
                     title: 'Settings',
                   ),
-                  _buildDrawerComponent(
-                    onTap: () => Get.toNamed(FaqView.id),
-                    iconData: Icons.help_outline,
-                    title: 'FAQ',
-                  ),
+                  // _buildDrawerComponent(
+                  //   onTap: () => Get.toNamed(FaqView.id),
+                  //   iconData: Icons.help_outline,
+                  //   title: 'FAQ',
+                  // ),
                   _buildDrawerComponent(
                     onTap: () => _model.onLogoutTap(),
                     iconData: Icons.logout,
