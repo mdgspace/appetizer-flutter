@@ -149,13 +149,13 @@ class HelpView extends StatelessWidget {
 }
 
 void launchFbUrl() {
-  launch('https://m.facebook.com/mdgiitr/');
+  launch('https://m.facebook.com/mdgspace/');
 }
 
 void launchGithubUrl() {
-  launch('https://github.com/mdg-iitr/');
+  launch('https://github.com/mdgspace/');
 }
 
 void launchWebUrl() {
-  launch('http://mdg.iitr.ac.in');
+  launch('https://mdg.iitr.ac.in/');
 }
