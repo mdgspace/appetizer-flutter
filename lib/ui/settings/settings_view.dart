@@ -1,6 +1,5 @@
 import 'package:appetizer/app_theme.dart';
 import 'package:appetizer/enums/view_state.dart';
-import 'package:appetizer/ui/FAQ/faq_view.dart';
 import 'package:appetizer/ui/base_view.dart';
 import 'package:appetizer/ui/components/appetizer_app_bar.dart';
 import 'package:appetizer/ui/components/appetizer_error_widget.dart';

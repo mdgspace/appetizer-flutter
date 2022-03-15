@@ -1,6 +1,5 @@
 import 'package:appetizer/app_theme.dart';
 import 'package:appetizer/globals.dart';
-import 'package:appetizer/ui/FAQ/faq_view.dart';
 import 'package:appetizer/ui/base_view.dart';
 import 'package:appetizer/ui/components/appetizer_date_picker.dart';
 import 'package:appetizer/ui/leaves/my_leaves_view.dart';
