@@ -1,6 +1,5 @@
 import 'package:appetizer/app_theme.dart';
 import 'package:appetizer/globals.dart';
-import 'package:appetizer/ui/FAQ/faq_view.dart';
 import 'package:appetizer/ui/base_view.dart';
 import 'package:appetizer/ui/components/appetizer_date_picker.dart';
 import 'package:appetizer/ui/leaves/my_leaves_view.dart';
@@ -305,11 +304,11 @@ class _HomeViewState extends State<HomeView> {
                     iconPath: 'assets/icons/setting.png',
                     title: 'Settings',
                   ),
-                  _buildDrawerComponent(
-                    onTap: () => Get.toNamed(FaqView.id),
-                    iconData: Icons.help_outline,
-                    title: 'FAQ',
-                  ),
+                  // _buildDrawerComponent(
+                  //   onTap: () => Get.toNamed(FaqView.id),
+                  //   iconData: Icons.help_outline,
+                  //   title: 'FAQ',
+                  // ),
                   _buildDrawerComponent(
                     onTap: () => _model.onLogoutTap(),
                     iconData: Icons.logout,

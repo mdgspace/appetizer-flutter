@@ -93,7 +93,7 @@ class HelpView extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.all(8),
                       child: Text(
-                        'Mobile Development Group, IIT Roorkee',
+                        'MDG Space, IIT Roorkee',
                         style: AppTheme.bodyText1,
                       ),
                     ),
@@ -149,13 +149,13 @@ class HelpView extends StatelessWidget {
 }
 
 void launchFbUrl() {
-  launch('https://m.facebook.com/mdgiitr/');
+  launch('https://m.facebook.com/mdgspace/');
 }
 
 void launchGithubUrl() {
-  launch('https://github.com/mdg-iitr/');
+  launch('https://github.com/mdgspace/');
 }
 
 void launchWebUrl() {
-  launch('http://mdg.iitr.ac.in');
+  launch('https://mdg.iitr.ac.in/');
 }

@@ -20,15 +20,24 @@ class NotificationHistoryView extends StatelessWidget {
         body: () {
           switch (model.state) {
             case ViewState.Idle:
-              return ListView.separated(
-                itemCount: model.notifications.length,
-                itemBuilder: (context, index) => MessNotification(
-                  model.notifications[index].title,
-                  model.notifications[index].message,
-                  DateTimeUtils.dateTime(
-                      model.notifications[index].dateCreated),
+              return Visibility(
+                visible: model.notifications.isNotEmpty,
+                replacement: Center(
+                  child: Text(
+                    'No Notifications yet!',
+                    style: Theme.of(context).textTheme.bodyText1,
+                  ),
                 ),
-                separatorBuilder: (context, index) => Divider(height: 8),
+                child: ListView.separated(
+                  itemCount: model.notifications.length,
+                  itemBuilder: (context, index) => MessNotification(
+                    model.notifications[index].title,
+                    model.notifications[index].message,
+                    DateTimeUtils.dateTime(
+                        model.notifications[index].dateCreated),
+                  ),
+                  separatorBuilder: (context, index) => Divider(height: 8),
+                ),
               );
               break;
             case ViewState.Busy:

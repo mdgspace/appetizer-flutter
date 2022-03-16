@@ -147,9 +147,10 @@ class UserApi {
     var endpoint = '/api/user/me/password/reset/';
     var uri = EnvironmentConfig.BASE_URL + endpoint;
     var json = {'email': email};
+    final headers = {'Content-Type': 'application/json'};
 
     try {
-      await ApiUtils.post(uri, body: json);
+      await ApiUtils.post(uri, headers: headers, body: json);
     } on FormatException catch (e) {
       print(e.message);
       throw Failure(Constants.BAD_RESPONSE_FORMAT);

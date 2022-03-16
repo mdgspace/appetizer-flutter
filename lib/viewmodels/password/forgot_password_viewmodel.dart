@@ -27,13 +27,17 @@ class ForgotPasswordViewModel extends BaseModel {
       await _userApi.sendResetPasswordLink(email);
       isResetEmailSent = true;
       setState(ViewState.Idle);
+      _dialogService.popDialog();
       SnackBarUtils.showDark('Info', 'link has been emailed');
       await Future.delayed(Duration(seconds: 1));
       Get.back();
     } on Failure catch (f) {
       setState(ViewState.Error);
       setErrorMessage(f.message);
+      _dialogService.popDialog();
       SnackBarUtils.showDark('Error', errorMessage);
+      await Future.delayed(Duration(seconds: 1));
+      Get.back();
     }
   }
 }

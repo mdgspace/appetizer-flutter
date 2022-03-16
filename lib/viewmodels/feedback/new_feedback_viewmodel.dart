@@ -6,11 +6,14 @@ import 'package:appetizer/services/api/feedback_api.dart';
 import 'package:appetizer/services/dialog_service.dart';
 import 'package:appetizer/utils/snackbar_utils.dart';
 import 'package:appetizer/viewmodels/base_model.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class NewFeedbackViewModel extends BaseModel {
   final FeedbackApi _feedbackApi = locator<FeedbackApi>();
   final DialogService _dialogService = locator<DialogService>();
+  final TextEditingController titleController = TextEditingController();
+  final TextEditingController descriptionController = TextEditingController();
 
   AppetizerFeedback _feedback;
 
@@ -21,15 +24,20 @@ class NewFeedbackViewModel extends BaseModel {
     notifyListeners();
   }
 
-  Future addFeedback(String feedbackType, String title, String description,
-      DateTime date) async {
+  Future addFeedback(String feedbackType, DateTime date) async {
     _dialogService.showCustomProgressDialog(title: 'Sending Feedback');
     setState(ViewState.Busy);
     try {
       feedback = await _feedbackApi.newFeedBack(
-          feedbackType, title, description, date);
+        feedbackType,
+        titleController.text.trim(),
+        descriptionController.text.trim(),
+        date,
+      );
       setState(ViewState.Idle);
       _dialogService.popDialog();
+      titleController.text = '';
+      descriptionController.text = '';
       SnackBarUtils.showDark('Info', 'Thank You For Your Feedback!');
       await Future.delayed(Duration(seconds: 1));
       Get.back();
