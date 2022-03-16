@@ -93,7 +93,7 @@ class HelpView extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.all(8),
                       child: Text(
-                        'Mobile Development Group, IIT Roorkee',
+                        'MDG Space, IIT Roorkee',
                         style: AppTheme.bodyText1,
                       ),
                     ),
