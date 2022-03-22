@@ -147,7 +147,7 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
         ),
       );
     } else if (_model.isLeaveEnabled && !isCheckedOut) {
-      GestureDetector(
+      return GestureDetector(
         onHorizontalDragStart: (_) => _model.onSwitchDragged(),
         child: Switch(
           activeColor: AppTheme.primary,
