@@ -131,7 +131,15 @@ class DialogService {
           ),
         ],
       ),
-    );
+    ).then((_) {
+      if (_dialogCompleter == null) return;
+
+      // Dialog is canceled by User
+      dialogComplete(
+        DialogResponse(confirmed: false),
+        shouldPop: false,
+      );
+    });
   }
 
   void _showProgressDialog(DialogRequest request) {
@@ -211,8 +219,9 @@ class DialogService {
   }
 
   /// Completes the _dialogCompleter to resume the Future's execution call
-  void dialogComplete(DialogResponse response) {
-    Get.key.currentState.pop();
+  void dialogComplete(DialogResponse response, {bool shouldPop = true}) {
+    // If dialog is not canceled by user
+    if (shouldPop) Get.key.currentState.pop();
     _dialogCompleter.complete(response);
     _dialogCompleter = null;
   }
