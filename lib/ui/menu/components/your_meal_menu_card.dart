@@ -239,6 +239,8 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
         _model.updateMealLeaveAndSwitchStatus(widget.meal);
       },
       onDidUpdateWidget: (oldWidget, model) {
+        _model.meal = widget.meal;
+        _model.dailyItems = widget.dailyItems;
         _model.isLeaveToggleOutdated =
             widget.meal?.isLeaveToggleOutdated ?? _model.isLeaveToggleOutdated;
         _model.updateMealLeaveAndSwitchStatus(widget.meal);
