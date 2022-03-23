@@ -15,7 +15,7 @@ class YourMealsMenuCard extends StatefulWidget {
   final Meal meal;
   final DailyItems dailyItems;
 
-  YourMealsMenuCard(this.meal, this.dailyItems);
+  const YourMealsMenuCard(this.meal, this.dailyItems);
 
   @override
   _YourMealsMenuCardState createState() => _YourMealsMenuCardState();
@@ -230,25 +230,29 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
   @override
   Widget build(BuildContext context) {
     return BaseView<YourMenuCardViewModel>(
-        onModelReady: (model) {
-          _model = model;
-          _model.meal = widget.meal;
-          _model.dailyItems = widget.dailyItems;
-          _model.isLeaveToggleOutdated = widget.meal?.isLeaveToggleOutdated ??
-              _model.isLeaveToggleOutdated;
-          _model.updateMealLeaveAndSwitchStatus(widget.meal);
-        },
-        onDidUpdateWidget: (oldWidget, model) =>
-            _model.updateMealLeaveAndSwitchStatus(widget.meal),
-        builder: (context, model, child) {
-          if (widget.meal == null) return Container();
+      onModelReady: (model) {
+        _model = model;
+        _model.meal = widget.meal;
+        _model.dailyItems = widget.dailyItems;
+        _model.isLeaveToggleOutdated =
+            widget.meal?.isLeaveToggleOutdated ?? _model.isLeaveToggleOutdated;
+        _model.updateMealLeaveAndSwitchStatus(widget.meal);
+      },
+      onDidUpdateWidget: (oldWidget, model) {
+        _model.isLeaveToggleOutdated =
+            widget.meal?.isLeaveToggleOutdated ?? _model.isLeaveToggleOutdated;
+        _model.updateMealLeaveAndSwitchStatus(widget.meal);
+      },
+      builder: (context, model, child) {
+        if (widget.meal == null) return Container();
 
-          return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 4),
-            child: _model.isSwitchEnabled && _model.secretCode != null
-                ? _buildQRCard()
-                : _buildMenuCard(),
-          );
-        });
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 4),
+          child: _model.isSwitchEnabled && _model.secretCode != null
+              ? _buildQRCard()
+              : _buildMenuCard(),
+        );
+      },
+    );
   }
 }
