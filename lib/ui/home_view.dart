@@ -111,45 +111,57 @@ class _HomeViewState extends State<HomeView> {
         child: Theme(
           data: ThemeData(canvasColor: AppTheme.secondary),
           child: Center(
-            child: DropdownButton<String>(
-              underline: Container(),
-              icon: Icon(
-                Icons.arrow_drop_down,
-                color: AppTheme.white,
-              ),
-              value: selectedHostelName,
-              hint: Text(
-                '       Your Meals',
-                textAlign: TextAlign.center,
-                style: AppTheme.headline1.copyWith(
-                  color: AppTheme.white,
-                  fontFamily: 'Lobster_Two',
-                ),
-              ),
-              items: _model.switchableHostelsList.map((String hostelName) {
-                return DropdownMenuItem<String>(
-                  value: hostelName,
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.47,
-                      child: Text(
-                        hostelName,
-                        textAlign: TextAlign.center,
-                        style: AppTheme.headline1.copyWith(
-                          color: AppTheme.white,
-                          fontFamily: 'Lobster_Two',
+            child: _model.isSwitchEnabled
+                ? DropdownButton<String>(
+                    underline: Container(),
+                    icon: Icon(
+                      Icons.arrow_drop_down,
+                      color: AppTheme.white,
+                    ),
+                    value: selectedHostelName,
+                    hint: Text(
+                      '       Your Meals',
+                      textAlign: TextAlign.center,
+                      style: AppTheme.headline1.copyWith(
+                        color: AppTheme.white,
+                        fontFamily: 'Lobster_Two',
+                      ),
+                    ),
+                    items:
+                        _model.switchableHostelsList.map((String hostelName) {
+                      return DropdownMenuItem<String>(
+                        value: hostelName,
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.47,
+                            child: Text(
+                              hostelName,
+                              textAlign: TextAlign.center,
+                              style: AppTheme.headline1.copyWith(
+                                color: AppTheme.white,
+                                fontFamily: 'Lobster_Two',
+                              ),
+                            ),
+                          ),
                         ),
+                      );
+                    }).toList(),
+                    onChanged: (String _selectedHostelName) {
+                      setState(() => selectedHostelName = _selectedHostelName);
+                      _model.selectedHostel = _selectedHostelName;
+                    },
+                  )
+                : Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      'Appetizer',
+                      style: AppTheme.headline1.copyWith(
+                        color: AppTheme.white,
+                        fontFamily: 'Lobster_Two',
                       ),
                     ),
                   ),
-                );
-              }).toList(),
-              onChanged: (String _selectedHostelName) {
-                setState(() => selectedHostelName = _selectedHostelName);
-                _model.selectedHostel = _selectedHostelName;
-              },
-            ),
           ),
         ),
       ),
