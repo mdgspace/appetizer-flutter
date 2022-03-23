@@ -220,7 +220,7 @@ class Meal {
             !DateTimeUtils.getDateTimeFromDateAndTime(date, json['start_time'])
                 .isAfter(DateTime.now()),
         isLeaveToggleOutdated:
-            !DateTimeUtils.getDateTimeFromDateAndTime(date, json['end_time'])
+            !DateTimeUtils.getDateTimeFromDateAndTime(date, json['start_time'])
                 .subtract(outdatedTime)
                 .isAfter(DateTime.now()),
         startDateTime:
