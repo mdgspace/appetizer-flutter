@@ -6,7 +6,7 @@ on:
 
 env:
   GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
-  PROD_BASE_URL: https://mess.iitr.ac.in
+  PROD_BASE_URL: ${{ secrets.PROD_BASE_URL }}
   SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
   FASTLANE_SUPPLY_JSON_KEY: ${{ secrets.FASTLANE_SUPPLY_JSON_KEY }}
   RELEASE_KEYSTORE: ${{ secrets.RELEASE_KEYSTORE }}
@@ -59,7 +59,13 @@ jobs:
       - run: echo "${RELEASE_KEYSTORE}" | base64 --decode > android/app/key.jks
 
       # Build appbundle.
-      - run: flutter build appbundle --dart-define=SENTRY_DSN=${SENTRY_DSN} --dart-define=BASE_URL=${PROD_BASE_URL} --dart-define=OAUTH_REDIRECT_URI=${PROD_BASE_URL}/oauth/
+      - name: 'Build dev appbundle'
+        if: "contains(github.event.release.tag_name, 'internal')"
+        run: flutter build appbundle --dart-define=SENTRY_DSN=${SENTRY_DSN}
+
+      - name: 'Build prod appbundle'
+        if: "!contains(github.event.release.tag_name, 'internal')"
+        run: flutter build appbundle --dart-define=SENTRY_DSN=${SENTRY_DSN} --dart-define=BASE_URL=${PROD_BASE_URL} --dart-define=OAUTH_REDIRECT_URI=${PROD_BASE_URL}/oauth/
 
       # Run fastlane internal
       - uses: maierj/fastlane-action@v1.4.0
