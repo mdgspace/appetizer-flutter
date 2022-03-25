@@ -116,17 +116,17 @@ class _RebatesHistoryViewState extends State<RebatesHistoryView> {
                         );
                       },
                     );
-                    break;
+
                   case ViewState.Busy:
                     return AppetizerProgressWidget();
-                    break;
+
                   case ViewState.Error:
                     return AppetizerErrorWidget(
                       errorMessage: model.errorMessage,
                       onRetryPressed: () =>
                           model.getYearlyRebate(_currentItemSelected),
                     );
-                    break;
+
                   default:
                     return Container();
                 }

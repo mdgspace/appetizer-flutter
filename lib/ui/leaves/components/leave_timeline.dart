@@ -45,16 +45,16 @@ class LeaveTimeline extends StatelessWidget {
               itemBuilder: (context, index) => _leaves[index],
               separatorBuilder: (context, index) => Divider(height: 0),
             );
-            break;
+
           case ViewState.Busy:
             return AppetizerProgressWidget();
-            break;
+
           case ViewState.Error:
             return AppetizerErrorWidget(
               errorMessage: model.errorMessage,
               onRetryPressed: () => model.fetchLeaves(year, 1),
             );
-            break;
+
           default:
             return Container();
         }

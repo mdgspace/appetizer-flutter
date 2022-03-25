@@ -226,10 +226,10 @@ class _WeekMenuViewState extends State<WeekMenuView> {
                       shrinkWrap: true,
                       children: _mealCells,
                     );
-                    break;
+
                   case ViewState.Busy:
                     return AppetizerProgressWidget();
-                    break;
+
                   case ViewState.Error:
                     if (model.errorMessage == Constants.MENU_NOT_FOUND) {
                       return AppetizerErrorWidget(
@@ -240,7 +240,7 @@ class _WeekMenuViewState extends State<WeekMenuView> {
                       errorMessage: model.errorMessage,
                       onRetryPressed: () => model.fetchCurrentWeekMenu(),
                     );
-                    break;
+
                   default:
                     return Container();
                 }

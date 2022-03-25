@@ -75,16 +75,16 @@ class _ConfirmSwitchPopupViewState extends State<ConfirmSwitchPopupView> {
                   ),
                 ),
               );
-              break;
+
             case ViewState.Busy:
               return AppetizerProgressWidget();
-              break;
+
             case ViewState.Error:
               return AppetizerErrorWidget(
                 errorMessage: model.errorMessage,
                 onRetryPressed: () => model.getMenuWeekMultimessing(),
               );
-              break;
+
             default:
               return Container();
           }

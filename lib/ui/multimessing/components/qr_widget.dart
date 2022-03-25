@@ -50,13 +50,13 @@ class QRWidgetState extends State<QRWidget> {
                 ),
               ),
             );
-            break;
+
           case ViewState.Busy:
             return AppetizerProgressWidget();
-            break;
+
           case ViewState.Error:
             return Text('No Secret was fetched');
-            break;
+
           default:
             return Container();
         }

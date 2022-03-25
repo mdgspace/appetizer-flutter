@@ -63,10 +63,10 @@ class _YourMenuViewState extends State<YourMenuView> {
                 dayMenu: selectedDayMenu,
                 dailyItems: dailyItems,
               );
-              break;
+
             case ViewState.Busy:
               return AppetizerProgressWidget();
-              break;
+
             case ViewState.Error:
               if (model.errorMessage == Constants.MENU_NOT_FOUND) {
                 return AppetizerErrorWidget(
@@ -79,7 +79,7 @@ class _YourMenuViewState extends State<YourMenuView> {
                   DateTimeUtils.getWeekNumber(widget.selectedDateTime),
                 ),
               );
-              break;
+
             default:
               return Container();
           }

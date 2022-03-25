@@ -230,12 +230,12 @@ class YourMenuCardViewModel extends BaseModel {
       case SwitchStatusEnum.N:
       case SwitchStatusEnum.A:
         return () {};
-        break;
+
       case SwitchStatusEnum.D:
         return () {
           Fluttertoast.showToast(msg: 'Your switch has been denied');
         };
-        break;
+
       case SwitchStatusEnum.F:
       case SwitchStatusEnum.T:
         return () {
@@ -252,12 +252,12 @@ class YourMenuCardViewModel extends BaseModel {
             secretCode = '1';
           }
         };
-        break;
+
       case SwitchStatusEnum.U:
         return () {
           Fluttertoast.showToast(msg: 'Your Switch was not approved!');
         };
-        break;
+
       default:
         return () {};
     }

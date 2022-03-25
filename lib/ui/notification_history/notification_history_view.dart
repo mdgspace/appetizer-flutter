@@ -39,16 +39,16 @@ class NotificationHistoryView extends StatelessWidget {
                   separatorBuilder: (context, index) => Divider(height: 8),
                 ),
               );
-              break;
+
             case ViewState.Busy:
               return AppetizerProgressWidget();
-              break;
+
             case ViewState.Error:
               return AppetizerErrorWidget(
                 errorMessage: model.errorMessage,
                 onRetryPressed: () => model.getNotifications(),
               );
-              break;
+
             default:
               return Container();
           }

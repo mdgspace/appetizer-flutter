@@ -52,16 +52,16 @@ class FaqView extends StatelessWidget {
                 itemBuilder: (context, index) => _buildFaq(model.faqs[index]),
                 separatorBuilder: (context, index) => Divider(height: 16),
               );
-              break;
+
             case ViewState.Busy:
               return AppetizerProgressWidget();
-              break;
+
             case ViewState.Error:
               return AppetizerErrorWidget(
                 errorMessage: model.errorMessage,
                 onRetryPressed: () => model.getFaqs(),
               );
-              break;
+
             default:
               return Container();
           }

@@ -133,16 +133,16 @@ class _SwitchableMealsState extends State<SwitchableMealsView> {
                       .map((meal) => _buildTableRow(meal))
                 ],
               );
-              break;
+
             case ViewState.Busy:
               return AppetizerProgressWidget();
-              break;
+
             case ViewState.Error:
               return AppetizerErrorWidget(
                 errorMessage: model.errorMessage,
                 onRetryPressed: () => model.getSwitchableMeals(widget.mealId),
               );
-              break;
+
             default:
               return Container();
           }

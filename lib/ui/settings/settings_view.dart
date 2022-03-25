@@ -91,17 +91,17 @@ class SettingsView extends StatelessWidget {
                         roomNo: model.userDetails.roomNo,
                         email: model.userDetails.email,
                       );
-                      break;
+
                     case ViewState.Busy:
                       return AppetizerProgressWidget();
-                      break;
+
                     case ViewState.Error:
                       return AppetizerErrorWidget(
                         errorMessage: model.errorMessage,
                         onRetryPressed: model.getUserDetails,
                         textColor: AppTheme.white,
                       );
-                      break;
+
                     default:
                       return Container();
                   }
