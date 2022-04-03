@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:appetizer/app_theme.dart';
 import 'package:appetizer/models/menu/week_menu.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class MenuUIUtils {
   static Widget buildtitleAndBhawanNameComponent(Meal meal) {
@@ -15,13 +16,13 @@ class MenuUIUtils {
             color: AppTheme.primary,
           ),
         ),
-        if (meal.hostelName != null)
-          Text(
-            '${meal.hostelName}',
-            style: AppTheme.bodyText1.copyWith(
-              color: AppTheme.secondary,
-            ),
+        Text(
+          "${meal.hostelName ?? ''}${meal.hostelName != null ? ',' : ''}"
+          '${DateFormat.jm().format(meal.startTime)} - ${DateFormat.jm().format(meal.endTime)}',
+          style: AppTheme.bodyText1.copyWith(
+            color: AppTheme.secondary,
           ),
+        ),
       ],
     );
   }

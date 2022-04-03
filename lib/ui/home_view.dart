@@ -14,6 +14,7 @@ import 'package:appetizer/ui/user_feedback/user_feedback_view.dart';
 import 'package:appetizer/viewmodels/home_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class HomeView extends StatefulWidget {
   static const String id = 'home_view';
@@ -42,6 +43,7 @@ class _HomeViewState extends State<HomeView> {
   Widget _buildDatePicker() {
     return Container(
       height: 90,
+      color: AppTheme.secondary,
       width: MediaQuery.of(context).size.width,
       child: AppetizerDatePicker(
         onDateChanged: (date) => setState(() => _selectedDateTime = date),
@@ -343,6 +345,7 @@ class _HomeViewState extends State<HomeView> {
         _model = model;
         _model.checkVersion();
         _model.fetchInitialCheckedStatus();
+        _selectedDateTime ??= DateTime.now();
         if (_model.isSwitchEnabled) _model.setSwitchableHostels();
       },
       builder: (context, model, child) => Scaffold(
@@ -352,19 +355,35 @@ class _HomeViewState extends State<HomeView> {
         body: SafeArea(
           child: Column(
             children: <Widget>[
+              _buildMonthComponent(),
               _buildDatePicker(),
               _buildCheckedOutComponent(),
               _model.selectedHostel == 'Your Meals'
                   ? YourMenuView(
-                      selectedDateTime: _selectedDateTime ?? DateTime.now(),
+                      selectedDateTime: _selectedDateTime,
                     )
                   : OtherMenuView(
                       hostelName: model.selectedHostel,
-                      selectedDateTime: _selectedDateTime ?? DateTime.now(),
+                      selectedDateTime: _selectedDateTime,
                     ),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildMonthComponent() {
+    return Container(
+      padding: EdgeInsets.all(8.0),
+      color: AppTheme.secondary,
+      width: MediaQuery.of(context).size.width,
+      child: Text(
+        DateFormat('LLLL, yyyy').format(_selectedDateTime),
+        style: AppTheme.headline5.copyWith(
+          color: AppTheme.white,
+        ),
+        textAlign: TextAlign.center,
       ),
     );
   }
