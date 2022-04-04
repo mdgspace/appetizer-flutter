@@ -15,7 +15,7 @@ class ColorUtils {
         return AppTheme.red;
 
       case LeaveStatusEnum.P:
-        return AppTheme.yellow;
+        return AppTheme.secondary;
 
       case LeaveStatusEnum.U:
         return AppTheme.blue;

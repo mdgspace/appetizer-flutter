@@ -101,20 +101,19 @@ class _HomeViewState extends State<HomeView> {
 
   Widget _buildAppBar() {
     return AppBar(
-      centerTitle: true,
       backgroundColor: AppTheme.secondary,
-      title: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(50),
-          border: Border.all(
-            color: Colors.black.withOpacity(0.25),
-          ),
-        ),
-        child: Theme(
-          data: ThemeData(canvasColor: AppTheme.secondary),
-          child: Center(
-            child: _model.isSwitchEnabled
-                ? DropdownButton<String>(
+      title: _model.isSwitchEnabled
+          ? Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(50),
+                border: Border.all(
+                  color: Colors.black.withOpacity(0.25),
+                ),
+              ),
+              child: Theme(
+                data: ThemeData(canvasColor: AppTheme.secondary),
+                child: Center(
+                  child: DropdownButton<String>(
                     underline: Container(),
                     icon: Icon(
                       Icons.arrow_drop_down,
@@ -153,21 +152,21 @@ class _HomeViewState extends State<HomeView> {
                       setState(() => selectedHostelName = _selectedHostelName);
                       _model.selectedHostel = _selectedHostelName;
                     },
-                  )
-                : Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      'Appetizer',
-                      style: AppTheme.headline1.copyWith(
-                        color: AppTheme.white,
-                        fontFamily: 'Lobster_Two',
-                      ),
-                    ),
                   ),
-          ),
-        ),
-      ),
+                ),
+              ),
+            )
+          : Text(
+              'Menu',
+              style: AppTheme.headline3.copyWith(
+                color: AppTheme.white,
+              ),
+            ),
       actions: <Widget>[
+        Visibility(
+          visible: !_model.isSwitchEnabled,
+          child: _buildMonthComponent(),
+        ),
         Padding(
           padding: const EdgeInsets.all(8),
           child: GestureDetector(
@@ -175,7 +174,10 @@ class _HomeViewState extends State<HomeView> {
             child: Container(
               height: 24,
               width: 24,
-              child: Image.asset('assets/icons/week_menu.png'),
+              child: Image.asset(
+                'assets/icons/week_menu.png',
+                color: AppTheme.white,
+              ),
             ),
           ),
         )
@@ -355,7 +357,6 @@ class _HomeViewState extends State<HomeView> {
         body: SafeArea(
           child: Column(
             children: <Widget>[
-              _buildMonthComponent(),
               _buildDatePicker(),
               _buildCheckedOutComponent(),
               _model.selectedHostel == 'Your Meals'
@@ -375,15 +376,14 @@ class _HomeViewState extends State<HomeView> {
 
   Widget _buildMonthComponent() {
     return Container(
-      padding: EdgeInsets.all(8.0),
+      padding: EdgeInsets.only(top: 16, right: 10),
       color: AppTheme.secondary,
-      width: MediaQuery.of(context).size.width,
       child: Text(
-        DateFormat('LLLL, yyyy').format(_selectedDateTime),
+        DateFormat('MMM’yy').format(_selectedDateTime),
         style: AppTheme.headline5.copyWith(
           color: AppTheme.white,
+          letterSpacing: 0.9,
         ),
-        textAlign: TextAlign.center,
       ),
     );
   }
