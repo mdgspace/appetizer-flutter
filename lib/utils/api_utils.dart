@@ -115,6 +115,7 @@ class ApiUtils {
       case 201:
       case 202:
       case 204:
+        if (response.body == '') return;
         var responseJson = json.decode(response.body);
         print(responseJson);
         return responseJson;
