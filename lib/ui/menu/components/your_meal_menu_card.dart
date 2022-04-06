@@ -7,9 +7,11 @@ import 'package:appetizer/ui/user_feedback/new_feedback_view.dart';
 import 'package:appetizer/utils/color_utils.dart';
 import 'package:appetizer/utils/menu_ui_utils.dart';
 import 'package:appetizer/viewmodels/menu/your_menu_card_viewmodel.dart';
+import 'package:appetizer/viewmodels/menu/your_menu_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class YourMealsMenuCard extends StatefulWidget {
   final Meal meal;
@@ -155,7 +157,17 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
           value: _model.mealLeaveStatus,
           onChanged: (_model.isLeaveToggleOutdated || !_model.mealSwitchStatus)
               ? null
-              : _model.onLeaveChanged,
+              : (value) {
+                  _model.onLeaveChanged(value).then((_) {
+                    context.read<YourMenuViewModel>().updateMeal =
+                        widget.meal.copyWith(
+                            leaveStatus: LeaveStatus(
+                      status: _model.mealLeaveStatus
+                          ? LeaveStatusEnum.N
+                          : LeaveStatusEnum.P,
+                    ));
+                  });
+                },
         ),
       );
     }

@@ -26,6 +26,7 @@ class _YourMenuViewState extends State<YourMenuView> {
     super.didUpdateWidget(oldWidget);
     if (DateTimeUtils.getWeekNumber(oldWidget.selectedDateTime) !=
         DateTimeUtils.getWeekNumber(widget.selectedDateTime)) {
+      _model.selectedDateTime = widget.selectedDateTime;
       _model.fetchSelectedWeekMenu(
         DateTimeUtils.getWeekNumber(widget.selectedDateTime),
       );
@@ -38,6 +39,7 @@ class _YourMenuViewState extends State<YourMenuView> {
       onModelReady: (model) {
         _model = model;
         _model.fetchInitialCheckedStatus();
+        _model.selectedDateTime = widget.selectedDateTime;
         _model.fetchSelectedWeekMenu(
           DateTimeUtils.getWeekNumber(widget.selectedDateTime),
         );
