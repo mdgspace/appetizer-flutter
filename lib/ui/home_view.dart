@@ -14,6 +14,7 @@ import 'package:appetizer/ui/user_feedback/user_feedback_view.dart';
 import 'package:appetizer/viewmodels/home_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class HomeView extends StatefulWidget {
   static const String id = 'home_view';
@@ -42,6 +43,7 @@ class _HomeViewState extends State<HomeView> {
   Widget _buildDatePicker() {
     return Container(
       height: 90,
+      color: AppTheme.secondary,
       width: MediaQuery.of(context).size.width,
       child: AppetizerDatePicker(
         onDateChanged: (date) => setState(() => _selectedDateTime = date),
@@ -99,20 +101,19 @@ class _HomeViewState extends State<HomeView> {
 
   Widget _buildAppBar() {
     return AppBar(
-      centerTitle: true,
       backgroundColor: AppTheme.secondary,
-      title: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(50),
-          border: Border.all(
-            color: Colors.black.withOpacity(0.25),
-          ),
-        ),
-        child: Theme(
-          data: ThemeData(canvasColor: AppTheme.secondary),
-          child: Center(
-            child: _model.isSwitchEnabled
-                ? DropdownButton<String>(
+      title: _model.isSwitchEnabled
+          ? Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(50),
+                border: Border.all(
+                  color: Colors.black.withOpacity(0.25),
+                ),
+              ),
+              child: Theme(
+                data: ThemeData(canvasColor: AppTheme.secondary),
+                child: Center(
+                  child: DropdownButton<String>(
                     underline: Container(),
                     icon: Icon(
                       Icons.arrow_drop_down,
@@ -151,21 +152,21 @@ class _HomeViewState extends State<HomeView> {
                       setState(() => selectedHostelName = _selectedHostelName);
                       _model.selectedHostel = _selectedHostelName;
                     },
-                  )
-                : Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      'Appetizer',
-                      style: AppTheme.headline1.copyWith(
-                        color: AppTheme.white,
-                        fontFamily: 'Lobster_Two',
-                      ),
-                    ),
                   ),
-          ),
-        ),
-      ),
+                ),
+              ),
+            )
+          : Text(
+              'Menu',
+              style: AppTheme.headline3.copyWith(
+                color: AppTheme.white,
+              ),
+            ),
       actions: <Widget>[
+        Visibility(
+          visible: !_model.isSwitchEnabled,
+          child: _buildMonthComponent(),
+        ),
         Padding(
           padding: const EdgeInsets.all(8),
           child: GestureDetector(
@@ -173,7 +174,10 @@ class _HomeViewState extends State<HomeView> {
             child: Container(
               height: 24,
               width: 24,
-              child: Image.asset('assets/icons/week_menu.png'),
+              child: Image.asset(
+                'assets/icons/week_menu.png',
+                color: AppTheme.white,
+              ),
             ),
           ),
         )
@@ -343,6 +347,7 @@ class _HomeViewState extends State<HomeView> {
         _model = model;
         _model.checkVersion();
         _model.fetchInitialCheckedStatus();
+        _selectedDateTime ??= DateTime.now();
         if (_model.isSwitchEnabled) _model.setSwitchableHostels();
       },
       builder: (context, model, child) => Scaffold(
@@ -356,14 +361,28 @@ class _HomeViewState extends State<HomeView> {
               _buildCheckedOutComponent(),
               _model.selectedHostel == 'Your Meals'
                   ? YourMenuView(
-                      selectedDateTime: _selectedDateTime ?? DateTime.now(),
+                      selectedDateTime: _selectedDateTime,
                     )
                   : OtherMenuView(
                       hostelName: model.selectedHostel,
-                      selectedDateTime: _selectedDateTime ?? DateTime.now(),
+                      selectedDateTime: _selectedDateTime,
                     ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildMonthComponent() {
+    return Container(
+      padding: EdgeInsets.only(top: 16, right: 10),
+      color: AppTheme.secondary,
+      child: Text(
+        DateFormat('MMM’yy').format(_selectedDateTime),
+        style: AppTheme.headline5.copyWith(
+          color: AppTheme.white,
+          letterSpacing: 0.9,
         ),
       ),
     );

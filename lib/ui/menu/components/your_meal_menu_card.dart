@@ -32,7 +32,6 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
             children: <Widget>[
               MenuUIUtils.buildtitleAndBhawanNameComponent(widget.meal),
               SizedBox(width: 8),
-              _buildSkippedFlagComponent(),
             ],
           ),
         ),
@@ -44,6 +43,8 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
                   ? _buildSwitchComponent()
                   : Container(),
             ],
+            _buildSkippedFlagComponent(),
+            SizedBox(width: 10),
             _buildFeedbackOrToggleComponent(),
           ],
         ),
@@ -141,8 +142,8 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
           onTap: () => Get.toNamed(NewFeedbackView.id),
           child: Image.asset(
             'assets/icons/feedback_button.png',
-            height: 25,
-            width: 25,
+            height: 18,
+            width: 18,
           ),
         ),
       );
@@ -189,14 +190,15 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
         decoration: BoxDecoration(
           color: ColorUtils.getLeaveColorFromLeaveStatus(
               widget.meal.leaveStatus?.status),
-          shape: BoxShape.circle,
+          borderRadius: BorderRadius.circular(24),
         ),
-        child: Padding(
-          padding: const EdgeInsets.all(8),
-          child: Text(
-            'S',
-            style: AppTheme.headline4.copyWith(color: AppTheme.white),
-          ),
+        padding: const EdgeInsets.symmetric(
+          horizontal: 8,
+          vertical: 4,
+        ),
+        child: Text(
+          'Skipped',
+          style: AppTheme.bodyText2.copyWith(color: AppTheme.white),
         ),
       );
     }

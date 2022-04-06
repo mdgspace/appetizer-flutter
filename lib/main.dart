@@ -91,8 +91,8 @@ class Appetizer extends StatelessWidget {
         appBarTheme: AppBarTheme(
           elevation: 0,
           color: AppTheme.secondary,
-          iconTheme: IconThemeData(color: AppTheme.primary),
-          actionsIconTheme: IconThemeData(color: AppTheme.primary),
+          iconTheme: IconThemeData(color: AppTheme.white),
+          actionsIconTheme: IconThemeData(color: AppTheme.white),
         ),
         textSelectionTheme: TextSelectionThemeData(
           cursorColor: AppTheme.primary,
