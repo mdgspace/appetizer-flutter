@@ -16,6 +16,15 @@ class YourMenuViewModel extends BaseModel {
   final MenuApi _menuApi = locator<MenuApi>();
   final UserApi _userApi = locator<UserApi>();
 
+  DateTime _selectedDateTime;
+
+  DateTime get selectedDateTime => _selectedDateTime;
+
+  set selectedDateTime(DateTime val) {
+    _selectedDateTime = val;
+    notifyListeners();
+  }
+
   WeekMenu _selectedWeekMenuYourMeals;
 
   WeekMenu get selectedWeekMenuYourMeals => _selectedWeekMenuYourMeals;
@@ -33,6 +42,8 @@ class YourMenuViewModel extends BaseModel {
     _selectedWeekMenu = selectedWeekMenu;
     notifyListeners();
   }
+
+  DayMenu selectedDayMenu;
 
   Future fetchInitialCheckedStatus() async {
     try {
@@ -79,6 +90,11 @@ class YourMenuViewModel extends BaseModel {
         setErrorMessage(f.message);
       }
     }
+  }
+
+  set updateMeal(Meal updatedMeal) {
+    selectedDayMenu.mealMap[updatedMeal.type] = updatedMeal;
+    notifyListeners();
   }
 
   static const String MEAL_STORE_NAME = 'meals';

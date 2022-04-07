@@ -113,10 +113,7 @@ class LeaveApi {
     try {
       await ApiUtils.addTokenToHeaders(headers);
       final response = await ApiUtils.delete(uri, headers: headers);
-      if (response.statusCode >= 200 && response.statusCode < 210) {
-        return true;
-      }
-      return false;
+      return response == null;
     } on FormatException catch (e) {
       print(e.message);
       throw Failure(Constants.BAD_RESPONSE_FORMAT);

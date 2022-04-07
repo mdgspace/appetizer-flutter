@@ -244,6 +244,45 @@ class Meal {
         'secret_code': secretCode,
       };
 
+  Meal copyWith({
+    int id,
+    MealType type,
+    CostType costType,
+    List<MealItem> items,
+    DateTime startTime,
+    DateTime endTime,
+    LeaveStatus leaveStatus,
+    dynamic wastage,
+    bool isSwitchable,
+    SwitchStatus switchStatus,
+    String hostelName,
+    String secretCode,
+    bool isOutdated,
+    bool isLeaveToggleOutdated,
+    DateTime startDateTime,
+    DateTime endDateTime,
+  }) {
+    return Meal(
+      id: id ?? this.id,
+      type: type ?? this.type,
+      costType: costType ?? this.costType,
+      items: items ?? this.items,
+      startTime: startTime ?? this.startTime,
+      endTime: endTime ?? this.endTime,
+      leaveStatus: leaveStatus ?? this.leaveStatus,
+      wastage: wastage ?? this.wastage,
+      isSwitchable: isSwitchable ?? this.isSwitchable,
+      switchStatus: switchStatus ?? this.switchStatus,
+      hostelName: hostelName ?? this.hostelName,
+      secretCode: secretCode ?? this.secretCode,
+      isLeaveToggleOutdated:
+          isLeaveToggleOutdated ?? this.isLeaveToggleOutdated,
+      isOutdated: isOutdated ?? this.isOutdated,
+      startDateTime: startDateTime ?? this.startDateTime,
+      endDateTime: endDateTime ?? this.endDateTime,
+    );
+  }
+
   String get title {
     switch (type) {
       case MealType.B:

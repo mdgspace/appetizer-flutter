@@ -1,6 +1,5 @@
 import 'package:appetizer/constants.dart';
 import 'package:appetizer/enums/view_state.dart';
-import 'package:appetizer/models/menu/week_menu.dart';
 import 'package:appetizer/ui/base_view.dart';
 import 'package:appetizer/ui/components/appetizer_error_widget.dart';
 import 'package:appetizer/ui/components/appetizer_progress_widget.dart';
@@ -26,6 +25,7 @@ class _YourMenuViewState extends State<YourMenuView> {
     super.didUpdateWidget(oldWidget);
     if (DateTimeUtils.getWeekNumber(oldWidget.selectedDateTime) !=
         DateTimeUtils.getWeekNumber(widget.selectedDateTime)) {
+      _model.selectedDateTime = widget.selectedDateTime;
       _model.fetchSelectedWeekMenu(
         DateTimeUtils.getWeekNumber(widget.selectedDateTime),
       );
@@ -38,6 +38,7 @@ class _YourMenuViewState extends State<YourMenuView> {
       onModelReady: (model) {
         _model = model;
         _model.fetchInitialCheckedStatus();
+        _model.selectedDateTime = widget.selectedDateTime;
         _model.fetchSelectedWeekMenu(
           DateTimeUtils.getWeekNumber(widget.selectedDateTime),
         );
@@ -46,13 +47,13 @@ class _YourMenuViewState extends State<YourMenuView> {
         child: () {
           switch (model.state) {
             case ViewState.Idle:
-              DayMenu selectedDayMenu;
+              model.selectedDayMenu = null;
               model.selectedWeekMenu.dayMenus.forEach((dayMenu) {
                 if (dayMenu.date.weekday == widget.selectedDateTime.weekday) {
-                  selectedDayMenu = dayMenu;
+                  model.selectedDayMenu = dayMenu;
                 }
               });
-              if (selectedDayMenu == null) {
+              if (model.selectedDayMenu == null) {
                 return AppetizerErrorWidget(
                   errorMessage:
                       'The menu for this day has not been uploaded yet!',
@@ -60,7 +61,7 @@ class _YourMenuViewState extends State<YourMenuView> {
               }
               final dailyItems = model.selectedWeekMenu.dailyItems;
               return YourDayMenuView(
-                dayMenu: selectedDayMenu,
+                dayMenu: model.selectedDayMenu,
                 dailyItems: dailyItems,
               );
 
