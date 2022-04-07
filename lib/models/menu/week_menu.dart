@@ -275,7 +275,8 @@ class Meal {
       switchStatus: switchStatus ?? this.switchStatus,
       hostelName: hostelName ?? this.hostelName,
       secretCode: secretCode ?? this.secretCode,
-      isLeaveToggleOutdated: isLeaveToggleOutdated ?? isLeaveToggleOutdated,
+      isLeaveToggleOutdated:
+          isLeaveToggleOutdated ?? this.isLeaveToggleOutdated,
       isOutdated: isOutdated ?? this.isOutdated,
       startDateTime: startDateTime ?? this.startDateTime,
       endDateTime: endDateTime ?? this.endDateTime,

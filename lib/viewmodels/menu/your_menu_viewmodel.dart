@@ -43,6 +43,8 @@ class YourMenuViewModel extends BaseModel {
     notifyListeners();
   }
 
+  DayMenu selectedDayMenu;
+
   Future fetchInitialCheckedStatus() async {
     try {
       var userDetails = await _userApi.getCurrentUser();
@@ -91,11 +93,7 @@ class YourMenuViewModel extends BaseModel {
   }
 
   set updateMeal(Meal updatedMeal) {
-    selectedWeekMenu.dayMenus.forEach((dayMenu) {
-      if (dayMenu.date.weekday == selectedDateTime.weekday) {
-        dayMenu.mealMap[updatedMeal.type] = updatedMeal;
-      }
-    });
+    selectedDayMenu.mealMap[updatedMeal.type] = updatedMeal;
     notifyListeners();
   }
 

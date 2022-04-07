@@ -32,7 +32,7 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
         Expanded(
           child: Row(
             children: <Widget>[
-              MenuUIUtils.buildtitleAndBhawanNameComponent(widget.meal),
+              MenuUIUtils.buildtitleAndBhawanNameComponent(_model.meal),
               SizedBox(width: 8),
             ],
           ),
@@ -41,7 +41,7 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
           children: <Widget>[
             if (_model.isSwitchEnabled) ...[
               _buildQRButtonComponent(),
-              widget.meal.items.isNotEmpty
+              _model.meal.items.isNotEmpty
                   ? _buildSwitchComponent()
                   : Container(),
             ],
@@ -68,16 +68,16 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
               children: <Widget>[
                 _buildMenuCardHeader(),
                 SizedBox(height: 16),
-                MenuUIUtils.buildMealItemsComponent(widget.meal),
+                MenuUIUtils.buildMealItemsComponent(_model.meal),
               ],
             ),
           ),
           MenuUIUtils.buildDailyItemsComponent(
-            widget.meal,
+            _model.meal,
             widget.dailyItems,
           ),
           MenuUIUtils.buildSpecialMealBanner(
-            widget.meal.costType,
+            _model.meal.costType,
           ),
         ],
       ),
@@ -106,11 +106,11 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
                           onPressed: () => _model.secretCode = null,
                         ),
                         MenuUIUtils.buildtitleAndBhawanNameComponent(
-                            widget.meal),
+                            _model.meal),
                       ],
                     ),
                     Text(
-                      DateFormat.yMMMMEEEEd().format(widget.meal.startDateTime),
+                      DateFormat.yMMMMEEEEd().format(_model.meal.startDateTime),
                     ),
                   ],
                 ),
@@ -118,7 +118,7 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
             ),
           ),
           QRWidget(
-            switchId: widget.meal.switchStatus.id,
+            switchId: _model.meal.switchStatus.id,
           ),
           Container(
             width: double.maxFinite,
@@ -137,7 +137,7 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
   }
 
   Widget _buildFeedbackOrToggleComponent() {
-    if (widget.meal.isOutdated) {
+    if (_model.meal.isOutdated) {
       return Padding(
         padding: const EdgeInsets.all(8),
         child: InkWell(
@@ -160,7 +160,7 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
               : (value) {
                   _model.onLeaveChanged(value).then((_) {
                     context.read<YourMenuViewModel>().updateMeal =
-                        widget.meal.copyWith(
+                        _model.meal.copyWith(
                             leaveStatus: LeaveStatus(
                       status: _model.mealLeaveStatus
                           ? LeaveStatusEnum.N
@@ -177,11 +177,11 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
   Widget _buildSwitchComponent() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12),
-      child: widget.meal.isSwitchable
+      child: _model.meal.isSwitchable
           ? GestureDetector(
               onTap: _model.onSwitchChanged,
               child: Image.asset(
-                widget.meal.isLeaveToggleOutdated
+                _model.meal.isLeaveToggleOutdated
                     ? 'assets/icons/switch_inactive.png'
                     : _model.mealSwitchStatus
                         ? 'assets/icons/switch_active.png'
@@ -195,13 +195,13 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
 
   Widget _buildSkippedFlagComponent() {
     if (ColorUtils.getLeaveColorFromLeaveStatus(
-                widget.meal.leaveStatus?.status) !=
+                _model.meal.leaveStatus?.status) !=
             Colors.white &&
-        widget.meal.isOutdated) {
+        _model.meal.isOutdated) {
       return Container(
         decoration: BoxDecoration(
           color: ColorUtils.getLeaveColorFromLeaveStatus(
-              widget.meal.leaveStatus?.status),
+              _model.meal.leaveStatus?.status),
           borderRadius: BorderRadius.circular(24),
         ),
         padding: const EdgeInsets.symmetric(
@@ -225,11 +225,11 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
         child: Container(
           decoration: BoxDecoration(
             color: ColorUtils.getSwitchColorFromSwitchStatus(
-              widget.meal.switchStatus,
+              _model.meal.switchStatus,
             ),
             borderRadius: BorderRadius.circular(4),
           ),
-          child: widget.meal.switchStatus.status == SwitchStatusEnum.N
+          child: _model.meal.switchStatus.status == SwitchStatusEnum.N
               ? Container()
               : Image.asset(
                   'assets/icons/qr_image.png',
@@ -250,17 +250,17 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
         _model.dailyItems = widget.dailyItems;
         _model.isLeaveToggleOutdated =
             widget.meal?.isLeaveToggleOutdated ?? _model.isLeaveToggleOutdated;
-        _model.updateMealLeaveAndSwitchStatus(widget.meal);
+        _model.updateMealLeaveAndSwitchStatus(_model.meal);
       },
       onDidUpdateWidget: (oldWidget, model) {
         _model.meal = widget.meal;
         _model.dailyItems = widget.dailyItems;
         _model.isLeaveToggleOutdated =
             widget.meal?.isLeaveToggleOutdated ?? _model.isLeaveToggleOutdated;
-        _model.updateMealLeaveAndSwitchStatus(widget.meal);
+        _model.updateMealLeaveAndSwitchStatus(_model.meal);
       },
       builder: (context, model, child) {
-        if (widget.meal == null) return Container();
+        if (model.meal == null) return Container();
 
         return Padding(
           padding: const EdgeInsets.symmetric(vertical: 4),
