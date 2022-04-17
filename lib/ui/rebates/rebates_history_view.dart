@@ -24,6 +24,7 @@ class _RebatesHistoryViewState extends State<RebatesHistoryView> {
     DateTime.now().year - 3,
     DateTime.now().year - 4,
   ];
+  RebatesHistoryViewModel _model;
 
   int _currentItemSelected = DateTime.now().year;
 
@@ -69,6 +70,7 @@ class _RebatesHistoryViewState extends State<RebatesHistoryView> {
                     }).toList(),
                     onChanged: (int newValueSelected) {
                       setState(() => _currentItemSelected = newValueSelected);
+                      _model.getYearlyRebate(_currentItemSelected);
                     },
                   ),
                 ),
@@ -83,7 +85,10 @@ class _RebatesHistoryViewState extends State<RebatesHistoryView> {
   @override
   Widget build(BuildContext context) {
     return BaseView<RebatesHistoryViewModel>(
-      onModelReady: (model) => model.getYearlyRebate(_currentItemSelected),
+      onModelReady: (model) {
+        _model = model;
+        model.getYearlyRebate(_currentItemSelected);
+      },
       builder: (context, model, child) => Scaffold(
         appBar: AppetizerAppBar(title: 'Rebates History'),
         body: Column(
