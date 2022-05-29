@@ -15,7 +15,7 @@ import 'package:appetizer/viewmodels/base_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class HomeViewModel extends BaseModel {
   final MultimessingApi _multimessingApi = locator<MultimessingApi>();
@@ -78,8 +78,8 @@ class HomeViewModel extends BaseModel {
           confirmationTitle: 'UPDATE',
         );
         if (_dialogResponse.confirmed) {
-          if (await canLaunch(appetizerLink)) {
-            await launch(appetizerLink);
+          if (await canLaunchUrlString(appetizerLink)) {
+            await launchUrlString(appetizerLink);
           } else {
             throw 'Could not launch $appetizerLink';
           }

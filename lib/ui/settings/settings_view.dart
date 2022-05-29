@@ -11,7 +11,7 @@ import 'package:appetizer/utils/string_utils.dart';
 import 'package:appetizer/viewmodels/settings/settings_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:share/share.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:appetizer/ui/help/help_view.dart';
 
 class SettingsView extends StatelessWidget {
