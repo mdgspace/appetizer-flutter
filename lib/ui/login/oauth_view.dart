@@ -30,6 +30,10 @@ class _OAuthViewState extends State<OAuthView> {
           initialUrl: omniportSignUpURL,
           javascriptMode: JavascriptMode.unrestricted,
           navigationDelegate: (request) {
+            if (request.url.contains('https://channeli.in/oauth/')) {
+              return NavigationDecision.navigate;
+            }
+
             var _params = request.url.split('?').last.split('&');
             if (_params.first.contains('code')) {
               var _code = _params.first.split('=').last;
