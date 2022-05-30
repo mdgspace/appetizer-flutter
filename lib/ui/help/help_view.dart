@@ -3,7 +3,7 @@ import 'package:appetizer/ui/base_view.dart';
 import 'package:appetizer/ui/components/appetizer_app_bar.dart';
 import 'package:appetizer/viewmodels/help/help_viewmodel.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class HelpView extends StatelessWidget {
   static const String id = 'help_view';
@@ -149,13 +149,13 @@ class HelpView extends StatelessWidget {
 }
 
 void launchFbUrl() {
-  launch('https://m.facebook.com/mdgspace/');
+  launchUrlString('https://m.facebook.com/mdgspace/');
 }
 
 void launchGithubUrl() {
-  launch('https://github.com/mdgspace/');
+  launchUrlString('https://github.com/mdgspace/');
 }
 
 void launchWebUrl() {
-  launch('https://mdg.iitr.ac.in/');
+  launchUrlString('https://mdg.iitr.ac.in/');
 }
