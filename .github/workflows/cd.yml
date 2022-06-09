@@ -6,6 +6,8 @@ on:
 
 env:
   GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
+  FIREBASE_OPTIONS: ${{ secrets.FIREBASE_OPTIONS }}
+  FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
   PROD_BASE_URL: ${{ secrets.PROD_BASE_URL }}
   SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
   FASTLANE_SUPPLY_JSON_KEY: ${{ secrets.FASTLANE_SUPPLY_JSON_KEY }}
@@ -43,6 +45,9 @@ jobs:
       # Check for any formatting issues in the code.
       - run: flutter format --set-exit-if-changed .
 
+      # Save firebase-options.dart
+      - run: echo "${FIREBASE_OPTIONS}" | base64 --decode > lib/firebase_options.dart
+
       # Statically analyze the Dart code for any errors.
       - run: flutter analyze .
 
@@ -57,6 +62,9 @@ jobs:
 
       # Save release keystore for signing
       - run: echo "${RELEASE_KEYSTORE}" | base64 --decode > android/app/key.jks
+
+      # Save firebase_app_id_file.json
+      - run: echo "${FIREBASE_APP_ID}" | base64 --decode > ios/firebase_app_id_file.json
 
       # Build appbundle.
       - name: 'Build dev appbundle'

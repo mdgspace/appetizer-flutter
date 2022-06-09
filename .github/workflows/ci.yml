@@ -5,6 +5,7 @@ on: [push, pull_request]
 env:
   GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
   SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+  FIREBASE_OPTIONS: ${{ secrets.FIREBASE_OPTIONS }}
 
 jobs:
   build:
@@ -27,6 +28,9 @@ jobs:
 
       # Check for any formatting issues in the code.
       - run: flutter format --set-exit-if-changed .
+
+      # Save firebase-options.dart
+      - run: echo "${FIREBASE_OPTIONS}" | base64 --decode > lib/firebase_options.dart
 
       # Statically analyze the Dart code for any errors.
       - run: flutter analyze .
