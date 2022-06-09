@@ -1,5 +1,6 @@
 import 'package:appetizer/app_theme.dart';
 import 'package:appetizer/config/environment_config.dart';
+import 'package:appetizer/firebase_options.dart';
 import 'package:appetizer/locator.dart';
 import 'package:appetizer/services/analytics_service.dart';
 import 'package:appetizer/ui/router.dart';
@@ -25,7 +26,9 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // initialize Firebase App
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   // Register all the models and services before the app starts
   await setupLocator();
@@ -130,3 +133,6 @@ class Appetizer extends StatelessWidget {
     );
   }
 }
+
+
+// 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
