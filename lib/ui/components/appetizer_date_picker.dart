@@ -3,6 +3,7 @@ import 'package:appetizer/ui/base_view.dart';
 import 'package:appetizer/utils/date_time_utils.dart';
 import 'package:appetizer/viewmodels/date_picker_viewmodel.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppetizerDatePicker extends StatefulWidget {
   final Function(DateTime) onDateChanged;
@@ -44,7 +45,7 @@ class _AppetizerDatePickerState extends State<AppetizerDatePicker> {
 
   Widget _buildDateCell(DateTime cellDate) {
     final _scrW = MediaQuery.of(context).size.width;
-    final _padding = 8.0;
+    final _padding = 8.r;
     final _width = (_scrW - (14 * _padding)) / 7;
 
     bool _isCellDateCurrentDate() {
@@ -59,7 +60,7 @@ class _AppetizerDatePickerState extends State<AppetizerDatePicker> {
     return Container(
       padding: EdgeInsets.all(_padding),
       color: AppTheme.secondary,
-      height: 90,
+      height: 90.r,
       child: GestureDetector(
         onTap: () {
           _model.setDateTime(cellDate);
