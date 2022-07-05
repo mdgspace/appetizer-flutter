@@ -102,7 +102,7 @@ class _LoginViewState extends State<LoginView> with TickerProviderStateMixin {
       title: 'SIGNUP WITH CHANNEL-I',
       onPressed: () async {
         var _code = await Get.toNamed(OAuthView.id);
-        if (_code is String) await _model.verifyUser(_code);
+        if (_code is String && _code.isNotEmpty) await _model.verifyUser(_code);
       },
     );
   }

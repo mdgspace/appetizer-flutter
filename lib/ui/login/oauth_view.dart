@@ -1,45 +1,73 @@
-import 'dart:io';
-
 import 'package:appetizer/config/environment_config.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:get/get.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 
-class OAuthView extends StatefulWidget {
+import '../../utils/snackbar_utils.dart';
+
+class OAuthView extends StatelessWidget {
   static const id = 'oauth_view';
-
-  @override
-  State<OAuthView> createState() => _OAuthViewState();
-}
-
-class _OAuthViewState extends State<OAuthView> {
+  OAuthView({Key key}) : super(key: key);
+  final ValueNotifier<int> _loadingState = ValueNotifier(1);
   final String omniportSignUpURL =
       'https://channeli.in/oauth/authorise/?client_id=${EnvironmentConfig.OAUTH_CLIENT_ID}&redirect_uri=${EnvironmentConfig.OAUTH_REDIRECT_URI}';
-
-  @override
-  void initState() {
-    super.initState();
-    if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: WebView(
-          initialUrl: omniportSignUpURL,
-          javascriptMode: JavascriptMode.unrestricted,
-          navigationDelegate: (request) {
-            if (request.url.contains('https://channeli.in/oauth/')) {
-              return NavigationDecision.navigate;
-            }
+        child: ValueListenableBuilder(
+          valueListenable: _loadingState,
+          builder: (context, value, _) {
+            return IndexedStack(
+              index: value,
+              children: [
+                InAppWebView(
+                  initialUrlRequest: URLRequest(
+                    url: Uri.parse(omniportSignUpURL),
+                  ),
+                  initialOptions: InAppWebViewGroupOptions(
+                    crossPlatform: InAppWebViewOptions(
+                      useShouldOverrideUrlLoading: true,
+                    ),
+                  ),
+                  onLoadStop: (_, uri) {
+                    _loadingState.value = 0;
+                  },
+                  onUpdateVisitedHistory: (_, uri, __) {
+                    if (uri != null) {
+                      if (uri.toString().contains('https://channeli.in/feed')) {
+                        Get.back();
+                        SnackBarUtils.showDark('Error', 'Permission Denied!');
+                      }
+                    }
+                  },
+                  shouldOverrideUrlLoading: (_, navigationAction) async {
+                    final url = navigationAction.request.url.toString();
+                    if (url.contains('https://channeli.in/')) {
+                      return NavigationActionPolicy.ALLOW;
+                    }
 
-            var _params = request.url.split('?').last.split('&');
-            if (_params.first.contains('code')) {
-              var _code = _params.first.split('=').last;
-              Get.back(result: _code);
-            }
-            return NavigationDecision.prevent;
+                    var _params = url.split('?').last.split('&');
+                    if (_params.first.contains('code')) {
+                      var _code = _params.first.split('=').last;
+                      Get.back(result: _code);
+                    }
+
+                    return NavigationActionPolicy.CANCEL;
+                  },
+                ),
+                Center(
+                  child: SizedBox(
+                    child: CircularProgressIndicator(
+                      backgroundColor: Colors.grey[300],
+                      color: Colors.grey[500],
+                      strokeWidth: 3.0,
+                    ),
+                  ),
+                ),
+              ],
+            );
           },
         ),
       ),

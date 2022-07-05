@@ -13,6 +13,7 @@ import 'package:appetizer/ui/switches/my_switches_view.dart';
 import 'package:appetizer/ui/user_feedback/user_feedback_view.dart';
 import 'package:appetizer/viewmodels/home_viewmodel.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -42,7 +43,7 @@ class _HomeViewState extends State<HomeView> {
 
   Widget _buildDatePicker() {
     return Container(
-      height: 90,
+      height: 90.r,
       color: AppTheme.secondary,
       width: MediaQuery.of(context).size.width,
       child: AppetizerDatePicker(

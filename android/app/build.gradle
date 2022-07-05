@@ -42,7 +42,7 @@ android {
     defaultConfig {
         applicationId "in.ac.iitr.mdg.appetizer"
         minSdkVersion 21
-        targetSdkVersion 30
+        targetSdkVersion 31
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
