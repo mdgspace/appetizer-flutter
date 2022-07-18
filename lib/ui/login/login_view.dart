@@ -15,6 +15,7 @@ import 'package:appetizer/utils/snackbar_utils.dart';
 import 'package:appetizer/utils/validators.dart';
 import 'package:appetizer/viewmodels/login/login_viewmodel.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
@@ -176,7 +177,7 @@ class _LoginViewState extends State<LoginView> with TickerProviderStateMixin {
                     children: <Widget>[
                       _buildEnrollmentInput(),
                       _buildPasswordInput(),
-                      SizedBox(height: 32),
+                      SizedBox(height: 24.r),
                       Container(
                         width: double.maxFinite,
                         child: _buildLoginButton(),
@@ -191,7 +192,7 @@ class _LoginViewState extends State<LoginView> with TickerProviderStateMixin {
                           ],
                         ),
                       ),
-                      SizedBox(height: 16),
+                      SizedBox(height: 12.r),
                       Container(
                         width: double.maxFinite,
                         child: _buildChannelIButton(),

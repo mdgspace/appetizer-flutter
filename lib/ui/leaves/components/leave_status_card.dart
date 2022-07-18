@@ -3,6 +3,7 @@ import 'package:appetizer/globals.dart';
 import 'package:appetizer/ui/base_view.dart';
 import 'package:appetizer/viewmodels/leaves/leave_status_card_viewmodel.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class LeaveStatusCard extends StatefulWidget {
   final int remainingLeaves;
@@ -19,15 +20,15 @@ class _LeaveStatusCardState extends State<LeaveStatusCard> {
     return BaseView<LeaveStatusCardViewModel>(
       builder: (context, model, child) => Card(
         elevation: 5.0,
-        margin: const EdgeInsets.all(8),
+        margin: EdgeInsets.all(6.r),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(6.r),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.all(16),
+              padding: EdgeInsets.all(12.r),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -36,7 +37,7 @@ class _LeaveStatusCardState extends State<LeaveStatusCard> {
                     children: <Widget>[
                       Text(
                         'Your Status',
-                        style: AppTheme.headline3,
+                        style: AppTheme.headline4,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -72,7 +73,7 @@ class _LeaveStatusCardState extends State<LeaveStatusCard> {
                   Icon(
                     Icons.account_circle,
                     color: AppTheme.secondary,
-                    size: 80,
+                    size: 70.r,
                   ),
                 ],
               ),
@@ -80,16 +81,16 @@ class _LeaveStatusCardState extends State<LeaveStatusCard> {
             Divider(color: AppTheme.grey, height: 0),
             Container(
               width: MediaQuery.of(context).size.width / 2,
-              padding: const EdgeInsets.all(4),
+              padding: EdgeInsets.all(4.r),
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   primary: isCheckedOut ? AppTheme.green : AppTheme.red,
-                  padding: const EdgeInsets.all(10),
+                  padding: EdgeInsets.all(8.r),
                 ),
                 onPressed: model.onCheckTapped,
                 child: Text(
                   (isCheckedOut) ? 'CHECK IN' : 'CHECK OUT',
-                  style: AppTheme.headline4.copyWith(
+                  style: AppTheme.headline5.copyWith(
                     color: AppTheme.white,
                   ),
                 ),

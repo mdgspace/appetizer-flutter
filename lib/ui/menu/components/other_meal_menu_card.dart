@@ -3,6 +3,7 @@ import 'package:appetizer/ui/base_view.dart';
 import 'package:appetizer/utils/menu_ui_utils.dart';
 import 'package:appetizer/viewmodels/menu/other_menu_card_viewmodel.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class OtherMealsMenuCard extends StatefulWidget {
   final Meal meal;
@@ -28,7 +29,7 @@ class _OtherMealsMenuCardState extends State<OtherMealsMenuCard> {
               : widget.meal.switchStatus.status == SwitchStatusEnum.N
                   ? 'assets/icons/switch_active.png'
                   : 'assets/icons/switch_crossed_active.png',
-          width: 30,
+          width: 30.r,
           scale: 2,
         ),
       ),

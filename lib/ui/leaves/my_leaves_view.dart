@@ -6,6 +6,7 @@ import 'package:appetizer/ui/leaves/leave_history_view.dart';
 import 'package:appetizer/ui/leaves/components/leave_status_card.dart';
 import 'package:appetizer/viewmodels/leaves/my_leaves_viewmodel.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class MyLeavesView extends StatelessWidget {
@@ -20,10 +21,10 @@ class MyLeavesView extends StatelessWidget {
         children: <Widget>[
           Icon(
             Icons.info,
-            size: 20,
+            size: 16.r,
             color: AppTheme.blackSecondary,
           ),
-          SizedBox(width: 8),
+          SizedBox(width: 8.r),
           Text(
             info,
             style: AppTheme.bodyText2,
@@ -45,13 +46,13 @@ class MyLeavesView extends StatelessWidget {
           behavior: HitTestBehavior.translucent,
           onTap: () => Get.toNamed(LeavesHistoryView.id),
           child: Padding(
-            padding: const EdgeInsets.all(16),
+            padding: EdgeInsets.all(12.r),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Text(
                   'See Leave History',
-                  style: AppTheme.subtitle1,
+                  style: AppTheme.subtitle2,
                 ),
                 Icon(Icons.keyboard_arrow_right),
               ],

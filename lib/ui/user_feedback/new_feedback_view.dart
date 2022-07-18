@@ -6,6 +6,7 @@ import 'package:appetizer/utils/feedback_utils.dart';
 import 'package:appetizer/utils/validators.dart';
 import 'package:appetizer/viewmodels/feedback/new_feedback_viewmodel.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
 class NewFeedbackView extends StatefulWidget {
@@ -51,7 +52,7 @@ class _NewFeedbackViewState extends State<NewFeedbackView> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text('Title'),
+                  Text('Title', style: AppTheme.headline6),
                   TextFormField(
                     controller: model.titleController,
                     decoration: InputDecoration(
@@ -62,8 +63,8 @@ class _NewFeedbackViewState extends State<NewFeedbackView> {
                     validator: (value) =>
                         value.isEmpty ? "Title can\'t be empty" : null,
                   ),
-                  SizedBox(height: 24),
-                  Text('Type of Feedback'),
+                  SizedBox(height: 16.r),
+                  Text('Type of Feedback', style: AppTheme.headline6),
                   DropdownButton<String>(
                     hint: Text(
                       FeedbackUtils.resolveFeedbackTypeCode(_feedbackType),
@@ -83,8 +84,8 @@ class _NewFeedbackViewState extends State<NewFeedbackView> {
                     onChanged: (newValue) =>
                         setState(() => _feedbackType = newValue),
                   ),
-                  SizedBox(height: 24),
-                  Text('Date'),
+                  SizedBox(height: 16.r),
+                  Text('Date', style: AppTheme.headline6),
                   TextField(
                     focusNode: AlwaysDisabledFocusNode(),
                     decoration: InputDecoration(
@@ -103,9 +104,9 @@ class _NewFeedbackViewState extends State<NewFeedbackView> {
                       }
                     },
                   ),
-                  SizedBox(height: 24),
-                  Text('Description'),
-                  SizedBox(height: 12),
+                  SizedBox(height: 16.r),
+                  Text('Description', style: AppTheme.headline6),
+                  SizedBox(height: 8.r),
                   TextFormField(
                     controller: model.descriptionController,
                     decoration: InputDecoration(border: OutlineInputBorder()),
@@ -114,7 +115,7 @@ class _NewFeedbackViewState extends State<NewFeedbackView> {
                         ? 'Description must be atleast 50 charecters'
                         : null,
                   ),
-                  SizedBox(height: 16),
+                  SizedBox(height: 12.r),
                   Center(
                     child: Image.asset('assets/icons/feedback_dish.png'),
                   ),

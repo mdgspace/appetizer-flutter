@@ -1,5 +1,6 @@
 import 'package:appetizer/app_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppetizerOutineButton extends StatelessWidget {
   final String title;
@@ -16,9 +17,9 @@ class AppetizerOutineButton extends StatelessWidget {
     return TextButton(
       onPressed: onPressed,
       style: TextButton.styleFrom(
-        padding: const EdgeInsets.symmetric(
-          vertical: 12,
-          horizontal: 24,
+        padding: EdgeInsets.symmetric(
+          vertical: 8.r,
+          horizontal: 16.r,
         ),
         primary: Colors.white,
         side: BorderSide(color: AppTheme.primary),
@@ -26,7 +27,6 @@ class AppetizerOutineButton extends StatelessWidget {
       child: Text(
         title,
         style: AppTheme.subtitle1.copyWith(
-          fontSize: 20,
           color: AppTheme.primary,
         ),
       ),

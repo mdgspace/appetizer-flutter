@@ -8,6 +8,7 @@ import 'package:appetizer/ui/components/appetizer_progress_widget.dart';
 import 'package:appetizer/utils/date_time_utils.dart';
 import 'package:appetizer/viewmodels/menu/week_menu_viewmodel.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class WeekMenuView extends StatefulWidget {
   static const String id = 'week_menu_view';
@@ -19,7 +20,7 @@ class WeekMenuView extends StatefulWidget {
 class _WeekMenuViewState extends State<WeekMenuView> {
   Widget _buildWeekMenuHeader() {
     return Container(
-      padding: EdgeInsets.all(8.0),
+      padding: EdgeInsets.all(6.r),
       decoration: BoxDecoration(color: AppTheme.secondary),
       child: Row(
         children: <Widget>[
@@ -82,7 +83,7 @@ class _WeekMenuViewState extends State<WeekMenuView> {
     Widget _buildDateColumn() {
       return Container(
         height: cellHeight,
-        padding: const EdgeInsets.all(8.0),
+        padding: EdgeInsets.all(6.r),
         decoration: BoxDecoration(
           color: AppTheme.lightGrey,
           border: Border.all(color: AppTheme.grey),
@@ -98,7 +99,7 @@ class _WeekMenuViewState extends State<WeekMenuView> {
               ),
               child: Center(
                 child: Padding(
-                  padding: const EdgeInsets.all(12.0),
+                  padding: EdgeInsets.all(10.r),
                   child: Center(
                     child: Text(
                       DateTimeUtils.getWeekDayName(date)
@@ -111,12 +112,8 @@ class _WeekMenuViewState extends State<WeekMenuView> {
                 ),
               ),
             ),
-            Text(
-              date.day.toString(),
-              style: AppTheme.overline.copyWith(
-                fontSize: height < 600 ? 0.0 : 12.0,
-              ),
-            ),
+            SizedBox(height: 2.r),
+            Text(date.day.toString(), style: AppTheme.overline),
           ],
         ),
       );
@@ -140,7 +137,7 @@ class _WeekMenuViewState extends State<WeekMenuView> {
                     (item) => Center(
                       child: Text(
                         item,
-                        style: AppTheme.overline,
+                        style: AppTheme.bodyText2,
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -172,7 +169,7 @@ class _WeekMenuViewState extends State<WeekMenuView> {
           centerTitle: true,
           title: Text(
             'Mess Menu',
-            style: AppTheme.headline1.copyWith(
+            style: AppTheme.headline2.copyWith(
               color: Colors.white,
               fontFamily: 'Lobster_Two',
             ),

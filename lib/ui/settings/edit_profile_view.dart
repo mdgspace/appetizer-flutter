@@ -7,6 +7,7 @@ import 'package:appetizer/ui/settings/components/user_details_card.dart';
 import 'package:appetizer/utils/validators.dart';
 import 'package:appetizer/viewmodels/settings/edit_profile_viewmodel.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class EditProfileView extends StatefulWidget {
   static const String id = 'edit_profile_view';
@@ -31,7 +32,7 @@ class _EditProfileViewState extends State<EditProfileView> {
             children: <Widget>[
               Container(
                 color: AppTheme.secondary,
-                height: MediaQuery.of(context).size.height / 2 -
+                height: MediaQuery.of(context).size.height / 2.5 -
                     AppBar().preferredSize.height,
                 alignment: Alignment.center,
                 child: UserDetailsCard(
@@ -55,10 +56,10 @@ class _EditProfileViewState extends State<EditProfileView> {
                         child: Text(
                           'Edit Profile',
                           textAlign: TextAlign.center,
-                          style: AppTheme.headline3,
+                          style: AppTheme.headline5,
                         ),
                       ),
-                      SizedBox(height: 16),
+                      SizedBox(height: 12.r),
                       AppetizerTextField(
                         keyboardType: TextInputType.number,
                         initialValue: model?.currentUser?.contactNo,
@@ -70,7 +71,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                                 : null,
                         onSaved: (value) => _contactNo = value,
                       ),
-                      SizedBox(height: 16),
+                      SizedBox(height: 12.r),
                       AppetizerTextField(
                         keyboardType: TextInputType.emailAddress,
                         initialValue: model?.currentUser?.email,
@@ -81,7 +82,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                             : null,
                         onSaved: (value) => _email = value,
                       ),
-                      SizedBox(height: 32),
+                      SizedBox(height: 24.r),
                       Container(
                         width: double.maxFinite,
                         child: AppetizerOutineButton(
