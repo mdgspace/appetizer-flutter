@@ -1,4 +1,4 @@
-import 'package:appetizer/models/menu/week_menu.dart';
+import '../../../models/menu/week_menu.dart';
 import 'package:appetizer/ui/base_view.dart';
 import 'package:appetizer/utils/menu_ui_utils.dart';
 import 'package:appetizer/viewmodels/menu/other_menu_card_viewmodel.dart';

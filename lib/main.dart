@@ -1,6 +1,9 @@
 import 'package:appetizer/app_theme.dart';
 import 'package:appetizer/config/environment_config.dart';
+import 'package:appetizer/models/menu/week_menu.dart';
 import 'package:appetizer/firebase_options.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:appetizer/locator.dart';
 import 'package:appetizer/services/analytics_service.dart';
 import 'package:appetizer/ui/router.dart';
@@ -10,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' as fs;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:sembast/sembast.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 /*
@@ -30,7 +34,12 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
+  
+  // initialize Hive
+  await Hive.initFlutter();
+  Hive.registerAdapter(TransactionAdapter());
+  await Hive.openBox<Transaction>('Save');
+  
   // Register all the models and services before the app starts
   await setupLocator();
 

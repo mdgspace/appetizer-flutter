@@ -1,4 +1,4 @@
-import 'package:appetizer/models/menu/week_menu.dart';
+import '../../models/menu/week_menu.dart';
 import 'package:appetizer/ui/menu/components/your_meal_menu_card.dart';
 import 'package:flutter/material.dart';
 

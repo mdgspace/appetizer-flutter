@@ -2,6 +2,10 @@ import 'dart:async';
 
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
+
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+
 import 'package:sembast/sembast.dart';
 import 'package:sembast/sembast_io.dart';
 
@@ -33,6 +37,15 @@ class AppDatabase {
     return _dbOpenCompleter.future;
   }
 
+  Future addTransaction(int week_id){
+  final transaction = Transaction()
+    ..week_id= week_id
+
+  final box = Boxes.getTransactions();
+  box.add(transaction);
+  box.save(); 
+  }
+
   Future _openDatabase() async {
     // Get a platform-specific directory where persistent app data can be stored
     final appDocumentDir = await getApplicationDocumentsDirectory();
@@ -44,3 +57,4 @@ class AppDatabase {
     _dbOpenCompleter.complete(database);
   }
 }
+

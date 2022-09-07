@@ -2,7 +2,7 @@ import 'package:appetizer/config/environment_config.dart';
 import 'package:appetizer/constants.dart';
 import 'package:appetizer/database/app_database.dart';
 import 'package:appetizer/models/failure_model.dart';
-import 'package:appetizer/models/menu/week_menu.dart';
+import '../../models/menu/week_menu.dart';
 import 'package:appetizer/utils/api_utils.dart';
 import 'package:appetizer/utils/app_exceptions.dart';
 import 'package:http/http.dart' as http;

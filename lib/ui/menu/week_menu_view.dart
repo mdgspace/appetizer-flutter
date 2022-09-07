@@ -1,7 +1,7 @@
 import 'package:appetizer/app_theme.dart';
 import 'package:appetizer/constants.dart';
 import 'package:appetizer/enums/view_state.dart';
-import 'package:appetizer/models/menu/week_menu.dart';
+import '../../models/menu/week_menu.dart';
 import 'package:appetizer/ui/base_view.dart';
 import 'package:appetizer/ui/components/appetizer_error_widget.dart';
 import 'package:appetizer/ui/components/appetizer_progress_widget.dart';

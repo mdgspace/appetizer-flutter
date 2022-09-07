@@ -1,5 +1,5 @@
 import 'package:appetizer/app_theme.dart';
-import 'package:appetizer/models/menu/week_menu.dart';
+import '../../../models/menu/week_menu.dart';
 import 'package:appetizer/utils/menu_ui_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';

@@ -5,13 +5,26 @@ import 'package:appetizer/globals.dart';
 import 'package:appetizer/utils/date_time_utils.dart';
 import 'package:intl/intl.dart';
 
-class WeekMenu {
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+
+part 'transaction.g.dart';
+
+@HiveType(typeId: 0)
+class WeekMenu extends HiveObject{
+  @HiveField(0)
   int weekId;
+  @HiveField(1)
   int year;
+  @HiveField(2)
   dynamic name;
+  @HiveField(3)
   String hostelName;
+  @HiveField(4)
   DailyItems dailyItems;
+  @HiveField(5)
   List<DayMenu> dayMenus;
+  @HiveField(6)
   bool isApproved;
 
   WeekMenu({
@@ -46,11 +59,17 @@ class WeekMenu {
       };
 }
 
-class DailyItems {
+@HiveType(typeId: 1)
+class DailyItems extends HiveObject {
+  @HiveField(0)
   int id;
+  @HiveField(1)
   List<MealItem> breakfast;
+  @HiveField(2)
   List<MealItem> lunch;
+  @HiveField(3)
   List<MealItem> dinner;
+  @HiveField(4)
   List<MealItem> snack;
 
   DailyItems({
@@ -92,9 +111,13 @@ List<MealItem> mealItemFromJson(String str) =>
 String mealItemToJson(List<MealItem> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class MealItem {
+@HiveType(typeId: 2)
+class MealItem extends HiveObject {
+  @HiveField(0)
   int id;
+  @HiveField(1)
   MealItemType type;
+  @HiveField(2)
   String name;
 
   MealItem({
@@ -127,11 +150,17 @@ final breakfastTypeValues = EnumValues({
   'str': MealItemType.STR
 });
 
-class DayMenu {
+@HiveType(typeId: 3)
+class DayMenu extends HiveObject{
+  @HiveField(0)
   int id;
+  @HiveField(1)
   int dayId;
+  @HiveField(2)
   DateTime date;
+  @HiveField(3)
   List<Meal> meals;
+  @HiveField(4)
   Map<MealType, Meal> mealMap;
 
   DayMenu({
@@ -165,22 +194,39 @@ class DayMenu {
       };
 }
 
-class Meal {
+@HiveType(typeId: 4)
+class Meal extends HiveObject{
+  @HiveField(0)
   int id;
+  @HiveField(1)
   MealType type;
+  @HiveField(2)
   CostType costType;
+  @HiveField(3)
   List<MealItem> items;
+  @HiveField(4)
   DateTime startTime;
+  @HiveField(5)
   DateTime endTime;
+  @HiveField(6)
   LeaveStatus leaveStatus;
+  @HiveField(7)
   dynamic wastage;
+  @HiveField(8)
   bool isSwitchable;
+  @HiveField(9)
   SwitchStatus switchStatus;
+  @HiveField(10)
   String hostelName;
+  @HiveField(11)
   String secretCode;
+  @HiveField(12)
   bool isOutdated;
+  @HiveField(13)
   bool isLeaveToggleOutdated;
+  @HiveField(14)
   DateTime startDateTime;
+  @HiveField(15)
   DateTime endDateTime;
 
   Meal({
@@ -298,8 +344,11 @@ class Meal {
   }
 }
 
-class LeaveStatus {
+@HiveType(typeId: 5)
+class LeaveStatus extends HiveObject{
+  @HiveField(0)
   int id;
+  @HiveField(1)
   LeaveStatusEnum status;
 
   LeaveStatus({
@@ -320,8 +369,11 @@ class LeaveStatus {
       };
 }
 
-class SwitchStatus {
+@HiveType(typeId: 6)
+class SwitchStatus extends HiveObject {
+  @HiveField(0)
   int id;
+  @HiveField(1)
   SwitchStatusEnum status;
 
   SwitchStatus({
