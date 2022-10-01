@@ -18,6 +18,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 
 class LoginView extends StatefulWidget {
   static const String id = 'login_view';
@@ -32,6 +33,20 @@ class _LoginViewState extends State<LoginView> with TickerProviderStateMixin {
   LoginViewModel _model;
   final _formKey = GlobalKey<FormState>();
   String _enrollmentNo, _password;
+  AnimationController _controller;
+  LottieComposition _successComposition, _failureComposition;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   Widget _buildEnrollmentInput() {
     return AppetizerTextField(
@@ -115,96 +130,148 @@ class _LoginViewState extends State<LoginView> with TickerProviderStateMixin {
         enrollment: _enrollmentNo,
         password: _password,
       );
+      _controller.reset();
+      _model.showLottie = true;
       if (_model.isLoggedIn) {
         _model.subscribeToFCMTopic();
-        await Get.offAllNamed(HomeView.id);
+        _controller
+          ..duration = _successComposition.duration
+          ..forward();
+
+        _controller.addStatusListener((status) async {
+          if (status == AnimationStatus.completed) {
+            await Get.offAllNamed(HomeView.id);
+            _model.showLottie = false;
+          }
+        });
       } else {
         _formKey.currentState.reset();
+        _controller
+          ..duration = _failureComposition.duration
+          ..forward();
         SnackBarUtils.showDark('Error', _model.errorMessage);
       }
     }
   }
 
+  Future<void> _loadComposition() async {
+    // Success Composition
+    _successComposition =
+        await AssetLottie('assets/lottie/success.json').load();
+
+    // Failure Composition
+    _failureComposition =
+        await AssetLottie('assets/lottie/failure.json').load();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BaseView<LoginViewModel>(
-      onModelReady: (model) {
+      onModelReady: (model) async {
         _model = model;
+        model.showLottie = false;
+        await _loadComposition();
+
         Future.delayed(Duration(seconds: 1), () => _model.currentUser = null);
       },
-      builder: (context, model, child) => Scaffold(
-        body: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                height: MediaQuery.of(context).size.height / 2,
-                width: MediaQuery.of(context).size.width,
-                color: AppTheme.secondary,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    SafeArea(
-                      child: Text(
-                        'Appetizer',
-                        textAlign: TextAlign.center,
-                        style: AppTheme.subtitle1.copyWith(
-                          fontSize: 48.0,
-                          fontFamily: 'Lobster_Two',
-                          color: AppTheme.white,
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 16),
-                    Expanded(
-                      child: SvgPicture.asset(
-                        'assets/images/fingerprint.svg',
-                        width: MediaQuery.of(context).size.width / 1.5,
-                        alignment: Alignment.bottomCenter,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 16,
-                ),
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    children: <Widget>[
-                      _buildEnrollmentInput(),
-                      _buildPasswordInput(),
-                      SizedBox(height: 24.r),
+      builder: (context, model, child) {
+        return Scaffold(
+          body: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                  height: MediaQuery.of(context).size.height,
+                  child: Stack(
+                    children: [
                       Container(
-                        width: double.maxFinite,
-                        child: _buildLoginButton(),
-                      ),
-                      IntrinsicHeight(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                        height: MediaQuery.of(context).size.height / 2.04,
+                        width: MediaQuery.of(context).size.width,
+                        color: AppTheme.secondary,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            _buildHelpTextCopmonent(),
-                            VerticalDivider(color: AppTheme.primary),
-                            _buildForgotPasswordTextComponent(),
+                            SafeArea(
+                              child: Text(
+                                'Appetizer',
+                                textAlign: TextAlign.center,
+                                style: AppTheme.subtitle1.copyWith(
+                                  fontSize: 48.0,
+                                  fontFamily: 'Lobster_Two',
+                                  color: AppTheme.white,
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 16.h),
+                            if (!model.showLottie)
+                              Expanded(
+                                child: SvgPicture.asset(
+                                  'assets/images/fingerprint.svg',
+                                  width:
+                                      MediaQuery.of(context).size.width / 1.60,
+                                  alignment: Alignment.bottomCenter,
+                                ),
+                              ),
                           ],
                         ),
                       ),
-                      SizedBox(height: 12.r),
-                      Container(
-                        width: double.maxFinite,
-                        child: _buildChannelIButton(),
+                      if (model.showLottie)
+                        Container(
+                          height: MediaQuery.of(context).size.height,
+                          child: Lottie(
+                            composition: _model.isLoggedIn
+                                ? _successComposition
+                                : _failureComposition,
+                            controller: _controller,
+                          ),
+                        ),
+                      Positioned(
+                        top: MediaQuery.of(context).size.height / 2.05,
+                        child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 20.w,
+                            vertical: 16.w,
+                          ),
+                          child: Form(
+                            key: _formKey,
+                            child: Column(
+                              children: <Widget>[
+                                _buildEnrollmentInput(),
+                                _buildPasswordInput(),
+                                SizedBox(height: 24.r),
+                                Container(
+                                  width: double.maxFinite,
+                                  child: _buildLoginButton(),
+                                ),
+                                IntrinsicHeight(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      _buildHelpTextCopmonent(),
+                                      VerticalDivider(color: AppTheme.primary),
+                                      _buildForgotPasswordTextComponent(),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(height: 12.r),
+                                Container(
+                                  width: double.maxFinite,
+                                  child: _buildChannelIButton(),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
                       ),
                     ],
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }
