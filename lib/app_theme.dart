@@ -41,19 +41,19 @@ class AppTheme {
     fontFamily: 'OpenSans',
   );
   static TextStyle subtitle1 = TextStyle(
-    fontSize: 12.sp,
+    fontSize: 14.sp,
     fontWeight: FontWeight.w500,
     color: blackSecondary,
     fontFamily: 'OpenSans',
   );
   static TextStyle subtitle2 = TextStyle(
-    fontSize: 10.sp,
+    fontSize: 12.sp,
     fontWeight: FontWeight.w500,
     color: blackSecondary,
     fontFamily: 'OpenSans',
   );
   static TextStyle bodyText1 = TextStyle(
-    fontSize: 10.sp,
+    fontSize: 12.sp,
     fontWeight: FontWeight.w400,
     color: blackSecondary,
     fontFamily: 'OpenSans',

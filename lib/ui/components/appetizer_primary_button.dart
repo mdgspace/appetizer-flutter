@@ -22,7 +22,7 @@ class AppetizerPrimaryButton extends StatelessWidget {
           horizontal: 16.r,
         ),
         elevation: 0,
-        primary: AppTheme.primary,
+        backgroundColor: AppTheme.primary,
       ),
       child: Text(
         title,

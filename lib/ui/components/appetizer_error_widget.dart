@@ -33,7 +33,7 @@ class AppetizerErrorWidget extends StatelessWidget {
               ElevatedButton(
                 onPressed: onRetryPressed,
                 style: ElevatedButton.styleFrom(
-                  primary: Theme.of(context).primaryColor,
+                  backgroundColor: Theme.of(context).primaryColor,
                 ),
                 child: Text(
                   'RETRY',

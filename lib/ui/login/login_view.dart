@@ -196,7 +196,7 @@ class _LoginViewState extends State<LoginView> with TickerProviderStateMixin {
                                 'Appetizer',
                                 textAlign: TextAlign.center,
                                 style: AppTheme.subtitle1.copyWith(
-                                  fontSize: 48.0,
+                                  fontSize: 48.sp,
                                   fontFamily: 'Lobster_Two',
                                   color: AppTheme.white,
                                 ),

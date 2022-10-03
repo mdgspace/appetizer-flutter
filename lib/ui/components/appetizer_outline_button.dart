@@ -21,7 +21,7 @@ class AppetizerOutineButton extends StatelessWidget {
           vertical: 8.r,
           horizontal: 16.r,
         ),
-        primary: Colors.white,
+        backgroundColor: Colors.white,
         side: BorderSide(color: AppTheme.primary),
       ),
       child: Text(

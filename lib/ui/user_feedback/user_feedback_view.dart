@@ -68,7 +68,9 @@ class _UserFeedbackViewState extends State<UserFeedbackView> {
             children: <Widget>[
               ElevatedButton(
                 onPressed: () => Get.toNamed(NewFeedbackView.id),
-                style: ElevatedButton.styleFrom(primary: AppTheme.white),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppTheme.white,
+                ),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   child: Row(

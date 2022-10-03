@@ -84,7 +84,7 @@ class _LeaveStatusCardState extends State<LeaveStatusCard> {
               padding: EdgeInsets.all(4.r),
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  primary: isCheckedOut ? AppTheme.green : AppTheme.red,
+                  backgroundColor: isCheckedOut ? AppTheme.green : AppTheme.red,
                   padding: EdgeInsets.all(8.r),
                 ),
                 onPressed: model.onCheckTapped,

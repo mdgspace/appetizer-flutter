@@ -76,7 +76,7 @@ class _AppetizerDatePickerState extends State<AppetizerDatePicker> {
               child: Text(
                 DateTimeUtils.getWeekDayName(cellDate)[0],
                 style: TextStyle(
-                  fontSize: 8.sp,
+                  fontSize: 10.sp,
                   color: _isCellDateSelectedDate()
                       ? AppTheme.primary
                       : _isCellDateCurrentDate()
