@@ -39,6 +39,7 @@ dependencies:
   connectivity_for_web: ^0.4.0+1
   flutter_inappwebview: ^5.4.3+7
   flutter_screenutil: ^5.5.3+2
+  lottie: ^1.4.3
 
 dev_dependencies:
   flutter_test:
@@ -61,6 +62,7 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
+    - assets/lottie/
 
   fonts:
     - family: OpenSans

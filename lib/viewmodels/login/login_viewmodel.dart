@@ -33,6 +33,15 @@ class LoginViewModel extends BaseModel {
 
   OAuthUser get oauthUser => _oauthUser;
 
+  bool _showLottie;
+
+  bool get showLottie => _showLottie;
+
+  set showLottie(bool val) {
+    _showLottie = val;
+    notifyListeners();
+  }
+
   set oauthUser(OAuthUser oauthUser) {
     _oauthUser = oauthUser;
     notifyListeners();
@@ -45,6 +54,7 @@ class LoginViewModel extends BaseModel {
       user = await _userApi.userLogin(enrollment, password);
       token = user.token;
       isLoggedIn = true;
+      _showLottie = true;
       isCheckedOut = user.isCheckedOut;
       currentUser = user;
       setState(ViewState.Idle);

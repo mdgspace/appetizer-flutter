@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:appetizer/app_theme.dart';
 import 'package:appetizer/models/dialog_models.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class DialogService {
@@ -13,14 +14,17 @@ class DialogService {
   void _showDialog(DialogRequest request) {
     Get.dialog(
       SimpleDialog(
-        contentPadding: const EdgeInsets.all(0),
+        contentPadding: EdgeInsets.zero,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(8.r),
           side: BorderSide(color: AppTheme.grey),
         ),
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 36, horizontal: 16),
+            padding: EdgeInsets.symmetric(
+              vertical: 26.r,
+              horizontal: 12.r,
+            ),
             child: Column(
               children: [
                 Icon(
@@ -28,12 +32,12 @@ class DialogService {
                       ? Icons.warning_amber_outlined
                       : Icons.check_circle_outline,
                   color: request.isFailure ? AppTheme.red : AppTheme.green,
-                  size: 72,
+                  size: 60.r,
                 ),
-                SizedBox(height: 16),
+                SizedBox(height: 12.r),
                 Text(
                   request.title,
-                  style: AppTheme.headline3,
+                  style: AppTheme.headline4,
                   textAlign: TextAlign.center,
                 ),
               ],
@@ -45,7 +49,7 @@ class DialogService {
               DialogResponse(confirmed: true),
             ),
             child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16.0),
+              padding: EdgeInsets.symmetric(vertical: 12.r),
               child: Text(
                 request.buttonTitle,
                 style: AppTheme.headline5.copyWith(
@@ -63,23 +67,26 @@ class DialogService {
   void _showConfirmationDialog(DialogRequest request) {
     Get.dialog(
       SimpleDialog(
-        contentPadding: const EdgeInsets.all(0),
+        contentPadding: EdgeInsets.zero,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(6.r),
           side: BorderSide(color: AppTheme.grey),
         ),
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 36, horizontal: 16),
+            padding: EdgeInsets.symmetric(
+              vertical: 24.r,
+              horizontal: 12.r,
+            ),
             child: Column(
               children: [
                 Text(
                   request.title,
-                  style: AppTheme.headline3,
+                  style: AppTheme.headline4,
                   textAlign: TextAlign.center,
                 ),
                 if (request.description != null) ...[
-                  SizedBox(height: 16),
+                  SizedBox(height: 12.r),
                   Text(
                     request.description,
                     style: AppTheme.bodyText1,
@@ -98,7 +105,7 @@ class DialogService {
                     DialogResponse(confirmed: false),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                    padding: EdgeInsets.symmetric(vertical: 12.r),
                     child: Text(
                       request.cancelTitle,
                       style: AppTheme.headline5.copyWith(
@@ -116,7 +123,7 @@ class DialogService {
                     DialogResponse(confirmed: true),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                    padding: EdgeInsets.symmetric(vertical: 12.r),
                     child: Text(
                       request.buttonTitle,
                       style: AppTheme.headline5.copyWith(
@@ -146,17 +153,17 @@ class DialogService {
     Get.dialog(
       SimpleDialog(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(8.r),
           side: BorderSide(color: AppTheme.grey),
         ),
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+            padding: EdgeInsets.symmetric(vertical: 8.r, horizontal: 16.r),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 CircularProgressIndicator(),
-                SizedBox(width: 16),
+                SizedBox(width: 12.r),
                 Expanded(
                   child: Text(
                     request.title,

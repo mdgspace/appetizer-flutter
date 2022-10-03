@@ -1,6 +1,7 @@
 import 'package:appetizer/app_theme.dart';
 import 'package:appetizer/ui/login/login_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:get/get.dart';
 
@@ -21,7 +22,7 @@ class _OnBoarding extends State<OnBoardingView> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Container(
-            padding: EdgeInsets.all(8),
+            padding: EdgeInsets.all(6.r),
             child: Text(
               title,
               textAlign: TextAlign.center,
@@ -31,11 +32,11 @@ class _OnBoarding extends State<OnBoardingView> {
             ),
           ),
           Container(
-            padding: EdgeInsets.all(8),
+            padding: EdgeInsets.all(6.r),
             child: Image.asset(imagePath),
           ),
           Container(
-            padding: EdgeInsets.all(8),
+            padding: EdgeInsets.all(6.r),
             child: Align(
               alignment: FractionalOffset.bottomCenter,
               child: Text(

@@ -1,6 +1,7 @@
 import 'package:appetizer/app_theme.dart';
 import 'package:appetizer/utils/date_time_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:timeline_tile/timeline_tile.dart';
 
@@ -45,10 +46,8 @@ class MultipleLeaveTimelineCard extends StatelessWidget {
 
   Widget _buildEndChild() {
     return Container(
-      height: 160,
-      padding: const EdgeInsets.symmetric(vertical: 16).add(
-        EdgeInsets.only(right: 24, left: 8),
-      ),
+      height: 140.r,
+      padding: EdgeInsets.fromLTRB(6.r, 12.r, 18.r, 12.r),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
@@ -131,8 +130,8 @@ class MultipleLeaveTimelineCard extends StatelessWidget {
             ),
           ),
           Container(
-            height: 40,
-            width: 40,
+            height: 30.r,
+            width: 30.r,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               border: Border.all(color: AppTheme.primary),
@@ -149,19 +148,19 @@ class MultipleLeaveTimelineCard extends StatelessWidget {
           Expanded(
             child: VerticalDivider(
               color: AppTheme.primary,
-              width: 2,
+              width: 2.r,
             ),
           ),
           Container(
-            height: 8,
-            width: 8,
+            height: 6.r,
+            width: 6.r,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               border: Border.all(color: AppTheme.primary),
             ),
           ),
           SizedBox(
-            height: 28,
+            height: 20.r,
             child: VerticalDivider(),
           ),
         ],
@@ -175,8 +174,8 @@ class MultipleLeaveTimelineCard extends StatelessWidget {
       alignment: TimelineAlign.manual,
       lineXY: 0.2,
       indicatorStyle: IndicatorStyle(
-        width: 40,
-        height: 160,
+        width: 30.r,
+        height: 140.r,
         drawGap: true,
         indicator: _buildTimelineIcon(),
       ),

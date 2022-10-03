@@ -9,6 +9,7 @@ import 'package:appetizer/utils/menu_ui_utils.dart';
 import 'package:appetizer/viewmodels/menu/your_menu_card_viewmodel.dart';
 import 'package:appetizer/viewmodels/menu/your_menu_viewmodel.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -33,7 +34,7 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
           child: Row(
             children: <Widget>[
               MenuUIUtils.buildtitleAndBhawanNameComponent(_model.meal),
-              SizedBox(width: 8),
+              SizedBox(width: 6.r),
             ],
           ),
         ),
@@ -46,7 +47,7 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
                   : Container(),
             ],
             _buildSkippedFlagComponent(),
-            SizedBox(width: 10),
+            SizedBox(width: 8.r),
             _buildFeedbackOrToggleComponent(),
           ],
         ),
@@ -56,18 +57,21 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
 
   Widget _buildMenuCard() {
     return Card(
-      margin: EdgeInsets.symmetric(vertical: 4, horizontal: 12),
+      margin: EdgeInsets.symmetric(
+        vertical: 4.r,
+        horizontal: 8.r,
+      ),
       elevation: 2,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: EdgeInsets.all(6.r),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 _buildMenuCardHeader(),
-                SizedBox(height: 16),
+                SizedBox(height: 12.r),
                 MenuUIUtils.buildMealItemsComponent(_model.meal),
               ],
             ),
@@ -92,7 +96,7 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: EdgeInsets.all(6.r),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -124,7 +128,7 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
             width: double.maxFinite,
             color: AppTheme.lightGrey,
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: EdgeInsets.all(6.r),
               child: Text(
                 'Scan this QR code at the mess reception and get delicious meal',
                 style: AppTheme.bodyText1,
@@ -139,13 +143,13 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
   Widget _buildFeedbackOrToggleComponent() {
     if (_model.meal.isOutdated) {
       return Padding(
-        padding: const EdgeInsets.all(8),
+        padding: EdgeInsets.all(8.r),
         child: InkWell(
           onTap: () => Get.toNamed(NewFeedbackView.id),
           child: Image.asset(
             'assets/icons/feedback_button.png',
-            height: 18,
-            width: 18,
+            height: 18.r,
+            width: 18.r,
           ),
         ),
       );
@@ -176,7 +180,7 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
 
   Widget _buildSwitchComponent() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 12),
+      padding: EdgeInsets.symmetric(horizontal: 10.r),
       child: _model.meal.isSwitchable
           ? GestureDetector(
               onTap: _model.onSwitchChanged,
@@ -186,7 +190,7 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
                     : _model.mealSwitchStatus
                         ? 'assets/icons/switch_active.png'
                         : 'assets/icons/switch_crossed_active.png',
-                width: 30,
+                width: 30.r,
               ),
             )
           : Container(),
@@ -204,9 +208,9 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
               _model.meal.leaveStatus?.status),
           borderRadius: BorderRadius.circular(24),
         ),
-        padding: const EdgeInsets.symmetric(
-          horizontal: 8,
-          vertical: 4,
+        padding: EdgeInsets.symmetric(
+          horizontal: 8.r,
+          vertical: 4.r,
         ),
         child: Text(
           'Skipped',
@@ -219,7 +223,7 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
 
   Widget _buildQRButtonComponent() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 4),
+      padding: EdgeInsets.symmetric(horizontal: 4.r),
       child: GestureDetector(
         onTap: _model.onQRTapped,
         child: Container(
@@ -227,14 +231,14 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
             color: ColorUtils.getSwitchColorFromSwitchStatus(
               _model.meal.switchStatus,
             ),
-            borderRadius: BorderRadius.circular(4),
+            borderRadius: BorderRadius.circular(4.r),
           ),
           child: _model.meal.switchStatus.status == SwitchStatusEnum.N
               ? Container()
               : Image.asset(
                   'assets/icons/qr_image.png',
-                  height: 40,
-                  width: 40,
+                  height: 40.r,
+                  width: 40.r,
                 ),
         ),
       ),
@@ -263,7 +267,7 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
         if (model.meal == null) return Container();
 
         return Padding(
-          padding: const EdgeInsets.symmetric(vertical: 4),
+          padding: EdgeInsets.symmetric(vertical: 4.r),
           child: _model.isSwitchEnabled && _model.secretCode != null
               ? _buildQRCard()
               : _buildMenuCard(),

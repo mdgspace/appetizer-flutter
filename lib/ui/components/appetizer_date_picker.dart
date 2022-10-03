@@ -45,7 +45,7 @@ class _AppetizerDatePickerState extends State<AppetizerDatePicker> {
 
   Widget _buildDateCell(DateTime cellDate) {
     final _scrW = MediaQuery.of(context).size.width;
-    final _padding = 8.r;
+    final _padding = 10.r;
     final _width = (_scrW - (14 * _padding)) / 7;
 
     bool _isCellDateCurrentDate() {
@@ -60,7 +60,7 @@ class _AppetizerDatePickerState extends State<AppetizerDatePicker> {
     return Container(
       padding: EdgeInsets.all(_padding),
       color: AppTheme.secondary,
-      height: 90.r,
+      height: 70.r,
       child: GestureDetector(
         onTap: () {
           _model.setDateTime(cellDate);
@@ -76,6 +76,7 @@ class _AppetizerDatePickerState extends State<AppetizerDatePicker> {
               child: Text(
                 DateTimeUtils.getWeekDayName(cellDate)[0],
                 style: TextStyle(
+                  fontSize: 10.sp,
                   color: _isCellDateSelectedDate()
                       ? AppTheme.primary
                       : _isCellDateCurrentDate()
@@ -84,7 +85,7 @@ class _AppetizerDatePickerState extends State<AppetizerDatePicker> {
                 ),
               ),
             ),
-            SizedBox(height: 4),
+            SizedBox(height: 4.r),
             Container(
               width: _width,
               height: _width,
