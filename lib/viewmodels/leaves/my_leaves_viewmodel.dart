@@ -7,11 +7,11 @@ import 'package:appetizer/viewmodels/base_model.dart';
 class MyLeavesViewModel extends BaseModel {
   final LeaveApi _leaveApi = locator<LeaveApi>();
 
-  int _leaveCount;
+  int? _leaveCount;
 
-  int get leaveCount => _leaveCount;
+  int? get leaveCount => _leaveCount;
 
-  set leaveCount(int leaveCount) {
+  set leaveCount(int? leaveCount) {
     _leaveCount = leaveCount;
     notifyListeners();
   }

@@ -14,7 +14,7 @@ class SwitchableMealsViewModel extends BaseModel {
   final DialogService _dialogService = locator<DialogService>();
   final MultimessingApi _multimessingApi = locator<MultimessingApi>();
 
-  bool _isMealSwitched;
+  late bool _isMealSwitched;
 
   bool get isMealSwitched => _isMealSwitched;
 
@@ -23,7 +23,7 @@ class SwitchableMealsViewModel extends BaseModel {
     notifyListeners();
   }
 
-  List<SwitchableMeal> _listOfSwitchableMeals;
+  late List<SwitchableMeal> _listOfSwitchableMeals;
 
   List<SwitchableMeal> get listOfSwitchableMeals => _listOfSwitchableMeals;
 

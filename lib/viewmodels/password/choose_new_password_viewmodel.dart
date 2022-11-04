@@ -12,11 +12,11 @@ class NewPasswordViewModel extends BaseModel {
   final UserApi _userApi = locator<UserApi>();
   final DialogService _dialogService = locator<DialogService>();
 
-  OAuthUser _oauthUser;
+  OAuthUser? _oauthUser;
 
-  OAuthUser get oauthUser => _oauthUser;
+  OAuthUser? get oauthUser => _oauthUser;
 
-  set oauthUser(OAuthUser oauthUser) {
+  set oauthUser(OAuthUser? oauthUser) {
     _oauthUser = oauthUser;
     notifyListeners();
   }
@@ -38,9 +38,9 @@ class NewPasswordViewModel extends BaseModel {
     _dialogService.showCustomProgressDialog(title: 'Logging You In');
     await oAuthComplete(enr, password, email, contactNo);
     _dialogService.popDialog();
-    if (oauthUser.token != null) {
-      var studentData = oauthUser.studentData;
-      token = oauthUser.token;
+    if (oauthUser != null) {
+      var studentData = oauthUser!.studentData;
+      token = oauthUser!.token;
       isLoggedIn = true;
       currentUser = studentData;
       await Get.offNamed(HomeView.id);

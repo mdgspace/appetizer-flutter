@@ -100,7 +100,7 @@ class HomeViewModel extends BaseModel {
       await _pushNotificationService
           .unsubscribeFromTopic('${kReleaseMode ? 'release-' : 'debug-'}all');
       await _pushNotificationService.unsubscribeFromTopic(
-          '${kReleaseMode ? 'release-' : 'debug-'}' + currentUser.hostelCode);
+          '${kReleaseMode ? 'release-' : 'debug-'}' + currentUser!.hostelCode);
       await Get.offAllNamed(LoginView.id);
       _dialogService.popDialog();
     } catch (e) {

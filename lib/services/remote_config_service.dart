@@ -8,17 +8,21 @@ class RemoteConfigService {
   final FirebaseRemoteConfig _remoteConfig;
   final defaults = <String, dynamic>{};
 
-  static RemoteConfigService _instance;
+  static late RemoteConfigService _instance;
+  static bool _instantiated = false;
 
   static Future<RemoteConfigService> getInstance() async {
-    _instance ??= RemoteConfigService(
+    if(_instantiated == false){
+      _instance = RemoteConfigService(
       remoteConfig: FirebaseRemoteConfig.instance,
-    );
+      );
+      _instantiated = true;
+    }
 
     return _instance;
   }
 
-  RemoteConfigService({FirebaseRemoteConfig remoteConfig})
+  RemoteConfigService({required FirebaseRemoteConfig remoteConfig})
       : _remoteConfig = remoteConfig;
 
   String get appetizerLink => _remoteConfig.getString(APP_LINK);

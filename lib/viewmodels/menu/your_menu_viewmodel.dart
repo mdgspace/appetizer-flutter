@@ -16,7 +16,7 @@ class YourMenuViewModel extends BaseModel {
   final MenuApi _menuApi = locator<MenuApi>();
   final UserApi _userApi = locator<UserApi>();
 
-  DateTime _selectedDateTime;
+  late DateTime _selectedDateTime;
 
   DateTime get selectedDateTime => _selectedDateTime;
 
@@ -25,7 +25,7 @@ class YourMenuViewModel extends BaseModel {
     notifyListeners();
   }
 
-  WeekMenu _selectedWeekMenuYourMeals;
+  late WeekMenu _selectedWeekMenuYourMeals;
 
   WeekMenu get selectedWeekMenuYourMeals => _selectedWeekMenuYourMeals;
 
@@ -34,7 +34,7 @@ class YourMenuViewModel extends BaseModel {
     notifyListeners();
   }
 
-  WeekMenu _selectedWeekMenu;
+  late WeekMenu _selectedWeekMenu;
 
   WeekMenu get selectedWeekMenu => _selectedWeekMenu;
 
@@ -43,7 +43,7 @@ class YourMenuViewModel extends BaseModel {
     notifyListeners();
   }
 
-  DayMenu selectedDayMenu;
+  DayMenu? selectedDayMenu;
 
   Future fetchInitialCheckedStatus() async {
     try {
@@ -93,7 +93,7 @@ class YourMenuViewModel extends BaseModel {
   }
 
   set updateMeal(Meal updatedMeal) {
-    selectedDayMenu.mealMap[updatedMeal.type] = updatedMeal;
+    selectedDayMenu?.mealMap[updatedMeal.type] = updatedMeal;
     notifyListeners();
   }
 

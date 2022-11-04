@@ -7,10 +7,10 @@ class PaginatedNotifications {
   List<Notification> results;
 
   PaginatedNotifications({
-    this.count,
-    this.hasNext,
-    this.hasPrevious,
-    this.results,
+    required this.count,
+    required this.hasNext,
+    required this.hasPrevious,
+    required this.results,
   });
 
   factory PaginatedNotifications.fromJson(Map<String, dynamic> json) =>

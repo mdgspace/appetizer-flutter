@@ -9,9 +9,9 @@ import 'package:appetizer/viewmodels/base_model.dart';
 class FaqViewModel extends BaseModel {
   final TransactionApi _transactionApi = locator<TransactionApi>();
 
-  List<Faq> _faqs;
+  List<Faq>? _faqs;
 
-  List<Faq> get faqs => _faqs;
+  List<Faq> get faqs => _faqs ?? [];
 
   set faqs(List<Faq> faqs) {
     _faqs = faqs;

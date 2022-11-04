@@ -59,14 +59,15 @@ class _NewFeedbackViewState extends State<NewFeedbackView> {
                       hintStyle: TextStyle(color: AppTheme.blackPrimary),
                     ),
                     maxLength: 30,
-                    validator: (value) =>
-                        value.isEmpty ? "Title can\'t be empty" : null,
+                    validator: (value){
+                      if (value == null || value.isEmpty) return "Title can\'t be empty";
+                      return null;},
                   ),
                   SizedBox(height: 24),
                   Text('Type of Feedback'),
                   DropdownButton<String>(
                     hint: Text(
-                      FeedbackUtils.resolveFeedbackTypeCode(_feedbackType),
+                      FeedbackUtils.resolveFeedbackTypeCode(_feedbackType) ?? 'No info available',
                       style: TextStyle(color: AppTheme.blackPrimary),
                     ),
                     items: ['gn', 'am', 'hc', 'tm', 'wm', 'ws', 'dn']
@@ -75,13 +76,13 @@ class _NewFeedbackViewState extends State<NewFeedbackView> {
                         value: value,
                         child: Container(
                           child: Text(
-                            FeedbackUtils.resolveFeedbackTypeCode(value),
+                            FeedbackUtils.resolveFeedbackTypeCode(value) ?? 'No info available',
                           ),
                         ),
                       );
                     }).toList(),
-                    onChanged: (newValue) =>
-                        setState(() => _feedbackType = newValue),
+                    onChanged: (newValue){
+                      if (newValue != null) setState(() => _feedbackType = newValue);},
                   ),
                   SizedBox(height: 24),
                   Text('Date'),
@@ -110,9 +111,9 @@ class _NewFeedbackViewState extends State<NewFeedbackView> {
                     controller: model.descriptionController,
                     decoration: InputDecoration(border: OutlineInputBorder()),
                     maxLines: 7,
-                    validator: (value) => value.length < 50
-                        ? 'Description must be atleast 50 charecters'
-                        : null,
+                    validator: (value){ 
+                      if (value == null || value.length < 50) return 'Description must be atleast 50 charecters';
+                      return null;},
                   ),
                   SizedBox(height: 16),
                   Center(

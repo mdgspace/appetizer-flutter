@@ -8,43 +8,43 @@ class User {
   String email;
   String hostelName;
   String hostelCode;
-  String roomNo;
+  String? roomNo;
   int enrNo;
   String name;
   String contactNo;
   String branch;
   dynamic imageUrl;
   bool isCheckedOut;
-  int lastUpdated;
-  int leavesLeft;
+  int? lastUpdated;
+  int? leavesLeft;
   dynamic dob;
-  String gender;
+  String? gender;
   dynamic degree;
   dynamic admissionYear;
-  String role;
-  String token;
+  String? role;
+  String? token;
   bool isNew;
 
   User({
-    this.email,
-    this.hostelName,
-    this.hostelCode,
+    required this.email,
+    required this.hostelName,
+    required this.hostelCode,
     this.roomNo,
-    this.enrNo,
-    this.name,
-    this.contactNo,
-    this.branch,
-    this.imageUrl,
-    this.isCheckedOut,
+    required this.enrNo,
+    required this.name,
+    required this.contactNo,
+    required this.branch,
+    required this.imageUrl,
+    required this.isCheckedOut,
     this.lastUpdated,
     this.leavesLeft,
-    this.dob,
+    required this.dob,
     this.gender,
-    this.degree,
-    this.admissionYear,
+    required this.degree,
+    required this.admissionYear,
     this.role,
     this.token,
-    this.isNew,
+    required this.isNew,
   });
 
   factory User.fromJson(Map<String, dynamic> json) => User(
@@ -57,7 +57,7 @@ class User {
         contactNo: json['contact_no'],
         branch: json['branch'],
         imageUrl: json['image_url'],
-        isCheckedOut: json['is_checked_out'],
+        isCheckedOut: json['is_checked_out'] ?? false,
         lastUpdated: json['last_updated'],
         leavesLeft: json['leaves_left'],
         dob: json['dob'],
@@ -66,7 +66,7 @@ class User {
         admissionYear: json['admission_year'],
         role: json['role'],
         token: json['token'],
-        isNew: json['is_new'],
+        isNew: json['is_new'] ?? true,
       );
 
   Map<String, dynamic> toJson() => {

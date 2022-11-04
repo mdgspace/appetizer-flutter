@@ -18,7 +18,7 @@ class EditProfileView extends StatefulWidget {
 class _EditProfileViewState extends State<EditProfileView> {
   final _formKey = GlobalKey<FormState>();
 
-  String _email, _contactNo;
+  late String _email, _contactNo;
 
   @override
   Widget build(BuildContext context) {
@@ -35,12 +35,12 @@ class _EditProfileViewState extends State<EditProfileView> {
                     AppBar().preferredSize.height,
                 alignment: Alignment.center,
                 child: UserDetailsCard(
-                  name: model.currentUser.name,
-                  enrollmentNo: model.currentUser.enrNo.toString(),
-                  branch: model.currentUser.branch,
-                  hostel: model.currentUser.hostelName,
-                  roomNo: model.currentUser.roomNo,
-                  email: model.currentUser.email,
+                  name: model.currentUser!.name,
+                  enrollmentNo: model.currentUser!.enrNo.toString(),
+                  branch: model.currentUser!.branch,
+                  hostel: model.currentUser!.hostelName,
+                  roomNo: model.currentUser!.roomNo,
+                  email: model.currentUser!.email,
                 ),
               ),
               Form(
@@ -61,25 +61,29 @@ class _EditProfileViewState extends State<EditProfileView> {
                       SizedBox(height: 16),
                       AppetizerTextField(
                         keyboardType: TextInputType.number,
-                        initialValue: model?.currentUser?.contactNo,
+                        initialValue: model.currentUser!.contactNo,
                         iconData: Icons.phone,
                         label: 'Contact Number',
                         validator: (value) =>
                             !Validators.isPhoneNumberValid(value)
                                 ? 'Please enter a valid contact no.'
                                 : null,
-                        onSaved: (value) => _contactNo = value,
+                        onSaved: (value){
+                          if (value != null) _contactNo = value;
+                        },
                       ),
                       SizedBox(height: 16),
                       AppetizerTextField(
                         keyboardType: TextInputType.emailAddress,
-                        initialValue: model?.currentUser?.email,
+                        initialValue: model.currentUser!.email,
                         iconData: Icons.email,
                         label: 'Email Address',
                         validator: (value) => !Validators.isEmailValid(value)
                             ? 'Please enter a valid e-mail'
                             : null,
-                        onSaved: (value) => _email = value,
+                        onSaved: (value){
+                          if (value != null) _email = value;
+                        }
                       ),
                       SizedBox(height: 32),
                       Container(

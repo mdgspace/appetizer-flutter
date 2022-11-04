@@ -11,10 +11,10 @@ class Switch {
   String status;
 
   Switch({
-    this.id,
-    this.toMeal,
-    this.secretCode,
-    this.status,
+    required this.id,
+    required this.toMeal,
+    required this.secretCode,
+    required this.status,
   });
 
   factory Switch.fromJson(Map<String, dynamic> json) => Switch(

@@ -11,14 +11,14 @@ import 'package:flutter/material.dart';
 class YourMenuView extends StatefulWidget {
   final DateTime selectedDateTime;
 
-  const YourMenuView({Key key, this.selectedDateTime}) : super(key: key);
+  const YourMenuView({Key? key, required this.selectedDateTime}) : super(key: key);
 
   @override
   _YourMenuViewState createState() => _YourMenuViewState();
 }
 
 class _YourMenuViewState extends State<YourMenuView> {
-  YourMenuViewModel _model;
+  late YourMenuViewModel _model;
 
   @override
   void didUpdateWidget(covariant YourMenuView oldWidget) {
@@ -61,7 +61,7 @@ class _YourMenuViewState extends State<YourMenuView> {
               }
               final dailyItems = model.selectedWeekMenu.dailyItems;
               return YourDayMenuView(
-                dayMenu: model.selectedDayMenu,
+                dayMenu: model.selectedDayMenu!,
                 dailyItems: dailyItems,
               );
 

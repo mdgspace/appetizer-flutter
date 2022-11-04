@@ -6,7 +6,7 @@ class LeaveDropdownFilter extends StatefulWidget {
   final Function(int) onYearSelected;
 
   const LeaveDropdownFilter(
-      {Key key, this.onMonthSelected, this.onYearSelected})
+      {Key? key, required this.onMonthSelected, required this.onYearSelected})
       : super(key: key);
 
   @override
@@ -38,8 +38,8 @@ class _LeaveDropdownFilterState extends State<LeaveDropdownFilter> {
     'December'
   ];
 
-  String _selectedMonth;
-  int _selectedYear;
+  late String _selectedMonth;
+  late int _selectedYear;
 
   @override
   void initState() {
@@ -95,9 +95,9 @@ class _LeaveDropdownFilterState extends State<LeaveDropdownFilter> {
                                 ),
                               );
                             }).toList(),
-                            onChanged: (String newMonthSelected) {
-                              setState(() => _selectedMonth = newMonthSelected);
-                              widget.onMonthSelected(newMonthSelected);
+                            onChanged: (String? newMonthSelected) {
+                              setState(() => _selectedMonth = newMonthSelected!);
+                              widget.onMonthSelected(newMonthSelected!);
                             },
                           ),
                         ),
@@ -133,9 +133,9 @@ class _LeaveDropdownFilterState extends State<LeaveDropdownFilter> {
                                 ),
                               );
                             }).toList(),
-                            onChanged: (int newYearSelected) {
-                              setState(() => _selectedYear = newYearSelected);
-                              widget.onYearSelected(newYearSelected);
+                            onChanged: (int? newYearSelected) {
+                              setState(() => _selectedYear = newYearSelected!);
+                              widget.onYearSelected(newYearSelected!);
                             },
                           ),
                         ),

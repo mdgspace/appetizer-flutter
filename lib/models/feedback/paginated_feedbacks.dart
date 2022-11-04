@@ -7,10 +7,10 @@ class PaginatedFeedbacks {
   List<AppetizerFeedback> feedbacks;
 
   PaginatedFeedbacks({
-    this.count,
-    this.hasNext,
-    this.hasPrevious,
-    this.feedbacks,
+    required this.count,
+    required this.hasNext,
+    required this.hasPrevious,
+    required this.feedbacks,
   });
 
   factory PaginatedFeedbacks.fromJson(Map<String, dynamic> json) =>

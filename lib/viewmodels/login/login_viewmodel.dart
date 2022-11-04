@@ -20,7 +20,7 @@ class LoginViewModel extends BaseModel {
   final PushNotificationService _pushNotificationService =
       locator<PushNotificationService>();
 
-  User _user;
+  late User _user;
 
   User get user => _user;
 
@@ -31,15 +31,15 @@ class LoginViewModel extends BaseModel {
 
   var _oauthUser;
 
-  OAuthUser get oauthUser => _oauthUser;
+  OAuthUser? get oauthUser => _oauthUser;
 
-  set oauthUser(OAuthUser oauthUser) {
+  set oauthUser(OAuthUser? oauthUser) {
     _oauthUser = oauthUser;
     notifyListeners();
   }
 
   Future loginWithEnrollmentAndPassword(
-      {String enrollment, String password}) async {
+      {required String enrollment, required String password}) async {
     setState(ViewState.Busy);
     try {
       user = await _userApi.userLogin(enrollment, password);
@@ -77,15 +77,15 @@ class LoginViewModel extends BaseModel {
     _dialogService.popDialog();
 
     if (oauthUser != null) {
-      var studentData = oauthUser.studentData;
-      if (oauthUser.isNew) {
+      var studentData = oauthUser!.studentData;
+      if (oauthUser!.isNew) {
         _dialogService.showCustomProgressDialog(title: 'Redirecting');
         await Future.delayed(Duration(milliseconds: 500));
         _dialogService.popDialog();
         await Get.offNamed(ChooseNewPasswordView.id, arguments: studentData);
-      } else if (oauthUser.token != null) {
+      } else if (oauthUser!.token != null) {
         _dialogService.showCustomProgressDialog(title: 'Logging You In');
-        token = oauthUser.token;
+        token = oauthUser!.token;
         isLoggedIn = true;
         currentUser = studentData;
         await Future.delayed(const Duration(milliseconds: 500));

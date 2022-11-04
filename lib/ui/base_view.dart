@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class BaseView<T extends BaseModel> extends StatefulWidget {
-  final Widget Function(BuildContext context, T model, Widget child) builder;
-  final Function(T) onModelReady;
-  final Function(T) onModelDestroy;
-  final Function(Widget, T) onDidUpdateWidget;
-  final Function(T) onDidChangeDependencies;
+  final Widget Function(BuildContext context, T model, Widget? child) builder;
+  final Function(T)? onModelReady;
+  final Function(T)? onModelDestroy;
+  final Function(Widget, T)? onDidUpdateWidget;
+  final Function(T)? onDidChangeDependencies;
 
   BaseView({
-    this.builder,
+    required this.builder,
     this.onModelReady,
     this.onModelDestroy,
     this.onDidUpdateWidget,
@@ -28,7 +28,7 @@ class _BaseViewState<T extends BaseModel> extends State<BaseView<T>> {
   @override
   void initState() {
     if (widget.onModelReady != null) {
-      widget.onModelReady(model);
+      widget.onModelReady!(model);
     }
     super.initState();
   }
@@ -36,15 +36,15 @@ class _BaseViewState<T extends BaseModel> extends State<BaseView<T>> {
   @override
   void didChangeDependencies() {
     if (widget.onDidChangeDependencies != null) {
-      widget.onDidChangeDependencies(model);
+      widget.onDidChangeDependencies!(model);
     }
     super.didChangeDependencies();
   }
 
   @override
-  void didUpdateWidget(Widget oldWidget) {
+  void didUpdateWidget(BaseView<T> oldWidget) {
     if (widget.onDidUpdateWidget != null) {
-      widget.onDidUpdateWidget(oldWidget, model);
+      widget.onDidUpdateWidget!(oldWidget, model);
     }
     super.didUpdateWidget(oldWidget);
   }
@@ -52,7 +52,7 @@ class _BaseViewState<T extends BaseModel> extends State<BaseView<T>> {
   @override
   void dispose() {
     if (widget.onModelDestroy != null) {
-      widget.onModelDestroy(model);
+      widget.onModelDestroy!(model);
     }
     super.dispose();
   }

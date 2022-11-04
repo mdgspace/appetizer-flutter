@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DialogService {
-  Completer _dialogCompleter;
+  Completer<DialogResponse>? _dialogCompleter;
 
-  Completer<DialogResponse> get dialogCompleter => _dialogCompleter;
+  Completer<DialogResponse> get dialogCompleter => _dialogCompleter!;
 
   void _showDialog(DialogRequest request) {
     Get.dialog(
@@ -24,10 +24,10 @@ class DialogService {
             child: Column(
               children: [
                 Icon(
-                  request.isFailure
+                  request.isFailure!
                       ? Icons.warning_amber_outlined
                       : Icons.check_circle_outline,
-                  color: request.isFailure ? AppTheme.red : AppTheme.green,
+                  color: request.isFailure! ? AppTheme.red : AppTheme.green,
                   size: 72,
                 ),
                 SizedBox(height: 16),
@@ -47,7 +47,7 @@ class DialogService {
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 16.0),
               child: Text(
-                request.buttonTitle,
+                request.buttonTitle!,
                 style: AppTheme.headline5.copyWith(
                   color: AppTheme.primary,
                 ),
@@ -78,14 +78,12 @@ class DialogService {
                   style: AppTheme.headline3,
                   textAlign: TextAlign.center,
                 ),
-                if (request.description != null) ...[
                   SizedBox(height: 16),
                   Text(
-                    request.description,
+                    request.description!,
                     style: AppTheme.bodyText1,
                     textAlign: TextAlign.center,
                   ),
-                ],
               ],
             ),
           ),
@@ -100,7 +98,7 @@ class DialogService {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16.0),
                     child: Text(
-                      request.cancelTitle,
+                      request.cancelTitle!,
                       style: AppTheme.headline5.copyWith(
                         color: AppTheme.primary,
                       ),
@@ -118,7 +116,7 @@ class DialogService {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16.0),
                     child: Text(
-                      request.buttonTitle,
+                      request.buttonTitle!,
                       style: AppTheme.headline5.copyWith(
                         color: AppTheme.primary,
                       ),
@@ -176,8 +174,8 @@ class DialogService {
 
   /// Calls the dialog listener and returns a Future that will wait for dialogComplete.
   Future<DialogResponse> showDialog({
-    String title,
-    String description,
+    required String title,
+    required String description,
     String buttonTitle = 'Okay',
     bool isFailure = false,
   }) {
@@ -190,13 +188,13 @@ class DialogService {
         isFailure: isFailure,
       ),
     );
-    return _dialogCompleter.future;
+    return _dialogCompleter!.future;
   }
 
   /// Shows a confirmation dialog
   Future<DialogResponse> showConfirmationDialog({
-    String title,
-    String description,
+    required String title,
+    required String description,
     String confirmationTitle = 'YES',
     String cancelTitle = 'NO',
   }) {
@@ -209,10 +207,10 @@ class DialogService {
         cancelTitle: cancelTitle,
       ),
     );
-    return _dialogCompleter.future;
+    return _dialogCompleter!.future;
   }
 
-  void showCustomProgressDialog({String title}) {
+  void showCustomProgressDialog({required String title}) {
     _showProgressDialog(
       DialogRequest(title: title),
     );
@@ -221,14 +219,14 @@ class DialogService {
   /// Completes the _dialogCompleter to resume the Future's execution call
   void dialogComplete(DialogResponse response, {bool shouldPop = true}) {
     // If dialog is not canceled by user
-    if (shouldPop) Get.key.currentState.pop();
-    _dialogCompleter.complete(response);
+    if (shouldPop) Get.key.currentState!.pop();
+    _dialogCompleter!.complete(response);
     _dialogCompleter = null;
   }
 
   void popDialog() {
-    if (Get.key.currentState.canPop()) {
-      Get.key.currentState.pop();
+    if (Get.key.currentState!.canPop()) {
+      Get.key.currentState!.pop();
     }
   }
 }

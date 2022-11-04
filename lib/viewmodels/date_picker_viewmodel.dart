@@ -2,11 +2,11 @@ import 'package:appetizer/utils/date_time_utils.dart';
 import 'package:appetizer/viewmodels/base_model.dart';
 
 class DatePickerViewModel extends BaseModel {
-  DateTime dateTime;
+  late DateTime dateTime;
 
-  int weekId;
+  late int weekId;
 
-  bool weekDidChange;
+  late bool weekDidChange;
 
   void setDateTime(DateTime value) {
     dateTime = value;
@@ -16,7 +16,6 @@ class DatePickerViewModel extends BaseModel {
     } else {
       weekDidChange = false;
     }
-    print('CurrentDateModel: $dateTime');
     notifyListeners();
   }
 }

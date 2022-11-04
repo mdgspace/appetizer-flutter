@@ -18,7 +18,7 @@ class SettingsViewModel extends BaseModel {
       locator<PushNotificationService>();
   final DialogService _dialogService = locator<DialogService>();
 
-  User _userDetails;
+  late User _userDetails;
 
   User get userDetails => _userDetails;
 
@@ -34,7 +34,7 @@ class SettingsViewModel extends BaseModel {
       setState(ViewState.Idle);
     } on Failure catch (f) {
       if (f.message == Constants.NO_INTERNET_CONNECTION) {
-        userDetails = currentUser;
+        userDetails = currentUser!;
         setState(ViewState.Idle);
       } else {
         setState(ViewState.Error);
@@ -52,7 +52,7 @@ class SettingsViewModel extends BaseModel {
       await _pushNotificationService
           .unsubscribeFromTopic('${kReleaseMode ? 'release-' : 'debug-'}all');
       await _pushNotificationService.unsubscribeFromTopic(
-          '${kReleaseMode ? 'release-' : 'debug-'}' + currentUser.hostelCode);
+          '${kReleaseMode ? 'release-' : 'debug-'}' + currentUser!.hostelCode);
       await Get.offAllNamed(LoginView.id);
       _dialogService.popDialog();
     } catch (e) {

@@ -12,9 +12,9 @@ class Faq {
   String answer;
 
   Faq({
-    this.id,
-    this.question,
-    this.answer,
+    required this.id,
+    required this.question,
+    required this.answer,
   });
 
   factory Faq.fromJson(Map<String, dynamic> json) => Faq(

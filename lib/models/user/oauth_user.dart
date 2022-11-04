@@ -7,14 +7,14 @@ OAuthUser oauthUserFromJson(String str) => OAuthUser.fromJson(json.decode(str));
 String oauthuserToJson(OAuthUser data) => json.encode(data.toJson());
 
 class OAuthUser {
-  String token;
+  String? token;
   User studentData;
   bool isNew;
 
   OAuthUser({
     this.token,
-    this.studentData,
-    this.isNew,
+    required this.studentData,
+    required this.isNew,
   });
 
   factory OAuthUser.fromJson(Map<String, dynamic> json) => OAuthUser(

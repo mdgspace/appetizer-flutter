@@ -7,12 +7,12 @@ class AppetizerVersion {
   int dateCreated;
 
   AppetizerVersion({
-    this.number,
-    this.platform,
-    this.expiryDate,
-    this.isExpired,
-    this.isLatest,
-    this.dateCreated,
+    required this.number,
+    required this.platform,
+    required this.expiryDate,
+    required this.isExpired,
+    required this.isLatest,
+    required this.dateCreated,
   });
 
   factory AppetizerVersion.fromJson(Map<String, dynamic> json) =>

@@ -68,8 +68,8 @@ class MenuApi {
 
     try {
       var prefs = await SharedPreferences.getInstance();
-      var record = await _mealStore.record(prefs.getInt('mealKey')).get(_db);
-      return WeekMenu.fromJson(record);
+      var record = await _mealStore.record(prefs.getInt('mealKey')!).get(_db);
+      return WeekMenu.fromJson(record!);
     } on FormatException catch (e) {
       print(e.message);
       throw Failure(Constants.BAD_RESPONSE_FORMAT);

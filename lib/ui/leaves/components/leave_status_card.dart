@@ -5,7 +5,7 @@ import 'package:appetizer/viewmodels/leaves/leave_status_card_viewmodel.dart';
 import 'package:flutter/material.dart';
 
 class LeaveStatusCard extends StatefulWidget {
-  final int remainingLeaves;
+  final int? remainingLeaves;
 
   LeaveStatusCard(this.remainingLeaves);
 

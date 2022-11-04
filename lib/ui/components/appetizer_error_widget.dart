@@ -2,12 +2,12 @@ import 'package:appetizer/app_theme.dart';
 import 'package:flutter/material.dart';
 
 class AppetizerErrorWidget extends StatelessWidget {
-  final String errorMessage;
-  final VoidCallback onRetryPressed;
+  final String? errorMessage;
+  final VoidCallback? onRetryPressed;
   final Color textColor;
 
   const AppetizerErrorWidget({
-    Key key,
+    Key? key,
     this.errorMessage,
     this.onRetryPressed,
     this.textColor = AppTheme.blackSecondary,

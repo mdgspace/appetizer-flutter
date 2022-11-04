@@ -71,10 +71,10 @@ class _WeekMenuViewState extends State<WeekMenuView> {
   }
 
   Widget _buildTableRow({
-    DateTime date,
-    List<String> breakfast,
-    List<String> lunch,
-    List<String> dinner,
+    required DateTime date,
+    required List<String> breakfast,
+    required List<String> lunch,
+    required List<String> dinner,
   }) {
     final height = MediaQuery.of(context).size.height;
     final cellHeight = (height - AppBar().preferredSize.height * 2.12) / 7;

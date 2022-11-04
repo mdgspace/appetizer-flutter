@@ -21,16 +21,16 @@ import 'package:get/get.dart';
 class LoginView extends StatefulWidget {
   static const String id = 'login_view';
 
-  const LoginView({Key key}) : super(key: key);
+  const LoginView({Key? key}) : super(key: key);
 
   @override
   _LoginViewState createState() => _LoginViewState();
 }
 
 class _LoginViewState extends State<LoginView> with TickerProviderStateMixin {
-  LoginViewModel _model;
+  late LoginViewModel _model;
   final _formKey = GlobalKey<FormState>();
-  String _enrollmentNo, _password;
+  String? _enrollmentNo, _password;
 
   Widget _buildEnrollmentInput() {
     return AppetizerTextField(
@@ -38,8 +38,11 @@ class _LoginViewState extends State<LoginView> with TickerProviderStateMixin {
       label: 'Enrollment No.',
       keyboardType: TextInputType.number,
       validator: (value) =>
-          value.isEmpty ? 'Enrollment No can\'t be empty' : null,
-      onSaved: (value) => _enrollmentNo = value.trim(),
+          (value ?? '').isEmpty ? 'Enrollment No can\'t be empty' : null,
+      onSaved: (value) {
+        if (value != null) _enrollmentNo = value.trim();
+        return null;
+      }
     );
   }
 
@@ -47,7 +50,10 @@ class _LoginViewState extends State<LoginView> with TickerProviderStateMixin {
     return AppetizerPasswordField(
       iconData: Icons.lock,
       label: 'Password',
-      validator: (value) => value.isEmpty ? 'Password can\'t be empty' : null,
+      validator: (value) {
+        if (value == null || value.isEmpty) return 'Password can\'t be empty';
+        return null;
+      },
       onSaved: (value) => _password = value,
     );
   }
@@ -111,14 +117,14 @@ class _LoginViewState extends State<LoginView> with TickerProviderStateMixin {
     if (Validators.validateAndSaveForm(_formKey)) {
       FocusScope.of(context).requestFocus(FocusNode());
       await _model.loginWithEnrollmentAndPassword(
-        enrollment: _enrollmentNo,
-        password: _password,
+        enrollment: _enrollmentNo!,
+        password: _password!,
       );
       if (_model.isLoggedIn) {
         _model.subscribeToFCMTopic();
         await Get.offAllNamed(HomeView.id);
       } else {
-        _formKey.currentState.reset();
+        _formKey.currentState?.reset();
         SnackBarUtils.showDark('Error', _model.errorMessage);
       }
     }

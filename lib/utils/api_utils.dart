@@ -29,7 +29,7 @@ class ApiUtils {
 
   /// Returns JSON POST response
   static Future<dynamic> post(String uri,
-      {Map<String, String> headers, dynamic body}) async {
+      {required Map<String, String> headers, dynamic body}) async {
     try {
       final response = await client.post(Uri.parse(uri),
           headers: headers, body: jsonEncode(body));
@@ -49,7 +49,7 @@ class ApiUtils {
 
   /// Returns JSON PUT response
   static Future<dynamic> put(String uri,
-      {Map<String, String> headers, dynamic body}) async {
+      {required Map<String, String> headers, dynamic body}) async {
     try {
       final response = await client.put(
         Uri.parse(uri),
@@ -72,7 +72,7 @@ class ApiUtils {
 
   /// Returns JSON PATCH response
   static Future<dynamic> patch(String uri,
-      {Map<String, String> headers, dynamic body}) async {
+      {required Map<String, String> headers, dynamic body}) async {
     try {
       final response = await client.patch(Uri.parse(uri),
           headers: headers, body: jsonEncode(body));
@@ -92,7 +92,7 @@ class ApiUtils {
 
   /// Returns JSON DELETE response
   static Future<dynamic> delete(String uri,
-      {Map<String, String> headers}) async {
+      {required Map<String, String> headers}) async {
     try {
       final response = await http.delete(Uri.parse(uri), headers: headers);
       final jsonResponse = ApiUtils.jsonResponse(response);

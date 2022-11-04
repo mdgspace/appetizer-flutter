@@ -8,7 +8,7 @@ import 'package:appetizer/viewmodels/base_model.dart';
 class NotificationsViewModel extends BaseModel {
   final UserApi _userApi = locator<UserApi>();
 
-  List<Notification> _notifications;
+  List<Notification> _notifications = [];
 
   List<Notification> get notifications => _notifications;
 

@@ -6,9 +6,9 @@ class AppetizerOutineButton extends StatelessWidget {
   final VoidCallback onPressed;
 
   const AppetizerOutineButton({
-    Key key,
-    @required this.title,
-    @required this.onPressed,
+    Key? key,
+    required this.title,
+    required this.onPressed,
   }) : super(key: key);
 
   @override

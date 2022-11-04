@@ -7,10 +7,10 @@ class PaginatedLeaves {
   List<Leave> results;
 
   PaginatedLeaves({
-    this.count,
-    this.hasNext,
-    this.hasPrevious,
-    this.results,
+    required this.count,
+    required this.hasNext,
+    required this.hasPrevious,
+    required this.results,
   });
 
   factory PaginatedLeaves.fromJson(Map<String, dynamic> json) =>

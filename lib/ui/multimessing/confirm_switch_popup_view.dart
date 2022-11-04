@@ -14,8 +14,8 @@ class ConfirmSwitchPopupView extends StatefulWidget {
   final Meal toMeal;
 
   const ConfirmSwitchPopupView({
-    Key key,
-    this.toMeal,
+    Key? key,
+    required this.toMeal,
   }) : super(key: key);
 
   @override

@@ -10,15 +10,15 @@ class AppetizerFeedback {
   dynamic response;
 
   AppetizerFeedback({
-    this.id,
-    this.type,
-    this.title,
-    this.message,
-    this.timestamp,
-    this.mealId,
-    this.imageUrl,
-    this.dateIssue,
-    this.response,
+    required this.id,
+    required this.type,
+    required this.title,
+    required this.message,
+    required this.timestamp,
+    required this.mealId,
+    required this.imageUrl,
+    required this.dateIssue,
+    required this.response,
   });
 
   factory AppetizerFeedback.fromJson(Map<String, dynamic> json) =>

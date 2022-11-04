@@ -1,6 +1,8 @@
 class FeedbackUtils {
-  static String resolveFeedbackTypeCode(String str) {
+  static String? resolveFeedbackTypeCode(String? str) {
     switch (str) {
+      case null:
+        return null;
       case 'gn':
         return 'General';
       case 'am':

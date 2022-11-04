@@ -2,13 +2,13 @@ import 'package:flutter/foundation.dart';
 
 class DialogRequest {
   final String title;
-  final String description;
-  final String buttonTitle;
-  final String cancelTitle;
-  final bool isFailure;
+  final String? description;
+  final String? buttonTitle;
+  final String? cancelTitle;
+  final bool? isFailure;
 
   DialogRequest({
-    @required this.title,
+    required this.title,
     this.description,
     this.buttonTitle,
     this.cancelTitle,
@@ -17,13 +17,13 @@ class DialogRequest {
 }
 
 class DialogResponse {
-  final String fieldOne;
-  final String fieldTwo;
+  final String? fieldOne;
+  final String? fieldTwo;
   final bool confirmed;
 
   DialogResponse({
     this.fieldOne,
     this.fieldTwo,
-    this.confirmed,
+    required this.confirmed,
   });
 }

@@ -5,7 +5,7 @@ import 'package:appetizer/viewmodels/menu/other_menu_card_viewmodel.dart';
 import 'package:flutter/material.dart';
 
 class OtherMealsMenuCard extends StatefulWidget {
-  final Meal meal;
+  final Meal? meal;
   final DailyItems dailyItems;
 
   OtherMealsMenuCard(this.meal, this.dailyItems);
@@ -15,17 +15,17 @@ class OtherMealsMenuCard extends StatefulWidget {
 }
 
 class _OtherMealsMenuCardState extends State<OtherMealsMenuCard> {
-  OtherMenuCardViewModel _model;
+  late OtherMenuCardViewModel _model;
 
   Widget _buildSwitchIcon() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12),
       child: GestureDetector(
-        onTap: () => _model.onSwitchTapped(widget.meal),
+        onTap: () => _model.onSwitchTapped(widget.meal!),
         child: Image.asset(
-          widget.meal.isLeaveToggleOutdated
+          widget.meal!.isLeaveToggleOutdated
               ? 'assets/icons/switch_inactive.png'
-              : widget.meal.switchStatus.status == SwitchStatusEnum.N
+              : widget.meal!.switchStatus.status == SwitchStatusEnum.N
                   ? 'assets/icons/switch_active.png'
                   : 'assets/icons/switch_crossed_active.png',
           width: 30,
@@ -39,11 +39,11 @@ class _OtherMealsMenuCardState extends State<OtherMealsMenuCard> {
     return Row(
       children: <Widget>[
         Expanded(
-          child: MenuUIUtils.buildtitleAndBhawanNameComponent(widget.meal),
+          child: MenuUIUtils.buildtitleAndBhawanNameComponent(widget.meal!),
         ),
         if (_model.isSwitchEnabled &&
-            widget.meal.items.isNotEmpty &&
-            widget.meal.isSwitchable)
+            widget.meal!.items.isNotEmpty &&
+            widget.meal!.isSwitchable)
           _buildSwitchIcon(),
       ],
     );
@@ -70,17 +70,17 @@ class _OtherMealsMenuCardState extends State<OtherMealsMenuCard> {
                   children: <Widget>[
                     _buildMenuCardHeader(),
                     SizedBox(height: 16),
-                    MenuUIUtils.buildMealItemsComponent(widget.meal),
+                    MenuUIUtils.buildMealItemsComponent(widget.meal!),
                   ],
                 ),
               ),
               MenuUIUtils.buildDailyItemsComponent(
-                widget.meal,
+                widget.meal!,
                 widget.dailyItems,
               ),
-              MenuUIUtils.buildSpecialMealBanner(
-                widget.meal.costType,
-              ),
+              // MenuUIUtils.buildSpecialMealBanner(
+              //   widget.meal.costType,
+              // ),
             ],
           ),
         ),

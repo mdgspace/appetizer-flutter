@@ -7,11 +7,11 @@ import 'package:appetizer/viewmodels/base_model.dart';
 class MyRebatesViewModel extends BaseModel {
   final TransactionApi _transactionApi = locator<TransactionApi>();
 
-  int _monthlyRebate;
+  int? _monthlyRebate;
 
-  int get monthlyRebate => _monthlyRebate;
+  int? get monthlyRebate => _monthlyRebate;
 
-  set monthlyRebate(int monthlyRebate) {
+  set monthlyRebate(int? monthlyRebate) {
     _monthlyRebate = monthlyRebate;
     notifyListeners();
   }

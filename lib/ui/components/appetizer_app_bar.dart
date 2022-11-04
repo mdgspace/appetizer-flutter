@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 class AppetizerAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final double elevation;
-  final Color backgroundColor;
-  final bool centerTile;
-  final List<Widget> actions;
+  final Color? backgroundColor;
+  final bool? centerTile;
+  final List<Widget>? actions;
 
   const AppetizerAppBar({
-    Key key,
-    @required this.title,
+    Key? key,
+    required this.title,
     this.elevation = 0,
     this.backgroundColor,
     this.centerTile,

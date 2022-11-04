@@ -9,19 +9,19 @@ class WeekMenu {
   int weekId;
   int year;
   dynamic name;
-  String hostelName;
+  String? hostelName;
   DailyItems dailyItems;
   List<DayMenu> dayMenus;
   bool isApproved;
 
   WeekMenu({
-    this.weekId,
-    this.year,
-    this.name,
+    required this.weekId,
+    required this.year,
+    required this.name,
     this.hostelName,
-    this.dailyItems,
-    this.dayMenus,
-    this.isApproved,
+    required this.dailyItems,
+    required this.dayMenus,
+    required this.isApproved,
   });
 
   factory WeekMenu.fromJson(Map<String, dynamic> json) => WeekMenu(
@@ -54,11 +54,11 @@ class DailyItems {
   List<MealItem> snack;
 
   DailyItems({
-    this.id,
-    this.breakfast,
-    this.lunch,
-    this.dinner,
-    this.snack,
+    required this.id,
+    required this.breakfast,
+    required this.lunch,
+    required this.dinner,
+    required this.snack,
   });
 
   factory DailyItems.fromJson(Map<String, dynamic> json) => DailyItems(
@@ -98,14 +98,14 @@ class MealItem {
   String name;
 
   MealItem({
-    this.id,
-    this.type,
-    this.name,
+    required this.id,
+    required this.type,
+    required this.name,
   });
 
   factory MealItem.fromJson(Map<String, dynamic> json) => MealItem(
         id: json['id'],
-        type: breakfastTypeValues.map[json['type']],
+        type: breakfastTypeValues.map[json['type']]!,
         name: json['name'],
       );
 
@@ -132,13 +132,13 @@ class DayMenu {
   int dayId;
   DateTime date;
   List<Meal> meals;
-  Map<MealType, Meal> mealMap;
+  late Map<MealType, Meal> mealMap;
 
   DayMenu({
-    this.id,
-    this.dayId,
-    this.date,
-    this.meals,
+    required this.id,
+    required this.dayId,
+    required this.date,
+    required this.meals,
   }) {
     mealMap = {};
     meals.forEach((meal) {
@@ -168,7 +168,7 @@ class DayMenu {
 class Meal {
   int id;
   MealType type;
-  CostType costType;
+  CostType? costType;
   List<MealItem> items;
   DateTime startTime;
   DateTime endTime;
@@ -176,35 +176,35 @@ class Meal {
   dynamic wastage;
   bool isSwitchable;
   SwitchStatus switchStatus;
-  String hostelName;
-  String secretCode;
+  String? hostelName;
+  String? secretCode;
   bool isOutdated;
   bool isLeaveToggleOutdated;
   DateTime startDateTime;
   DateTime endDateTime;
 
   Meal({
-    this.id,
-    this.type,
+    required this.id,
+    required this.type,
     this.costType,
-    this.items,
-    this.startTime,
-    this.endTime,
-    this.leaveStatus,
-    this.wastage,
-    this.isSwitchable,
-    this.switchStatus,
+    required this.items,
+    required this.startTime,
+    required this.endTime,
+    required this.leaveStatus,
+    required this.wastage,
+    required this.isSwitchable,
+    required this.switchStatus,
     this.hostelName,
     this.secretCode,
-    this.isOutdated,
-    this.isLeaveToggleOutdated,
-    this.startDateTime,
-    this.endDateTime,
+    required this.isOutdated,
+    required this.isLeaveToggleOutdated,
+    required this.startDateTime,
+    required this.endDateTime,
   });
 
   factory Meal.fromJson(Map<String, dynamic> json, DateTime date) => Meal(
         id: json['id'],
-        type: mealTypeValues.map[json['type']],
+        type: mealTypeValues.map[json['type']]!,
         costType: costTypeValues.map[json['cost_type']],
         items:
             List<MealItem>.from(json['items'].map((x) => MealItem.fromJson(x))),
@@ -245,22 +245,22 @@ class Meal {
       };
 
   Meal copyWith({
-    int id,
-    MealType type,
-    CostType costType,
-    List<MealItem> items,
-    DateTime startTime,
-    DateTime endTime,
-    LeaveStatus leaveStatus,
+    int? id,
+    MealType? type,
+    CostType? costType,
+    List<MealItem>? items,
+    DateTime? startTime,
+    DateTime? endTime,
+    LeaveStatus? leaveStatus,
     dynamic wastage,
-    bool isSwitchable,
-    SwitchStatus switchStatus,
-    String hostelName,
-    String secretCode,
-    bool isOutdated,
-    bool isLeaveToggleOutdated,
-    DateTime startDateTime,
-    DateTime endDateTime,
+    bool? isSwitchable,
+    SwitchStatus? switchStatus,
+    String? hostelName,
+    String? secretCode,
+    bool? isOutdated,
+    bool? isLeaveToggleOutdated,
+    DateTime? startDateTime,
+    DateTime? endDateTime,
   }) {
     return Meal(
       id: id ?? this.id,
@@ -299,18 +299,18 @@ class Meal {
 }
 
 class LeaveStatus {
-  int id;
+  int? id;
   LeaveStatusEnum status;
 
   LeaveStatus({
     this.id,
-    this.status,
+    required this.status,
   });
 
-  factory LeaveStatus.fromJson(Map<String, dynamic> json) => LeaveStatus(
+  factory LeaveStatus.fromJson(Map<String, dynamic>? json) => LeaveStatus(
         id: json != null ? json['id'] : null,
         status: json != null
-            ? leaveStatusValues.map[json['status'] ?? 'N']
+            ? leaveStatusValues.map[json['status'] ?? 'N']!
             : LeaveStatusEnum.N,
       );
 
@@ -325,14 +325,14 @@ class SwitchStatus {
   SwitchStatusEnum status;
 
   SwitchStatus({
-    this.id,
-    this.status,
+    required this.id,
+    required this.status,
   });
 
-  factory SwitchStatus.fromJson(Map<String, dynamic> json) => SwitchStatus(
-        id: json != null ? json['id'] : null,
+  factory SwitchStatus.fromJson(Map<String, dynamic>? json) => SwitchStatus(
+        id: json != null? (json['id'] ?? 0) : 0,
         status: json != null
-            ? switchStatusValues.map[json['status'] ?? 'N']
+            ? switchStatusValues.map[json['status'] ?? 'N']!
             : SwitchStatusEnum.N,
       );
 

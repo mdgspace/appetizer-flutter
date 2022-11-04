@@ -14,14 +14,14 @@ class OtherMenuView extends StatefulWidget {
   final String hostelName;
   final DateTime selectedDateTime;
 
-  const OtherMenuView({Key key, this.hostelName, this.selectedDateTime})
+  const OtherMenuView({Key? key, required this.hostelName, required this.selectedDateTime})
       : super(key: key);
   @override
   _OtherMenuViewState createState() => _OtherMenuViewState();
 }
 
 class _OtherMenuViewState extends State<OtherMenuView> {
-  OtherMenuViewModel _model;
+  late OtherMenuViewModel _model;
 
   @override
   void didUpdateWidget(covariant OtherMenuView oldWidget) {
@@ -50,7 +50,7 @@ class _OtherMenuViewState extends State<OtherMenuView> {
         child: () {
           switch (model.state) {
             case ViewState.Idle:
-              DayMenu selectedDayMenu;
+              DayMenu? selectedDayMenu;
               model.hostelWeekMenu.dayMenus.forEach((dayMenu) {
                 if (dayMenu.date.weekday == widget.selectedDateTime.weekday) {
                   selectedDayMenu = dayMenu;
@@ -64,7 +64,7 @@ class _OtherMenuViewState extends State<OtherMenuView> {
               }
               final dailyItems = model.hostelWeekMenu.dailyItems;
               return OtherDayMenuView(
-                dayMenu: selectedDayMenu,
+                dayMenu: selectedDayMenu!,
                 dailyItems: dailyItems,
               );
 
