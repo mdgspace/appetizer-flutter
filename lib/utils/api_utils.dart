@@ -10,7 +10,7 @@ class ApiUtils {
   static http.Client client = http.Client();
 
   /// Returns JSON GET response
-  static Future<dynamic> get(String uri, {Map<String, String> headers}) async {
+  static Future<dynamic> get(String uri, {Map<String, String>? headers}) async {
     try {
       final response = await client.get(Uri.parse(uri), headers: headers);
       final jsonResponse = ApiUtils.jsonResponse(response);
