@@ -66,7 +66,8 @@ class _OnBoarding extends State<OnBoardingView> {
               padding: EdgeInsets.all(16),
               child: Text(
                 'SKIP',
-                style: AppTheme.subtitle1.copyWith(
+                style: TextStyle(
+                  fontSize: 14,
                   color: AppTheme.primary,
                 ),
               ),

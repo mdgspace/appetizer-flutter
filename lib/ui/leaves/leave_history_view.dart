@@ -29,7 +29,7 @@ class _LeavesHistoryViewState extends State<LeavesHistoryView> {
       body: Column(
         children: <Widget>[
           Container(
-            height: 117.h,
+            height: 135.r,
             child: LeaveDropdownFilter(
               onMonthSelected: (month) => setState(
                 () => _selectedMonth = month,

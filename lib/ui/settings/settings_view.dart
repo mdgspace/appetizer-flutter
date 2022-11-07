@@ -79,8 +79,7 @@ class SettingsView extends StatelessWidget {
             children: <Widget>[
               Container(
                 color: AppTheme.secondary,
-                height: MediaQuery.of(context).size.height / 2.45 -
-                    AppBar().preferredSize.height,
+                height: 250.h,
                 alignment: Alignment.center,
                 child: () {
                   switch (model.state) {

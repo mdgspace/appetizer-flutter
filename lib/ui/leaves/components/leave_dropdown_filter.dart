@@ -81,7 +81,7 @@ class _LeaveDropdownFilterState extends State<LeaveDropdownFilter> {
                         style: AppTheme.subtitle2,
                       ),
                       Container(
-                        width: MediaQuery.of(context).size.width / 2 - 36.w,
+                        width: 140.w,
                         decoration: BoxDecoration(
                           border: Border(
                             bottom: BorderSide(color: AppTheme.grey),
@@ -119,7 +119,7 @@ class _LeaveDropdownFilterState extends State<LeaveDropdownFilter> {
                         style: AppTheme.subtitle1,
                       ),
                       Container(
-                        width: MediaQuery.of(context).size.width / 2 - 36.w,
+                        width: 140.w,
                         decoration: BoxDecoration(
                           border: Border(
                             bottom: BorderSide(color: AppTheme.grey),

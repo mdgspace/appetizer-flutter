@@ -96,7 +96,7 @@ class _RebatesHistoryViewState extends State<RebatesHistoryView> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Container(
-              height: 120.r,
+              height: 135.r,
               child: _buildDropdownFilter(),
             ),
             Expanded(

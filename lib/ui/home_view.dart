@@ -30,11 +30,12 @@ class _HomeViewState extends State<HomeView> {
   DateTime _selectedDateTime;
 
   Widget _buildFAB() {
-    return FloatingActionButton(
+    return MaterialButton(
+      shape: CircleBorder(),
+      color: AppTheme.primary,
       onPressed: _model.onCheckoutTap,
-      backgroundColor: AppTheme.primary,
       child: Padding(
-        padding: EdgeInsets.all(10.r),
+        padding: EdgeInsets.all(12.r),
         child: Image.asset(
           'assets/images/check_out.png',
           height: 20.r,
@@ -46,7 +47,7 @@ class _HomeViewState extends State<HomeView> {
 
   Widget _buildDatePicker() {
     return Container(
-      height: 70.r,
+      height: 80.r,
       color: AppTheme.secondary,
       width: MediaQuery.of(context).size.width,
       child: AppetizerDatePicker(
@@ -215,16 +216,18 @@ class _HomeViewState extends State<HomeView> {
                 Text(
                   _model.currentUser?.name ?? '',
                   overflow: TextOverflow.ellipsis,
-                  style: AppTheme.headline4.copyWith(
+                  style: TextStyle(
                     color: AppTheme.white,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
                 SizedBox(height: 6.r),
                 Text(
                   _model.currentUser?.enrNo.toString() ?? '',
                   overflow: TextOverflow.ellipsis,
-                  style: AppTheme.headline4.copyWith(
+                  style: TextStyle(
                     color: AppTheme.white,
+                    fontWeight: FontWeight.w600,
                   ),
                 )
               ],
@@ -241,16 +244,27 @@ class _HomeViewState extends State<HomeView> {
     String title,
     VoidCallback onTap,
   }) {
-    return ListTile(
+    return GestureDetector(
       onTap: () {
         Get.back();
         onTap();
       },
-      minLeadingWidth: 20.r,
-      leading: iconPath != null
-          ? Image.asset(iconPath, width: 16.r, height: 16.r)
-          : Icon(iconData, size: 20.r, color: AppTheme.primary),
-      title: Text(title),
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 10.r, vertical: 15.r),
+        child: Row(
+          children: [
+            iconPath != null
+                ? Image.asset(iconPath, width: 16.r, height: 16.r)
+                : Icon(iconData, size: 20.r, color: AppTheme.primary),
+            SizedBox(width: 10.r),
+            Text(
+              title,
+              style: TextStyle(fontSize: 10),
+              overflow: TextOverflow.ellipsis,
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -263,14 +277,12 @@ class _HomeViewState extends State<HomeView> {
         children: <Widget>[
           Text(
             _model.appetizerVersion,
-            style: AppTheme.overline,
             textAlign: TextAlign.left,
           ),
           Row(
             children: <Widget>[
               Text(
                 'Made with ',
-                style: AppTheme.subtitle2,
               ),
               Icon(
                 Icons.favorite,
@@ -278,7 +290,6 @@ class _HomeViewState extends State<HomeView> {
               ),
               Text(
                 ' by .mdg',
-                style: AppTheme.subtitle2,
               ),
             ],
           )

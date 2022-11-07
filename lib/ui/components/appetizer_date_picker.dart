@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:appetizer/app_theme.dart';
 import 'package:appetizer/ui/base_view.dart';
 import 'package:appetizer/utils/date_time_utils.dart';
@@ -36,17 +38,20 @@ class _AppetizerDatePickerState extends State<AppetizerDatePicker> {
     return _dateList;
   }
 
-  List<Widget> _currentRowWidgets(DateTime anchor) {
+  List<Widget> _currentRowWidgets(DateTime anchor, BoxConstraints constraints) {
     final list = _currentRowDates(anchor).map((dateTime) {
-      return _buildDateCell(dateTime);
+      return _buildDateCell(dateTime, constraints);
     }).toList(growable: false);
     return list;
   }
 
-  Widget _buildDateCell(DateTime cellDate) {
+  Widget _buildDateCell(DateTime cellDate, BoxConstraints constraints) {
     final _scrW = MediaQuery.of(context).size.width;
     final _padding = 10.r;
-    final _width = (_scrW - (14 * _padding)) / 7;
+    final _minWidth = (_scrW - (14 * _padding)) / 7;
+    final _minHeight = (constraints.maxHeight - _padding / 2) / 2;
+
+    final _width = math.min(_minWidth, _minHeight);
 
     bool _isCellDateCurrentDate() {
       return cellDate.day == DateTime.now().day &&
@@ -58,9 +63,12 @@ class _AppetizerDatePickerState extends State<AppetizerDatePicker> {
     }
 
     return Container(
-      padding: EdgeInsets.all(_padding),
+      padding: EdgeInsets.symmetric(
+        horizontal: _padding,
+        vertical: _padding / 4,
+      ),
       color: AppTheme.secondary,
-      height: 70.r,
+      height: 80.r,
       child: GestureDetector(
         onTap: () {
           _model.setDateTime(cellDate);
@@ -125,7 +133,10 @@ class _AppetizerDatePickerState extends State<AppetizerDatePicker> {
     return Container(
       color: AppTheme.secondary,
       width: MediaQuery.of(context).size.width,
-      child: Row(children: _dateWidgets),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: _dateWidgets,
+      ),
     );
   }
 
@@ -143,9 +154,11 @@ class _AppetizerDatePickerState extends State<AppetizerDatePicker> {
         pageSnapping: true,
         controller: _pageController,
         itemBuilder: (context, index) {
-          return _buildDateRow(
-            _currentRowWidgets(_model.dateTime),
-          );
+          return LayoutBuilder(builder: (context, constraints) {
+            return _buildDateRow(
+              _currentRowWidgets(_model.dateTime, constraints),
+            );
+          });
         },
         onPageChanged: (index) {
           print('PAGE: $index');
