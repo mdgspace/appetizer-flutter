@@ -1,5 +1,6 @@
 import 'package:appetizer/ui/components/appetizer_app_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'components/leave_dropdown_filter.dart';
 import 'components/leave_timeline.dart';
 
@@ -28,7 +29,7 @@ class _LeavesHistoryViewState extends State<LeavesHistoryView> {
       body: Column(
         children: <Widget>[
           Container(
-            height: 150.0,
+            height: 135.r,
             child: LeaveDropdownFilter(
               onMonthSelected: (month) => setState(
                 () => _selectedMonth = month,

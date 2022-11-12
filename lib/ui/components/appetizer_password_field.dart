@@ -1,5 +1,6 @@
 import 'package:appetizer/app_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppetizerPasswordField extends StatefulWidget {
   final String label;
@@ -37,22 +38,23 @@ class _AppetizerPasswordFieldState extends State<AppetizerPasswordField> {
       maxLines: 1,
       obscureText: _obscureText,
       keyboardType: TextInputType.visiblePassword,
-      style: AppTheme.subtitle1,
+      style: AppTheme.subtitle2,
       decoration: InputDecoration(
         icon: Icon(
           widget.iconData,
           color: AppTheme.blackSecondary,
-          size: 36,
+          size: 18.r,
         ),
         suffixIcon: GestureDetector(
           onTap: _toggle,
           child: Icon(
             _obscureText ? Icons.visibility_off : Icons.visibility,
             color: AppTheme.blackSecondary,
+            size: 18.r,
           ),
         ),
         labelText: widget.label,
-        labelStyle: AppTheme.subtitle1,
+        labelStyle: AppTheme.subtitle2,
       ),
       onChanged: widget.onChanged,
       validator: widget.validator,

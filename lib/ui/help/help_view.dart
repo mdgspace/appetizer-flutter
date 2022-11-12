@@ -3,6 +3,7 @@ import 'package:appetizer/ui/base_view.dart';
 import 'package:appetizer/ui/components/appetizer_app_bar.dart';
 import 'package:appetizer/viewmodels/help/help_viewmodel.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class HelpView extends StatelessWidget {
@@ -26,7 +27,7 @@ class HelpView extends StatelessWidget {
                       bottom: 0,
                       child: Image(
                         image: AssetImage('assets/images/about_pattern.png'),
-                        width: 280,
+                        width: 170.r,
                       ),
                     ),
                     Center(
@@ -34,18 +35,18 @@ class HelpView extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Padding(
-                            padding: const EdgeInsets.only(bottom: 16),
+                            padding: EdgeInsets.only(bottom: 12.r),
                             child: Material(
                               elevation: 2,
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(24.0),
+                                borderRadius: BorderRadius.circular(16.r),
                               ),
                               clipBehavior: Clip.antiAlias,
                               child: Image(
                                 image: AssetImage(
                                   'assets/icons/logo_rounded.png',
                                 ),
-                                width: 100,
+                                width: 70.r,
                               ),
                             ),
                           ),
@@ -53,10 +54,10 @@ class HelpView extends StatelessWidget {
                             image: AssetImage(
                               'assets/images/appetizer_text.png',
                             ),
-                            width: 100,
+                            width: 60.r,
                           ),
                           Padding(
-                            padding: EdgeInsets.all(4),
+                            padding: EdgeInsets.all(4.r),
                             child: Text(
                               'Version ${model.appetizerVersion}',
                               style: AppTheme.bodyText2.copyWith(
@@ -73,7 +74,7 @@ class HelpView extends StatelessWidget {
             ),
             Expanded(
               child: Container(
-                padding: EdgeInsets.all(16),
+                padding: EdgeInsets.all(12.r),
                 width: MediaQuery.of(context).size.width,
                 child: Column(
                   children: <Widget>[
@@ -84,14 +85,14 @@ class HelpView extends StatelessWidget {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(8),
+                      padding: EdgeInsets.all(6.r),
                       child: Image(
                         image: AssetImage('assets/images/mdg.png'),
-                        height: 40,
+                        height: 30.r,
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.all(8),
+                      padding: EdgeInsets.all(6.r),
                       child: Text(
                         'MDG Space, IIT Roorkee',
                         style: AppTheme.bodyText1,
@@ -106,30 +107,30 @@ class HelpView extends StatelessWidget {
                             GestureDetector(
                               onTap: launchGithubUrl,
                               child: Padding(
-                                padding: EdgeInsets.all(16),
+                                padding: EdgeInsets.all(12.r),
                                 child: Image(
                                   image: AssetImage('assets/images/github.png'),
-                                  width: 48,
+                                  width: 32.r,
                                 ),
                               ),
                             ),
                             GestureDetector(
                               onTap: launchFbUrl,
                               child: Padding(
-                                padding: EdgeInsets.all(16),
+                                padding: EdgeInsets.all(12.r),
                                 child: Image(
                                   image: AssetImage('assets/images/fb.png'),
-                                  width: 48,
+                                  width: 32.r,
                                 ),
                               ),
                             ),
                             GestureDetector(
                               onTap: launchWebUrl,
                               child: Padding(
-                                padding: EdgeInsets.all(16),
+                                padding: EdgeInsets.all(12.r),
                                 child: Image(
                                   image: AssetImage('assets/images/web.png'),
-                                  width: 48,
+                                  width: 32.r,
                                 ),
                               ),
                             ),

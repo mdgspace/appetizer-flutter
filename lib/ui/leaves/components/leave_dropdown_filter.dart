@@ -1,5 +1,6 @@
 import 'package:appetizer/app_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class LeaveDropdownFilter extends StatefulWidget {
   final Function(String) onMonthSelected;
@@ -51,11 +52,14 @@ class _LeaveDropdownFilterState extends State<LeaveDropdownFilter> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(8.0),
+      padding: EdgeInsets.all(8.r),
       color: AppTheme.secondary,
       child: Card(
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+          padding: EdgeInsets.symmetric(
+            vertical: 6.r,
+            horizontal: 12.r,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -63,7 +67,7 @@ class _LeaveDropdownFilterState extends State<LeaveDropdownFilter> {
                 'Filter by',
                 style: AppTheme.subtitle1,
               ),
-              SizedBox(height: 4),
+              SizedBox(height: 4.r),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -72,10 +76,10 @@ class _LeaveDropdownFilterState extends State<LeaveDropdownFilter> {
                     children: <Widget>[
                       Text(
                         'Month',
-                        style: AppTheme.subtitle1,
+                        style: AppTheme.subtitle2,
                       ),
                       Container(
-                        width: MediaQuery.of(context).size.width / 2 - 36,
+                        width: 140.w,
                         decoration: BoxDecoration(
                           border: Border(
                             bottom: BorderSide(color: AppTheme.grey),
@@ -89,7 +93,7 @@ class _LeaveDropdownFilterState extends State<LeaveDropdownFilter> {
                                 value: dropDownMonthItem,
                                 child: Text(
                                   '$dropDownMonthItem',
-                                  style: AppTheme.headline3.copyWith(
+                                  style: AppTheme.headline5.copyWith(
                                     fontWeight: FontWeight.normal,
                                   ),
                                 ),
@@ -104,7 +108,7 @@ class _LeaveDropdownFilterState extends State<LeaveDropdownFilter> {
                       ),
                     ],
                   ),
-                  SizedBox(width: 16),
+                  SizedBox(width: 12.r),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
@@ -113,7 +117,7 @@ class _LeaveDropdownFilterState extends State<LeaveDropdownFilter> {
                         style: AppTheme.subtitle1,
                       ),
                       Container(
-                        width: MediaQuery.of(context).size.width / 2 - 36,
+                        width: 140.w,
                         decoration: BoxDecoration(
                           border: Border(
                             bottom: BorderSide(color: AppTheme.grey),
@@ -127,7 +131,7 @@ class _LeaveDropdownFilterState extends State<LeaveDropdownFilter> {
                                 value: dropDownYearItem,
                                 child: Text(
                                   '$dropDownYearItem',
-                                  style: AppTheme.headline3.copyWith(
+                                  style: AppTheme.headline5.copyWith(
                                     fontWeight: FontWeight.normal,
                                   ),
                                 ),

@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:appetizer/app_theme.dart';
 import 'package:appetizer/models/menu/week_menu.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
 class MenuUIUtils {
@@ -12,7 +13,7 @@ class MenuUIUtils {
       children: <Widget>[
         Text(
           '${meal.title}',
-          style: AppTheme.headline1.copyWith(
+          style: AppTheme.headline3.copyWith(
             color: AppTheme.primary,
           ),
         ),
@@ -39,7 +40,7 @@ class MenuUIUtils {
       width: double.maxFinite,
       color: AppTheme.lightGrey,
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: EdgeInsets.all(6.r),
         child: Text(
           '${_dailyItemsMap[meal.type]}',
           style: AppTheme.bodyText1,
@@ -56,16 +57,16 @@ class MenuUIUtils {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 CircleAvatar(
-                  radius: 16,
+                  radius: 12.r,
                   backgroundColor: Colors.transparent,
                   child: Image.asset(
                     'assets/icons/meal_icon' +
                         (math.Random().nextInt(5) + 1).toString() +
                         '.jpg',
-                    scale: 2.5,
+                    scale: 2,
                   ),
                 ),
-                SizedBox(width: 4),
+                SizedBox(width: 3.r),
                 Expanded(
                   child: Container(
                     child: Text(
@@ -87,7 +88,7 @@ class MenuUIUtils {
         width: double.maxFinite,
         color: AppTheme.primary,
         child: Padding(
-          padding: const EdgeInsets.all(4.0),
+          padding: EdgeInsets.all(4.r),
           child: Text(
             'Special Meal',
             style: AppTheme.bodyText1.copyWith(

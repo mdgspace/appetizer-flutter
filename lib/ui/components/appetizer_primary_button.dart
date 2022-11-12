@@ -1,5 +1,6 @@
 import 'package:appetizer/app_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppetizerPrimaryButton extends StatelessWidget {
   final String title;
@@ -16,17 +17,16 @@ class AppetizerPrimaryButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        padding: const EdgeInsets.symmetric(
-          vertical: 12,
-          horizontal: 24,
+        padding: EdgeInsets.symmetric(
+          vertical: 8.r,
+          horizontal: 16.r,
         ),
         elevation: 0,
-        primary: AppTheme.primary,
+        backgroundColor: AppTheme.primary,
       ),
       child: Text(
         title,
         style: AppTheme.subtitle1.copyWith(
-          fontSize: 20,
           color: AppTheme.white,
         ),
       ),

@@ -5,6 +5,7 @@ import 'package:appetizer/ui/rebates/components/monthly_rebate_card.dart';
 import 'package:appetizer/ui/rebates/rebates_history_view.dart';
 import 'package:appetizer/viewmodels/rebates/my_rebates_viewmodel.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class MyRebatesView extends StatelessWidget {
@@ -22,7 +23,7 @@ class MyRebatesView extends StatelessWidget {
           behavior: HitTestBehavior.translucent,
           onTap: () => Get.toNamed(RebatesHistoryView.id),
           child: Padding(
-            padding: const EdgeInsets.all(16),
+            padding: EdgeInsets.all(12.r),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[

@@ -30,20 +30,24 @@ class _HomeViewState extends State<HomeView> {
   late DateTime _selectedDateTime;
 
   Widget _buildFAB() {
-    return FloatingActionButton(
+    return MaterialButton(
+      shape: CircleBorder(),
+      color: AppTheme.primary,
       onPressed: _model.onCheckoutTap,
-      backgroundColor: AppTheme.primary,
-      child: Image.asset(
-        'assets/images/check_out.png',
-        height: 24,
-        width: 24,
+      child: Padding(
+        padding: EdgeInsets.all(12.r),
+        child: Image.asset(
+          'assets/images/check_out.png',
+          height: 20.r,
+          width: 20.r,
+        ),
       ),
     );
   }
 
   Widget _buildDatePicker() {
     return Container(
-      height: 90.r,
+      height: 80.r,
       color: AppTheme.secondary,
       width: MediaQuery.of(context).size.width,
       child: AppetizerDatePicker(
@@ -80,9 +84,9 @@ class _HomeViewState extends State<HomeView> {
             GestureDetector(
               onTap: () => Get.toNamed(MyLeavesView.id),
               child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 4,
-                  horizontal: 16,
+                padding: EdgeInsets.symmetric(
+                  vertical: 4.r,
+                  horizontal: 12.r,
                 ),
                 child: Text(
                   'CHECK-IN',
@@ -106,7 +110,7 @@ class _HomeViewState extends State<HomeView> {
       title: _model.isSwitchEnabled
           ? Container(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(50),
+                borderRadius: BorderRadius.circular(40.r),
                 border: Border.all(
                   color: Colors.black.withOpacity(0.25),
                 ),
@@ -159,7 +163,7 @@ class _HomeViewState extends State<HomeView> {
             )
           : Text(
               'Menu',
-              style: AppTheme.headline3.copyWith(
+              style: AppTheme.headline4.copyWith(
                 color: AppTheme.white,
               ),
             ),
@@ -169,12 +173,12 @@ class _HomeViewState extends State<HomeView> {
           child: _buildMonthComponent(),
         ),
         Padding(
-          padding: const EdgeInsets.all(8),
+          padding: EdgeInsets.all(6.r),
           child: GestureDetector(
             onTap: () => Get.toNamed(WeekMenuView.id),
             child: Container(
-              height: 24,
-              width: 24,
+              height: 18.r,
+              width: 18.r,
               child: Image.asset(
                 'assets/icons/week_menu.png',
                 color: AppTheme.white,
@@ -199,10 +203,10 @@ class _HomeViewState extends State<HomeView> {
         children: <Widget>[
           Icon(
             Icons.account_circle,
-            size: 80,
+            size: 60.r,
             color: AppTheme.primary,
           ),
-          SizedBox(width: 8),
+          SizedBox(width: 6.r),
           Flexible(
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -212,16 +216,18 @@ class _HomeViewState extends State<HomeView> {
                 Text(
                   _model.currentUser?.name ?? '',
                   overflow: TextOverflow.ellipsis,
-                  style: AppTheme.headline3.copyWith(
+                  style: TextStyle(
                     color: AppTheme.white,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
-                SizedBox(height: 8),
+                SizedBox(height: 6.r),
                 Text(
                   _model.currentUser?.enrNo.toString() ?? '',
                   overflow: TextOverflow.ellipsis,
-                  style: AppTheme.headline3.copyWith(
+                  style: TextStyle(
                     color: AppTheme.white,
+                    fontWeight: FontWeight.w600,
                   ),
                 )
               ],
@@ -234,43 +240,52 @@ class _HomeViewState extends State<HomeView> {
 
   Widget _buildDrawerComponent(
       {String? iconPath, IconData? iconData, required String title, required VoidCallback onTap}) {
-    return ListTile(
+    return GestureDetector(
       onTap: () {
         Get.back();
         onTap();
       },
-      leading: iconPath != null
-          ? Image(image: AssetImage(iconPath), width: 24, height: 24)
-          : Icon(iconData, size: 24, color: AppTheme.primary),
-      title: Text(title),
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 10.r, vertical: 15.r),
+        child: Row(
+          children: [
+            iconPath != null
+                ? Image.asset(iconPath, width: 16.r, height: 16.r)
+                : Icon(iconData, size: 20.r, color: AppTheme.primary),
+            SizedBox(width: 10.r),
+            Text(
+              title,
+              style: TextStyle(fontSize: 10),
+              overflow: TextOverflow.ellipsis,
+            ),
+          ],
+        ),
+      ),
     );
   }
 
   Widget _buildMadeByMdgComponent() {
     return Container(
-      padding: EdgeInsets.all(16),
+      padding: EdgeInsets.all(16.r),
       alignment: Alignment.bottomLeft,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
             _model.appetizerVersion,
-            style: AppTheme.overline,
             textAlign: TextAlign.left,
           ),
           Row(
             children: <Widget>[
               Text(
                 'Made with ',
-                style: AppTheme.subtitle2,
               ),
               Icon(
                 Icons.favorite,
                 color: AppTheme.red,
               ),
               Text(
-                ' by MDG',
-                style: AppTheme.subtitle2,
+                ' by .mdg',
               ),
             ],
           )
@@ -377,7 +392,8 @@ class _HomeViewState extends State<HomeView> {
 
   Widget _buildMonthComponent() {
     return Container(
-      padding: EdgeInsets.only(top: 16, right: 10),
+      padding: EdgeInsets.only(right: 10.r),
+      alignment: Alignment.center,
       color: AppTheme.secondary,
       child: Text(
         DateFormat('MMM’yy').format(_selectedDateTime),

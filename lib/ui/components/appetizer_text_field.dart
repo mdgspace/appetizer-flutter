@@ -1,5 +1,6 @@
 import 'package:appetizer/app_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppetizerTextField extends StatelessWidget {
   final String? initialValue;
@@ -29,14 +30,14 @@ class AppetizerTextField extends StatelessWidget {
       initialValue: initialValue,
       maxLines: maxLines,
       keyboardType: keyboardType,
-      style: AppTheme.subtitle1,
+      style: AppTheme.subtitle2,
       decoration: InputDecoration(
         labelText: label,
-        labelStyle: AppTheme.subtitle1,
+        labelStyle: AppTheme.subtitle2,
         icon: Icon(
           iconData,
           color: AppTheme.blackSecondary,
-          size: 36,
+          size: 18.r,
         ),
       ),
       onChanged: onChanged,

@@ -1,5 +1,6 @@
 import 'package:appetizer/app_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppetizerErrorWidget extends StatelessWidget {
   final String? errorMessage;
@@ -16,7 +17,7 @@ class AppetizerErrorWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: EdgeInsets.all(6.r),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
@@ -27,12 +28,12 @@ class AppetizerErrorWidget extends StatelessWidget {
                 color: textColor,
               ),
             ),
-            SizedBox(height: 8),
+            SizedBox(height: 6.r),
             if (onRetryPressed != null)
               ElevatedButton(
                 onPressed: onRetryPressed,
                 style: ElevatedButton.styleFrom(
-                  primary: Theme.of(context).primaryColor,
+                  backgroundColor: Theme.of(context).primaryColor,
                 ),
                 child: Text(
                   'RETRY',

@@ -1,5 +1,6 @@
 import 'package:appetizer/app_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SwitchConfirmedView extends StatefulWidget {
   static const String id = 'switch_confirmed_view';
@@ -19,15 +20,15 @@ class _SwitchConfirmedViewState extends State<SwitchConfirmedView> {
           children: <Widget>[
             Image.asset(
               'assets/images/meals_switched.png',
-              width: 150,
+              width: 150.r,
             ),
-            SizedBox(height: 30),
+            SizedBox(height: 30.r),
             Text(
               'Switched Meals Successfully!',
               textAlign: TextAlign.center,
               style: AppTheme.headline1.copyWith(
                 color: AppTheme.white,
-                fontSize: 36.0,
+                fontSize: 36.sp,
                 fontFamily: 'Lobster_Two',
               ),
             ),

@@ -1,5 +1,6 @@
 import 'package:appetizer/app_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class UserDetailsCard extends StatelessWidget {
@@ -47,15 +48,15 @@ class UserDetailsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: const EdgeInsets.all(16),
+      margin: EdgeInsets.all(12.r),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(6.r),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: EdgeInsets.all(6.r),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
@@ -66,7 +67,7 @@ class UserDetailsCard extends StatelessWidget {
                       '$name',
                       style: AppTheme.subtitle1,
                     ),
-                    SizedBox(height: 4),
+                    SizedBox(height: 4.r),
                     Container(
                       child: Text(
                         'INDIAN INSTITUTE OF TECHNOLOGY, ROORKEE',
@@ -84,7 +85,7 @@ class UserDetailsCard extends StatelessWidget {
           ),
           Divider(),
           Container(
-            padding: const EdgeInsets.symmetric(vertical: 8),
+            padding: EdgeInsets.symmetric(vertical: 6.r),
             child: Row(
               children: <Widget>[
                 Flexible(
@@ -102,12 +103,12 @@ class UserDetailsCard extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.all(8),
+                  padding: EdgeInsets.all(6.r),
                   decoration: BoxDecoration(shape: BoxShape.circle),
                   child: Icon(
                     Icons.account_circle,
                     color: AppTheme.secondary,
-                    size: 100,
+                    size: 80.r,
                   ),
                 ),
               ],

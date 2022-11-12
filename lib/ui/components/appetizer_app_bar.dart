@@ -23,7 +23,7 @@ class AppetizerAppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: backgroundColor,
       title: Text(
         title,
-        style: AppTheme.headline3.copyWith(
+        style: AppTheme.headline4.copyWith(
           color: AppTheme.white,
         ),
       ),

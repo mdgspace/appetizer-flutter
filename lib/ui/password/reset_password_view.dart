@@ -6,6 +6,7 @@ import 'package:appetizer/ui/components/appetizer_password_field.dart';
 import 'package:appetizer/utils/validators.dart';
 import 'package:appetizer/viewmodels/password/reset_password_viewmodel.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ResetPasswordView extends StatefulWidget {
   static const String id = 'reset_password_view';
@@ -52,17 +53,17 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                       child: Text(
                         'Reset Password',
                         textAlign: TextAlign.center,
-                        style: AppTheme.headline3,
+                        style: AppTheme.headline5,
                       ),
                     ),
                     Text(
                       'Password should be of atleast 8 characters',
                       textAlign: TextAlign.center,
-                      style: AppTheme.subtitle1.copyWith(
+                      style: AppTheme.subtitle2.copyWith(
                         color: AppTheme.red,
                       ),
                     ),
-                    SizedBox(height: 16),
+                    SizedBox(height: 12.r),
                     AppetizerPasswordField(
                       iconData: Icons.lock,
                       label: 'Old Password',
@@ -83,7 +84,7 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                         if (value != null) _newPassword = value;
                       },
                     ),
-                    SizedBox(height: 32),
+                    SizedBox(height: 24.r),
                     Container(
                       width: double.maxFinite,
                       child: AppetizerOutineButton(

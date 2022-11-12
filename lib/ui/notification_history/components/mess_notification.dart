@@ -1,5 +1,6 @@
 import 'package:appetizer/app_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MessNotification extends StatefulWidget {
   final String heading;
@@ -27,12 +28,12 @@ class _MessNotificationState extends State<MessNotification> {
                 fontWeight: FontWeight.normal,
               ),
             ),
-            SizedBox(height: 4),
+            SizedBox(height: 4.r),
             Text(
               '${widget.message}',
               style: AppTheme.subtitle1,
             ),
-            SizedBox(height: 4),
+            SizedBox(height: 4.r),
             Text(
               '${widget.dateAndTime}',
               style: AppTheme.bodyText2,

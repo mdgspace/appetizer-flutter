@@ -1,5 +1,6 @@
 import 'package:appetizer/app_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
 class MonthlyRebateCard extends StatelessWidget {
@@ -21,12 +22,12 @@ class MonthlyRebateCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 5.0,
-      margin: const EdgeInsets.all(8),
+      margin: EdgeInsets.all(6.r),
       child: Column(
         children: <Widget>[
           Container(
             child: Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: EdgeInsets.all(12.r),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -44,7 +45,7 @@ class MonthlyRebateCard extends StatelessWidget {
           ),
           Divider(height: 0),
           Container(
-            padding: const EdgeInsets.all(16),
+            padding: EdgeInsets.all(12.r),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
@@ -63,7 +64,7 @@ class MonthlyRebateCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(height: 8),
+                SizedBox(height: 6.r),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
@@ -79,7 +80,7 @@ class MonthlyRebateCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(height: 8),
+                SizedBox(height: 6.r),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
