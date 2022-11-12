@@ -146,8 +146,6 @@ packages:
     description:
       name: connectivity_plus_windows
       url: "https://pub.flutter-io.cn"
-      name: cross_file
-      url: "https://pub.dartlang.org"
     source: hosted
     version: "0.3.3+2"
   crypto:
