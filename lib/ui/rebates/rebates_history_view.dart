@@ -8,6 +8,7 @@ import 'package:appetizer/ui/rebates/components/monthly_rebate_card.dart';
 import 'package:appetizer/utils/date_time_utils.dart';
 import 'package:appetizer/viewmodels/rebates/rebates_history_viewmodel.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class RebatesHistoryView extends StatefulWidget {
   static const String id = 'rebates_history_view';
@@ -30,11 +31,11 @@ class _RebatesHistoryViewState extends State<RebatesHistoryView> {
 
   Widget _buildDropdownFilter() {
     return Container(
-      padding: const EdgeInsets.all(8.0),
+      padding: EdgeInsets.all(8.r),
       color: AppTheme.secondary,
       child: Card(
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+          padding: EdgeInsets.symmetric(vertical: 6.r, horizontal: 12.r),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -42,10 +43,10 @@ class _RebatesHistoryViewState extends State<RebatesHistoryView> {
                 'Filter by',
                 style: AppTheme.subtitle1,
               ),
-              SizedBox(height: 4),
+              SizedBox(height: 4.r),
               Text(
                 'Year',
-                style: AppTheme.subtitle1,
+                style: AppTheme.subtitle2,
               ),
               Container(
                 width: double.maxFinite,
@@ -62,7 +63,7 @@ class _RebatesHistoryViewState extends State<RebatesHistoryView> {
                         value: year,
                         child: Text(
                           '$year',
-                          style: AppTheme.headline3.copyWith(
+                          style: AppTheme.headline4.copyWith(
                             fontWeight: FontWeight.normal,
                           ),
                         ),
@@ -95,7 +96,7 @@ class _RebatesHistoryViewState extends State<RebatesHistoryView> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Container(
-              height: 150.0,
+              height: 135.r,
               child: _buildDropdownFilter(),
             ),
             Expanded(

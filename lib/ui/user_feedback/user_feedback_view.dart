@@ -7,6 +7,7 @@ import 'package:appetizer/ui/user_feedback/new_feedback_view.dart';
 import 'package:appetizer/utils/feedback_utils.dart';
 import 'package:appetizer/viewmodels/feedback/user_feedback_viewmodel.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -67,7 +68,9 @@ class _UserFeedbackViewState extends State<UserFeedbackView> {
             children: <Widget>[
               ElevatedButton(
                 onPressed: () => Get.toNamed(NewFeedbackView.id),
-                style: ElevatedButton.styleFrom(primary: AppTheme.white),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppTheme.white,
+                ),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   child: Row(
@@ -75,12 +78,12 @@ class _UserFeedbackViewState extends State<UserFeedbackView> {
                       Icon(
                         Icons.edit,
                         color: AppTheme.primary,
-                        size: 24,
+                        size: 18.r,
                       ),
-                      SizedBox(width: 16),
+                      SizedBox(width: 12.r),
                       Text(
                         'New Feedback',
-                        style: AppTheme.headline4,
+                        style: AppTheme.headline5,
                       ),
                     ],
                   ),
@@ -91,16 +94,14 @@ class _UserFeedbackViewState extends State<UserFeedbackView> {
                     setState(() => _isInboxExpanded = value),
                 title: Row(
                   children: <Widget>[
-                    Image.asset(
-                      'assets/icons/inbox_logo.png',
-                      height: 24,
-                      width: 24,
+                    Padding(
+                      padding: EdgeInsets.all(2.r),
+                      child: Image.asset('assets/icons/inbox_logo.png'),
                     ),
-                    SizedBox(width: 16),
+                    SizedBox(width: 12.r),
                     Text(
                       'Inbox',
                       style: AppTheme.subtitle1.copyWith(
-                        fontSize: 18,
                         color: _isInboxExpanded
                             ? AppTheme.primary
                             : AppTheme.blackSecondary,
@@ -120,14 +121,13 @@ class _UserFeedbackViewState extends State<UserFeedbackView> {
                   children: <Widget>[
                     Icon(
                       Icons.send,
-                      size: 24,
+                      size: 16.r,
                       color: AppTheme.primary,
                     ),
-                    SizedBox(width: 16),
+                    SizedBox(width: 12.r),
                     Text(
                       'Submitted',
                       style: AppTheme.subtitle1.copyWith(
-                        fontSize: 18,
                         color: _isSubmittedExpanded
                             ? AppTheme.primary
                             : AppTheme.blackSecondary,

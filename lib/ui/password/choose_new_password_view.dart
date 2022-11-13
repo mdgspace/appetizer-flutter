@@ -8,6 +8,7 @@ import 'package:appetizer/ui/components/appetizer_text_field.dart';
 import 'package:appetizer/utils/validators.dart';
 import 'package:appetizer/viewmodels/password/choose_new_password_viewmodel.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ChooseNewPasswordView extends StatefulWidget {
   static const String id = 'choose_new_password_view';
@@ -35,25 +36,25 @@ class _ChooseNewPasswordViewState extends State<ChooseNewPasswordView> {
             Form(
               key: _formKey,
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+                padding: EdgeInsets.symmetric(horizontal: 16.r),
                 child: Column(
                   children: <Widget>[
                     Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      padding: EdgeInsets.symmetric(vertical: 12.r),
                       child: Text(
                         'Hi ${(widget.user.name).split(' ')[0]}, Choose Your Password!',
                         textAlign: TextAlign.center,
-                        style: AppTheme.headline3,
+                        style: AppTheme.headline5,
                       ),
                     ),
                     Text(
                       'Password should be of atleast 8 charecters',
                       textAlign: TextAlign.center,
-                      style: AppTheme.subtitle1.copyWith(
+                      style: AppTheme.subtitle2.copyWith(
                         color: AppTheme.red,
                       ),
                     ),
-                    SizedBox(height: 16),
+                    SizedBox(height: 12.r),
                     AppetizerPasswordField(
                       iconData: Icons.lock,
                       label: 'New Password',
@@ -66,7 +67,7 @@ class _ChooseNewPasswordViewState extends State<ChooseNewPasswordView> {
                         if (value != null) _newPassword = value;
                       },
                     ),
-                    SizedBox(height: 16),
+                    SizedBox(height: 12.r),
                     AppetizerPasswordField(
                       iconData: Icons.lock,
                       label: 'Confirm Password',
@@ -80,7 +81,7 @@ class _ChooseNewPasswordViewState extends State<ChooseNewPasswordView> {
                         return null;
                       },
                     ),
-                    SizedBox(height: 16),
+                    SizedBox(height: 12.r),
                     AppetizerTextField(
                       keyboardType: TextInputType.emailAddress,
                       initialValue: widget.user.email,
@@ -93,7 +94,7 @@ class _ChooseNewPasswordViewState extends State<ChooseNewPasswordView> {
                         if (value != null) _email = value;
                       },
                     ),
-                    SizedBox(height: 16),
+                    SizedBox(height: 12.r),
                     AppetizerTextField(
                       keyboardType: TextInputType.number,
                       initialValue: widget.user.contactNo,
@@ -107,7 +108,7 @@ class _ChooseNewPasswordViewState extends State<ChooseNewPasswordView> {
                         if (value != null) _contactNo = value;
                       },
                     ),
-                    SizedBox(height: 32),
+                    SizedBox(height: 24.r),
                     Container(
                       width: double.maxFinite,
                       child: AppetizerOutineButton(

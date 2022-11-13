@@ -10,6 +10,7 @@ import 'package:appetizer/ui/settings/components/user_details_card.dart';
 import 'package:appetizer/utils/string_utils.dart';
 import 'package:appetizer/viewmodels/settings/settings_viewmodel.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:appetizer/ui/help/help_view.dart';
@@ -22,19 +23,19 @@ class SettingsView extends StatelessWidget {
       behavior: HitTestBehavior.opaque,
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.all(12),
+        padding: EdgeInsets.all(8.r),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             Icon(
               iconData,
               color: AppTheme.primary,
-              size: 30.0,
+              size: 20.r,
             ),
-            SizedBox(width: 16),
+            SizedBox(width: 12.r),
             Text(
               '$title',
-              style: AppTheme.subtitle1,
+              style: AppTheme.subtitle2,
             ),
           ],
         ),
@@ -44,21 +45,22 @@ class SettingsView extends StatelessWidget {
 
   Widget _buildMadeByMdgComponent() {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: EdgeInsets.all(8.r),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Text(
             'Made with ',
-            style: AppTheme.subtitle1,
+            style: AppTheme.subtitle2,
           ),
           Icon(
             Icons.favorite,
             color: AppTheme.red,
+            size: 16.r,
           ),
           Text(
-            ' by MDG',
-            style: AppTheme.subtitle1,
+            ' by .mdg',
+            style: AppTheme.subtitle2,
           ),
         ],
       ),
@@ -77,8 +79,7 @@ class SettingsView extends StatelessWidget {
             children: <Widget>[
               Container(
                 color: AppTheme.secondary,
-                height: MediaQuery.of(context).size.height / 2 -
-                    AppBar().preferredSize.height,
+                height: 250.h,
                 alignment: Alignment.center,
                 child: () {
                   switch (model.state) {

@@ -21,7 +21,7 @@ class _OnBoarding extends State<OnBoardingView> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Container(
-            padding: EdgeInsets.all(8),
+            padding: EdgeInsets.all(6.r),
             child: Text(
               title,
               textAlign: TextAlign.center,
@@ -31,11 +31,11 @@ class _OnBoarding extends State<OnBoardingView> {
             ),
           ),
           Container(
-            padding: EdgeInsets.all(8),
+            padding: EdgeInsets.all(6.r),
             child: Image.asset(imagePath),
           ),
           Container(
-            padding: EdgeInsets.all(8),
+            padding: EdgeInsets.all(6.r),
             child: Align(
               alignment: FractionalOffset.bottomCenter,
               child: Text(
@@ -65,7 +65,8 @@ class _OnBoarding extends State<OnBoardingView> {
               padding: EdgeInsets.all(16),
               child: Text(
                 'SKIP',
-                style: AppTheme.subtitle1.copyWith(
+                style: TextStyle(
+                  fontSize: 14,
                   color: AppTheme.primary,
                 ),
               ),

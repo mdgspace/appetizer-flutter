@@ -45,10 +45,10 @@ class SettingsViewModel extends BaseModel {
 
   Future logoutAndClearData() async {
     _dialogService.showCustomProgressDialog(title: 'Logging You Out');
+    isLoggedIn = false;
+    token = null;
     try {
       await _userApi.userLogout();
-      isLoggedIn = false;
-      token = null;
       await _pushNotificationService
           .unsubscribeFromTopic('${kReleaseMode ? 'release-' : 'debug-'}all');
       await _pushNotificationService.unsubscribeFromTopic(
@@ -56,6 +56,7 @@ class SettingsViewModel extends BaseModel {
       await Get.offAllNamed(LoginView.id);
       _dialogService.popDialog();
     } catch (e) {
+      await Get.offAllNamed(LoginView.id);
       _dialogService.popDialog();
       SnackBarUtils.showDark(
           'Error', 'Unable to log you out. Please try after some time.');
