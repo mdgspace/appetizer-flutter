@@ -32,8 +32,9 @@ class LoginView extends StatefulWidget {
 class _LoginViewState extends State<LoginView> with TickerProviderStateMixin {
   late LoginViewModel _model;
   final _formKey = GlobalKey<FormState>();
+  String? _enrollmentNo, _password;
   late AnimationController _controller;
-  LottieComposition _successComposition, _failureComposition;
+  late LottieComposition _successComposition, _failureComposition;
 
   @override
   void initState() {
@@ -57,7 +58,7 @@ class _LoginViewState extends State<LoginView> with TickerProviderStateMixin {
       onSaved: (value) {
         if (value != null) _enrollmentNo = value.trim();
         return null;
-      }
+      },
     );
   }
 

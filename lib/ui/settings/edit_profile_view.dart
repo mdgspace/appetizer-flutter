@@ -68,7 +68,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                             !Validators.isPhoneNumberValid(value)
                                 ? 'Please enter a valid contact no.'
                                 : null,
-                        onSaved: (value){
+                        onSaved: (value) {
                           if (value != null) _contactNo = value;
                         },
                       ),
@@ -81,9 +81,9 @@ class _EditProfileViewState extends State<EditProfileView> {
                         validator: (value) => !Validators.isEmailValid(value)
                             ? 'Please enter a valid e-mail'
                             : null,
-                        onSaved: (value){
+                        onSaved: (value) {
                           if (value != null) _email = value;
-                        }
+                        },
                       ),
                       SizedBox(height: 24.r),
                       Container(

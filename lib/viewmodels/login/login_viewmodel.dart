@@ -29,12 +29,11 @@ class LoginViewModel extends BaseModel {
     notifyListeners();
   }
 
-  var _oauthUser;
+  OAuthUser? _oauthUser;
 
   OAuthUser? get oauthUser => _oauthUser;
 
-  set oauthUser(OAuthUser? oauthUser) {
-  bool _showLottie;
+  late bool _showLottie;
 
   bool get showLottie => _showLottie;
 

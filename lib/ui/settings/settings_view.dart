@@ -18,7 +18,11 @@ import 'package:appetizer/ui/help/help_view.dart';
 class SettingsView extends StatelessWidget {
   static const String id = 'settings_view';
 
-  Widget _buildListItem({required IconData iconData, required String title, required VoidCallback onTap}) {
+  Widget _buildListItem({
+    required IconData iconData,
+    required String title,
+    required VoidCallback onTap,
+  }) {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: onTap,

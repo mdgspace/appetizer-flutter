@@ -31,7 +31,7 @@ class DialogService {
                   request.isFailure!
                       ? Icons.warning_amber_outlined
                       : Icons.check_circle_outline,
-                  color: request.isFailure ? AppTheme.red : AppTheme.green,
+                  color: request.isFailure! ? AppTheme.red : AppTheme.green,
                   size: 60.r,
                 ),
                 SizedBox(height: 12.r),
@@ -92,6 +92,7 @@ class DialogService {
                     style: AppTheme.bodyText1,
                     textAlign: TextAlign.center,
                   ),
+                ]
               ],
             ),
           ),

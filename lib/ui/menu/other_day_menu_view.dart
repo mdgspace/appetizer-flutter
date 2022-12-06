@@ -20,25 +20,25 @@ class _OtherDayMenuViewState extends State<OtherDayMenuView> {
     return ListView(
       children: <Widget>[
         if (widget.dayMenu.mealMap[MealType.B] != null)
-             OtherMealsMenuCard(
-                widget.dayMenu.mealMap[MealType.B]!,
-                widget.dailyItems,
-              ),
+          OtherMealsMenuCard(
+            widget.dayMenu.mealMap[MealType.B]!,
+            widget.dailyItems,
+          ),
         if (widget.dayMenu.mealMap[MealType.L] != null)
-             OtherMealsMenuCard(
-                widget.dayMenu.mealMap[MealType.L]!,
-                widget.dailyItems,
-              ),
+          OtherMealsMenuCard(
+            widget.dayMenu.mealMap[MealType.L]!,
+            widget.dailyItems,
+          ),
         if (widget.dayMenu.mealMap[MealType.S] != null)
           OtherMealsMenuCard(
             widget.dayMenu.mealMap[MealType.S]!,
             widget.dailyItems,
           ),
         if (widget.dayMenu.mealMap[MealType.D] != null)
-             OtherMealsMenuCard(
-                widget.dayMenu.mealMap[MealType.D]!,
-                widget.dailyItems,
-              ),
+          OtherMealsMenuCard(
+            widget.dayMenu.mealMap[MealType.D]!,
+            widget.dailyItems,
+          ),
       ],
     );
   }

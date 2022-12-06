@@ -105,7 +105,8 @@ class MonthlyRebateCard extends StatelessWidget {
               children: <Widget>[
                 Text(
                   'Rs. ' +
-                      (balanceConsumed ?? 0 + (additionalMeal ?? 0) - (rebate ?? 0))
+                      (balanceConsumed ??
+                              0 + (additionalMeal ?? 0) - (rebate ?? 0))
                           .toString(),
                   style: AppTheme.headline4,
                 )

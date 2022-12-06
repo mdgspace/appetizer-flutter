@@ -12,7 +12,7 @@ class User {
   int enrNo;
   String name;
   String contactNo;
-  String branch;
+  String? branch;
   dynamic imageUrl;
   bool isCheckedOut;
   int? lastUpdated;

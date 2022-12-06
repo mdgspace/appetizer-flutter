@@ -12,9 +12,9 @@ class RemoteConfigService {
   static bool _instantiated = false;
 
   static Future<RemoteConfigService> getInstance() async {
-    if(_instantiated == false){
+    if (!_instantiated) {
       _instance = RemoteConfigService(
-      remoteConfig: FirebaseRemoteConfig.instance,
+        remoteConfig: FirebaseRemoteConfig.instance,
       );
       _instantiated = true;
     }

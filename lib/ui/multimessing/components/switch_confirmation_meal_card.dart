@@ -7,7 +7,8 @@ import 'package:intl/intl.dart';
 class SwitchConfirmationMealCard extends StatefulWidget {
   final Meal meal;
 
-  const SwitchConfirmationMealCard({Key? key, required this.meal}) : super(key: key);
+  const SwitchConfirmationMealCard({Key? key, required this.meal})
+      : super(key: key);
 
   @override
   _SwitchConfirmationMealCardState createState() =>

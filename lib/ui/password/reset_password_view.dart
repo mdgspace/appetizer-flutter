@@ -68,19 +68,25 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                       iconData: Icons.lock,
                       label: 'Old Password',
                       validator: (value) {
-                        if (value == null || value.isEmpty) return 'Password can\'t be empty';
-                        return null;},
-                      onSaved: (value){
+                        if (value == null || value.isEmpty) {
+                          return 'Password can\'t be empty';
+                        }
+                        return null;
+                      },
+                      onSaved: (value) {
                         if (value != null) _oldPassword = value;
                       },
                     ),
                     AppetizerPasswordField(
                       iconData: Icons.lock,
                       label: 'New Password',
-                      validator: (value){
-                        if (value == null || value.isEmpty) return 'Password can\'t be empty';
-                        return null;},
-                      onSaved: (value){
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Password can\'t be empty';
+                        }
+                        return null;
+                      },
+                      onSaved: (value) {
                         if (value != null) _newPassword = value;
                       },
                     ),

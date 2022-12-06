@@ -293,8 +293,9 @@ class Meal {
         return 'Snacks';
       case MealType.D:
         return 'Dinner';
+      default:
+        return 'Meal';
     }
-    return 'Meal';
   }
 }
 
@@ -330,7 +331,7 @@ class SwitchStatus {
   });
 
   factory SwitchStatus.fromJson(Map<String, dynamic>? json) => SwitchStatus(
-        id: json != null? (json['id'] ?? 0) : 0,
+        id: json != null ? (json['id'] ?? 0) : 0,
         status: json != null
             ? switchStatusValues.map[json['status'] ?? 'N']!
             : SwitchStatusEnum.N,

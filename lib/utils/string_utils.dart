@@ -28,7 +28,8 @@ class StringUtils {
   }
 
   static String hostelNameToCode(String name) {
-    return _hostelMap[name] ?? 'Either bhawan does not exist or no bhawan has no code';
+    return _hostelMap[name] ??
+        'Either bhawan does not exist or no bhawan has no code';
   }
 
   static String appLinkToShareText(String link) {

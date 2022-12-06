@@ -60,10 +60,12 @@ class _ChooseNewPasswordViewState extends State<ChooseNewPasswordView> {
                       label: 'New Password',
                       onChanged: (value) => _newPassword = value,
                       validator: (value) {
-                        if (value == null || value.isEmpty) return 'Password can\'t be empty';
+                        if (value == null || value.isEmpty) {
+                          return 'Password can\'t be empty';
+                        }
                         return null;
                       },
-                      onSaved: (value){
+                      onSaved: (value) {
                         if (value != null) _newPassword = value;
                       },
                     ),
@@ -90,7 +92,7 @@ class _ChooseNewPasswordViewState extends State<ChooseNewPasswordView> {
                       validator: (value) => !Validators.isEmailValid(value)
                           ? 'Please enter a valid e-mail'
                           : null,
-                      onSaved: (value){
+                      onSaved: (value) {
                         if (value != null) _email = value;
                       },
                     ),
@@ -104,7 +106,7 @@ class _ChooseNewPasswordViewState extends State<ChooseNewPasswordView> {
                           !Validators.isPhoneNumberValid(value)
                               ? 'Please enter a valid contact no.'
                               : null,
-                      onSaved: (value){
+                      onSaved: (value) {
                         if (value != null) _contactNo = value;
                       },
                     ),
