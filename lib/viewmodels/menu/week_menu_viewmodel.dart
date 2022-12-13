@@ -9,7 +9,7 @@ import 'package:appetizer/viewmodels/base_model.dart';
 class WeekMenuViewModel extends BaseModel {
   final MenuApi _menuApi = locator<MenuApi>();
 
-  WeekMenu _currentWeekMenu;
+  late WeekMenu _currentWeekMenu;
 
   WeekMenu get currentWeekMenu => _currentWeekMenu;
 

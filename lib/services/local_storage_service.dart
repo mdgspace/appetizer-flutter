@@ -4,8 +4,10 @@ import 'package:appetizer/models/user/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LocalStorageService {
-  static LocalStorageService _instance;
-  static SharedPreferences _preferences;
+  static late LocalStorageService _instance;
+  static late SharedPreferences _preferences;
+
+  static bool _instantiated = false;
 
   static const String userKey = 'logged_in_user';
   static const String tokenKey = 'token';
@@ -14,10 +16,11 @@ class LocalStorageService {
   static const String fcmTokenKey = 'fcm_token_key';
 
   static Future<LocalStorageService> getInstance() async {
-    _instance ??= LocalStorageService();
-
-    _preferences ??= await SharedPreferences.getInstance();
-
+    if (!_instantiated) {
+      _instance = LocalStorageService();
+      _preferences = await SharedPreferences.getInstance();
+      _instantiated = true;
+    }
     return _instance;
   }
 
@@ -47,7 +50,7 @@ class LocalStorageService {
     }
   }
 
-  User get currentUser {
+  User? get currentUser {
     var userJson = _getFromDisk(userKey);
     if (userJson == null) {
       return null;
@@ -56,13 +59,13 @@ class LocalStorageService {
     return User.fromJson(json.decode(userJson));
   }
 
-  set currentUser(User userToSave) {
+  set currentUser(User? userToSave) {
     _saveToDisk(userKey, json.encode(userToSave?.toJson()));
   }
 
   String get token => _getFromDisk(tokenKey);
 
-  set token(String token) {
+  set token(String? token) {
     _saveToDisk(tokenKey, token);
   }
 

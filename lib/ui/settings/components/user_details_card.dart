@@ -6,18 +6,18 @@ import 'package:flutter_svg/flutter_svg.dart';
 class UserDetailsCard extends StatelessWidget {
   final String name;
   final String enrollmentNo;
-  final String branch;
+  final String? branch;
   final String hostel;
-  final String roomNo;
+  final String? roomNo;
   final String email;
 
   UserDetailsCard({
-    this.name,
-    this.enrollmentNo,
-    this.branch,
-    this.hostel,
+    required this.name,
+    required this.enrollmentNo,
+    required this.branch,
+    required this.hostel,
     this.roomNo,
-    this.email,
+    required this.email,
   });
 
   Widget _buildCardListItem(String title, String subTitle) {

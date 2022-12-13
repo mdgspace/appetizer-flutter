@@ -12,7 +12,7 @@ class EditProfileViewModel extends BaseModel {
   final UserApi _userApi = locator<UserApi>();
   final DialogService _dialogService = locator<DialogService>();
 
-  User _updatedUserDetails;
+  late User _updatedUserDetails;
 
   User get updatedUserDetails => _updatedUserDetails;
 

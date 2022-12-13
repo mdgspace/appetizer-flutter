@@ -10,15 +10,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class AppetizerDatePicker extends StatefulWidget {
   final Function(DateTime) onDateChanged;
 
-  const AppetizerDatePicker({this.onDateChanged});
+  const AppetizerDatePicker({required this.onDateChanged});
 
   @override
   _AppetizerDatePickerState createState() => _AppetizerDatePickerState();
 }
 
 class _AppetizerDatePickerState extends State<AppetizerDatePicker> {
-  DatePickerViewModel _model;
-  int indexState;
+  late DatePickerViewModel _model;
+  late int indexState;
 
   @override
   void initState() {
@@ -26,13 +26,13 @@ class _AppetizerDatePickerState extends State<AppetizerDatePicker> {
     indexState = 11;
   }
 
-  List<DateTime> _currentRowDates(anchor) {
+  List<DateTime> _currentRowDates(DateTime anchor) {
     var _dateList = List<DateTime>.filled(7, DateTime.now());
-    for (int i = anchor.weekday - 1; i >= 1; i--) {
+    for (var i = anchor.weekday - 1; i >= 1; i--) {
       _dateList[i - 1] = anchor.subtract(Duration(days: (anchor.weekday - i)));
     }
     _dateList[anchor.weekday - 1] = anchor;
-    for (int i = anchor.weekday + 1; i <= 7; i++) {
+    for (var i = anchor.weekday + 1; i <= 7; i++) {
       _dateList[i - 1] = anchor.add(Duration(days: (i - anchor.weekday)));
     }
     return _dateList;

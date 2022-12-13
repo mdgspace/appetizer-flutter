@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class LeaveStatusCard extends StatefulWidget {
-  final int remainingLeaves;
+  final int? remainingLeaves;
 
   LeaveStatusCard(this.remainingLeaves);
 

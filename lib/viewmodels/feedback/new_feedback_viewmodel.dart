@@ -15,7 +15,7 @@ class NewFeedbackViewModel extends BaseModel {
   final TextEditingController titleController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
 
-  AppetizerFeedback _feedback;
+  late AppetizerFeedback _feedback;
 
   AppetizerFeedback get feedback => _feedback;
 

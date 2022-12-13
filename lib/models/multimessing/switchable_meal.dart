@@ -18,14 +18,14 @@ class SwitchableMeal {
   String hostelName;
 
   SwitchableMeal({
-    this.id,
-    this.type,
-    this.items,
-    this.startTime,
-    this.endTime,
-    this.leaveStatus,
-    this.wastage,
-    this.hostelName,
+    required this.id,
+    required this.type,
+    required this.items,
+    required this.startTime,
+    required this.endTime,
+    required this.leaveStatus,
+    required this.wastage,
+    required this.hostelName,
   });
 
   factory SwitchableMeal.fromJson(Map<String, dynamic> json) => SwitchableMeal(
@@ -57,9 +57,9 @@ class Item {
   String name;
 
   Item({
-    this.id,
-    this.type,
-    this.name,
+    required this.id,
+    required this.type,
+    required this.name,
   });
 
   factory Item.fromJson(Map<String, dynamic> json) => Item(

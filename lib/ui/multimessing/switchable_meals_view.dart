@@ -11,14 +11,14 @@ class SwitchableMealsView extends StatefulWidget {
   static const String id = 'switchable_meals_view';
   final int mealId;
 
-  const SwitchableMealsView({Key key, this.mealId}) : super(key: key);
+  const SwitchableMealsView({Key? key, required this.mealId}) : super(key: key);
 
   @override
   _SwitchableMealsState createState() => _SwitchableMealsState();
 }
 
 class _SwitchableMealsState extends State<SwitchableMealsView> {
-  SwitchableMealsViewModel _model;
+  late SwitchableMealsViewModel _model;
 
   TableRow _buildTableHeader() {
     return TableRow(

@@ -15,14 +15,14 @@ class Leave {
   String status;
 
   Leave({
-    this.id,
-    this.dateCreated,
-    this.startMealType,
-    this.endMealType,
-    this.startDatetime,
-    this.endDatetime,
-    this.mealCount,
-    this.status,
+    required this.id,
+    required this.dateCreated,
+    required this.startMealType,
+    required this.endMealType,
+    required this.startDatetime,
+    required this.endDatetime,
+    required this.mealCount,
+    required this.status,
   });
 
   factory Leave.fromJson(Map<String, dynamic> json) => Leave(

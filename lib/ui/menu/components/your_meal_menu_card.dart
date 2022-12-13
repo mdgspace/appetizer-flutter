@@ -18,22 +18,24 @@ class YourMealsMenuCard extends StatefulWidget {
   final Meal meal;
   final DailyItems dailyItems;
 
-  const YourMealsMenuCard(this.meal, this.dailyItems);
+  const YourMealsMenuCard({required this.meal, required this.dailyItems});
 
   @override
   _YourMealsMenuCardState createState() => _YourMealsMenuCardState();
 }
 
 class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
-  YourMenuCardViewModel _model;
+  late YourMenuCardViewModel _model;
 
   Widget _buildMenuCardHeader() {
+    if (_model.meal == null) return SizedBox();
+
     return Row(
       children: <Widget>[
         Expanded(
           child: Row(
             children: <Widget>[
-              MenuUIUtils.buildtitleAndBhawanNameComponent(_model.meal),
+              MenuUIUtils.buildtitleAndBhawanNameComponent(_model.meal!),
               SizedBox(width: 6.r),
             ],
           ),
@@ -42,7 +44,7 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
           children: <Widget>[
             if (_model.isSwitchEnabled) ...[
               _buildQRButtonComponent(),
-              _model.meal.items.isNotEmpty
+              _model.meal!.items.isNotEmpty
                   ? _buildSwitchComponent()
                   : Container(),
             ],
@@ -56,6 +58,8 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
   }
 
   Widget _buildMenuCard() {
+    if (_model.meal == null) return SizedBox();
+
     return Card(
       margin: EdgeInsets.symmetric(
         vertical: 4.r,
@@ -72,16 +76,16 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
               children: <Widget>[
                 _buildMenuCardHeader(),
                 SizedBox(height: 12.r),
-                MenuUIUtils.buildMealItemsComponent(_model.meal),
+                MenuUIUtils.buildMealItemsComponent(_model.meal!),
               ],
             ),
           ),
           MenuUIUtils.buildDailyItemsComponent(
-            _model.meal,
+            _model.meal!,
             widget.dailyItems,
           ),
           MenuUIUtils.buildSpecialMealBanner(
-            _model.meal.costType,
+            _model.meal!.costType,
           ),
         ],
       ),
@@ -110,11 +114,12 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
                           onPressed: () => _model.secretCode = null,
                         ),
                         MenuUIUtils.buildtitleAndBhawanNameComponent(
-                            _model.meal),
+                            _model.meal!),
                       ],
                     ),
                     Text(
-                      DateFormat.yMMMMEEEEd().format(_model.meal.startDateTime),
+                      DateFormat.yMMMMEEEEd()
+                          .format(_model.meal!.startDateTime),
                     ),
                   ],
                 ),
@@ -122,7 +127,7 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
             ),
           ),
           QRWidget(
-            switchId: _model.meal.switchStatus.id,
+            switchId: _model.meal!.switchStatus.id,
           ),
           Container(
             width: double.maxFinite,
@@ -141,7 +146,7 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
   }
 
   Widget _buildFeedbackOrToggleComponent() {
-    if (_model.meal.isOutdated) {
+    if (_model.meal!.isOutdated) {
       return Padding(
         padding: EdgeInsets.all(8.r),
         child: InkWell(
@@ -164,7 +169,7 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
               : (value) {
                   _model.onLeaveChanged(value).then((_) {
                     context.read<YourMenuViewModel>().updateMeal =
-                        _model.meal.copyWith(
+                        _model.meal!.copyWith(
                             leaveStatus: LeaveStatus(
                       status: _model.mealLeaveStatus
                           ? LeaveStatusEnum.N
@@ -181,11 +186,11 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
   Widget _buildSwitchComponent() {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 10.r),
-      child: _model.meal.isSwitchable
+      child: _model.meal!.isSwitchable
           ? GestureDetector(
               onTap: _model.onSwitchChanged,
               child: Image.asset(
-                _model.meal.isLeaveToggleOutdated
+                _model.meal!.isLeaveToggleOutdated
                     ? 'assets/icons/switch_inactive.png'
                     : _model.mealSwitchStatus
                         ? 'assets/icons/switch_active.png'
@@ -199,13 +204,13 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
 
   Widget _buildSkippedFlagComponent() {
     if (ColorUtils.getLeaveColorFromLeaveStatus(
-                _model.meal.leaveStatus?.status) !=
+                _model.meal!.leaveStatus.status) !=
             Colors.white &&
-        _model.meal.isOutdated) {
+        _model.meal!.isOutdated) {
       return Container(
         decoration: BoxDecoration(
           color: ColorUtils.getLeaveColorFromLeaveStatus(
-              _model.meal.leaveStatus?.status),
+              _model.meal!.leaveStatus.status),
           borderRadius: BorderRadius.circular(24),
         ),
         padding: EdgeInsets.symmetric(
@@ -229,11 +234,11 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
         child: Container(
           decoration: BoxDecoration(
             color: ColorUtils.getSwitchColorFromSwitchStatus(
-              _model.meal.switchStatus,
+              _model.meal!.switchStatus,
             ),
             borderRadius: BorderRadius.circular(4.r),
           ),
-          child: _model.meal.switchStatus.status == SwitchStatusEnum.N
+          child: _model.meal!.switchStatus.status == SwitchStatusEnum.N
               ? Container()
               : Image.asset(
                   'assets/icons/qr_image.png',
@@ -252,15 +257,14 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
         _model = model;
         _model.meal = widget.meal;
         _model.dailyItems = widget.dailyItems;
-        _model.isLeaveToggleOutdated =
-            widget.meal?.isLeaveToggleOutdated ?? _model.isLeaveToggleOutdated;
+        _model.isLeaveToggleOutdated = widget.meal.isLeaveToggleOutdated;
         _model.updateMealLeaveAndSwitchStatus(_model.meal);
       },
       onDidUpdateWidget: (oldWidget, model) {
         _model.meal = widget.meal;
         _model.dailyItems = widget.dailyItems;
-        _model.isLeaveToggleOutdated =
-            widget.meal?.isLeaveToggleOutdated ?? _model.isLeaveToggleOutdated;
+        _model.isLeaveToggleOutdated = widget.meal
+            .isLeaveToggleOutdated; //widget.meal is already being treated as non null in above lines, so no need to check here
         _model.updateMealLeaveAndSwitchStatus(_model.meal);
       },
       builder: (context, model, child) {

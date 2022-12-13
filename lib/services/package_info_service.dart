@@ -4,17 +4,22 @@ class PackageInfoService {
   final PackageInfo _packageInfo;
   final defaults = <String, dynamic>{};
 
-  static PackageInfoService _instance;
+  static late PackageInfoService _instance;
+  static bool _instantiated = false;
 
   static Future<PackageInfoService> getInstance() async {
-    _instance ??= PackageInfoService(
-      packageInfo: await PackageInfo.fromPlatform(),
-    );
+    if (!_instantiated) {
+      _instance = PackageInfoService(
+        packageInfo: await PackageInfo.fromPlatform(),
+      );
+      _instantiated = true;
+    }
 
     return _instance;
   }
 
-  PackageInfoService({PackageInfo packageInfo}) : _packageInfo = packageInfo;
+  PackageInfoService({required PackageInfo packageInfo})
+      : _packageInfo = packageInfo;
 
   String get version => _packageInfo.version;
 }

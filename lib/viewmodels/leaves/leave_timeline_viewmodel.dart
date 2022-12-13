@@ -9,7 +9,7 @@ import 'package:appetizer/viewmodels/base_model.dart';
 class LeaveTimelineViewModel extends BaseModel {
   final LeaveApi _leaveApi = locator<LeaveApi>();
 
-  PaginatedLeaves _paginatedLeaves;
+  late PaginatedLeaves _paginatedLeaves;
 
   PaginatedLeaves get paginatedLeaves => _paginatedLeaves;
 

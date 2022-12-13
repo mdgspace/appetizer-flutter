@@ -25,7 +25,7 @@ class _RebatesHistoryViewState extends State<RebatesHistoryView> {
     DateTime.now().year - 3,
     DateTime.now().year - 4,
   ];
-  RebatesHistoryViewModel _model;
+  late RebatesHistoryViewModel _model;
 
   int _currentItemSelected = DateTime.now().year;
 
@@ -69,8 +69,8 @@ class _RebatesHistoryViewState extends State<RebatesHistoryView> {
                         ),
                       );
                     }).toList(),
-                    onChanged: (int newValueSelected) {
-                      setState(() => _currentItemSelected = newValueSelected);
+                    onChanged: (int? newValueSelected) {
+                      setState(() => _currentItemSelected = newValueSelected!);
                       _model.getYearlyRebate(_currentItemSelected);
                     },
                   ),

@@ -5,7 +5,7 @@ import 'package:appetizer/viewmodels/switches/switch_status_card_viewmodel.dart'
 import 'package:flutter/material.dart';
 
 class SwitchStatusCard extends StatefulWidget {
-  final int remainingSwitches;
+  final int? remainingSwitches;
 
   SwitchStatusCard(this.remainingSwitches);
 

@@ -5,16 +5,16 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class AppetizerPasswordField extends StatefulWidget {
   final String label;
   final IconData iconData;
-  final Function(String) onChanged;
-  final Function(String) validator;
-  final Function(String) onSaved;
+  final Function(String)? onChanged;
+  final String? Function(String?) validator;
+  final void Function(String?)? onSaved;
 
   const AppetizerPasswordField({
-    Key key,
-    this.label,
-    this.iconData,
+    Key? key,
+    required this.label,
+    required this.iconData,
     this.onChanged,
-    this.validator,
+    required this.validator,
     this.onSaved,
   }) : super(key: key);
 

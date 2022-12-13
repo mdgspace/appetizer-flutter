@@ -12,8 +12,8 @@ class LeavesHistoryView extends StatefulWidget {
 }
 
 class _LeavesHistoryViewState extends State<LeavesHistoryView> {
-  String _selectedMonth;
-  int _selectedYear;
+  late String _selectedMonth;
+  late int _selectedYear;
 
   @override
   void initState() {

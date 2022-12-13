@@ -17,16 +17,18 @@ class YourMenuCardViewModel extends BaseModel {
   final MultimessingApi _multimessingApi = locator<MultimessingApi>();
   final DialogService _dialogService = locator<DialogService>();
 
-  Meal _meal;
+  Meal? _meal;
+  bool _mealinitialized = false;
 
-  Meal get meal => _meal;
+  Meal? get meal => _mealinitialized ? _meal : null;
 
-  set meal(Meal meal) {
+  set meal(Meal? meal) {
     _meal = meal;
+    if (_mealinitialized == false) _mealinitialized = true;
     notifyListeners();
   }
 
-  DailyItems _dailyItems;
+  late DailyItems _dailyItems;
 
   DailyItems get dailyItems => _dailyItems;
 
@@ -35,7 +37,7 @@ class YourMenuCardViewModel extends BaseModel {
     notifyListeners();
   }
 
-  bool _mealLeaveStatus;
+  late bool _mealLeaveStatus;
 
   bool get mealLeaveStatus => _mealLeaveStatus;
 
@@ -44,7 +46,7 @@ class YourMenuCardViewModel extends BaseModel {
     notifyListeners();
   }
 
-  bool _mealSwitchStatus;
+  late bool _mealSwitchStatus;
 
   bool get mealSwitchStatus => _mealSwitchStatus;
 
@@ -53,16 +55,16 @@ class YourMenuCardViewModel extends BaseModel {
     notifyListeners();
   }
 
-  String _secretCode;
+  String? _secretCode;
 
-  String get secretCode => _secretCode;
+  String? get secretCode => _secretCode;
 
-  set secretCode(String secretCode) {
+  set secretCode(String? secretCode) {
     _secretCode = secretCode;
     notifyListeners();
   }
 
-  bool _isLeaveToggleOutdated;
+  late bool _isLeaveToggleOutdated;
 
   bool get isLeaveToggleOutdated => _isLeaveToggleOutdated;
 
@@ -71,7 +73,7 @@ class YourMenuCardViewModel extends BaseModel {
     notifyListeners();
   }
 
-  bool _isLeaveCancelled;
+  late bool _isLeaveCancelled;
 
   bool get isLeaveCancelled => _isLeaveCancelled;
 
@@ -80,7 +82,7 @@ class YourMenuCardViewModel extends BaseModel {
     notifyListeners();
   }
 
-  bool _isSwitchCancelled;
+  late bool _isSwitchCancelled;
 
   bool get isSwitchCancelled => _isSwitchCancelled;
 
@@ -89,12 +91,17 @@ class YourMenuCardViewModel extends BaseModel {
     notifyListeners();
   }
 
-  void updateMealLeaveAndSwitchStatus(Meal meal) {
+  void updateMealLeaveAndSwitchStatus(Meal? meal) {
     if (meal != null) {
-      _mealLeaveStatus =
-          _meal?.leaveStatus?.status == LeaveStatusEnum.N ? true : false;
-      _mealSwitchStatus =
-          _meal?.switchStatus?.status == SwitchStatusEnum.N ? true : false;
+      if (_mealinitialized == true) {
+        _mealLeaveStatus =
+            _meal!.leaveStatus.status == LeaveStatusEnum.N ? true : false;
+        _mealSwitchStatus =
+            _meal!.switchStatus.status == SwitchStatusEnum.N ? true : false;
+      } else {
+        _mealLeaveStatus = false;
+        _mealSwitchStatus = false;
+      }
     } else {
       _mealLeaveStatus = true;
       _mealSwitchStatus = false;
@@ -155,7 +162,7 @@ class YourMenuCardViewModel extends BaseModel {
 
           if (_dialogResponse.confirmed) {
             _dialogService.showCustomProgressDialog(title: 'Cancelling Leave');
-            await cancelLeave(meal.id);
+            await cancelLeave(meal!.id);
             _dialogService.popDialog();
           } else {
             mealLeaveStatus = !mealLeaveStatus;
@@ -176,7 +183,7 @@ class YourMenuCardViewModel extends BaseModel {
 
           if (_dialogResponse.confirmed) {
             _dialogService.showCustomProgressDialog(title: 'Leaving Meal');
-            await leaveMeal(meal.id);
+            await leaveMeal(meal!.id);
             _dialogService.popDialog();
           } else {
             mealLeaveStatus = !mealLeaveStatus;
@@ -189,10 +196,10 @@ class YourMenuCardViewModel extends BaseModel {
   Future onSwitchChanged() async {
     if (!isLeaveToggleOutdated) {
       if (mealSwitchStatus) {
-        await Get.toNamed(SwitchableMealsView.id, arguments: meal.id);
+        await Get.toNamed(SwitchableMealsView.id, arguments: meal!.id);
       } else {
-        if (meal.switchStatus.status == SwitchStatusEnum.T ||
-            meal.switchStatus.status == SwitchStatusEnum.F) {
+        if (meal!.switchStatus.status == SwitchStatusEnum.T ||
+            meal!.switchStatus.status == SwitchStatusEnum.F) {
           var _dialogResponse = await _dialogService.showConfirmationDialog(
             title: 'Cancel Switch',
             description: 'Are you sure you want to cancel this switch?',
@@ -200,10 +207,10 @@ class YourMenuCardViewModel extends BaseModel {
 
           if (_dialogResponse.confirmed) {
             _dialogService.showCustomProgressDialog(title: 'Cancelling Switch');
-            await cancelSwitch(meal.switchStatus.id);
+            await cancelSwitch(meal!.switchStatus.id);
             _dialogService.popDialog();
             if (isSwitchCancelled) {
-              Get.key.currentState.popUntil((route) => route.isFirst);
+              Get.key.currentState!.popUntil((route) => route.isFirst);
               mealSwitchStatus = true;
             }
           }
@@ -226,7 +233,7 @@ class YourMenuCardViewModel extends BaseModel {
   }
 
   VoidCallback onQRTapped() {
-    switch (meal.switchStatus.status) {
+    switch (meal!.switchStatus.status) {
       case SwitchStatusEnum.N:
       case SwitchStatusEnum.A:
         return () {};
@@ -239,11 +246,11 @@ class YourMenuCardViewModel extends BaseModel {
       case SwitchStatusEnum.F:
       case SwitchStatusEnum.T:
         return () {
-          if (meal.endDateTime
+          if (meal!.endDateTime
               .add(Duration(hours: 1))
               .isBefore(DateTime.now())) {
             Fluttertoast.showToast(msg: 'Time for this meal has passed!');
-          } else if (meal.startTime
+          } else if (meal!.startTime
               .subtract(outdatedTime)
               .isAfter(DateTime.now())) {
             Fluttertoast.showToast(

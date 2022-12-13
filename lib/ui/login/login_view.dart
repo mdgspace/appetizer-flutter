@@ -23,18 +23,18 @@ import 'package:lottie/lottie.dart';
 class LoginView extends StatefulWidget {
   static const String id = 'login_view';
 
-  const LoginView({Key key}) : super(key: key);
+  const LoginView({Key? key}) : super(key: key);
 
   @override
   _LoginViewState createState() => _LoginViewState();
 }
 
 class _LoginViewState extends State<LoginView> with TickerProviderStateMixin {
-  LoginViewModel _model;
+  late LoginViewModel _model;
   final _formKey = GlobalKey<FormState>();
-  String _enrollmentNo, _password;
-  AnimationController _controller;
-  LottieComposition _successComposition, _failureComposition;
+  String? _enrollmentNo, _password;
+  late AnimationController _controller;
+  late LottieComposition _successComposition, _failureComposition;
 
   @override
   void initState() {
@@ -54,8 +54,11 @@ class _LoginViewState extends State<LoginView> with TickerProviderStateMixin {
       label: 'Enrollment No.',
       keyboardType: TextInputType.number,
       validator: (value) =>
-          value.isEmpty ? 'Enrollment No can\'t be empty' : null,
-      onSaved: (value) => _enrollmentNo = value.trim(),
+          (value ?? '').isEmpty ? 'Enrollment No can\'t be empty' : null,
+      onSaved: (value) {
+        if (value != null) _enrollmentNo = value.trim();
+        return null;
+      },
     );
   }
 
@@ -63,7 +66,10 @@ class _LoginViewState extends State<LoginView> with TickerProviderStateMixin {
     return AppetizerPasswordField(
       iconData: Icons.lock,
       label: 'Password',
-      validator: (value) => value.isEmpty ? 'Password can\'t be empty' : null,
+      validator: (value) {
+        if (value == null || value.isEmpty) return 'Password can\'t be empty';
+        return null;
+      },
       onSaved: (value) => _password = value,
     );
   }
@@ -127,8 +133,8 @@ class _LoginViewState extends State<LoginView> with TickerProviderStateMixin {
     if (Validators.validateAndSaveForm(_formKey)) {
       FocusScope.of(context).requestFocus(FocusNode());
       await _model.loginWithEnrollmentAndPassword(
-        enrollment: _enrollmentNo,
-        password: _password,
+        enrollment: _enrollmentNo!,
+        password: _password!,
       );
       _controller.reset();
       _model.showLottie = true;
@@ -145,7 +151,7 @@ class _LoginViewState extends State<LoginView> with TickerProviderStateMixin {
           }
         });
       } else {
-        _formKey.currentState.reset();
+        _formKey.currentState?.reset();
         _controller
           ..duration = _failureComposition.duration
           ..forward();

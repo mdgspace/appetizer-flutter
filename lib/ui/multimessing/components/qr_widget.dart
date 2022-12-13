@@ -9,7 +9,7 @@ import 'package:qr_flutter/qr_flutter.dart';
 class QRWidget extends StatefulWidget {
   final int switchId;
 
-  const QRWidget({Key key, this.switchId}) : super(key: key);
+  const QRWidget({Key? key, required this.switchId}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => QRWidgetState();
@@ -44,7 +44,7 @@ class QRWidgetState extends State<QRWidget> {
                 child: Container(
                   color: AppTheme.white,
                   child: QrImage(
-                    data: model.secretCode,
+                    data: model.secretCode!,
                     size: 150,
                   ),
                 ),

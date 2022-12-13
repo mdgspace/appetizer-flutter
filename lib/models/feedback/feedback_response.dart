@@ -4,9 +4,9 @@ class FeedbackResponse {
   int dateCreated;
 
   FeedbackResponse({
-    this.message,
-    this.isRead,
-    this.dateCreated,
+    required this.message,
+    required this.isRead,
+    required this.dateCreated,
   });
 
   factory FeedbackResponse.fromJson(Map<String, dynamic> json) =>

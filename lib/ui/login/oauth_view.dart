@@ -7,7 +7,7 @@ import '../../utils/snackbar_utils.dart';
 
 class OAuthView extends StatelessWidget {
   static const id = 'oauth_view';
-  OAuthView({Key key}) : super(key: key);
+  OAuthView({Key? key}) : super(key: key);
   final ValueNotifier<int> _loadingState = ValueNotifier(1);
   final String omniportSignUpURL =
       'https://channeli.in/oauth/authorise/?client_id=${EnvironmentConfig.OAUTH_CLIENT_ID}&redirect_uri=${EnvironmentConfig.OAUTH_REDIRECT_URI}';
@@ -20,7 +20,7 @@ class OAuthView extends StatelessWidget {
           valueListenable: _loadingState,
           builder: (context, value, _) {
             return IndexedStack(
-              index: value,
+              index: int.parse(value.toString()),
               children: [
                 InAppWebView(
                   initialUrlRequest: URLRequest(

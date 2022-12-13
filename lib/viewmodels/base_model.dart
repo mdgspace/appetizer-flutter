@@ -13,9 +13,9 @@ class BaseModel extends ChangeNotifier {
       locator<LocalStorageService>();
   final PackageInfoService _packageInfoService = locator<PackageInfoService>();
 
-  User get currentUser => _localStorageService.currentUser;
+  User? get currentUser => _localStorageService.currentUser;
 
-  set currentUser(User currentUser) {
+  set currentUser(User? currentUser) {
     _localStorageService.currentUser = currentUser;
     notifyListeners();
   }
@@ -29,7 +29,7 @@ class BaseModel extends ChangeNotifier {
 
   String get token => _localStorageService.token;
 
-  set token(String token) {
+  set token(String? token) {
     _localStorageService.token = token;
     notifyListeners();
   }

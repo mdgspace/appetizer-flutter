@@ -6,7 +6,8 @@ class OtherDayMenuView extends StatefulWidget {
   final DayMenu dayMenu;
   final DailyItems dailyItems;
 
-  const OtherDayMenuView({Key key, this.dayMenu, this.dailyItems})
+  const OtherDayMenuView(
+      {Key? key, required this.dayMenu, required this.dailyItems})
       : super(key: key);
 
   @override
@@ -18,22 +19,26 @@ class _OtherDayMenuViewState extends State<OtherDayMenuView> {
   Widget build(BuildContext context) {
     return ListView(
       children: <Widget>[
-        OtherMealsMenuCard(
-          widget.dayMenu.mealMap[MealType.B],
-          widget.dailyItems,
-        ),
-        OtherMealsMenuCard(
-          widget.dayMenu.mealMap[MealType.L],
-          widget.dailyItems,
-        ),
-        OtherMealsMenuCard(
-          widget.dayMenu.mealMap[MealType.S],
-          widget.dailyItems,
-        ),
-        OtherMealsMenuCard(
-          widget.dayMenu.mealMap[MealType.D],
-          widget.dailyItems,
-        ),
+        if (widget.dayMenu.mealMap[MealType.B] != null)
+          OtherMealsMenuCard(
+            widget.dayMenu.mealMap[MealType.B]!,
+            widget.dailyItems,
+          ),
+        if (widget.dayMenu.mealMap[MealType.L] != null)
+          OtherMealsMenuCard(
+            widget.dayMenu.mealMap[MealType.L]!,
+            widget.dailyItems,
+          ),
+        if (widget.dayMenu.mealMap[MealType.S] != null)
+          OtherMealsMenuCard(
+            widget.dayMenu.mealMap[MealType.S]!,
+            widget.dailyItems,
+          ),
+        if (widget.dayMenu.mealMap[MealType.D] != null)
+          OtherMealsMenuCard(
+            widget.dayMenu.mealMap[MealType.D]!,
+            widget.dailyItems,
+          ),
       ],
     );
   }

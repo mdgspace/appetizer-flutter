@@ -82,7 +82,7 @@ class MenuUIUtils {
     );
   }
 
-  static Widget buildSpecialMealBanner(CostType costType) {
+  static Widget buildSpecialMealBanner(CostType? costType) {
     if (costType == CostType.S) {
       return Container(
         width: double.maxFinite,
@@ -99,6 +99,6 @@ class MenuUIUtils {
       );
     }
 
-    return Container();
+    return SizedBox();
   }
 }

@@ -13,10 +13,10 @@ class PaginatedYearlyRebate {
   List<YearlyRebate> results;
 
   PaginatedYearlyRebate({
-    this.count,
-    this.hasNext,
-    this.hasPrevious,
-    this.results,
+    required this.count,
+    required this.hasNext,
+    required this.hasPrevious,
+    required this.results,
   });
 
   factory PaginatedYearlyRebate.fromJson(Map<String, dynamic> json) =>
@@ -45,12 +45,12 @@ class YearlyRebate {
   int startDate;
 
   YearlyRebate({
-    this.monthId,
-    this.year,
-    this.bill,
-    this.expenses,
-    this.rebate,
-    this.startDate,
+    required this.monthId,
+    required this.year,
+    required this.bill,
+    required this.expenses,
+    required this.rebate,
+    required this.startDate,
   });
 
   factory YearlyRebate.fromJson(Map<String, dynamic> json) => YearlyRebate(

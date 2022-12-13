@@ -17,7 +17,7 @@ class ConfirmSwitchPopupViewModel extends BaseModel {
   final MultimessingApi _multimessingApi = locator<MultimessingApi>();
   final MenuApi _menuApi = locator<MenuApi>();
 
-  Meal _fromMeal;
+  late Meal _fromMeal;
 
   Meal get fromMeal => _fromMeal;
 
@@ -26,7 +26,7 @@ class ConfirmSwitchPopupViewModel extends BaseModel {
     notifyListeners();
   }
 
-  Meal _toMeal;
+  late Meal _toMeal;
 
   Meal get toMeal => _toMeal;
 
@@ -35,7 +35,7 @@ class ConfirmSwitchPopupViewModel extends BaseModel {
     notifyListeners();
   }
 
-  bool _isMealSwitched;
+  late bool _isMealSwitched;
 
   bool get isMealSwitched => _isMealSwitched;
 
@@ -44,7 +44,7 @@ class ConfirmSwitchPopupViewModel extends BaseModel {
     notifyListeners();
   }
 
-  WeekMenu _weekMenuMultimessing;
+  late WeekMenu _weekMenuMultimessing;
 
   WeekMenu get weekMenuMultimessing => _weekMenuMultimessing;
 
@@ -69,7 +69,7 @@ class ConfirmSwitchPopupViewModel extends BaseModel {
     try {
       weekMenuMultimessing = await _menuApi.weekMenuMultiMessing(
         DateTimeUtils.getWeekNumber(toMeal.startDateTime),
-        currentUser.hostelCode,
+        currentUser!.hostelCode,
       );
       weekMenuMultimessing.dayMenus.forEach((dayMenu) {
         dayMenu.meals.forEach((meal) {
@@ -90,7 +90,7 @@ class ConfirmSwitchPopupViewModel extends BaseModel {
     _dialogService.showCustomProgressDialog(title: 'Switching Meals');
     await switchMeals(
       _fromMeal.id,
-      StringUtils.hostelNameToCode(toMeal.hostelName),
+      StringUtils.hostelNameToCode(toMeal.hostelName!),
     );
     _dialogService.popDialog();
 

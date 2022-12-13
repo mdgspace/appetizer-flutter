@@ -4,11 +4,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
 class MonthlyRebateCard extends StatelessWidget {
-  final int balanceConsumed;
-  final int rebate;
-  final int additionalMeal;
-  final String month;
-  final int year;
+  final int? balanceConsumed;
+  final int? rebate;
+  final int? additionalMeal;
+  final String? month;
+  final int? year;
 
   MonthlyRebateCard({
     this.balanceConsumed,
@@ -105,7 +105,8 @@ class MonthlyRebateCard extends StatelessWidget {
               children: <Widget>[
                 Text(
                   'Rs. ' +
-                      (balanceConsumed ?? 0 + additionalMeal ?? 0 - rebate ?? 0)
+                      (balanceConsumed ??
+                              0 + (additionalMeal ?? 0) - (rebate ?? 0))
                           .toString(),
                   style: AppTheme.headline4,
                 )

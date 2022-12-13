@@ -2,8 +2,8 @@ import 'package:appetizer/app_theme.dart';
 import 'package:appetizer/ui/login/login_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:get/get.dart';
+import 'package:card_swiper/card_swiper.dart';
 
 class OnBoardingView extends StatefulWidget {
   static const String id = 'on_boarding_view';

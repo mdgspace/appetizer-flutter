@@ -11,7 +11,7 @@ class ForgotPasswordViewModel extends BaseModel {
   final UserApi _userApi = locator<UserApi>();
   final DialogService _dialogService = locator<DialogService>();
 
-  bool _isResetEmailSent;
+  late bool _isResetEmailSent;
 
   bool get isResetEmailSent => _isResetEmailSent;
 

@@ -12,10 +12,10 @@ class Notification {
   String message;
 
   Notification({
-    this.id,
-    this.dateCreated,
-    this.title,
-    this.message,
+    required this.id,
+    required this.dateCreated,
+    required this.title,
+    required this.message,
   });
 
   factory Notification.fromJson(Map<String, dynamic> json) => Notification(

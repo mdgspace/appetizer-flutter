@@ -14,7 +14,7 @@ class ChooseNewPasswordView extends StatefulWidget {
   static const String id = 'choose_new_password_view';
   final User user;
 
-  const ChooseNewPasswordView({Key key, this.user}) : super(key: key);
+  const ChooseNewPasswordView({Key? key, required this.user}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _ChooseNewPasswordViewState();
@@ -23,7 +23,7 @@ class ChooseNewPasswordView extends StatefulWidget {
 class _ChooseNewPasswordViewState extends State<ChooseNewPasswordView> {
   final _formKey = GlobalKey<FormState>();
 
-  String _newPassword, _email, _contactNo;
+  late String _newPassword, _email, _contactNo;
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +42,7 @@ class _ChooseNewPasswordViewState extends State<ChooseNewPasswordView> {
                     Padding(
                       padding: EdgeInsets.symmetric(vertical: 12.r),
                       child: Text(
-                        'Hi ${(widget?.user?.name ?? '').split(' ')[0]}, Choose Your Password!',
+                        'Hi ${(widget.user.name).split(' ')[0]}, Choose Your Password!',
                         textAlign: TextAlign.center,
                         style: AppTheme.headline5,
                       ),
@@ -59,16 +59,22 @@ class _ChooseNewPasswordViewState extends State<ChooseNewPasswordView> {
                       iconData: Icons.lock,
                       label: 'New Password',
                       onChanged: (value) => _newPassword = value,
-                      validator: (value) =>
-                          value.isEmpty ? 'Password can\'t be empty' : null,
-                      onSaved: (value) => _newPassword = value,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Password can\'t be empty';
+                        }
+                        return null;
+                      },
+                      onSaved: (value) {
+                        if (value != null) _newPassword = value;
+                      },
                     ),
                     SizedBox(height: 12.r),
                     AppetizerPasswordField(
                       iconData: Icons.lock,
                       label: 'Confirm Password',
                       validator: (value) {
-                        if (value.isEmpty) {
+                        if (value == null || value.isEmpty) {
                           return 'Password can\'t be empty';
                         }
                         if (value != _newPassword) {
@@ -80,25 +86,29 @@ class _ChooseNewPasswordViewState extends State<ChooseNewPasswordView> {
                     SizedBox(height: 12.r),
                     AppetizerTextField(
                       keyboardType: TextInputType.emailAddress,
-                      initialValue: widget?.user?.email,
+                      initialValue: widget.user.email,
                       iconData: Icons.email,
                       label: 'Email Address',
                       validator: (value) => !Validators.isEmailValid(value)
                           ? 'Please enter a valid e-mail'
                           : null,
-                      onSaved: (value) => _email = value,
+                      onSaved: (value) {
+                        if (value != null) _email = value;
+                      },
                     ),
                     SizedBox(height: 12.r),
                     AppetizerTextField(
                       keyboardType: TextInputType.number,
-                      initialValue: widget?.user?.contactNo,
+                      initialValue: widget.user.contactNo,
                       iconData: Icons.phone,
                       label: 'Contact Number',
                       validator: (value) =>
                           !Validators.isPhoneNumberValid(value)
                               ? 'Please enter a valid contact no.'
                               : null,
-                      onSaved: (value) => _contactNo = value,
+                      onSaved: (value) {
+                        if (value != null) _contactNo = value;
+                      },
                     ),
                     SizedBox(height: 24.r),
                     Container(
@@ -107,7 +117,7 @@ class _ChooseNewPasswordViewState extends State<ChooseNewPasswordView> {
                         title: 'Confirm',
                         onPressed: () async {
                           if (Validators.validateAndSaveForm(_formKey)) {
-                            _formKey.currentState.reset();
+                            _formKey.currentState!.reset();
                             FocusScope.of(context).requestFocus(FocusNode());
                             await model.loginUser(
                               widget.user.enrNo,

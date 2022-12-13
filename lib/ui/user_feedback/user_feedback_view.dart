@@ -111,7 +111,7 @@ class _UserFeedbackViewState extends State<UserFeedbackView> {
                 ),
                 children: model.responseOfFeedbacks
                         ?.map((response) => _buildResponse(response))
-                        ?.toList() ??
+                        .toList() ??
                     [],
               ),
               ExpansionTile(
@@ -137,7 +137,7 @@ class _UserFeedbackViewState extends State<UserFeedbackView> {
                 ),
                 children: model.submittedFeedbacks
                         ?.map((feedback) => _buildFeedback(feedback))
-                        ?.toList() ??
+                        .toList() ??
                     [],
               ),
             ],

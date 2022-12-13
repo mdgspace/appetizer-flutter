@@ -7,11 +7,11 @@ import 'package:appetizer/viewmodels/base_model.dart';
 class MySwitchesViewModel extends BaseModel {
   final MultimessingApi _multimessingApi = locator<MultimessingApi>();
 
-  int _switchCount;
+  int? _switchCount;
 
-  int get switchCount => _switchCount;
+  int? get switchCount => _switchCount;
 
-  set switchCount(int switchCount) {
+  set switchCount(int? switchCount) {
     _switchCount = switchCount;
     notifyListeners();
   }

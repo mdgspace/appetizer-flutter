@@ -11,7 +11,7 @@ class ResetPasswordViewModel extends BaseModel {
   final UserApi _userApi = locator<UserApi>();
   final DialogService _dialogService = locator<DialogService>();
 
-  bool _isUserPasswordReset;
+  bool? _isUserPasswordReset;
 
   Future resetPassword(String oldPassword, String newPassword) async {
     setState(ViewState.Busy);

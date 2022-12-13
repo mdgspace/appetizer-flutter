@@ -15,13 +15,13 @@ class MultipleLeaveTimelineCard extends StatelessWidget {
   final int consecutiveLeaves;
 
   MultipleLeaveTimelineCard({
-    this.mealFrom,
-    this.mealTo,
+    required this.mealFrom,
+    required this.mealTo,
     dayFrom,
     dayTo,
-    this.dateFrom,
-    this.dateTo,
-    this.consecutiveLeaves,
+    required this.dateFrom,
+    required this.dateTo,
+    required this.consecutiveLeaves,
   })  : dayFrom = DateTimeUtils.getWeekDayName(dateFrom)
             .substring(0, 3)
             .toUpperCase(),

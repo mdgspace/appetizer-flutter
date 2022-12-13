@@ -3,24 +3,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppetizerTextField extends StatelessWidget {
-  final String initialValue;
-  final num maxLines;
+  final String? initialValue;
+  final int? maxLines;
   final String label;
   final IconData iconData;
-  final Function(String) onChanged;
-  final Function(String) validator;
-  final Function(String) onSaved;
+  final Function(String)? onChanged;
+  final String? Function(String?) validator;
+  final void Function(String?) onSaved;
   final TextInputType keyboardType;
 
   const AppetizerTextField({
-    Key key,
+    Key? key,
     this.initialValue,
     this.maxLines = 1,
-    @required this.label,
-    this.iconData,
+    required this.label,
+    required this.iconData,
     this.onChanged,
-    this.validator,
-    this.onSaved,
+    required this.validator,
+    required this.onSaved,
     this.keyboardType = TextInputType.text,
   }) : super(key: key);
 

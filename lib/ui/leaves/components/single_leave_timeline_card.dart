@@ -9,7 +9,8 @@ class SingleLeaveTimelineCard extends StatelessWidget {
   final String day;
   final DateTime leaveDate;
 
-  SingleLeaveTimelineCard({Key key, this.meal, String day, this.leaveDate})
+  SingleLeaveTimelineCard(
+      {Key? key, required this.meal, day, required this.leaveDate})
       : day = DateTimeUtils.getWeekDayName(leaveDate)
             .substring(0, 3)
             .toUpperCase(),

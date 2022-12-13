@@ -25,9 +25,9 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  HomeViewModel _model;
-  String selectedHostelName;
-  DateTime _selectedDateTime;
+  late HomeViewModel _model;
+  String? selectedHostelName;
+  late DateTime _selectedDateTime;
 
   Widget _buildFAB() {
     return MaterialButton(
@@ -104,7 +104,7 @@ class _HomeViewState extends State<HomeView> {
     return Container();
   }
 
-  Widget _buildAppBar() {
+  PreferredSizeWidget _buildAppBar() {
     return AppBar(
       backgroundColor: AppTheme.secondary,
       title: _model.isSwitchEnabled
@@ -153,9 +153,9 @@ class _HomeViewState extends State<HomeView> {
                         ),
                       );
                     }).toList(),
-                    onChanged: (String _selectedHostelName) {
-                      setState(() => selectedHostelName = _selectedHostelName);
-                      _model.selectedHostel = _selectedHostelName;
+                    onChanged: (String? _selectedHostelName) {
+                      setState(() => selectedHostelName = _selectedHostelName!);
+                      _model.selectedHostel = _selectedHostelName!;
                     },
                   ),
                 ),
@@ -239,10 +239,10 @@ class _HomeViewState extends State<HomeView> {
   }
 
   Widget _buildDrawerComponent({
-    String iconPath,
-    IconData iconData,
-    String title,
-    VoidCallback onTap,
+    String? iconPath,
+    IconData? iconData,
+    required String title,
+    required VoidCallback onTap,
   }) {
     return GestureDetector(
       onTap: () {
@@ -367,7 +367,7 @@ class _HomeViewState extends State<HomeView> {
         _model = model;
         _model.checkVersion();
         _model.fetchInitialCheckedStatus();
-        _selectedDateTime ??= DateTime.now();
+        _selectedDateTime = DateTime.now();
         if (_model.isSwitchEnabled) _model.setSwitchableHostels();
       },
       builder: (context, model, child) => Scaffold(

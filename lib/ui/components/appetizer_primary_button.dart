@@ -7,9 +7,9 @@ class AppetizerPrimaryButton extends StatelessWidget {
   final VoidCallback onPressed;
 
   const AppetizerPrimaryButton({
-    Key key,
-    @required this.title,
-    @required this.onPressed,
+    Key? key,
+    required this.title,
+    required this.onPressed,
   }) : super(key: key);
 
   @override

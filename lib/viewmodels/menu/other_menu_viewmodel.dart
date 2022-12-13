@@ -11,7 +11,7 @@ class OtherMenuViewModel extends BaseModel {
   final MenuApi _menuApi = locator<MenuApi>();
   final UserApi _userApi = locator<UserApi>();
 
-  String _hostelCode;
+  late String _hostelCode;
 
   String get hostelCode => _hostelCode;
 
@@ -20,7 +20,7 @@ class OtherMenuViewModel extends BaseModel {
     notifyListeners();
   }
 
-  WeekMenu _hostelWeekMenu;
+  late WeekMenu _hostelWeekMenu;
 
   WeekMenu get hostelWeekMenu => _hostelWeekMenu;
 

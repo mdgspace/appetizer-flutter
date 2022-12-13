@@ -18,7 +18,7 @@ class ForgotPasswordView extends StatefulWidget {
 class _ForgotPasswordViewState extends State<ForgotPasswordView> {
   final _formKey = GlobalKey<FormState>();
 
-  String _email;
+  late String _email;
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +83,9 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
                       validator: (value) => !Validators.isEmailValid(value)
                           ? 'Please enter a valid e-mail'
                           : null,
-                      onSaved: (value) => _email = value,
+                      onSaved: (value) {
+                        if (value != null) _email = value;
+                      },
                     ),
                     SizedBox(height: 32.r),
                     Container(
@@ -92,7 +94,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
                         title: 'Send Instructions',
                         onPressed: () async {
                           if (Validators.validateAndSaveForm(_formKey)) {
-                            _formKey.currentState.reset();
+                            _formKey.currentState!.reset();
                             FocusScope.of(context).requestFocus(FocusNode());
                             await model.sendResetEmail(_email);
                           }

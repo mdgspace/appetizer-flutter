@@ -23,12 +23,13 @@ class StringUtils {
   static String hostelCodeToName(String code) {
     return _hostelMap.keys.firstWhere(
       (k) => _hostelMap[k] == code,
-      orElse: () => null,
+      orElse: () => 'Error: No Bhawan with given code',
     );
   }
 
   static String hostelNameToCode(String name) {
-    return _hostelMap[name];
+    return _hostelMap[name] ??
+        'Either bhawan does not exist or no bhawan has no code';
   }
 
   static String appLinkToShareText(String link) {
