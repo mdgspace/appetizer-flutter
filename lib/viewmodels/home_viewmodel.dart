@@ -123,6 +123,7 @@ class HomeViewModel extends BaseModel {
   Future checkout() async {
     try {
       isCheckedOut = await _leaveApi.checkout();
+      notifyListeners();
     } on Failure catch (f) {
       setState(ViewState.Error);
       setErrorMessage(f.message);
