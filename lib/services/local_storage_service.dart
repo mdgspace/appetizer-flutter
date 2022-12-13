@@ -16,7 +16,7 @@ class LocalStorageService {
   static const String fcmTokenKey = 'fcm_token_key';
 
   static Future<LocalStorageService> getInstance() async {
-    if (_instantiated == false){
+    if (!_instantiated) {
       _instance = LocalStorageService();
       _preferences = await SharedPreferences.getInstance();
       _instantiated = true;

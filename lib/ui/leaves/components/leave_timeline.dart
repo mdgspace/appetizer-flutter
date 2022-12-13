@@ -12,7 +12,8 @@ class LeaveTimeline extends StatelessWidget {
   final String month;
   final int year;
 
-  const LeaveTimeline({Key? key, required this.month, required this.year}) : super(key: key);
+  const LeaveTimeline({Key? key, required this.month, required this.year})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

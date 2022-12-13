@@ -7,7 +7,7 @@ class AppetizerPasswordField extends StatefulWidget {
   final IconData iconData;
   final Function(String)? onChanged;
   final String? Function(String?) validator;
-  final String? Function(String?)? onSaved;
+  final void Function(String?)? onSaved;
 
   const AppetizerPasswordField({
     Key? key,

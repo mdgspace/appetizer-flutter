@@ -13,7 +13,7 @@ class AppDatabase {
   static AppDatabase get instance => _singleton;
 
   // Completer is used for transforming synchronous code into asynchronous code.
-  Completer<Database> ? _dbOpenCompleter;
+  Completer<Database>? _dbOpenCompleter;
 
   // A private constructor. Allows us to create instances of AppDatabase
   // only from within the AppDatabase class itself.

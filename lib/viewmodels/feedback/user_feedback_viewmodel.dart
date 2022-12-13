@@ -9,7 +9,7 @@ import 'package:appetizer/viewmodels/base_model.dart';
 class UserFeedbackViewModel extends BaseModel {
   final FeedbackApi _feedbackApi = locator<FeedbackApi>();
 
-  List<FeedbackResponse> ? _responseOfFeedbacks;
+  List<FeedbackResponse>? _responseOfFeedbacks;
 
   List<FeedbackResponse>? get responseOfFeedbacks => _responseOfFeedbacks;
 

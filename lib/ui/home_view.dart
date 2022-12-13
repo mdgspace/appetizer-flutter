@@ -238,8 +238,12 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 
-  Widget _buildDrawerComponent(
-      {String? iconPath, IconData? iconData, required String title, required VoidCallback onTap}) {
+  Widget _buildDrawerComponent({
+    String? iconPath,
+    IconData? iconData,
+    required String title,
+    required VoidCallback onTap,
+  }) {
     return GestureDetector(
       onTap: () {
         Get.back();

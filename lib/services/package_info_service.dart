@@ -8,9 +8,9 @@ class PackageInfoService {
   static bool _instantiated = false;
 
   static Future<PackageInfoService> getInstance() async {
-    if (_instantiated == false){
+    if (!_instantiated) {
       _instance = PackageInfoService(
-      packageInfo: await PackageInfo.fromPlatform(),
+        packageInfo: await PackageInfo.fromPlatform(),
       );
       _instantiated = true;
     }
@@ -18,7 +18,8 @@ class PackageInfoService {
     return _instance;
   }
 
-  PackageInfoService({required PackageInfo packageInfo}) : _packageInfo = packageInfo;
+  PackageInfoService({required PackageInfo packageInfo})
+      : _packageInfo = packageInfo;
 
   String get version => _packageInfo.version;
 }

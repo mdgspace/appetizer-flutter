@@ -100,7 +100,8 @@ class _LeaveDropdownFilterState extends State<LeaveDropdownFilter> {
                               );
                             }).toList(),
                             onChanged: (String? newMonthSelected) {
-                              setState(() => _selectedMonth = newMonthSelected!);
+                              setState(
+                                  () => _selectedMonth = newMonthSelected!);
                               widget.onMonthSelected(newMonthSelected!);
                             },
                           ),

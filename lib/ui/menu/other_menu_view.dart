@@ -14,7 +14,8 @@ class OtherMenuView extends StatefulWidget {
   final String hostelName;
   final DateTime selectedDateTime;
 
-  const OtherMenuView({Key? key, required this.hostelName, required this.selectedDateTime})
+  const OtherMenuView(
+      {Key? key, required this.hostelName, required this.selectedDateTime})
       : super(key: key);
   @override
   _OtherMenuViewState createState() => _OtherMenuViewState();

@@ -9,7 +9,7 @@ class AppetizerTextField extends StatelessWidget {
   final IconData iconData;
   final Function(String)? onChanged;
   final String? Function(String?) validator;
-  final String? Function(String?) onSaved;
+  final void Function(String?) onSaved;
   final TextInputType keyboardType;
 
   const AppetizerTextField({
