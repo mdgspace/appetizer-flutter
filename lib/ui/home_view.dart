@@ -315,7 +315,8 @@ class _HomeViewState extends State<HomeView> {
                   ),
                   if (_model.isLeaveEnabled)
                     _buildDrawerComponent(
-                      onTap: () => Get.toNamed(MyLeavesView.id)!.then((_) => setState((){})),
+                      onTap: () => Get.toNamed(MyLeavesView.id)!
+                          .then((_) => setState(() {})),
                       iconPath: 'assets/icons/leaves.png',
                       title: 'Leaves',
                     ),
