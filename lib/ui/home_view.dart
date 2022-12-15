@@ -82,7 +82,8 @@ class _HomeViewState extends State<HomeView> {
               ),
             ),
             GestureDetector(
-              onTap: () => Get.toNamed(MyLeavesView.id),
+              onTap: () =>
+                  Get.toNamed(MyLeavesView.id)!.then((_) => setState(() {})),
               child: Padding(
                 padding: EdgeInsets.symmetric(
                   vertical: 4.r,
@@ -314,7 +315,7 @@ class _HomeViewState extends State<HomeView> {
                   ),
                   if (_model.isLeaveEnabled)
                     _buildDrawerComponent(
-                      onTap: () => Get.toNamed(MyLeavesView.id),
+                      onTap: () => Get.toNamed(MyLeavesView.id)!.then((_) => setState((){})),
                       iconPath: 'assets/icons/leaves.png',
                       title: 'Leaves',
                     ),
