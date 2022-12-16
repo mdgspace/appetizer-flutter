@@ -218,4 +218,14 @@ class UserApi {
       throw Failure(Constants.GENERIC_FAILURE);
     }
   }
+
+  Future checkEnrollmentNumber(String enrl) async {
+    var uri = '$enrl';
+    try {
+      var jsonResponse = await ApiUtils.get(uri);
+      print(jsonResponse);
+    } on Exception catch (e) {
+      print(e);
+    }
+  }
 }

@@ -35,7 +35,10 @@ class _LoginViewState extends State<LoginView> with TickerProviderStateMixin {
   String? _enrollmentNo, _password;
   late AnimationController _controller;
   late LottieComposition _successComposition, _failureComposition;
-
+  bool pass_visible = false;
+  bool enrl_visible = true;
+  bool nextbtn_visible = true;
+  bool loginbtn_visible = false;
   @override
   void initState() {
     super.initState();
@@ -49,49 +52,64 @@ class _LoginViewState extends State<LoginView> with TickerProviderStateMixin {
   }
 
   Widget _buildEnrollmentInput() {
-    return AppetizerTextField(
-      iconData: Icons.person,
-      label: 'Enrollment No.',
-      keyboardType: TextInputType.number,
-      validator: (value) =>
-          (value ?? '').isEmpty ? 'Enrollment No can\'t be empty' : null,
-      onSaved: (value) {
-        if (value != null) _enrollmentNo = value.trim();
-        return null;
-      },
+    return Visibility(
+      visible: enrl_visible,
+      child: AppetizerTextField(
+        iconData: Icons.person,
+        label: 'Enrollment No.',
+        keyboardType: TextInputType.number,
+        validator: (value) =>
+            (value ?? '').isEmpty ? 'Enrollment No can\'t be empty' : null,
+        onSaved: (value) {
+          if (value != null) _enrollmentNo = value.trim();
+          return null;
+        },
+      ),
     );
   }
 
   Widget _buildPasswordInput() {
-    return AppetizerPasswordField(
-      iconData: Icons.lock,
-      label: 'Password',
-      validator: (value) {
-        if (value == null || value.isEmpty) return 'Password can\'t be empty';
-        return null;
-      },
-      onSaved: (value) => _password = value,
+    return Visibility(
+      visible: pass_visible,
+      child: AppetizerPasswordField(
+        iconData: Icons.lock,
+        label: 'Password',
+        validator: (value) {
+          if (value == null || value.isEmpty) return 'Password can\'t be empty';
+          return null;
+        },
+        onSaved: (value) => _password = value,
+      ),
     );
   }
 
   Widget _buildLoginButton() {
     if (_model.state == ViewState.Busy) {
-      return AppetizerPrimaryButton(
-        title: 'Authenticating..',
-        onPressed: () {},
+      return Visibility(
+        visible: loginbtn_visible,
+        child: AppetizerPrimaryButton(
+          title: 'Authenticating..',
+          onPressed: () {},
+        ),
       );
     }
 
     if (_model.isLoggedIn) {
-      return AppetizerOutineButton(
-        title: 'Login Successful',
-        onPressed: () {},
+      return Visibility(
+        visible: loginbtn_visible,
+        child: AppetizerOutineButton(
+          title: 'Login Successful',
+          onPressed: () {},
+        ),
       );
     }
 
-    return AppetizerOutineButton(
-      title: 'LOGIN',
-      onPressed: _validateAndSubmit,
+    return Visibility(
+      visible: loginbtn_visible,
+      child: AppetizerOutineButton(
+        title: 'LOGIN',
+        onPressed: _validateAndSubmit,
+      ),
     );
   }
 
@@ -119,6 +137,23 @@ class _LoginViewState extends State<LoginView> with TickerProviderStateMixin {
     );
   }
 
+  Widget _verifyEnrlNum() {
+    return Visibility(
+      visible: nextbtn_visible,
+      child: AppetizerOutineButton(
+          title: 'NEXT',
+          onPressed: () {
+            _verifyEnrlNum();
+            setState(() {
+              pass_visible = true;
+              enrl_visible = false;
+              nextbtn_visible = false;
+              loginbtn_visible = true;
+            });
+          }),
+    );
+  }
+
   Widget _buildChannelIButton() {
     return AppetizerPrimaryButton(
       title: 'SIGNUP WITH CHANNEL-I',
@@ -127,6 +162,13 @@ class _LoginViewState extends State<LoginView> with TickerProviderStateMixin {
         if (_code is String && _code.isNotEmpty) await _model.verifyUser(_code);
       },
     );
+  }
+
+  Future<void> _validateEnrollment() async {
+    if (Validators.validateAndSaveForm(_formKey)) {
+      //TODO: implement enrollment number checking api
+      print(1212121212);
+    }
   }
 
   Future<void> _validateAndSubmit() async {
@@ -248,6 +290,10 @@ class _LoginViewState extends State<LoginView> with TickerProviderStateMixin {
                                 SizedBox(height: 24.r),
                                 Container(
                                   width: double.maxFinite,
+                                  child: _verifyEnrlNum(),
+                                ),
+                                Container(
+                                  width: double.maxFinite,
                                   child: _buildLoginButton(),
                                 ),
                                 IntrinsicHeight(
@@ -261,10 +307,10 @@ class _LoginViewState extends State<LoginView> with TickerProviderStateMixin {
                                   ),
                                 ),
                                 SizedBox(height: 12.r),
-                                Container(
-                                  width: double.maxFinite,
-                                  child: _buildChannelIButton(),
-                                ),
+                                // Container(
+                                //   width: double.maxFinite,
+                                //   child: _buildChannelIButton(),
+                                // ),
                               ],
                             ),
                           ),
