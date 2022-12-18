@@ -26,6 +26,18 @@ class HomeViewModel extends BaseModel {
       locator<PushNotificationService>();
   final DialogService _dialogService = locator<DialogService>();
 
+  bool _checkedOut = isCheckedOut;
+
+  bool get checkedOut => _checkedOut;
+
+  set checkedOut(bool isCheckedOut) {
+    if (_checkedOut == isCheckedOut) {
+      return;
+    }
+    _checkedOut = isCheckedOut;
+    notifyListeners();
+  }
+
   String _selectedHostel = 'Your Meals';
 
   String get selectedHostel => _selectedHostel;
