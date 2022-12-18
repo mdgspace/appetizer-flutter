@@ -7,7 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class LeaveStatusCard extends StatefulWidget {
   final int? remainingLeaves;
-  
+
   LeaveStatusCard(this.remainingLeaves);
 
   @override
