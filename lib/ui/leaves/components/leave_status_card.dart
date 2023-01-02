@@ -5,37 +5,10 @@ import 'package:appetizer/viewmodels/leaves/leave_status_card_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class LeaveStatusCard extends StatefulWidget {
+class LeaveStatusCard extends StatelessWidget {
   final int? remainingLeaves;
-  LeaveStatusCard(this.remainingLeaves);
+  const LeaveStatusCard(this.remainingLeaves);
 
-  @override
-  _LeaveStatusCardState createState() => _LeaveStatusCardState();
-}
-
-Widget _buildInfoComponent(String info) {
-  return Container(
-    padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-    color: AppTheme.lightGrey,
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: <Widget>[
-        Icon(
-          Icons.info,
-          size: 16.r,
-          color: AppTheme.blackSecondary,
-        ),
-        SizedBox(width: 8.r),
-        Text(
-          info,
-          style: AppTheme.bodyText2,
-        ),
-      ],
-    ),
-  );
-}
-
-class _LeaveStatusCardState extends State<LeaveStatusCard> {
   @override
   Widget build(BuildContext context) {
     return BaseView<LeaveStatusCardViewModel>(
@@ -70,7 +43,7 @@ class _LeaveStatusCardState extends State<LeaveStatusCard> {
                                 style: AppTheme.bodyText1,
                               ),
                               Text(
-                                '${widget.remainingLeaves ?? '-'}',
+                                '${remainingLeaves ?? '-'}',
                                 style: AppTheme.subtitle1,
                               ),
                             ],
@@ -113,7 +86,7 @@ class _LeaveStatusCardState extends State<LeaveStatusCard> {
                       padding: EdgeInsets.all(8.r),
                     ),
                     onPressed: () {
-                      model.onCheckTapped().then((_) => setState(() {}));
+                      model.onCheckTapped();
                     },
                     child: Text(
                       (isCheckedOut) ? 'CHECK IN' : 'CHECK OUT',
@@ -130,6 +103,28 @@ class _LeaveStatusCardState extends State<LeaveStatusCard> {
               ? _buildInfoComponent('Check-in to start taking meals again')
               : _buildInfoComponent(
                   'Check-out to leave upcoming meals in sequence'),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildInfoComponent(String info) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+      color: AppTheme.lightGrey,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          Icon(
+            Icons.info,
+            size: 16.r,
+            color: AppTheme.blackSecondary,
+          ),
+          SizedBox(width: 8.r),
+          Text(
+            info,
+            style: AppTheme.bodyText2,
+          ),
         ],
       ),
     );

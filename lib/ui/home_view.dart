@@ -82,8 +82,8 @@ class _HomeViewState extends State<HomeView> {
               ),
             ),
             GestureDetector(
-              onTap: () =>
-                  Get.toNamed(MyLeavesView.id)!.then((_) => setState(() {})),
+              onTap: () => Get.toNamed(MyLeavesView.id)!
+                  .then((_) => _model.checkedOut = isCheckedOut),
               child: Padding(
                 padding: EdgeInsets.symmetric(
                   vertical: 4.r,

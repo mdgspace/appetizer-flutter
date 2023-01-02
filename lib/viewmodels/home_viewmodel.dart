@@ -30,11 +30,9 @@ class HomeViewModel extends BaseModel {
 
   bool get checkedOut => _checkedOut;
 
-  set checkedOut(bool isCheckedOut) {
-    if (_checkedOut == isCheckedOut) {
-      return;
-    }
-    _checkedOut = isCheckedOut;
+  set checkedOut(bool state) {
+    _checkedOut = state;
+    isCheckedOut = state;
     notifyListeners();
   }
 
@@ -68,7 +66,7 @@ class HomeViewModel extends BaseModel {
   Future fetchInitialCheckedStatus() async {
     try {
       var userDetails = await _userApi.getCurrentUser();
-      isCheckedOut = userDetails.isCheckedOut;
+      checkedOut = userDetails.isCheckedOut;
       notifyListeners();
     } on Failure catch (f) {
       if (f.message == Constants.UNAUTHORIZED_EXCEPTION) {
@@ -134,7 +132,7 @@ class HomeViewModel extends BaseModel {
 
   Future checkout() async {
     try {
-      isCheckedOut = await _leaveApi.checkout();
+      checkedOut = await _leaveApi.checkout();
       notifyListeners();
     } on Failure catch (f) {
       setState(ViewState.Error);
@@ -152,7 +150,7 @@ class HomeViewModel extends BaseModel {
 
       if (dialogResponse.confirmed) {
         await checkout();
-        if (isCheckedOut) {
+        if (checkedOut) {
           SnackBarUtils.showDark('Info', 'You have checked out');
         }
       }
