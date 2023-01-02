@@ -1,5 +1,4 @@
 import 'package:appetizer/app_theme.dart';
-import 'package:appetizer/globals.dart';
 import 'package:appetizer/ui/base_view.dart';
 import 'package:appetizer/ui/components/appetizer_app_bar.dart';
 import 'package:appetizer/ui/leaves/leave_history_view.dart';
@@ -11,28 +10,6 @@ import 'package:get/get.dart';
 
 class MyLeavesView extends StatelessWidget {
   static const String id = 'my_leaves_view';
-
-  Widget _buildInfoComponent(String info) {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-      color: AppTheme.lightGrey,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          Icon(
-            Icons.info,
-            size: 16.r,
-            color: AppTheme.blackSecondary,
-          ),
-          SizedBox(width: 8.r),
-          Text(
-            info,
-            style: AppTheme.bodyText2,
-          ),
-        ],
-      ),
-    );
-  }
 
   Widget _buildLeaveHistoryComponent() {
     return SafeArea(
@@ -72,16 +49,7 @@ class MyLeavesView extends StatelessWidget {
         body: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Column(
-              children: [
-                LeaveStatusCard(model.leaveCount),
-                (isCheckedOut)
-                    ? _buildInfoComponent(
-                        'Check-in to start taking meals again')
-                    : _buildInfoComponent(
-                        'Check-out to leave upcoming meals in sequence'),
-              ],
-            ),
+            LeaveStatusCard(model.leaveCount),
             _buildLeaveHistoryComponent()
           ],
         ),

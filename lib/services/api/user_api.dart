@@ -23,7 +23,6 @@ class UserApi {
 
     try {
       var jsonResponse = await ApiUtils.post(uri, headers: headers, body: json);
-      print(jsonResponse);
       var user = User.fromJson(jsonResponse);
       return user;
     } on ForbiddenException catch (e) {

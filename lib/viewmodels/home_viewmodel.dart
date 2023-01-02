@@ -26,6 +26,16 @@ class HomeViewModel extends BaseModel {
       locator<PushNotificationService>();
   final DialogService _dialogService = locator<DialogService>();
 
+  bool _checkedOut = isCheckedOut;
+
+  bool get checkedOut => _checkedOut;
+
+  set checkedOut(bool state) {
+    _checkedOut = state;
+    isCheckedOut = state;
+    notifyListeners();
+  }
+
   String _selectedHostel = 'Your Meals';
 
   String get selectedHostel => _selectedHostel;
@@ -56,7 +66,7 @@ class HomeViewModel extends BaseModel {
   Future fetchInitialCheckedStatus() async {
     try {
       var userDetails = await _userApi.getCurrentUser();
-      isCheckedOut = userDetails.isCheckedOut;
+      checkedOut = userDetails.isCheckedOut;
       notifyListeners();
     } on Failure catch (f) {
       if (f.message == Constants.UNAUTHORIZED_EXCEPTION) {
@@ -122,7 +132,8 @@ class HomeViewModel extends BaseModel {
 
   Future checkout() async {
     try {
-      isCheckedOut = await _leaveApi.checkout();
+      checkedOut = await _leaveApi.checkout();
+      notifyListeners();
     } on Failure catch (f) {
       setState(ViewState.Error);
       setErrorMessage(f.message);
@@ -139,7 +150,7 @@ class HomeViewModel extends BaseModel {
 
       if (dialogResponse.confirmed) {
         await checkout();
-        if (isCheckedOut) {
+        if (checkedOut) {
           SnackBarUtils.showDark('Info', 'You have checked out');
         }
       }
