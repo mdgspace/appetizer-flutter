@@ -1,11 +1,10 @@
 import 'package:appetizer/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intl/intl.dart';
 
 class MonthlyRebateCard extends StatelessWidget {
   final int? balanceConsumed;
-  final int? rebate;
+  final num? rebate;
   final int? additionalMeal;
   final String? month;
   final int? year;
@@ -36,7 +35,7 @@ class MonthlyRebateCard extends StatelessWidget {
                     style: AppTheme.headline3,
                   ),
                   Text(
-                    '${DateFormat.MMMM().format(DateTime.now())} ${DateTime.now().year}',
+                    '$month $year',
                     style: AppTheme.bodyText1,
                   ),
                 ],

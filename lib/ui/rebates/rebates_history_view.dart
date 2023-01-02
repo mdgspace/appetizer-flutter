@@ -110,15 +110,14 @@ class _RebatesHistoryViewState extends State<RebatesHistoryView> {
                         return MonthlyRebateCard(
                           balanceConsumed: 0,
                           rebate: _yearlyRebate.rebate,
-                          additionalMeal:
-                              model.yearlyRebate.results[index].expenses,
+                          additionalMeal: _yearlyRebate.expenses,
                           month: DateTimeUtils.getMonthName(
                             DateTime(
                               DateTime.now().year,
-                              model.yearlyRebate.results[index].monthId,
+                              _yearlyRebate.monthId,
                             ),
                           ),
-                          year: model.yearlyRebate.results[index].year,
+                          year: _yearlyRebate.year,
                         );
                       },
                     );

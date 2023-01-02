@@ -41,7 +41,7 @@ class YearlyRebate {
   int year;
   dynamic bill;
   int expenses;
-  int rebate;
+  num rebate;
   int startDate;
 
   YearlyRebate({
