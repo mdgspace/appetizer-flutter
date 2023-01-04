@@ -218,6 +218,7 @@ class _HomeViewState extends State<HomeView> {
                   _model.currentUser?.name ?? '',
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
+                    fontSize: 16,
                     color: AppTheme.white,
                     fontWeight: FontWeight.w600,
                   ),
@@ -227,6 +228,7 @@ class _HomeViewState extends State<HomeView> {
                   _model.currentUser?.enrNo.toString() ?? '',
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
+                    fontSize: 14,
                     color: AppTheme.white,
                     fontWeight: FontWeight.w600,
                   ),
@@ -250,6 +252,7 @@ class _HomeViewState extends State<HomeView> {
         Get.back();
         onTap();
       },
+      behavior: HitTestBehavior.opaque,
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 10.r, vertical: 15.r),
         child: Row(
@@ -260,7 +263,7 @@ class _HomeViewState extends State<HomeView> {
             SizedBox(width: 10.r),
             Text(
               title,
-              style: TextStyle(fontSize: 10),
+              style: TextStyle(fontSize: 12),
               overflow: TextOverflow.ellipsis,
             ),
           ],

@@ -7,6 +7,7 @@ import 'package:appetizer/viewmodels/rebates/my_rebates_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class MyRebatesView extends StatelessWidget {
   static const String id = 'rebates_view';
@@ -53,6 +54,8 @@ class MyRebatesView extends StatelessWidget {
               balanceConsumed: 0,
               rebate: model.monthlyRebate,
               additionalMeal: 0,
+              month: DateFormat.MMMM().format(DateTime.now()),
+              year: DateTime.now().year,
             ),
             _buildRebatesHistoryComponent(),
           ],
