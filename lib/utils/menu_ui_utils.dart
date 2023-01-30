@@ -78,19 +78,26 @@ class MenuUIUtils {
                     ),
                   ),
                 ),
-                item.name.contains('Chicken')
-                    ? cs == 'N'
-                        ? AppetizerOutineButton(
-                            title: 'Coupon',
-                            onPressed: () {},
-                            theme: AppTheme.red,
-                          )
-                        : AppetizerPrimaryButton(
-                            title: 'Coupon',
-                            onPressed: () {},
-                            theme: AppTheme.red,
-                          )
-                    : SizedBox(),
+                SizedBox(
+                  height: 20.r,
+                  child: item.name.contains('Chicken')
+                      ? cs == 'N'
+                          ? AppetizerOutineButton(
+                              title: 'Coupon',
+                              onPressed: () {},
+                              theme: AppTheme.red,
+                              textStyle: AppTheme.bodyText3,
+                              width: 10.r,
+                            )
+                          : AppetizerPrimaryButton(
+                              title: 'Coupon',
+                              onPressed: () {},
+                              textStyle: AppTheme.bodyText3,
+                              theme: AppTheme.red,
+                              width: 10.r,
+                            )
+                      : SizedBox(),
+                )
               ],
             ),
           )

@@ -6,12 +6,16 @@ class AppetizerOutineButton extends StatelessWidget {
   final String title;
   final VoidCallback onPressed;
   final Color? theme;
+  final TextStyle? textStyle;
+  final double? width;
 
   const AppetizerOutineButton({
     Key? key,
     required this.title,
     required this.onPressed,
     this.theme,
+    this.textStyle,
+    this.width,
   }) : super(key: key);
 
   @override
@@ -20,8 +24,8 @@ class AppetizerOutineButton extends StatelessWidget {
       onPressed: onPressed,
       style: TextButton.styleFrom(
         padding: EdgeInsets.symmetric(
-          vertical: 8.r,
-          horizontal: 16.r,
+          vertical: width != null ? 0 : 8.r,
+          horizontal: width ?? 16.r,
         ),
         backgroundColor: Colors.white,
         side: BorderSide(
@@ -30,9 +34,12 @@ class AppetizerOutineButton extends StatelessWidget {
       ),
       child: Text(
         title,
-        style: AppTheme.subtitle1.copyWith(
-          color: theme ?? AppTheme.primary,
-        ),
+        style: textStyle?.copyWith(
+              color: theme ?? AppTheme.red,
+            ) ??
+            AppTheme.subtitle1.copyWith(
+              color: theme ?? AppTheme.primary,
+            ),
       ),
     );
   }
