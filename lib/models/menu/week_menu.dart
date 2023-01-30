@@ -173,6 +173,7 @@ class Meal {
   DateTime startTime;
   DateTime endTime;
   LeaveStatus leaveStatus;
+  CouponStatus couponStatus;
   dynamic wastage;
   bool isSwitchable;
   SwitchStatus switchStatus;
@@ -200,6 +201,7 @@ class Meal {
     required this.isLeaveToggleOutdated,
     required this.startDateTime,
     required this.endDateTime,
+    required this.couponStatus,
   });
 
   factory Meal.fromJson(Map<String, dynamic> json, DateTime date) => Meal(
@@ -211,6 +213,7 @@ class Meal {
         startTime: DateFormat('HH:mm:ss').parse(json['start_time']),
         endTime: DateFormat('HH:mm:ss').parse(json['end_time']),
         leaveStatus: LeaveStatus.fromJson(json['leave_status']),
+        couponStatus: CouponStatus.fromJson(json['coupon_status']),
         wastage: json['wastage'],
         isSwitchable: json['is_switchable'] ?? false,
         switchStatus: SwitchStatus.fromJson(json['switch_status']),
@@ -252,6 +255,7 @@ class Meal {
     DateTime? startTime,
     DateTime? endTime,
     LeaveStatus? leaveStatus,
+    CouponStatus? couponStatus,
     dynamic wastage,
     bool? isSwitchable,
     SwitchStatus? switchStatus,
@@ -270,6 +274,7 @@ class Meal {
       startTime: startTime ?? this.startTime,
       endTime: endTime ?? this.endTime,
       leaveStatus: leaveStatus ?? this.leaveStatus,
+      couponStatus: couponStatus ?? this.couponStatus,
       wastage: wastage ?? this.wastage,
       isSwitchable: isSwitchable ?? this.isSwitchable,
       switchStatus: switchStatus ?? this.switchStatus,
@@ -321,6 +326,28 @@ class LeaveStatus {
       };
 }
 
+class CouponStatus {
+  int? id;
+  CouponStatusEnum status;
+
+  CouponStatus({
+    this.id,
+    required this.status,
+  });
+
+  factory CouponStatus.fromJson(Map<String, dynamic>? json) => CouponStatus(
+        id: json != null ? json['id'] : null,
+        status: json != null
+            ? couponStatusValues.map[json['status'] ?? 'N']!
+            : CouponStatusEnum.N,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'status': couponStatusValues.reverse[status],
+      };
+}
+
 class SwitchStatus {
   int id;
   SwitchStatusEnum status;
@@ -344,6 +371,13 @@ class SwitchStatus {
 }
 
 enum LeaveStatusEnum { N, A, D, P, U }
+
+enum CouponStatusEnum { N, A }
+
+final couponStatusValues = EnumValues({
+  'N': CouponStatusEnum.N,
+  'A': CouponStatusEnum.A,
+});
 
 final leaveStatusValues = EnumValues({
   'N': LeaveStatusEnum.N,

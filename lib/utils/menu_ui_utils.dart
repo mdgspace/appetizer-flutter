@@ -2,6 +2,8 @@ import 'dart:math' as math;
 
 import 'package:appetizer/app_theme.dart';
 import 'package:appetizer/models/menu/week_menu.dart';
+import 'package:appetizer/ui/components/appetizer_outline_button.dart';
+import 'package:appetizer/ui/components/appetizer_primary_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
@@ -50,6 +52,7 @@ class MenuUIUtils {
   }
 
   static Widget buildMealItemsComponent(Meal meal) {
+    var cs = meal.couponStatus.status.name;
     return Column(
       children: meal.items
           .map(
@@ -75,6 +78,19 @@ class MenuUIUtils {
                     ),
                   ),
                 ),
+                item.name.contains('Chicken')
+                    ? cs == 'N'
+                        ? AppetizerOutineButton(
+                            title: 'Coupon',
+                            onPressed: () {},
+                            theme: AppTheme.red,
+                          )
+                        : AppetizerPrimaryButton(
+                            title: 'Coupon',
+                            onPressed: () {},
+                            theme: AppTheme.red,
+                          )
+                    : SizedBox(),
               ],
             ),
           )

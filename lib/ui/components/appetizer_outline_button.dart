@@ -5,11 +5,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class AppetizerOutineButton extends StatelessWidget {
   final String title;
   final VoidCallback onPressed;
+  final Color? theme;
 
   const AppetizerOutineButton({
     Key? key,
     required this.title,
     required this.onPressed,
+    this.theme,
   }) : super(key: key);
 
   @override
@@ -22,12 +24,14 @@ class AppetizerOutineButton extends StatelessWidget {
           horizontal: 16.r,
         ),
         backgroundColor: Colors.white,
-        side: BorderSide(color: AppTheme.primary),
+        side: BorderSide(
+          color: theme ?? AppTheme.primary,
+        ),
       ),
       child: Text(
         title,
         style: AppTheme.subtitle1.copyWith(
-          color: AppTheme.primary,
+          color: theme ?? AppTheme.primary,
         ),
       ),
     );
