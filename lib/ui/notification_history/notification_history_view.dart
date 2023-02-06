@@ -25,6 +25,7 @@ class NotificationHistoryView extends StatelessWidget {
                 replacement: Center(
                   child: Text(
                     'No Notifications yet!',
+                    // ignore: deprecated_member_use
                     style: Theme.of(context).textTheme.bodyText1,
                   ),
                 ),

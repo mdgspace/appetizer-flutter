@@ -64,6 +64,12 @@ class AppTheme {
     color: blackSecondary,
     fontFamily: 'OpenSans',
   );
+  static TextStyle bodyText3 = TextStyle(
+    fontSize: 10.sp,
+    fontWeight: FontWeight.w400,
+    color: blackSecondary,
+    fontFamily: 'OpenSans',
+  );
   static TextStyle overline = TextStyle(
     fontSize: 6.sp,
     fontWeight: FontWeight.w400,

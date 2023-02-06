@@ -5,11 +5,17 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class AppetizerPrimaryButton extends StatelessWidget {
   final String title;
   final VoidCallback onPressed;
+  final Color? theme;
+  final TextStyle? textStyle;
+  final double? width;
 
   const AppetizerPrimaryButton({
     Key? key,
     required this.title,
     required this.onPressed,
+    this.theme,
+    this.textStyle,
+    this.width,
   }) : super(key: key);
 
   @override
@@ -18,17 +24,18 @@ class AppetizerPrimaryButton extends StatelessWidget {
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
         padding: EdgeInsets.symmetric(
-          vertical: 8.r,
-          horizontal: 16.r,
+          vertical: width != null ? 0 : 8.r,
+          horizontal: width ?? 16.r,
         ),
         elevation: 0,
-        backgroundColor: AppTheme.primary,
+        backgroundColor: theme ?? AppTheme.primary,
       ),
       child: Text(
         title,
-        style: AppTheme.subtitle1.copyWith(
-          color: AppTheme.white,
-        ),
+        style: textStyle?.copyWith(color: AppTheme.white) ??
+            AppTheme.subtitle1.copyWith(
+              color: AppTheme.white,
+            ),
       ),
     );
   }

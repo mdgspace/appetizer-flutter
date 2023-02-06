@@ -3,6 +3,7 @@ import 'package:appetizer/globals.dart';
 import 'package:appetizer/locator.dart';
 import 'package:appetizer/models/failure_model.dart';
 import 'package:appetizer/models/menu/week_menu.dart';
+import 'package:appetizer/services/api/coupon_api.dart';
 import 'package:appetizer/services/api/leave_api.dart';
 import 'package:appetizer/services/api/multimessing_api.dart';
 import 'package:appetizer/services/dialog_service.dart';
@@ -14,6 +15,7 @@ import 'package:get/get.dart';
 
 class YourMenuCardViewModel extends BaseModel {
   final LeaveApi _leaveApi = locator<LeaveApi>();
+  final CouponApi _couponApi = locator<CouponApi>();
   final MultimessingApi _multimessingApi = locator<MultimessingApi>();
   final DialogService _dialogService = locator<DialogService>();
 
@@ -107,6 +109,34 @@ class YourMenuCardViewModel extends BaseModel {
       _mealSwitchStatus = false;
     }
     notifyListeners();
+  }
+
+  Future updateCouponStatus() async {
+    if (_meal != null) {
+      if (_meal!.couponStatus.status == CouponStatusEnum.A) {
+        try {
+          return await _couponApi.cancelCoupon(_meal!.couponStatus.id!);
+        } on Failure catch (f) {
+          print(f.toString());
+          setErrorMessage(f.message);
+          setState(ViewState.Error);
+          await Fluttertoast.showToast(
+            msg: 'Something went wrong while canceling the coupon',
+          );
+        }
+      } else {
+        try {
+          return await _couponApi.applyForCoupon(_meal!.id);
+        } on Failure catch (f) {
+          print(f.toString());
+          setErrorMessage(f.message);
+          setState(ViewState.Error);
+          await Fluttertoast.showToast(
+            msg: 'Something went wrong while generating the coupon',
+          );
+        }
+      }
+    }
   }
 
   Future cancelLeave(int id) async {

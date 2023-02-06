@@ -12,7 +12,7 @@ class OtherMenuCardViewModel extends BaseModel {
   final MultimessingApi _multimessingApi = locator<MultimessingApi>();
 
   Future<void> onSwitchTapped(Meal meal) async {
-    if (meal.isLeaveToggleOutdated) return null;
+    if (meal.isLeaveToggleOutdated) return;
 
     if (meal.switchStatus.status == SwitchStatusEnum.N) {
       await Get.toNamed(SwitchConfirmedView.id);

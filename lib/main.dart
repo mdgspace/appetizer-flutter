@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:appetizer/app_theme.dart';
 import 'package:appetizer/config/environment_config.dart';
 import 'package:appetizer/firebase_options.dart';

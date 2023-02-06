@@ -1,1 +1,20 @@
-include: package:pedantic/analysis_options.yaml
+include: package:flutter_lints/flutter.yaml
+
+
+linter:
+  rules:
+    constant_identifier_names: false
+    prefer_const_constructors: false
+    avoid_print: false
+    sized_box_for_whitespace: false
+    no_leading_underscores_for_local_identifiers: false
+    library_private_types_in_public_api: false
+    use_key_in_widget_constructors: false
+    unnecessary_string_interpolations: false
+    avoid_function_literals_in_foreach_calls: false
+    avoid_unnecessary_containers: false
+    prefer_const_constructors_in_immutables: false
+    prefer_interpolation_to_compose_strings: false
+    prefer_typing_uninitialized_variables: false
+    depend_on_referenced_packages: false
+    

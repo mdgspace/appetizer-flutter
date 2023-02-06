@@ -2,9 +2,13 @@ import 'dart:math' as math;
 
 import 'package:appetizer/app_theme.dart';
 import 'package:appetizer/models/menu/week_menu.dart';
+import 'package:appetizer/ui/components/appetizer_outline_button.dart';
+import 'package:appetizer/ui/components/appetizer_primary_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+
+typedef SetCouponStatusCallBack = void Function(CouponStatus);
 
 class MenuUIUtils {
   static Widget buildtitleAndBhawanNameComponent(Meal meal) {
@@ -49,7 +53,10 @@ class MenuUIUtils {
     );
   }
 
-  static Widget buildMealItemsComponent(Meal meal) {
+  static Widget buildMealItemsComponent(
+    Meal meal, {
+    VoidCallback? onPressed,
+  }) {
     return Column(
       children: meal.items
           .map(
@@ -75,6 +82,25 @@ class MenuUIUtils {
                     ),
                   ),
                 ),
+                if (!meal.isOutdated && item.type == MealItemType.CPN)
+                  SizedBox(
+                    height: 20.r,
+                    child: meal.couponStatus.status == CouponStatusEnum.N
+                        ? AppetizerOutineButton(
+                            title: 'Coupon',
+                            onPressed: onPressed ?? () {},
+                            theme: AppTheme.red,
+                            textStyle: AppTheme.bodyText3,
+                            width: 10.r,
+                          )
+                        : AppetizerPrimaryButton(
+                            title: 'Coupon',
+                            onPressed: onPressed ?? () {},
+                            textStyle: AppTheme.bodyText3,
+                            theme: AppTheme.red,
+                            width: 10.r,
+                          ),
+                  )
               ],
             ),
           )
