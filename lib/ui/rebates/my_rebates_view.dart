@@ -52,7 +52,7 @@ class MyRebatesView extends StatelessWidget {
           children: <Widget>[
             MonthlyRebateCard(
               balanceConsumed: 0,
-              rebate: model.monthlyRebate,
+              rebate: model.monthlyRebate ?? 0,
               additionalMeal: 0,
               month: DateFormat.MMMM().format(DateTime.now()),
               year: DateTime.now().year,
