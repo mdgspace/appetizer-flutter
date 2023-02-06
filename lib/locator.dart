@@ -1,4 +1,5 @@
 import 'package:appetizer/services/analytics_service.dart';
+import 'package:appetizer/services/api/coupon_api.dart';
 import 'package:appetizer/services/api/feedback_api.dart';
 import 'package:appetizer/services/api/leave_api.dart';
 import 'package:appetizer/services/api/menu_api.dart';
@@ -45,6 +46,7 @@ import 'package:get_it/get_it.dart';
 GetIt locator = GetIt.instance;
 
 Future<void> setupLocator() async {
+  locator.registerLazySingleton(() => CouponApi());
   locator.registerLazySingleton(() => FeedbackApi());
   locator.registerLazySingleton(() => LeaveApi());
   locator.registerLazySingleton(() => MenuApi());

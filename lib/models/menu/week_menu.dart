@@ -116,7 +116,7 @@ class MealItem {
       };
 }
 
-enum MealItemType { MCL, SLD, EXT, MCD, STR, SNK }
+enum MealItemType { MCL, SLD, EXT, MCD, STR, SNK, CPN }
 
 final breakfastTypeValues = EnumValues({
   'ext': MealItemType.EXT,
@@ -124,7 +124,8 @@ final breakfastTypeValues = EnumValues({
   'mcl': MealItemType.MCL,
   'sld': MealItemType.SLD,
   'snk': MealItemType.SNK,
-  'str': MealItemType.STR
+  'str': MealItemType.STR,
+  'cpn': MealItemType.CPN,
 });
 
 class DayMenu {
@@ -336,10 +337,8 @@ class CouponStatus {
   });
 
   factory CouponStatus.fromJson(Map<String, dynamic>? json) => CouponStatus(
-        id: json != null ? json['id'] : null,
-        status: json != null
-            ? couponStatusValues.map[json['status'] ?? 'N']!
-            : CouponStatusEnum.N,
+        id: json?['id'],
+        status: couponStatusValues.map[json?['status'] ?? 'N']!,
       );
 
   Map<String, dynamic> toJson() => {

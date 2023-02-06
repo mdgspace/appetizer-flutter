@@ -48,6 +48,7 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
                   ? _buildSwitchComponent()
                   : Container(),
             ],
+            _buildCouponCodeComponent(),
             _buildSkippedFlagComponent(),
             SizedBox(width: 8.r),
             _buildFeedbackOrToggleComponent(),
@@ -55,6 +56,27 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
         ),
       ],
     );
+  }
+
+  Widget _buildCouponCodeComponent() {
+    if (_model.meal!.couponStatus.status == CouponStatusEnum.A &&
+        _model.meal!.isOutdated) {
+      return Container(
+        decoration: BoxDecoration(
+          color: AppTheme.secondary,
+          borderRadius: BorderRadius.circular(24),
+        ),
+        padding: EdgeInsets.symmetric(
+          horizontal: 8.r,
+          vertical: 4.r,
+        ),
+        child: Text(
+          'CPN - ${_model.meal!.couponStatus.id}',
+          style: AppTheme.bodyText2.copyWith(color: AppTheme.white),
+        ),
+      );
+    }
+    return Container();
   }
 
   Widget _buildMenuCard() {
@@ -76,7 +98,17 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
               children: <Widget>[
                 _buildMenuCardHeader(),
                 SizedBox(height: 12.r),
-                MenuUIUtils.buildMealItemsComponent(_model.meal!),
+                MenuUIUtils.buildMealItemsComponent(
+                  _model.meal!,
+                  onPressed: () {
+                    _model.updateCouponStatus().then((status) {
+                      if (status == null) return;
+
+                      context.read<YourMenuViewModel>().updateMeal =
+                          _model.meal!.copyWith(couponStatus: status);
+                    });
+                  },
+                ),
               ],
             ),
           ),

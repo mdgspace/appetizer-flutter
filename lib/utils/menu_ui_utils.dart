@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
+typedef SetCouponStatusCallBack = void Function(CouponStatus);
+
 class MenuUIUtils {
   static Widget buildtitleAndBhawanNameComponent(Meal meal) {
     return Column(
@@ -51,8 +53,10 @@ class MenuUIUtils {
     );
   }
 
-  static Widget buildMealItemsComponent(Meal meal) {
-    var cs = meal.couponStatus.status.name;
+  static Widget buildMealItemsComponent(
+    Meal meal, {
+    VoidCallback? onPressed,
+  }) {
     return Column(
       children: meal.items
           .map(
@@ -78,26 +82,25 @@ class MenuUIUtils {
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: 20.r,
-                  child: item.name.contains('Chicken')
-                      ? cs == 'N'
-                          ? AppetizerOutineButton(
-                              title: 'Coupon',
-                              onPressed: () {},
-                              theme: AppTheme.red,
-                              textStyle: AppTheme.bodyText3,
-                              width: 10.r,
-                            )
-                          : AppetizerPrimaryButton(
-                              title: 'Coupon',
-                              onPressed: () {},
-                              textStyle: AppTheme.bodyText3,
-                              theme: AppTheme.red,
-                              width: 10.r,
-                            )
-                      : SizedBox(),
-                )
+                if (!meal.isOutdated && item.type == MealItemType.CPN)
+                  SizedBox(
+                    height: 20.r,
+                    child: meal.couponStatus.status == CouponStatusEnum.N
+                        ? AppetizerOutineButton(
+                            title: 'Coupon',
+                            onPressed: onPressed ?? () {},
+                            theme: AppTheme.red,
+                            textStyle: AppTheme.bodyText3,
+                            width: 10.r,
+                          )
+                        : AppetizerPrimaryButton(
+                            title: 'Coupon',
+                            onPressed: onPressed ?? () {},
+                            textStyle: AppTheme.bodyText3,
+                            theme: AppTheme.red,
+                            width: 10.r,
+                          ),
+                  )
               ],
             ),
           )
