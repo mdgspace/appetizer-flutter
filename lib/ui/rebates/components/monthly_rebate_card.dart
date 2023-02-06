@@ -3,19 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MonthlyRebateCard extends StatelessWidget {
-  final int? balanceConsumed;
-  final num? rebate;
-  final int? additionalMeal;
-  final String? month;
-  final int? year;
+  final num balanceConsumed;
+  final num rebate;
+  final num additionalMeal;
+  final num totalBalance;
+  final String month;
+  final int year;
 
   MonthlyRebateCard({
-    this.balanceConsumed,
-    this.rebate,
-    this.additionalMeal,
-    this.month,
-    this.year,
-  });
+    this.balanceConsumed = 0,
+    this.rebate = 0,
+    this.additionalMeal = 0,
+    required this.month,
+    required this.year,
+  }) : totalBalance = balanceConsumed + additionalMeal - rebate;
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +57,7 @@ class MonthlyRebateCard extends StatelessWidget {
                       style: AppTheme.bodyText2,
                     ),
                     Text(
-                      '- Rs. ${balanceConsumed ?? 0}',
+                      '- Rs. $balanceConsumed',
                       style: AppTheme.bodyText2.copyWith(
                         color: AppTheme.red,
                       ),
@@ -72,7 +73,7 @@ class MonthlyRebateCard extends StatelessWidget {
                       style: AppTheme.bodyText2,
                     ),
                     Text(
-                      '- Rs. ${rebate ?? 0}',
+                      '- Rs. $rebate',
                       style: AppTheme.bodyText2.copyWith(
                         color: AppTheme.green,
                       ),
@@ -88,7 +89,7 @@ class MonthlyRebateCard extends StatelessWidget {
                       style: AppTheme.bodyText2,
                     ),
                     Text(
-                      '- Rs. ${additionalMeal ?? 0}',
+                      '- Rs. $additionalMeal',
                       style: AppTheme.bodyText2,
                     ),
                   ],
@@ -103,11 +104,10 @@ class MonthlyRebateCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 Text(
-                  'Rs. ' +
-                      (balanceConsumed ??
-                              0 + (additionalMeal ?? 0) - (rebate ?? 0))
-                          .toString(),
-                  style: AppTheme.headline4,
+                  'Rs. ${totalBalance.abs()}',
+                  style: AppTheme.headline4.copyWith(
+                    color: totalBalance <= 0 ? AppTheme.green : AppTheme.red,
+                  ),
                 )
               ],
             ),
