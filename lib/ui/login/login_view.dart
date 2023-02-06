@@ -57,7 +57,7 @@ class _LoginViewState extends State<LoginView> with TickerProviderStateMixin {
           (value ?? '').isEmpty ? 'Enrollment No can\'t be empty' : null,
       onSaved: (value) {
         if (value != null) _enrollmentNo = value.trim();
-        return null;
+        return;
       },
     );
   }

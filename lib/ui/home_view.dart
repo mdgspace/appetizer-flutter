@@ -284,7 +284,7 @@ class _HomeViewState extends State<HomeView> {
             textAlign: TextAlign.left,
           ),
           Row(
-            children: <Widget>[
+            children: const <Widget>[
               Text(
                 'Made with ',
               ),

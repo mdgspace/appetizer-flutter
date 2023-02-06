@@ -62,7 +62,7 @@ class _NewFeedbackViewState extends State<NewFeedbackView> {
                     maxLength: 30,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return "Title can\'t be empty";
+                        return "Title can't be empty";
                       }
                       return null;
                     },
