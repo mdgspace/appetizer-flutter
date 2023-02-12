@@ -82,7 +82,7 @@ class MenuUIUtils {
                     ),
                   ),
                 ),
-                if (!meal.isOutdated && item.type == MealItemType.CPN)
+                if (!meal.isCouponOutdated && item.type == MealItemType.CPN)
                   SizedBox(
                     height: 20.r,
                     child: meal.couponStatus.status == CouponStatusEnum.N

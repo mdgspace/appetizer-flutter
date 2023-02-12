@@ -60,7 +60,7 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
 
   Widget _buildCouponCodeComponent() {
     if (_model.meal!.couponStatus.status == CouponStatusEnum.A &&
-        _model.meal!.isOutdated) {
+        _model.meal!.isCouponOutdated) {
       return Container(
         decoration: BoxDecoration(
           color: AppTheme.secondary,
