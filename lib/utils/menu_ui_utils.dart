@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:appetizer/app_theme.dart';
+import 'package:appetizer/globals.dart';
 import 'package:appetizer/models/menu/week_menu.dart';
 import 'package:appetizer/ui/components/appetizer_outline_button.dart';
 import 'package:appetizer/ui/components/appetizer_primary_button.dart';
@@ -82,7 +83,10 @@ class MenuUIUtils {
                     ),
                   ),
                 ),
-                if (!meal.isCouponOutdated && item.type == MealItemType.CPN)
+                if (!meal.isCouponOutdated &&
+                    item.type == MealItemType.CPN &&
+                    meal.leaveStatus.status == LeaveStatusEnum.N &&
+                    !isCheckedOut)
                   SizedBox(
                     height: 20.r,
                     child: meal.couponStatus.status == CouponStatusEnum.N

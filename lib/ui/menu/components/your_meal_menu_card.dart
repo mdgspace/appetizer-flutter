@@ -202,11 +202,15 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
                   _model.onLeaveChanged(value).then((_) {
                     context.read<YourMenuViewModel>().updateMeal =
                         _model.meal!.copyWith(
-                            leaveStatus: LeaveStatus(
-                      status: _model.mealLeaveStatus
-                          ? LeaveStatusEnum.N
-                          : LeaveStatusEnum.P,
-                    ));
+                      leaveStatus: LeaveStatus(
+                        status: _model.mealLeaveStatus
+                            ? LeaveStatusEnum.N
+                            : LeaveStatusEnum.P,
+                      ),
+                      couponStatus: !_model.mealLeaveStatus
+                          ? CouponStatus(status: CouponStatusEnum.N)
+                          : _model.meal!.couponStatus,
+                    );
                   });
                 },
         ),
