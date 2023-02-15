@@ -5,8 +5,10 @@ import 'package:appetizer/ui/components/appetizer_error_widget.dart';
 import 'package:appetizer/ui/components/appetizer_progress_widget.dart';
 import 'package:appetizer/ui/menu/your_day_menu_view.dart';
 import 'package:appetizer/utils/date_time_utils.dart';
+import 'package:appetizer/viewmodels/home_viewmodel.dart';
 import 'package:appetizer/viewmodels/menu/your_menu_viewmodel.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class YourMenuView extends StatefulWidget {
   final DateTime selectedDateTime;
@@ -38,6 +40,11 @@ class _YourMenuViewState extends State<YourMenuView> {
     return BaseView<YourMenuViewModel>(
       onModelReady: (model) {
         _model = model;
+        context.read<HomeViewModel>().addListener(() {
+          _model.fetchSelectedWeekMenu(
+            DateTimeUtils.getWeekNumber(widget.selectedDateTime),
+          );
+        });
         _model.fetchInitialCheckedStatus();
         _model.selectedDateTime = widget.selectedDateTime;
         _model.fetchSelectedWeekMenu(

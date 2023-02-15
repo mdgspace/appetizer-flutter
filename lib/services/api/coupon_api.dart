@@ -15,8 +15,8 @@ class CouponApi {
 
     try {
       await ApiUtils.addTokenToHeaders(headers);
-      var jsonResponse =
-          await ApiUtils.post(uri, headers: headers, body: {'meal': mealId});
+      var jsonResponse = await ApiUtils.post(uri,
+          headers: headers, body: {'meal': mealId, 'is_active': true});
 
       return CouponStatus(
         status: CouponStatusEnum.A,
@@ -34,7 +34,7 @@ class CouponApi {
 
     try {
       await ApiUtils.addTokenToHeaders(headers);
-      await ApiUtils.delete(uri, headers: headers);
+      await ApiUtils.patch(uri, headers: headers, body: {'is_active': false});
 
       return CouponStatus(status: CouponStatusEnum.N);
     } on Exception catch (e) {

@@ -60,19 +60,49 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
 
   Widget _buildCouponCodeComponent() {
     if (_model.meal!.couponStatus.status == CouponStatusEnum.A &&
-        _model.meal!.isOutdated) {
-      return Container(
-        decoration: BoxDecoration(
-          color: AppTheme.secondary,
-          borderRadius: BorderRadius.circular(24),
-        ),
-        padding: EdgeInsets.symmetric(
-          horizontal: 8.r,
-          vertical: 4.r,
-        ),
-        child: Text(
-          'CPN - ${_model.meal!.couponStatus.id}',
-          style: AppTheme.bodyText2.copyWith(color: AppTheme.white),
+        _model.meal!.isCouponOutdated) {
+      return GestureDetector(
+        onTap: () {
+          Get.dialog(
+            SimpleDialog(
+              contentPadding: EdgeInsets.symmetric(vertical: 10),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8.r),
+                side: BorderSide(color: AppTheme.grey),
+              ),
+              children: [
+                Center(
+                  child: Text(
+                    'Coupon',
+                    style: AppTheme.headline6,
+                  ),
+                ),
+                Center(
+                  child: Text(
+                    '${_model.meal!.couponStatus.id}',
+                    style: AppTheme.headline1.copyWith(
+                      fontSize: 30.sp,
+                      color: AppTheme.tertiary,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            color: AppTheme.secondary,
+            borderRadius: BorderRadius.circular(24),
+          ),
+          padding: EdgeInsets.symmetric(
+            horizontal: 8.r,
+            vertical: 4.r,
+          ),
+          child: Text(
+            'CPN - ${_model.meal!.couponStatus.id}',
+            style: AppTheme.bodyText2.copyWith(color: AppTheme.white),
+          ),
         ),
       );
     }
@@ -202,11 +232,15 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
                   _model.onLeaveChanged(value).then((_) {
                     context.read<YourMenuViewModel>().updateMeal =
                         _model.meal!.copyWith(
-                            leaveStatus: LeaveStatus(
-                      status: _model.mealLeaveStatus
-                          ? LeaveStatusEnum.N
-                          : LeaveStatusEnum.P,
-                    ));
+                      leaveStatus: LeaveStatus(
+                        status: _model.mealLeaveStatus
+                            ? LeaveStatusEnum.N
+                            : LeaveStatusEnum.P,
+                      ),
+                      couponStatus: !_model.mealLeaveStatus
+                          ? CouponStatus(status: CouponStatusEnum.N)
+                          : _model.meal!.couponStatus,
+                    );
                   });
                 },
         ),
