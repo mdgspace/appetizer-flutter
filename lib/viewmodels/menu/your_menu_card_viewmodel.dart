@@ -115,7 +115,12 @@ class YourMenuCardViewModel extends BaseModel {
     if (_meal != null) {
       if (_meal!.couponStatus.status == CouponStatusEnum.A) {
         try {
-          return await _couponApi.cancelCoupon(_meal!.couponStatus.id!);
+          var _dialogResponse = await _dialogService.showConfirmationDialog(
+              title: 'Chicken Coupon',
+              description: 'Do you want to cancel your chicken coupon?');
+          if (_dialogResponse.confirmed) {
+            return await _couponApi.cancelCoupon(_meal!.couponStatus.id!);
+          }
         } on Failure catch (f) {
           print(f.toString());
           setErrorMessage(f.message);
@@ -126,7 +131,12 @@ class YourMenuCardViewModel extends BaseModel {
         }
       } else {
         try {
-          return await _couponApi.applyForCoupon(_meal!.id);
+          var _dialogResponse = await _dialogService.showConfirmationDialog(
+              title: 'Chicken Coupon',
+              description: 'Do you want to Apply for chicken coupon?');
+          if (_dialogResponse.confirmed) {
+            return await _couponApi.applyForCoupon(_meal!.id);
+          }
         } on Failure catch (f) {
           print(f.toString());
           setErrorMessage(f.message);
