@@ -23,7 +23,6 @@ class NotificationsViewModel extends BaseModel {
       notifications = await _userApi.getNotifications();
       setState(ViewState.Idle);
     } on Failure catch (f) {
-      print(f.message);
       setErrorMessage(f.message);
       setState(ViewState.Error);
     }

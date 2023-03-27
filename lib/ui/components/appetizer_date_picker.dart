@@ -161,7 +161,6 @@ class _AppetizerDatePickerState extends State<AppetizerDatePicker> {
           });
         },
         onPageChanged: (index) {
-          print('PAGE: $index');
           var _newDate;
           if (index < indexState) {
             _newDate = _model.dateTime.subtract(Duration(days: 7));

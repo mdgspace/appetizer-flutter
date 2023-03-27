@@ -1,4 +1,5 @@
 import 'package:firebase_remote_config/firebase_remote_config.dart';
+import 'package:flutter/foundation.dart';
 
 const String APP_LINK = 'appetizer_link';
 const String IS_LEAVE_ENABLED = 'is_leave_enabled';
@@ -42,9 +43,9 @@ class RemoteConfigService {
       await _remoteConfig.setDefaults(defaults);
       await _remoteConfig.fetchAndActivate();
     } catch (exception) {
-      print(
-          'Unable to fetch remote config. Cached or default values will be used');
-      print('error : $exception');
+      if (kDebugMode) {
+        print('error : $exception');
+      }
     }
   }
 }

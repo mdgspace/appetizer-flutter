@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:io' show Platform;
 
 import 'package:appetizer/config/environment_config.dart';

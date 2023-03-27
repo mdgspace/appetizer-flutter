@@ -122,7 +122,6 @@ class YourMenuCardViewModel extends BaseModel {
             return await _couponApi.cancelCoupon(_meal!.couponStatus.id!);
           }
         } on Failure catch (f) {
-          print(f.toString());
           setErrorMessage(f.message);
           setState(ViewState.Error);
           await Fluttertoast.showToast(
@@ -137,7 +136,6 @@ class YourMenuCardViewModel extends BaseModel {
             return await _couponApi.applyForCoupon(_meal!.id);
           }
         } on Failure catch (f) {
-          print(f.toString());
           setErrorMessage(f.message);
           setState(ViewState.Error);
           await Fluttertoast.showToast(
@@ -155,7 +153,6 @@ class YourMenuCardViewModel extends BaseModel {
         await Fluttertoast.showToast(msg: 'Leave Cancelled');
       }
     } on Failure catch (f) {
-      print(f.message);
       setErrorMessage(f.message);
       setState(ViewState.Error);
       await Fluttertoast.showToast(msg: errorMessage);

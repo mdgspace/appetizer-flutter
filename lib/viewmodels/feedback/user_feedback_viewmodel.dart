@@ -33,7 +33,6 @@ class UserFeedbackViewModel extends BaseModel {
       responseOfFeedBacks = await _feedbackApi.responseOfFeedBacks();
       setState(ViewState.Idle);
     } on Failure catch (f) {
-      print(f.message);
       setErrorMessage(f.message);
       setState(ViewState.Error);
     }
@@ -45,7 +44,6 @@ class UserFeedbackViewModel extends BaseModel {
       submittedFeedbacks = await _feedbackApi.submittedFeedBacks();
       setState(ViewState.Idle);
     } on Failure catch (f) {
-      print(f.message);
       setErrorMessage(f.message);
       setState(ViewState.Error);
     }

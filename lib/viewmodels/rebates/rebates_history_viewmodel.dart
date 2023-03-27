@@ -23,7 +23,6 @@ class RebatesHistoryViewModel extends BaseModel {
       yearlyRebate = await _transactionApi.getYearlyRebate(year);
       setState(ViewState.Idle);
     } on Failure catch (f) {
-      print(f.message);
       setErrorMessage(f.message);
       setState(ViewState.Error);
     }

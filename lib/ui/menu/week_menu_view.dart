@@ -191,6 +191,7 @@ class _WeekMenuViewState extends State<WeekMenuView> {
                       dayMenu.meals.forEach(
                         (meal) {
                           meal.items.forEach((item) =>
+                              // ignore: avoid_print
                               print('item ${item.name} ${meal.type}'));
                           switch (meal.type) {
                             case MealType.B:

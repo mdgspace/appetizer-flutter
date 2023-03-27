@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:appetizer/config/environment_config.dart';
 import 'package:appetizer/constants.dart';
 import 'package:appetizer/database/app_database.dart';
