@@ -220,7 +220,7 @@ class _YourMealsMenuCardState extends State<YourMealsMenuCard> {
           ),
         ),
       );
-    } else if (_model.isLeaveEnabled && !isCheckedOut) {
+    } else if (_model.isLeaveEnabled && !isCheckedOut && _model.meal!.title != 'Snacks') {
       return GestureDetector(
         onHorizontalDragStart: (_) => _model.onSwitchDragged(),
         child: Switch(
