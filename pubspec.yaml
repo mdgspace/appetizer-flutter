@@ -13,9 +13,9 @@ dependencies:
   firebase_analytics: ^10.0.3
   firebase_core: ^2.1.1
   firebase_messaging: ^14.0.3
-  firebase_remote_config: ^3.0.3
+  firebase_remote_config: ^4.2.0
   flare_flutter: ^3.0.2
-  flutter_launcher_icons: ^0.11.0
+  flutter_launcher_icons: ^0.13.1
   flutter_native_splash: ^2.0.5
   flutter_svg: ^2.0.0+1
   fluttertoast: ^8.0.8
@@ -27,13 +27,13 @@ dependencies:
   provider: ^6.0.0
   qr_flutter: ^4.0.0
   sembast: ^3.1.0+2
-  sentry_flutter: ^6.0.0
+  sentry_flutter: ^7.5.2
   shared_preferences: ^2.0.7
   timeline_tile: ^2.0.0
   url_launcher: ^6.0.10
-  share_plus: ^6.2.0
+  share_plus: ^7.0.0
   package_info_plus: ^3.0.1
-  connectivity_plus: ^3.0.2
+  connectivity_plus: ^4.0.0
   connectivity_for_web: ^0.4.0+1
   flutter_inappwebview: ^5.4.3+7
   flutter_screenutil: ^5.5.3+2

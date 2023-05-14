@@ -27,7 +27,7 @@ jobs:
       - run: flutter pub get
 
       # Check for any formatting issues in the code.
-      - run: flutter format --set-exit-if-changed .
+      - run: dart format --set-exit-if-changed .
 
       # Save firebase-options.dart
       - run: echo "${FIREBASE_OPTIONS}" | base64 --decode > lib/firebase_options.dart
