@@ -39,9 +39,9 @@ class FeedbackTile extends StatelessWidget {
                         .add(FeedbackRatingChangedEvent(newRating: index + 1)),
                     icon: index < state.rating
                         ? Image.asset(
-                            'lib/presentation/assets/images/filledStar.png')
+                            'lib/assets/images/filledStar.png')
                         : Image.asset(
-                            'lib/presentation/assets/images/emptyStar.png'),
+                            'lib/assets/images/emptyStar.png'),
                   );
                 }),
               );
