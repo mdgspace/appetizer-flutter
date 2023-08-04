@@ -1,3 +1,5 @@
+import 'package:appetizer/app_theme.dart';
+import 'package:appetizer/ui/menu/components/DayDateBar/day_date_bar.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -16,6 +18,12 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
+      ),
+      home: Scaffold(
+        body: Container(
+            color: AppTheme.green,
+            child: const DayDateBar(
+                startDate: 1, startDay: "Monday", endDate: 7, currDate: 3)),
       ),
     );
   }
