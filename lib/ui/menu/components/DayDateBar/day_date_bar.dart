@@ -150,7 +150,7 @@ class DayDateBar extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               mainAxisSize: MainAxisSize.min,
               children: [
-                SizedBox(width: 12.5),
+                const SizedBox(width: 12.5),
                 for (int widgetDateOffset = 0;
                     startDate + widgetDateOffset <= state.endDate;
                     widgetDateOffset++)
@@ -169,7 +169,7 @@ class DayDateBar extends StatelessWidget {
                           newCurrDate: state.startDate + widgetDateOffset));
                     },
                   ),
-                SizedBox(width: 8.5),
+                const SizedBox(width: 8.5),
               ],
             ),
           );
