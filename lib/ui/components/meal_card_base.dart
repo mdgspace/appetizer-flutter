@@ -26,9 +26,9 @@ class _MealCardBaseState extends State<MealCardBase> {
                     image: AssetImage(
                         "assets/images/${widget.mealType.toString()}"))),
             width: 125,
-            child: Column(),
+            child: const Column(),
           ),
-          SizedBox(
+          const SizedBox(
             width: 187,
             child: Column(),
           )
