@@ -1,4 +1,4 @@
-import 'package:appetizer_revamp_parts/models/coupon/coupon.dart';
+import 'package:appetizer/models/coupon/coupon.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 

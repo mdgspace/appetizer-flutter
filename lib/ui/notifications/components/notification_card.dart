@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:appetizer_revamp_parts/models/user/notification.dart'
-    as notification;
+import 'package:appetizer/models/user/notification.dart' as notification;
 
 class NotificationCard extends StatelessWidget {
   const NotificationCard({

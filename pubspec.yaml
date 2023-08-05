@@ -31,6 +31,7 @@ dependencies:
   path_provider: ^2.0.15
   bloc: ^8.1.2
   fluttertoast: ^8.2.2
+  fswitch_nullsafety: ^2.0.2
 
 dev_dependencies:
   auto_route_generator: ^7.3.0
@@ -48,6 +49,7 @@ flutter:
   assets:
     - assets/images/
     - lib/assets/images/
+    - assets/images/meal_card/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

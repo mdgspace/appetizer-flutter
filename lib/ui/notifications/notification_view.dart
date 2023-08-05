@@ -1,5 +1,5 @@
-import 'package:appetizer_revamp_parts/ui/notifications/bloc/notification_page_bloc.dart';
-import 'package:appetizer_revamp_parts/ui/notifications/components/notification_card.dart';
+import 'package:appetizer/ui/notifications/bloc/notification_page_bloc.dart';
+import 'package:appetizer/ui/notifications/components/notification_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -47,16 +47,18 @@ class NotificationPage extends StatelessWidget {
                 child: ListView.builder(
                   itemCount: state.notifications.length,
                   itemBuilder: (context, index) {
-                    return Column(children: [
-                      NotificationCard(
-                        data: state.notifications[index],
-                      ),
-                      index < state.notifications.length
-                          ? const SizedBox(
-                              height: 16,
-                            )
-                          : const SizedBox.shrink(),
-                    ],);
+                    return Column(
+                      children: [
+                        NotificationCard(
+                          data: state.notifications[index],
+                        ),
+                        index < state.notifications.length
+                            ? const SizedBox(
+                                height: 16,
+                              )
+                            : const SizedBox.shrink(),
+                      ],
+                    );
                   },
                 ),
               );

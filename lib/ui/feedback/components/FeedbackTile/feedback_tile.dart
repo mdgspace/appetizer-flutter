@@ -1,5 +1,5 @@
-import 'package:appetizer_revamp_parts/ui/feedback/bloc/feedback_page_bloc.dart';
-import 'package:appetizer_revamp_parts/ui/feedback/components/FeedbackTile/bloc/feedback_tile_bloc.dart';
+import 'package:appetizer/ui/feedback/bloc/feedback_page_bloc.dart';
+import 'package:appetizer/ui/feedback/components/FeedbackTile/bloc/feedback_tile_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

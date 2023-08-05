@@ -1,5 +1,5 @@
-import 'package:appetizer_revamp_parts/ui/coupons/bloc/coupons_page_bloc.dart';
-import 'package:appetizer_revamp_parts/ui/coupons/components/coupon_card.dart';
+import 'package:appetizer/ui/coupons/bloc/coupons_page_bloc.dart';
+import 'package:appetizer/ui/coupons/components/coupon_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

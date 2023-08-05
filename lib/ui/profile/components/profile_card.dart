@@ -1,4 +1,4 @@
-import 'package:appetizer_revamp_parts/models/user/user.dart';
+import 'package:appetizer/models/user/user.dart';
 import 'package:flutter/material.dart';
 
 class Fields extends StatelessWidget {

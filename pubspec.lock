@@ -400,6 +400,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.2.0"
+  fswitch_nullsafety:
+    dependency: "direct main"
+    description:
+      name: fswitch_nullsafety
+      sha256: "7df0c37a9e7c8b52e2465f7ea55a950079f18f42c442c546a992f2b926c7c414"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.2"
   get:
     dependency: "direct main"
     description:

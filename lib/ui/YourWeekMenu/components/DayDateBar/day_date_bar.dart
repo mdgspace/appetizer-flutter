@@ -1,8 +1,8 @@
 import 'package:appetizer/app_theme.dart';
 import 'package:appetizer/constants.dart';
+import 'package:appetizer/ui/YourWeekMenu/components/DayDateBar/bloc/day_date_bar_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:appetizer/ui/menu/components/DayDateBar/bloc/day_date_bar_bloc.dart';
 
 class _CurrDateWidget extends StatelessWidget {
   const _CurrDateWidget({required this.date, required this.day});
@@ -150,7 +150,7 @@ class DayDateBar extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               mainAxisSize: MainAxisSize.min,
               children: [
-                const SizedBox(width: 12.5),
+                SizedBox(width: 12.5),
                 for (int widgetDateOffset = 0;
                     startDate + widgetDateOffset <= state.endDate;
                     widgetDateOffset++)
@@ -169,7 +169,7 @@ class DayDateBar extends StatelessWidget {
                           newCurrDate: state.startDate + widgetDateOffset));
                     },
                   ),
-                const SizedBox(width: 8.5),
+                SizedBox(width: 8.5),
               ],
             ),
           );
