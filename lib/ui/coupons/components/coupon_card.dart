@@ -13,7 +13,11 @@ class CouponCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 129,
+      height: 61,
+      constraints: const BoxConstraints(maxHeight: 61),
       child: Row(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
             decoration: const BoxDecoration(
@@ -45,6 +49,7 @@ class CouponCard extends StatelessWidget {
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
                   coupon.title,

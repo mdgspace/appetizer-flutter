@@ -6,3 +6,14 @@ abstract class CouponsPageEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+class CouponsPageFetchEvent extends CouponsPageEvent {
+  const CouponsPageFetchEvent({
+    required this.coupons,
+  });
+
+  final List<Coupon> coupons;
+
+  @override
+  List<Object> get props => [];
+}
