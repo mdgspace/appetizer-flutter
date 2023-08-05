@@ -1,38 +1,38 @@
 import 'package:appetizer_revamp_parts/app_theme.dart';
 import 'package:appetizer_revamp_parts/models/menu/week_menu.dart';
-import 'package:appetizer_revamp_parts/ui/menu/components/YourMealMenuCard/bloc/your_meal_menu_card_bloc.dart';
+import 'package:appetizer_revamp_parts/ui/components/round_edge_container.dart';
+import 'package:appetizer_revamp_parts/ui/YourWeekMenu/components/YourMealMenuCard/bloc/your_meal_menu_card_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fswitch_nullsafety/fswitch_nullsafety.dart';
 import 'package:intl/intl.dart';
 
-import 'package:flutter/cupertino.dart' as cupertino;
+class YourMealMenuCard extends StatefulWidget {
+  const YourMealMenuCard(
+      {super.key, required this.meal, required this.dailyItems});
+  final Meal meal;
+  final List<MealItem> dailyItems;
 
-class YourMealMenuCard extends StatelessWidget {
-  YourMealMenuCard({super.key, required this.weekMenu});
-  final WeekMenu weekMenu;
+  @override
+  State<YourMealMenuCard> createState() => _YourMealMenuCardState();
+}
+
+class _YourMealMenuCardState extends State<YourMealMenuCard> {
   late List<String> dailyItemsParsed;
-  late List<MealItem> dailyItems;
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => YourMealMenuCardBloc(),
+      create: (_) => YourMealMenuCardBloc(meal: widget.meal),
       child: BlocBuilder<YourMealMenuCardBloc, YourMealMenuCardState>(
         builder: (context, state) {
-          bool mealSkipped;
           if (state is YourMealMenuCardLoadingState) {
+          } else if (state is ShowSnackBarState) {
+            ScaffoldMessenger.of(context)
+                .showSnackBar(SnackBar(content: Text(state.text)));
           } else if (state is YourMealMenuCardDisplayState) {
-            mealSkipped = state.meal.leaveStatus.status == LeaveStatusEnum.A;
-            if (state.meal.type == MealType.B) {
-              dailyItems = weekMenu.dailyItems.breakfast;
-            } else if (state.meal.type == MealType.D) {
-              dailyItems = weekMenu.dailyItems.dinner;
-            } else if (state.meal.type == MealType.L) {
-              dailyItems = weekMenu.dailyItems.lunch;
-            } else {
-              dailyItems = weekMenu.dailyItems.snack;
-            }
             String dailyItemsParsed = '';
-            for (MealItem item in dailyItems) {
+            for (MealItem item in widget.dailyItems) {
               dailyItemsParsed += '${item.name}, ';
             }
             dailyItemsParsed =
@@ -60,11 +60,11 @@ class YourMealMenuCard extends StatelessWidget {
                   Container(
                     width: 125,
                     height: 168,
-                    color: AppTheme.primary,
+                    // color: AppTheme.primary,
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         image: AssetImage(
-                          'assets/images/${state.meal.title}.png',
+                          'assets/images/meal_card/${state.meal.title}.png',
                         ),
                       ),
                     ),
@@ -80,9 +80,8 @@ class YourMealMenuCard extends StatelessWidget {
                           padding: const EdgeInsets.only(left: 12),
                           child: Text(
                             state.meal.title,
-                            style: AppTheme.headline2.copyWith(
-                              fontSize: 20,
-                            ),
+                            style: AppTheme.headline1.copyWith(
+                                fontSize: 20, color: AppTheme.black11),
                           ),
                         ),
                         Container(
@@ -91,59 +90,64 @@ class YourMealMenuCard extends StatelessWidget {
                           padding: const EdgeInsets.only(left: 12),
                           child: Text(
                             '${DateFormat.jm().format(state.meal.startTime)} - ${DateFormat.jm().format(state.meal.endTime)}',
-                            style: AppTheme.headline2.copyWith(
-                              fontWeight: FontWeight.w600,
-                            ),
+                            style: AppTheme.headline3.copyWith(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 12,
+                                color: AppTheme.grey2f),
                           ),
                         ),
                         SizedBox(
                           height: 9,
                         ),
-                        Container(
-                          width: 125,
-                          height: 20,
-                          padding: const EdgeInsets.only(left: 12),
-                          child: cupertino.CupertinoSwitch(
-                            value: mealSkipped,
-                            onChanged: (value) {
-                              context.read<YourMealMenuCardBloc>().add(
-                                    const MealToggleEvent(),
-                                  );
-                            },
-                            activeColor: const Color(
-                              0x2F2F2FFF,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Container(
+                              // width: 125,
+                              // height: 20,
+                              // alignment: Alignment.centerLeft,
+                              padding: const EdgeInsets.only(left: 12),
+                              child: Container(
+                                // padding: EdgeInsets.zero,
+                                height: 20,
+                                width: 44,
+                                child: FittedBox(
+                                  fit: BoxFit.contain,
+                                  child: FSwitch(
+                                    // value: mealSkipped,
+                                    sliderColor: AppTheme.customWhite,
+                                    openColor: AppTheme.black2e,
+                                    height: 20,
+                                    width: 44,
+                                    onChanged: (value) {
+                                      context.read<YourMealMenuCardBloc>().add(
+                                            MealToggleEvent(context: context),
+                                          );
+                                    },
+                                  ),
+                                ),
+                              ),
                             ),
-                            trackColor: const Color(
-                              0xB9B9B9FF,
-                            ),
-                            thumbColor: Colors.white,
-                          ),
+                          ],
                         ),
                         //check the enums
                         SizedBox(
                           height: 47,
                         ),
                         Container(
-                          padding: const EdgeInsets.only(left: 18),
+                          alignment: Alignment.centerLeft,
+                          // padding: const EdgeInsets.only(left: 18),
+                          height: 24,
+                          width: 88,
                           child: state.meal.startDateTime.isBefore(
                             DateTime.now(),
                           )
-                              ? FloatingActionButton.extended(
-                                  onPressed: () {},
-                                  label: Text(
-                                    "Give Feedback",
-                                    style: AppTheme.button,
-                                  ),
-                                )
+                              ? const MealCardButtonContainer(
+                                  text: "Give Feedback")
                               : (state.meal.couponStatus.status ==
                                       CouponStatusEnum.A
-                                  ? FloatingActionButton.extended(
-                                      onPressed: () {},
-                                      label: Text(
-                                        "COUPON",
-                                        style: AppTheme.button,
-                                      ),
-                                    )
+                                  ? const MealCardButtonContainer(
+                                      text: "COUPON")
                                   : null),
                         )
                       ],
@@ -153,12 +157,19 @@ class YourMealMenuCard extends StatelessWidget {
                     height: 168,
                     width: 187,
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisSize: MainAxisSize.max,
                       children: [
                         SizedBox(
-                          height: 18,
+                          height: 80,
+                          child: Column(children: [
+                            SizedBox(
+                              height: 18,
+                            ),
+                            for (var item in state.meal.items)
+                              Text("\u2022 ${item.name}")
+                          ]),
                         ),
-                        for (var item in state.meal.items)
-                          Text("\u2022${item.name}"),
                         Container(
                           padding: EdgeInsets.only(bottom: 17),
                           child: Column(
@@ -167,26 +178,31 @@ class YourMealMenuCard extends StatelessWidget {
                                 height: 1,
                                 indent: 22,
                                 endIndent: 20,
+                                color: AppTheme.rulerColor,
                               ),
                               SizedBox(
                                 height: 8,
                               ),
                               Container(
                                 width: 187,
-                                padding: EdgeInsets.only(left: 12, right: 19),
+                                padding: EdgeInsets.only(
+                                    left: 12, right: 19, bottom: 0),
                                 child: RichText(
                                   text: TextSpan(
                                       text: 'Daily Items: ',
                                       style: AppTheme.bodyText2.copyWith(
                                           fontWeight: FontWeight.w600,
-                                          color: Color(0xffB51111)),
+                                          color: Color(0xFFB51111)),
                                       children: [
                                         TextSpan(
                                             text: dailyItemsParsed,
                                             style: AppTheme.bodyText2)
                                       ]),
                                 ),
-                              )
+                              ),
+                              // SizedBox(
+                              //   height: 17,
+                              // )
                             ],
                           ),
                         )

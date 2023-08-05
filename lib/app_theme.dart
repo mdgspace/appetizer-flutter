@@ -52,13 +52,18 @@ class AppTheme {
   //new colors
   static const Color black2e = Color(0xFF2E2E2E);
   static const Color black1e = Color(0xFF1E1E1E);
+  static const Color black11 = Color(0xFF111111);
   static const Color customWhite = Color(0xFFF6F6F6);
+  static const Color transparentWhite = Color(0x00FFFFFF);
   static const Color primary = Color(0xFFFFCB74);
   static const Color shadow = Color(0x99FFDDDD);
+  static const Color grey2f = Color(0xFF2F2F2F);
+  static const Color toggleOff = Color(0xFFB9B9B9);
+  static const Color white = Color(0xFFFFFFFF);
+  static const Color rulerColor = Color(0xFFE4E4E4);
   // These are the old colors only, need to be set afterwards
   static const Color secondary = Color(0xFF795548);
   static const Color tertiary = Color(0xFFA16938);
-  static const Color white = Color(0xFFFFFFFF);
   static const Color red = Color(0xFFEB5757);
   static const Color blue = Color(0xFF2196F3);
   static const Color yellow = Color(0xffF6BA18);

@@ -232,14 +232,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  fluttertoast:
+  fswitch_nullsafety:
     dependency: "direct main"
     description:
-      name: fluttertoast
-      sha256: "474f7d506230897a3cd28c965ec21c5328ae5605fc9c400cd330e9e9d6ac175c"
+      name: fswitch_nullsafety
+      sha256: "7df0c37a9e7c8b52e2465f7ea55a950079f18f42c442c546a992f2b926c7c414"
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "8.2.2"
+    version: "2.0.2"
   get:
     dependency: "direct main"
     description:
