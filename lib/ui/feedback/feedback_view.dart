@@ -31,39 +31,91 @@ class FeedbackPage extends StatelessWidget {
         create: (context) => FeedbackPageBloc(),
         child: BlocBuilder<FeedbackPageBloc, FeedbackPageState>(
           builder: (context, state) {
-            if (state.submitted) {
-              // TODO: Add success screen or navigate back
-              return const Placeholder();
-            }
-            return Column(
-              children: [
-                const FeedbackTile(title: 'Rating 1'),
-                const FeedbackTile(title: 'Rating 2'),
-                const FeedbackTile(title: 'Rating 3'),
-                const FeedbackTile(title: 'Rating 4'),
-                const FeedbackTile(title: 'Rating 5'),
-                TextField(
-                  controller: textController,
-                  onChanged: (value) => context
-                      .read<FeedbackPageBloc>()
-                      .add(FeedbackPageDescriptionChangedEvent(description: value)),
-                ),
-                Positioned(
-                  bottom: 43,
-                  right: 24,
-                  child: TextButton(
+            // if (state.submitted) {
+            //   // TODO: Add success screen or navigate back
+            //   return const Placeholder();
+            // }
+            return SingleChildScrollView(
+              padding: const EdgeInsets.only(left: 24, right: 26),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 9),
+                  const Text(
+                    'Kindly provide us with your feedback to improve your mess experience.',
+                    style: TextStyle(
+                      color: Color(0xFF5A5A5A),
+                      fontSize: 14,
+                      fontFamily: 'Lato',
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  FeedbackTile(title: 'Ambience', parentState: state, index: 0),
+                  const SizedBox(height: 4),
+                  FeedbackTile(
+                      title: 'Hygiene and Cleanliness',
+                      parentState: state,
+                      index: 1),
+                  const SizedBox(height: 4),
+                  FeedbackTile(
+                      title: 'Weekly Menu', parentState: state, index: 2),
+                  const SizedBox(height: 4),
+                  FeedbackTile(
+                      title: 'Worker and Services',
+                      parentState: state,
+                      index: 3),
+                  const SizedBox(height: 4),
+                  FeedbackTile(
+                      title: 'Diet and Nutrition',
+                      parentState: state,
+                      index: 4),
+                  const SizedBox(height: 4),
+                  const Text(
+                    'If any other feeback, please describe below',
+                    style: TextStyle(
+                      color: Color(0xFF111111),
+                      fontSize: 16,
+                      fontFamily: 'Lato',
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                  Text(
+                    'Description',
+                    style: TextStyle(
+                      color: Colors.black.withOpacity(0.5400000214576721),
+                      fontSize: 12,
+                      fontFamily: 'Open Sans',
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                  TextField(
+                    controller: textController,
+                    onChanged: (value) => context.read<FeedbackPageBloc>().add(
+                        FeedbackPageDescriptionChangedEvent(
+                            description: value)),
+                    keyboardType: TextInputType.multiline,
+                    maxLines: 5,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          width: 0.5,
+                          color: Color.fromARGB(37, 0, 0, 0),
+                        ),
+                      ),
+                    ),
+                  ),
+                  TextButton(
+                    // TODO: decoration for Button
                     onPressed: () => context.read<FeedbackPageBloc>().add(
                         FeedbackPageSubmitEvent(
-                            rating1: state.rating1,
-                            rating2: state.rating2,
-                            rating3: state.rating3,
-                            rating4: state.rating4,
-                            rating5: state.rating5,
+                            rating: state.rating,
                             description: state.description)),
                     child: const Text('Submit'),
                   ),
-                ),
-              ],
+                ],
+              ),
             );
           },
         ),

@@ -1,3 +1,4 @@
+import 'package:appetizer_revamp_parts/ui/feedback/bloc/feedback_page_bloc.dart';
 import 'package:appetizer_revamp_parts/ui/feedback/components/FeedbackTile/bloc/feedback_tile_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -5,10 +6,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class FeedbackTile extends StatelessWidget {
   const FeedbackTile({
     required this.title,
+    required this.parentState,
+    required this.index,
     Key? key,
   }) : super(key: key);
 
   final String title;
+  final FeedbackPageState parentState;
+  final int index;
 
   @override
   Widget build(BuildContext context) {
@@ -34,14 +39,14 @@ class FeedbackTile extends StatelessWidget {
                 children: List.generate(5, (index) {
                   return IconButton(
                     iconSize: 27,
-                    onPressed: () => context
-                        .read<FeedbackTileBloc>()
-                        .add(FeedbackRatingChangedEvent(newRating: index + 1)),
+                    onPressed: () {
+                      context.read<FeedbackTileBloc>().add(
+                          FeedbackRatingChangedEvent(newRating: index + 1));
+                      parentState.rating[this.index] = index + 1;
+                    },
                     icon: index < state.rating
-                        ? Image.asset(
-                            'lib/assets/images/filledStar.png')
-                        : Image.asset(
-                            'lib/assets/images/emptyStar.png'),
+                        ? Image.asset('lib/assets/images/filledStar.png')
+                        : Image.asset('lib/assets/images/emptyStar.png'),
                   );
                 }),
               );
