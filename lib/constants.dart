@@ -19,6 +19,15 @@ class Constants {
   static const String HTTP_EXCEPTION = 'Unable to fetch response';
   static const String UNAUTHORIZED_EXCEPTION =
       'Unauthorized to fetch the resource.';
+  static const List<String> days = [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday",
+  ];
   static const Map<String, String> dayToInitial = {
     "Monday": "M",
     "Tuesday": "T",

@@ -1,8 +1,9 @@
 import 'package:appetizer_revamp_parts/app_theme.dart';
 import 'package:appetizer_revamp_parts/constants.dart';
+import 'package:appetizer_revamp_parts/ui/YourWeekMenu/components/title_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:appetizer_revamp_parts/ui/menu/components/DayDateBar/bloc/day_date_bar_bloc.dart';
+import 'package:appetizer_revamp_parts/ui/YourWeekMenu/components/DayDateBar/bloc/day_date_bar_bloc.dart';
 
 class _CurrDateWidget extends StatelessWidget {
   const _CurrDateWidget({required this.date, required this.day});
@@ -112,12 +113,12 @@ class _OtherDateWidget extends StatelessWidget {
 class DayDateBar extends StatelessWidget {
   const DayDateBar(
       {super.key,
-      required this.startDate,
-      required this.startDay,
-      required this.endDate,
+      required this.dates,
+      required this.dateToMonthYear,
       required this.currDate});
-  final int startDate, endDate, currDate;
-  final String startDay;
+  final int currDate;
+  final List<int> dates;
+  final Map<int, String> dateToMonthYear;
 
   static const List<String> dayNames = [
     "Monday",
@@ -133,43 +134,53 @@ class DayDateBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => DayDateBarBloc(
-          endDate: endDate,
-          startDate: startDate,
-          currDate: currDate,
-          startDay: startDay),
+          dateToMonthYear: dateToMonthYear, dates: dates, currDate: currDate),
       child: BlocBuilder<DayDateBarBloc, DayDateBarState>(
         builder: (context, state) {
-          int startDayIndex = 0;
-          while (startDayIndex < 7) {
-            if (dayNames[startDayIndex] == startDay) break;
-            startDayIndex++;
-          }
           return SizedBox(
             width: 360,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              mainAxisSize: MainAxisSize.min,
+            child: Column(
               children: [
-                const SizedBox(width: 12.5),
-                for (int widgetDateOffset = 0;
-                    startDate + widgetDateOffset <= state.endDate;
-                    widgetDateOffset++)
-                  GestureDetector(
-                    child: state.currDate == state.startDate + widgetDateOffset
+                TitleBar(
+                    monthAndYear: dateToMonthYear[state.currDate]!,
+                    dayName: "dayName"),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SizedBox(width: 12.5),
+                    state.currDate == state.dates[0]
                         ? _CurrDateWidget(
-                            date: state.startDate + widgetDateOffset,
-                            day: dayNames[
-                                (startDayIndex + widgetDateOffset) % 7])
+                            date: state.dates[0], day: dayNames[0])
                         : _OtherDateWidget(
-                            date: state.startDate + widgetDateOffset,
-                            day: dayNames[
-                                (startDayIndex + widgetDateOffset) % 7]),
-                    onTap: () {
-                      context.read<DayDateBarBloc>().add(DateChangeEvent(
-                          newCurrDate: state.startDate + widgetDateOffset));
-                    },
-                  ),
-                const SizedBox(width: 8.5),
+                            date: state.dates[0], day: dayNames[0 % 7]),
+                    for (int widgetDateOffset = 1;
+                        widgetDateOffset < 7;
+                        widgetDateOffset++)
+                      Row(
+                        children: [
+                          SizedBox(width: 15),
+                          GestureDetector(
+                            child:
+                                state.currDate == state.dates[widgetDateOffset]
+                                    ? _CurrDateWidget(
+                                        date: state.dates[widgetDateOffset],
+                                        day: dayNames[widgetDateOffset])
+                                    : _OtherDateWidget(
+                                        date: state.dates[widgetDateOffset],
+                                        day: dayNames[widgetDateOffset % 7]),
+                            onTap: () {
+                              context.read<DayDateBarBloc>().add(
+                                  DateChangeEvent(
+                                      newCurrDate:
+                                          state.dates[widgetDateOffset]));
+                            },
+                          ),
+                        ],
+                      ),
+                    SizedBox(width: 8.5),
+                  ],
+                ),
               ],
             ),
           );

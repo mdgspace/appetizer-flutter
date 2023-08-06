@@ -1,3 +1,5 @@
+// May be discarded
+
 import 'package:appetizer_revamp_parts/enums/meal_type.dart';
 import 'package:flutter/material.dart';
 

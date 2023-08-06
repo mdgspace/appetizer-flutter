@@ -5,24 +5,22 @@ part 'day_date_bar_event.dart';
 part 'day_date_bar_state.dart';
 
 class DayDateBarBloc extends Bloc<DayDateBarEvent, DayDateBarState> {
-  final int startDate, endDate, currDate;
-  final String startDay;
+  final int currDate;
+  final List<int> dates;
+  final Map<int, String> dateToMonthYear;
   DayDateBarBloc(
-      {required this.endDate,
-      required this.startDate,
-      required this.startDay,
+      {required this.dates,
+      required this.dateToMonthYear,
       required this.currDate})
       : super(DayDateBarState(
-            endDate: endDate,
-            startDate: startDate,
-            startDay: startDay,
+            dateToMonthYear: dateToMonthYear,
+            dates: dates,
             currDate: currDate)) {
     on<DateChangeEvent>((DateChangeEvent event, Emitter<DayDateBarState> emit) {
       if (state.currDate != event.newCurrDate) {
         emit(DayDateBarState(
-            endDate: endDate,
-            startDate: startDate,
-            startDay: startDay,
+            dateToMonthYear: dateToMonthYear,
+            dates: dates,
             currDate: event.newCurrDate));
       }
     });

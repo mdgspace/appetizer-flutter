@@ -8,7 +8,8 @@ abstract class YourMealMenuCardEvent extends Equatable {
 }
 
 class MealToggleEvent extends YourMealMenuCardEvent {
-  const MealToggleEvent();
+  const MealToggleEvent({required this.context});
+  final BuildContext context;
 
   @override
   List<Object> get props => [];
