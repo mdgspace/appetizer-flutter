@@ -161,15 +161,37 @@ class DayDateBar extends StatelessWidget {
                             day: dayNames[
                                 (startDayIndex + widgetDateOffset) % 7])
                         : _OtherDateWidget(
-                            date: state.startDate + widgetDateOffset,
-                            day: dayNames[
-                                (startDayIndex + widgetDateOffset) % 7]),
-                    onTap: () {
-                      context.read<DayDateBarBloc>().add(DateChangeEvent(
-                          newCurrDate: state.startDate + widgetDateOffset));
-                    },
-                  ),
-                SizedBox(width: 8.5),
+                            date: state.dates[0], day: dayNames[0 % 7]),
+                    for (int widgetDateOffset = 1;
+                        widgetDateOffset < 7;
+                        widgetDateOffset++)
+                      Row(
+                        children: [
+                          SizedBox(width: 15),
+                          GestureDetector(
+                            child:
+                                state.currDate == state.dates[widgetDateOffset]
+                                    ? _CurrDateWidget(
+                                        date: state.dates[widgetDateOffset],
+                                        day: dayNames[widgetDateOffset])
+                                    : _OtherDateWidget(
+                                        date: state.dates[widgetDateOffset],
+                                        day: dayNames[widgetDateOffset % 7]),
+                            onTap: () {
+                              context.read<DayDateBarBloc>().add(
+                                  DateChangeEvent(
+                                      newCurrDate:
+                                          state.dates[widgetDateOffset]));
+                              context.read<YourWeekMenuBlocBloc>().add(
+                                  DayChangeEvent(
+                                      newDayIndex: widgetDateOffset));
+                            },
+                          ),
+                        ],
+                      ),
+                    SizedBox(width: 8.5),
+                  ],
+                ),
               ],
             ),
           );

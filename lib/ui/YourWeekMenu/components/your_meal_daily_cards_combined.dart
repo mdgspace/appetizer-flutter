@@ -9,7 +9,7 @@ class YourMealDailyCardsCombined extends StatelessWidget {
   const YourMealDailyCardsCombined(
       {super.key, required this.dayMenu, required this.dailyItems});
   final DayMenu dayMenu;
-  final List<MealItem> dailyItems;
+  final DailyItems dailyItems;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -17,12 +17,12 @@ class YourMealDailyCardsCombined extends StatelessWidget {
       children: [
         YourMealMenuCard(
           meal: dayMenu.mealMap[MealType.B]!,
-          dailyItems: dailyItems,
+          dailyItems: dailyItems.breakfast,
         ),
         SizedBox(height: 24),
         YourMealMenuCard(
           meal: dayMenu.mealMap[MealType.L]!,
-          dailyItems: dailyItems,
+          dailyItems: dailyItems.lunch,
         ),
         SizedBox(height: 24),
         dayMenu.mealMap[MealType.S] != null
@@ -30,8 +30,8 @@ class YourMealDailyCardsCombined extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   YourMealMenuCard(
-                    meal: dayMenu.mealMap[MealType.L]!,
-                    dailyItems: dailyItems,
+                    meal: dayMenu.mealMap[MealType.S]!,
+                    dailyItems: dailyItems.snack,
                   ),
                   SizedBox(height: 24),
                 ],
@@ -39,7 +39,7 @@ class YourMealDailyCardsCombined extends StatelessWidget {
             : SizedBox.shrink(),
         YourMealMenuCard(
           meal: dayMenu.mealMap[MealType.D]!,
-          dailyItems: dailyItems,
+          dailyItems: dailyItems.dinner,
         ),
       ],
     );
