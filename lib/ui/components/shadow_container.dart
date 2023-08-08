@@ -6,8 +6,9 @@ class ShadowContainer extends StatelessWidget {
       {super.key,
       required this.child,
       required this.height,
-      required this.width});
-  final double height, width;
+      required this.width,
+      required this.offset});
+  final double height, width, offset;
   final Widget child;
 
   @override
@@ -24,7 +25,7 @@ class ShadowContainer extends StatelessWidget {
           BoxShadow(
             color: AppTheme.shadowColor,
             blurRadius: 21.43,
-            offset: Offset(0, 0),
+            offset: Offset(offset, offset),
             spreadRadius: 1.07,
           )
         ],
