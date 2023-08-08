@@ -5,6 +5,7 @@ import 'package:appetizer_revamp_parts/ui/YourWeekMenu/components/DayDateBar/day
 import 'package:appetizer_revamp_parts/ui/YourWeekMenu/components/your_meal_daily_cards_combined.dart';
 // import 'package:appetizer_revamp_parts/ui/YourWeekMenu/components/title_bar.dart';
 import 'package:appetizer_revamp_parts/ui/components/app_banner.dart';
+import 'package:appetizer_revamp_parts/ui/components/round_edge_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -50,8 +51,10 @@ class YourWeekMenu extends StatelessWidget {
           if (state is YourWeekMenuBlocDisplayState) {
             return Column(
               mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    children: [
                 AppBanner(
                   height: 146,
                   child: Column(
@@ -84,18 +87,35 @@ class YourWeekMenu extends StatelessWidget {
                       ),
                       YourMealDailyCardsCombined(
                           dayMenu: weekMenu.dayMenus[state.currDayIndex],
-                          dailyItems: weekMenu.dailyItems),
+                              dailyItems: weekMenu.dailyItems,
+                            ),
                     ],
                   ),
                 ),
                 DayDateBar(
                     dates: dates,
                     dateToMonthYear: dateToMonthYear,
-                    currDate: currDate),
-                YourMealDailyCardsCombined(
-                    dayMenu: weekMenu.dayMenus[currDayIndex],
-                    dailyItems: weekMenu.dailyItems)
-              ],
+                        currDate: currDate,
+                      ),
+                      SingleChildScrollView(
+                        child: YourMealDailyCardsCombined(
+                            dayMenu: weekMenu.dayMenus[currDayIndex],
+                            dailyItems: weekMenu.dailyItems),
+                      ),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      GestureDetector(
+                        child: RoundEdgeTextOnlyContainer(text: "CHECK OUT"),
+                        onTap: () {}, // TODO: add checkout functionality
+                      ),
+                      SizedBox(
+                        height: 16,
+                      )
+                    ],
+                  )
+                ]
             );
           } else {
             // TODO: ask for final confirmation with designers
