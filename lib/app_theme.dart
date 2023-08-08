@@ -61,6 +61,7 @@ class AppTheme {
   static const Color toggleOff = Color(0xFFB9B9B9);
   static const Color white = Color(0xFFFFFFFF);
   static const Color rulerColor = Color(0xFFE4E4E4);
+  static const Color shadowColor = Color(0x19000000);
   // These are the old colors only, need to be set afterwards
   static const Color secondary = Color(0xFF795548);
   static const Color tertiary = Color(0xFFA16938);
