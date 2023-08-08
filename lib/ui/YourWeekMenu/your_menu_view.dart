@@ -5,6 +5,7 @@ import 'package:appetizer/ui/YourWeekMenu/components/DayDateBar/day_date_bar.dar
 import 'package:appetizer/ui/YourWeekMenu/components/your_meal_daily_cards_combined.dart';
 // import 'package:appetizer/ui/YourWeekMenu/components/title_bar.dart';
 import 'package:appetizer/ui/components/app_banner.dart';
+import 'package:appetizer/ui/components/round_edge_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -49,54 +50,73 @@ class YourWeekMenu extends StatelessWidget {
           }
           if (state is YourWeekMenuBlocDisplayState) {
             return Column(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                AppBanner(
-                  height: 146,
-                  child: Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
                     children: [
-                      GestureDetector(
-                        onPanUpdate: ((details) {
-                          // Swiping in right direction.
-                          if (details.delta.dx > 0) {
-                            // move to previous week
-                            context.read<YourWeekMenuBlocBloc>().add(
-                                  PreviousWeekChangeEvent(
-                                    previousWeekId: state.weekMenu.weekId - 1,
-                                  ),
-                                );
-                          }
-                          // Swiping in left direction.
-                          if (details.delta.dx < 0) {
-                            context.read<YourWeekMenuBlocBloc>().add(
-                                  NextWeekChangeEvent(
-                                    nextWeekId: state.weekMenu.weekId + 1,
-                                  ),
-                                );
-                          }
-                        }),
-                        child: DayDateBar(
-                          currDate: currDate,
-                          dates: dates,
-                          dateToMonthYear: dateToMonthYear,
+                      AppBanner(
+                        height: 146,
+                        child: Column(
+                          children: [
+                            GestureDetector(
+                              onPanUpdate: ((details) {
+                                // Swiping in right direction.
+                                if (details.delta.dx > 0) {
+                                  // move to previous week
+                                  context.read<YourWeekMenuBlocBloc>().add(
+                                        PreviousWeekChangeEvent(
+                                          previousWeekId:
+                                              state.weekMenu.weekId - 1,
+                                        ),
+                                      );
+                                }
+                                // Swiping in left direction.
+                                if (details.delta.dx < 0) {
+                                  context.read<YourWeekMenuBlocBloc>().add(
+                                        NextWeekChangeEvent(
+                                          nextWeekId: state.weekMenu.weekId + 1,
+                                        ),
+                                      );
+                                }
+                              }),
+                              child: DayDateBar(
+                                currDate: currDate,
+                                dates: dates,
+                                dateToMonthYear: dateToMonthYear,
+                              ),
+                            ),
+                            YourMealDailyCardsCombined(
+                              dayMenu: weekMenu.dayMenus[state.currDayIndex],
+                              dailyItems: weekMenu.dailyItems,
+                            ),
+                          ],
                         ),
                       ),
-                      YourMealDailyCardsCombined(
-                          dayMenu: weekMenu.dayMenus[state.currDayIndex],
-                          dailyItems: weekMenu.dailyItems),
+                      DayDateBar(
+                        dates: dates,
+                        dateToMonthYear: dateToMonthYear,
+                        currDate: currDate,
+                      ),
+                      SingleChildScrollView(
+                        child: YourMealDailyCardsCombined(
+                            dayMenu: weekMenu.dayMenus[currDayIndex],
+                            dailyItems: weekMenu.dailyItems),
+                      ),
                     ],
                   ),
-                ),
-                DayDateBar(
-                    dates: dates,
-                    dateToMonthYear: dateToMonthYear,
-                    currDate: currDate),
-                YourMealDailyCardsCombined(
-                    dayMenu: weekMenu.dayMenus[currDayIndex],
-                    dailyItems: weekMenu.dailyItems)
-              ],
-            );
+                  Column(
+                    children: [
+                      GestureDetector(
+                        child: RoundEdgeTextOnlyContainer(text: "CHECK OUT"),
+                        onTap: () {}, // TODO: add checkout functionality
+                      ),
+                      SizedBox(
+                        height: 16,
+                      )
+                    ],
+                  )
+                ]);
           } else {
             // TODO: ask for final confirmation with designers
             return const Center(
