@@ -58,6 +58,7 @@ class AppTheme {
   static const Color primary = Color(0xFFFFCB74);
   static const Color shadow = Color(0x99FFDDDD);
   static const Color grey2f = Color(0xFF2F2F2F);
+  static const Color grey2e = Color(0xCC2E2E2E);
   static const Color toggleOff = Color(0xFFB9B9B9);
   static const Color white = Color(0xFFFFFFFF);
   static const Color rulerColor = Color(0xFFE4E4E4);
