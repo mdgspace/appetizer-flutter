@@ -1,9 +1,11 @@
 import 'package:appetizer_revamp_parts/app_theme.dart';
 import 'package:appetizer_revamp_parts/models/menu/week_menu.dart';
+import 'package:appetizer_revamp_parts/models/user/user.dart';
 import 'package:appetizer_revamp_parts/ui/YourWeekMenu/components/DayDateBar/day_date_bar.dart';
 import 'package:appetizer_revamp_parts/ui/YourWeekMenu/components/YourMealMenuCard/your_meal_menu_card.dart';
 import 'package:appetizer_revamp_parts/ui/YourWeekMenu/components/your_meal_daily_cards_combined.dart';
 import 'package:appetizer_revamp_parts/ui/YourWeekMenu/your_menu_view.dart';
+import 'package:appetizer_revamp_parts/ui/profile/profile_view.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -110,7 +112,7 @@ class MyApp extends StatelessWidget {
       dumdam.date = DateTime(2023, 1, i + 1);
       ddm.add(dumdam);
 
-      print(ddm[i].date.day);
+      // print(ddm[i].date.day);
     }
     WeekMenu dummy = WeekMenu(
         weekId: 1,
@@ -119,13 +121,23 @@ class MyApp extends StatelessWidget {
         dailyItems: ddi,
         dayMenus: ddm,
         isApproved: true);
+    User baka = User(
+        email: 'nishtha_k@iitr.ch.ac.in',
+        hostelName: 'Himalaya Bhawan',
+        hostelCode: 'HB',
+        enrNo: 21115095,
+        name: 'Nishtha Kaura',
+        contactNo: '810333423',
+        branch: 'EED',
+        imageUrl: 'imageUrl',
+        isCheckedOut: false,
+        dob: '12-06-1998',
+        degree: 'B Tech',
+        admissionYear: '2021',
+        isNew: false);
     return MaterialApp(
-      home: Scaffold(
-        appBar: null,
-        body: Container(
-          color: AppTheme.green,
-          child: YourWeekMenu(weekMenu: dummy),
-        ),
+      home: ProfilePage(
+        data: baka,
       ),
     );
   }
