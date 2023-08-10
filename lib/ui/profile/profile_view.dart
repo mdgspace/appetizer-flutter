@@ -1,7 +1,7 @@
-import 'package:appetizer_revamp_parts/models/user/user.dart';
-import 'package:appetizer_revamp_parts/ui/profile/components/profile_button.dart';
-import 'package:appetizer_revamp_parts/ui/profile/components/profile_card.dart';
-import 'package:appetizer_revamp_parts/ui/profile/components/profile_photo.dart';
+import 'package:appetizer/models/user/user.dart';
+import 'package:appetizer/ui/profile/components/profile_button.dart';
+import 'package:appetizer/ui/profile/components/profile_card.dart';
+import 'package:appetizer/ui/profile/components/profile_photo.dart';
 import 'package:flutter/material.dart';
 
 class ProfilePage extends StatelessWidget {
