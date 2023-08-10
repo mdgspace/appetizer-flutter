@@ -6,6 +6,7 @@ import 'package:appetizer_revamp_parts/ui/YourWeekMenu/components/your_meal_dail
 // import 'package:appetizer_revamp_parts/ui/YourWeekMenu/components/title_bar.dart';
 import 'package:appetizer_revamp_parts/ui/components/app_banner.dart';
 import 'package:appetizer_revamp_parts/ui/components/round_edge_container.dart';
+import 'package:appetizer_revamp_parts/ui/components/loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -44,9 +45,7 @@ class YourWeekMenu extends StatelessWidget {
       child: BlocBuilder<YourWeekMenuBlocBloc, YourWeekMenuBlocState>(
         builder: (context, state) {
           if (state is YourWeekMenuBlocLoadingState) {
-            return SizedBox(
-                // TODO: ask for this from designers and then complete
-                );
+            return const Center(child: LoadingIndicator());
           }
           if (state is YourWeekMenuBlocDisplayState) {
             return Column(
