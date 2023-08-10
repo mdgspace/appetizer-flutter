@@ -1,4 +1,5 @@
 import 'package:appetizer_revamp_parts/ui/notifications/bloc/notification_page_bloc.dart';
+import 'package:appetizer_revamp_parts/ui/notifications/components/no_notification_widget.dart';
 import 'package:appetizer_revamp_parts/ui/notifications/components/notification_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -42,26 +43,31 @@ class NotificationPage extends StatelessWidget {
               // TODO: throw an error, or snackbar
             }
             if (state is NotificationPageFetchedState) {
+              if (state.notifications.isEmpty) {
+                return const NoNotificationsWidget();
+              }
               return Container(
                 padding: const EdgeInsets.only(left: 24, right: 25, top: 32),
                 child: ListView.builder(
                   itemCount: state.notifications.length,
                   itemBuilder: (context, index) {
-                    return Column(children: [
-                      NotificationCard(
-                        data: state.notifications[index],
-                      ),
-                      index < state.notifications.length
-                          ? const SizedBox(
-                              height: 16,
-                            )
-                          : const SizedBox.shrink(),
-                    ],);
+                    return Column(
+                      children: [
+                        NotificationCard(
+                          data: state.notifications[index],
+                        ),
+                        index < state.notifications.length
+                            ? const SizedBox(
+                                height: 16,
+                              )
+                            : const SizedBox.shrink(),
+                      ],
+                    );
                   },
                 ),
               );
             }
-            return const Placeholder();
+            return const NoNotificationsWidget();
           },
         ),
       ),
