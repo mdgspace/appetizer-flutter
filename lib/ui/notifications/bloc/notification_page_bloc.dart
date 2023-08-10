@@ -12,23 +12,7 @@ class NotificationPageBloc
         Emitter<NotificationPageState> emit) {
       // TODO: implement repository call
       bool submissionSuccessful = true;
-      List<Notification> notifications = [
-        Notification(
-            id: 123,
-            dateCreated: 532523,
-            title: "Yesssir",
-            message: "fasfafafassfadasdadsafafasfsdfafasfasfasfasfasfas"),
-        Notification(
-            id: 123,
-            dateCreated: 532523,
-            title: "Yesssir",
-            message: "fasfafafassfadasdadsafafasfsdfafasfasfasfasfasfas"),
-        Notification(
-            id: 123,
-            dateCreated: 532523,
-            title: "Yesssir",
-            message: "fasfafafassfadasdadsafafasfsdfafasfasfasfasfasfas")
-      ];
+      List<Notification> notifications = [];
       if (submissionSuccessful) {
         emit(
           NotificationPageFetchedState(
