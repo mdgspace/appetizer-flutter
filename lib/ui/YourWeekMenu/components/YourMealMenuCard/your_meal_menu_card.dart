@@ -17,6 +17,15 @@ class YourMealMenuCard extends StatefulWidget {
   State<YourMealMenuCard> createState() => _YourMealMenuCardState();
 }
 
+bool _isMealValidForCoupon(Meal meal) {
+  for (MealItem item in meal.items) {
+    if (item.type == MealItemType.CPN) {
+      return true;
+    }
+  }
+  return false;
+}
+
 class _YourMealMenuCardState extends State<YourMealMenuCard> {
   late List<String> dailyItemsParsed;
 
@@ -134,22 +143,29 @@ class _YourMealMenuCardState extends State<YourMealMenuCard> {
                         SizedBox(
                           height: 47,
                         ),
-                        Container(
-                          alignment: Alignment.centerLeft,
-                          // padding: const EdgeInsets.only(left: 18),
-                          height: 24,
-                          width: 88,
-                          child: state.meal.startDateTime.isBefore(
+                        ...[
+                          state.meal.startDateTime.isBefore(
                             DateTime.now(),
                           )
-                              ? const MealCardButtonContainer(
-                                  text: "Give Feedback")
-                              : (state.meal.couponStatus.status ==
-                                      CouponStatusEnum.A
-                                  ? const MealCardButtonContainer(
-                                      text: "COUPON")
-                                  : null),
-                        )
+                              ? GestureDetector(
+                                  onTap: () {},
+                                  child: Container(
+                                    alignment: Alignment.centerLeft,
+                                    // padding: const EdgeInsets.only(left: 18),
+                                    height: 24,
+                                    width: 88,
+                                    child: const MealCardButtonContainer(
+                                        text: "Give Feedback"),
+                                  ),
+                                )
+                              : (_isMealValidForCoupon(state.meal)
+                                  ? GestureDetector(
+                                      onTap: () {},
+                                      child: const MealCardButtonContainer(
+                                          text: "COUPON"),
+                                    )
+                                  : const SizedBox.shrink())
+                        ],
                       ],
                     ),
                   ),
