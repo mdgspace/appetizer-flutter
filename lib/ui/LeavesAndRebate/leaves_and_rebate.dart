@@ -1,14 +1,15 @@
-import 'package:appetizer_revamp_parts/app_theme.dart';
-import 'package:appetizer_revamp_parts/locator.dart';
-import 'package:appetizer_revamp_parts/models/transaction/paginated_yearly_rebate.dart';
-import 'package:appetizer_revamp_parts/services/api/leave_api.dart';
-import 'package:appetizer_revamp_parts/services/api/transaction_api.dart';
-import 'package:appetizer_revamp_parts/ui/LeavesAndRebate/bloc/leaves_and_rebate_bloc.dart';
-import 'package:appetizer_revamp_parts/ui/LeavesAndRebate/components/custom_divider.dart';
-import 'package:appetizer_revamp_parts/ui/LeavesAndRebate/components/leave_history.dart';
-import 'package:appetizer_revamp_parts/ui/LeavesAndRebate/components/monthly_rebates.dart';
-import 'package:appetizer_revamp_parts/ui/components/app_banner.dart';
-import 'package:appetizer_revamp_parts/ui/components/round_edge_container.dart';
+import 'package:appetizer/app_theme.dart';
+import 'package:appetizer/locator.dart';
+import 'package:appetizer/models/transaction/paginated_yearly_rebate.dart';
+import 'package:appetizer/services/api/leave_api.dart';
+import 'package:appetizer/services/api/transaction_api.dart';
+import 'package:appetizer/ui/LeavesAndRebate/bloc/leaves_and_rebate_bloc.dart';
+import 'package:appetizer/ui/LeavesAndRebate/components/custom_divider.dart';
+import 'package:appetizer/ui/LeavesAndRebate/components/leave_history.dart';
+import 'package:appetizer/ui/LeavesAndRebate/components/monthly_rebates.dart';
+import 'package:appetizer/ui/components/app_banner.dart';
+import 'package:appetizer/ui/components/loading_indicator.dart';
+import 'package:appetizer/ui/components/round_edge_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -28,7 +29,6 @@ class LeavesAndRebate extends StatelessWidget {
           PaginatedYearlyRebate? yearlyRebate;
           int? remainingLeaves;
           if (state is LeavesAndRebateLoadingState) {
-            //TODO: confirm if this will work or not
             transactionApi.getYearlyRebate(DateTime.now().year).then((value) {
               yearlyRebate = value;
               leaveApi.remainingLeaves().then((value) {
@@ -38,9 +38,7 @@ class LeavesAndRebate extends StatelessWidget {
                     .add(const LeavesAndRebateGetInitialDataEvent());
               });
             });
-            return Center(
-              child: CircularProgressIndicator(),
-            );
+            return const Center(child: LoadingIndicator());
           }
           if (state is LeavesAndRebateDisplayState) {
             return Column(

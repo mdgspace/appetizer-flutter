@@ -1,6 +1,6 @@
-import 'package:appetizer_revamp_parts/app_theme.dart';
-import 'package:appetizer_revamp_parts/models/transaction/paginated_yearly_rebate.dart';
-import 'package:appetizer_revamp_parts/ui/LeavesAndRebate/components/custom_divider.dart';
+import 'package:appetizer/app_theme.dart';
+import 'package:appetizer/models/transaction/paginated_yearly_rebate.dart';
+import 'package:appetizer/ui/LeavesAndRebate/components/custom_divider.dart';
 import 'package:flutter/material.dart';
 
 class MonthlyRebates extends StatefulWidget {

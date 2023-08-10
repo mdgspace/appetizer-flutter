@@ -1,4 +1,4 @@
-import 'package:appetizer_revamp_parts/app_theme.dart';
+import 'package:appetizer/app_theme.dart';
 import 'package:flutter/material.dart';
 
 class ShadowContainer extends StatelessWidget {
