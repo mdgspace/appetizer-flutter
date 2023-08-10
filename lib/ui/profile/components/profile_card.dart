@@ -89,7 +89,7 @@ class ProfileCard extends StatelessWidget {
           ),
           Fields(
             title: 'Branch:',
-            data: data.branch!,
+            data: data.branch ?? "",
           ),
           const SizedBox(
             height: 8,
@@ -103,7 +103,7 @@ class ProfileCard extends StatelessWidget {
           ),
           Fields(
             title: 'Room No:',
-            data: data.roomNo!,
+            data: data.roomNo ?? "",
           ),
         ],
       ),
