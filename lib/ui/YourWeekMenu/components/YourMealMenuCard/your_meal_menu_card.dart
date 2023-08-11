@@ -31,6 +31,9 @@ class _YourMealMenuCardState extends State<YourMealMenuCard> {
 
   @override
   Widget build(BuildContext context) {
+    print('----------------');
+    print(widget.meal.toJson());
+    print('----------------');
     return BlocProvider<YourMealMenuCardBloc>(
       create: (BuildContext context) => YourMealMenuCardBloc(meal: widget.meal),
       child: SafeArea(
