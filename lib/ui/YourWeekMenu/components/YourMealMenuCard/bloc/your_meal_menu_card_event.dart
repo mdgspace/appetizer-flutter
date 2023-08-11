@@ -12,5 +12,5 @@ class MealToggleEvent extends YourMealMenuCardEvent {
   final BuildContext context;
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [context];
 }
