@@ -34,6 +34,9 @@ class YourWeekMenuBlocBloc
     });
     on<DayChangeEvent>(
         (DayChangeEvent event, Emitter<YourWeekMenuBlocState> emit) {
+          print("++++++++++++++++++++++++++++++++++++++++++++++");
+          print(weekMenu.dayMenus[event.newDayIndex].meals[0].toJson());
+          print("++++++++++++++++++++++++++++++++++++++++++++++");
       emit(YourWeekMenuBlocDisplayState(
           weekMenu: weekMenu, currDayIndex: event.newDayIndex));
     });

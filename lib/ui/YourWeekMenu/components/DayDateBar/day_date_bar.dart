@@ -117,10 +117,12 @@ class NewDayDateBar extends StatefulWidget {
       {super.key,
       required this.dates,
       required this.dateToMonthYear,
-      required this.currDate});
+      required this.currDate,
+      required this.blocObj});
   final int currDate;
   final List<int> dates;
   final Map<int, String> dateToMonthYear;
+  final YourWeekMenuBlocBloc blocObj;
 
   @override
   State<NewDayDateBar> createState() => _NewDayDateBarState();

@@ -42,7 +42,7 @@ class YourWeekMenu extends StatelessWidget {
               DateFormat("yy").format(weekMenu.dayMenus[dayIndex].date);
     }
     final List<int> dayUtil = getCurrDayAndIndex(weekMenu);
-    final int currDate = dayUtil[1], currDayIndex = dayUtil[0];
+    final int currDate = dates[context.read<YourWeekMenuBlocBloc>().currDayIndex], currDayIndex = dayUtil[0];
     return BlocProvider<YourWeekMenuBlocBloc>(
       create: (BuildContext context) =>
           YourWeekMenuBlocBloc(weekMenu: weekMenu, currDayIndex: currDayIndex),
@@ -105,6 +105,8 @@ class YourWeekMenu extends StatelessWidget {
                                       currDate: dates[state.currDayIndex],
                                       dates: dates,
                                       dateToMonthYear: dateToMonthYear,
+                                      blocObj:
+                                          context.read<YourWeekMenuBlocBloc>(),
                                     ),
                                   ),
                                   // YourMealDailyCardsCombined(
@@ -127,8 +129,8 @@ class YourWeekMenu extends StatelessWidget {
                               height: 423,
                               child: SingleChildScrollView(
                                 child: YourMealDailyCardsCombined(
-                                    dayMenu:
-                                        state.weekMenu.dayMenus[state.currDayIndex],
+                                    dayMenu: state
+                                        .weekMenu.dayMenus[state.currDayIndex],
                                     dailyItems: state.weekMenu.dailyItems),
                               ),
                             ),
