@@ -2,13 +2,16 @@ import 'package:appetizer/app_theme.dart';
 import 'package:flutter/material.dart';
 
 class ShadowContainer extends StatelessWidget {
-  const ShadowContainer(
-      {super.key,
-      required this.child,
-      required this.height,
-      required this.width,
-      required this.offset});
+  const ShadowContainer({
+    super.key,
+    required this.child,
+    required this.height,
+    required this.width,
+    required this.offset,
+    // required this.padding
+  });
   final double height, width, offset;
+  // final EdgeInsetsGeometry padding;
   final Widget child;
 
   @override
@@ -16,6 +19,7 @@ class ShadowContainer extends StatelessWidget {
     return Container(
       height: height,
       width: width,
+      // padding: padding,
       decoration: ShapeDecoration(
         color: Colors.white,
         shape: RoundedRectangleBorder(
@@ -24,9 +28,9 @@ class ShadowContainer extends StatelessWidget {
         shadows: [
           BoxShadow(
             color: AppTheme.shadowColor,
-            blurRadius: 21.43,
+            blurRadius: 12,
             offset: Offset(offset, offset),
-            spreadRadius: 1.07,
+            spreadRadius: 1,
           )
         ],
       ),

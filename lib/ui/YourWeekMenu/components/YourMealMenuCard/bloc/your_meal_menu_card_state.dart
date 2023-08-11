@@ -7,12 +7,12 @@ abstract class YourMealMenuCardState extends Equatable {
   List<Object> get props => [];
 }
 
-class YourMealMenuCardLoadingState extends YourMealMenuCardState {
-  const YourMealMenuCardLoadingState();
+// class YourMealMenuCardLoadingState extends YourMealMenuCardState {
+//   const YourMealMenuCardLoadingState();
 
-  @override
-  List<Object> get props => [];
-}
+//   @override
+//   List<Object> get props => [];
+// }
 
 class YourMealMenuCardDisplayState extends YourMealMenuCardState {
   const YourMealMenuCardDisplayState({required this.meal});

@@ -15,32 +15,48 @@ class YourMealDailyCardsCombined extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        YourMealMenuCard(
-          meal: dayMenu.mealMap[MealType.B]!,
-          dailyItems: dailyItems.breakfast,
-        ),
-        SizedBox(height: 24),
-        YourMealMenuCard(
-          meal: dayMenu.mealMap[MealType.L]!,
-          dailyItems: dailyItems.lunch,
-        ),
-        SizedBox(height: 24),
+        (dayMenu.mealMap[MealType.B] != null
+            ? YourMealMenuCard(
+                dailyItems: dailyItems.breakfast,
+                meal: dayMenu.mealMap[MealType.B]!,
+              )
+            : Container(
+                width: 125,
+                height: 168,
+                child: Text("The menu for this meal hasn't been uploaded yet!"),
+              )),
+        (dayMenu.mealMap[MealType.L] != null
+            ? YourMealMenuCard(
+                dailyItems: dailyItems.lunch,
+                meal: dayMenu.mealMap[MealType.L]!)
+            : Container(
+                width: 125,
+                height: 168,
+                child: Text("The menu for this meal hasn't been uploaded yet!"),
+              )),
+        // SizedBox(height: 24),
         dayMenu.mealMap[MealType.S] != null
             ? Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   YourMealMenuCard(
-                    meal: dayMenu.mealMap[MealType.S]!,
                     dailyItems: dailyItems.snack,
+                    meal: dayMenu.mealMap[MealType.S]!,
                   ),
                   SizedBox(height: 24),
                 ],
               )
             : SizedBox.shrink(),
-        YourMealMenuCard(
-          meal: dayMenu.mealMap[MealType.D]!,
-          dailyItems: dailyItems.dinner,
-        ),
+        (dayMenu.mealMap[MealType.D] != null
+            ? YourMealMenuCard(
+                dailyItems: dailyItems.dinner,
+                meal: dayMenu.mealMap[MealType.D]!,
+              )
+            : Container(
+                width: 125,
+                height: 168,
+                child: Text("The menu for this meal hasn't been uploaded yet!"),
+              )),
       ],
     );
   }

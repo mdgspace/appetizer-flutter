@@ -11,7 +11,7 @@ class YourWeekMenuBlocBloc
     extends Bloc<YourWeekMenuBlocEvent, YourWeekMenuBlocState> {
   final WeekMenu weekMenu;
   final int currDayIndex;
-  final MenuApi _menuApi = locator<MenuApi>();
+  // final MenuApi _menuApi = locator<MenuApi>();
   YourWeekMenuBlocBloc({
     required this.weekMenu,
     required this.currDayIndex,
@@ -20,17 +20,17 @@ class YourWeekMenuBlocBloc
     on<NextWeekChangeEvent>(
         (NextWeekChangeEvent event, Emitter<YourWeekMenuBlocState> emit) async {
       emit(const YourWeekMenuBlocLoadingState());
-      WeekMenu nextWeekMenu = await _menuApi.weekMenuByWeekId(event.nextWeekId);
-      emit(YourWeekMenuBlocDisplayState(
-          weekMenu: nextWeekMenu, currDayIndex: 0));
+      // WeekMenu nextWeekMenu = await _menuApi.weekMenuByWeekId(event.nextWeekId);
+      // emit(YourWeekMenuBlocDisplayState(
+      //     weekMenu: nextWeekMenu, currDayIndex: 0));
     });
     on<PreviousWeekChangeEvent>((PreviousWeekChangeEvent event,
         Emitter<YourWeekMenuBlocState> emit) async {
       emit(const YourWeekMenuBlocLoadingState());
-      WeekMenu previousWeekMenu =
-          await _menuApi.weekMenuByWeekId(event.previousWeekId);
-      emit(YourWeekMenuBlocDisplayState(
-          weekMenu: previousWeekMenu, currDayIndex: 0));
+      // WeekMenu previousWeekMenu =
+      //     await _menuApi.weekMenuByWeekId(event.previousWeekId);
+      // emit(YourWeekMenuBlocDisplayState(
+      //     weekMenu: previousWeekMenu, currDayIndex: 0));
     });
     on<DayChangeEvent>(
         (DayChangeEvent event, Emitter<YourWeekMenuBlocState> emit) {

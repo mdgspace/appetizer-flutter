@@ -20,13 +20,38 @@ class TitleBar extends StatelessWidget {
           Row(
             children: [
               Text(dayName, style: AppTheme.headline1),
-              VerticalDivider(thickness: 1, width: 24, color: AppTheme.white),
+              SizedBox(
+                width: 8,
+              ),
+              Transform(
+                transform: Matrix4.identity()
+                  ..translate(0.0, 0.0)
+                  ..rotateZ(1.57),
+                child: Container(
+                  width: 24,
+                  decoration: ShapeDecoration(
+                    shape: RoundedRectangleBorder(
+                      side: BorderSide(
+                        width: 0.50,
+                        strokeAlign: BorderSide.strokeAlignCenter,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
               Text(monthAndYear,
                   style: AppTheme.headline1.copyWith(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
                   )),
-              Icon(Icons.calendar_today_outlined),
+              SizedBox(
+                width: 6,
+              ),
+              Icon(
+                Icons.calendar_today_outlined,
+                color: AppTheme.white,
+              ),
             ],
           ),
           Icon(Icons.notifications_none),

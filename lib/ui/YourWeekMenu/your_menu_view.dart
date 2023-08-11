@@ -25,9 +25,11 @@ List<int> getCurrDayAndIndex(WeekMenu weekMenu) {
 }
 
 class YourWeekMenu extends StatelessWidget {
-  const YourWeekMenu({super.key, required this.weekMenu});
+  const YourWeekMenu(
+      {super.key, required this.weekMenu, required this.isCheckedOut});
   // final DateTime monthAndYear, startDateTime, endDateTime;
   final WeekMenu weekMenu;
+  final bool isCheckedOut;
   @override
   Widget build(BuildContext context) {
     List<int> dates = [];
@@ -35,87 +37,116 @@ class YourWeekMenu extends StatelessWidget {
     for (int dayIndex = 0; dayIndex < 7; dayIndex++) {
       dates.add(weekMenu.dayMenus[dayIndex].date.day);
       dateToMonthYear[weekMenu.dayMenus[dayIndex].date.day] =
-          DateFormat('MMM’yy').format(weekMenu.dayMenus[dayIndex].date);
+          DateFormat("MMM").format(weekMenu.dayMenus[dayIndex].date) +
+              "'" +
+              DateFormat("yy").format(weekMenu.dayMenus[dayIndex].date);
     }
     final List<int> dayUtil = getCurrDayAndIndex(weekMenu);
     final int currDate = dayUtil[1], currDayIndex = dayUtil[0];
-    return BlocProvider(
-      create: (context) =>
+    return BlocProvider<YourWeekMenuBlocBloc>(
+      create: (BuildContext context) =>
           YourWeekMenuBlocBloc(weekMenu: weekMenu, currDayIndex: currDayIndex),
       child: BlocBuilder<YourWeekMenuBlocBloc, YourWeekMenuBlocState>(
+        // listener: (context, state) {},
+        // listenWhen: (previous, current) {
+        //   return (previous != current);
+        // },
         builder: (context, state) {
           if (state is YourWeekMenuBlocLoadingState) {
             return const Center(child: LoadingIndicator());
           }
           if (state is YourWeekMenuBlocDisplayState) {
-            return Column(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
+            return isCheckedOut == true
+                ? Column(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [Text("checked out")],
+                  )
+                : (Column(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      AppBanner(
-                        height: 146,
-                        child: Column(
+                        Column(
                           children: [
-                            GestureDetector(
-                              onPanUpdate: ((details) {
-                                // Swiping in right direction.
-                                if (details.delta.dx > 0) {
-                                  // move to previous week
-                                  context.read<YourWeekMenuBlocBloc>().add(
-                                        PreviousWeekChangeEvent(
-                                          previousWeekId:
-                                              state.weekMenu.weekId - 1,
-                                        ),
-                                      );
-                                }
-                                // Swiping in left direction.
-                                if (details.delta.dx < 0) {
-                                  context.read<YourWeekMenuBlocBloc>().add(
-                                        NextWeekChangeEvent(
-                                          nextWeekId: state.weekMenu.weekId + 1,
-                                        ),
-                                      );
-                                }
-                              }),
-                              child: DayDateBar(
-                                currDate: currDate,
-                                dates: dates,
-                                dateToMonthYear: dateToMonthYear,
+                            AppBanner(
+                              height: 146,
+                              child: Column(
+                                children: [
+                                  SizedBox(
+                                    height: 32,
+                                  ),
+                                  GestureDetector(
+                                    onPanUpdate: ((details) {
+                                      // Swiping in right direction.
+                                      if (details.delta.dx > 0) {
+                                        // move to previous week
+                                        context
+                                            .read<YourWeekMenuBlocBloc>()
+                                            .add(
+                                              PreviousWeekChangeEvent(
+                                                previousWeekId:
+                                                    state.weekMenu.weekId - 1,
+                                              ),
+                                            );
+                                      }
+                                      // Swiping in left direction.
+                                      if (details.delta.dx < 0) {
+                                        context
+                                            .read<YourWeekMenuBlocBloc>()
+                                            .add(
+                                              NextWeekChangeEvent(
+                                                nextWeekId:
+                                                    state.weekMenu.weekId + 1,
+                                              ),
+                                            );
+                                      }
+                                    }),
+                                    child: NewDayDateBar(
+                                      currDate: dates[state.currDayIndex],
+                                      dates: dates,
+                                      dateToMonthYear: dateToMonthYear,
+                                    ),
+                                  ),
+                                  // YourMealDailyCardsCombined(
+                                  //   dayMenu:
+                                  //       weekMenu.dayMenus[state.currDayIndex],
+                                  //   dailyItems: weekMenu.dailyItems,
+                                  // ),
+                                ],
                               ),
                             ),
-                            YourMealDailyCardsCombined(
-                              dayMenu: weekMenu.dayMenus[state.currDayIndex],
-                              dailyItems: weekMenu.dailyItems,
+                            // DayDateBar(
+                            //   dates: dates,
+                            //   dateToMonthYear: dateToMonthYear,
+                            //   currDate: currDate,
+                            // ),
+                            // SizedBox(
+                            //   height: 32,
+                            // ),
+                            Container(
+                              height: 423,
+                              child: SingleChildScrollView(
+                                child: YourMealDailyCardsCombined(
+                                    dayMenu: state
+                                        .weekMenu.dayMenus[state.currDayIndex],
+                                    dailyItems: state.weekMenu.dailyItems),
+                              ),
                             ),
                           ],
                         ),
-                      ),
-                      DayDateBar(
-                        dates: dates,
-                        dateToMonthYear: dateToMonthYear,
-                        currDate: currDate,
-                      ),
-                      SingleChildScrollView(
-                        child: YourMealDailyCardsCombined(
-                            dayMenu: weekMenu.dayMenus[currDayIndex],
-                            dailyItems: weekMenu.dailyItems),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      GestureDetector(
-                        child: RoundEdgeTextOnlyContainer(text: "CHECK OUT"),
-                        onTap: () {}, // TODO: add checkout functionality
-                      ),
-                      SizedBox(
-                        height: 16,
-                      )
-                    ],
-                  )
-                ]);
+                        Column(
+                          children: [
+                            GestureDetector(
+                              child:
+                                  RoundEdgeTextOnlyContainer(text: "CHECK OUT"),
+                              onTap: () {}, // TODO: add checkout functionality
+                            ),
+                            SizedBox(
+                              height: 16,
+                            )
+                          ],
+                        )
+                      ]));
           } else {
             // TODO: ask for final confirmation with designers
             return const Center(
