@@ -5,6 +5,7 @@ import 'package:appetizer/ui/YourWeekMenu/components/YourMealMenuCard/bloc/your_
 import 'package:appetizer/ui/components/shadow_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fswitch_nullsafety/fswitch_nullsafety.dart';
 import 'package:intl/intl.dart';
 
@@ -156,15 +157,18 @@ class _YourMealMenuCardState extends State<YourMealMenuCard> {
                                         // padding: const EdgeInsets.only(left: 18),
                                         height: 24,
                                         width: 88,
-                                        child: const MealCardButtonContainer(
-                                            text: "Give Feedback"),
+                                        child: const FeedbackAndCouponWidget(
+                                            taken: false, coupon: false),
                                       ),
                                     )
                                   : (_isMealValidForCoupon(state.meal)
                                       ? GestureDetector(
                                           onTap: () {},
-                                          child: const MealCardButtonContainer(
-                                              text: "COUPON"),
+                                          child: FeedbackAndCouponWidget(
+                                              taken: state.meal.couponStatus
+                                                      .status ==
+                                                  CouponStatusEnum.A,
+                                              coupon: true),
                                         )
                                       : const SizedBox.shrink())
                             ],
@@ -238,6 +242,42 @@ class _YourMealMenuCardState extends State<YourMealMenuCard> {
             throw Error();
           },
         ),
+      ),
+    );
+  }
+}
+
+class FeedbackAndCouponWidget extends StatelessWidget {
+  const FeedbackAndCouponWidget(
+      {super.key, required this.taken, required this.coupon});
+  final bool taken;
+  final bool coupon;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 24,
+      width: 88,
+      padding: EdgeInsets.symmetric(horizontal: 8),
+      decoration: ShapeDecoration(
+        color: AppTheme.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          ...[
+            coupon && taken
+                ? SvgPicture.asset('assets/icons/coupon_taken_tick.svg')
+                : const SizedBox.shrink()
+          ],
+          Text(coupon ? "COUPON" : "Give Feedback",
+              style: AppTheme.button.copyWith(
+                  height: 1,
+                  fontSize: 11,
+                  fontWeight: FontWeight.w600,
+                  color: AppTheme.black11))
+        ],
       ),
     );
   }
