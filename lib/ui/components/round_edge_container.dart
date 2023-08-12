@@ -39,31 +39,3 @@ class RoundEdgeTextOnlyContainer extends StatelessWidget {
     );
   }
 }
-
-class MealCardButtonContainer extends StatelessWidget {
-  const MealCardButtonContainer({super.key, required this.text});
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 24,
-      width: 88,
-      // padding: EdgeInsets.symmetric(vertical: 8),
-      decoration: ShapeDecoration(
-        color: AppTheme.white,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
-      ),
-      child: Center(
-        child: Text(
-          text,
-          style: AppTheme.button.copyWith(
-              height: 1,
-              fontSize: 11,
-              fontWeight: FontWeight.w600,
-              color: AppTheme.black11),
-        ),
-      ),
-    );
-  }
-}
