@@ -1,5 +1,6 @@
 import 'package:appetizer_revamp_parts/app_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class TitleBar extends StatelessWidget {
   const TitleBar({
@@ -54,7 +55,7 @@ class TitleBar extends StatelessWidget {
               ),
             ],
           ),
-          Icon(Icons.notifications_none),
+          SvgPicture.asset('assets/images/icons/Bell.svg'),
         ],
       ),
     );
