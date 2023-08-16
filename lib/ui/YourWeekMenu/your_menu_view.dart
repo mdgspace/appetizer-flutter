@@ -2,7 +2,7 @@
 import 'package:appetizer_revamp_parts/models/menu/week_menu.dart';
 import 'package:appetizer_revamp_parts/ui/YourWeekMenu/bloc/your_week_menu_bloc_bloc.dart';
 import 'package:appetizer_revamp_parts/ui/YourWeekMenu/components/DayDateBar/day_date_bar.dart';
-import 'package:appetizer_revamp_parts/ui/YourWeekMenu/components/your_meal_daily_cards_combined.dart';
+import 'package:appetizer_revamp_parts/ui/YourWeekMenu/components/yourMealDailyCardsCombined/your_meal_daily_cards_combined.dart';
 // import 'package:appetizer_revamp_parts/ui/YourWeekMenu/components/title_bar.dart';
 import 'package:appetizer_revamp_parts/ui/components/app_banner.dart';
 import 'package:appetizer_revamp_parts/ui/components/round_edge_container.dart';
@@ -42,7 +42,7 @@ class YourWeekMenu extends StatelessWidget {
               DateFormat("yy").format(weekMenu.dayMenus[dayIndex].date);
     }
     final List<int> dayUtil = getCurrDayAndIndex(weekMenu);
-    final int currDate = dates[context.read<YourWeekMenuBlocBloc>().currDayIndex], currDayIndex = dayUtil[0];
+    final int currDate = dayUtil[1], currDayIndex = dayUtil[0];
     return BlocProvider<YourWeekMenuBlocBloc>(
       create: (BuildContext context) =>
           YourWeekMenuBlocBloc(weekMenu: weekMenu, currDayIndex: currDayIndex),
