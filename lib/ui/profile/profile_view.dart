@@ -1,4 +1,5 @@
 import 'package:appetizer_revamp_parts/models/user/user.dart';
+import 'package:appetizer_revamp_parts/ui/components/black_button.dart';
 import 'package:appetizer_revamp_parts/ui/profile/components/profile_button.dart';
 import 'package:appetizer_revamp_parts/ui/profile/components/profile_card.dart';
 import 'package:appetizer_revamp_parts/ui/profile/components/profile_photo.dart';
@@ -15,7 +16,6 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // TODO: implement Old/New notification bars and logic
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -25,6 +25,7 @@ class ProfilePage extends StatelessWidget {
             decoration: const BoxDecoration(
               color: Color(0xFFFFCB74),
             ),
+            padding: const EdgeInsets.only(left: 24),
             child: const Align(
               alignment: Alignment.centerLeft,
               child: Text(
@@ -59,7 +60,8 @@ class ProfilePage extends StatelessWidget {
                   child: ProfileCard(data: data),
                 ),
                 Container(
-                  padding: const EdgeInsets.only(left: 55, right: 57, top: 24),
+                  padding: const EdgeInsets.only(
+                      left: 55, right: 57, top: 24, bottom: 24),
                   child: Row(
                     children: [
                       ProfileTextButton(
@@ -77,7 +79,7 @@ class ProfilePage extends StatelessWidget {
                   ),
                 ),
                 const Divider(
-                  height: 48,
+                  height: 2,
                   thickness: 2,
                   color: Color.fromARGB(255, 189, 189, 189),
                   indent: 30,
@@ -103,11 +105,34 @@ class ProfilePage extends StatelessWidget {
                     ],
                   ),
                 ),
+                const SizedBox(height: 40),
+                BlackButton(
+                  title: 'LOGOUT',
+                  onTap: () {},
+                  width: 101,
+                ),
+                const SizedBox(height: 18),
+                TextButton(
+                  onPressed: () {},
+                  style: TextButton.styleFrom(
+                    padding: EdgeInsets.zero,
+                    minimumSize: Size.zero,
+                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  ),
+                  child: const Text(
+                    'Raise a Query',
+                    style: TextStyle(
+                      color: Color(0xFF008BFF),
+                      fontSize: 12,
+                      fontFamily: 'Inter',
+                      fontWeight: FontWeight.w400,
+                      decoration: TextDecoration.underline,
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
-          // TODO: Logout Button
-          // TODO: Raise a Query Button
         ],
       ),
     );
