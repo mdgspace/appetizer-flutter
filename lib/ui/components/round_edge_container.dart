@@ -17,6 +17,7 @@ class RoundEdgeContainers extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
       ),
       child: Row(
+        mainAxisSize: MainAxisSize.min,
         children: children,
       ),
     );
@@ -31,9 +32,12 @@ class RoundEdgeTextOnlyContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return RoundEdgeContainers(
       children: [
-        Text(
-          text,
-          style: AppTheme.button,
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: Text(
+            text,
+            style: AppTheme.button,
+          ),
         ),
       ],
     );
