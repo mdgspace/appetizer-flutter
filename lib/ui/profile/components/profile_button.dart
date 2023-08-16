@@ -70,19 +70,18 @@ class ProfileIconButton extends StatelessWidget {
         ],
       ),
       child: Row(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Container(
+          const SizedBox(
             width: 20,
             height: 20,
-            child: const Icon(
+            child: Icon(
               Icons.bookmark_border_outlined,
               color: Color.fromARGB(255, 255, 203, 116),
             ),
           ),
-          const SizedBox(width: 3),
+          const SizedBox(width: 10),
           Text(
             title,
             textAlign: TextAlign.center,

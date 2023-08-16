@@ -15,77 +15,93 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {},
-        ),
-        title: const Text(
-          'My Profile',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 24,
-            fontFamily: 'Noto Sans',
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-        backgroundColor: const Color(0xFFFFCB74),
-        toolbarHeight: 120,
-      ),
       // TODO: implement Old/New notification bars and logic
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          ProfilePhoto(
-            imageUri: data.imageUrl,
-          ),
-          Text(
-            data.name,
-            style: const TextStyle(
-              color: Color(0xFF111111),
-              fontSize: 25,
-              fontFamily: 'Noto Sans',
-              fontWeight: FontWeight.w600,
+          Container(
+            height: 200,
+            width: double.infinity,
+            decoration: const BoxDecoration(
+              color: Color(0xFFFFCB74),
+            ),
+            child: const Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                'My Profile',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                  fontFamily: 'Noto Sans',
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
             ),
           ),
-          Container(
-            padding: const EdgeInsets.only(left: 33, right: 34, top: 22),
-            child: ProfileCard(data: data),
-          ),
-          Container(
-            padding: const EdgeInsets.only(left: 55, right: 57, top: 24),
-            child: Row(
+          Transform.translate(
+            offset: const Offset(0, -60),
+            child: Column(
               children: [
-                ProfileTextButton(
-                  title: 'Edit Profile',
-                  onPressed: () {},
+                ProfilePhoto(
+                  imageUri: data.imageUrl,
                 ),
-                const SizedBox(
-                  width: 18,
+                Text(
+                  data.name,
+                  style: const TextStyle(
+                    color: Color(0xFF111111),
+                    fontSize: 25,
+                    fontFamily: 'Noto Sans',
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
-                ProfileTextButton(
-                  title: 'Reset Password',
-                  onPressed: () {},
+                Container(
+                  padding: const EdgeInsets.only(left: 33, right: 34, top: 22),
+                  child: ProfileCard(data: data),
                 ),
-              ],
-            ),
-          ),
-          Container(
-            padding: const EdgeInsets.only(left: 35, right: 35, top: 24),
-            child: Row(
-              children: [
-                ProfileIconButton(
-                  title: 'Bookmark',
-                  onPressed: () {},
-                  icon: Icons.bookmark_border_outlined,
+                Container(
+                  padding: const EdgeInsets.only(left: 55, right: 57, top: 24),
+                  child: Row(
+                    children: [
+                      ProfileTextButton(
+                        title: 'Edit Profile',
+                        onPressed: () {},
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      ProfileTextButton(
+                        title: 'Reset Password',
+                        onPressed: () {},
+                      ),
+                    ],
+                  ),
                 ),
-                const SizedBox(
-                  width: 48,
+                const Divider(
+                  height: 48,
+                  thickness: 2,
+                  color: Color.fromARGB(255, 189, 189, 189),
+                  indent: 30,
+                  endIndent: 30,
                 ),
-                ProfileIconButton(
-                  title: 'Coupons',
-                  onPressed: () {},
-                  icon: Icons.bookmark_border_outlined,
+                Container(
+                  padding: const EdgeInsets.only(left: 46, right: 48, top: 24),
+                  child: Row(
+                    children: [
+                      ProfileIconButton(
+                        title: 'Bookmark',
+                        onPressed: () {},
+                        icon: Icons.bookmark_border_outlined,
+                      ),
+                      const SizedBox(
+                        width: 48,
+                      ),
+                      ProfileIconButton(
+                        title: 'Coupons',
+                        onPressed: () {},
+                        icon: Icons.bookmark_border_outlined,
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
