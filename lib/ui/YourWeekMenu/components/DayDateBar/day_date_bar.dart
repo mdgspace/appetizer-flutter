@@ -38,7 +38,6 @@ class _CurrDateWidget extends StatelessWidget {
           ),
           const SizedBox(height: 2),
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5.5),
             decoration: ShapeDecoration(
               color: AppTheme.customWhite,
               shape: RoundedRectangleBorder(
@@ -90,7 +89,7 @@ class _OtherDateWidget extends StatelessWidget {
           ),
           const SizedBox(height: 2),
           Container(
-            padding: const EdgeInsets.symmetric(vertical: 5.5, horizontal: 6),
+            // padding: const EdgeInsets.symmetric(vertical: 5.5, horizontal: 6),
             decoration: ShapeDecoration(
               color: AppTheme.customWhite,
               shape: RoundedRectangleBorder(
