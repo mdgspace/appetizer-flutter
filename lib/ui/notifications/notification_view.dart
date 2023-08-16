@@ -1,6 +1,7 @@
 import 'package:appetizer/ui/notifications/bloc/notification_page_bloc.dart';
 import 'package:appetizer/ui/notifications/components/no_notification_widget.dart';
 import 'package:appetizer/ui/notifications/components/notification_card.dart';
+import 'package:appetizer/ui/notifications/components/switch_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -46,25 +47,32 @@ class NotificationPage extends StatelessWidget {
               if (state.notifications.isEmpty) {
                 return const NoNotificationsWidget();
               }
-              return Container(
-                padding: const EdgeInsets.only(left: 24, right: 25, top: 32),
-                child: ListView.builder(
-                  itemCount: state.notifications.length,
-                  itemBuilder: (context, index) {
-                    return Column(
-                      children: [
-                        NotificationCard(
-                          data: state.notifications[index],
-                        ),
-                        index < state.notifications.length
-                            ? const SizedBox(
-                                height: 16,
-                              )
-                            : const SizedBox.shrink(),
-                      ],
-                    );
-                  },
-                ),
+              return Column(
+                children: [
+                  SwitchBarWidget(option: state.option),
+                  Container(
+                    height: 656,
+                    padding:
+                        const EdgeInsets.only(left: 24, right: 25, top: 32),
+                    child: ListView.builder(
+                      itemCount: state.notifications.length,
+                      itemBuilder: (context, index) {
+                        return Column(
+                          children: [
+                            NotificationCard(
+                              data: state.notifications[index],
+                            ),
+                            index < state.notifications.length
+                                ? const SizedBox(
+                                    height: 16,
+                                  )
+                                : const SizedBox.shrink(),
+                          ],
+                        );
+                      },
+                    ),
+                  ),
+                ],
               );
             }
             return const NoNotificationsWidget();

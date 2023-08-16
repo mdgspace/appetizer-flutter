@@ -12,10 +12,27 @@ class NotificationPageBloc
         Emitter<NotificationPageState> emit) {
       // TODO: implement repository call
       bool submissionSuccessful = true;
-      List<Notification> notifications = [];
+      List<Notification> notifications = [
+        Notification(
+            id: 123,
+            dateCreated: 532523,
+            title: "Yesssir",
+            message: "fasfafafassfadasdadsafafasfsdfafasfasfasfasfasfas"),
+        Notification(
+            id: 123,
+            dateCreated: 532523,
+            title: "Yesssir",
+            message: "fasfafafassfadasdadsafafasfsdfafasfasfasfasfasfas"),
+        Notification(
+            id: 123,
+            dateCreated: 532523,
+            title: "Yesssir",
+            message: "fasfafafassfadasdadsafafasfsdfafasfasfasfasfasfas")
+      ];
       if (submissionSuccessful) {
         emit(
           NotificationPageFetchedState(
+            option: 0,
             notifications: notifications,
           ),
         );
@@ -27,5 +44,30 @@ class NotificationPageBloc
         );
       }
     });
+
+    on<NotificationPageSwitchChangedEvent>(
+      (NotificationPageSwitchChangedEvent event,
+          Emitter<NotificationPageState> emit) {
+        List<Notification> notifications = [
+          Notification(
+              id: 123,
+              dateCreated: 532523,
+              title: "Yesssir",
+              message: "fasfafafassfadasdadsafafasfsdfafasfasfasfasfasfas"),
+          Notification(
+              id: 123,
+              dateCreated: 532523,
+              title: "Yesssir",
+              message: "fasfafafassfadasdadsafafasfsdfafasfasfasfasfasfas"),
+          Notification(
+              id: 123,
+              dateCreated: 532523,
+              title: "Yesssir",
+              message: "fasfafafassfadasdadsafafasfsdfafasfasfasfasfasfas")
+        ];
+        emit(NotificationPageFetchedState(
+            option: event.option, notifications: notifications));
+      },
+    );
   }
 }
