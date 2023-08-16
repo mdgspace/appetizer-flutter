@@ -1,10 +1,10 @@
 import 'package:appetizer_revamp_parts/app_theme.dart';
 import 'package:appetizer_revamp_parts/constants.dart';
 import 'package:appetizer_revamp_parts/ui/YourWeekMenu/bloc/your_week_menu_bloc_bloc.dart';
+import 'package:appetizer_revamp_parts/ui/YourWeekMenu/components/DayDateBar/bloc/day_date_bar_bloc.dart';
 import 'package:appetizer_revamp_parts/ui/YourWeekMenu/components/title_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:appetizer_revamp_parts/ui/YourWeekMenu/components/DayDateBar/bloc/day_date_bar_bloc.dart';
 import 'package:intl/intl.dart';
 
 class _CurrDateWidget extends StatelessWidget {
@@ -38,7 +38,6 @@ class _CurrDateWidget extends StatelessWidget {
           ),
           const SizedBox(height: 2),
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5.5),
             decoration: ShapeDecoration(
               color: AppTheme.customWhite,
               shape: RoundedRectangleBorder(
@@ -90,7 +89,7 @@ class _OtherDateWidget extends StatelessWidget {
           ),
           const SizedBox(height: 2),
           Container(
-            padding: const EdgeInsets.symmetric(vertical: 5.5, horizontal: 6),
+            // padding: const EdgeInsets.symmetric(vertical: 5.5, horizontal: 6),
             decoration: ShapeDecoration(
               color: AppTheme.customWhite,
               shape: RoundedRectangleBorder(
