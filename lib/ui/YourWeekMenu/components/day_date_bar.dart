@@ -1,7 +1,6 @@
 import 'package:appetizer_revamp_parts/app_theme.dart';
 import 'package:appetizer_revamp_parts/constants.dart';
 import 'package:appetizer_revamp_parts/ui/YourWeekMenu/bloc/your_week_menu_bloc_bloc.dart';
-import 'package:appetizer_revamp_parts/ui/YourWeekMenu/components/DayDateBar/bloc/day_date_bar_bloc.dart';
 import 'package:appetizer_revamp_parts/ui/YourWeekMenu/components/title_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -213,105 +212,105 @@ class _NewDayDateBarState extends State<NewDayDateBar> {
   }
 }
 
-class DayDateBar extends StatelessWidget {
-  const DayDateBar(
-      {super.key,
-      required this.dates,
-      required this.dateToMonthYear,
-      required this.currDate});
-  final int currDate;
-  final List<int> dates;
-  final Map<int, String> dateToMonthYear;
+// class DayDateBar extends StatelessWidget {
+//   const DayDateBar(
+//       {super.key,
+//       required this.dates,
+//       required this.dateToMonthYear,
+//       required this.currDate});
+//   final int currDate;
+//   final List<int> dates;
+//   final Map<int, String> dateToMonthYear;
 
-  static const List<String> dayNames = [
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-    "Sunday"
-  ];
+//   static const List<String> dayNames = [
+//     "Monday",
+//     "Tuesday",
+//     "Wednesday",
+//     "Thursday",
+//     "Friday",
+//     "Saturday",
+//     "Sunday"
+//   ];
 
-  @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => DayDateBarBloc(
-          dateToMonthYear: dateToMonthYear, dates: dates, currDate: currDate),
-      child: BlocBuilder<DayDateBarBloc, DayDateBarState>(
-        builder: (context, state) {
-          return SizedBox(
-            width: 360,
-            child: Column(
-              children: [
-                (DateFormat("dd ").format(DateTime.now()) +
-                            DateFormat("MMM").format(DateTime.now()) +
-                            "'" +
-                            DateFormat("yy").format(DateTime.now()) ==
-                        ((state.currDate).toString() +
-                            " " +
-                            dateToMonthYear[state.currDate]!))
-                    ? TitleBar(
-                        monthAndYear: dateToMonthYear[state.currDate]!,
-                        dayName: "Today")
-                    : TitleBar(
-                        monthAndYear: "",
-                        dayName: ((state.currDate).toString() +
-                            " " +
-                            dateToMonthYear[state.currDate]!)),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    SizedBox(width: 12.5),
-                    GestureDetector(
-                        onTap: () {
-                          context.read<DayDateBarBloc>().add(
-                              DateChangeEvent(newCurrDate: state.dates[0]));
-                          context
-                              .read<YourWeekMenuBlocBloc>()
-                              .add(DayChangeEvent(newDayIndex: 0));
-                        },
-                        child: state.currDate == state.dates[0]
-                            ? _CurrDateWidget(
-                                date: state.dates[0], day: dayNames[0])
-                            : _OtherDateWidget(
-                                date: state.dates[0], day: dayNames[0 % 7])),
-                    for (int widgetDateOffset = 1;
-                        widgetDateOffset < 7;
-                        widgetDateOffset++)
-                      Row(
-                        children: [
-                          SizedBox(width: 15),
-                          GestureDetector(
-                            child:
-                                state.currDate == state.dates[widgetDateOffset]
-                                    ? _CurrDateWidget(
-                                        date: state.dates[widgetDateOffset],
-                                        day: dayNames[widgetDateOffset])
-                                    : _OtherDateWidget(
-                                        date: state.dates[widgetDateOffset],
-                                        day: dayNames[widgetDateOffset]),
-                            onTap: () {
-                              context.read<DayDateBarBloc>().add(
-                                  DateChangeEvent(
-                                      newCurrDate:
-                                          state.dates[widgetDateOffset]));
-                              context.read<YourWeekMenuBlocBloc>().add(
-                                  DayChangeEvent(
-                                      newDayIndex: widgetDateOffset));
-                            },
-                          ),
-                        ],
-                      ),
-                    SizedBox(width: 8.5),
-                  ],
-                ),
-              ],
-            ),
-          );
-        },
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return BlocProvider(
+//       create: (_) => DayDateBarBloc(
+//           dateToMonthYear: dateToMonthYear, dates: dates, currDate: currDate),
+//       child: BlocBuilder<DayDateBarBloc, DayDateBarState>(
+//         builder: (context, state) {
+//           return SizedBox(
+//             width: 360,
+//             child: Column(
+//               children: [
+//                 (DateFormat("dd ").format(DateTime.now()) +
+//                             DateFormat("MMM").format(DateTime.now()) +
+//                             "'" +
+//                             DateFormat("yy").format(DateTime.now()) ==
+//                         ((state.currDate).toString() +
+//                             " " +
+//                             dateToMonthYear[state.currDate]!))
+//                     ? TitleBar(
+//                         monthAndYear: dateToMonthYear[state.currDate]!,
+//                         dayName: "Today")
+//                     : TitleBar(
+//                         monthAndYear: "",
+//                         dayName: ((state.currDate).toString() +
+//                             " " +
+//                             dateToMonthYear[state.currDate]!)),
+//                 Row(
+//                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                   mainAxisSize: MainAxisSize.min,
+//                   children: [
+//                     SizedBox(width: 12.5),
+//                     GestureDetector(
+//                         onTap: () {
+//                           context.read<DayDateBarBloc>().add(
+//                               DateChangeEvent(newCurrDate: state.dates[0]));
+//                           context
+//                               .read<YourWeekMenuBlocBloc>()
+//                               .add(DayChangeEvent(newDayIndex: 0));
+//                         },
+//                         child: state.currDate == state.dates[0]
+//                             ? _CurrDateWidget(
+//                                 date: state.dates[0], day: dayNames[0])
+//                             : _OtherDateWidget(
+//                                 date: state.dates[0], day: dayNames[0 % 7])),
+//                     for (int widgetDateOffset = 1;
+//                         widgetDateOffset < 7;
+//                         widgetDateOffset++)
+//                       Row(
+//                         children: [
+//                           SizedBox(width: 15),
+//                           GestureDetector(
+//                             child:
+//                                 state.currDate == state.dates[widgetDateOffset]
+//                                     ? _CurrDateWidget(
+//                                         date: state.dates[widgetDateOffset],
+//                                         day: dayNames[widgetDateOffset])
+//                                     : _OtherDateWidget(
+//                                         date: state.dates[widgetDateOffset],
+//                                         day: dayNames[widgetDateOffset]),
+//                             onTap: () {
+//                               context.read<DayDateBarBloc>().add(
+//                                   DateChangeEvent(
+//                                       newCurrDate:
+//                                           state.dates[widgetDateOffset]));
+//                               context.read<YourWeekMenuBlocBloc>().add(
+//                                   DayChangeEvent(
+//                                       newDayIndex: widgetDateOffset));
+//                             },
+//                           ),
+//                         ],
+//                       ),
+//                     SizedBox(width: 8.5),
+//                   ],
+//                 ),
+//               ],
+//             ),
+//           );
+//         },
+//       ),
+//     );
+//   }
+// }
