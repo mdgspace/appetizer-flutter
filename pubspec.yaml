@@ -33,6 +33,7 @@ dependencies:
   fluttertoast: ^8.2.2
   fswitch_nullsafety: ^2.0.2
   flutter_svg: ^2.0.7
+  google_fonts: ^5.1.0
 
 dev_dependencies:
   auto_route_generator: ^7.3.0
