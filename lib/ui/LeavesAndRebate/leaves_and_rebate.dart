@@ -15,80 +15,73 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
 class LeavesAndRebate extends StatelessWidget {
-  const LeavesAndRebate({super.key, required this.isCheckedOut});
+  const LeavesAndRebate(
+      {super.key,
+      required this.isCheckedOut,
+      required this.initialYearlyRebates});
   final bool isCheckedOut;
+  final PaginatedYearlyRebate initialYearlyRebates;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => LeavesAndRebateBloc(isCheckedOut: isCheckedOut),
-      child: BlocBuilder<LeavesAndRebateBloc, LeavesAndRebateState>(
-        builder: (context, state) {
-          final TransactionApi transactionApi = locator<TransactionApi>();
-          final LeaveApi leaveApi = locator<LeaveApi>();
-          PaginatedYearlyRebate? yearlyRebate;
-          int? remainingLeaves;
-          if (state is LeavesAndRebateLoadingState) {
-            transactionApi.getYearlyRebate(DateTime.now().year).then((value) {
-              yearlyRebate = value;
-              leaveApi.remainingLeaves().then((value) {
-                remainingLeaves = value;
-                context
-                    .read<LeavesAndRebateBloc>()
-                    .add(const LeavesAndRebateGetInitialDataEvent());
-              });
-            });
-            return const Center(child: LoadingIndicator());
-          }
-          if (state is LeavesAndRebateDisplayState) {
-            return Column(
-              children: [
-                AppBanner(
-                    height: 85,
-                    child: Text(
-                      "Leaves & Rebates",
-                      style: AppTheme.headline1,
-                    )),
-                SizedBox(height: 40),
-                MonthlyRebates(
-                    paginatedYearlyRebate: yearlyRebate!,
-                    currMonthIndex:
-                        DateFormat('dd').format(DateTime.now()) as int),
-                SizedBox(height: 24),
-                Row(
-                  children: [
-                    Text("Remaining Leaves : ",
-                        style: AppTheme.subtitle1
-                            .copyWith(fontSize: 14, color: AppTheme.black2e)),
-                    Text(remainingLeaves! as String,
-                        style: AppTheme.headline2
-                            .copyWith(fontSize: 14, color: AppTheme.primary))
-                  ],
-                ),
-                SizedBox(height: 12),
-                Row(
-                  children: [
-                    Text("Meals Skipped : ",
-                        style: AppTheme.subtitle1
-                            .copyWith(fontSize: 14, color: AppTheme.black2e)),
-                    Text((yearlyRebate).count as String,
-                        style: AppTheme.headline2
-                            .copyWith(fontSize: 14, color: AppTheme.primary))
-                  ],
-                ),
-                SizedBox(height: 20),
-                CustomDivider(),
-                SizedBox(height: 24),
-                LeaveHistory(),
-                SizedBox(height: 32),
-                GestureDetector(
-                    child: RoundEdgeTextOnlyContainer(text: "CHECK OUT"))
-              ],
-            );
-          }
-          return const SizedBox.shrink();
-        },
-      ),
-    );
+        create: (context) => LeavesAndRebateBloc(isCheckedOut: isCheckedOut),
+        child: BlocBuilder<LeavesAndRebateBloc, LeavesAndRebateState>(
+          builder: (context, state) {
+            if (state is LeavesAndRebateLoadingState) {
+              context
+                  .read<LeavesAndRebateBloc>()
+                  .add(const LeavesAndRebateGetInitialDataEvent());
+              return const Center(child: LoadingIndicator());
+            }
+            if (state is LeavesAndRebateDisplayState) {
+              return Column(
+                children: [
+                  AppBanner(
+                      height: 85,
+                      child: Text(
+                        "Leaves & Rebates",
+                        style: AppTheme.headline1,
+                      )),
+                  SizedBox(height: 40),
+                  MonthlyRebates(
+                      paginatedYearlyRebate: initialYearlyRebates,
+                      currMonthIndex:
+                          DateFormat('dd').format(DateTime.now()) as int),
+                  SizedBox(height: 24),
+                  Row(
+                    children: [
+                      Text("Remaining Leaves : ",
+                          style: AppTheme.subtitle1
+                              .copyWith(fontSize: 14, color: AppTheme.black2e)),
+                      Text(state.remainingLeaves as String,
+                          style: AppTheme.headline2
+                              .copyWith(fontSize: 14, color: AppTheme.primary))
+                    ],
+                  ),
+                  SizedBox(height: 12),
+                  Row(
+                    children: [
+                      Text("Meals Skipped : ",
+                          style: AppTheme.subtitle1
+                              .copyWith(fontSize: 14, color: AppTheme.black2e)),
+                      Text(state.mealsSkipped as String,
+                          style: AppTheme.headline2
+                              .copyWith(fontSize: 14, color: AppTheme.primary))
+                    ],
+                  ),
+                  SizedBox(height: 20),
+                  CustomDivider(),
+                  SizedBox(height: 24),
+                  LeaveHistory(paginatedLeaves: state.paginatedLeaves),
+                  SizedBox(height: 32),
+                  GestureDetector(
+                      child: RoundEdgeTextOnlyContainer(text: "CHECK OUT"))
+                ],
+              );
+            }
+            return const SizedBox.shrink();
+          },
+        ));
   }
 }

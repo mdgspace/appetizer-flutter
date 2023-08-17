@@ -8,8 +8,15 @@ abstract class LeavesAndRebateState extends Equatable {
 }
 
 class LeavesAndRebateDisplayState extends LeavesAndRebateState {
-  const LeavesAndRebateDisplayState({required this.isCheckedOut});
+  const LeavesAndRebateDisplayState(
+      {required this.isCheckedOut,
+      required this.mealsSkipped,
+      required this.remainingLeaves,
+      required this.paginatedLeaves});
   final bool isCheckedOut;
+  final int remainingLeaves;
+  final int mealsSkipped;
+  final PaginatedLeaves paginatedLeaves;
 
   @override
   List<Object> get props => [isCheckedOut];
