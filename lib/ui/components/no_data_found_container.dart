@@ -22,7 +22,7 @@ class NoDataFoundContainer extends StatelessWidget {
             width: 186,
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('lib/assets/images/no_data_image.png'),
+                image: AssetImage('assets/images/no_data_image.png'),
               ),
             ),
           ),
