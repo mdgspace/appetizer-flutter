@@ -1,3 +1,4 @@
+import 'package:appetizer_revamp_parts/ui/components/no_data_found_container.dart';
 import 'package:appetizer_revamp_parts/ui/coupons/bloc/coupons_page_bloc.dart';
 import 'package:appetizer_revamp_parts/ui/coupons/components/coupon_card.dart';
 import 'package:flutter/material.dart';
@@ -41,6 +42,10 @@ class CouponsPage extends StatelessWidget {
               // TODO: throw an error, or snackbar
             }
             if (state is CouponsPageFetchedState) {
+              if (state.coupons.isEmpty) {
+                return const NoDataFoundContainer(
+                    title: 'No coupons selected !');
+              }
               return Container(
                 padding: const EdgeInsets.only(left: 32, top: 40),
                 child: GridView.count(
@@ -54,7 +59,7 @@ class CouponsPage extends StatelessWidget {
                 ),
               );
             }
-            return const Placeholder();
+            return const NoDataFoundContainer(title: 'No coupons selected !');
           },
         ),
       ),

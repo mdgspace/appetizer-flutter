@@ -15,5 +15,16 @@ class NotificationPageFetchEvent extends NotificationPageEvent {
   final List<Notification> notifications;
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [notifications];
+}
+
+class NotificationPageSwitchChangedEvent extends NotificationPageEvent {
+  const NotificationPageSwitchChangedEvent({
+    required this.option,
+  });
+
+  final int option;
+
+  @override
+  List<Object> get props => [option];
 }
