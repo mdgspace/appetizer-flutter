@@ -25,7 +25,7 @@ class CouponCard extends StatelessWidget {
             ),
             width: 28,
             height: 61,
-            child: Image.asset('lib/assets/images/coupon.png'),
+            child: Image.asset('assets/images/coupon.png'),
           ),
           Container(
             width: 101,

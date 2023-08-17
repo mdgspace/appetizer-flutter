@@ -45,8 +45,8 @@ class FeedbackTile extends StatelessWidget {
                       parentState.rating[this.index] = index + 1;
                     },
                     icon: index < state.rating
-                        ? Image.asset('lib/assets/images/filledStar.png')
-                        : Image.asset('lib/assets/images/emptyStar.png'),
+                        ? Image.asset('assets/images/filledStar.png')
+                        : Image.asset('assets/images/emptyStar.png'),
                   );
                 }),
               );

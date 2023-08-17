@@ -26,7 +26,7 @@ class ProfilePhoto extends StatelessWidget {
       child: const CircleAvatar(
         backgroundColor: Color.fromARGB(255, 255, 255, 255),
         foregroundImage: AssetImage(
-          'lib/assets/images/profile_photo.png',
+          'assets/images/profile_photo.png',
         ),
       ),
     );
