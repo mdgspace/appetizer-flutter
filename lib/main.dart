@@ -1,3 +1,4 @@
+import 'package:appetizer/models/leaves/paginated_leaves.dart';
 import 'package:appetizer/models/menu/week_menu.dart';
 import 'package:appetizer/models/user/user.dart';
 import 'package:appetizer/ui/profile/profile_view.dart';
@@ -303,6 +304,23 @@ class MyApp extends StatelessWidget {
         }
       ],
       "is_approved": true
+    });
+    PaginatedLeaves dummyLeaves = PaginatedLeaves.fromJson({
+      "count": 1,
+      "has_next": false,
+      "has_previous": false,
+      "results": [
+        {
+          "id": 51,
+          "date_created": 1675078095318,
+          "start_meal_type": "Dinner",
+          "start_datetime": 1675260000000,
+          "status": "P",
+          "meal_count": 1,
+          "end_meal_type": "Dinner",
+          "end_datetime": 1675260000000
+        }
+      ]
     });
     User baka = User(
         email: 'nishtha_k@iitr.ch.ac.in',
