@@ -313,7 +313,7 @@ class MyApp extends StatelessWidget {
         appBar: null,
         body: Container(
           child: // Text("hello")
-              YourWeekMenu(weekMenu: menu, isCheckedOut: false),
+              YourWeekMenu(weekMenu: menu, isCheckedOut: true),
         ),
       ),
     );

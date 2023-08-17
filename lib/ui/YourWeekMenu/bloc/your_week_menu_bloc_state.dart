@@ -9,10 +9,12 @@ abstract class YourWeekMenuBlocState extends Equatable {
 
 class YourWeekMenuBlocDisplayState extends YourWeekMenuBlocState {
   const YourWeekMenuBlocDisplayState(
-      {required this.weekMenu, required this.currDayIndex});
+      {required this.weekMenu,
+      required this.currDayIndex,
+      required this.isCheckedOut});
   final WeekMenu weekMenu;
   final int currDayIndex;
-
+  final bool isCheckedOut;
   @override
   List<Object> get props => [weekMenu, currDayIndex];
 }

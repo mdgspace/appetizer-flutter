@@ -2,7 +2,7 @@
 // pass just the daily meal to it
 
 import 'package:appetizer/models/menu/week_menu.dart';
-import 'package:appetizer/ui/YourWeekMenu/components/menu_card.dart';
+import 'package:appetizer/ui/YourWeekMenu/components/yourMealDailyCardsCombined/menu_card.dart';
 import 'package:appetizer/ui/YourWeekMenu/components/yourMealDailyCardsCombined/bloc/your_meal_daily_cards_combined_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,6 +26,7 @@ class YourMealDailyCardsCombined extends StatelessWidget {
     return BlocProvider(
       create: (_) => YourMealDailyCardsCombinedBloc(initialMealStates),
       child: Column(
+          mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.start,
           children: dayMenu.meals
               .map(
