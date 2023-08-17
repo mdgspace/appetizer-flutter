@@ -12,7 +12,7 @@ class AppBanner extends StatelessWidget {
       width: 360,
       decoration: const BoxDecoration(
           image: DecorationImage(
-        image: AssetImage("assets/images/meal_card/Lunch.png"), //path of image
+        image: AssetImage("assets/images/banner.png"), //path of image
         fit: BoxFit.cover,
       )),
       child: child,

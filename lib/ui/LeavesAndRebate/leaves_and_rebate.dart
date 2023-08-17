@@ -8,6 +8,7 @@ import 'package:appetizer_revamp_parts/ui/LeavesAndRebate/components/custom_divi
 import 'package:appetizer_revamp_parts/ui/LeavesAndRebate/components/leave_history.dart';
 import 'package:appetizer_revamp_parts/ui/LeavesAndRebate/components/monthly_rebates.dart';
 import 'package:appetizer_revamp_parts/ui/components/app_banner.dart';
+import 'package:appetizer_revamp_parts/ui/components/loading_indicator.dart';
 import 'package:appetizer_revamp_parts/ui/components/round_edge_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -28,7 +29,6 @@ class LeavesAndRebate extends StatelessWidget {
           PaginatedYearlyRebate? yearlyRebate;
           int? remainingLeaves;
           if (state is LeavesAndRebateLoadingState) {
-            //TODO: confirm if this will work or not
             transactionApi.getYearlyRebate(DateTime.now().year).then((value) {
               yearlyRebate = value;
               leaveApi.remainingLeaves().then((value) {
@@ -38,9 +38,7 @@ class LeavesAndRebate extends StatelessWidget {
                     .add(const LeavesAndRebateGetInitialDataEvent());
               });
             });
-            return Center(
-              child: CircularProgressIndicator(),
-            );
+            return const Center(child: LoadingIndicator());
           }
           if (state is LeavesAndRebateDisplayState) {
             return Column(
