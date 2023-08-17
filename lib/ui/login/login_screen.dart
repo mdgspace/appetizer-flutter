@@ -1,5 +1,5 @@
-import 'package:appetizer_revamp_parts/ui/login/components/login_button.dart';
-import 'package:appetizer_revamp_parts/ui/login/bloc/login_bloc.dart';
+import 'package:appetizer/ui/login/components/login_button.dart';
+import 'package:appetizer/ui/login/bloc/login_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
