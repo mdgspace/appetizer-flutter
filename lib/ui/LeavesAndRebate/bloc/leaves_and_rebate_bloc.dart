@@ -1,11 +1,6 @@
-import 'package:appetizer/globals.dart';
-import 'package:appetizer/locator.dart';
 import 'package:appetizer/models/leaves/paginated_leaves.dart';
-import 'package:appetizer/models/transaction/paginated_yearly_rebate.dart';
-import 'package:appetizer/services/api/leave_api.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 
 part 'leaves_and_rebate_event.dart';
 part 'leaves_and_rebate_state.dart';
@@ -13,32 +8,26 @@ part 'leaves_and_rebate_state.dart';
 class LeavesAndRebateBloc
     extends Bloc<LeavesAndRebateEvent, LeavesAndRebateState> {
   final bool isCheckedOut;
-  final LeaveApi _leaveApi = locator<LeaveApi>();
-  LeavesAndRebateBloc({required this.isCheckedOut})
-      : super(const LeavesAndRebateLoadingState()) {
-    on<LeavesAndRebateGetInitialDataEvent>(
-        (LeavesAndRebateGetInitialDataEvent event,
-            Emitter<LeavesAndRebateState> emit) async {
-      emit(const LeavesAndRebateLoadingState());
-      final PaginatedLeaves paginatedLeaves =
-          await _leaveApi.getLeaves(DateTime.now().year, 0);
-      final int remainingLeaves = await _leaveApi.remainingLeaves();
-      emit(LeavesAndRebateDisplayState(
-          isCheckedOut: isCheckedOut,
-          remainingLeaves: remainingLeaves,
-          mealsSkipped: maxLeaves - remainingLeaves,
-          paginatedLeaves: paginatedLeaves));
-    });
+  final PaginatedLeaves currYearLeaves;
+  final int remainingLeaves, mealsSkipped;
+  LeavesAndRebateBloc(
+      {required this.isCheckedOut,
+      required this.currYearLeaves,
+      required this.mealsSkipped,
+      required this.remainingLeaves})
+      : super(LeavesAndRebateState(
+            isCheckedOut: isCheckedOut,
+            mealsSkipped: mealsSkipped,
+            remainingLeaves: remainingLeaves,
+            paginatedLeaves: currYearLeaves)) {
     on<LeavesAndRebateToggleCheckOutStatusEvent>(
         (LeavesAndRebateToggleCheckOutStatusEvent event,
             Emitter<LeavesAndRebateState> emit) {
-      emit(LeavesAndRebateDisplayState(
+      emit(LeavesAndRebateState(
           isCheckedOut: !isCheckedOut,
-          remainingLeaves:
-              (state as LeavesAndRebateDisplayState).remainingLeaves,
-          mealsSkipped: (state as LeavesAndRebateDisplayState).mealsSkipped,
-          paginatedLeaves:
-              (state as LeavesAndRebateDisplayState).paginatedLeaves));
+          remainingLeaves: state.remainingLeaves,
+          mealsSkipped: state.mealsSkipped,
+          paginatedLeaves: state.paginatedLeaves));
     });
   }
 }
