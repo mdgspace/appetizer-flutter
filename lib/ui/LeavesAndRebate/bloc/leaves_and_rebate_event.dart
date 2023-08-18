@@ -13,10 +13,3 @@ class LeavesAndRebateToggleCheckOutStatusEvent extends LeavesAndRebateEvent {
   @override
   List<Object> get props => [];
 }
-
-class LeavesAndRebateGetInitialDataEvent extends LeavesAndRebateEvent{
-  const LeavesAndRebateGetInitialDataEvent();
-
-  @override
-  List<Object> get props => []; 
-}
