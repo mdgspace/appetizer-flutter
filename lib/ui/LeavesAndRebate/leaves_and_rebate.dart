@@ -45,6 +45,28 @@ class LeavesAndRebate extends StatelessWidget {
                         style: AppTheme.headline1,
                       ),
                     )),
+                ...[
+                  if (state.isCheckedOut)
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(0, 14, 0, 14),
+                      child: Text(
+                        "You are currently checked-out",
+                        style: AppTheme.bodyText1.copyWith(
+                            fontFamily: 'Noto Sans',
+                            fontSize: 14,
+                            color: AppTheme.customRed),
+                      ),
+                    ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 0, 0, 14),
+                    child: GestureDetector(
+                      onTap: () {
+                        //TODO: add check in functionality
+                      },
+                      child: RoundEdgeTextOnlyContainer(text: "CHECK IN"),
+                    ),
+                  )
+                ],
                 SizedBox(height: 40),
                 MonthlyRebates(
                     paginatedYearlyRebate: initialYearlyRebates,
@@ -83,8 +105,9 @@ class LeavesAndRebate extends StatelessWidget {
                 SizedBox(height: 24),
                 LeaveHistory(paginatedLeaves: state.paginatedLeaves),
                 SizedBox(height: 32),
-                GestureDetector(
-                    child: RoundEdgeTextOnlyContainer(text: "CHECK OUT"))
+                if (!state.isCheckedOut)
+                  GestureDetector(
+                      child: RoundEdgeTextOnlyContainer(text: "CHECK OUT"))
               ],
             );
           },
