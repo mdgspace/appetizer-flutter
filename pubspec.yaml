@@ -46,7 +46,7 @@ dependencies:
   package_info_plus: ^4.1.0
   get_it: ^7.6.0
   sembast: ^3.5.0+1
-  intl: ^0.18.1
+  intl: ^0.18.0
   path_provider: ^2.0.15
   bloc: ^8.1.2
   equatable: ^2.0.5
@@ -54,6 +54,7 @@ dependencies:
   fswitch_nullsafety: ^2.0.2
   flutter_svg: ^2.0.7
   google_fonts: ^5.1.0
+  month_picker_dialog: ^2.0.2
 
 dev_dependencies:
   flutter_test:

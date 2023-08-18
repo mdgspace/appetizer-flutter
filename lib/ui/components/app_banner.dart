@@ -7,15 +7,33 @@ class AppBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: height,
-      width: 360,
-      decoration: const BoxDecoration(
-          image: DecorationImage(
-        image: AssetImage("assets/images/banner.png"), //path of image
-        fit: BoxFit.cover,
-      )),
-      child: child,
-    );
+    return Stack(children: [
+      Container(
+        height: height + 12,
+        width: 360,
+        decoration: const BoxDecoration(
+            image: DecorationImage(
+          image: AssetImage("assets/images/banner.png"), //path of image
+          fit: BoxFit.cover,
+        )),
+        child: child,
+      ),
+      Positioned(
+        bottom: 0,
+        child: Container(
+          height: 12,
+          width: 360,
+          decoration: const ShapeDecoration(
+            color: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(12),
+                topRight: Radius.circular(12),
+              ),
+            ),
+          ),
+        ),
+      )
+    ]);
   }
 }
