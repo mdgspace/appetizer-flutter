@@ -1,119 +1,55 @@
-import 'dart:convert';
-
 import 'package:appetizer/enums/enum_values.dart';
-import 'package:appetizer/globals.dart';
-import 'package:appetizer/utils/date_time_utils.dart';
-import 'package:intl/intl.dart';
+import 'package:flutter/foundation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class WeekMenu {
-  int weekId;
-  int year;
-  dynamic name;
-  String? hostelName;
-  DailyItems dailyItems;
-  List<DayMenu> dayMenus;
-  bool isApproved;
+part 'week_menu.freezed.dart';
+part 'week_menu.g.dart';
 
-  WeekMenu({
-    required this.weekId,
-    required this.year,
-    required this.name,
-    this.hostelName,
-    required this.dailyItems,
-    required this.dayMenus,
-    required this.isApproved,
-  });
+// TODO: remove enums from this file
 
-  factory WeekMenu.fromJson(Map<String, dynamic> json) => WeekMenu(
-        weekId: json['week_id'],
-        year: json['year'],
-        name: json['name'],
-        hostelName: json['hostel_name'],
-        dailyItems: DailyItems.fromJson(json['daily_items']),
-        dayMenus:
-            List<DayMenu>.from(json['days'].map((x) => DayMenu.fromJson(x))),
-        isApproved: json['is_approved'],
-      );
+@freezed
+class WeekMenu with _$WeekMenu {
+  @JsonSerializable(fieldRename: FieldRename.snake, explicitToJson: true)
+  const factory WeekMenu({
+    required int weekId,
+    required int year,
+    required dynamic name,
+    String? hostelName,
+    required DailyItems dailyItems,
+    @JsonKey(name: 'days') required List<DayMenu> dayMenus,
+    required bool isApproved,
+  }) = _WeekMenu;
 
-  Map<String, dynamic> toJson() => {
-        'week_id': weekId,
-        'year': year,
-        'name': name,
-        'hostel_name': hostelName,
-        'daily_items': dailyItems.toJson(),
-        'days': List<dynamic>.from(dayMenus.map((x) => x.toJson())),
-        'is_approved': isApproved,
-      };
+  factory WeekMenu.fromJson(Map<String, dynamic> json) =>
+      _$WeekMenuFromJson(json);
 }
 
-class DailyItems {
-  int id;
-  List<MealItem> breakfast;
-  List<MealItem> lunch;
-  List<MealItem> dinner;
-  List<MealItem> snack;
+@freezed
+class DailyItems with _$DailyItems {
+  @JsonSerializable(fieldRename: FieldRename.snake, explicitToJson: true)
+  const factory DailyItems({
+    required int id,
+    required List<MealItem> breakfast,
+    required List<MealItem> lunch,
+    required List<MealItem> dinner,
+    List<MealItem>? snack,
+  }) = _DailyItems;
 
-  DailyItems({
-    required this.id,
-    required this.breakfast,
-    required this.lunch,
-    required this.dinner,
-    required this.snack,
-  });
-
-  factory DailyItems.fromJson(Map<String, dynamic> json) => DailyItems(
-        id: json['id'],
-        breakfast: List<MealItem>.from(
-          json['breakfast'].map((x) => MealItem.fromJson(x)),
-        ),
-        lunch: List<MealItem>.from(
-          json['lunch'].map((x) => MealItem.fromJson(x)),
-        ),
-        dinner: List<MealItem>.from(
-          json['dinner'].map((x) => MealItem.fromJson(x)),
-        ),
-        snack: List<MealItem>.from(
-          json['snack'].map((x) => MealItem.fromJson(x)),
-        ),
-      );
-
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'breakfast': List<dynamic>.from(breakfast.map((x) => x.toJson())),
-        'lunch': List<dynamic>.from(lunch.map((x) => x.toJson())),
-        'dinner': List<dynamic>.from(dinner.map((x) => x.toJson())),
-        'snack': List<dynamic>.from(snack.map((x) => x.toJson())),
-      };
+  factory DailyItems.fromJson(Map<String, dynamic> json) =>
+      _$DailyItemsFromJson(json);
 }
 
-List<MealItem> mealItemFromJson(String str) =>
-    List<MealItem>.from(json.decode(str).map((x) => MealItem.fromJson(x)));
+@freezed
+class MealItem with _$MealItem {
+  @JsonSerializable()
+  const factory MealItem({
+    required int id,
+    required MealItemType type,
+    required String name,
+  }) = _MealItem;
 
-String mealItemToJson(List<MealItem> data) =>
-    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
-
-class MealItem {
-  int id;
-  MealItemType type;
-  String name;
-
-  MealItem({
-    required this.id,
-    required this.type,
-    required this.name,
-  });
-
-  factory MealItem.fromJson(Map<String, dynamic> json) => MealItem(
-        id: json['id'],
-        type: breakfastTypeValues.map[json['type']]!,
-        name: json['name'],
-      );
-
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'type': breakfastTypeValues.reverse[type],
-        'name': name,
-      };
+  factory MealItem.fromJson(Map<String, dynamic> json) =>
+      _$MealItemFromJson(json);
 }
 
 enum MealItemType { MCL, SLD, EXT, MCD, STR, SNK, CPN }
@@ -128,174 +64,56 @@ final breakfastTypeValues = EnumValues({
   'cpn': MealItemType.CPN,
 });
 
-class DayMenu {
-  int id;
-  int dayId;
-  DateTime date;
-  List<Meal> meals;
-  late Map<MealType, Meal> mealMap;
+@freezed
+class DayMenu with _$DayMenu {
+  @JsonSerializable(fieldRename: FieldRename.snake, explicitToJson: true)
+  const DayMenu._();
 
-  DayMenu({
-    required this.id,
-    required this.dayId,
-    required this.date,
-    required this.meals,
-  }) {
-    mealMap = {};
+  factory DayMenu({
+    required int id,
+    required int dayId,
+    required DateTime date,
+    required List<Meal> meals,
+  }) = _DayMenu;
+
+  // TODO: check if mealMap is parsed correctly
+  Map<MealType, Meal> get mealMap {
+    Map<MealType, Meal> mealMap = {};
     for (var meal in meals) {
       mealMap[meal.type] = meal;
     }
+    return mealMap;
   }
 
-  factory DayMenu.fromJson(Map<String, dynamic> json) => DayMenu(
-        id: json['id'],
-        dayId: json['day_id'],
-        date: DateTime.parse(json['date']),
-        meals: List<Meal>.from(
-          json['meals'].map(
-            (meal) => Meal.fromJson(meal, DateTime.parse(json['date'])),
-          ),
-        ),
-      );
-
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'day_id': dayId,
-        'date': DateTimeUtils.getDashedDate(date),
-        'meals': List<dynamic>.from(meals.map((x) => x.toJson())),
-      };
+  factory DayMenu.fromJson(Map<String, dynamic> json) =>
+      _$DayMenuFromJson(json);
 }
 
-class Meal {
-  int id;
-  MealType type;
-  CostType? costType;
-  List<MealItem> items;
-  DateTime startTime;
-  DateTime endTime;
-  LeaveStatus leaveStatus;
-  CouponStatus couponStatus;
-  dynamic wastage;
-  bool isSwitchable;
-  SwitchStatus switchStatus;
-  String? hostelName;
-  String? secretCode;
-  bool isOutdated;
-  bool isLeaveToggleOutdated;
-  bool isCouponOutdated;
-  DateTime startDateTime;
-  DateTime endDateTime;
+@freezed
+class Meal with _$Meal {
+  @JsonSerializable(fieldRename: FieldRename.snake, explicitToJson: true)
+  const Meal._();
 
-  Meal({
-    required this.id,
-    required this.type,
-    this.costType,
-    required this.items,
-    required this.startTime,
-    required this.endTime,
-    required this.leaveStatus,
-    required this.wastage,
-    required this.isSwitchable,
-    required this.switchStatus,
-    this.hostelName,
-    this.secretCode,
-    required this.isOutdated,
-    required this.isLeaveToggleOutdated,
-    required this.isCouponOutdated,
-    required this.startDateTime,
-    required this.endDateTime,
-    required this.couponStatus,
-  });
-
-  factory Meal.fromJson(Map<String, dynamic> json, DateTime date) => Meal(
-        id: json['id'],
-        type: mealTypeValues.map[json['type']]!,
-        costType: costTypeValues.map[json['cost_type']],
-        items:
-            List<MealItem>.from(json['items'].map((x) => MealItem.fromJson(x))),
-        startTime: DateFormat('HH:mm:ss').parse(json['start_time']),
-        endTime: DateFormat('HH:mm:ss').parse(json['end_time']),
-        leaveStatus: LeaveStatus.fromJson(json['leave_status']),
-        couponStatus: CouponStatus.fromJson(json['coupon_status']),
-        wastage: json['wastage'],
-        isSwitchable: json['is_switchable'] ?? false,
-        switchStatus: SwitchStatus.fromJson(json['switch_status']),
-        hostelName: json['hostel_name'],
-        secretCode: json['secret_code'],
-        isOutdated:
-            !DateTimeUtils.getDateTimeFromDateAndTime(date, json['start_time'])
-                .isAfter(DateTime.now()),
-        isLeaveToggleOutdated:
-            !DateTimeUtils.getDateTimeFromDateAndTime(date, json['start_time'])
-                .subtract(outdatedTime)
-                .isAfter(DateTime.now()),
-        isCouponOutdated:
-            !DateTimeUtils.getDateTimeFromDateAndTime(date, json['start_time'])
-                .subtract(outdatedTime * 2)
-                .isAfter(DateTime.now()),
-        startDateTime:
-            DateTimeUtils.getDateTimeFromDateAndTime(date, json['start_time']),
-        endDateTime:
-            DateTimeUtils.getDateTimeFromDateAndTime(date, json['end_time']),
-      );
-
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'type': mealTypeValues.reverse[type],
-        'cost_type': costTypeValues.reverse[costType],
-        'items': List<dynamic>.from(items.map((x) => x.toJson())),
-        'start_time': startTime,
-        'end_time': endTime,
-        'leave_status': leaveStatus.toJson(),
-        'wastage': wastage,
-        'is_switchable': isSwitchable,
-        'switch_status': switchStatus.toJson(),
-        'hostel_name': hostelName,
-        'secret_code': secretCode,
-      };
-
-  Meal copyWith({
-    int? id,
-    MealType? type,
+  const factory Meal({
+    required int id,
+    required MealType type,
     CostType? costType,
-    List<MealItem>? items,
-    DateTime? startTime,
-    DateTime? endTime,
-    LeaveStatus? leaveStatus,
-    CouponStatus? couponStatus,
-    dynamic wastage,
-    bool? isSwitchable,
-    SwitchStatus? switchStatus,
+    required List<MealItem> items,
+    required DateTime startTime,
+    required DateTime endTime,
+    required LeaveStatus leaveStatus,
+    required CouponStatus couponStatus,
+    required dynamic wastage,
+    required bool isSwitchable,
+    required SwitchStatus switchStatus,
     String? hostelName,
     String? secretCode,
-    bool? isOutdated,
-    bool? isLeaveToggleOutdated,
-    bool? isCouponOutdated,
-    DateTime? startDateTime,
-    DateTime? endDateTime,
-  }) {
-    return Meal(
-      id: id ?? this.id,
-      type: type ?? this.type,
-      costType: costType ?? this.costType,
-      items: items ?? this.items,
-      startTime: startTime ?? this.startTime,
-      endTime: endTime ?? this.endTime,
-      leaveStatus: leaveStatus ?? this.leaveStatus,
-      couponStatus: couponStatus ?? this.couponStatus,
-      wastage: wastage ?? this.wastage,
-      isSwitchable: isSwitchable ?? this.isSwitchable,
-      switchStatus: switchStatus ?? this.switchStatus,
-      hostelName: hostelName ?? this.hostelName,
-      secretCode: secretCode ?? this.secretCode,
-      isLeaveToggleOutdated:
-          isLeaveToggleOutdated ?? this.isLeaveToggleOutdated,
-      isOutdated: isOutdated ?? this.isOutdated,
-      isCouponOutdated: isCouponOutdated ?? this.isCouponOutdated,
-      startDateTime: startDateTime ?? this.startDateTime,
-      endDateTime: endDateTime ?? this.endDateTime,
-    );
-  }
+    required bool isOutdated,
+    required bool isLeaveToggleOutdated,
+    required bool isCouponOutdated,
+    required DateTime startDateTime,
+    required DateTime endDateTime,
+  }) = _Meal;
 
   String get title {
     switch (type) {
@@ -311,70 +129,41 @@ class Meal {
         return 'Meal';
     }
   }
+
+  factory Meal.fromJson(Map<String, dynamic> json) => _$MealFromJson(json);
 }
 
-class LeaveStatus {
-  int? id;
-  LeaveStatusEnum status;
+@freezed
+class LeaveStatus with _$LeaveStatus {
+  const factory LeaveStatus({
+    int? id,
+    @Default(LeaveStatusEnum.N) LeaveStatusEnum status,
+  }) = _LeaveStatus;
 
-  LeaveStatus({
-    this.id,
-    required this.status,
-  });
-
-  factory LeaveStatus.fromJson(Map<String, dynamic>? json) => LeaveStatus(
-        id: json != null ? json['id'] : null,
-        status: json != null
-            ? leaveStatusValues.map[json['status'] ?? 'N']!
-            : LeaveStatusEnum.N,
-      );
-
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'status': leaveStatusValues.reverse[status],
-      };
+  factory LeaveStatus.fromJson(Map<String, dynamic> json) =>
+      _$LeaveStatusFromJson(json);
 }
 
-class CouponStatus {
-  int? id;
-  CouponStatusEnum status;
+@freezed
+class CouponStatus with _$CouponStatus {
+  const factory CouponStatus({
+    int? id,
+    @Default(CouponStatusEnum.N) required CouponStatusEnum status,
+  }) = _CouponStatus;
 
-  CouponStatus({
-    this.id,
-    required this.status,
-  });
-
-  factory CouponStatus.fromJson(Map<String, dynamic>? json) => CouponStatus(
-        id: json?['id'],
-        status: couponStatusValues.map[json?['status'] ?? 'N']!,
-      );
-
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'status': couponStatusValues.reverse[status],
-      };
+  factory CouponStatus.fromJson(Map<String, dynamic> json) =>
+      _$CouponStatusFromJson(json);
 }
 
-class SwitchStatus {
-  int id;
-  SwitchStatusEnum status;
+@freezed
+class SwitchStatus with _$SwitchStatus {
+  const factory SwitchStatus({
+    int? id,
+    @Default(SwitchStatusEnum.N) required SwitchStatusEnum status,
+  }) = _SwitchStatus;
 
-  SwitchStatus({
-    required this.id,
-    required this.status,
-  });
-
-  factory SwitchStatus.fromJson(Map<String, dynamic>? json) => SwitchStatus(
-        id: json != null ? (json['id'] ?? 0) : 0,
-        status: json != null
-            ? switchStatusValues.map[json['status'] ?? 'N']!
-            : SwitchStatusEnum.N,
-      );
-
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'status': switchStatusValues.reverse[status],
-      };
+  factory SwitchStatus.fromJson(Map<String, dynamic> json) =>
+      _$SwitchStatusFromJson(json);
 }
 
 enum LeaveStatusEnum { N, A, D, P, U }
