@@ -2,16 +2,23 @@ import 'package:appetizer/domain/models/leaves/paginated_leaves.dart';
 import 'package:appetizer/domain/models/transaction/paginated_yearly_rebate.dart';
 import 'package:appetizer/presentation/leaves_and_rebate/leaves_and_rebate.dart';
 import 'package:appetizer/utils/local_storage.dart';
+import 'package:device_preview/device_preview.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await LocalStorage.init();
-  runApp(const MyApp());
+  runApp(
+    DevicePreview(
+      enabled: !kReleaseMode,
+      builder: (context) => const AppetizerApp(),
+    ),
+  );
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class AppetizerApp extends StatelessWidget {
+  const AppetizerApp({super.key});
 
   @override
   Widget build(BuildContext context) {

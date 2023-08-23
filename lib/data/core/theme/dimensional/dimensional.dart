@@ -1,6 +1,8 @@
 import 'package:appetizer/utils/app_extensions/app_extensions.dart';
 import 'package:flutter/material.dart';
 
+part 'extension.dart';
+
 abstract class DimensionalPolicies {
   DimensionalPolicies._();
 
