@@ -1,31 +1,28 @@
 import 'package:appetizer/domain/models/feedback/appetizer_feedback.dart';
+import 'package:json_annotation/json_annotation.dart';
 
-class PaginatedFeedbacks {
+part 'paginated_feedbacks.g.dart';
+
+@JsonSerializable()
+class PaginatedFeedback {
   int count;
+  @JsonKey(name: 'has_next')
   bool hasNext;
+  @JsonKey(name: 'has_previous')
   bool hasPrevious;
   List<AppetizerFeedback> feedbacks;
 
-  PaginatedFeedbacks({
+  PaginatedFeedback({
     required this.count,
     required this.hasNext,
     required this.hasPrevious,
     required this.feedbacks,
   });
 
-  factory PaginatedFeedbacks.fromJson(Map<String, dynamic> json) =>
-      PaginatedFeedbacks(
-        count: json['count'],
-        hasNext: json['has_next'],
-        hasPrevious: json['has_previous'],
-        feedbacks: List<AppetizerFeedback>.from(
-            json['results'].map((x) => AppetizerFeedback.fromJson(x))),
-      );
+  // TODO: check if feedbacks parse correctly into the map
 
-  Map<String, dynamic> toJson() => {
-        'count': count,
-        'has_next': hasNext,
-        'has_previous': hasPrevious,
-        'results': List<dynamic>.from(feedbacks.map((x) => x.toJson())),
-      };
+  factory PaginatedFeedback.fromJson(Map<String, dynamic> json) =>
+      _$PaginatedFeedbackFromJson(json);
+
+  Map<String, dynamic> toJson() => _$PaginatedFeedbackToJson(this);
 }
