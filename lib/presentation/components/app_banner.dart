@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 
 class AppBanner extends StatelessWidget {
   const AppBanner({super.key, required this.height, required this.child});
@@ -12,10 +13,11 @@ class AppBanner extends StatelessWidget {
         height: height + 12,
         width: 360,
         decoration: const BoxDecoration(
-            image: DecorationImage(
-          image: AssetImage("assets/images/banner.png"), //path of image
-          fit: BoxFit.cover,
-        )),
+          image: DecorationImage(
+            image: Svg('assets/images/banner.svg'),
+            fit: BoxFit.cover,
+          ),
+        ),
         child: child,
       ),
       Positioned(

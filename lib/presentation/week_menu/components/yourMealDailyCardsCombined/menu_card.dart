@@ -4,6 +4,7 @@ import 'package:appetizer/presentation/week_menu/components/yourMealDailyCardsCo
 import 'package:appetizer/presentation/components/shadow_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg_provider/flutter_svg_provider.dart' as svg;
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fswitch_nullsafety/fswitch_nullsafety.dart';
 import 'package:intl/intl.dart';
@@ -125,8 +126,8 @@ class MealCard extends StatelessWidget {
               height: 168,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage(
-                    'assets/images/meal_card/${meal.title}.png',
+                  image: svg.Svg(
+                    'assets/images/meal_card/${meal.title}.svg',
                   ),
                 ),
               ),

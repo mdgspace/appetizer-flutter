@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class BlackButton extends StatelessWidget {
   const BlackButton({
@@ -92,7 +93,7 @@ class BlackIconButton extends StatelessWidget {
               height: 14,
               width: 14,
               alignment: Alignment.centerRight,
-              child: Image.asset('assets/images/icons/submit_icon.png'),
+              child: SvgPicture.asset('assets/images/icons/submit_icon.svg'),
             ),
           ],
         ),
