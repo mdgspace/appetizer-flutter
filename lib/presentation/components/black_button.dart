@@ -92,7 +92,7 @@ class BlackIconButton extends StatelessWidget {
               height: 14,
               width: 14,
               alignment: Alignment.centerRight,
-              child: Image.asset('lib/assets/images/submit_icon.png'),
+              child: Image.asset('assets/images/icons/submit_icon.png'),
             ),
           ],
         ),

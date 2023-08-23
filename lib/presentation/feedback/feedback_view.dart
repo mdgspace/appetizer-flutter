@@ -1,3 +1,4 @@
+import 'package:appetizer/presentation/components/black_button.dart';
 import 'package:appetizer/presentation/feedback/bloc/feedback_page_bloc.dart';
 import 'package:appetizer/presentation/feedback/components/FeedbackTile/feedback_tile.dart';
 import 'package:flutter/material.dart';
@@ -95,8 +96,7 @@ class FeedbackPage extends StatelessWidget {
                     onChanged: (value) => context.read<FeedbackPageBloc>().add(
                         FeedbackPageDescriptionChangedEvent(
                             description: value)),
-                    keyboardType: TextInputType.multiline,
-                    maxLines: 5,
+                    maxLength: 200,
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(
                         borderSide: BorderSide(
@@ -106,13 +106,18 @@ class FeedbackPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  TextButton(
-                    // TODO: decoration for Button
-                    onPressed: () => context.read<FeedbackPageBloc>().add(
-                        FeedbackPageSubmitEvent(
-                            rating: state.rating,
-                            description: state.description)),
-                    child: const Text('Submit'),
+                  const SizedBox(height: 19),
+                  Align(
+                    alignment: Alignment.bottomRight,
+                    child: BlackIconButton(
+                      onTap: () => context.read<FeedbackPageBloc>().add(
+                          FeedbackPageSubmitEvent(
+                              rating: state.rating,
+                              description: state.description)),
+                      title: "SUBMIT",
+                      width: 102,
+                      icon: Icons.keyboard_double_arrow_right_sharp,
+                    ),
                   ),
                 ],
               ),
