@@ -9,9 +9,7 @@ class PaginatedLeaves with _$PaginatedLeaves {
   @JsonSerializable(fieldRename: FieldRename.snake)
   const factory PaginatedLeaves({
     required int count,
-    @JsonKey(name: 'has_next') 
     required bool hasNext,
-    @JsonKey(name: 'has_previous')
     required bool hasPrevious,
     required List<Leave> results,
   }) = _PaginatedLeaves;

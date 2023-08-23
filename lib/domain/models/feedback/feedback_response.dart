@@ -2,12 +2,10 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'feedback_response.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(fieldRename: FieldRename.snake)
 class FeedbackResponse {
   String message;
-  @JsonKey(name: 'is_read')
   bool isRead;
-  @JsonKey(name: 'date_created')
   int dateCreated;
 
   FeedbackResponse({

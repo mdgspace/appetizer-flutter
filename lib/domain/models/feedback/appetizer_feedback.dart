@@ -2,18 +2,15 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'appetizer_feedback.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(fieldRename: FieldRename.snake)
 class AppetizerFeedback {
   int id;
   String type;
   String title;
   String message;
   int timestamp;
-  @JsonKey(name: 'meal_id')
   dynamic mealId;
-  @JsonKey(name: 'image_url')
   dynamic imageUrl;
-  @JsonKey(name: 'date_issue')
   int dateIssue;
   dynamic response;
 

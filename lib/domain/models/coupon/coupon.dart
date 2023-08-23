@@ -7,9 +7,9 @@ part 'coupon.g.dart';
 class Coupon with _$Coupon {
   @JsonSerializable(fieldRename: FieldRename.snake)
   const factory Coupon({
-    @JsonKey(name: 'id') required int id,
-    @JsonKey(name: 'meal') required String meal,
-    @JsonKey(name: 'is_active') bool? isActive,
+    required int id,
+    required String meal,
+    bool? isActive,
   }) = _Coupon;
 
   factory Coupon.fromJson(Map<String, dynamic> json) => _$CouponFromJson(json);

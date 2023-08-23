@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'paginated_feedbacks.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true, fieldRename: FieldRename.snake)
 class PaginatedFeedback {
   int count;
   @JsonKey(name: 'has_next')
