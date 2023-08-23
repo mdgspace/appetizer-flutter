@@ -1,7 +1,6 @@
 import 'dart:convert';
 
-Coupon notificationFromJson(String str) =>
-    Coupon.fromJson(json.decode(str));
+Coupon notificationFromJson(String str) => Coupon.fromJson(json.decode(str));
 
 String notificationToJson(Coupon data) => json.encode(data.toJson());
 

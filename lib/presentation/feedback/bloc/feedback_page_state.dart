@@ -14,6 +14,5 @@ class FeedbackPageState extends Equatable {
   final bool error;
 
   @override
-  List<Object> get props =>
-      [rating, description, error];
+  List<Object> get props => [rating, description, error];
 }
