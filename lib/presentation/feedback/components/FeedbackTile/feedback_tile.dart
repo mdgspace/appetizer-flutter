@@ -2,6 +2,7 @@ import 'package:appetizer/presentation/feedback/bloc/feedback_page_bloc.dart';
 import 'package:appetizer/presentation/feedback/components/FeedbackTile/bloc/feedback_tile_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class FeedbackTile extends StatelessWidget {
   const FeedbackTile({
@@ -45,8 +46,8 @@ class FeedbackTile extends StatelessWidget {
                       parentState.rating[this.index] = index + 1;
                     },
                     icon: index < state.rating
-                        ? Image.asset('assets/images/filledStar.png')
-                        : Image.asset('assets/images/emptyStar.png'),
+                        ? SvgPicture.asset('assets/images/filledStar.svg')
+                        : SvgPicture.asset('assets/images/emptyStar.svg'),
                   );
                 }),
               );

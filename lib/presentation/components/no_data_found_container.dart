@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 
 class NoDataFoundContainer extends StatelessWidget {
   const NoDataFoundContainer({
@@ -22,7 +23,7 @@ class NoDataFoundContainer extends StatelessWidget {
             width: 186,
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('assets/images/no_data_image.png'),
+                image: Svg('assets/images/no_data_image.svg'),
               ),
             ),
           ),

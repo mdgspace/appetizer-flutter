@@ -2,6 +2,7 @@ import 'package:appetizer/presentation/login/components/login_button.dart';
 import 'package:appetizer/presentation/login/bloc/login_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -22,15 +23,15 @@ class _LoginScreenState extends State<LoginScreen> {
           body: SingleChildScrollView(
             child: Column(
               children: <Widget>[
-                Image.asset('assets/images/login.png'),
+                SvgPicture.asset('assets/images/login.svg'),
                 const SizedBox(height: 20),
                 Container(
                   width: 168,
                   height: 63,
                   alignment: Alignment.center,
-                  child: Image.asset(
+                  child: SvgPicture.asset(
                     'assets/images/logo.png',
-                    scale: 1.5,
+                    // scale: 1.5,
                   ),
                 ),
                 const SizedBox(height: 30),

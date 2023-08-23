@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 
 class ProfilePhoto extends StatelessWidget {
   const ProfilePhoto({
@@ -25,8 +26,8 @@ class ProfilePhoto extends StatelessWidget {
       height: 124,
       child: const CircleAvatar(
         backgroundColor: Color.fromARGB(255, 255, 255, 255),
-        foregroundImage: AssetImage(
-          'assets/images/profile_photo.png',
+        foregroundImage: Svg(
+          'assets/images/profile_photo.svg',
         ),
       ),
     );
