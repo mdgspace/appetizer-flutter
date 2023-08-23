@@ -7,17 +7,21 @@ import 'package:appetizer/presentation/leaves_and_rebate/components/leave_histor
 import 'package:appetizer/presentation/leaves_and_rebate/components/monthly_rebates.dart';
 import 'package:appetizer/presentation/components/app_banner.dart';
 import 'package:appetizer/presentation/components/round_edge_container.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class LeavesAndRebate extends StatelessWidget {
-  const LeavesAndRebate(
-      {super.key,
-      required this.isCheckedOut,
-      required this.initialYearlyRebates,
-      required this.currYearLeaves,
-      required this.mealsSkipped,
-      required this.remainingLeaves});
+@RoutePage()
+class LeavesAndRebateScreen extends StatelessWidget {
+  const LeavesAndRebateScreen({
+    required this.isCheckedOut,
+    required this.initialYearlyRebates,
+    required this.currYearLeaves,
+    required this.mealsSkipped,
+    required this.remainingLeaves,
+    super.key,
+  });
+
   final bool isCheckedOut;
   final PaginatedYearlyRebate initialYearlyRebates;
   final PaginatedLeaves currYearLeaves;

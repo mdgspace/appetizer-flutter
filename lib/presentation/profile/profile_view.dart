@@ -3,13 +3,12 @@ import 'package:appetizer/presentation/components/black_button.dart';
 import 'package:appetizer/presentation/profile/components/profile_button.dart';
 import 'package:appetizer/presentation/profile/components/profile_card.dart';
 import 'package:appetizer/presentation/profile/components/profile_photo.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
-class ProfilePage extends StatelessWidget {
-  const ProfilePage({
-    required this.data,
-    Key? key,
-  }) : super(key: key);
+@RoutePage()
+class ProfileScreen extends StatelessWidget {
+  const ProfileScreen({required this.data, Key? key}) : super(key: key);
 
   final User data;
 

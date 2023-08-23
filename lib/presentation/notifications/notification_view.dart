@@ -2,11 +2,13 @@ import 'package:appetizer/presentation/notifications/bloc/notification_page_bloc
 import 'package:appetizer/presentation/notifications/components/no_notification_widget.dart';
 import 'package:appetizer/presentation/notifications/components/notification_card.dart';
 import 'package:appetizer/presentation/notifications/components/switch_bar.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class NotificationPage extends StatelessWidget {
-  const NotificationPage({super.key});
+@RoutePage()
+class NotificationScreen extends StatelessWidget {
+  const NotificationScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
