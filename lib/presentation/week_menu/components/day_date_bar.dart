@@ -1,5 +1,6 @@
 import 'package:appetizer/app_theme.dart';
 import 'package:appetizer/data/constants/constants.dart';
+import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
 import 'package:appetizer/presentation/week_menu/bloc/your_week_menu_bloc_bloc.dart';
 import 'package:appetizer/presentation/week_menu/components/title_bar.dart';
 import 'package:flutter/material.dart';
@@ -14,13 +15,14 @@ class _CurrDateWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 33,
-      height: 53,
-      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 6),
+      width: 33.toAutoScaledWidth,
+      height: 53.toAutoScaledHeight,
+      padding: EdgeInsets.symmetric(
+          horizontal: 5.toAutoScaledWidth, vertical: 6.toAutoScaledHeight),
       decoration: ShapeDecoration(
         color: AppTheme.black2e,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(16.toAutoScaledWidth),
         ),
       ),
       child: Column(
@@ -29,26 +31,26 @@ class _CurrDateWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(
-            height: 14,
+            height: 14.toAutoScaledHeight,
             child: Text(
               AppConstants.dayToInitial[day]!,
-              style: AppTheme.button.copyWith(height: 1),
+              style: AppTheme.button.copyWith(height: 1.toAutoScaledHeight),
             ),
           ),
-          const SizedBox(height: 2),
+          SizedBox(height: 2.toAutoScaledHeight),
           Container(
             decoration: ShapeDecoration(
               color: AppTheme.customWhite,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30),
+                borderRadius: BorderRadius.circular(30.toAutoScaledWidth),
               ),
             ),
-            height: 25,
+            height: 25.toAutoScaledHeight,
             child: Center(
               child: Text(
                 date.toString(),
-                style: AppTheme.button
-                    .copyWith(color: AppTheme.black1e, height: 1),
+                style: AppTheme.button.copyWith(
+                    color: AppTheme.black1e, height: 1.toAutoScaledHeight),
               ),
             ),
           ),
@@ -66,12 +68,13 @@ class _OtherDateWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 33,
-      height: 53,
-      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 6),
+      width: 33.toAutoScaledWidth,
+      height: 53.toAutoScaledHeight,
+      padding: EdgeInsets.symmetric(
+          horizontal: 5.toAutoScaledWidth, vertical: 6.toAutoScaledHeight),
       decoration: ShapeDecoration(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(16.toAutoScaledWidth),
         ),
       ),
       child: Column(
@@ -80,27 +83,27 @@ class _OtherDateWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(
-            height: 14,
+            height: 14.toAutoScaledHeight,
             child: Text(
               AppConstants.dayToInitial[day]!,
-              style: AppTheme.button.copyWith(height: 1),
+              style: AppTheme.button.copyWith(height: 1.toAutoScaledHeight),
             ),
           ),
-          const SizedBox(height: 2),
+          SizedBox(height: 2.toAutoScaledHeight),
           Container(
             // padding: const EdgeInsets.symmetric(vertical: 5.5, horizontal: 6),
             decoration: ShapeDecoration(
               color: AppTheme.customWhite,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30),
+                borderRadius: BorderRadius.circular(30.toAutoScaledWidth),
               ),
             ),
-            height: 25,
+            height: 25.toAutoScaledHeight,
             child: Center(
               child: Text(
                 date.toString(),
-                style: AppTheme.button
-                    .copyWith(color: AppTheme.black1e, height: 1),
+                style: AppTheme.button.copyWith(
+                    color: AppTheme.black1e, height: 1.toAutoScaledHeight),
               ),
             ),
           ),

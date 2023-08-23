@@ -1,4 +1,5 @@
 import 'package:appetizer/app_theme.dart';
+import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -13,8 +14,8 @@ class TitleBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 360,
-      padding: const EdgeInsets.symmetric(horizontal: 24),
+      width: 360.toAutoScaledWidth,
+      padding: EdgeInsets.symmetric(horizontal: 24.toAutoScaledWidth),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -22,8 +23,8 @@ class TitleBar extends StatelessWidget {
             child: Row(
               children: [
                 Text(dayName, style: AppTheme.headline1),
-                const SizedBox(
-                  width: 8,
+                SizedBox(
+                  width: 8.toAutoScaledWidth,
                 ),
                 const VerticalDivider(
                   thickness: 1.5,
@@ -31,11 +32,11 @@ class TitleBar extends StatelessWidget {
                 ),
                 Text(monthAndYear,
                     style: AppTheme.headline1.copyWith(
-                      fontSize: 16,
+                      fontSize: 16.toAutoScaledFont,
                       fontWeight: FontWeight.w600,
                     )),
-                const SizedBox(
-                  width: 6,
+                SizedBox(
+                  width: 6.toAutoScaledWidth,
                 ),
                 const Icon(
                   Icons.calendar_today_outlined,

@@ -1,4 +1,5 @@
 import 'package:appetizer/app_theme.dart';
+import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
 import 'package:appetizer/domain/models/menu/week_menu.dart';
 import 'package:appetizer/presentation/week_menu/components/yourMealDailyCardsCombined/bloc/your_meal_daily_cards_combined_bloc.dart';
 import 'package:appetizer/presentation/components/shadow_container.dart';
@@ -29,9 +30,9 @@ class FeedbackAndCouponWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        height: 24,
-        width: 88,
-        padding: const EdgeInsets.symmetric(horizontal: 8),
+        height: 24.toAutoScaledHeight,
+        width: 88.toAutoScaledWidth,
+        padding: EdgeInsets.symmetric(horizontal: 8.toAutoScaledWidth),
         decoration: ShapeDecoration(
           color: AppTheme.white,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
@@ -44,8 +45,8 @@ class FeedbackAndCouponWidget extends StatelessWidget {
             ],
             Text(coupon ? "COUPON" : "Give Feedback",
                 style: AppTheme.button.copyWith(
-                    height: 1,
-                    fontSize: 11,
+                    height: 1.toAutoScaledHeight,
+                    fontSize: 11.toAutoScaledFont,
                     fontWeight: FontWeight.w600,
                     color: AppTheme.black11))
           ],
@@ -71,21 +72,22 @@ class CouponDialogBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       content: Container(
-        width: 310,
-        height: 83,
+        width: 310.toAutoScaledWidth,
+        height: 83.toAutoScaledHeight,
         decoration: ShapeDecoration(
           color: Colors.amber,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.toAutoScaledWidth)),
         ),
         child: Stack(
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 60),
+              padding: EdgeInsets.symmetric(horizontal: 60.toAutoScaledWidth),
               child: Center(
                   child: Text(text,
                       style: AppTheme.headline3.copyWith(
-                          fontSize: 17, fontWeight: FontWeight.w400))),
+                          fontSize: 17.toAutoScaledFont,
+                          fontWeight: FontWeight.w400))),
             ),
             Positioned(
                 right: 0,
@@ -114,15 +116,15 @@ class MealCard extends StatelessWidget {
         dailyItemsParsed.substring(0, dailyItemsParsed.length - 2);
     return ShadowContainer(
       offset: 2,
-      width: 312,
-      height: 168,
+      width: 312.toAutoScaledWidth,
+      height: 168.toAutoScaledHeight,
       child: Container(
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              width: 125,
-              height: 168,
+              width: 125.toAutoScaledWidth,
+              height: 168.toAutoScaledHeight,
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage(
@@ -134,33 +136,34 @@ class MealCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  const SizedBox(height: 15),
+                  SizedBox(height: 15.toAutoScaledHeight),
                   Container(
-                    height: 28,
-                    padding: const EdgeInsets.only(left: 12),
+                    height: 28.toAutoScaledHeight,
+                    padding: EdgeInsets.only(left: 12),
                     child: Text(
                       meal.title,
-                      style: AppTheme.headline1
-                          .copyWith(fontSize: 20, color: AppTheme.black11),
+                      style: AppTheme.headline1.copyWith(
+                          fontSize: 20.toAutoScaledFont,
+                          color: AppTheme.black11),
                     ),
                   ),
                   Container(
-                    height: 17,
-                    padding: const EdgeInsets.only(left: 12),
+                    height: 17.toAutoScaledHeight,
+                    padding: EdgeInsets.only(left: 12.toAutoScaledWidth),
                     child: Text(
                       '${DateFormat.jm().format(meal.startTime)} - ${DateFormat.jm().format(meal.endTime)}',
                       style: AppTheme.headline3.copyWith(
                           fontWeight: FontWeight.w600,
-                          fontSize: 12,
+                          fontSize: 12.toAutoScaledFont,
                           color: AppTheme.grey2f),
                     ),
                   ),
-                  const SizedBox(height: 9),
+                  SizedBox(height: 9.toAutoScaledHeight),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Container(
-                        padding: const EdgeInsets.only(left: 12),
+                        padding: EdgeInsets.only(left: 12.toAutoScaledWidth),
                         child: FittedBox(
                           fit: BoxFit.contain,
                           child: FSwitch(
@@ -168,8 +171,8 @@ class MealCard extends StatelessWidget {
                             open: meal.leaveStatus.status != LeaveStatusEnum.A,
                             sliderColor: AppTheme.customWhite,
                             openColor: AppTheme.black2e,
-                            height: 20,
-                            width: 44,
+                            height: 20.toAutoScaledHeight,
+                            width: 44.toAutoScaledWidth,
                             onChanged: (value) async {
                               context
                                   .read<YourMealDailyCardsCombinedBloc>()
@@ -184,7 +187,7 @@ class MealCard extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 45),
+                  SizedBox(height: 45.toAutoScaledHeight),
                   ...[
                     meal.isOutdated
                         ? GestureDetector(
@@ -228,7 +231,7 @@ class MealCard extends StatelessWidget {
                               )
                             : const SizedBox.shrink()),
                   ],
-                  const SizedBox(height: 10)
+                  SizedBox(height: 10.toAutoScaledHeight)
                 ],
               ),
             ),
@@ -237,20 +240,23 @@ class MealCard extends StatelessWidget {
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 18),
+                SizedBox(height: 18.toAutoScaledHeight),
                 for (var item in meal.items) Text("  \u2022 ${item.name}"),
                 const Spacer(),
                 Container(
-                  margin: const EdgeInsets.fromLTRB(22, 0, 20, 0),
+                  margin: EdgeInsets.fromLTRB(
+                      22.toAutoScaledWidth, 0, 20.toAutoScaledWidth, 0),
                   height: 0.5,
                   width: 145,
                   color: AppTheme.rulerColor,
                 ),
-                const SizedBox(height: 8),
+                SizedBox(height: 8.toAutoScaledHeight),
                 Container(
-                  width: 187,
-                  padding:
-                      const EdgeInsets.only(left: 12, right: 19, bottom: 0),
+                  width: 187.toAutoScaledWidth,
+                  padding: EdgeInsets.only(
+                      left: 12.toAutoScaledWidth,
+                      right: 19.toAutoScaledWidth,
+                      bottom: 0),
                   child: RichText(
                     text: TextSpan(
                       text: 'Daily Items: ',
@@ -264,7 +270,7 @@ class MealCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: 17)
+                SizedBox(height: 17.toAutoScaledHeight)
               ],
             )
           ],

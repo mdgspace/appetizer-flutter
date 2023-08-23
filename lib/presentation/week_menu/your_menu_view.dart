@@ -1,5 +1,6 @@
 // import 'package:appetizer/AppConstants.dart';
 import 'package:appetizer/app_theme.dart';
+import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
 import 'package:appetizer/domain/models/menu/week_menu.dart';
 import 'package:appetizer/presentation/week_menu/bloc/your_week_menu_bloc_bloc.dart';
 import 'package:appetizer/presentation/week_menu/components/day_date_bar.dart';
@@ -77,11 +78,11 @@ class YourWeekMenu extends StatelessWidget {
                   Column(
                     children: [
                       AppBanner(
-                        height: 146,
+                        height: 146.toAutoScaledHeight,
                         child: Column(
                           children: [
-                            const SizedBox(
-                              height: 32,
+                            SizedBox(
+                              height: 32.toAutoScaledHeight,
                             ),
                             GestureDetector(
                               onPanUpdate: ((details) {
@@ -126,17 +127,19 @@ class YourWeekMenu extends StatelessWidget {
                       // ),
                       if (isCheckedOut) ...[
                         Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 14, 0, 14),
+                          padding: EdgeInsets.fromLTRB(0, 14.toAutoScaledHeight,
+                              0, 14.toAutoScaledHeight),
                           child: Text(
                             "You are currently checked-out",
                             style: AppTheme.bodyText1.copyWith(
                                 fontFamily: 'Noto Sans',
-                                fontSize: 14,
+                                fontSize: 14.toAutoScaledFont,
                                 color: AppTheme.customRed),
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 0, 0, 14),
+                          padding: EdgeInsets.fromLTRB(
+                              0, 0, 0, 14.toAutoScaledHeight),
                           child: GestureDetector(
                             onTap: () {
                               //TODO: add check in functionality
@@ -154,7 +157,7 @@ class YourWeekMenu extends StatelessWidget {
                       //   builder: (context, state) {
                       //     return
                       SizedBox(
-                        height: 423,
+                        height: 423.toAutoScaledHeight,
                         child: SingleChildScrollView(
                           child: YourMealDailyCardsCombined(
                               dayMenu:
@@ -178,8 +181,8 @@ class YourWeekMenu extends StatelessWidget {
                                 .add(const CheckOutEvent());
                           }, // TODO: add checkout functionality
                         ),
-                        const SizedBox(
-                          height: 16,
+                        SizedBox(
+                          height: 16.toAutoScaledHeight,
                         )
                       ],
                     )
