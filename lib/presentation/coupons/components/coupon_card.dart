@@ -1,6 +1,7 @@
 import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
 import 'package:appetizer/domain/models/coupon/coupon.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class CouponCard extends StatelessWidget {
   const CouponCard({
@@ -24,7 +25,7 @@ class CouponCard extends StatelessWidget {
             ),
             width: 28.toAutoScaledWidth,
             height: 61.toAutoScaledHeight,
-            child: Image.asset('assets/images/coupon.png'),
+            child: SvgPicture.asset('assets/images/coupon.svg'),
           ),
           Container(
             width: 101.toAutoScaledWidth,

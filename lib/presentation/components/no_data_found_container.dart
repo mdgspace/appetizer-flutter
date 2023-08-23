@@ -1,5 +1,6 @@
 import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 
 class NoDataFoundContainer extends StatelessWidget {
   const NoDataFoundContainer({
@@ -23,7 +24,7 @@ class NoDataFoundContainer extends StatelessWidget {
             width: 186.toAutoScaledWidth,
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('assets/images/no_data_image.png'),
+                image: Svg('assets/images/no_data_image.svg'),
               ),
             ),
           ),

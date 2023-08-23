@@ -1,5 +1,6 @@
 import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 
 import 'dart:math' as math;
 
@@ -17,7 +18,7 @@ class AppBanner extends StatelessWidget {
           width: double.maxFinite,
           decoration: const BoxDecoration(
               image: DecorationImage(
-            image: AssetImage("assets/images/banner.png"), //path of image
+            image: Svg('assets/images/banner.svg'), //path of image
             fit: BoxFit.fitWidth,
           )),
           child: Padding(

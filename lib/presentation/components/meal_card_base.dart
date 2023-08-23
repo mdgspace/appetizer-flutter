@@ -1,5 +1,6 @@
 import 'package:appetizer/enums/meal_type.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 
 class MealCardBase extends StatefulWidget {
   const MealCardBase({super.key, required this.mealType});
@@ -22,9 +23,10 @@ class _MealCardBaseState extends State<MealCardBase> {
           Container(
             color: const Color.fromARGB(1, 255, 203, 116),
             decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage(
-                        "assets/images/${widget.mealType.toString()}"))),
+              image: DecorationImage(
+                image: Svg("assets/images/${widget.mealType.toString()}.svg"),
+              ),
+            ),
             width: 125,
             child: const Column(),
           ),
