@@ -23,9 +23,7 @@ class TitleBar extends StatelessWidget {
             child: Row(
               children: [
                 Text(dayName, style: AppTheme.headline1),
-                SizedBox(
-                  width: 8.toAutoScaledWidth,
-                ),
+                8.toHorizontalSizedBox,
                 const VerticalDivider(
                   thickness: 1.5,
                   color: AppTheme.white,
@@ -35,9 +33,7 @@ class TitleBar extends StatelessWidget {
                       fontSize: 16.toAutoScaledFont,
                       fontWeight: FontWeight.w600,
                     )),
-                SizedBox(
-                  width: 6.toAutoScaledWidth,
-                ),
+                6.toHorizontalSizedBox,
                 const Icon(
                   Icons.calendar_today_outlined,
                   color: AppTheme.white,

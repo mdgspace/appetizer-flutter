@@ -78,30 +78,22 @@ class ProfileCard extends StatelessWidget {
             title: 'Enrollment No:',
             data: '${data.enrNo}',
           ),
-          SizedBox(
-            height: 8.toAutoScaledHeight,
-          ),
+          8.toVerticalSizedBox,
           Fields(
             title: 'Hostel:',
             data: data.hostelName,
           ),
-          SizedBox(
-            height: 8.toAutoScaledHeight,
-          ),
+          8.toVerticalSizedBox,
           Fields(
             title: 'Branch:',
             data: data.branch ?? "",
           ),
-          SizedBox(
-            height: 8.toAutoScaledHeight,
-          ),
+          8.toVerticalSizedBox,
           Fields(
             title: 'Email:',
             data: data.email,
           ),
-          SizedBox(
-            height: 8.toAutoScaledHeight,
-          ),
+          8.toVerticalSizedBox,
           Fields(
             title: 'Room No:',
             data: data.roomNo ?? "",
