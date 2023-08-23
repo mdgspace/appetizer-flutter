@@ -1,73 +1,36 @@
-import 'dart:convert';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-PaginatedYearlyRebate paginatedYearlyRebateFromJson(String str) =>
-    PaginatedYearlyRebate.fromJson(json.decode(str));
+part 'paginated_yearly_rebate.freezed.dart';
+part 'paginated_yearly_rebate.g.dart';
 
-String paginatedYearlyRebateToJson(PaginatedYearlyRebate data) =>
-    json.encode(data.toJson());
-
-class PaginatedYearlyRebate {
-  int count;
-  bool hasNext;
-  bool hasPrevious;
-  List<YearlyRebate> results;
-
-  PaginatedYearlyRebate({
-    required this.count,
-    required this.hasNext,
-    required this.hasPrevious,
-    required this.results,
-  });
+@freezed
+class PaginatedYearlyRebate with _$PaginatedYearlyRebate {
+  @JsonSerializable(fieldRename: FieldRename.snake, explicitToJson: true)
+  
+  const factory PaginatedYearlyRebate({
+    required int count,
+    required bool hasNext,
+    required bool hasPrevious,
+    required List<YearlyRebate> results,
+  }) = _PaginatedYearlyRebate;
 
   factory PaginatedYearlyRebate.fromJson(Map<String, dynamic> json) =>
-      PaginatedYearlyRebate(
-        count: json['count'],
-        hasNext: json['has_next'],
-        hasPrevious: json['has_previous'],
-        results: List<YearlyRebate>.from(
-            json['results'].map((x) => YearlyRebate.fromJson(x))),
-      );
-
-  Map<String, dynamic> toJson() => {
-        'count': count,
-        'has_next': hasNext,
-        'has_previous': hasPrevious,
-        'results': List<dynamic>.from(results.map((x) => x.toJson())),
-      };
+      _$PaginatedYearlyRebateFromJson(json);
 }
 
-class YearlyRebate {
-  int monthId;
-  int year;
-  dynamic bill;
-  int expenses;
-  num rebate;
-  int startDate;
+@freezed
+class YearlyRebate with _$YearlyRebate {
+  @JsonSerializable(fieldRename: FieldRename.snake)
 
-  YearlyRebate({
-    required this.monthId,
-    required this.year,
-    required this.bill,
-    required this.expenses,
-    required this.rebate,
-    required this.startDate,
-  });
+  const factory YearlyRebate({
+    required int monthId,
+    required int year,
+    required dynamic bill,
+    required int expenses,
+    required num rebate,
+    required int startDate,
+  }) = _YearlyRebate;
 
-  factory YearlyRebate.fromJson(Map<String, dynamic> json) => YearlyRebate(
-        monthId: json['month_id'],
-        year: json['year'],
-        bill: json['bill'],
-        expenses: json['expenses'],
-        rebate: json['rebate'],
-        startDate: json['start_date'],
-      );
-
-  Map<String, dynamic> toJson() => {
-        'month_id': monthId,
-        'year': year,
-        'bill': bill,
-        'expenses': expenses,
-        'rebate': rebate,
-        'start_date': startDate,
-      };
+  factory YearlyRebate.fromJson(Map<String, dynamic> json) =>
+      _$YearlyRebateFromJson(json);
 }
