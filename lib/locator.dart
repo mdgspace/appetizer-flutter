@@ -1,4 +1,4 @@
-import 'package:appetizer/data/services/analytics_service.dart';
+import 'package:appetizer/domain/amenity/analytics_service.dart';
 import 'package:appetizer/data/services/api/coupon_api.dart';
 import 'package:appetizer/data/services/api/feedback_api.dart';
 import 'package:appetizer/data/services/api/leave_api.dart';
@@ -7,11 +7,11 @@ import 'package:appetizer/data/services/api/multimessing_api.dart';
 import 'package:appetizer/data/services/api/transaction_api.dart';
 import 'package:appetizer/data/services/api/user_api.dart';
 import 'package:appetizer/data/services/api/version_check_api.dart';
-import 'package:appetizer/data/services/dialog_service.dart';
-import 'package:appetizer/data/services/local_storage_service.dart';
-import 'package:appetizer/data/services/package_info_service.dart';
-import 'package:appetizer/data/services/push_notification_service.dart';
-import 'package:appetizer/data/services/remote_config_service.dart';
+import 'package:appetizer/data/services/local/dialog_service.dart';
+import 'package:appetizer/data/services/local/local_storage_service.dart';
+import 'package:appetizer/data/services/local/package_info_service.dart';
+import 'package:appetizer/data/services/remote/push_notification_service.dart';
+import 'package:appetizer/data/services/remote/remote_config_service.dart';
 import 'package:get_it/get_it.dart';
 
 GetIt locator = GetIt.instance;

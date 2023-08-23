@@ -1,5 +1,5 @@
 import 'package:appetizer/locator.dart';
-import 'package:appetizer/data/services/local_storage_service.dart';
+import 'package:appetizer/data/services/local/local_storage_service.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
 class PushNotificationService {

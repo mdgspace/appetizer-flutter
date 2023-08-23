@@ -1,9 +1,18 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'appetizer_version.g.dart';
+
+@JsonSerializable()
 class AppetizerVersion {
   String number;
   String platform;
+  @JsonKey(name: "expiry_date")
   dynamic expiryDate;
+  @JsonKey(name: "is_expired")
   bool isExpired;
+  @JsonKey(name: "is_latest")
   bool isLatest;
+  @JsonKey(name: "date_created")
   int dateCreated;
 
   AppetizerVersion({
@@ -16,21 +25,7 @@ class AppetizerVersion {
   });
 
   factory AppetizerVersion.fromJson(Map<String, dynamic> json) =>
-      AppetizerVersion(
-        number: json['number'],
-        platform: json['platform'],
-        expiryDate: json['expiry_date'],
-        isExpired: json['is_expired'],
-        isLatest: json['is_latest'],
-        dateCreated: json['date_created'],
-      );
+      _$AppetizerVersionFromJson(json);
 
-  Map<String, dynamic> toJson() => {
-        'number': number,
-        'platform': platform,
-        'expiry_date': expiryDate,
-        'is_expired': isExpired,
-        'is_latest': isLatest,
-        'date_created': dateCreated,
-      };
+  Map<String, dynamic> toJson() => _$AppetizerVersionToJson(this);
 }
