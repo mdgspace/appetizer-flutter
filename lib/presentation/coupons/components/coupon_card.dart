@@ -1,3 +1,4 @@
+import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
 import 'package:appetizer/domain/models/coupon/coupon.dart';
 import 'package:flutter/material.dart';
 
@@ -12,38 +13,36 @@ class CouponCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 129,
-      height: 61,
-      constraints: const BoxConstraints(maxHeight: 61),
+      width: 129.toAutoScaledWidth,
+      constraints: BoxConstraints(maxHeight: 61.toAutoScaledHeight),
       child: Row(
-        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
             decoration: const BoxDecoration(
               color: Color.fromARGB(255, 255, 255, 255),
             ),
-            width: 28,
-            height: 61,
+            width: 28.toAutoScaledWidth,
+            height: 61.toAutoScaledHeight,
             child: Image.asset('assets/images/coupon.png'),
           ),
           Container(
-            width: 101,
-            height: 61,
-            padding: const EdgeInsets.only(
-              top: 12,
-              left: 8,
-              right: 10,
-              bottom: 12,
+            width: 101.toAutoScaledWidth,
+            height: 61.toAutoScaledHeight,
+            padding: EdgeInsets.only(
+              top: 12.toAutoScaledHeight,
+              left: 8.toAutoScaledWidth,
+              right: 10.toAutoScaledWidth,
+              bottom: 12.toAutoScaledHeight,
             ),
-            decoration: const ShapeDecoration(
+            decoration: ShapeDecoration(
               color: Color.fromARGB(255, 255, 255, 255),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.zero,
-                  topRight: Radius.circular(12),
+                  topRight: Radius.circular(12.toAutoScaledWidth),
                   bottomLeft: Radius.zero,
-                  bottomRight: Radius.circular(12),
+                  bottomRight: Radius.circular(12.toAutoScaledWidth),
                 ),
               ),
             ),
@@ -54,19 +53,19 @@ class CouponCard extends StatelessWidget {
                 Text(
                   coupon.title,
                   textAlign: TextAlign.left,
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: Color(0xFF111111),
-                    fontSize: 12,
+                    fontSize: 12.toAutoScaledFont,
                     fontFamily: 'Noto Sans',
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                const SizedBox(height: 6),
+                SizedBox(height: 6.toAutoScaledHeight),
                 Text(
                   coupon.meal,
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: Color(0xFF2E2E2E),
-                    fontSize: 10,
+                    fontSize: 10.toAutoScaledFont,
                     fontFamily: 'Noto Sans',
                     fontWeight: FontWeight.w400,
                   ),
