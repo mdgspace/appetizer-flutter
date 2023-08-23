@@ -11,6 +11,8 @@ import 'package:appetizer/presentation/components/round_edge_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'dart:math' as math;
+
 class LeavesAndRebate extends StatelessWidget {
   const LeavesAndRebate(
       {super.key,
@@ -40,7 +42,11 @@ class LeavesAndRebate extends StatelessWidget {
                     height: 85.toAutoScaledHeight,
                     child: Padding(
                       padding: EdgeInsets.fromLTRB(
-                          24.toAutoScaledWidth, 32.toAutoScaledHeight, 0, 0),
+                          24.toAutoScaledWidth,
+                          math.max(32.toAutoScaledHeight,
+                              MediaQuery.of(context).padding.top),
+                          0,
+                          0),
                       child: Text(
                         "Leaves & Rebates",
                         style: AppTheme.headline1,

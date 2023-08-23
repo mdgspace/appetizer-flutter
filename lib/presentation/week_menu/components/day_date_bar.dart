@@ -147,22 +147,24 @@ class _NewDayDateBarState extends State<NewDayDateBar> {
     currDate = widget.currDate;
     dates = widget.dates;
     dateToMonthYear = widget.dateToMonthYear;
-    return SizedBox(
-      width: 360,
-      child: Column(
-        children: [
-          ("${DateFormat("dd ").format(DateTime.now())}${DateFormat("MMM").format(DateTime.now())}'${DateFormat("yy").format(DateTime.now())}" ==
-                  ("$currDate ${dateToMonthYear![currDate]!}"))
-              ? TitleBar(
-                  monthAndYear: dateToMonthYear![currDate]!, dayName: "Today")
-              : TitleBar(
-                  monthAndYear: "",
-                  dayName: ("$currDate ${dateToMonthYear![currDate]!}")),
-          Row(
+    return Column(
+      // mainAxisSize: MainAxisSize.min,
+      // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+
+      children: [
+        ("${DateFormat("dd ").format(DateTime.now())}${DateFormat("MMM").format(DateTime.now())}'${DateFormat("yy").format(DateTime.now())}" ==
+                ("$currDate ${dateToMonthYear![currDate]!}"))
+            ? TitleBar(
+                monthAndYear: dateToMonthYear![currDate]!, dayName: "Today")
+            : TitleBar(
+                monthAndYear: "",
+                dayName: ("$currDate ${dateToMonthYear![currDate]!}")),
+        Expanded(
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             mainAxisSize: MainAxisSize.min,
             children: [
-              const SizedBox(width: 12.5),
+              SizedBox(width: 12.5.toAutoScaledWidth),
               GestureDetector(
                   onTap: () {
                     setState(() {
@@ -181,7 +183,7 @@ class _NewDayDateBarState extends State<NewDayDateBar> {
                   widgetDateOffset++)
                 Row(
                   children: [
-                    const SizedBox(width: 15),
+                    SizedBox(width: 15.toAutoScaledWidth),
                     GestureDetector(
                       child: currDate == dates![widgetDateOffset]
                           ? _CurrDateWidget(
@@ -201,11 +203,11 @@ class _NewDayDateBarState extends State<NewDayDateBar> {
                     ),
                   ],
                 ),
-              const SizedBox(width: 8.5),
+              SizedBox(width: 8.5.toAutoScaledWidth),
             ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

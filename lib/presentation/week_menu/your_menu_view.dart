@@ -72,121 +72,85 @@ class YourWeekMenu extends StatelessWidget {
           }
           if (state is YourWeekMenuBlocDisplayState) {
             return Column(
-                mainAxisSize: MainAxisSize.max,
+                mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Column(
-                    children: [
-                      AppBanner(
-                        height: 146.toAutoScaledHeight,
-                        child: Column(
-                          children: [
-                            SizedBox(
-                              height: 32.toAutoScaledHeight,
-                            ),
-                            GestureDetector(
-                              onPanUpdate: ((details) {
-                                // Swiping in right direction.
-                                if (details.delta.dx > 0) {
-                                  // move to previous week
-                                  context.read<YourWeekMenuBlocBloc>().add(
-                                        PreviousWeekChangeEvent(
-                                          previousWeekId:
-                                              state.weekMenu.weekId - 1,
-                                        ),
-                                      );
-                                }
-                                // Swiping in left direction.
-                                if (details.delta.dx < 0) {
-                                  context.read<YourWeekMenuBlocBloc>().add(
-                                        NextWeekChangeEvent(
-                                          nextWeekId: state.weekMenu.weekId + 1,
-                                        ),
-                                      );
-                                }
-                              }),
-                              child: NewDayDateBar(
-                                currDate: dates[state.currDayIndex],
-                                dates: dates,
-                                dateToMonthYear: dateToMonthYear,
-                                blocObj: context.read<YourWeekMenuBlocBloc>(),
-                              ),
-                            ),
-                            // YourMealDailyCardsCombined(
-                            //   dayMenu:
-                            //       weekMenu.dayMenus[state.currDayIndex],
-                            //   dailyItems: weekMenu.dailyItems,
-                            // ),
-                          ],
-                        ),
+                  AppBanner(
+                    height: 146.toAutoScaledHeight,
+                    child: GestureDetector(
+                      onPanUpdate: ((details) {
+                        // Swiping in right direction.
+                        if (details.delta.dx > 0) {
+                          // move to previous week
+                          context.read<YourWeekMenuBlocBloc>().add(
+                                PreviousWeekChangeEvent(
+                                  previousWeekId: state.weekMenu.weekId - 1,
+                                ),
+                              );
+                        }
+                        // Swiping in left direction.
+                        if (details.delta.dx < 0) {
+                          context.read<YourWeekMenuBlocBloc>().add(
+                                NextWeekChangeEvent(
+                                  nextWeekId: state.weekMenu.weekId + 1,
+                                ),
+                              );
+                        }
+                      }),
+                      child: NewDayDateBar(
+                        currDate: dates[state.currDayIndex],
+                        dates: dates,
+                        dateToMonthYear: dateToMonthYear,
+                        blocObj: context.read<YourWeekMenuBlocBloc>(),
                       ),
-                      // DayDateBar(
-                      //   dates: dates,
-                      //   dateToMonthYear: dateToMonthYear,
-                      //   currDate: currDate,
-                      // ),
-                      if (isCheckedOut) ...[
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(0, 14.toAutoScaledHeight,
-                              0, 14.toAutoScaledHeight),
-                          child: Text(
-                            "You are currently checked-out",
-                            style: AppTheme.bodyText1.copyWith(
-                                fontFamily: 'Noto Sans',
-                                fontSize: 14.toAutoScaledFont,
-                                color: AppTheme.customRed),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(
-                              0, 0, 0, 14.toAutoScaledHeight),
-                          child: GestureDetector(
-                            onTap: () {
-                              //TODO: add check in functionality
-                            },
-                            child: const RoundEdgeTextOnlyContainer(
-                                text: "CHECK IN"),
-                          ),
-                        )
-                      ],
-                      // BlocSelector<YourWeekMenuBlocBloc, YourWeekMenuBlocState,
-                      //     DayMenuFull>(
-                      //   selector: (state) => DayMenuFull(
-                      //       dayMenu: weekMenu.dayMenus[currDayIndex],
-                      //       dailyItems: weekMenu.dailyItems),
-                      //   builder: (context, state) {
-                      //     return
-                      SizedBox(
-                        height: 423.toAutoScaledHeight,
-                        child: SingleChildScrollView(
-                          child: YourMealDailyCardsCombined(
-                              dayMenu:
-                                  state.weekMenu.dayMenus[state.currDayIndex],
-                              dailyItems: state.weekMenu.dailyItems),
-                        ),
-                      ) //;
-                      // },
-                      // ),
-                    ],
+                    ),
                   ),
-                  if (!isCheckedOut) ...[
-                    Column(
-                      children: [
-                        GestureDetector(
-                          child: const RoundEdgeTextOnlyContainer(
-                              text: "CHECK OUT"),
-                          onTap: () {
-                            context
-                                .read<YourWeekMenuBlocBloc>()
-                                .add(const CheckOutEvent());
-                          }, // TODO: add checkout functionality
-                        ),
-                        SizedBox(
-                          height: 16.toAutoScaledHeight,
-                        )
-                      ],
+                  // DayDateBar(
+                  //   dates: dates,
+                  //   dateToMonthYear: dateToMonthYear,
+                  //   currDate: currDate,
+                  // ),
+                  if (isCheckedOut) ...[
+                    Padding(
+                      padding:
+                          EdgeInsets.fromLTRB(0, 0, 0, 14.toAutoScaledHeight),
+                      child: Text(
+                        "You are currently checked-out",
+                        style: AppTheme.bodyText1.copyWith(
+                            fontFamily: 'Noto Sans',
+                            fontSize: 14.toAutoScaledFont,
+                            color: AppTheme.customRed),
+                      ),
+                    ),
+                    Padding(
+                      padding:
+                          EdgeInsets.fromLTRB(0, 0, 0, 14.toAutoScaledHeight),
+                      child: GestureDetector(
+                        onTap: () {
+                          //TODO: add check in functionality
+                        },
+                        child:
+                            const RoundEdgeTextOnlyContainer(text: "CHECK IN"),
+                      ),
                     )
-                  ]
+                  ],
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Column(children: [
+                        // BlocSelector<YourWeekMenuBlocBloc, YourWeekMenuBlocState,
+                        //     DayMenuFull>(
+                        //   selector: (state) => DayMenuFull(
+                        //       dayMenu: weekMenu.dayMenus[currDayIndex],
+                        //       dailyItems: weekMenu.dailyItems),
+                        //   builder: (context, state) {
+                        //     return
+                        YourMealDailyCardsCombined(
+                            dayMenu:
+                                state.weekMenu.dayMenus[state.currDayIndex],
+                            dailyItems: state.weekMenu.dailyItems),
+                      ]),
+                    ),
+                  )
                 ]);
           } else {
             // TODO: ask for final confirmation with designers
