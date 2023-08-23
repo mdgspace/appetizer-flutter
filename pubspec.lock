@@ -45,18 +45,18 @@ packages:
     dependency: "direct main"
     description:
       name: auto_route
-      sha256: "35e5c7f8de56ec07c40fca4c953cb7d1d113e26d50bd876a4130a9b874923f27"
+      sha256: "02120972925a567c37921fa28ac7e90680c7095dd0e70711353737ec2727cdc6"
       url: "https://pub.dev"
     source: hosted
-    version: "7.8.1"
+    version: "7.4.0"
   auto_route_generator:
     dependency: "direct dev"
     description:
       name: auto_route_generator
-      sha256: e7aa9ab44b77cd31a4619d94db645ab5736e543fd0b4c6058c281249e479dfb8
+      sha256: d0555913cc54153c38b1dd4f69e0d6a623818ca7195e7c1437901d52b2596eec
       url: "https://pub.dev"
     source: hosted
-    version: "7.3.1"
+    version: "7.1.1"
   bloc:
     dependency: "direct main"
     description:
@@ -805,6 +805,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.5.0+1"
+  sentry:
+    dependency: transitive
+    description:
+      name: sentry
+      sha256: "39c23342fc96105da449914f7774139a17a0ca8a4e70d9ad5200171f7e47d6ba"
+      url: "https://pub.dev"
+    source: hosted
+    version: "7.9.0"
+  sentry_dio:
+    dependency: "direct main"
+    description:
+      name: sentry_dio
+      sha256: df4c1eca92ab0a4b4e4ef67477a01d3fc898e9394c2675f9cf2b0a20285b1847
+      url: "https://pub.dev"
+    source: hosted
+    version: "7.9.0"
+  sentry_flutter:
+    dependency: "direct main"
+    description:
+      name: sentry_flutter
+      sha256: ff68ab31918690da004a42e20204242a3ad9ad57da7e2712da8487060ac9767f
+      url: "https://pub.dev"
+    source: hosted
+    version: "7.9.0"
   shared_preferences:
     dependency: "direct main"
     description:
@@ -986,6 +1010,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.3.2"
+  uuid:
+    dependency: transitive
+    description:
+      name: uuid
+      sha256: "648e103079f7c64a36dc7d39369cabb358d377078a051d6ae2ad3aa539519313"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.7"
   vector_graphics:
     dependency: transitive
     description:

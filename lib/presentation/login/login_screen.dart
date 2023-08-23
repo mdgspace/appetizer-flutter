@@ -1,9 +1,11 @@
 import 'package:appetizer/presentation/login/components/login_button.dart';
 import 'package:appetizer/presentation/login/bloc/login_bloc.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+@RoutePage()
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
