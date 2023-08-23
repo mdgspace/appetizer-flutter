@@ -137,7 +137,7 @@ class _MonthlyRebatesState extends State<MonthlyRebates> {
                 )
               ],
             ),
-            SizedBox(height: 16.toAutoScaledHeight),
+            16.toVerticalSizedBox,
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 3.toAutoScaledWidth),
               child: Row(
@@ -154,9 +154,9 @@ class _MonthlyRebatesState extends State<MonthlyRebates> {
                 ],
               ),
             ),
-            SizedBox(height: 16.toAutoScaledHeight),
+            16.toVerticalSizedBox,
             const CustomDivider(),
-            SizedBox(height: 8.toAutoScaledHeight),
+            8.toVerticalSizedBox,
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 8.toAutoScaledWidth),
               child: Row(

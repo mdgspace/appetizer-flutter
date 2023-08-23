@@ -23,7 +23,7 @@ class SwitchBarWidget extends StatelessWidget {
                 .add(const NotificationPageSwitchChangedEvent(option: 0)),
             child: Column(
               children: [
-                SizedBox(height: 2.toAutoScaledHeight),
+                2.toVerticalSizedBox,
                 SizedBox(
                   width: 180.toAutoScaledWidth,
                   height: 31.toAutoScaledHeight,
@@ -55,7 +55,7 @@ class SwitchBarWidget extends StatelessWidget {
                 .add(const NotificationPageSwitchChangedEvent(option: 1)),
             child: Column(
               children: [
-                SizedBox(height: 2.toAutoScaledHeight),
+                2.toVerticalSizedBox,
                 SizedBox(
                   width: 181.toAutoScaledWidth,
                   height: 31.toAutoScaledHeight,

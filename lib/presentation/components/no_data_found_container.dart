@@ -19,7 +19,7 @@ class NoDataFoundContainer extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(height: 150.toAutoScaledHeight),
+          150.toVerticalSizedBox,
           SvgPicture.asset(
             'assets/images/no_data_image.svg',
             width: 186.toAutoScaledWidth,

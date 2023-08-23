@@ -75,9 +75,7 @@ class ProfilePage extends StatelessWidget {
                         title: 'Edit Profile',
                         onPressed: () {},
                       ),
-                      SizedBox(
-                        width: 10.toAutoScaledWidth,
-                      ),
+                      10.toHorizontalSizedBox,
                       ProfileTextButton(
                         title: 'Reset Password',
                         onPressed: () {},
@@ -104,9 +102,7 @@ class ProfilePage extends StatelessWidget {
                         onPressed: () {},
                         icon: Icons.bookmark_border_outlined,
                       ),
-                      SizedBox(
-                        width: 48.toAutoScaledWidth,
-                      ),
+                      48.toHorizontalSizedBox,
                       ProfileIconButton(
                         title: 'Coupons',
                         onPressed: () {},

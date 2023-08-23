@@ -25,7 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               children: <Widget>[
                 SvgPicture.asset('assets/images/login.svg'),
-                SizedBox(height: 20.toAutoScaledHeight),
+                20.toVerticalSizedBox,
                 Container(
                   width: 168.toAutoScaledWidth,
                   height: 63.toAutoScaledHeight,
@@ -35,7 +35,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     // scale: 1.5,
                   ),
                 ),
-                SizedBox(height: 30.toAutoScaledHeight),
+                30.toVerticalSizedBox,
                 Padding(
                   padding:
                       EdgeInsets.symmetric(horizontal: 25.toAutoScaledWidth),
@@ -60,7 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
-                            SizedBox(height: 20.toAutoScaledHeight),
+                            20.toVerticalSizedBox,
                             TextField(
                               controller: _controller,
                               decoration: InputDecoration(
@@ -80,7 +80,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     horizontal: 20.toAutoScaledWidth),
                               ),
                             ),
-                            SizedBox(height: 10.toAutoScaledHeight),
+                            10.toVerticalSizedBox,
                             TextField(
                               controller: _controller,
                               obscureText: true,
@@ -135,7 +135,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               fontWeight: FontWeight.w600,
                             ),
                           ),
-                          SizedBox(height: 20.toAutoScaledHeight),
+                          20.toVerticalSizedBox,
                           TextField(
                             controller: _controller,
                             obscureText: state is EnterPassword
@@ -206,7 +206,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     ],
                                   ),
                                 )
-                              : SizedBox(height: 20.toAutoScaledHeight),
+                              : 20.toVerticalSizedBox,
                           Center(
                               child: LoginButton(
                                   text:

@@ -159,7 +159,7 @@ class MealCard extends StatelessWidget {
                           color: AppTheme.grey2f),
                     ),
                   ),
-                  SizedBox(height: 9.toAutoScaledHeight),
+                  9.toVerticalSizedBox,
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -188,7 +188,7 @@ class MealCard extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(height: 45.toAutoScaledHeight),
+                  45.toVerticalSizedBox,
                   ...[
                     meal.isOutdated
                         ? GestureDetector(
@@ -232,7 +232,7 @@ class MealCard extends StatelessWidget {
                               )
                             : const SizedBox.shrink()),
                   ],
-                  SizedBox(height: 10.toAutoScaledHeight)
+                  10.toVerticalSizedBox
                 ],
               ),
             ),
@@ -241,7 +241,7 @@ class MealCard extends StatelessWidget {
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 18.toAutoScaledHeight),
+                18.toVerticalSizedBox,
                 for (var item in meal.items) Text("  \u2022 ${item.name}"),
                 const Spacer(),
                 Container(
@@ -272,7 +272,7 @@ class MealCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(height: 17.toAutoScaledHeight)
+                17.toVerticalSizedBox
               ],
             )
           ],

@@ -87,7 +87,7 @@ class ProfileIconButton extends StatelessWidget {
               color: Color.fromARGB(255, 255, 203, 116),
             ),
           ),
-          SizedBox(width: 10.toAutoScaledWidth),
+          10.toHorizontalSizedBox,
           Text(
             title,
             textAlign: TextAlign.center,

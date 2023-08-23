@@ -68,9 +68,7 @@ class NotificationCard extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(
-            height: 4.toAutoScaledHeight,
-          ),
+          4.toVerticalSizedBox,
           Text(
             data.message,
             style: TextStyle(

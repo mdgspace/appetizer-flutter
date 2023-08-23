@@ -75,11 +75,11 @@ class LeavesAndRebate extends StatelessWidget {
                     ),
                   )
                 ],
-                SizedBox(height: 40.toAutoScaledHeight),
+                40.toVerticalSizedBox,
                 MonthlyRebates(
                     paginatedYearlyRebate: initialYearlyRebates,
                     currMonthIndex: DateTime.now().month - 1),
-                SizedBox(height: 24.toAutoScaledHeight),
+                24.toVerticalSizedBox,
                 Padding(
                   padding:
                       EdgeInsets.symmetric(horizontal: 40.toAutoScaledWidth),
@@ -97,7 +97,7 @@ class LeavesAndRebate extends StatelessWidget {
                                   color: AppTheme.primary))
                         ],
                       ),
-                      SizedBox(height: 12.toAutoScaledHeight),
+                      12.toVerticalSizedBox,
                       Row(
                         children: [
                           Text("Meals Skipped : ",
@@ -110,14 +110,14 @@ class LeavesAndRebate extends StatelessWidget {
                                   color: AppTheme.primary))
                         ],
                       ),
-                      SizedBox(height: 20.toAutoScaledHeight),
+                      20.toVerticalSizedBox,
                       const CustomDivider(),
                     ],
                   ),
                 ),
-                SizedBox(height: 24.toAutoScaledHeight),
+                24.toVerticalSizedBox,
                 LeaveHistory(paginatedLeaves: state.paginatedLeaves),
-                SizedBox(height: 32.toAutoScaledHeight),
+                32.toVerticalSizedBox,
                 if (!state.isCheckedOut)
                   GestureDetector(
                       child:
