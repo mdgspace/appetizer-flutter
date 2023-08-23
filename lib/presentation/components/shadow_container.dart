@@ -1,4 +1,5 @@
 import 'package:appetizer/app_theme.dart';
+import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
 import 'package:flutter/material.dart';
 
 class ShadowContainer extends StatelessWidget {
@@ -23,14 +24,14 @@ class ShadowContainer extends StatelessWidget {
       decoration: ShapeDecoration(
         color: Colors.white,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(10.toAutoScaledWidth),
         ),
         shadows: [
           BoxShadow(
             color: AppTheme.shadowColor,
-            blurRadius: 12,
+            blurRadius: 12.toAutoScaledWidth,
             offset: Offset(offset, offset),
-            spreadRadius: 1,
+            spreadRadius: 1.toAutoScaledWidth,
           )
         ],
       ),

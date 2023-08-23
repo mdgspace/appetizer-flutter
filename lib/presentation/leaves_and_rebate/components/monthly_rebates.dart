@@ -1,4 +1,5 @@
 import 'package:appetizer/app_theme.dart';
+import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
 import 'package:appetizer/domain/models/transaction/paginated_yearly_rebate.dart';
 import 'package:appetizer/presentation/leaves_and_rebate/components/custom_divider.dart';
 import 'package:appetizer/presentation/components/shadow_container.dart';
@@ -64,11 +65,12 @@ class _MonthlyRebatesState extends State<MonthlyRebates> {
     _monthlyRebateMap["All"] = _totalRebate;
     year = DateTime.now().year;
     return ShadowContainer(
-      height: 134,
-      width: 312,
+      height: 134.toAutoScaledHeight,
+      width: 312.toAutoScaledWidth,
       offset: 2,
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 16, 16, 20),
+        padding: EdgeInsets.fromLTRB(16.toAutoScaledWidth,
+            16.toAutoScaledHeight, 16.toAutoScaledWidth, 20.toAutoScaledHeight),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -79,13 +81,13 @@ class _MonthlyRebatesState extends State<MonthlyRebates> {
                   "Monthly Rebates",
                   style: AppTheme.headline3.copyWith(
                     color: AppTheme.black1e,
-                    fontSize: 20,
+                    fontSize: 20.toAutoScaledFont,
                     fontWeight: FontWeight.w400,
                   ),
                 ),
                 Container(
-                  width: 87,
-                  height: 24,
+                  width: 87.toAutoScaledWidth,
+                  height: 24.toAutoScaledHeight,
                   decoration: ShapeDecoration(
                     color: AppTheme.primary,
                     shape: RoundedRectangleBorder(
@@ -135,26 +137,28 @@ class _MonthlyRebatesState extends State<MonthlyRebates> {
                 )
               ],
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.toAutoScaledHeight),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 3),
+              padding: EdgeInsets.symmetric(horizontal: 3.toAutoScaledWidth),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text("Rebates",
-                      style: AppTheme.headline2
-                          .copyWith(color: AppTheme.primary, fontSize: 14)),
+                      style: AppTheme.headline2.copyWith(
+                          color: AppTheme.primary,
+                          fontSize: 14.toAutoScaledFont)),
                   Text("- Rs. ${_monthlyRebateMap[_currMonthName] ?? 0}",
-                      style: AppTheme.headline2
-                          .copyWith(color: AppTheme.primary, fontSize: 14))
+                      style: AppTheme.headline2.copyWith(
+                          color: AppTheme.primary,
+                          fontSize: 14.toAutoScaledFont))
                 ],
               ),
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.toAutoScaledHeight),
             const CustomDivider(),
-            const SizedBox(height: 8),
+            SizedBox(height: 8.toAutoScaledHeight),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
+              padding: EdgeInsets.symmetric(horizontal: 8.toAutoScaledWidth),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

@@ -1,5 +1,8 @@
+import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
+
+import 'dart:math' as math;
 
 class AppBanner extends StatelessWidget {
   const AppBanner({super.key, required this.height, required this.child});
@@ -8,34 +11,39 @@ class AppBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(children: [
-      Container(
-        height: height + 12,
-        width: 360,
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: Svg('assets/images/banner.svg'),
-            fit: BoxFit.cover,
+    return Column(
+      children: [
+        Container(
+          height: height + 12.toAutoScaledHeight,
+          width: double.maxFinite,
+          decoration: const BoxDecoration(
+              image: DecorationImage(
+            image: Svg('assets/images/banner.svg'), //path of image
+            fit: BoxFit.fitWidth,
+          )),
+          child: Padding(
+            padding: EdgeInsets.only(
+                top: math.max(32, MediaQuery.of(context).padding.top),
+                bottom: 12),
+            child: child,
           ),
         ),
-        child: child,
-      ),
-      Positioned(
-        bottom: 0,
-        child: Container(
-          height: 12,
-          width: 360,
-          decoration: const ShapeDecoration(
-            color: Colors.white,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(12),
-                topRight: Radius.circular(12),
+        Transform.translate(
+          offset: Offset(0, -12.toAutoScaledHeight),
+          child: Container(
+            height: 12.toAutoScaledHeight,
+            decoration: ShapeDecoration(
+              color: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(12.toAutoScaledWidth),
+                  topRight: Radius.circular(12.toAutoScaledWidth),
+                ),
               ),
             ),
           ),
-        ),
-      )
-    ]);
+        )
+      ],
+    );
   }
 }

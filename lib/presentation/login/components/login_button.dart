@@ -1,3 +1,4 @@
+import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -14,7 +15,7 @@ class _LoginButtonState extends State<LoginButton> {
   @override
   Widget build(BuildContext context) {
     return MaterialButton(
-      minWidth: 110,
+      minWidth: 110.toAutoScaledWidth,
       elevation: 2.5,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(5),
@@ -24,7 +25,7 @@ class _LoginButtonState extends State<LoginButton> {
       child: Text(
         widget.text,
         style: GoogleFonts.lato(
-          fontSize: 14,
+          fontSize: 14.toAutoScaledFont,
           fontWeight: FontWeight.w600,
         ),
       ),

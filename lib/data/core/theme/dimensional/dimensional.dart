@@ -7,7 +7,7 @@ abstract class DimensionalPolicies {
   DimensionalPolicies._();
 
   static double get policyRatioForWidth {
-    const designWidth = 375.0;
+    const designWidth = 360.0;
 
     final deviceWidth = () {
       late double width;

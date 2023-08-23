@@ -1,3 +1,4 @@
+import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
 import 'package:appetizer/domain/models/user/user.dart';
 import 'package:appetizer/presentation/components/black_button.dart';
 import 'package:appetizer/presentation/profile/components/profile_button.dart';
@@ -20,19 +21,19 @@ class ProfilePage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
-            height: 200,
+            height: 200.toAutoScaledHeight,
             width: double.infinity,
             decoration: const BoxDecoration(
               color: Color(0xFFFFCB74),
             ),
-            padding: const EdgeInsets.only(left: 24),
-            child: const Align(
+            padding: EdgeInsets.only(left: 24.toAutoScaledWidth),
+            child: Align(
               alignment: Alignment.centerLeft,
               child: Text(
                 'My Profile',
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 24,
+                  fontSize: 24.toAutoScaledWidth,
                   fontFamily: 'Noto Sans',
                   fontWeight: FontWeight.w700,
                 ),
@@ -48,28 +49,34 @@ class ProfilePage extends StatelessWidget {
                 ),
                 Text(
                   data.name,
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: Color(0xFF111111),
-                    fontSize: 25,
+                    fontSize: 25.toAutoScaledFont,
                     fontFamily: 'Noto Sans',
                     fontWeight: FontWeight.w600,
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.only(left: 33, right: 34, top: 22),
+                  padding: EdgeInsets.only(
+                      left: 33.toAutoScaledWidth,
+                      right: 34.toAutoScaledWidth,
+                      top: 22.toAutoScaledHeight),
                   child: ProfileCard(data: data),
                 ),
                 Container(
-                  padding: const EdgeInsets.only(
-                      left: 55, right: 57, top: 24, bottom: 24),
+                  padding: EdgeInsets.only(
+                      left: 55.toAutoScaledWidth,
+                      right: 57.toAutoScaledWidth,
+                      top: 24.toAutoScaledHeight,
+                      bottom: 24.toAutoScaledHeight),
                   child: Row(
                     children: [
                       ProfileTextButton(
                         title: 'Edit Profile',
                         onPressed: () {},
                       ),
-                      const SizedBox(
-                        width: 10,
+                      SizedBox(
+                        width: 10.toAutoScaledWidth,
                       ),
                       ProfileTextButton(
                         title: 'Reset Password',
@@ -78,7 +85,7 @@ class ProfilePage extends StatelessWidget {
                     ],
                   ),
                 ),
-                const Divider(
+                Divider(
                   height: 2,
                   thickness: 2,
                   color: Color.fromARGB(255, 189, 189, 189),
@@ -86,7 +93,10 @@ class ProfilePage extends StatelessWidget {
                   endIndent: 30,
                 ),
                 Container(
-                  padding: const EdgeInsets.only(left: 46, right: 48, top: 24),
+                  padding: EdgeInsets.only(
+                      left: 46.toAutoScaledWidth,
+                      right: 48.toAutoScaledWidth,
+                      top: 24.toAutoScaledHeight),
                   child: Row(
                     children: [
                       ProfileIconButton(
@@ -94,8 +104,8 @@ class ProfilePage extends StatelessWidget {
                         onPressed: () {},
                         icon: Icons.bookmark_border_outlined,
                       ),
-                      const SizedBox(
-                        width: 48,
+                      SizedBox(
+                        width: 48.toAutoScaledWidth,
                       ),
                       ProfileIconButton(
                         title: 'Coupons',
@@ -105,13 +115,13 @@ class ProfilePage extends StatelessWidget {
                     ],
                   ),
                 ),
-                const SizedBox(height: 40),
+                SizedBox(height: 40.toAutoScaledHeight),
                 BlackButton(
                   title: 'LOGOUT',
                   onTap: () {},
                   width: 101,
                 ),
-                const SizedBox(height: 18),
+                SizedBox(height: 18.toAutoScaledHeight),
                 TextButton(
                   onPressed: () {},
                   style: TextButton.styleFrom(
@@ -119,11 +129,11 @@ class ProfilePage extends StatelessWidget {
                     minimumSize: Size.zero,
                     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   ),
-                  child: const Text(
+                  child: Text(
                     'Raise a Query',
                     style: TextStyle(
                       color: Color(0xFF008BFF),
-                      fontSize: 12,
+                      fontSize: 12.toAutoScaledFont,
                       fontFamily: 'Inter',
                       fontWeight: FontWeight.w400,
                       decoration: TextDecoration.underline,

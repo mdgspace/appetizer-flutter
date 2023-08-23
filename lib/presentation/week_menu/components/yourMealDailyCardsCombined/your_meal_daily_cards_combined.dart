@@ -1,6 +1,7 @@
 // just combine three cards into one
 // pass just the daily meal to it
 
+import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
 import 'package:appetizer/domain/models/menu/week_menu.dart';
 import 'package:appetizer/presentation/week_menu/components/yourMealDailyCardsCombined/menu_card.dart';
 import 'package:appetizer/presentation/week_menu/components/yourMealDailyCardsCombined/bloc/your_meal_daily_cards_combined_bloc.dart';
@@ -31,8 +32,10 @@ class YourMealDailyCardsCombined extends StatelessWidget {
           children: dayMenu.meals
               .map(
                 (meal) => Padding(
-                  padding: EdgeInsets.fromLTRB(
-                      0, 0, 0, (meal == dayMenu.meals.last ? 0 : 24)),
+                  padding: EdgeInsets.only(
+                    bottom: (meal == dayMenu.meals.last ? 0 : 24)
+                        .toAutoScaledHeight,
+                  ),
                   child: BlocSelector<YourMealDailyCardsCombinedBloc,
                       YourMealDailyCardsDisplayState, MealState>(
                     selector: (state) =>

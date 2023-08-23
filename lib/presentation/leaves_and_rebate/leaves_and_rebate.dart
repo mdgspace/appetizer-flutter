@@ -1,4 +1,5 @@
 import 'package:appetizer/app_theme.dart';
+import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
 import 'package:appetizer/domain/models/leaves/paginated_leaves.dart';
 import 'package:appetizer/domain/models/transaction/paginated_yearly_rebate.dart';
 import 'package:appetizer/presentation/leaves_and_rebate/bloc/leaves_and_rebate_bloc.dart';
@@ -9,6 +10,8 @@ import 'package:appetizer/presentation/components/app_banner.dart';
 import 'package:appetizer/presentation/components/round_edge_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'dart:math' as math;
 
 class LeavesAndRebate extends StatelessWidget {
   const LeavesAndRebate(
@@ -36,9 +39,13 @@ class LeavesAndRebate extends StatelessWidget {
             return Column(
               children: [
                 AppBanner(
-                    height: 85,
+                    height: 85.toAutoScaledHeight,
                     child: Padding(
-                      padding: const EdgeInsets.fromLTRB(24, 32, 0, 0),
+                      padding: EdgeInsets.only(
+                        left: 24.toAutoScaledWidth,
+                        top: math.max(32.toAutoScaledHeight,
+                            MediaQuery.of(context).padding.top),
+                      ),
                       child: Text(
                         "Leaves & Rebates",
                         style: AppTheme.headline1,
@@ -47,17 +54,19 @@ class LeavesAndRebate extends StatelessWidget {
                 ...[
                   if (state.isCheckedOut)
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 14, 0, 14),
+                      padding: EdgeInsets.symmetric(
+                        vertical: 14.toAutoScaledHeight,
+                      ),
                       child: Text(
                         "You are currently checked-out",
                         style: AppTheme.bodyText1.copyWith(
                             fontFamily: 'Noto Sans',
-                            fontSize: 14,
+                            fontSize: 14.toAutoScaledFont,
                             color: AppTheme.customRed),
                       ),
                     ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 0, 0, 14),
+                    padding: EdgeInsets.only(bottom: 14.toAutoScaledHeight),
                     child: GestureDetector(
                       onTap: () {
                         //TODO: add check in functionality
@@ -66,44 +75,49 @@ class LeavesAndRebate extends StatelessWidget {
                     ),
                   )
                 ],
-                const SizedBox(height: 40),
+                SizedBox(height: 40.toAutoScaledHeight),
                 MonthlyRebates(
                     paginatedYearlyRebate: initialYearlyRebates,
                     currMonthIndex: DateTime.now().month - 1),
-                const SizedBox(height: 24),
+                SizedBox(height: 24.toAutoScaledHeight),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(40, 0, 40, 0),
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 40.toAutoScaledWidth),
                   child: Column(
                     children: [
                       Row(
                         children: [
                           Text("Remaining Leaves : ",
                               style: AppTheme.subtitle1.copyWith(
-                                  fontSize: 14, color: AppTheme.black2e)),
+                                  fontSize: 14.toAutoScaledFont,
+                                  color: AppTheme.black2e)),
                           Text(state.remainingLeaves.toString(),
                               style: AppTheme.headline2.copyWith(
-                                  fontSize: 14, color: AppTheme.primary))
+                                  fontSize: 14.toAutoScaledFont,
+                                  color: AppTheme.primary))
                         ],
                       ),
-                      const SizedBox(height: 12),
+                      SizedBox(height: 12.toAutoScaledHeight),
                       Row(
                         children: [
                           Text("Meals Skipped : ",
                               style: AppTheme.subtitle1.copyWith(
-                                  fontSize: 14, color: AppTheme.black2e)),
+                                  fontSize: 14.toAutoScaledFont,
+                                  color: AppTheme.black2e)),
                           Text(state.mealsSkipped.toString(),
                               style: AppTheme.headline2.copyWith(
-                                  fontSize: 14, color: AppTheme.primary))
+                                  fontSize: 14.toAutoScaledFont,
+                                  color: AppTheme.primary))
                         ],
                       ),
-                      const SizedBox(height: 20),
+                      SizedBox(height: 20.toAutoScaledHeight),
                       const CustomDivider(),
                     ],
                   ),
                 ),
-                const SizedBox(height: 24),
+                SizedBox(height: 24.toAutoScaledHeight),
                 LeaveHistory(paginatedLeaves: state.paginatedLeaves),
-                const SizedBox(height: 32),
+                SizedBox(height: 32.toAutoScaledHeight),
                 if (!state.isCheckedOut)
                   GestureDetector(
                       child:

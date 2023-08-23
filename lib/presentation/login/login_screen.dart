@@ -1,3 +1,4 @@
+import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
 import 'package:appetizer/presentation/login/components/login_button.dart';
 import 'package:appetizer/presentation/login/bloc/login_bloc.dart';
 import 'package:flutter/material.dart';
@@ -24,19 +25,20 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               children: <Widget>[
                 SvgPicture.asset('assets/images/login.svg'),
-                const SizedBox(height: 20),
+                SizedBox(height: 20.toAutoScaledHeight),
                 Container(
-                  width: 168,
-                  height: 63,
+                  width: 168.toAutoScaledWidth,
+                  height: 63.toAutoScaledHeight,
                   alignment: Alignment.center,
                   child: SvgPicture.asset(
                     'assets/images/logo.png',
                     // scale: 1.5,
                   ),
                 ),
-                const SizedBox(height: 30),
+                SizedBox(height: 30.toAutoScaledHeight),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25),
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 25.toAutoScaledWidth),
                   child: BlocConsumer<LoginBloc, LoginState>(
                     listener: (context, state) {
                       if (state is EnterPassword) {
@@ -54,11 +56,11 @@ class _LoginScreenState extends State<LoginScreen> {
                             Text(
                               'Set Password',
                               style: GoogleFonts.notoSans(
-                                fontSize: 18,
+                                fontSize: 18.toAutoScaledFont,
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
-                            const SizedBox(height: 20),
+                            SizedBox(height: 20.toAutoScaledHeight),
                             TextField(
                               controller: _controller,
                               decoration: InputDecoration(
@@ -74,18 +76,18 @@ class _LoginScreenState extends State<LoginScreen> {
                                           .withOpacity(0.25)),
                                   borderRadius: BorderRadius.circular(5),
                                 ),
-                                contentPadding:
-                                    const EdgeInsets.symmetric(horizontal: 20),
+                                contentPadding: EdgeInsets.symmetric(
+                                    horizontal: 20.toAutoScaledWidth),
                               ),
                             ),
-                            const SizedBox(height: 10),
+                            SizedBox(height: 10.toAutoScaledHeight),
                             TextField(
                               controller: _controller,
                               obscureText: true,
                               decoration: InputDecoration(
                                 hintText: 'Confirm Password',
                                 hintStyle: GoogleFonts.lato(
-                                  fontSize: 12,
+                                  fontSize: 12.toAutoScaledFont,
                                   color: const Color(0xFF111111),
                                   fontWeight: FontWeight.w600,
                                 ),
@@ -100,11 +102,11 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             ),
                             SizedBox(
-                              height: 30,
+                              height: 30.toAutoScaledHeight,
                               child: Text(
                                 state.error ?? '',
                                 style: GoogleFonts.lato(
-                                  fontSize: 10,
+                                  fontSize: 10.toAutoScaledFont,
                                   color: const Color(0xFF2F2F2F),
                                   fontWeight: FontWeight.w400,
                                 ),
@@ -133,7 +135,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               fontWeight: FontWeight.w600,
                             ),
                           ),
-                          const SizedBox(height: 20),
+                          SizedBox(height: 20.toAutoScaledHeight),
                           TextField(
                             controller: _controller,
                             obscureText: state is EnterPassword
@@ -144,7 +146,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ? "Password"
                                   : 'Enrollment No.',
                               hintStyle: GoogleFonts.lato(
-                                fontSize: 12,
+                                fontSize: 12.toAutoScaledFont,
                                 color: const Color(0xFF111111),
                                 fontWeight: FontWeight.w600,
                               ),
@@ -167,13 +169,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                         .withOpacity(0.25)),
                                 borderRadius: BorderRadius.circular(5),
                               ),
-                              contentPadding:
-                                  const EdgeInsets.symmetric(horizontal: 20),
+                              contentPadding: EdgeInsets.symmetric(
+                                  horizontal: 20.toAutoScaledWidth),
                             ),
                           ),
                           state is EnterPassword
                               ? SizedBox(
-                                  height: 30,
+                                  height: 30.toAutoScaledHeight,
                                   child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
@@ -181,7 +183,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       Text(
                                         state.error ?? '',
                                         style: GoogleFonts.lato(
-                                          fontSize: 10,
+                                          fontSize: 10.toAutoScaledFont,
                                           color: const Color(0xFF2F2F2F),
                                           fontWeight: FontWeight.w400,
                                         ),
@@ -191,7 +193,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         child: Text(
                                           'Forgot Password?',
                                           style: GoogleFonts.lato(
-                                            fontSize: 10,
+                                            fontSize: 10.toAutoScaledFont,
                                             color: const Color(0xFF2F2F2F),
                                             fontWeight: FontWeight.w400,
                                             textStyle: const TextStyle(
@@ -204,7 +206,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     ],
                                   ),
                                 )
-                              : const SizedBox(height: 20),
+                              : SizedBox(height: 20.toAutoScaledHeight),
                           Center(
                               child: LoginButton(
                                   text:
@@ -230,7 +232,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Text(
                     'Raise a Query',
                     style: GoogleFonts.inter(
-                      fontSize: 12,
+                      fontSize: 12.toAutoScaledFont,
                       color: const Color(0xFF008BFF),
                       fontWeight: FontWeight.w400,
                       textStyle: const TextStyle(
