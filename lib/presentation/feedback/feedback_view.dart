@@ -1,3 +1,4 @@
+import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
 import 'package:appetizer/presentation/feedback/bloc/feedback_page_bloc.dart';
 import 'package:appetizer/presentation/feedback/components/FeedbackTile/feedback_tile.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +26,7 @@ class FeedbackPage extends StatelessWidget {
           ),
         ),
         backgroundColor: const Color(0xFFFFCB74),
-        toolbarHeight: 120,
+        toolbarHeight: 120.toAutoScaledHeight,
       ),
       body: BlocProvider(
         create: (context) => FeedbackPageBloc(),
@@ -41,42 +42,42 @@ class FeedbackPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(height: 9),
-                  const Text(
+                  SizedBox(height: 9.toAutoScaledHeight),
+                  Text(
                     'Kindly provide us with your feedback to improve your mess experience.',
                     style: TextStyle(
                       color: Color(0xFF5A5A5A),
-                      fontSize: 14,
+                      fontSize: 14.toAutoScaledFont,
                       fontFamily: 'Lato',
                       fontWeight: FontWeight.w400,
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  SizedBox(height: 8.toAutoScaledHeight),
                   FeedbackTile(title: 'Ambience', parentState: state, index: 0),
-                  const SizedBox(height: 4),
+                  SizedBox(height: 4.toAutoScaledHeight),
                   FeedbackTile(
                       title: 'Hygiene and Cleanliness',
                       parentState: state,
                       index: 1),
-                  const SizedBox(height: 4),
+                  SizedBox(height: 4.toAutoScaledHeight),
                   FeedbackTile(
                       title: 'Weekly Menu', parentState: state, index: 2),
-                  const SizedBox(height: 4),
+                  SizedBox(height: 4.toAutoScaledHeight),
                   FeedbackTile(
                       title: 'Worker and Services',
                       parentState: state,
                       index: 3),
-                  const SizedBox(height: 4),
+                  SizedBox(height: 4.toAutoScaledHeight),
                   FeedbackTile(
                       title: 'Diet and Nutrition',
                       parentState: state,
                       index: 4),
-                  const SizedBox(height: 4),
-                  const Text(
+                  SizedBox(height: 4.toAutoScaledHeight),
+                  Text(
                     'If any other feeback, please describe below',
                     style: TextStyle(
                       color: Color(0xFF111111),
-                      fontSize: 16,
+                      fontSize: 16.toAutoScaledFont,
                       fontFamily: 'Lato',
                       fontWeight: FontWeight.w400,
                     ),
@@ -85,7 +86,7 @@ class FeedbackPage extends StatelessWidget {
                     'Description',
                     style: TextStyle(
                       color: Colors.black.withOpacity(0.5400000214576721),
-                      fontSize: 12,
+                      fontSize: 12.toAutoScaledFont,
                       fontFamily: 'Open Sans',
                       fontWeight: FontWeight.w400,
                     ),
@@ -97,10 +98,10 @@ class FeedbackPage extends StatelessWidget {
                             description: value)),
                     keyboardType: TextInputType.multiline,
                     maxLines: 5,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       border: OutlineInputBorder(
                         borderSide: BorderSide(
-                          width: 0.5,
+                          width: 0.5.toAutoScaledWidth,
                           color: Color.fromARGB(37, 0, 0, 0),
                         ),
                       ),

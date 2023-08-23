@@ -1,3 +1,4 @@
+import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
 import 'package:appetizer/presentation/feedback/bloc/feedback_page_bloc.dart';
 import 'package:appetizer/presentation/feedback/components/FeedbackTile/bloc/feedback_tile_bloc.dart';
 import 'package:flutter/material.dart';
@@ -23,9 +24,9 @@ class FeedbackTile extends StatelessWidget {
         Text(
           title,
           textAlign: TextAlign.left,
-          style: const TextStyle(
+          style: TextStyle(
             color: Color(0xFF111111),
-            fontSize: 20,
+            fontSize: 20.toAutoScaledFont,
             fontFamily: 'Lato',
             fontWeight: FontWeight.w400,
           ),
@@ -38,7 +39,7 @@ class FeedbackTile extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: List.generate(5, (index) {
                   return IconButton(
-                    iconSize: 27,
+                    iconSize: 27.toAutoScaledWidth,
                     onPressed: () {
                       context.read<FeedbackTileBloc>().add(
                           FeedbackRatingChangedEvent(newRating: index + 1));
