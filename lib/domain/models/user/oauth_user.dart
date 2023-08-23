@@ -1,12 +1,13 @@
-import 'dart:convert';
-
 import 'package:appetizer/domain/models/user/user.dart';
+import 'package:json_annotation/json_annotation.dart';
 
-OAuthUser oauthUserFromJson(String str) => OAuthUser.fromJson(json.decode(str));
+import 'package:json_annotation/json_annotation.dart';
 
-String oauthuserToJson(OAuthUser data) => json.encode(data.toJson());
+part 'oauth_user.g.dart';
 
+@JsonSerializable(fieldRename: FieldRename.snake, explicitToJson: true)
 class OAuthUser {
+
   String? token;
   User studentData;
   bool isNew;
@@ -17,15 +18,7 @@ class OAuthUser {
     required this.isNew,
   });
 
-  factory OAuthUser.fromJson(Map<String, dynamic> json) => OAuthUser(
-        token: json['token'],
-        studentData: User.fromJson(json['student_data']),
-        isNew: json['is_new'],
-      );
+  factory OAuthUser.fromJson(Map<String, dynamic> json) => _$OAuthUserFromJson(json);
 
-  Map<String, dynamic> toJson() => {
-        'token': token,
-        'student_data': studentData.toJson(),
-        'is_new': isNew,
-      };
+  Map<String, dynamic> toJson() => _$OAuthUserToJson(this);
 }

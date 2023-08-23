@@ -1,34 +1,32 @@
-import 'dart:convert';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-Notification notificationFromJson(String str) =>
-    Notification.fromJson(json.decode(str));
+part 'notification.freezed.dart';
+part 'notification.g.dart';
 
-String notificationToJson(Notification data) => json.encode(data.toJson());
+@freezed
+class Notification with _$Notification {
+  @JsonSerializable(fieldRename: FieldRename.snake)
+  const factory Notification({
+    required int id,
+    required int dateCreated,
+    required String title,
+    required String message,
+  }) = _Notification;
 
-class Notification {
-  int id;
-  int dateCreated;
-  String title;
-  String message;
+  factory Notification.fromJson(Map<String, dynamic> json) =>
+      _$NotificationFromJson(json);
+}
 
-  Notification({
-    required this.id,
-    required this.dateCreated,
-    required this.title,
-    required this.message,
-  });
+@freezed
+class PaginatedNotifications with _$PaginatedNotifications {
+  @JsonSerializable(fieldRename: FieldRename.snake, explicitToJson: true)
+  const factory PaginatedNotifications({
+    required int count,
+    required bool hasNext,
+    required bool hasPrevious,
+    required List<Notification> results,
+  }) = _PaginatedNotifications;
 
-  factory Notification.fromJson(Map<String, dynamic> json) => Notification(
-        id: json['id'],
-        dateCreated: json['date_created'],
-        title: json['title'],
-        message: json['message'],
-      );
-
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'date_created': dateCreated,
-        'title': title,
-        'message': message,
-      };
+  factory PaginatedNotifications.fromJson(Map<String, dynamic> json) =>
+      _$PaginatedNotificationsFromJson(json);
 }

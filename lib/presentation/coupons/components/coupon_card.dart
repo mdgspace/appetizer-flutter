@@ -52,7 +52,7 @@ class CouponCard extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  coupon.title,
+                  coupon.id.toString(),
                   textAlign: TextAlign.left,
                   style: const TextStyle(
                     color: Color(0xFF111111),
