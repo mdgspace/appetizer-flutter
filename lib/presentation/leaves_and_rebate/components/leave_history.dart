@@ -1,4 +1,5 @@
 import 'package:appetizer/app_theme.dart';
+import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
 import 'package:appetizer/domain/models/leaves/paginated_leaves.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -17,10 +18,10 @@ class LeaveHistory extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15),
           ),
-          shadows: const [
+          shadows: [
             BoxShadow(
               color: Color(0x19000000),
-              blurRadius: 7,
+              blurRadius: 7.toAutoScaledWidth,
               offset: Offset(2, 2),
               spreadRadius: 1,
             )
@@ -32,31 +33,35 @@ class LeaveHistory extends StatelessWidget {
           title: const SizedBox.shrink(),
           leading: Text("Leave History",
               style: AppTheme.headline3.copyWith(
-                  fontSize: 16, color: AppTheme.grey2f, height: 11 / 8)),
+                  fontSize: 16.toAutoScaledFont,
+                  color: AppTheme.grey2f,
+                  height: (11 / 8).toAutoScaledHeight)),
           trailing: const Icon(Icons.expand_more, color: AppTheme.grey2f),
           children: [
             Container(
-              margin: const EdgeInsets.fromLTRB(24, 0, 0, 0),
+              margin: EdgeInsets.fromLTRB(24.toAutoScaledWidth, 0, 0, 0),
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       paginatedLeaves.results[0].startDatetime.year.toString(),
-                      style: AppTheme.headline2
-                          .copyWith(fontSize: 14, color: AppTheme.primary),
+                      style: AppTheme.headline2.copyWith(
+                          fontSize: 14.toAutoScaledFont,
+                          color: AppTheme.primary),
                     ),
                     const SizedBox(height: 10),
                     ...paginatedLeaves.results
                         .map((leave) => Padding(
-                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+                              padding: EdgeInsets.fromLTRB(
+                                  0, 0, 0, 10.toAutoScaledHeight),
                               child: Row(
                                 children: [
                                   RichText(
                                     text: TextSpan(
                                       text: DateFormat('dd MMM')
                                           .format(leave.startDatetime),
-                                      style: AppTheme.bodyText1
-                                          .copyWith(height: 1),
+                                      style: AppTheme.bodyText1.copyWith(
+                                          height: 1.toAutoScaledHeight),
                                     ),
                                   ),
                                   const Text("-"),
@@ -64,7 +69,8 @@ class LeaveHistory extends StatelessWidget {
                                     text: TextSpan(
                                       text: leave.startMealType,
                                       style: AppTheme.bodyText1.copyWith(
-                                          height: 1, color: AppTheme.primary),
+                                          height: 1.toAutoScaledHeight,
+                                          color: AppTheme.primary),
                                     ),
                                   ),
                                 ],
