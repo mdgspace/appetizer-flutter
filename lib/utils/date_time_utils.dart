@@ -10,12 +10,12 @@ class DateTimeUtils {
         .parse('${date.toString().substring(0, 10)} $time');
   }
 
-  static String getWeekDayName(DateTime _dateTime) {
-    return DateFormat('EEEE').format(_dateTime);
+  static String getWeekDayName(DateTime dateTime) {
+    return DateFormat('EEEE').format(dateTime);
   }
 
-  static String getMonthName(DateTime _dateTime) {
-    return DateFormat('LLLL').format(_dateTime);
+  static String getMonthName(DateTime dateTime) {
+    return DateFormat('LLLL').format(dateTime);
   }
 
   static int getWeekNumber(DateTime dateTime) {

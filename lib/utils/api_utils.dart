@@ -1,8 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:appetizer/constants.dart';
-import 'package:appetizer/models/failure_model.dart';
+import 'package:appetizer/data/constants/constants.dart';
+import 'package:appetizer/domain/models/failure_model.dart';
 import 'package:appetizer/utils/app_exceptions.dart';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -16,14 +17,14 @@ class ApiUtils {
       final jsonResponse = ApiUtils.jsonResponse(response);
       return jsonResponse;
     } on UnauthorizedException catch (e) {
-      print(e.message);
-      throw Failure(Constants.UNAUTHORIZED_EXCEPTION);
+      debugPrint(e.message);
+      throw Failure(AppConstants.UNAUTHORIZED_EXCEPTION);
     } on SocketException catch (e) {
-      print(e.message);
-      throw Failure(Constants.NO_INTERNET_CONNECTION);
+      debugPrint(e.message);
+      throw Failure(AppConstants.NO_INTERNET_CONNECTION);
     } on HttpException catch (e) {
-      print(e.message);
-      throw Failure(Constants.HTTP_EXCEPTION);
+      debugPrint(e.message);
+      throw Failure(AppConstants.HTTP_EXCEPTION);
     }
   }
 
@@ -36,14 +37,14 @@ class ApiUtils {
       final jsonResponse = ApiUtils.jsonResponse(response);
       return jsonResponse;
     } on UnauthorizedException catch (e) {
-      print(e.message);
-      throw Failure(Constants.UNAUTHORIZED_EXCEPTION);
+      debugPrint(e.message);
+      throw Failure(AppConstants.UNAUTHORIZED_EXCEPTION);
     } on SocketException catch (e) {
-      print(e.message);
-      throw Failure(Constants.NO_INTERNET_CONNECTION);
+      debugPrint(e.message);
+      throw Failure(AppConstants.NO_INTERNET_CONNECTION);
     } on HttpException catch (e) {
-      print(e.message);
-      throw Failure(Constants.HTTP_EXCEPTION);
+      debugPrint(e.message);
+      throw Failure(AppConstants.HTTP_EXCEPTION);
     }
   }
 
@@ -59,14 +60,14 @@ class ApiUtils {
       final jsonResponse = ApiUtils.jsonResponse(response);
       return jsonResponse;
     } on UnauthorizedException catch (e) {
-      print(e.message);
-      throw Failure(Constants.UNAUTHORIZED_EXCEPTION);
+      debugPrint(e.message);
+      throw Failure(AppConstants.UNAUTHORIZED_EXCEPTION);
     } on SocketException catch (e) {
-      print(e.message);
-      throw Failure(Constants.NO_INTERNET_CONNECTION);
+      debugPrint(e.message);
+      throw Failure(AppConstants.NO_INTERNET_CONNECTION);
     } on HttpException catch (e) {
-      print(e.message);
-      throw Failure(Constants.HTTP_EXCEPTION);
+      debugPrint(e.message);
+      throw Failure(AppConstants.HTTP_EXCEPTION);
     }
   }
 
@@ -79,14 +80,14 @@ class ApiUtils {
       final jsonResponse = ApiUtils.jsonResponse(response);
       return jsonResponse;
     } on UnauthorizedException catch (e) {
-      print(e.message);
-      throw Failure(Constants.UNAUTHORIZED_EXCEPTION);
+      debugPrint(e.message);
+      throw Failure(AppConstants.UNAUTHORIZED_EXCEPTION);
     } on SocketException catch (e) {
-      print(e.message);
-      throw Failure(Constants.NO_INTERNET_CONNECTION);
+      debugPrint(e.message);
+      throw Failure(AppConstants.NO_INTERNET_CONNECTION);
     } on HttpException catch (e) {
-      print(e.message);
-      throw Failure(Constants.HTTP_EXCEPTION);
+      debugPrint(e.message);
+      throw Failure(AppConstants.HTTP_EXCEPTION);
     }
   }
 
@@ -98,14 +99,14 @@ class ApiUtils {
       final jsonResponse = ApiUtils.jsonResponse(response);
       return jsonResponse;
     } on UnauthorizedException catch (e) {
-      print(e.message);
-      throw Failure(Constants.UNAUTHORIZED_EXCEPTION);
+      debugPrint(e.message);
+      throw Failure(AppConstants.UNAUTHORIZED_EXCEPTION);
     } on SocketException catch (e) {
-      print(e.message);
-      throw Failure(Constants.NO_INTERNET_CONNECTION);
+      debugPrint(e.message);
+      throw Failure(AppConstants.NO_INTERNET_CONNECTION);
     } on HttpException catch (e) {
-      print(e.message);
-      throw Failure(Constants.HTTP_EXCEPTION);
+      debugPrint(e.message);
+      throw Failure(AppConstants.HTTP_EXCEPTION);
     }
   }
 
@@ -117,31 +118,31 @@ class ApiUtils {
       case 204:
         if (response.body == '') return;
         var responseJson = json.decode(response.body);
-        print(responseJson);
+        debugPrint(responseJson);
         return responseJson;
       case 400:
-        print(response.body);
+        debugPrint(response.body);
         throw BadRequestException(response.body);
       case 401:
-        print(response.body);
+        debugPrint(response.body);
         throw UnauthorizedException(response.body);
       case 403:
-        print(response.body);
+        debugPrint(response.body);
         throw ForbiddenException(response.body);
       case 404:
-        print(response.body);
+        debugPrint(response.body);
         throw NotFoundException(response.body);
       case 409:
-        print(response.body);
+        debugPrint(response.body);
         throw ConflictException(response.body);
       case 500:
-        print(response.body);
+        debugPrint(response.body);
         throw InternalServerErrorException(response.body);
       case 503:
-        print(response.body);
+        debugPrint(response.body);
         throw ServiceUnavailableException(response.body);
       default:
-        print(response.body);
+        debugPrint(response.body);
         throw FetchDataException(
           'Error occured while Communication with Server with StatusCode : ${response.statusCode}',
         );

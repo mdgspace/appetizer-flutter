@@ -35,6 +35,7 @@ dependencies:
   flutter_svg: ^2.0.7
   google_fonts: ^5.1.0
   month_picker_dialog: ^2.0.2
+  hive: ^2.2.3
 
 dev_dependencies:
   auto_route_generator: ^7.3.0
