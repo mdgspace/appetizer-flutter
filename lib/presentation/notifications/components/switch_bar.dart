@@ -1,3 +1,4 @@
+import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
 import 'package:appetizer/presentation/notifications/bloc/notification_page_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,28 +14,28 @@ class SwitchBarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 35,
-      width: 361,
+      height: 35.toAutoScaledHeight,
+      width: 361.toAutoScaledWidth,
       child: Row(
         children: [
           SizedBox(
-            width: 180,
+            width: 180.toAutoScaledWidth,
             child: GestureDetector(
               onTap: () => context
                   .read<NotificationPageBloc>()
                   .add(const NotificationPageSwitchChangedEvent(option: 0)),
               child: Column(
                 children: [
-                  const SizedBox(height: 2),
-                  const SizedBox(
-                    width: 180,
-                    height: 31,
+                  SizedBox(height: 2.toAutoScaledHeight),
+                  SizedBox(
+                    width: 180.toAutoScaledWidth,
+                    height: 31.toAutoScaledHeight,
                     child: Text(
                       'New',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 20,
+                        fontSize: 20.toAutoScaledFont,
                         fontFamily: 'Lato',
                         fontWeight: FontWeight.w600,
                       ),
@@ -50,23 +51,23 @@ class SwitchBarWidget extends StatelessWidget {
             ),
           ),
           SizedBox(
-            width: 181,
+            width: 181.toAutoScaledWidth,
             child: GestureDetector(
               onTap: () => context
                   .read<NotificationPageBloc>()
                   .add(const NotificationPageSwitchChangedEvent(option: 1)),
               child: Column(
                 children: [
-                  const SizedBox(height: 2),
-                  const SizedBox(
-                    width: 181,
-                    height: 31,
+                  SizedBox(height: 2.toAutoScaledHeight),
+                  SizedBox(
+                    width: 181.toAutoScaledWidth,
+                    height: 31.toAutoScaledHeight,
                     child: Text(
                       'Previous',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 20,
+                        fontSize: 20.toAutoScaledFont,
                         fontFamily: 'Lato',
                         fontWeight: FontWeight.w600,
                       ),
