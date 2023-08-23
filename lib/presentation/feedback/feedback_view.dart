@@ -8,6 +8,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class FeedbackPage extends StatelessWidget {
   FeedbackPage({super.key});
   final TextEditingController textController = TextEditingController();
+  static const List<String> feedbackHeadings = [
+    "Ambience",
+    "Hygiene and Cleanliness",
+    "Weekly Menu",
+    "Worker and Services",
+    "Diet and Nutrition",
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +52,7 @@ class FeedbackPage extends StatelessWidget {
                 children: [
                   SizedBox(height: 9.toAutoScaledHeight),
                   Text(
-                    'Kindly provide us with your feedback to improve your mess experience.',
+                    'Kindly provide us with your feedback to improve your mess experienWeekly Menuce.',
                     style: TextStyle(
                       color: Color(0xFF5A5A5A),
                       fontSize: 14.toAutoScaledFont,
@@ -53,27 +60,21 @@ class FeedbackPage extends StatelessWidget {
                       fontWeight: FontWeight.w400,
                     ),
                   ),
-                  SizedBox(height: 8.toAutoScaledHeight),
-                  FeedbackTile(title: 'Ambience', parentState: state, index: 0),
-                  SizedBox(height: 4.toAutoScaledHeight),
-                  FeedbackTile(
-                      title: 'Hygiene and Cleanliness',
-                      parentState: state,
-                      index: 1),
-                  SizedBox(height: 4.toAutoScaledHeight),
-                  FeedbackTile(
-                      title: 'Weekly Menu', parentState: state, index: 2),
-                  SizedBox(height: 4.toAutoScaledHeight),
-                  FeedbackTile(
-                      title: 'Worker and Services',
-                      parentState: state,
-                      index: 3),
-                  SizedBox(height: 4.toAutoScaledHeight),
-                  FeedbackTile(
-                      title: 'Diet and Nutrition',
-                      parentState: state,
-                      index: 4),
-                  SizedBox(height: 4.toAutoScaledHeight),
+                  SizedBox(height: 6.toAutoScaledHeight),
+                  ...List.generate(feedbackHeadings.length, (ind) {
+                    return Padding(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 2.toAutoScaledHeight),
+                      child: FeedbackTile(
+                        parentState: state,
+                        title: feedbackHeadings[ind],
+                        index: ind,
+                      ),
+                    );
+                  }),
+                  SizedBox(
+                    height: 2,
+                  ),
                   Text(
                     'If any other feeback, please describe below',
                     style: TextStyle(

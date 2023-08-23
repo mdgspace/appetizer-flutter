@@ -245,8 +245,9 @@ class MealCard extends StatelessWidget {
                 for (var item in meal.items) Text("  \u2022 ${item.name}"),
                 const Spacer(),
                 Container(
-                  margin: EdgeInsets.fromLTRB(
-                      22.toAutoScaledWidth, 0, 20.toAutoScaledWidth, 0),
+                  margin: EdgeInsets.symmetric(
+                    horizontal: 22.toAutoScaledWidth,
+                  ),
                   height: 0.5,
                   width: 145,
                   color: AppTheme.rulerColor,
@@ -255,9 +256,9 @@ class MealCard extends StatelessWidget {
                 Container(
                   width: 187.toAutoScaledWidth,
                   padding: EdgeInsets.only(
-                      left: 12.toAutoScaledWidth,
-                      right: 19.toAutoScaledWidth,
-                      bottom: 0),
+                    left: 12.toAutoScaledWidth,
+                    right: 19.toAutoScaledWidth,
+                  ),
                   child: RichText(
                     text: TextSpan(
                       text: 'Daily Items: ',

@@ -70,7 +70,7 @@ class _MonthlyRebatesState extends State<MonthlyRebates> {
       offset: 2,
       child: Padding(
         padding: EdgeInsets.fromLTRB(16.toAutoScaledWidth,
-            16.toAutoScaledHeight, 16.toAutoScaledWidth, 20),
+            16.toAutoScaledHeight, 16.toAutoScaledWidth, 20.toAutoScaledHeight),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [

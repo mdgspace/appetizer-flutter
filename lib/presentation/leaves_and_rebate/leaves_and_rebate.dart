@@ -41,12 +41,11 @@ class LeavesAndRebate extends StatelessWidget {
                 AppBanner(
                     height: 85.toAutoScaledHeight,
                     child: Padding(
-                      padding: EdgeInsets.fromLTRB(
-                          24.toAutoScaledWidth,
-                          math.max(32.toAutoScaledHeight,
-                              MediaQuery.of(context).padding.top),
-                          0,
-                          0),
+                      padding: EdgeInsets.only(
+                        left: 24.toAutoScaledWidth,
+                        top: math.max(32.toAutoScaledHeight,
+                            MediaQuery.of(context).padding.top),
+                      ),
                       child: Text(
                         "Leaves & Rebates",
                         style: AppTheme.headline1,
@@ -55,8 +54,9 @@ class LeavesAndRebate extends StatelessWidget {
                 ...[
                   if (state.isCheckedOut)
                     Padding(
-                      padding: EdgeInsets.fromLTRB(
-                          0, 14.toAutoScaledHeight, 0, 14.toAutoScaledHeight),
+                      padding: EdgeInsets.symmetric(
+                        vertical: 14.toAutoScaledHeight,
+                      ),
                       child: Text(
                         "You are currently checked-out",
                         style: AppTheme.bodyText1.copyWith(
@@ -66,8 +66,7 @@ class LeavesAndRebate extends StatelessWidget {
                       ),
                     ),
                   Padding(
-                    padding:
-                        EdgeInsets.fromLTRB(0, 0, 0, 14.toAutoScaledHeight),
+                    padding: EdgeInsets.only(bottom: 14.toAutoScaledHeight),
                     child: GestureDetector(
                       onTap: () {
                         //TODO: add check in functionality
@@ -82,8 +81,8 @@ class LeavesAndRebate extends StatelessWidget {
                     currMonthIndex: DateTime.now().month - 1),
                 SizedBox(height: 24.toAutoScaledHeight),
                 Padding(
-                  padding: EdgeInsets.fromLTRB(
-                      40.toAutoScaledWidth, 0, 40.toAutoScaledWidth, 0),
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 40.toAutoScaledWidth),
                   child: Column(
                     children: [
                       Row(

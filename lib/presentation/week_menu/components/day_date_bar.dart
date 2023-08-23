@@ -148,11 +148,8 @@ class _NewDayDateBarState extends State<NewDayDateBar> {
     dates = widget.dates;
     dateToMonthYear = widget.dateToMonthYear;
     return Column(
-      // mainAxisSize: MainAxisSize.min,
-      // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-
       children: [
-        ("${DateFormat("dd ").format(DateTime.now())}${DateFormat("MMM").format(DateTime.now())}'${DateFormat("yy").format(DateTime.now())}" ==
+        (DateFormat("dd MMM'yy").format(DateTime.now()) ==
                 ("$currDate ${dateToMonthYear![currDate]!}"))
             ? TitleBar(
                 monthAndYear: dateToMonthYear![currDate]!, dayName: "Today")

@@ -32,8 +32,10 @@ class YourMealDailyCardsCombined extends StatelessWidget {
           children: dayMenu.meals
               .map(
                 (meal) => Padding(
-                  padding: EdgeInsets.fromLTRB(0, 0, 0,
-                      (meal == dayMenu.meals.last ? 0 : 24).toAutoScaledHeight),
+                  padding: EdgeInsets.only(
+                    bottom: (meal == dayMenu.meals.last ? 0 : 24)
+                        .toAutoScaledHeight,
+                  ),
                   child: BlocSelector<YourMealDailyCardsCombinedBloc,
                       YourMealDailyCardsDisplayState, MealState>(
                     selector: (state) =>
