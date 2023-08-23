@@ -1,29 +1,16 @@
-import 'dart:convert';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-Coupon notificationFromJson(String str) => Coupon.fromJson(json.decode(str));
+part 'coupon.freezed.dart';
+part 'coupon.g.dart';
 
-String notificationToJson(Coupon data) => json.encode(data.toJson());
+@freezed
+class Coupon with _$Coupon {
+  @JsonSerializable(fieldRename: FieldRename.snake)
+  const factory Coupon({
+    @JsonKey(name: 'id') required int id,
+    @JsonKey(name: 'meal') required String meal,
+    @JsonKey(name: 'is_active') bool? isActive,
+  }) = _Coupon;
 
-class Coupon {
-  int id;
-  String meal;
-  String title;
-
-  Coupon({
-    required this.id,
-    required this.meal,
-    required this.title,
-  });
-
-  factory Coupon.fromJson(Map<String, dynamic> json) => Coupon(
-        id: json['id'],
-        meal: json['meal'],
-        title: json['title'],
-      );
-
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'meal': meal,
-        'title': title,
-      };
+  factory Coupon.fromJson(Map<String, dynamic> json) => _$CouponFromJson(json);
 }
