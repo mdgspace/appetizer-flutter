@@ -1,31 +1,22 @@
 import 'package:appetizer/domain/models/leaves/leave.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class PaginatedLeaves {
-  int count;
-  bool hasNext;
-  bool hasPrevious;
-  List<Leave> results;
+part 'paginated_leaves.freezed.dart';
+part 'paginated_leaves.g.dart';
 
-  PaginatedLeaves({
-    required this.count,
-    required this.hasNext,
-    required this.hasPrevious,
-    required this.results,
-  });
+@freezed
+class PaginatedLeaves with _$PaginatedLeaves {
+  @JsonSerializable(fieldRename: FieldRename.snake)
+  const factory PaginatedLeaves({
+    required int count,
+    @JsonKey(name: 'has_next') 
+    required bool hasNext,
+    @JsonKey(name: 'has_previous')
+    required bool hasPrevious,
+    required List<Leave> results,
+  }) = _PaginatedLeaves;
 
-  factory PaginatedLeaves.fromJson(Map<String, dynamic> json) =>
-      PaginatedLeaves(
-        count: json['count'],
-        hasNext: json['has_next'],
-        hasPrevious: json['has_previous'],
-        results:
-            List<Leave>.from(json['results'].map((x) => Leave.fromJson(x))),
-      );
+  // TODO: check if leaves parse correctly into the map
 
-  Map<String, dynamic> toJson() => {
-        'count': count,
-        'has_next': hasNext,
-        'has_previous': hasPrevious,
-        'results': List<dynamic>.from(results.map((x) => x.toJson())),
-      };
+  factory PaginatedLeaves.fromJson(Map<String, dynamic> json) => _$PaginatedLeavesFromJson(json);
 }
