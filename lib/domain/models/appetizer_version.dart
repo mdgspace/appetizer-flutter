@@ -2,17 +2,13 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'appetizer_version.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(fieldRename: FieldRename.snake)
 class AppetizerVersion {
   String number;
   String platform;
-  @JsonKey(name: "expiry_date")
   dynamic expiryDate;
-  @JsonKey(name: "is_expired")
   bool isExpired;
-  @JsonKey(name: "is_latest")
   bool isLatest;
-  @JsonKey(name: "date_created")
   int dateCreated;
 
   AppetizerVersion({

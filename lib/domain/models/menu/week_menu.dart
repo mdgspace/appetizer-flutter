@@ -6,6 +6,7 @@ part 'week_menu.freezed.dart';
 part 'week_menu.g.dart';
 
 // TODO: remove enums from this file
+// TODO: check for DateTime parsing (different in different api)
 
 @freezed
 class WeekMenu with _$WeekMenu {
@@ -99,18 +100,20 @@ class Meal with _$Meal {
     required MealType type,
     CostType? costType,
     required List<MealItem> items,
-    required DateTime startTime,
-    required DateTime endTime,
+    // TODO: write getters
+    // required DateTime startTime,
+    // required DateTime endTime,
     required LeaveStatus leaveStatus,
     required CouponStatus couponStatus,
     required dynamic wastage,
-    required bool isSwitchable,
+    @Default(false) bool isSwitchable,
     required SwitchStatus switchStatus,
     String? hostelName,
     String? secretCode,
-    required bool isOutdated,
-    required bool isLeaveToggleOutdated,
-    required bool isCouponOutdated,
+    // TODO: write getters
+    // required bool isOutdated,
+    // required bool isLeaveToggleOutdated,
+    // required bool isCouponOutdated,
     required DateTime startDateTime,
     required DateTime endDateTime,
   }) = _Meal;

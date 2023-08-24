@@ -17,7 +17,7 @@ class User with _$User{
     required String contactNo,
     String? branch,
     required dynamic imageUrl,
-    required bool isCheckedOut,
+    @Default(false) bool isCheckedOut,
     int? lastUpdated,
     int? leavesLeft,
     required dynamic dob,
@@ -26,7 +26,7 @@ class User with _$User{
     required dynamic admissionYear,
     String? role,
     String? token,
-    required bool isNew,
+    @Default(true) bool isNew,
   }) = _User;
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json); 
