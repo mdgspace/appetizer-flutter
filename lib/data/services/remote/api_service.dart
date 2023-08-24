@@ -4,6 +4,10 @@ import 'package:appetizer/domain/models/feedback/appetizer_feedback.dart';
 import 'package:appetizer/domain/models/feedback/feedback_response.dart';
 import 'package:appetizer/domain/models/leaves/paginated_leaves.dart';
 import 'package:appetizer/domain/models/menu/week_menu.dart';
+import 'package:appetizer/domain/models/transaction/faq.dart';
+import 'package:appetizer/domain/models/user/notification.dart';
+import 'package:appetizer/domain/models/user/oauth_user.dart';
+import 'package:appetizer/domain/models/user/user.dart';
 import 'package:dio/dio.dart' hide Headers;
 import 'package:retrofit/retrofit.dart';
 import 'dart:async';
@@ -106,4 +110,65 @@ abstract class ApiService {
     @Path("week") String week,
     @Path("dayOfWeek") String dayOfWeek,
   );
+
+  // TODO: add Multimessing API
+
+  // Transaction API
+
+  @GET(ApiEndpoints.monthlyRebate)
+  Future<double> getMonthlyRebate();
+
+  @GET(ApiEndpoints.yearlyRebate)
+  Future<double> getYearlyRebate(
+    @Query("year") int year,
+  );
+
+  @GET(ApiEndpoints.faqs)
+  Future<List<Faq>> getFAQs();
+
+  // User API
+
+  @POST(ApiEndpoints.login)
+  Future<User> login(
+    @Body() Map<String, dynamic> map,
+  );
+
+  @POST(ApiEndpoints.logout)
+  Future<void> logout();
+
+  @GET(ApiEndpoints.user)
+  Future<User> getCurrentUser();
+
+  @PATCH(ApiEndpoints.user)
+  Future<User> updateUser(
+    @Body() Map<String, dynamic> map,
+  );
+
+  @PATCH(ApiEndpoints.user)
+  Future<User> updateFcmTokenForUser(
+    @Body() Map<String, dynamic> map,
+  );
+  
+  @PUT(ApiEndpoints.password)
+  Future<void> changePassword(
+    @Body() Map<String, dynamic> map,
+  );
+
+  @POST(ApiEndpoints.resetpassword)
+  Future<void> resetPassword(
+    @Body() Map<String, dynamic> map,
+  );
+
+  @GET(ApiEndpoints.oAuthRedirect)
+  Future<OAuthUser> oAuthRedirect(
+    @Query("code") String code,
+  );
+
+  @POST(ApiEndpoints.oAuthComplete) 
+  Future<OAuthUser> oAuthComplete(
+    @Body() Map<String, dynamic> map,
+  );
+
+  @GET(ApiEndpoints.notifications)
+  Future<List<Notification>> getNotifications();
 }
