@@ -1,6 +1,6 @@
 import 'package:appetizer/data/constants/env_config.dart';
 
-class ApiEnpoints {
+class ApiEndpoints {
   static const String baseUrl = EnvironmentConfig.BASE_URL;
 
   static const String checkVersion =
