@@ -5,6 +5,7 @@ import 'package:appetizer/domain/models/feedback/feedback_response.dart';
 import 'package:appetizer/domain/models/leaves/paginated_leaves.dart';
 import 'package:appetizer/domain/models/menu/week_menu.dart';
 import 'package:appetizer/domain/models/transaction/faq.dart';
+import 'package:appetizer/domain/models/transaction/paginated_yearly_rebate.dart';
 import 'package:appetizer/domain/models/user/notification.dart';
 import 'package:appetizer/domain/models/user/oauth_user.dart';
 import 'package:appetizer/domain/models/user/user.dart';
@@ -60,27 +61,27 @@ abstract class ApiService {
 
   @GET(ApiEndpoints.getLeaves)
   Future<PaginatedLeaves> getLeaves(
-    @Query("year") String year,
-    @Query("month") String? month,
+    @Query("year") int year,
+    @Query("month") int month,
+  );
+
+  @GET(ApiEndpoints.getLeaves)
+  Future<PaginatedLeaves> getLeavesForYear(
+    @Query("year") int year,
   );
 
   @POST(ApiEndpoints.check)
-  Future<bool> checkout(
-    @Body() Map<String, dynamic> map,
-  );
-
-  @POST(ApiEndpoints.check)
-  Future<bool> checkin(
+  Future<bool> check(
     @Body() Map<String, dynamic> map,
   );
 
   @POST(ApiEndpoints.leave)
-  Future<void> leave(
+  Future leave(
     @Body() Map<String, dynamic> map,
   );
 
   @DELETE(ApiEndpoints.cancelLeave)
-  Future<void> cancelLeave(
+  Future cancelLeave(
     @Path("id") int id,
   );
 
@@ -89,17 +90,17 @@ abstract class ApiService {
   @GET(ApiEndpoints.weekMenuMultimessing)
   Future<WeekMenu> weekMenuMultimessing(
     @Query("hostel") String hostelCode,
-    @Query("week_id") String week,
+    @Query("week_id") int week,
   );
 
   @GET(ApiEndpoints.weekMenuForYourMeals)
   Future<WeekMenu> weekMenuForYourMeals(
-    @Query("week_id") String week,
+    @Query("week_id") int week,
   );
 
   @GET(ApiEndpoints.weekMenu)
   Future<WeekMenu> weekMenuByWeekId(
-    @Query("week_id") String week,
+    @Query("week_id") int week,
   );
 
   @GET(ApiEndpoints.weekMenu)
@@ -107,7 +108,7 @@ abstract class ApiService {
 
   @GET(ApiEndpoints.dayMenu)
   Future<WeekMenu> dayMenu(
-    @Path("week") String week,
+    @Path("week") int week,
     @Path("dayOfWeek") String dayOfWeek,
   );
 
@@ -116,10 +117,10 @@ abstract class ApiService {
   // Transaction API
 
   @GET(ApiEndpoints.monthlyRebate)
-  Future<double> getMonthlyRebate();
+  Future<int> getMonthlyRebate();
 
   @GET(ApiEndpoints.yearlyRebate)
-  Future<double> getYearlyRebate(
+  Future<PaginatedYearlyRebate> getYearlyRebate(
     @Query("year") int year,
   );
 
@@ -141,7 +142,7 @@ abstract class ApiService {
 
   @PATCH(ApiEndpoints.user)
   Future<User> updateUser(
-    @Body() Map<String, dynamic> map,
+    @Body() User user,
   );
 
   @PATCH(ApiEndpoints.user)
