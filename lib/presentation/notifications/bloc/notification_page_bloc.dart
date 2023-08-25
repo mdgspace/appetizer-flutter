@@ -26,29 +26,29 @@ class NotificationPageBloc
       },
     );
     // TODO: remove swithc bar and option related events and logic
-    on<NotificationPageSwitchChangedEvent>(
-      (NotificationPageSwitchChangedEvent event,
-          Emitter<NotificationPageState> emit) {
-        List<Notification> notifications = [
-          const Notification(
-              id: 123,
-              dateCreated: 532523,
-              title: "Yesssir",
-              message: "fasfafafassfadasdadsafafasfsdfafasfasfasfasfasfas"),
-          const Notification(
-              id: 123,
-              dateCreated: 532523,
-              title: "Yesssir",
-              message: "fasfafafassfadasdadsafafasfsdfafasfasfasfasfasfas"),
-          const Notification(
-              id: 123,
-              dateCreated: 532523,
-              title: "Yesssir",
-              message: "fasfafafassfadasdadsafafasfsdfafasfasfasfasfasfas")
-        ];
-        emit(NotificationPageFetchedState(
-            option: event.option, notifications: notifications));
-      },
-    );
+    // on<NotificationPageSwitchChangedEvent>(
+    //   (NotificationPageSwitchChangedEvent event,
+    //       Emitter<NotificationPageState> emit) {
+    //     List<Notification> notifications = [
+    //       const Notification(
+    //           id: 123,
+    //           dateCreated: 532523,
+    //           title: "Yesssir",
+    //           message: "fasfafafassfadasdadsafafasfsdfafasfasfasfasfasfas"),
+    //       const Notification(
+    //           id: 123,
+    //           dateCreated: 532523,
+    //           title: "Yesssir",
+    //           message: "fasfafafassfadasdadsafafasfsdfafasfasfasfasfasfas"),
+    //       const Notification(
+    //           id: 123,
+    //           dateCreated: 532523,
+    //           title: "Yesssir",
+    //           message: "fasfafafassfadasdadsafafasfsdfafasfasfasfasfasfas")
+    //     ];
+    //     emit(NotificationPageFetchedState(
+    //         option: event.option, notifications: notifications));
+    //   },
+    // );
   }
 }
