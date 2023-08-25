@@ -123,4 +123,9 @@ class UserRepository {
       throw Failure(AppConstants.GENERIC_FAILURE);
     }
   }
+
+  Future<bool> userIsOldUser(String enrollmentNo) async {
+    //TODO: update and link with api
+    return true;
+  }
 }
