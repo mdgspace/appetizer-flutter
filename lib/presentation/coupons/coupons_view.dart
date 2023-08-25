@@ -1,3 +1,4 @@
+import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
 import 'package:appetizer/presentation/components/no_data_found_container.dart';
 import 'package:appetizer/presentation/coupons/bloc/coupons_page_bloc.dart';
 import 'package:appetizer/presentation/coupons/components/coupon_card.dart';
@@ -17,17 +18,17 @@ class CouponsScreen extends StatelessWidget {
           icon: const Icon(Icons.arrow_back),
           onPressed: () {},
         ),
-        title: const Text(
+        title: Text(
           'Coupons',
           style: TextStyle(
             color: Colors.white,
-            fontSize: 24,
+            fontSize: 24.toAutoScaledFont,
             fontFamily: 'Noto Sans',
             fontWeight: FontWeight.w700,
           ),
         ),
         backgroundColor: const Color(0xFFFFCB74),
-        toolbarHeight: 120,
+        toolbarHeight: 120.toAutoScaledHeight,
       ),
       body: BlocProvider(
         create: (context) => CouponsPageBloc(),
@@ -49,11 +50,12 @@ class CouponsScreen extends StatelessWidget {
                     title: 'No coupons selected !');
               }
               return Container(
-                padding: const EdgeInsets.only(left: 32, top: 40),
+                padding: EdgeInsets.only(
+                    left: 32.toAutoScaledWidth, top: 40.toAutoScaledHeight),
                 child: GridView.count(
                   crossAxisCount: 2,
-                  crossAxisSpacing: 39,
-                  mainAxisSpacing: 27,
+                  crossAxisSpacing: 39.toAutoScaledWidth,
+                  mainAxisSpacing: 27.toAutoScaledHeight,
                   children: List.generate(
                     state.coupons.length,
                     (index) => CouponCard(coupon: state.coupons[index]),

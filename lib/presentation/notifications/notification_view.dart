@@ -1,3 +1,4 @@
+import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
 import 'package:appetizer/presentation/notifications/bloc/notification_page_bloc.dart';
 import 'package:appetizer/presentation/notifications/components/no_notification_widget.dart';
 import 'package:appetizer/presentation/notifications/components/notification_card.dart';
@@ -18,17 +19,17 @@ class NotificationScreen extends StatelessWidget {
           icon: const Icon(Icons.arrow_back),
           onPressed: () {},
         ),
-        title: const Text(
+        title: Text(
           'Notification',
           style: TextStyle(
             color: Colors.white,
-            fontSize: 24,
+            fontSize: 24.toAutoScaledFont,
             fontFamily: 'Noto Sans',
             fontWeight: FontWeight.w700,
           ),
         ),
         backgroundColor: const Color(0xFFFFCB74),
-        toolbarHeight: 120,
+        toolbarHeight: 120.toAutoScaledHeight,
       ),
       // TODO: implement Old/New notification bars and logic
       body: BlocProvider(
@@ -53,9 +54,11 @@ class NotificationScreen extends StatelessWidget {
                 children: [
                   SwitchBarWidget(option: state.option),
                   Container(
-                    height: 656,
-                    padding:
-                        const EdgeInsets.only(left: 24, right: 25, top: 32),
+                    height: 656.toAutoScaledHeight,
+                    padding: EdgeInsets.only(
+                        left: 24.toAutoScaledWidth,
+                        right: 25.toAutoScaledWidth,
+                        top: 32.toAutoScaledHeight),
                     child: ListView.builder(
                       itemCount: state.notifications.length,
                       itemBuilder: (context, index) {
@@ -65,8 +68,8 @@ class NotificationScreen extends StatelessWidget {
                               data: state.notifications[index],
                             ),
                             index < state.notifications.length
-                                ? const SizedBox(
-                                    height: 16,
+                                ? SizedBox(
+                                    height: 16.toAutoScaledHeight,
                                   )
                                 : const SizedBox.shrink(),
                           ],

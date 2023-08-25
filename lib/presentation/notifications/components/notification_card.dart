@@ -1,3 +1,4 @@
+import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
 import 'package:flutter/material.dart';
 import 'package:appetizer/domain/models/user/notification.dart' as notification;
 
@@ -12,18 +13,18 @@ class NotificationCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 127,
-      width: 312,
-      padding: const EdgeInsets.only(
-        top: 15,
-        left: 19,
-        right: 16,
-        bottom: 15,
+      height: 127.toAutoScaledHeight,
+      width: 312.toAutoScaledWidth,
+      padding: EdgeInsets.only(
+        top: 15.toAutoScaledHeight,
+        left: 19.toAutoScaledWidth,
+        right: 16.toAutoScaledWidth,
+        bottom: 15.toAutoScaledHeight,
       ),
       decoration: ShapeDecoration(
         color: Colors.white,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.71),
+          borderRadius: BorderRadius.circular(10.71.toAutoScaledWidth),
         ),
         shadows: const [
           BoxShadow(
@@ -44,9 +45,9 @@ class NotificationCard extends StatelessWidget {
               Expanded(
                 child: Text(
                   data.title,
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: Color(0xFF111111),
-                    fontSize: 18,
+                    fontSize: 18.toAutoScaledFont,
                     fontFamily: 'Noto Sans',
                     fontWeight: FontWeight.w500,
                   ),
@@ -56,9 +57,9 @@ class NotificationCard extends StatelessWidget {
               Expanded(
                 child: Text(
                   '${data.dateCreated}',
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: Color(0xFF2E2E2E),
-                    fontSize: 10,
+                    fontSize: 10.toAutoScaledFont,
                     fontFamily: 'Lato',
                     fontWeight: FontWeight.w400,
                   ),
@@ -67,14 +68,14 @@ class NotificationCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(
-            height: 4,
+          SizedBox(
+            height: 4.toAutoScaledHeight,
           ),
           Text(
             data.message,
-            style: const TextStyle(
+            style: TextStyle(
               color: Color(0xFF2E2E2E),
-              fontSize: 14,
+              fontSize: 14.toAutoScaledFont,
               fontFamily: 'Lato',
               fontWeight: FontWeight.w400,
             ),

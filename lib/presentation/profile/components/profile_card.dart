@@ -1,3 +1,4 @@
+import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
 import 'package:appetizer/domain/models/user/user.dart';
 import 'package:flutter/material.dart';
 
@@ -17,18 +18,18 @@ class Fields extends StatelessWidget {
       children: [
         Text(
           '$title ',
-          style: const TextStyle(
+          style: TextStyle(
             color: Color(0xFF111111),
-            fontSize: 16,
+            fontSize: 16.toAutoScaledFont,
             fontFamily: 'Lato',
             fontWeight: FontWeight.w500,
           ),
         ),
         Text(
           data,
-          style: const TextStyle(
+          style: TextStyle(
             color: Color(0xFF2E2E2E),
-            fontSize: 16,
+            fontSize: 16.toAutoScaledFont,
             fontFamily: 'Inter',
             fontWeight: FontWeight.w400,
           ),
@@ -49,18 +50,18 @@ class ProfileCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 293,
-      height: 167,
-      padding: const EdgeInsets.only(
-        top: 20,
-        left: 20,
-        right: 37,
-        bottom: 20,
+      width: 293.toAutoScaledWidth,
+      height: 167.toAutoScaledHeight,
+      padding: EdgeInsets.only(
+        top: 20.toAutoScaledHeight,
+        left: 20.toAutoScaledWidth,
+        right: 37.toAutoScaledWidth,
+        bottom: 20.toAutoScaledHeight,
       ),
       decoration: ShapeDecoration(
         color: Colors.white,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(20.toAutoScaledWidth),
         ),
         shadows: const [
           BoxShadow(
@@ -77,29 +78,29 @@ class ProfileCard extends StatelessWidget {
             title: 'Enrollment No:',
             data: '${data.enrNo}',
           ),
-          const SizedBox(
-            height: 8,
+          SizedBox(
+            height: 8.toAutoScaledHeight,
           ),
           Fields(
             title: 'Hostel:',
             data: data.hostelName,
           ),
-          const SizedBox(
-            height: 8,
+          SizedBox(
+            height: 8.toAutoScaledHeight,
           ),
           Fields(
             title: 'Branch:',
             data: data.branch ?? "",
           ),
-          const SizedBox(
-            height: 8,
+          SizedBox(
+            height: 8.toAutoScaledHeight,
           ),
           Fields(
             title: 'Email:',
             data: data.email,
           ),
-          const SizedBox(
-            height: 8,
+          SizedBox(
+            height: 8.toAutoScaledHeight,
           ),
           Fields(
             title: 'Room No:',
