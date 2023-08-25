@@ -101,8 +101,8 @@ class Meal with _$Meal {
     required MealType type,
     CostType? costType,
     required List<MealItem> items,
-    @JsonKey(fromJson: _fromJson, toJson: _toJson) required DateTime startTime,
-    @JsonKey(fromJson: _fromJson, toJson: _toJson) required DateTime endTime,
+    @DateTimeSerializer() required DateTime startTime,
+    @DateTimeSerializer() required DateTime endTime,
     required LeaveStatus leaveStatus,
     required CouponStatus couponStatus,
     required dynamic wastage,
@@ -134,9 +134,16 @@ class Meal with _$Meal {
   }
 
   factory Meal.fromJson(Map<String, dynamic> json) => _$MealFromJson(json);
+}
 
-  static DateTime _fromJson(String date) => DateFormat('HH:mm:ss').parse(date);
-  static String _toJson(DateTime date) => DateFormat('HH:mm:ss').format(date);
+class DateTimeSerializer implements JsonConverter<DateTime, String> {
+  const DateTimeSerializer();
+
+  @override
+  DateTime fromJson(String json) => DateFormat('HH:mm:ss').parse(json);
+
+  @override
+  String toJson(DateTime object) => DateFormat('HH:mm:ss').format(object);
 }
 
 @freezed
@@ -154,7 +161,7 @@ class LeaveStatus with _$LeaveStatus {
 class CouponStatus with _$CouponStatus {
   const factory CouponStatus({
     int? id,
-    @Default(CouponStatusEnum.N) required CouponStatusEnum status,
+    @Default(CouponStatusEnum.N) CouponStatusEnum status,
   }) = _CouponStatus;
 
   factory CouponStatus.fromJson(Map<String, dynamic> json) =>
@@ -165,7 +172,7 @@ class CouponStatus with _$CouponStatus {
 class SwitchStatus with _$SwitchStatus {
   const factory SwitchStatus({
     int? id,
-    @Default(SwitchStatusEnum.N) required SwitchStatusEnum status,
+    @Default(SwitchStatusEnum.N) SwitchStatusEnum status,
   }) = _SwitchStatus;
 
   factory SwitchStatus.fromJson(Map<String, dynamic> json) =>
