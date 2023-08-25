@@ -1,3 +1,4 @@
+import 'package:appetizer/domain/repositories/feedback_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
@@ -5,8 +6,10 @@ part 'feedback_page_event.dart';
 part 'feedback_page_state.dart';
 
 class FeedbackPageBloc extends Bloc<FeedbackPageEvent, FeedbackPageState> {
-  FeedbackPageBloc()
-      : super(
+  final FeedbackRepository repo;
+  FeedbackPageBloc({
+    required this.repo,
+  }) : super(
           FeedbackPageState(
             rating: List<int>.filled(5, 0),
             description: '',

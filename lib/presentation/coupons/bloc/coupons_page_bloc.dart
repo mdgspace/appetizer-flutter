@@ -1,4 +1,5 @@
 import 'package:appetizer/domain/models/coupon/coupon.dart';
+import 'package:appetizer/domain/repositories/coupon_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
@@ -6,7 +7,10 @@ part 'coupons_page_event.dart';
 part 'coupons_page_state.dart';
 
 class CouponsPageBloc extends Bloc<CouponsPageEvent, CouponsPageState> {
-  CouponsPageBloc() : super(const CouponsPageInitialState()) {
+  final CouponRepository repo;
+  CouponsPageBloc({
+    required this.repo,
+  }) : super(const CouponsPageInitialState()) {
     on<CouponsPageFetchEvent>(
         (CouponsPageFetchEvent event, Emitter<CouponsPageState> emit) {
       // TODO: implement repository call
