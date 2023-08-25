@@ -1,13 +1,10 @@
 import 'package:appetizer/domain/models/user/user.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-import 'package:json_annotation/json_annotation.dart';
-
 part 'oauth_user.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.snake, explicitToJson: true)
 class OAuthUser {
-
   String? token;
   User studentData;
   bool isNew;
@@ -18,7 +15,8 @@ class OAuthUser {
     required this.isNew,
   });
 
-  factory OAuthUser.fromJson(Map<String, dynamic> json) => _$OAuthUserFromJson(json);
+  factory OAuthUser.fromJson(Map<String, dynamic> json) =>
+      _$OAuthUserFromJson(json);
 
   Map<String, dynamic> toJson() => _$OAuthUserToJson(this);
 }

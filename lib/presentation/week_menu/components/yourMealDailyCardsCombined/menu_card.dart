@@ -273,3 +273,10 @@ class MealCard extends StatelessWidget {
     );
   }
 }
+
+// TODO(nano): temp fix for the getters
+extension on Meal {
+  bool get isOutdated => false;
+  bool get isLeaveToggleOutdated => false;
+  bool get isCouponOutdated => false;
+}

@@ -16,5 +16,6 @@ class PaginatedLeaves with _$PaginatedLeaves {
 
   // TODO: check if leaves parse correctly into the map
 
-  factory PaginatedLeaves.fromJson(Map<String, dynamic> json) => _$PaginatedLeavesFromJson(json);
+  factory PaginatedLeaves.fromJson(Map<String, dynamic> json) =>
+      _$PaginatedLeavesFromJson(json);
 }

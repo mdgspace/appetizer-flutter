@@ -26,7 +26,7 @@ class SwitchableMeal {
 
   factory SwitchableMeal.fromJson(Map<String, dynamic> json) =>
       _$SwitchableMealFromJson(json);
-    
+
   Map<String, dynamic> toJson() => _$SwitchableMealToJson(this);
 }
 

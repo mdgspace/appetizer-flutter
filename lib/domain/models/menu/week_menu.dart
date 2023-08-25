@@ -1,6 +1,7 @@
 import 'package:appetizer/enums/enum_values.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:intl/intl.dart';
 
 part 'week_menu.freezed.dart';
 part 'week_menu.g.dart';
@@ -100,9 +101,8 @@ class Meal with _$Meal {
     required MealType type,
     CostType? costType,
     required List<MealItem> items,
-    // TODO: write getters
-    // required DateTime startTime,
-    // required DateTime endTime,
+    @JsonKey(fromJson: _fromJson, toJson: _toJson) required DateTime startTime,
+    @JsonKey(fromJson: _fromJson, toJson: _toJson) required DateTime endTime,
     required LeaveStatus leaveStatus,
     required CouponStatus couponStatus,
     required dynamic wastage,
@@ -134,6 +134,9 @@ class Meal with _$Meal {
   }
 
   factory Meal.fromJson(Map<String, dynamic> json) => _$MealFromJson(json);
+
+  static DateTime _fromJson(String date) => DateFormat('HH:mm:ss').parse(date);
+  static String _toJson(DateTime date) => DateFormat('HH:mm:ss').format(date);
 }
 
 @freezed

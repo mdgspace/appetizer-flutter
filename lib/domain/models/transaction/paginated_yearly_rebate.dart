@@ -6,7 +6,6 @@ part 'paginated_yearly_rebate.g.dart';
 @freezed
 class PaginatedYearlyRebate with _$PaginatedYearlyRebate {
   @JsonSerializable(fieldRename: FieldRename.snake, explicitToJson: true)
-  
   const factory PaginatedYearlyRebate({
     required int count,
     required bool hasNext,
@@ -21,7 +20,6 @@ class PaginatedYearlyRebate with _$PaginatedYearlyRebate {
 @freezed
 class YearlyRebate with _$YearlyRebate {
   @JsonSerializable(fieldRename: FieldRename.snake)
-
   const factory YearlyRebate({
     required int monthId,
     required int year,

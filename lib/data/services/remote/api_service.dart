@@ -25,7 +25,6 @@ abstract class ApiService {
     @Path("versionNumber") String versionNumber,
   );
 
-  // TODO: add token to all headers
   // TODO: find a way to remove maps
 
   // Coupon API
@@ -149,7 +148,7 @@ abstract class ApiService {
   Future<User> updateFcmTokenForUser(
     @Body() Map<String, dynamic> map,
   );
-  
+
   @PUT(ApiEndpoints.password)
   Future<void> changePassword(
     @Body() Map<String, dynamic> map,
@@ -165,7 +164,7 @@ abstract class ApiService {
     @Query("code") String code,
   );
 
-  @POST(ApiEndpoints.oAuthComplete) 
+  @POST(ApiEndpoints.oAuthComplete)
   Future<OAuthUser> oAuthComplete(
     @Body() Map<String, dynamic> map,
   );

@@ -4,9 +4,8 @@ part 'user.freezed.dart';
 part 'user.g.dart';
 
 @freezed
-class User with _$User{
+class User with _$User {
   @JsonSerializable(fieldRename: FieldRename.snake)
-
   const factory User({
     required String email,
     required String hostelName,
@@ -29,5 +28,5 @@ class User with _$User{
     @Default(true) bool isNew,
   }) = _User;
 
-  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json); 
+  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 }
