@@ -3,9 +3,10 @@ import 'package:appetizer/data/services/remote/api_service.dart';
 import 'package:appetizer/domain/models/failure_model.dart';
 import 'package:appetizer/domain/models/leaves/paginated_leaves.dart';
 import 'package:appetizer/domain/models/menu/week_menu.dart';
+import 'package:flutter/foundation.dart';
 
 class LeaveRepository {
-  ApiService _apiService;
+  final ApiService _apiService;
 
   LeaveRepository(this._apiService);
 
@@ -40,7 +41,7 @@ class LeaveRepository {
     try {
       return await _apiService.check(map);
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
       throw Failure(AppConstants.GENERIC_FAILURE);
     }
   }
@@ -52,7 +53,7 @@ class LeaveRepository {
     try {
       return await _apiService.check(map);
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
       throw Failure(AppConstants.GENERIC_FAILURE);
     }
   }
@@ -66,7 +67,7 @@ class LeaveRepository {
     try {
       return await _apiService.leave(map);
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
       throw Failure(AppConstants.GENERIC_FAILURE);
     }
   }
@@ -77,7 +78,7 @@ class LeaveRepository {
     try {
       return await _apiService.cancelLeave(meal.id);
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
       throw Failure(AppConstants.GENERIC_FAILURE);
     }
   }

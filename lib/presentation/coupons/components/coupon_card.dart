@@ -63,7 +63,7 @@ class CouponCard extends StatelessWidget {
               Text(
                 coupon.meal,
                 style: TextStyle(
-                  color: Color(0xFF2E2E2E),
+                  color: const Color(0xFF2E2E2E),
                   fontSize: 10.toAutoScaledFont,
                   fontFamily: 'Noto Sans',
                   fontWeight: FontWeight.w400,

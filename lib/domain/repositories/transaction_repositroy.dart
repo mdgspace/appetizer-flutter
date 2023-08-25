@@ -3,9 +3,10 @@ import 'package:appetizer/data/services/remote/api_service.dart';
 import 'package:appetizer/domain/models/failure_model.dart';
 import 'package:appetizer/domain/models/transaction/faq.dart';
 import 'package:appetizer/domain/models/transaction/paginated_yearly_rebate.dart';
+import 'package:flutter/foundation.dart';
 
 class TransactionRepository {
-  ApiService _apiService;
+  final ApiService _apiService;
 
   TransactionRepository(this._apiService);
 
@@ -15,7 +16,7 @@ class TransactionRepository {
     try {
       return await _apiService.getMonthlyRebate();
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
       throw Failure(AppConstants.GENERIC_FAILURE);
     }
   }
@@ -24,7 +25,7 @@ class TransactionRepository {
     try {
       return await _apiService.getYearlyRebate(year);
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
       throw Failure(AppConstants.GENERIC_FAILURE);
     }
   }
@@ -33,7 +34,7 @@ class TransactionRepository {
     try {
       return await _apiService.getFAQs();
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
       throw Failure(AppConstants.GENERIC_FAILURE);
     }
   }

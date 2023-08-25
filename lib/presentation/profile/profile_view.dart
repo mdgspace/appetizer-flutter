@@ -49,7 +49,7 @@ class ProfileScreen extends StatelessWidget {
                 Text(
                   data.name,
                   style: TextStyle(
-                    color: Color(0xFF111111),
+                    color: const Color(0xFF111111),
                     fontSize: 25.toAutoScaledFont,
                     fontFamily: 'Noto Sans',
                     fontWeight: FontWeight.w600,
@@ -84,7 +84,7 @@ class ProfileScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                Divider(
+                const Divider(
                   height: 2,
                   thickness: 2,
                   color: Color.fromARGB(255, 189, 189, 189),
@@ -131,7 +131,7 @@ class ProfileScreen extends StatelessWidget {
                   child: Text(
                     'Raise a Query',
                     style: TextStyle(
-                      color: Color(0xFF008BFF),
+                      color: const Color(0xFF008BFF),
                       fontSize: 12.toAutoScaledFont,
                       fontFamily: 'Inter',
                       fontWeight: FontWeight.w400,

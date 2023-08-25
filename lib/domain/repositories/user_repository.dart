@@ -4,9 +4,10 @@ import 'package:appetizer/domain/models/failure_model.dart';
 import 'package:appetizer/domain/models/user/notification.dart';
 import 'package:appetizer/domain/models/user/oauth_user.dart';
 import 'package:appetizer/domain/models/user/user.dart';
+import 'package:flutter/foundation.dart';
 
 class UserRepository {
-  ApiService _apiService;
+  final ApiService _apiService;
 
   UserRepository(this._apiService);
 
@@ -20,7 +21,7 @@ class UserRepository {
     try {
       return await _apiService.login(map);
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
       throw Failure(AppConstants.GENERIC_FAILURE);
     }
   }
@@ -29,7 +30,7 @@ class UserRepository {
     try {
       return await _apiService.logout();
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
       throw Failure(AppConstants.GENERIC_FAILURE);
     }
   }
@@ -38,7 +39,7 @@ class UserRepository {
     try {
       return await _apiService.getCurrentUser();
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
       throw Failure(AppConstants.GENERIC_FAILURE);
     }
   }
@@ -47,7 +48,7 @@ class UserRepository {
     try {
       return await _apiService.updateUser(user);
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
       throw Failure(AppConstants.GENERIC_FAILURE);
     }
   }
@@ -60,7 +61,7 @@ class UserRepository {
     try {
       return await _apiService.updateFcmTokenForUser(map);
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
       throw Failure(AppConstants.GENERIC_FAILURE);
     }
   }
@@ -73,7 +74,7 @@ class UserRepository {
     try {
       return await _apiService.changePassword(map);
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
       throw Failure(AppConstants.GENERIC_FAILURE);
     }
   }
@@ -85,7 +86,7 @@ class UserRepository {
     try {
       return await _apiService.resetPassword(map);
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
       throw Failure(AppConstants.GENERIC_FAILURE);
     }
   }
@@ -94,7 +95,7 @@ class UserRepository {
     try {
       return await _apiService.oAuthRedirect(code);
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
       throw Failure(AppConstants.GENERIC_FAILURE);
     }
   }
@@ -109,7 +110,7 @@ class UserRepository {
     try {
       return await _apiService.oAuthComplete(map);
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
       throw Failure(AppConstants.GENERIC_FAILURE);
     }
   }
@@ -118,7 +119,7 @@ class UserRepository {
     try {
       return await _apiService.getNotifications();
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
       throw Failure(AppConstants.GENERIC_FAILURE);
     }
   }

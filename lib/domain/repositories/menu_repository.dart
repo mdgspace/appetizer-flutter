@@ -2,9 +2,10 @@ import 'package:appetizer/data/constants/constants.dart';
 import 'package:appetizer/data/services/remote/api_service.dart';
 import 'package:appetizer/domain/models/failure_model.dart';
 import 'package:appetizer/domain/models/menu/week_menu.dart';
+import 'package:flutter/foundation.dart';
 
 class MenuRepository {
-  ApiService _apiService;
+  final ApiService _apiService;
 
   MenuRepository(this._apiService);
 
@@ -14,7 +15,7 @@ class MenuRepository {
     try {
       return await _apiService.weekMenuMultimessing(hostelCode, id);
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
       throw Failure(AppConstants.GENERIC_FAILURE);
     }
   }
@@ -23,7 +24,7 @@ class MenuRepository {
     try {
       return await _apiService.weekMenuForYourMeals(weekId);
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
       throw Failure(AppConstants.GENERIC_FAILURE);
     }
   }
@@ -34,7 +35,7 @@ class MenuRepository {
     try {
       return await _apiService.weekMenuByWeekId(weekId);
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
       throw Failure(AppConstants.GENERIC_FAILURE);
     }
   }
@@ -43,7 +44,7 @@ class MenuRepository {
     try {
       return await _apiService.currentWeekMenu();
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
       throw Failure(AppConstants.GENERIC_FAILURE);
     }
   }
@@ -52,7 +53,7 @@ class MenuRepository {
     try {
       return await _apiService.dayMenu(week, dayOfWeek);
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
       throw Failure(AppConstants.GENERIC_FAILURE);
     }
   }

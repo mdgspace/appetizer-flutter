@@ -54,7 +54,7 @@ class FeedbackPage extends StatelessWidget {
                   Text(
                     'Kindly provide us with your feedback to improve your mess experienWeekly Menuce.',
                     style: TextStyle(
-                      color: Color(0xFF5A5A5A),
+                      color: const Color(0xFF5A5A5A),
                       fontSize: 14.toAutoScaledFont,
                       fontFamily: 'Lato',
                       fontWeight: FontWeight.w400,
@@ -72,13 +72,13 @@ class FeedbackPage extends StatelessWidget {
                       ),
                     );
                   }),
-                  SizedBox(
+                  const SizedBox(
                     height: 2,
                   ),
                   Text(
                     'If any other feeback, please describe below',
                     style: TextStyle(
-                      color: Color(0xFF111111),
+                      color: const Color(0xFF111111),
                       fontSize: 16.toAutoScaledFont,
                       fontFamily: 'Lato',
                       fontWeight: FontWeight.w400,
@@ -103,7 +103,7 @@ class FeedbackPage extends StatelessWidget {
                       border: OutlineInputBorder(
                         borderSide: BorderSide(
                           width: 0.5.toAutoScaledWidth,
-                          color: Color.fromARGB(37, 0, 0, 0),
+                          color: const Color.fromARGB(37, 0, 0, 0),
                         ),
                       ),
                     ),

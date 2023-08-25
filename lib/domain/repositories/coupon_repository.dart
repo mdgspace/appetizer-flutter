@@ -3,11 +3,12 @@ import 'package:appetizer/data/services/remote/api_service.dart';
 import 'package:appetizer/domain/models/coupon/coupon.dart';
 import 'package:appetizer/domain/models/failure_model.dart';
 import 'package:appetizer/domain/models/menu/week_menu.dart';
+import 'package:flutter/foundation.dart';
 
-class CouponRepositroy {
+class CouponRepository {
   final ApiService _apiService;
 
-  CouponRepositroy(this._apiService);
+  CouponRepository(this._apiService);
 
   Future<CouponStatus> applyForCoupon(Coupon coupon) async {
     Map<String, dynamic> map = {
@@ -17,7 +18,7 @@ class CouponRepositroy {
     try {
       return await _apiService.applyForCoupon(map);
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
       throw Failure(AppConstants.GENERIC_FAILURE);
     }
   }
@@ -29,7 +30,7 @@ class CouponRepositroy {
     try {
       return await _apiService.cancelCoupon(coupon.meal, map);
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
       throw Failure(AppConstants.GENERIC_FAILURE);
     }
   }

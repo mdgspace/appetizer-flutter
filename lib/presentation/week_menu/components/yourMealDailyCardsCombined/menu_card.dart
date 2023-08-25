@@ -119,164 +119,159 @@ class MealCard extends StatelessWidget {
       offset: 2,
       width: 312.toAutoScaledWidth,
       height: 168.toAutoScaledHeight,
-      child: Container(
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              width: 125.toAutoScaledWidth,
-              height: 168.toAutoScaledHeight,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: svg.Svg(
-                    'assets/images/meal_card/${meal.title}.svg',
-                  ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: 125.toAutoScaledWidth,
+            height: 168.toAutoScaledHeight,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: svg.Svg(
+                  'assets/images/meal_card/${meal.title}.svg',
                 ),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  SizedBox(height: 15.toAutoScaledHeight),
-                  Container(
-                    height: 28.toAutoScaledHeight,
-                    padding: EdgeInsets.only(left: 12),
-                    child: Text(
-                      meal.title,
-                      style: AppTheme.headline1.copyWith(
-                          fontSize: 20.toAutoScaledFont,
-                          color: AppTheme.black11),
-                    ),
-                  ),
-                  Container(
-                    height: 17.toAutoScaledHeight,
-                    padding: EdgeInsets.only(left: 12.toAutoScaledWidth),
-                    child: Text(
-                      '${DateFormat.jm().format(meal.startTime)} - ${DateFormat.jm().format(meal.endTime)}',
-                      style: AppTheme.headline3.copyWith(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 12.toAutoScaledFont,
-                          color: AppTheme.grey2f),
-                    ),
-                  ),
-                  SizedBox(height: 9.toAutoScaledHeight),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Container(
-                        padding: EdgeInsets.only(left: 12.toAutoScaledWidth),
-                        child: FittedBox(
-                          fit: BoxFit.contain,
-                          child: FSwitch(
-                            enable: !meal.isLeaveToggleOutdated,
-                            open: meal.leaveStatus.status != LeaveStatusEnum.A,
-                            sliderColor: AppTheme.customWhite,
-                            openColor: AppTheme.black2e,
-                            height: 20.toAutoScaledHeight,
-                            width: 44.toAutoScaledWidth,
-                            onChanged: (value) async {
-                              context
-                                  .read<YourMealDailyCardsCombinedBloc>()
-                                  .add(ToggleMealLeaveEvent(
-                                      mealId: meal.id,
-                                      leaveAppliedAlready:
-                                          meal.leaveStatus.status ==
-                                              LeaveStatusEnum.A));
-                            },
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 45.toAutoScaledHeight),
-                  ...[
-                    meal.isOutdated
-                        ? GestureDetector(
-                            onTap: () {
-                              //TODO: lead to feedback page
-                            },
-                            child: const FeedbackAndCouponWidget(
-                                taken: false, coupon: false),
-                          )
-                        : (_isMealValidForCoupon(meal)
-                            ? GestureDetector(
-                                onTap: () {
-                                  if (!meal.isCouponOutdated) {
-                                    context
-                                        .read<YourMealDailyCardsCombinedBloc>()
-                                        .add(ToggleMealCouponEvent(
-                                            couponId:
-                                                meal.couponStatus.status ==
-                                                        CouponStatusEnum.A
-                                                    ? meal.couponStatus.id!
-                                                    : -1,
-                                            couponAppliedAlready:
-                                                meal.couponStatus.status ==
-                                                    CouponStatusEnum.A,
-                                            mealId: meal.id));
-                                  } else if (meal.couponStatus.status ==
-                                      CouponStatusEnum.A) {
-                                    showCouponDialog(
-                                        "Coupon no: ${meal.couponStatus.id!}",
-                                        context);
-                                  } else {
-                                    showCouponDialog(
-                                        "You can not apply for coupon now",
-                                        context);
-                                  }
-                                },
-                                child: FeedbackAndCouponWidget(
-                                    taken: meal.couponStatus.status ==
-                                        CouponStatusEnum.A,
-                                    coupon: true),
-                              )
-                            : const SizedBox.shrink()),
-                  ],
-                  SizedBox(height: 10.toAutoScaledHeight)
-                ],
               ),
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              mainAxisSize: MainAxisSize.max,
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                SizedBox(height: 18.toAutoScaledHeight),
-                for (var item in meal.items) Text("  \u2022 ${item.name}"),
-                const Spacer(),
+                SizedBox(height: 15.toAutoScaledHeight),
                 Container(
-                  margin: EdgeInsets.symmetric(
-                    horizontal: 22.toAutoScaledWidth,
+                  height: 28.toAutoScaledHeight,
+                  padding: const EdgeInsets.only(left: 12),
+                  child: Text(
+                    meal.title,
+                    style: AppTheme.headline1.copyWith(
+                        fontSize: 20.toAutoScaledFont, color: AppTheme.black11),
                   ),
-                  height: 0.5,
-                  width: 145,
-                  color: AppTheme.rulerColor,
                 ),
-                SizedBox(height: 8.toAutoScaledHeight),
                 Container(
-                  width: 187.toAutoScaledWidth,
-                  padding: EdgeInsets.only(
-                    left: 12.toAutoScaledWidth,
-                    right: 19.toAutoScaledWidth,
+                  height: 17.toAutoScaledHeight,
+                  padding: EdgeInsets.only(left: 12.toAutoScaledWidth),
+                  child: Text(
+                    '${DateFormat.jm().format(meal.startTime)} - ${DateFormat.jm().format(meal.endTime)}',
+                    style: AppTheme.headline3.copyWith(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 12.toAutoScaledFont,
+                        color: AppTheme.grey2f),
                   ),
-                  child: RichText(
-                    text: TextSpan(
-                      text: 'Daily Items: ',
-                      style: AppTheme.bodyText2.copyWith(
-                          fontWeight: FontWeight.w600,
-                          color: const Color(0xFFB51111)),
-                      children: [
-                        TextSpan(
-                            text: dailyItemsParsed, style: AppTheme.bodyText2)
-                      ],
+                ),
+                SizedBox(height: 9.toAutoScaledHeight),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Container(
+                      padding: EdgeInsets.only(left: 12.toAutoScaledWidth),
+                      child: FittedBox(
+                        fit: BoxFit.contain,
+                        child: FSwitch(
+                          enable: !meal.isLeaveToggleOutdated,
+                          open: meal.leaveStatus.status != LeaveStatusEnum.A,
+                          sliderColor: AppTheme.customWhite,
+                          openColor: AppTheme.black2e,
+                          height: 20.toAutoScaledHeight,
+                          width: 44.toAutoScaledWidth,
+                          onChanged: (value) async {
+                            context.read<YourMealDailyCardsCombinedBloc>().add(
+                                ToggleMealLeaveEvent(
+                                    mealId: meal.id,
+                                    leaveAppliedAlready:
+                                        meal.leaveStatus.status ==
+                                            LeaveStatusEnum.A));
+                          },
+                        ),
+                      ),
                     ),
+                  ],
+                ),
+                SizedBox(height: 45.toAutoScaledHeight),
+                ...[
+                  meal.isOutdated
+                      ? GestureDetector(
+                          onTap: () {
+                            //TODO: lead to feedback page
+                          },
+                          child: const FeedbackAndCouponWidget(
+                              taken: false, coupon: false),
+                        )
+                      : (_isMealValidForCoupon(meal)
+                          ? GestureDetector(
+                              onTap: () {
+                                if (!meal.isCouponOutdated) {
+                                  context
+                                      .read<YourMealDailyCardsCombinedBloc>()
+                                      .add(ToggleMealCouponEvent(
+                                          couponId: meal.couponStatus.status ==
+                                                  CouponStatusEnum.A
+                                              ? meal.couponStatus.id!
+                                              : -1,
+                                          couponAppliedAlready:
+                                              meal.couponStatus.status ==
+                                                  CouponStatusEnum.A,
+                                          mealId: meal.id));
+                                } else if (meal.couponStatus.status ==
+                                    CouponStatusEnum.A) {
+                                  showCouponDialog(
+                                      "Coupon no: ${meal.couponStatus.id!}",
+                                      context);
+                                } else {
+                                  showCouponDialog(
+                                      "You can not apply for coupon now",
+                                      context);
+                                }
+                              },
+                              child: FeedbackAndCouponWidget(
+                                  taken: meal.couponStatus.status ==
+                                      CouponStatusEnum.A,
+                                  coupon: true),
+                            )
+                          : const SizedBox.shrink()),
+                ],
+                SizedBox(height: 10.toAutoScaledHeight)
+              ],
+            ),
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: 18.toAutoScaledHeight),
+              for (var item in meal.items) Text("  \u2022 ${item.name}"),
+              const Spacer(),
+              Container(
+                margin: EdgeInsets.symmetric(
+                  horizontal: 22.toAutoScaledWidth,
+                ),
+                height: 0.5,
+                width: 145,
+                color: AppTheme.rulerColor,
+              ),
+              SizedBox(height: 8.toAutoScaledHeight),
+              Container(
+                width: 187.toAutoScaledWidth,
+                padding: EdgeInsets.only(
+                  left: 12.toAutoScaledWidth,
+                  right: 19.toAutoScaledWidth,
+                ),
+                child: RichText(
+                  text: TextSpan(
+                    text: 'Daily Items: ',
+                    style: AppTheme.bodyText2.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: const Color(0xFFB51111)),
+                    children: [
+                      TextSpan(
+                          text: dailyItemsParsed, style: AppTheme.bodyText2)
+                    ],
                   ),
                 ),
-                SizedBox(height: 17.toAutoScaledHeight)
-              ],
-            )
-          ],
-        ),
+              ),
+              SizedBox(height: 17.toAutoScaledHeight)
+            ],
+          )
+        ],
       ),
     );
   }
