@@ -8,23 +8,22 @@ abstract class YourMealDailyCardsCombinedEvent extends Equatable {
 }
 
 class ToggleMealLeaveEvent extends YourMealDailyCardsCombinedEvent {
-  const ToggleMealLeaveEvent(
-      {required this.mealId, required this.leaveAppliedAlready});
-  final int mealId;
-  final bool leaveAppliedAlready;
+  const ToggleMealLeaveEvent({required this.meal});
+  final Meal meal;
 
   @override
-  List<Object> get props => [mealId];
+  List<Object> get props => [meal];
 }
 
 class ToggleMealCouponEvent extends YourMealDailyCardsCombinedEvent {
-  const ToggleMealCouponEvent(
-      {required this.couponId,
-      required this.couponAppliedAlready,
-      required this.mealId});
-  final int couponId;
-  final int mealId;
+  const ToggleMealCouponEvent({
+    required this.couponAppliedAlready,
+    required this.coupon,
+    required this.mealId,
+  });
+  final Coupon coupon;
   final bool couponAppliedAlready;
+  final int mealId;
   @override
-  List<Object> get props => [couponId, couponAppliedAlready, mealId];
+  List<Object> get props => [couponAppliedAlready, coupon];
 }

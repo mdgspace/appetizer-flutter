@@ -3,6 +3,8 @@
 
 import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
 import 'package:appetizer/domain/models/menu/week_menu.dart';
+import 'package:appetizer/domain/repositories/coupon_repository.dart';
+import 'package:appetizer/domain/repositories/leave_repository.dart';
 import 'package:appetizer/presentation/week_menu/components/yourMealDailyCardsCombined/menu_card.dart';
 import 'package:appetizer/presentation/week_menu/components/yourMealDailyCardsCombined/bloc/your_meal_daily_cards_combined_bloc.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +27,11 @@ class YourMealDailyCardsCombined extends StatelessWidget {
           couponApplied: meal.couponStatus.status == CouponStatusEnum.A));
     }
     return BlocProvider(
-      create: (_) => YourMealDailyCardsCombinedBloc(initialMealStates),
+      create: (_) => YourMealDailyCardsCombinedBloc(
+        mealStatesInitial: initialMealStates,
+        leaveRepository: context.read<LeaveRepository>(),
+        couponRepository: context.read<CouponRepository>(),
+      ),
       child: Column(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.start,

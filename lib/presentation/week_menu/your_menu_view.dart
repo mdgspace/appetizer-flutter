@@ -2,6 +2,8 @@
 import 'package:appetizer/app_theme.dart';
 import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
 import 'package:appetizer/domain/models/menu/week_menu.dart';
+import 'package:appetizer/domain/repositories/leave_repository.dart';
+import 'package:appetizer/domain/repositories/menu_repository.dart';
 import 'package:appetizer/presentation/week_menu/bloc/your_week_menu_bloc_bloc.dart';
 import 'package:appetizer/presentation/week_menu/components/day_date_bar.dart';
 import 'package:appetizer/presentation/week_menu/components/yourMealDailyCardsCombined/your_meal_daily_cards_combined.dart';
@@ -60,9 +62,12 @@ class YourWeekMenuScreen extends StatelessWidget {
     int currDayIndex = dayUtil[0];
     return BlocProvider<YourWeekMenuBlocBloc>(
       create: (BuildContext context) => YourWeekMenuBlocBloc(
-          weekMenu: weekMenu,
-          currDayIndex: currDayIndex,
-          isCheckedOut: isCheckedOut),
+        weekMenu: weekMenu,
+        currDayIndex: currDayIndex,
+        isCheckedOut: isCheckedOut,
+        menuRepository: context.read<MenuRepository>(),
+        leaveRepository: context.read<LeaveRepository>(),
+      ),
       child: BlocBuilder<YourWeekMenuBlocBloc, YourWeekMenuBlocState>(
         // listener: (context, state) {},
         // listenWhen: (previous, current) {
