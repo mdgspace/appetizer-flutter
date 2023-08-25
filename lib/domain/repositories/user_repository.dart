@@ -79,9 +79,9 @@ class UserRepository {
     }
   }
 
-  Future<void> sendResetPasswordLink(User user) async {
+  Future<void> sendResetPasswordLink(String emailID) async {
     Map<String, dynamic> map = {
-      'email': user.email,
+      'email': emailID,
     };
     try {
       return await _apiService.resetPassword(map);
