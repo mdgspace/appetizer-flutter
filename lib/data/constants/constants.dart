@@ -40,4 +40,7 @@ class AppConstants {
 
   // Local db
   static const String localDb = "appiLocalDb";
+
+  // Redirect link for issues
+  static const String issueUrl = "https://mess.iitr.ac.in/issues";
 }

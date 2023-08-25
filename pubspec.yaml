@@ -44,6 +44,8 @@ dependencies:
   sentry_flutter: ^7.9.0
   sentry_dio: ^7.9.0
   flutter_svg_provider: ^1.0.6
+  url_launcher: ^6.1.12
+  flutter_inappwebview: ^5.7.2+3
 
 dev_dependencies:
   auto_route_generator: 7.1.1

@@ -17,6 +17,8 @@ class EnterPassword extends LoginState {
   EnterPassword({this.showPassword = false, this.error});
 }
 
+class ForgotPasswordState extends LoginState {}
+
 class LoginSuccess extends LoginState {}
 
 class LoginError extends LoginState {}
