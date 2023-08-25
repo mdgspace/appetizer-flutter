@@ -13,7 +13,8 @@ class CouponCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row( //TODO: test if parent widget required or not
+    return Row(
+      //TODO: test if parent widget required or not
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
@@ -34,7 +35,7 @@ class CouponCard extends StatelessWidget {
             bottom: 12.toAutoScaledHeight,
           ),
           decoration: ShapeDecoration(
-            color: Color.fromARGB(255, 255, 255, 255),
+            color: const Color.fromARGB(255, 255, 255, 255),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
                 topLeft: Radius.zero,
@@ -49,10 +50,10 @@ class CouponCard extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                coupon.title,
+                coupon.id.toString(),
                 textAlign: TextAlign.left,
                 style: TextStyle(
-                  color: Color(0xFF111111),
+                  color: const Color(0xFF111111),
                   fontSize: 12.toAutoScaledFont,
                   fontFamily: 'Noto Sans',
                   fontWeight: FontWeight.w600,
@@ -62,7 +63,7 @@ class CouponCard extends StatelessWidget {
               Text(
                 coupon.meal,
                 style: TextStyle(
-                  color: Color(0xFF2E2E2E),
+                  color: const Color(0xFF2E2E2E),
                   fontSize: 10.toAutoScaledFont,
                   fontFamily: 'Noto Sans',
                   fontWeight: FontWeight.w400,

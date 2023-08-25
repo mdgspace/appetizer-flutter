@@ -12,7 +12,7 @@ class NoNotificationsWidget extends StatelessWidget {
       child: Text(
         'No new notifications !',
         style: TextStyle(
-          color: Color(0xFF111111),
+          color: const Color(0xFF111111),
           fontSize: 18.toAutoScaledFont,
           fontFamily: 'Noto Sans',
           fontWeight: FontWeight.w400,

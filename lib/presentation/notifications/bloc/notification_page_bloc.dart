@@ -13,17 +13,17 @@ class NotificationPageBloc
       // TODO: implement repository call
       bool submissionSuccessful = true;
       List<Notification> notifications = [
-        Notification(
+        const Notification(
             id: 123,
             dateCreated: 532523,
             title: "Yesssir",
             message: "fasfafafassfadasdadsafafasfsdfafasfasfasfasfasfas"),
-        Notification(
+        const Notification(
             id: 123,
             dateCreated: 532523,
             title: "Yesssir",
             message: "fasfafafassfadasdadsafafasfsdfafasfasfasfasfasfas"),
-        Notification(
+        const Notification(
             id: 123,
             dateCreated: 532523,
             title: "Yesssir",
@@ -50,17 +50,17 @@ class NotificationPageBloc
       (NotificationPageSwitchChangedEvent event,
           Emitter<NotificationPageState> emit) {
         List<Notification> notifications = [
-          Notification(
+          const Notification(
               id: 123,
               dateCreated: 532523,
               title: "Yesssir",
               message: "fasfafafassfadasdadsafafasfsdfafasfasfasfasfasfas"),
-          Notification(
+          const Notification(
               id: 123,
               dateCreated: 532523,
               title: "Yesssir",
               message: "fasfafafassfadasdadsafafasfsdfafasfasfasfasfasfas"),
-          Notification(
+          const Notification(
               id: 123,
               dateCreated: 532523,
               title: "Yesssir",
