@@ -89,7 +89,7 @@ class _OtherDateWidget extends StatelessWidget {
               style: AppTheme.button.copyWith(height: 1.toAutoScaledHeight),
             ),
           ),
-          SizedBox(height: 2.toAutoScaledHeight),
+          2.toVerticalSizedBox,
           Container(
             // padding: const EdgeInsets.symmetric(vertical: 5.5, horizontal: 6),
             decoration: ShapeDecoration(
@@ -161,7 +161,7 @@ class _NewDayDateBarState extends State<NewDayDateBar> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             mainAxisSize: MainAxisSize.min,
             children: [
-              SizedBox(width: 12.5.toAutoScaledWidth),
+              12.5.toHorizontalSizedBox,
               GestureDetector(
                   onTap: () {
                     setState(() {
@@ -200,7 +200,7 @@ class _NewDayDateBarState extends State<NewDayDateBar> {
                     ),
                   ],
                 ),
-              SizedBox(width: 8.5.toAutoScaledWidth),
+              8.5.toHorizontalSizedBox,
             ],
           ),
         ),

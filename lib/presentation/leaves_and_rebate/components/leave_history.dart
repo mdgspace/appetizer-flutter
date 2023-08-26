@@ -49,7 +49,7 @@ class LeaveHistory extends StatelessWidget {
                           fontSize: 14.toAutoScaledFont,
                           color: AppTheme.primary),
                     ),
-                    const SizedBox(height: 10),
+                    10.toVerticalSizedBox,
                     ...paginatedLeaves.results
                         .map((leave) => Padding(
                               padding: EdgeInsets.only(

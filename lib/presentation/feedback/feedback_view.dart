@@ -52,7 +52,7 @@ class FeedbackPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: 9.toAutoScaledHeight),
+                  9.toVerticalSizedBox,
                   Text(
                     'Kindly provide us with your feedback to improve your mess experienWeekly Menuce.',
                     style: TextStyle(
@@ -62,7 +62,7 @@ class FeedbackPage extends StatelessWidget {
                       fontWeight: FontWeight.w400,
                     ),
                   ),
-                  SizedBox(height: 6.toAutoScaledHeight),
+                  6.toVerticalSizedBox,
                   ...List.generate(feedbackHeadings.length, (ind) {
                     return Padding(
                       padding:
@@ -74,9 +74,7 @@ class FeedbackPage extends StatelessWidget {
                       ),
                     );
                   }),
-                  const SizedBox(
-                    height: 2,
-                  ),
+                  2.toVerticalSizedBox,
                   Text(
                     'If any other feeback, please describe below',
                     style: TextStyle(
@@ -110,7 +108,7 @@ class FeedbackPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 19),
+                  19.toVerticalSizedBox,
                   Align(
                     alignment: Alignment.bottomRight,
                     child: BlackIconButton(
