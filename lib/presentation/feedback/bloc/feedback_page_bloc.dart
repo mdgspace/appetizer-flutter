@@ -10,12 +10,7 @@ class FeedbackPageBloc extends Bloc<FeedbackPageEvent, FeedbackPageState> {
   FeedbackPageBloc({
     required this.repo,
   }) : super(
-          FeedbackPageState(
-            rating: List<int>.filled(5, 0),
-            description: '',
-            submitted: false,
-            error: false,
-          ),
+          FeedbackPageState.initial(),
         ) {
     on<FeedbackPageSubmitEvent>(
         (FeedbackPageSubmitEvent event, Emitter<FeedbackPageState> emit) {
