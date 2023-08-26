@@ -12,43 +12,28 @@ class NotificationPageBloc
   NotificationPageBloc({
     required this.repo,
   }) : super(const NotificationPageInitialState()) {
-    on<NotificationPageFetchEvent>(
-      (NotificationPageFetchEvent event,
-          Emitter<NotificationPageState> emit) async {
-        List<Notification> notifications = await repo.getNotifications();
-        emit(
-          NotificationPageFetchedState(
-            option: 0,
-            notifications: notifications,
-          ),
-        );
-        // TODO: add fail state
-      },
-    );
-    // TODO: remove swithc bar and option related events and logic
-    // on<NotificationPageSwitchChangedEvent>(
-    //   (NotificationPageSwitchChangedEvent event,
-    //       Emitter<NotificationPageState> emit) {
-    //     List<Notification> notifications = [
-    //       const Notification(
-    //           id: 123,
-    //           dateCreated: 532523,
-    //           title: "Yesssir",
-    //           message: "fasfafafassfadasdadsafafasfsdfafasfasfasfasfasfas"),
-    //       const Notification(
-    //           id: 123,
-    //           dateCreated: 532523,
-    //           title: "Yesssir",
-    //           message: "fasfafafassfadasdadsafafasfsdfafasfasfasfasfasfas"),
-    //       const Notification(
-    //           id: 123,
-    //           dateCreated: 532523,
-    //           title: "Yesssir",
-    //           message: "fasfafafassfadasdadsafafasfsdfafasfasfasfasfasfas")
-    //     ];
-    //     emit(NotificationPageFetchedState(
-    //         option: event.option, notifications: notifications));
-    //   },
-    // );
+    on<NotificationPageFetchEvent>(_onNotificationFetch);
+    // // TODO: remove swithc bar and option related events and logic
+    // on<NotificationPageSwitchChangedEvent>(_onSwitch);
   }
+
+  void _onNotificationFetch(NotificationPageFetchEvent event,
+      Emitter<NotificationPageState> emit) async {
+    List<Notification> notifications = await repo.getNotifications();
+    emit(
+      NotificationPageFetchedState(
+        option: 0,
+        notifications: notifications,
+      ),
+    );
+    // TODO: add fail state
+  }
+
+  // void _onSwitch(NotificationPageSwitchChangedEvent event,
+  //     Emitter<NotificationPageState> emit) {
+  //   // TODO: implement repository call
+  //   List<Notification> notifications = [];
+  //   emit(NotificationPageFetchedState(
+  //       option: event.option, notifications: notifications,),);
+  // }
 }

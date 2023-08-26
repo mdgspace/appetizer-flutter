@@ -8,7 +8,7 @@ class FeedbackPageState extends Equatable {
     required this.error,
   });
 
-  const FeebackPageState.initial()
+  const FeedbackPageState.initial()
       : rating = const [0, 0, 0, 0, 0],
         description = '',
         submitted = false,

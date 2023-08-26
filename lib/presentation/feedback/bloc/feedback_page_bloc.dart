@@ -10,46 +10,49 @@ class FeedbackPageBloc extends Bloc<FeedbackPageEvent, FeedbackPageState> {
   FeedbackPageBloc({
     required this.repo,
   }) : super(
-          FeedbackPageState.initial(),
+          const FeedbackPageState.initial(),
         ) {
-    on<FeedbackPageSubmitEvent>(
-        (FeedbackPageSubmitEvent event, Emitter<FeedbackPageState> emit) {
-      // TODO: implement repository call
-      bool submissionSuccessful = true;
-      if (submissionSuccessful) {
-        emit(
-          FeedbackPageState(
-            rating: event.rating,
-            description: event.description,
-            submitted: true,
-            error: false,
-          ),
-        );
-      }
-      // else {
-      //   emit(
-      //     FeedbackPageState(
-      //       rating: event.rating,
-      //       description: event.description,
-      //       submitted: false,
-      //       error: true,
-      //     ),
-      //   );
-      // }
-    });
-    on<FeedbackPageDescriptionChangedEvent>(
-        (FeedbackPageDescriptionChangedEvent event,
-            Emitter<FeedbackPageState> emit) {
-      if (event.description != state.description) {
-        emit(
-          FeedbackPageState(
-            rating: state.rating,
-            description: event.description,
-            submitted: state.submitted,
-            error: state.error,
-          ),
-        );
-      }
-    });
+    on<FeedbackPageSubmitEvent>(_onSubmit);
+    on<FeedbackPageDescriptionChangedEvent>(_onDescriptionChange);
+  }
+
+  void _onSubmit(
+      FeedbackPageSubmitEvent event, Emitter<FeedbackPageState> emit) {
+    // TODO: implement repository call
+    bool submissionSuccessful = true;
+    if (submissionSuccessful) {
+      emit(
+        FeedbackPageState(
+          rating: event.rating,
+          description: event.description,
+          submitted: true,
+          error: false,
+        ),
+      );
+    }
+    // else {
+    //   emit(
+    //     FeedbackPageState(
+    //       rating: event.rating,
+    //       description: event.description,
+    //       submitted: false,
+    //       error: true,
+    //     ),
+    //   );
+    // }
+  }
+
+  void _onDescriptionChange(FeedbackPageDescriptionChangedEvent event,
+      Emitter<FeedbackPageState> emit) {
+    if (event.description != state.description) {
+      emit(
+        FeedbackPageState(
+          rating: state.rating,
+          description: event.description,
+          submitted: state.submitted,
+          error: state.error,
+        ),
+      );
+    }
   }
 }

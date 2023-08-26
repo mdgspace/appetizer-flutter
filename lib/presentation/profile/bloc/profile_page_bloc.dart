@@ -11,15 +11,17 @@ class ProfilePageBloc extends Bloc<ProfilePageEvent, ProfilePageState> {
   ProfilePageBloc({
     required this.repo,
   }) : super(const ProfilePageInitialState()) {
-    on<ProfilePageFetchEvent>(
-        (ProfilePageFetchEvent event, Emitter<ProfilePageState> emit) async {
-      // TODO: implement event handler
-      User user = await repo.getCurrentUser();
-      emit(
-        ProfilePageFetchedState(
-          user: user,
-        ),
-      );
-    });
+    on<ProfilePageFetchEvent>(_onFetch);
+  }
+
+  void _onFetch(
+      ProfilePageFetchEvent event, Emitter<ProfilePageState> emit) async {
+    // TODO: implement event handler
+    User user = await repo.getCurrentUser();
+    emit(
+      ProfilePageFetchedState(
+        user: user,
+      ),
+    );
   }
 }
