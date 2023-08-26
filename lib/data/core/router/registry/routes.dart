@@ -32,5 +32,9 @@ class AppRoutesRegistry {
       path: AppPathsRegistry.weekMenu,
       page: YourWeekMenuRoute.page,
     ),
+    CustomRoute(
+      path: AppPathsRegistry.oAuth,
+      page: OAuthWebRoute.page,
+    )
   ];
 }

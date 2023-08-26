@@ -89,7 +89,7 @@ class BlackIconButton extends StatelessWidget {
                 height: 1.50,
               ),
             ),
-            const SizedBox(width: 12),
+            12.toVerticalSizedBox,
             Container(
               height: 14,
               width: 14,

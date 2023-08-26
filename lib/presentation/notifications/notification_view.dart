@@ -68,9 +68,7 @@ class NotificationScreen extends StatelessWidget {
                               data: state.notifications[index],
                             ),
                             index < state.notifications.length
-                                ? SizedBox(
-                                    height: 16.toAutoScaledHeight,
-                                  )
+                                ? 16.toVerticalSizedBox
                                 : const SizedBox.shrink(),
                           ],
                         );

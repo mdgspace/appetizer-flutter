@@ -59,7 +59,7 @@ class CouponCard extends StatelessWidget {
                   fontWeight: FontWeight.w600,
                 ),
               ),
-              SizedBox(height: 6.toAutoScaledHeight),
+              6.toVerticalSizedBox,
               Text(
                 coupon.meal,
                 style: TextStyle(
