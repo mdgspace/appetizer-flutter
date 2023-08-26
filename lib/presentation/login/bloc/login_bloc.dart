@@ -108,7 +108,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     on<SendPasswordResetInstructions>((event, emit) async {
       //TODO: complete logic
       emit(Loading());
-      try{
+      try {
         await userRepository.sendResetPasswordLink(event.emailId);
         //TODO: show dialog box that instructions have been sent
         //TODO: route (if needed)

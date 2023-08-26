@@ -227,9 +227,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ? context.read<LoginBloc>().add(LoginPressed(
                                       _controller.text, state.enrollmentNo))
                                   : state is ForgotPasswordState
-                                      ? context
-                                          .read<LoginBloc>()
-                                          .add(SendPasswordResetInstructions(emailId: state.emailID))
+                                      ? context.read<LoginBloc>().add(
+                                          SendPasswordResetInstructions(
+                                              emailId: state.emailID))
                                       : context
                                           .read<LoginBloc>()
                                           .add(NextPressed(_controller.text));
