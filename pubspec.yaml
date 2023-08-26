@@ -46,6 +46,7 @@ dependencies:
   flutter_svg_provider: ^1.0.6
   url_launcher: ^6.1.12
   flutter_inappwebview: ^5.7.2+3
+  flutter_native_splash: ^2.3.2
 
 dev_dependencies:
   auto_route_generator: 7.1.1
@@ -58,6 +59,16 @@ dev_dependencies:
     sdk: flutter
 
   flutter_lints: ^2.0.0
+
+flutter_native_splash:
+  color: "#FFCB74"
+  image: "assets/images/icons/splash_icon.png"
+  fullscreen: true
+
+  android_12:
+    color: "#FFCB74"
+    image: "assets/images/icons/splash_icon.png"
+
 
 flutter:
   uses-material-design: true
