@@ -1,8 +1,10 @@
 import 'package:appetizer/data/constants/env_config.dart';
+import 'package:appetizer/utils/app_extensions/app_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
-import 'package:get/get.dart';
+import 'package:auto_route/auto_route.dart';
 
+@RoutePage()
 class OAuthWebScreen extends StatelessWidget {
   static const id = 'oauth_view';
   OAuthWebScreen({Key? key}) : super(key: key);
@@ -35,7 +37,7 @@ class OAuthWebScreen extends StatelessWidget {
                   onUpdateVisitedHistory: (_, uri, __) {
                     if (uri != null) {
                       if (uri.toString().contains('https://channeli.in/feed')) {
-                        Get.back();
+                        BaseApp.router.pop();
                         //TODO: show dialog box
                         // SnackBarUtils.showDark('Error', 'Permission Denied!');
                       }
@@ -50,7 +52,7 @@ class OAuthWebScreen extends StatelessWidget {
                     var _params = url.split('?').last.split('&');
                     if (_params.first.contains('code')) {
                       var _code = _params.first.split('=').last;
-                      Get.back(result: _code);
+                      BaseApp.router.pop(_code);
                     }
 
                     return NavigationActionPolicy.CANCEL;
