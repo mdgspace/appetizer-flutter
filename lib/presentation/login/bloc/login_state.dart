@@ -16,10 +16,14 @@ class EnterPassword extends LoginState {
   final bool showPassword;
   final String enrollmentNo;
   final String? error;
-  EnterPassword({this.showPassword = false, this.error, required this.enrollmentNo});
+  EnterPassword(
+      {this.showPassword = false, this.error, required this.enrollmentNo});
 }
 
-class ForgotPasswordState extends LoginState {}
+class ForgotPasswordState extends LoginState {
+  final String emailID;
+  ForgotPasswordState({required this.emailID});
+}
 
 class LoginSuccess extends LoginState {}
 

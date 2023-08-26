@@ -12,8 +12,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   LoginBloc({required this.userRepository}) : super(LoginInitial()) {
     on<NextPressed>((event, emit) async {
       emit(Loading());
-      //TODO: check if enrollment number is valid or not
-      // If it is invalid, show a dialog box
       bool isOldUser = await userRepository.userIsOldUser(event.enrollmentNo);
       if (isOldUser) {
         emit(EnterPassword(enrollmentNo: event.enrollmentNo));
@@ -36,13 +34,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       } catch (e) {
         // TODO: show dialog box
       }
-      // TODO: call api
-
-      // if failed
-      // emit(LoginError());
-      // else
-      // TODO: route to home screen
-      // emit(LoginSuccess());
     });
     on<ShowPasswordPressed>((event, emit) {
       if (state is EnterPassword) {
@@ -70,9 +61,11 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           emit(CreatePassword(enrollmentNo: user.studentData.enrNo.toString()));
         } else {
           //TODO: show dialog box that user is already registered
-          emit(EnterPassword(
-              enrollmentNo: user.studentData.enrNo
-                  .toString())); // we can show an error here also
+          emit(
+            EnterPassword(
+              enrollmentNo: user.studentData.enrNo.toString(),
+            ),
+          );
         }
       } catch (e) {
         //TODO: show error dialog box
@@ -110,10 +103,18 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       }
     });
     on<ForgotPasswordPressed>((event, emit) {
-      emit(ForgotPasswordState());
+      emit(ForgotPasswordState(emailID: event.emailId));
     });
     on<SendPasswordResetInstructions>((event, emit) async {
       //TODO: complete logic
+      emit(Loading());
+      try{
+        await userRepository.sendResetPasswordLink(event.emailId);
+        //TODO: show dialog box that instructions have been sent
+        //TODO: route (if needed)
+      } catch (e) {
+        // TODO: show dialog box with error
+      }
       // for reference, see forgot_password_viewmodel.dart on master branch
     });
   }

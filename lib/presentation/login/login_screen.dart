@@ -24,7 +24,8 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => LoginBloc(userRepository: context.read<UserRepository>()),
+      create: (context) =>
+          LoginBloc(userRepository: context.read<UserRepository>()),
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         body: SingleChildScrollView(
@@ -123,9 +124,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               onPressed: () {
                                 context.read<LoginBloc>().add(
                                       LoginPressed(
-                                        _controller.text,
-                                        state.enrollmentNo
-                                      ),
+                                          _controller.text, state.enrollmentNo),
                                     );
                               },
                             ),
@@ -226,13 +225,11 @@ class _LoginScreenState extends State<LoginScreen> {
                             onPressed: () {
                               state is EnterPassword
                                   ? context.read<LoginBloc>().add(LoginPressed(
-                                        _controller.text,
-                                        state.enrollmentNo
-                                      ))
+                                      _controller.text, state.enrollmentNo))
                                   : state is ForgotPasswordState
                                       ? context
                                           .read<LoginBloc>()
-                                          .add(SendPasswordResetInstructions())
+                                          .add(SendPasswordResetInstructions(emailId: state.emailID))
                                       : context
                                           .read<LoginBloc>()
                                           .add(NextPressed(_controller.text));

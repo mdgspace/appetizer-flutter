@@ -15,7 +15,11 @@ class LoginPressed extends LoginEvent {
 
 class ShowPasswordPressed extends LoginEvent {}
 
-class SendPasswordResetInstructions extends LoginEvent {}
+class SendPasswordResetInstructions extends LoginEvent {
+  final String emailId;
+  SendPasswordResetInstructions({required this.emailId});
+}
+
 class ForgotPasswordPressed extends LoginEvent {
   final String emailId;
   ForgotPasswordPressed({required this.emailId});
@@ -27,7 +31,8 @@ class CreatedPasswordNewUser extends LoginEvent {
   CreatedPasswordNewUser({required this.password, required this.user});
 }
 
-class NewUserSignUp extends LoginEvent { // this event will be added after the oauth screen returns
+class NewUserSignUp extends LoginEvent {
+  // this event will be added after the oauth screen returns
   final String code;
   NewUserSignUp({required this.code});
 }
