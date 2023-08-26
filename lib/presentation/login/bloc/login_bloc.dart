@@ -21,7 +21,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
             error: 'Password must be at least 8 characters long'));
       }
       // TODO: call api
-      
+
       // if failed
       // emit(LoginError());
       // else

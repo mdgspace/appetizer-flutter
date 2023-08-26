@@ -9,7 +9,7 @@ class OAuthWebScreen extends StatelessWidget {
   static const id = 'oauth_view';
   OAuthWebScreen({Key? key}) : super(key: key);
   final ValueNotifier<int> _loadingState = ValueNotifier(1);
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,10 +47,10 @@ class OAuthWebScreen extends StatelessWidget {
                       return NavigationActionPolicy.ALLOW;
                     }
 
-                    var _params = url.split('?').last.split('&');
-                    if (_params.first.contains('code')) {
-                      var _code = _params.first.split('=').last;
-                      BaseApp.router.pop(_code);
+                    var params = url.split('?').last.split('&');
+                    if (params.first.contains('code')) {
+                      var code = params.first.split('=').last;
+                      BaseApp.router.pop(code);
                     }
 
                     return NavigationActionPolicy.CANCEL;
