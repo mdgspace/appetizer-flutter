@@ -59,9 +59,14 @@ dev_dependencies:
   flutter_lints: ^2.0.0
 
 flutter_native_splash:
-  background_image: "assets/images/splash_bg.png"
+  color: "#FFCB74"
   image: "assets/images/icons/splash_icon.png"
   fullscreen: true
+
+  android_12:
+    color: "#FFCB74"
+    image: "assets/images/icons/splash_icon.png"
+
 
 flutter:
   uses-material-design: true
