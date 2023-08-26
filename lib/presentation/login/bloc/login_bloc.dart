@@ -1,9 +1,7 @@
-import 'package:appetizer/data/core/router/intrinsic_router/intrinsic_router.dart';
 import 'package:appetizer/data/services/local/local_storage_service.dart';
 import 'package:appetizer/domain/models/user/oauth_user.dart';
 import 'package:appetizer/domain/models/user/user.dart';
 import 'package:appetizer/domain/repositories/user_repository.dart';
-import 'package:appetizer/utils/app_extensions/app_extensions.dart';
 import 'package:bloc/bloc.dart';
 
 part 'login_event.dart';
@@ -23,7 +21,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         // below is the code to be uncommented later:
         //try{
         //  OAuthUser oAuthUser = await userRepository.oAuthRedirect(code);
-        //  emit(CreatePassword())
+        //  emit(CreatePassword(event.enrollmentNo));
         //} catch(e) {
         //  //TODO: show dialog box with error code
         //}
