@@ -1,7 +1,9 @@
+import 'package:appetizer/data/core/router/intrinsic_router/intrinsic_router.dart';
 import 'package:appetizer/data/services/local/local_storage_service.dart';
 import 'package:appetizer/domain/models/user/oauth_user.dart';
 import 'package:appetizer/domain/models/user/user.dart';
 import 'package:appetizer/domain/repositories/user_repository.dart';
+import 'package:appetizer/utils/app_extensions/app_extensions.dart';
 import 'package:bloc/bloc.dart';
 
 part 'login_event.dart';
@@ -16,7 +18,15 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       if (isOldUser) {
         emit(EnterPassword(enrollmentNo: event.enrollmentNo));
       } else {
-        emit(CreatePassword(enrollmentNo: event.enrollmentNo));
+        // TODO: route to the oauthwebscreen and get code and go back in case of any error in oauthwebview screen
+        // verify user using oauthredirect
+        // below is the code to be uncommented later:
+        //try{
+        //  OAuthUser oAuthUser = await userRepository.oAuthRedirect(code);
+        //  emit(CreatePassword())
+        //} catch(e) {
+        //  //TODO: show dialog box with error code
+        //}
       }
     });
     on<LoginPressed>((event, emit) async {
