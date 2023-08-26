@@ -1,6 +1,7 @@
 import 'package:appetizer/data/constants/constants.dart';
 import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
 import 'package:appetizer/presentation/components/made_by_mdg.dart';
+import 'package:appetizer/domain/repositories/user_repository.dart';
 import 'package:appetizer/presentation/login/components/login_button.dart';
 import 'package:appetizer/presentation/login/bloc/login_bloc.dart';
 import 'package:auto_route/auto_route.dart';
@@ -23,7 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => LoginBloc(),
+      create: (context) => LoginBloc(userRepository: context.read<UserRepository>()),
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         body: SingleChildScrollView(
@@ -123,6 +124,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 context.read<LoginBloc>().add(
                                       LoginPressed(
                                         _controller.text,
+                                        state.enrollmentNo
                                       ),
                                     );
                               },
@@ -225,6 +227,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               state is EnterPassword
                                   ? context.read<LoginBloc>().add(LoginPressed(
                                         _controller.text,
+                                        state.enrollmentNo
                                       ))
                                   : state is ForgotPasswordState
                                       ? context

@@ -1,24 +1,40 @@
+import 'package:appetizer/data/services/local/local_storage_service.dart';
+import 'package:appetizer/domain/models/user/oauth_user.dart';
+import 'package:appetizer/domain/models/user/user.dart';
+import 'package:appetizer/domain/repositories/user_repository.dart';
 import 'package:bloc/bloc.dart';
 
 part 'login_event.dart';
 part 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
-  LoginBloc() : super(LoginInitial()) {
-    on<NextPressed>((event, emit) {
+  final UserRepository userRepository;
+  LoginBloc({required this.userRepository}) : super(LoginInitial()) {
+    on<NextPressed>((event, emit) async {
       emit(Loading());
-      // if already in db
-      // emit(CreatePassword());
-      // else
-      // TODO: route to oauth_webview
-      emit(CreatePassword());
+      //TODO: check if enrollment number is valid or not
+      // If it is invalid, show a dialog box
+      bool isOldUser = await userRepository.userIsOldUser(event.enrollmentNo);
+      if (isOldUser) {
+        emit(EnterPassword(enrollmentNo: event.enrollmentNo));
+      } else {
+        emit(CreatePassword(enrollmentNo: event.enrollmentNo));
+      }
     });
-    on<LoginPressed>((event, emit) {
+    on<LoginPressed>((event, emit) async {
       emit(Loading());
-      // if error
-      if (event.password.length < 8) {
-        emit(EnterPassword(
-            error: 'Password must be at least 8 characters long'));
+      try {
+        User user =
+            await userRepository.userLogin(event.enrollmentNo, event.password);
+        LocalStorageService localStorageService =
+            await LocalStorageService.getInstance();
+        localStorageService.currentUser = user;
+        localStorageService.token = user.token!;
+        localStorageService.isLoggedIn = true;
+        localStorageService.isFirstTimeLogin = true;
+        // TODO: route to home screen
+      } catch (e) {
+        // TODO: show dialog box
       }
       // TODO: call api
 
@@ -31,7 +47,66 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     on<ShowPasswordPressed>((event, emit) {
       if (state is EnterPassword) {
         final currentState = state as EnterPassword;
-        emit(EnterPassword(showPassword: !currentState.showPassword));
+        emit(EnterPassword(
+          showPassword: !currentState.showPassword,
+          enrollmentNo: currentState.enrollmentNo,
+        ));
+      }
+    });
+    on<ForgotPasswordPressed>((event, emit) async {
+      emit(Loading());
+      try {
+        await userRepository.sendResetPasswordLink(event.emailId);
+        // TODO: show dialog box that link has been sent
+      } catch (e) {
+        // TODO: show dialog box with error message
+      }
+    });
+    on<NewUserSignUp>((event, emit) async {
+      // verify user using code
+      try {
+        OAuthUser user = await userRepository.oAuthRedirect(event.code);
+        if (user.isNew) {
+          emit(CreatePassword(enrollmentNo: user.studentData.enrNo.toString()));
+        } else {
+          //TODO: show dialog box that user is already registered
+          emit(EnterPassword(
+              enrollmentNo: user.studentData.enrNo
+                  .toString())); // we can show an error here also
+        }
+      } catch (e) {
+        //TODO: show error dialog box
+      }
+    });
+    on<CreatedPasswordNewUser>((event, emit) async {
+      if (event.password.length < 8) {
+        emit(
+          EnterPassword(
+            error: 'Password must be at least 8 characters long',
+            enrollmentNo: (state as CreatePassword).enrollmentNo,
+          ),
+        );
+        return;
+      }
+      emit(Loading());
+      try {
+        OAuthUser authUser = await userRepository.oAuthComplete(
+          event.user,
+          event.password,
+        );
+        User user = await userRepository.userLogin(
+          authUser.studentData.enrNo.toString(),
+          event.password,
+        );
+        LocalStorageService localStorageService =
+            await LocalStorageService.getInstance();
+        localStorageService.currentUser = user;
+        localStorageService.token = user.token!;
+        localStorageService.isLoggedIn = true;
+        localStorageService.isFirstTimeLogin = true;
+        // TODO : route to the menu screen and update relevant information about the logged in user
+      } catch (e) {
+        //TODO: show dialog box with relevant error message
       }
     });
     on<ForgotPasswordPressed>((event, emit) {

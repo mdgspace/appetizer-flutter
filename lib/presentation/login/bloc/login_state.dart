@@ -8,13 +8,15 @@ class Loading extends LoginState {}
 
 class CreatePassword extends LoginState {
   final String? error;
-  CreatePassword({this.error});
+  final String enrollmentNo;
+  CreatePassword({this.error, required this.enrollmentNo});
 }
 
 class EnterPassword extends LoginState {
   final bool showPassword;
+  final String enrollmentNo;
   final String? error;
-  EnterPassword({this.showPassword = false, this.error});
+  EnterPassword({this.showPassword = false, this.error, required this.enrollmentNo});
 }
 
 class ForgotPasswordState extends LoginState {}
