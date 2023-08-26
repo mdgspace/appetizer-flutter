@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:get/get.dart';
 
-class OAuthView extends StatelessWidget {
+class OAuthWebScreen extends StatelessWidget {
   static const id = 'oauth_view';
-  OAuthView({Key? key}) : super(key: key);
+  OAuthWebScreen({Key? key}) : super(key: key);
   final ValueNotifier<int> _loadingState = ValueNotifier(1);
   final String omniportSignUpURL =
       'https://channeli.in/oauth/authorise/?client_id=${EnvironmentConfig.OAUTH_CLIENT_ID}&redirect_uri=${EnvironmentConfig.OAUTH_REDIRECT_URI}';
