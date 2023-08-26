@@ -9,6 +9,7 @@ import 'package:appetizer/presentation/week_menu/components/yourMealDailyCardsCo
 import 'package:appetizer/presentation/components/app_banner.dart';
 import 'package:appetizer/presentation/components/loading_indicator.dart';
 import 'package:appetizer/presentation/components/round_edge_container.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -38,8 +39,9 @@ class DayMenuFull {
   }
 }
 
-class YourWeekMenu extends StatelessWidget {
-  const YourWeekMenu(
+@RoutePage()
+class YourWeekMenuScreen extends StatelessWidget {
+  const YourWeekMenuScreen(
       {super.key, required this.weekMenu, required this.isCheckedOut});
   // final DateTime monthAndYear, startDateTime, endDateTime;
   final WeekMenu weekMenu;

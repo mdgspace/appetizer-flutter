@@ -37,12 +37,21 @@ dependencies:
   month_picker_dialog: ^2.0.2
   hive: ^2.2.3
   device_preview: ^1.1.0
+  retrofit: ^4.0.1
+  dio: ^5.3.2
+  json_annotation: ^4.8.1
+  freezed_annotation: ^2.4.1
+  sentry_flutter: ^7.9.0
+  sentry_dio: ^7.9.0
   flutter_svg_provider: ^1.0.6
   flutter_native_splash: ^2.3.2
 
 dev_dependencies:
   auto_route_generator: 7.1.1
   build_runner: ">2.3.0 <4.0.0"
+  json_serializable: ^6.7.1
+  freezed: ^2.4.1
+  retrofit_generator: ^7.0.8
 
   flutter_test:
     sdk: flutter

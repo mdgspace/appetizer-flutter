@@ -1,11 +1,8 @@
-import 'dart:convert';
+import 'package:json_annotation/json_annotation.dart';
 
-List<Faq> faqFromJson(String str) =>
-    List<Faq>.from(json.decode(str).map((x) => Faq.fromJson(x)));
+part 'faq.g.dart';
 
-String faqToJson(List<Faq> data) =>
-    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
-
+@JsonSerializable()
 class Faq {
   int id;
   String question;
@@ -17,15 +14,7 @@ class Faq {
     required this.answer,
   });
 
-  factory Faq.fromJson(Map<String, dynamic> json) => Faq(
-        id: json['id'],
-        question: json['question'],
-        answer: json['answer'],
-      );
+  factory Faq.fromJson(Map<String, dynamic> json) => _$FaqFromJson(json);
 
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'question': question,
-        'answer': answer,
-      };
+  Map<String, dynamic> toJson() => _$FaqToJson(this);
 }

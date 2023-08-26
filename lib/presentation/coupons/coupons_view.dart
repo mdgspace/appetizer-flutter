@@ -2,11 +2,13 @@ import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
 import 'package:appetizer/presentation/components/no_data_found_container.dart';
 import 'package:appetizer/presentation/coupons/bloc/coupons_page_bloc.dart';
 import 'package:appetizer/presentation/coupons/components/coupon_card.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class CouponsPage extends StatelessWidget {
-  const CouponsPage({super.key});
+@RoutePage()
+class CouponsScreen extends StatelessWidget {
+  const CouponsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

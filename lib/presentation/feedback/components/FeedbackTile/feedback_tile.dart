@@ -26,7 +26,7 @@ class FeedbackTile extends StatelessWidget {
           title,
           textAlign: TextAlign.left,
           style: TextStyle(
-            color: Color(0xFF111111),
+            color: const Color(0xFF111111),
             fontSize: 20.toAutoScaledFont,
             fontFamily: 'Lato',
             fontWeight: FontWeight.w400,

@@ -18,7 +18,7 @@ class ProfilePhoto extends StatelessWidget {
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(62.toAutoScaledWidth),
             side: BorderSide(
-              color: Color.fromARGB(255, 255, 255, 255),
+              color: const Color.fromARGB(255, 255, 255, 255),
               width: 12.4.toAutoScaledWidth,
             )),
       ),

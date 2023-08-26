@@ -29,7 +29,7 @@ class ProfileTextButton extends StatelessWidget {
           title,
           textAlign: TextAlign.center,
           style: TextStyle(
-            color: Color(0xFF111111),
+            color: const Color(0xFF111111),
             fontSize: 13.toAutoScaledFont,
             fontFamily: 'Lato',
             fontWeight: FontWeight.w400,
@@ -82,7 +82,7 @@ class ProfileIconButton extends StatelessWidget {
           SizedBox(
             width: 20.toAutoScaledWidth,
             height: 20.toAutoScaledHeight,
-            child: Icon(
+            child: const Icon(
               Icons.bookmark_border_outlined,
               color: Color.fromARGB(255, 255, 203, 116),
             ),
@@ -92,7 +92,7 @@ class ProfileIconButton extends StatelessWidget {
             title,
             textAlign: TextAlign.center,
             style: TextStyle(
-              color: Color(0xFF111111),
+              color: const Color(0xFF111111),
               fontSize: 14.toAutoScaledFont,
               fontFamily: 'Lato',
               fontWeight: FontWeight.w500,
