@@ -129,7 +129,7 @@ class YourWeekMenuScreen extends StatelessWidget {
                           EdgeInsets.fromLTRB(0, 0, 0, 14.toAutoScaledHeight),
                       child: GestureDetector(
                         onTap: () {
-                          //TODO: add check in functionality
+                          context.read<YourWeekMenuBlocBloc>().add(const CheckInEvent());
                         },
                         child:
                             const RoundEdgeTextOnlyContainer(text: "CHECK IN"),
