@@ -27,7 +27,8 @@ class YourWeekMenuBlocBloc
     on<NextWeekChangeEvent>(
         (NextWeekChangeEvent event, Emitter<YourWeekMenuBlocState> emit) async {
       emit(const YourWeekMenuBlocLoadingState());
-      WeekMenu nextWeekMenu = await menuRepository.weekMenuByWeekId(event.nextWeekId);
+      WeekMenu nextWeekMenu =
+          await menuRepository.weekMenuByWeekId(event.nextWeekId);
       emit(YourWeekMenuBlocDisplayState(
           weekMenu: nextWeekMenu,
           currDayIndex: 0,

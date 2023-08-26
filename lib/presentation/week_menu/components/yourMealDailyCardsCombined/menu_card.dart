@@ -198,7 +198,8 @@ class MealCard extends StatelessWidget {
                       : (_isMealValidForCoupon(meal)
                           ? GestureDetector(
                               onLongPress: () {
-                                if (meal.couponStatus.status == CouponStatusEnum.A){
+                                if (meal.couponStatus.status ==
+                                    CouponStatusEnum.A) {
                                   // TODO: show dialog box
                                 }
                               },
