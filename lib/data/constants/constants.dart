@@ -1,3 +1,5 @@
+import 'package:appetizer/data/constants/env_config.dart';
+
 class AppConstants {
   /// USER AUTHENTICATION CONSTANTS
   static const String USER_AUTH_WRONG_CREDENTIALS =
@@ -43,4 +45,7 @@ class AppConstants {
 
   // Redirect link for issues
   static const String issueUrl = "https://mess.iitr.ac.in/issues";
+
+  static const String omniportSignUpURL =
+      'https://channeli.in/oauth/authorise/?client_id=${EnvironmentConfig.OAUTH_CLIENT_ID}&redirect_uri=${EnvironmentConfig.OAUTH_REDIRECT_URI}';
 }

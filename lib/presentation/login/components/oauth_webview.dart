@@ -1,4 +1,4 @@
-import 'package:appetizer/data/constants/env_config.dart';
+import 'package:appetizer/data/constants/constants.dart';
 import 'package:appetizer/utils/app_extensions/app_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
@@ -9,9 +9,7 @@ class OAuthWebScreen extends StatelessWidget {
   static const id = 'oauth_view';
   OAuthWebScreen({Key? key}) : super(key: key);
   final ValueNotifier<int> _loadingState = ValueNotifier(1);
-  final String omniportSignUpURL =
-      'https://channeli.in/oauth/authorise/?client_id=${EnvironmentConfig.OAUTH_CLIENT_ID}&redirect_uri=${EnvironmentConfig.OAUTH_REDIRECT_URI}';
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,11 +18,11 @@ class OAuthWebScreen extends StatelessWidget {
           valueListenable: _loadingState,
           builder: (context, value, _) {
             return IndexedStack(
-              index: int.parse(value.toString()),
+              index: value,
               children: [
                 InAppWebView(
                   initialUrlRequest: URLRequest(
-                    url: Uri.parse(omniportSignUpURL),
+                    url: Uri.parse(AppConstants.omniportSignUpURL),
                   ),
                   initialOptions: InAppWebViewGroupOptions(
                     crossPlatform: InAppWebViewOptions(
