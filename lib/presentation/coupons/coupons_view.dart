@@ -1,4 +1,5 @@
 import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
+import 'package:appetizer/domain/repositories/coupon_repository.dart';
 import 'package:appetizer/presentation/components/no_data_found_container.dart';
 import 'package:appetizer/presentation/coupons/bloc/coupons_page_bloc.dart';
 import 'package:appetizer/presentation/coupons/components/coupon_card.dart';
@@ -31,7 +32,8 @@ class CouponsScreen extends StatelessWidget {
         toolbarHeight: 120.toAutoScaledHeight,
       ),
       body: BlocProvider(
-        create: (context) => CouponsPageBloc(),
+        create: (context) =>
+            CouponsPageBloc(repo: context.read<CouponRepository>()),
         child: BlocBuilder<CouponsPageBloc, CouponsPageState>(
           builder: (context, state) {
             if (state is CouponsPageInitialState) {
