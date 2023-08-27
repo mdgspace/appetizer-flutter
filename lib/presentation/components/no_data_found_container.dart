@@ -21,7 +21,7 @@ class NoDataFoundContainer extends StatelessWidget {
           // TODO: check why svg doesnt work
           // SvgPicture.asset(
           //   'assets/images/no_data_image.svg',
-          //   // 'assets/images/banner.svg',
+          //   // 'assets/images/no_data_image.svg',
           //   height: 178.toAutoScaledHeight,
           //   width: 186.toAutoScaledWidth,
           // ),

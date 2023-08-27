@@ -3,6 +3,7 @@ import 'package:appetizer/domain/models/menu/week_menu.dart';
 import 'package:appetizer/domain/models/transaction/paginated_yearly_rebate.dart';
 import 'package:appetizer/domain/models/user/user.dart';
 import 'package:appetizer/presentation/coupons/coupons_view.dart';
+import 'package:appetizer/presentation/feedback/feedback_view.dart';
 import 'package:appetizer/presentation/leaves_and_rebate/leaves_and_rebate.dart';
 import 'package:appetizer/presentation/profile/profile_view.dart';
 import 'package:appetizer/utils/local_storage.dart';
@@ -197,19 +198,8 @@ class AppetizerApp extends StatelessWidget {
     //     data: baka,
     //   ),
     // );
-    return const MaterialApp(
-      home: CouponsPage(),
+    return MaterialApp(
+      home: FeedbackPage(),
     );
-    // return MaterialApp(
-    //   home: Scaffold(
-    // body: LeavesAndRebate(
-    //       isCheckedOut: false,
-    //       initialYearlyRebates: dummyRebate,
-    //       mealsSkipped: mealsSkipped,
-    //       remainingLeaves: remainingLeaves,
-    //       currYearLeaves: dummyLeaves,
-    //     ),
-    //   ),
-    // );
   }
 }
