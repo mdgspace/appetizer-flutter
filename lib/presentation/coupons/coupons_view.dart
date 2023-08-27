@@ -1,6 +1,7 @@
 import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
 import 'package:appetizer/presentation/components/no_data_found_container.dart';
 import 'package:appetizer/presentation/coupons/bloc/coupons_page_bloc.dart';
+import 'package:appetizer/presentation/coupons/components/coupon_banner.dart';
 import 'package:appetizer/presentation/coupons/components/coupon_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,23 +12,6 @@ class CouponsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {},
-        ),
-        title: Text(
-          'Coupons',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 24.toAutoScaledFont,
-            fontFamily: 'Noto Sans',
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-        backgroundColor: const Color(0xFFFFCB74),
-        toolbarHeight: 120.toAutoScaledHeight,
-      ),
       body: BlocProvider(
         create: (context) => CouponsPageBloc(),
         child: BlocBuilder<CouponsPageBloc, CouponsPageState>(
@@ -36,32 +20,42 @@ class CouponsPage extends StatelessWidget {
               context
                   .read<CouponsPageBloc>()
                   .add(const CouponsPageFetchEvent(coupons: []));
-              // TODO: place proper widget
-              return const Placeholder();
-            }
-            if (state is CouponsPageFailedState) {
-              // TODO: throw an error, or snackbar
-            }
-            if (state is CouponsPageFetchedState) {
-              if (state.coupons.isEmpty) {
-                return const NoDataFoundContainer(
-                    title: 'No coupons selected !');
-              }
-              return Container(
-                padding: EdgeInsets.only(
-                    left: 32.toAutoScaledWidth, top: 40.toAutoScaledHeight),
-                child: GridView.count(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 39.toAutoScaledWidth,
-                  mainAxisSpacing: 27.toAutoScaledHeight,
-                  children: List.generate(
-                    state.coupons.length,
-                    (index) => CouponCard(coupon: state.coupons[index]),
-                  ),
-                ),
+              return const Column(
+                children: [
+                  CouponBanner(),
+                  NoDataFoundContainer(title: 'Coupons vanished into space !'),
+                ],
               );
             }
-            return const NoDataFoundContainer(title: 'No coupons selected !');
+            if (state is CouponsPageFetchedState && state.coupons.isNotEmpty) {
+              return Column(
+                children: [
+                  const CouponBanner(),
+                  Expanded(
+                    // TODO: remove extra size of gridview children
+                    child: GridView.count(
+                      crossAxisCount: 2,
+                      padding: EdgeInsets.only(left: 32.toAutoScaledWidth),
+                      shrinkWrap: true,
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 10,
+                      children: List.generate(
+                        state.coupons.length,
+                        (index) => CouponCard(
+                          coupon: state.coupons[index],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            }
+            return const Column(
+              children: [
+                CouponBanner(),
+                NoDataFoundContainer(title: 'No coupons selected !'),
+              ],
+            );
           },
         ),
       ),

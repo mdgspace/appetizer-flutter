@@ -11,7 +11,15 @@ class CouponsPageBloc extends Bloc<CouponsPageEvent, CouponsPageState> {
         (CouponsPageFetchEvent event, Emitter<CouponsPageState> emit) {
       // TODO: implement repository call
       bool submissionSuccessful = true;
-      List<Coupon> coupons = [];
+      List<Coupon> coupons = [
+        Coupon(id: 202, meal: "Breakfast, 12 August", title: "CPN202"),
+        Coupon(id: 202, meal: "Breakfast, 12 August", title: "CPN202"),
+        Coupon(id: 202, meal: "Breakfast, 12 August", title: "CPN202"),
+        Coupon(id: 202, meal: "Breakfast, 12 August", title: "CPN202"),
+        Coupon(id: 202, meal: "Breakfast, 12 August", title: "CPN202"),
+        Coupon(id: 202, meal: "Breakfast, 12 August", title: "CPN202"),
+        Coupon(id: 202, meal: "Breakfast, 12 August", title: "CPN202"),
+      ];
       if (submissionSuccessful) {
         emit(
           CouponsPageFetchedState(
