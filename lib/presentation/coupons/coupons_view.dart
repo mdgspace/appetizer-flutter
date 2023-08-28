@@ -1,8 +1,10 @@
 import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
+import 'package:appetizer/domain/models/coupon/coupon.dart';
 import 'package:appetizer/domain/repositories/coupon_repository.dart';
 import 'package:appetizer/presentation/components/no_data_found_container.dart';
 import 'package:appetizer/presentation/coupons/bloc/coupons_page_bloc.dart';
-import 'package:appetizer/presentation/coupons/components/coupon_card.dart';
+import 'package:appetizer/presentation/coupons/components/coupon_banner.dart';
+import 'package:appetizer/presentation/coupons/components/coupon_row.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,23 +16,6 @@ class CouponsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {},
-        ),
-        title: Text(
-          'Coupons',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 24.toAutoScaledFont,
-            fontFamily: 'Noto Sans',
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-        backgroundColor: const Color(0xFFFFCB74),
-        toolbarHeight: 120.toAutoScaledHeight,
-      ),
       body: BlocProvider(
         create: (context) =>
             CouponsPageBloc(repo: context.read<CouponRepository>()),
@@ -40,32 +25,48 @@ class CouponsScreen extends StatelessWidget {
               context
                   .read<CouponsPageBloc>()
                   .add(const CouponsPageFetchEvent(coupons: []));
-              // TODO: place proper widget
-              return const Placeholder();
-            }
-            if (state is CouponsPageFailedState) {
-              // TODO: throw an error, or snackbar
-            }
-            if (state is CouponsPageFetchedState) {
-              if (state.coupons.isEmpty) {
-                return const NoDataFoundContainer(
-                    title: 'No coupons selected !');
-              }
-              return Container(
-                padding: EdgeInsets.only(
-                    left: 32.toAutoScaledWidth, top: 40.toAutoScaledHeight),
-                child: GridView.count(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 39.toAutoScaledWidth,
-                  mainAxisSpacing: 27.toAutoScaledHeight,
-                  children: List.generate(
-                    state.coupons.length,
-                    (index) => CouponCard(coupon: state.coupons[index]),
-                  ),
-                ),
+              return const Column(
+                children: [
+                  CouponBanner(),
+                  NoDataFoundContainer(title: 'Coupons vanished into space !'),
+                ],
               );
             }
-            return const NoDataFoundContainer(title: 'No coupons selected !');
+            if (state is CouponsPageFetchedState && state.coupons.isNotEmpty) {
+              return Column(
+                children: [
+                  const CouponBanner(),
+                  Expanded(
+                    child: ListView.builder(
+                      itemBuilder: ((context, index) {
+                        List<Coupon> couponsList = [];
+                        if (index == (state.coupons.length - 1) ~/ 2 &&
+                            state.coupons.length.isOdd) {
+                          couponsList = [state.coupons.last];
+                        } else {
+                          couponsList = [
+                            state.coupons[2 * index],
+                            state.coupons[2 * index + 1]
+                          ];
+                        }
+                        return CouponRow(coupons: couponsList);
+                      }),
+                      itemCount: (state.coupons.length + 1) ~/ 2,
+                      padding: EdgeInsets.only(
+                        left: 32.toAutoScaledWidth,
+                        right: 32.toAutoScaledWidth,
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            }
+            return const Column(
+              children: [
+                CouponBanner(),
+                NoDataFoundContainer(title: 'No coupons selected !'),
+              ],
+            );
           },
         ),
       ),

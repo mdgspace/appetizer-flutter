@@ -1,6 +1,6 @@
 import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+// import 'package:flutter_svg/flutter_svg.dart';
 
 class NoDataFoundContainer extends StatelessWidget {
   const NoDataFoundContainer({
@@ -18,9 +18,16 @@ class NoDataFoundContainer extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          150.toVerticalSizedBox,
-          SvgPicture.asset(
-            'assets/images/no_data_image.svg',
+          // TODO: check why svg doesnt work
+          // SvgPicture.asset(
+          //   'assets/images/no_data_image.svg',
+          //   // 'assets/images/no_data_image.svg',
+          //   height: 178.toAutoScaledHeight,
+          //   width: 186.toAutoScaledWidth,
+          // ),
+          Image.asset(
+            'assets/images/no_data_image.png',
+            height: 178.toAutoScaledHeight,
             width: 186.toAutoScaledWidth,
           ),
           Text(
