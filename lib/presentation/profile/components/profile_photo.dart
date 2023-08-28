@@ -1,6 +1,5 @@
 import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 
 class ProfilePhoto extends StatelessWidget {
   const ProfilePhoto({
@@ -26,8 +25,9 @@ class ProfilePhoto extends StatelessWidget {
       height: 124.toAutoScaledHeight,
       child: const CircleAvatar(
         backgroundColor: Color.fromARGB(255, 255, 255, 255),
-        foregroundImage: Svg(
-          'assets/images/profile_photo.svg',
+        // TODO: make profile photo as svg
+        foregroundImage: AssetImage(
+          'assets/images/profile_photo.png',
         ),
       ),
     );
