@@ -1,5 +1,6 @@
 import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
 import 'package:appetizer/domain/models/user/user.dart';
+import 'package:appetizer/domain/repositories/user_repository.dart';
 import 'package:appetizer/presentation/components/app_banner.dart';
 import 'package:appetizer/presentation/components/black_button.dart';
 import 'package:appetizer/presentation/profile/bloc/profile_page_bloc.dart';
