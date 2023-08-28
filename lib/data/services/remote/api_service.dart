@@ -128,6 +128,11 @@ abstract class ApiService {
 
   // User API
 
+  @POST(ApiEndpoints.status)
+  Future<String> status(
+    @Body() Map<String, dynamic> map,
+  );
+
   @POST(ApiEndpoints.login)
   Future<User> login(
     @Body() Map<String, dynamic> map,

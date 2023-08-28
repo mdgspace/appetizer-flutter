@@ -125,7 +125,19 @@ class UserRepository {
   }
 
   Future<bool> userIsOldUser(String enrollmentNo) async {
-    //TODO: update and link with api
-    return true;
+    try {
+      String status = await _apiService.status({"enr": enrollmentNo});
+      if (status == AppConstants.REGISTERED_USER_API_STATUS) {
+        return true;
+      } else if (status == AppConstants.TEMPORARY_USER_API_STATUS ||
+          status == AppConstants.UNREGISTERED_USER_API_STATUS) {
+        return false;
+      } else {
+        throw Failure(AppConstants.GENERIC_FAILURE);
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+      throw Failure(AppConstants.GENERIC_FAILURE);
+    }
   }
 }
