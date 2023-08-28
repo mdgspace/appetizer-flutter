@@ -8,6 +8,7 @@ class ApiEndpoints {
 
   static const String coupon = '/api/coupon';
   static const String couponWithId = '/api/coupon/{couponId}';
+  static const String allCoupons = '/api/coupon/all';
 
   static const String submittedFeedback = '/api/feedback/all/';
   static const String responseOfFeedback = '/api/feedback/response/list/';

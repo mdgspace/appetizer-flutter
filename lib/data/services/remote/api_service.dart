@@ -1,5 +1,6 @@
 import 'package:appetizer/data/constants/api_endpoints.dart';
 import 'package:appetizer/domain/models/appetizer_version.dart';
+import 'package:appetizer/domain/models/coupon/coupon.dart';
 import 'package:appetizer/domain/models/feedback/appetizer_feedback.dart';
 import 'package:appetizer/domain/models/feedback/feedback_response.dart';
 import 'package:appetizer/domain/models/leaves/paginated_leaves.dart';
@@ -37,6 +38,11 @@ abstract class ApiService {
   @PATCH(ApiEndpoints.couponWithId)
   Future<CouponStatus> cancelCoupon(
     @Path("couponId") String couponId,
+    @Body() Map<String, dynamic> map,
+  );
+
+  @GET(ApiEndpoints.allCoupons)
+  Future<List<Coupon>> getAllCoupon(
     @Body() Map<String, dynamic> map,
   );
 

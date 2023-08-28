@@ -3,6 +3,7 @@ import 'package:appetizer/data/services/remote/api_service.dart';
 import 'package:appetizer/domain/models/coupon/coupon.dart';
 import 'package:appetizer/domain/models/failure_model.dart';
 import 'package:appetizer/domain/models/menu/week_menu.dart';
+import 'package:appetizer/domain/models/user/user.dart';
 import 'package:flutter/foundation.dart';
 
 class CouponRepository {
@@ -29,6 +30,16 @@ class CouponRepository {
     };
     try {
       return await _apiService.cancelCoupon(coupon.meal, map);
+    } catch (e) {
+      debugPrint(e.toString());
+      throw Failure(AppConstants.GENERIC_FAILURE);
+    }
+  }
+
+  Future<List<Coupon>> getAllCoupon(User user) async {
+    Map<String, dynamic> map = {};
+    try {
+      return await _apiService.getAllCoupon(map);
     } catch (e) {
       debugPrint(e.toString());
       throw Failure(AppConstants.GENERIC_FAILURE);
