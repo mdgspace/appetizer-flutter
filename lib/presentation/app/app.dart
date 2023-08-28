@@ -1,4 +1,10 @@
 import 'package:appetizer/data/services/remote/api_service.dart';
+import 'package:appetizer/domain/repositories/coupon_repository.dart';
+import 'package:appetizer/domain/repositories/feedback_repository.dart';
+import 'package:appetizer/domain/repositories/leave_repository.dart';
+import 'package:appetizer/domain/repositories/menu_repository.dart';
+import 'package:appetizer/domain/repositories/transaction_repositroy.dart';
+import 'package:appetizer/domain/repositories/user_repository.dart';
 import 'package:appetizer/presentation/app/bloc/app_bloc.dart';
 import 'package:appetizer/utils/app_extensions/app_extensions.dart';
 import 'package:appetizer/utils/interceptors/auth_interceptor.dart';
@@ -34,19 +40,29 @@ class _AppetizerAppState extends State<AppetizerApp> {
   @override
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(
-      providers: const [],
-      child: BlocBuilder<AppBloc, AppState>(
-        builder: (context, state) {
-          return MaterialApp.router(
-            debugShowCheckedModeBanner: false,
-            title: "Appetizer",
-            locale: DevicePreview.locale(context),
-            builder: DevicePreview.appBuilder,
-            routerDelegate: AutoRouterDelegate(BaseApp.router),
-            routeInformationParser: BaseApp.router.defaultRouteParser(),
-            // TODO: add theme
-          );
-        },
+      providers: [
+        RepositoryProvider<CouponRepository>(create: (context) => CouponRepository(apiService)),
+        RepositoryProvider<FeedbackRepository>(create: (context) => FeedbackRepository(apiService)),
+        RepositoryProvider<LeaveRepository>(create: (context) => LeaveRepository(apiService)),
+        RepositoryProvider<MenuRepository>(create: (context) => MenuRepository(apiService)),
+        RepositoryProvider<TransactionRepository>(create: (context) => TransactionRepository(apiService)),
+        RepositoryProvider<UserRepository>(create: (context) => UserRepository(apiService)),
+      ],
+      child: BlocProvider(
+        create: (context) => AppBloc(repo: context.read<UserRepository>()),
+        child: BlocBuilder<AppBloc, AppState>(
+          builder: (context, state) {
+            return MaterialApp.router(
+              debugShowCheckedModeBanner: false,
+              title: "Appetizer",
+              locale: DevicePreview.locale(context),
+              builder: DevicePreview.appBuilder,
+              routerDelegate: AutoRouterDelegate(BaseApp.router),
+              routeInformationParser: BaseApp.router.defaultRouteParser(),
+              // TODO: add theme
+            );
+          },
+        ),
       ),
     );
   }
