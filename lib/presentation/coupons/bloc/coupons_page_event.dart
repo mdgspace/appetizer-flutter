@@ -10,10 +10,12 @@ abstract class CouponsPageEvent extends Equatable {
 class CouponsPageFetchEvent extends CouponsPageEvent {
   const CouponsPageFetchEvent({
     required this.coupons,
+    required this.user,
   });
 
   final List<Coupon> coupons;
+  final User user;
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [coupons, user];
 }
