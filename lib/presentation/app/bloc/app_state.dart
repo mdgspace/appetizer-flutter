@@ -16,7 +16,8 @@ class AppState {
     NavigateTo? navigateTo,
     User? user,
   }) {
-    return AppState(navigateTo: navigateTo ?? this.navigateTo, user: user ?? this.user!);
+    return AppState(
+        navigateTo: navigateTo ?? this.navigateTo, user: user ?? this.user!);
   }
 
   factory AppState.initial() => AppState(navigateTo: NavigateTo.inital);

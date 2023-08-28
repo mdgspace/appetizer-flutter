@@ -41,12 +41,18 @@ class _AppetizerAppState extends State<AppetizerApp> {
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(
       providers: [
-        RepositoryProvider<CouponRepository>(create: (context) => CouponRepository(apiService)),
-        RepositoryProvider<FeedbackRepository>(create: (context) => FeedbackRepository(apiService)),
-        RepositoryProvider<LeaveRepository>(create: (context) => LeaveRepository(apiService)),
-        RepositoryProvider<MenuRepository>(create: (context) => MenuRepository(apiService)),
-        RepositoryProvider<TransactionRepository>(create: (context) => TransactionRepository(apiService)),
-        RepositoryProvider<UserRepository>(create: (context) => UserRepository(apiService)),
+        RepositoryProvider<CouponRepository>(
+            create: (context) => CouponRepository(apiService)),
+        RepositoryProvider<FeedbackRepository>(
+            create: (context) => FeedbackRepository(apiService)),
+        RepositoryProvider<LeaveRepository>(
+            create: (context) => LeaveRepository(apiService)),
+        RepositoryProvider<MenuRepository>(
+            create: (context) => MenuRepository(apiService)),
+        RepositoryProvider<TransactionRepository>(
+            create: (context) => TransactionRepository(apiService)),
+        RepositoryProvider<UserRepository>(
+            create: (context) => UserRepository(apiService)),
       ],
       child: BlocProvider(
         create: (context) => AppBloc(repo: context.read<UserRepository>()),
