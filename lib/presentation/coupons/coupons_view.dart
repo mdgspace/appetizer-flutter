@@ -1,8 +1,9 @@
 import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
+import 'package:appetizer/domain/models/coupon/coupon.dart';
 import 'package:appetizer/presentation/components/no_data_found_container.dart';
 import 'package:appetizer/presentation/coupons/bloc/coupons_page_bloc.dart';
 import 'package:appetizer/presentation/coupons/components/coupon_banner.dart';
-import 'package:appetizer/presentation/coupons/components/coupon_card.dart';
+import 'package:appetizer/presentation/coupons/components/coupon_row.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -32,18 +33,24 @@ class CouponsPage extends StatelessWidget {
                 children: [
                   const CouponBanner(),
                   Expanded(
-                    // TODO: remove extra size of gridview children
-                    child: GridView.count(
-                      crossAxisCount: 2,
-                      padding: EdgeInsets.only(left: 32.toAutoScaledWidth),
-                      shrinkWrap: true,
-                      crossAxisSpacing: 10,
-                      mainAxisSpacing: 10,
-                      children: List.generate(
-                        state.coupons.length,
-                        (index) => CouponCard(
-                          coupon: state.coupons[index],
-                        ),
+                    child: ListView.builder(
+                      itemBuilder: ((context, index) {
+                        List<Coupon> couponsList = [];
+                        if (index == (state.coupons.length - 1) ~/ 2 &&
+                            state.coupons.length.isOdd) {
+                          couponsList = [state.coupons.last];
+                        } else {
+                          couponsList = [
+                            state.coupons[2 * index],
+                            state.coupons[2 * index + 1]
+                          ];  
+                        }
+                        return CouponRow(coupons: couponsList);
+                      }),
+                      itemCount: (state.coupons.length + 1) ~/ 2,
+                      padding: EdgeInsets.only(
+                        left: 32.toAutoScaledWidth,
+                        right: 32.toAutoScaledWidth,
                       ),
                     ),
                   ),
