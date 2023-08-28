@@ -30,7 +30,7 @@ class ApiEndpoints {
   static const String yearlyRebate = '/api/transaction/list/expenses/';
   static const String faqs = '/api/faqs/';
 
-  static const String status = 'api/user/status';
+  static const String status = 'api/user/status/';
   static const String login = '/api/user/login/';
   static const String logout = '/api/user/logout/';
   static const String user = '/api/user/me/';
