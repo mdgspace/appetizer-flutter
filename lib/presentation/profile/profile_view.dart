@@ -142,7 +142,7 @@ class ProfileScreen extends StatelessWidget {
                           child: Text(
                             'Raise a Query',
                             style: TextStyle(
-                              color: Color(0xFF008BFF),
+                              color: const Color(0xFF008BFF),
                               fontSize: 12.toAutoScaledFont,
                               fontFamily: 'Inter',
                               fontWeight: FontWeight.w400,

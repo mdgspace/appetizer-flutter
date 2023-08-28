@@ -41,7 +41,7 @@ class FeedbackPage extends StatelessWidget {
                         Text(
                           'Kindly provide us with your feedback to improve your mess experienWeekly Menuce.',
                           style: TextStyle(
-                            color: Color(0xFF5A5A5A),
+                            color: const Color(0xFF5A5A5A),
                             fontSize: 14.toAutoScaledFont,
                             fontFamily: 'Lato',
                             fontWeight: FontWeight.w400,
@@ -63,7 +63,7 @@ class FeedbackPage extends StatelessWidget {
                         Text(
                           'If any other feeback, please describe below',
                           style: TextStyle(
-                            color: Color(0xFF111111),
+                            color: const Color(0xFF111111),
                             fontSize: 16.toAutoScaledFont,
                             fontFamily: 'Lato',
                             fontWeight: FontWeight.w400,

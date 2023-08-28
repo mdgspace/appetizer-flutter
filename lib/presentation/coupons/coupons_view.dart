@@ -47,7 +47,7 @@ class CouponsScreen extends StatelessWidget {
                           couponsList = [
                             state.coupons[2 * index],
                             state.coupons[2 * index + 1]
-                          ];  
+                          ];
                         }
                         return CouponRow(coupons: couponsList);
                       }),
