@@ -131,116 +131,12 @@ class MealCard extends StatelessWidget {
                   'assets/images/meal_card/${meal.title}.svg',
                 ),
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  SizedBox(height: 15.toAutoScaledHeight),
-                  Container(
-                    height: 28.toAutoScaledHeight,
-                    padding: EdgeInsets.only(left: 12),
-                    child: Text(
-                      meal.title,
-                      style: AppTheme.headline1.copyWith(
-                          fontSize: 20.toAutoScaledFont,
-                          color: AppTheme.black11),
-                    ),
-                  ),
-                  Container(
-                    height: 17.toAutoScaledHeight,
-                    padding: EdgeInsets.only(left: 12.toAutoScaledWidth),
-                    child: Text(
-                      '${DateFormat.jm().format(meal.startTime)} - ${DateFormat.jm().format(meal.endTime)}',
-                      style: AppTheme.headline3.copyWith(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 12.toAutoScaledFont,
-                          color: AppTheme.grey2f),
-                    ),
-                  ),
-                  9.toVerticalSizedBox,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Container(
-                        padding: EdgeInsets.only(left: 12.toAutoScaledWidth),
-                        child: FittedBox(
-                          fit: BoxFit.contain,
-                          child: FSwitch(
-                            enable: !meal.isLeaveToggleOutdated,
-                            open: meal.leaveStatus.status != LeaveStatusEnum.A,
-                            sliderColor: AppTheme.customWhite,
-                            openColor: AppTheme.black2e,
-                            height: 20.toAutoScaledHeight,
-                            width: 44.toAutoScaledWidth,
-                            onChanged: (value) async {
-                              context
-                                  .read<YourMealDailyCardsCombinedBloc>()
-                                  .add(ToggleMealLeaveEvent(
-                                      mealId: meal.id,
-                                      leaveAppliedAlready:
-                                          meal.leaveStatus.status ==
-                                              LeaveStatusEnum.A));
-                            },
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  45.toVerticalSizedBox,
-                  ...[
-                    meal.isOutdated
-                        ? GestureDetector(
-                            onTap: () {
-                              //TODO: lead to feedback page
-                            },
-                            child: const FeedbackAndCouponWidget(
-                                taken: false, coupon: false),
-                          )
-                        : (_isMealValidForCoupon(meal)
-                            ? GestureDetector(
-                                onTap: () {
-                                  if (!meal.isCouponOutdated) {
-                                    context
-                                        .read<YourMealDailyCardsCombinedBloc>()
-                                        .add(ToggleMealCouponEvent(
-                                            couponId:
-                                                meal.couponStatus.status ==
-                                                        CouponStatusEnum.A
-                                                    ? meal.couponStatus.id!
-                                                    : -1,
-                                            couponAppliedAlready:
-                                                meal.couponStatus.status ==
-                                                    CouponStatusEnum.A,
-                                            mealId: meal.id));
-                                  } else if (meal.couponStatus.status ==
-                                      CouponStatusEnum.A) {
-                                    showCouponDialog(
-                                        "Coupon no: ${meal.couponStatus.id!}",
-                                        context);
-                                  } else {
-                                    showCouponDialog(
-                                        "You can not apply for coupon now",
-                                        context);
-                                  }
-                                },
-                                child: FeedbackAndCouponWidget(
-                                    taken: meal.couponStatus.status ==
-                                        CouponStatusEnum.A,
-                                    coupon: true),
-                              )
-                            : const SizedBox.shrink()),
-                  ],
-                  10.toVerticalSizedBox
-                ],
-              ),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                18.toVerticalSizedBox,
-                for (var item in meal.items) Text("  \u2022 ${item.name}"),
-                const Spacer(),
+                SizedBox(height: 15.toAutoScaledHeight),
                 Container(
                   height: 28.toAutoScaledHeight,
                   padding: const EdgeInsets.only(left: 12),
@@ -372,7 +268,7 @@ class MealCard extends StatelessWidget {
                   ),
                 ),
               ),
-              17.toVerticalSizedBox,
+              SizedBox(height: 17.toAutoScaledHeight)
             ],
           )
         ],
