@@ -13,7 +13,14 @@ class FeedbackBanner extends StatelessWidget {
       child: Row(
         children: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              // TODO: navigate to menu page
+              // BaseApp.router.navigateToPage(
+              //   YourWeekMenuRoute(
+              //     weekMenu: const WeekMenu(),
+              //   ),
+              // );
+            },
             icon: const Icon(
               Icons.arrow_back,
               color: Colors.white,

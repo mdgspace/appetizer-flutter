@@ -1,3 +1,4 @@
+import 'package:appetizer/data/core/router/intrinsic_router/intrinsic_router.gr.dart';
 import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
 import 'package:appetizer/domain/models/user/user.dart';
 import 'package:appetizer/domain/repositories/user_repository.dart';
@@ -7,6 +8,7 @@ import 'package:appetizer/presentation/profile/bloc/profile_page_bloc.dart';
 import 'package:appetizer/presentation/profile/components/profile_button.dart';
 import 'package:appetizer/presentation/profile/components/profile_card.dart';
 import 'package:appetizer/presentation/profile/components/profile_photo.dart';
+import 'package:appetizer/utils/app_extensions/app_extensions.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -88,12 +90,22 @@ class ProfileScreen extends StatelessWidget {
                             children: [
                               ProfileTextButton(
                                 title: 'Edit Profile',
-                                onPressed: () {},
+                                onPressed: () {
+                                  const snackBar =
+                                      SnackBar(content: Text('Coming soon!'));
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(snackBar);
+                                },
                               ),
                               10.toHorizontalSizedBox,
                               ProfileTextButton(
                                 title: 'Reset Password',
-                                onPressed: () {},
+                                onPressed: () {
+                                  const snackBar =
+                                      SnackBar(content: Text('Coming soon!'));
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(snackBar);
+                                },
                               ),
                             ],
                           ),
@@ -119,7 +131,9 @@ class ProfileScreen extends StatelessWidget {
                               // 48.toHorizontalSizedBox,
                               ProfileIconButton(
                                 title: 'Coupons',
-                                onPressed: () {},
+                                onPressed: () => BaseApp.router.navigateToPage(
+                                  const CouponsRoute(),
+                                ),
                                 icon: Icons.bookmark_border_outlined,
                               ),
                             ],
@@ -128,12 +142,22 @@ class ProfileScreen extends StatelessWidget {
                         SizedBox(height: 40.toAutoScaledHeight),
                         BlackButton(
                           title: 'LOGOUT',
-                          onTap: () {},
+                          onTap: () {
+                            const snackBar =
+                                SnackBar(content: Text('Coming soon!'));
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackBar);
+                          },
                           width: 101,
                         ),
                         SizedBox(height: 18.toAutoScaledHeight),
                         TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            const snackBar = SnackBar(
+                                content: Text('Contact us at mdg@iitr.ac.in'));
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackBar);
+                          },
                           style: TextButton.styleFrom(
                             padding: EdgeInsets.zero,
                             minimumSize: Size.zero,
