@@ -46,9 +46,9 @@ class YourMealDailyCardsCombined extends StatelessWidget {
                             ? dailyItems.breakfast
                             : (meal.type == MealType.L
                                 ? dailyItems.lunch
-                                : (meal.type == MealType.S
-                                    ? dailyItems.snack
-                                    : dailyItems.dinner)),
+                                : (meal.type == MealType.D
+                                    ? dailyItems.dinner
+                                    : dailyItems.snack!)),
                         meal: meal,
                       );
                     },

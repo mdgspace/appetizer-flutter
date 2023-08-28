@@ -20,9 +20,9 @@ class LeaveHistory extends StatelessWidget {
           ),
           shadows: [
             BoxShadow(
-              color: Color(0x19000000),
+              color: const Color(0x19000000),
               blurRadius: 7.toAutoScaledWidth,
-              offset: Offset(2, 2),
+              offset: const Offset(2, 2),
               spreadRadius: 1,
             )
           ]),

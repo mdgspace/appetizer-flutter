@@ -15,3 +15,5 @@ class LoginPressed extends LoginEvent {
 class ShowPasswordPressed extends LoginEvent {}
 
 class ForgotPasswordPressed extends LoginEvent {}
+
+class SendPasswordResetInstructions extends LoginEvent {}

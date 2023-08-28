@@ -1,9 +1,8 @@
-import 'dart:convert';
+import 'package:json_annotation/json_annotation.dart';
 
-Switch switchFromJson(String str) => Switch.fromJson(json.decode(str));
+part 'switch.g.dart';
 
-String switchToJson(Switch data) => json.encode(data.toJson());
-
+@JsonSerializable(fieldRename: FieldRename.snake)
 class Switch {
   int id;
   int toMeal;
@@ -17,17 +16,7 @@ class Switch {
     required this.status,
   });
 
-  factory Switch.fromJson(Map<String, dynamic> json) => Switch(
-        id: json['id'],
-        toMeal: json['to_meal'],
-        secretCode: json['secret_code'],
-        status: json['status'],
-      );
+  factory Switch.fromJson(Map<String, dynamic> json) => _$SwitchFromJson(json);
 
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'to_meal': toMeal,
-        'secret_code': secretCode,
-        'status': status,
-      };
+  Map<String, dynamic> toJson() => _$SwitchToJson(this);
 }

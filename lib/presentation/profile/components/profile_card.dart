@@ -19,7 +19,7 @@ class Fields extends StatelessWidget {
         Text(
           '$title ',
           style: TextStyle(
-            color: Color(0xFF111111),
+            color: const Color(0xFF111111),
             fontSize: 16.toAutoScaledFont,
             fontFamily: 'Lato',
             fontWeight: FontWeight.w500,
@@ -28,7 +28,7 @@ class Fields extends StatelessWidget {
         Text(
           data,
           style: TextStyle(
-            color: Color(0xFF2E2E2E),
+            color: const Color(0xFF2E2E2E),
             fontSize: 16.toAutoScaledFont,
             fontFamily: 'Inter',
             fontWeight: FontWeight.w400,

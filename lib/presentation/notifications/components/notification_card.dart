@@ -46,7 +46,7 @@ class NotificationCard extends StatelessWidget {
                 child: Text(
                   data.title,
                   style: TextStyle(
-                    color: Color(0xFF111111),
+                    color: const Color(0xFF111111),
                     fontSize: 18.toAutoScaledFont,
                     fontFamily: 'Noto Sans',
                     fontWeight: FontWeight.w500,
@@ -58,7 +58,7 @@ class NotificationCard extends StatelessWidget {
                 child: Text(
                   '${data.dateCreated}',
                   style: TextStyle(
-                    color: Color(0xFF2E2E2E),
+                    color: const Color(0xFF2E2E2E),
                     fontSize: 10.toAutoScaledFont,
                     fontFamily: 'Lato',
                     fontWeight: FontWeight.w400,
@@ -72,7 +72,7 @@ class NotificationCard extends StatelessWidget {
           Text(
             data.message,
             style: TextStyle(
-              color: Color(0xFF2E2E2E),
+              color: const Color(0xFF2E2E2E),
               fontSize: 14.toAutoScaledFont,
               fontFamily: 'Lato',
               fontWeight: FontWeight.w400,

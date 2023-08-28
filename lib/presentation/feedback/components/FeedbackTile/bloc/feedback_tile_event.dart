@@ -1,6 +1,5 @@
 part of 'feedback_tile_bloc.dart';
 
-@immutable
 abstract class FeedbackTileEvent extends Equatable {
   const FeedbackTileEvent();
 

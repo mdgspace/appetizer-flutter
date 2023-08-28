@@ -1,4 +1,5 @@
 import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
+import 'package:appetizer/domain/repositories/feedback_repository.dart';
 import 'package:appetizer/presentation/components/black_button.dart';
 import 'package:appetizer/presentation/feedback/bloc/feedback_page_bloc.dart';
 import 'package:appetizer/presentation/feedback/components/FeedbackTile/feedback_tile.dart';
@@ -21,7 +22,8 @@ class FeedbackPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocProvider(
-        create: (context) => FeedbackPageBloc(),
+        create: (context) =>
+            FeedbackPageBloc(repo: context.read<FeedbackRepository>()),
         child: BlocBuilder<FeedbackPageBloc, FeedbackPageState>(
           builder: (context, state) {
             return Column(

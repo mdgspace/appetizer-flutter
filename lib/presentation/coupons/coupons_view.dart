@@ -1,20 +1,24 @@
 import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
 import 'package:appetizer/domain/models/coupon/coupon.dart';
+import 'package:appetizer/domain/repositories/coupon_repository.dart';
 import 'package:appetizer/presentation/components/no_data_found_container.dart';
 import 'package:appetizer/presentation/coupons/bloc/coupons_page_bloc.dart';
 import 'package:appetizer/presentation/coupons/components/coupon_banner.dart';
 import 'package:appetizer/presentation/coupons/components/coupon_row.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class CouponsPage extends StatelessWidget {
-  const CouponsPage({super.key});
+@RoutePage()
+class CouponsScreen extends StatelessWidget {
+  const CouponsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocProvider(
-        create: (context) => CouponsPageBloc(),
+        create: (context) =>
+            CouponsPageBloc(repo: context.read<CouponRepository>()),
         child: BlocBuilder<CouponsPageBloc, CouponsPageState>(
           builder: (context, state) {
             if (state is CouponsPageInitialState) {

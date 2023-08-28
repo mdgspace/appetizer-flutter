@@ -1,12 +1,8 @@
-import 'dart:convert';
+import 'package:json_annotation/json_annotation.dart';
 
-List<SwitchableMeal> switchableMealsFromJson(String str) =>
-    List<SwitchableMeal>.from(
-        json.decode(str).map((x) => SwitchableMeal.fromJson(x)));
+part 'switchable_meal.g.dart';
 
-String switchableMealsToJson(List<SwitchableMeal> data) =>
-    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
-
+@JsonSerializable(fieldRename: FieldRename.snake, explicitToJson: true)
 class SwitchableMeal {
   int id;
   String type;
@@ -28,29 +24,13 @@ class SwitchableMeal {
     required this.hostelName,
   });
 
-  factory SwitchableMeal.fromJson(Map<String, dynamic> json) => SwitchableMeal(
-        id: json['id'],
-        type: json['type'],
-        items: List<Item>.from(json['items'].map((x) => Item.fromJson(x))),
-        startTime: json['start_time'],
-        endTime: json['end_time'],
-        leaveStatus: json['leave_status'],
-        wastage: json['wastage'],
-        hostelName: json['hostel_name'],
-      );
+  factory SwitchableMeal.fromJson(Map<String, dynamic> json) =>
+      _$SwitchableMealFromJson(json);
 
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'type': type,
-        'items': List<dynamic>.from(items.map((x) => x.toJson())),
-        'start_time': startTime,
-        'end_time': endTime,
-        'leave_status': leaveStatus,
-        'wastage': wastage,
-        'hostel_name': hostelName,
-      };
+  Map<String, dynamic> toJson() => _$SwitchableMealToJson(this);
 }
 
+@JsonSerializable()
 class Item {
   int id;
   String type;
@@ -62,15 +42,7 @@ class Item {
     required this.name,
   });
 
-  factory Item.fromJson(Map<String, dynamic> json) => Item(
-        id: json['id'],
-        type: json['type'],
-        name: json['name'],
-      );
+  factory Item.fromJson(Map<String, dynamic> json) => _$ItemFromJson(json);
 
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'type': type,
-        'name': name,
-      };
+  Map<String, dynamic> toJson() => _$ItemToJson(this);
 }
