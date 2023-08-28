@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:appetizer/domain/models/coupon/coupon.dart';
 import 'package:appetizer/domain/models/menu/week_menu.dart';
 import 'package:appetizer/domain/repositories/coupon_repository.dart';
@@ -40,6 +42,7 @@ class YourMealDailyCardsCombinedBloc extends Bloc<
         }
       }
       // TODO: show dialog box using "text" variable
+      log(text);
       emit(YourMealDailyCardsDisplayState(mealStates: newStates));
     });
     on<ToggleMealLeaveEvent>((ToggleMealLeaveEvent event,
