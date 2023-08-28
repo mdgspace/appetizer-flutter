@@ -12,7 +12,12 @@ class Initialize extends AppEvent {
 }
 
 class GetUser extends AppEvent {
-  const GetUser();
+  const GetUser({required this.navigateTo});
+
+  final NavigateTo navigateTo;
+
+  @override
+  List<Object> get props => [navigateTo];
 }
 
 class NavigateToHomeScreen extends AppEvent {
