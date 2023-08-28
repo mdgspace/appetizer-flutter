@@ -1,5 +1,6 @@
 import 'package:appetizer/app_theme.dart';
 import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
+import 'package:appetizer/domain/models/coupon/coupon.dart';
 import 'package:appetizer/domain/models/menu/week_menu.dart';
 import 'package:appetizer/presentation/week_menu/components/yourMealDailyCardsCombined/bloc/your_meal_daily_cards_combined_bloc.dart';
 import 'package:appetizer/presentation/components/shadow_container.dart';
@@ -174,11 +175,10 @@ class MealCard extends StatelessWidget {
                           width: 44.toAutoScaledWidth,
                           onChanged: (value) async {
                             context.read<YourMealDailyCardsCombinedBloc>().add(
-                                ToggleMealLeaveEvent(
-                                    mealId: meal.id,
-                                    leaveAppliedAlready:
-                                        meal.leaveStatus.status ==
-                                            LeaveStatusEnum.A));
+                                  ToggleMealLeaveEvent(
+                                    meal: meal,
+                                  ),
+                                );
                           },
                         ),
                       ),
@@ -197,15 +197,26 @@ class MealCard extends StatelessWidget {
                         )
                       : (_isMealValidForCoupon(meal)
                           ? GestureDetector(
+                              onLongPress: () {
+                                if (meal.couponStatus.status ==
+                                    CouponStatusEnum.A) {
+                                  // TODO: show dialog box
+                                }
+                              },
                               onTap: () {
                                 if (!meal.isCouponOutdated) {
+                                  // TODO: show dialog box and then add toggle event
                                   context
                                       .read<YourMealDailyCardsCombinedBloc>()
                                       .add(ToggleMealCouponEvent(
-                                          couponId: meal.couponStatus.status ==
-                                                  CouponStatusEnum.A
-                                              ? meal.couponStatus.id!
-                                              : -1,
+                                          coupon: Coupon(
+                                            id: meal.couponStatus.status ==
+                                                    CouponStatusEnum.A
+                                                ? meal.couponStatus.id!
+                                                : -1,
+                                            meal:
+                                                "${meal.title}, ${DateFormat("dd MMMM").format(meal.startDateTime)}",
+                                          ),
                                           couponAppliedAlready:
                                               meal.couponStatus.status ==
                                                   CouponStatusEnum.A,
@@ -213,12 +224,9 @@ class MealCard extends StatelessWidget {
                                 } else if (meal.couponStatus.status ==
                                     CouponStatusEnum.A) {
                                   showCouponDialog(
-                                      "Coupon no: ${meal.couponStatus.id!}",
-                                      context);
-                                } else {
-                                  showCouponDialog(
-                                      "You can not apply for coupon now",
-                                      context);
+                                    "Coupon no: ${meal.couponStatus.id!}",
+                                    context,
+                                  );
                                 }
                               },
                               child: FeedbackAndCouponWidget(
