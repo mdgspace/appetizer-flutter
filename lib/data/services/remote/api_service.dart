@@ -43,7 +43,7 @@ abstract class ApiService {
 
   @GET(ApiEndpoints.allCoupons)
   Future<List<Coupon>> getAllCoupon(
-    @Body() Map<String, dynamic> map,
+    @Header("token") String token,
   );
 
   // Feedback API

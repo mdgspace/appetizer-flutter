@@ -37,9 +37,8 @@ class CouponRepository {
   }
 
   Future<List<Coupon>> getAllCoupon(User user) async {
-    Map<String, dynamic> map = {};
     try {
-      return await _apiService.getAllCoupon(map);
+      return await _apiService.getAllCoupon(user.token!);
     } catch (e) {
       debugPrint(e.toString());
       throw Failure(AppConstants.GENERIC_FAILURE);
