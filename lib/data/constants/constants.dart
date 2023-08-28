@@ -48,4 +48,9 @@ class AppConstants {
 
   static const String omniportSignUpURL =
       'https://channeli.in/oauth/authorise/?client_id=${EnvironmentConfig.OAUTH_CLIENT_ID}&redirect_uri=${EnvironmentConfig.OAUTH_REDIRECT_URI}';
+
+  /// Response values returned by api for different categories of user
+  static const REGISTERED_USER_API_STATUS = "Registered";
+  static const UNREGISTERED_USER_API_STATUS = "Enrollment does not exists";
+  static const TEMPORARY_USER_API_STATUS = "Temporary";
 }

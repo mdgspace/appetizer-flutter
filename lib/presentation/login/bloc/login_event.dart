@@ -9,11 +9,30 @@ class NextPressed extends LoginEvent {
 
 class LoginPressed extends LoginEvent {
   final String password;
-  LoginPressed(this.password);
+  final String enrollmentNo;
+  LoginPressed(this.password, this.enrollmentNo);
 }
 
 class ShowPasswordPressed extends LoginEvent {}
 
-class ForgotPasswordPressed extends LoginEvent {}
+class SendPasswordResetInstructions extends LoginEvent {
+  final String emailId;
+  SendPasswordResetInstructions({required this.emailId});
+}
 
-class SendPasswordResetInstructions extends LoginEvent {}
+class ForgotPasswordPressed extends LoginEvent {
+  final String emailId;
+  ForgotPasswordPressed({required this.emailId});
+}
+
+class CreatedPasswordNewUser extends LoginEvent {
+  final OAuthUser user;
+  final String password;
+  CreatedPasswordNewUser({required this.password, required this.user});
+}
+
+class NewUserSignUp extends LoginEvent {
+  // this event will be added after the oauth screen returns
+  final String code;
+  NewUserSignUp({required this.code});
+}

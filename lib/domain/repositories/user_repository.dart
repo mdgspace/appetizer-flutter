@@ -79,9 +79,9 @@ class UserRepository {
     }
   }
 
-  Future<void> sendResetPasswordLink(User user) async {
+  Future<void> sendResetPasswordLink(String emailID) async {
     Map<String, dynamic> map = {
-      'email': user.email,
+      'email': emailID,
     };
     try {
       return await _apiService.resetPassword(map);
@@ -118,6 +118,23 @@ class UserRepository {
   Future<List<Notification>> getNotifications() async {
     try {
       return await _apiService.getNotifications();
+    } catch (e) {
+      debugPrint(e.toString());
+      throw Failure(AppConstants.GENERIC_FAILURE);
+    }
+  }
+
+  Future<bool> userIsOldUser(String enrollmentNo) async {
+    try {
+      String status = await _apiService.status({"enr": enrollmentNo});
+      if (status == AppConstants.REGISTERED_USER_API_STATUS) {
+        return true;
+      } else if (status == AppConstants.TEMPORARY_USER_API_STATUS ||
+          status == AppConstants.UNREGISTERED_USER_API_STATUS) {
+        return false;
+      } else {
+        throw Failure(AppConstants.GENERIC_FAILURE);
+      }
     } catch (e) {
       debugPrint(e.toString());
       throw Failure(AppConstants.GENERIC_FAILURE);
