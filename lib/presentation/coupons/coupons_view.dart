@@ -1,7 +1,6 @@
 import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
 import 'package:appetizer/domain/models/coupon/coupon.dart';
 import 'package:appetizer/domain/repositories/coupon_repository.dart';
-import 'package:appetizer/presentation/app/bloc/app_bloc.dart';
 import 'package:appetizer/presentation/components/no_data_found_container.dart';
 import 'package:appetizer/presentation/coupons/bloc/coupons_page_bloc.dart';
 import 'package:appetizer/presentation/coupons/components/coupon_banner.dart';
@@ -23,8 +22,9 @@ class CouponsScreen extends StatelessWidget {
         child: BlocBuilder<CouponsPageBloc, CouponsPageState>(
           builder: (context, state) {
             if (state is CouponsPageInitialState) {
-              context.read<CouponsPageBloc>().add(CouponsPageFetchEvent(
-                  coupons: const [], user: context.read<AppState>().user!));
+              context
+                  .read<CouponsPageBloc>()
+                  .add(const CouponsPageFetchEvent());
               return const NoDataFoundContainer(
                   title: 'Cannot find the user !');
             }

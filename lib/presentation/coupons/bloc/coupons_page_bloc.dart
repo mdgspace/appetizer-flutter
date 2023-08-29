@@ -1,5 +1,4 @@
 import 'package:appetizer/domain/models/coupon/coupon.dart';
-import 'package:appetizer/domain/models/user/user.dart';
 import 'package:appetizer/domain/repositories/coupon_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -20,7 +19,7 @@ class CouponsPageBloc extends Bloc<CouponsPageEvent, CouponsPageState> {
     bool submissionSuccessful = true;
     List<Coupon> coupons = [];
     try {
-      coupons = await repo.getAllCoupon(event.user);
+      coupons = await repo.getAllCoupon();
     } catch (e) {
       submissionSuccessful = false;
     }
@@ -32,9 +31,7 @@ class CouponsPageBloc extends Bloc<CouponsPageEvent, CouponsPageState> {
       );
     } else {
       emit(
-        CouponsPageFailedState(
-          coupons: event.coupons,
-        ),
+        CouponsPageFailedState(coupons: coupons),
       );
     }
   }

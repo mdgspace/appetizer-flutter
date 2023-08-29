@@ -1,13 +1,13 @@
-part of 'your_week_menu_bloc_bloc.dart';
+part of 'week_menu_bloc.dart';
 
-abstract class YourWeekMenuBlocEvent extends Equatable {
-  const YourWeekMenuBlocEvent();
+abstract class WeekMenuBlocEvent extends Equatable {
+  const WeekMenuBlocEvent();
 
   @override
   List<Object> get props => [];
 }
 
-class DayChangeEvent extends YourWeekMenuBlocEvent {
+class DayChangeEvent extends WeekMenuBlocEvent {
   const DayChangeEvent({required this.newDayIndex});
   final int newDayIndex;
 
@@ -15,7 +15,7 @@ class DayChangeEvent extends YourWeekMenuBlocEvent {
   List<Object> get props => [newDayIndex];
 }
 
-class NextWeekChangeEvent extends YourWeekMenuBlocEvent {
+class NextWeekChangeEvent extends WeekMenuBlocEvent {
   const NextWeekChangeEvent({required this.nextWeekId});
   final int nextWeekId;
 
@@ -23,7 +23,7 @@ class NextWeekChangeEvent extends YourWeekMenuBlocEvent {
   List<Object> get props => [nextWeekId];
 }
 
-class PreviousWeekChangeEvent extends YourWeekMenuBlocEvent {
+class PreviousWeekChangeEvent extends WeekMenuBlocEvent {
   const PreviousWeekChangeEvent({required this.previousWeekId});
   final int previousWeekId;
 
@@ -31,14 +31,14 @@ class PreviousWeekChangeEvent extends YourWeekMenuBlocEvent {
   List<Object> get props => [previousWeekId];
 }
 
-class CheckOutEvent extends YourWeekMenuBlocEvent {
+class CheckOutEvent extends WeekMenuBlocEvent {
   const CheckOutEvent();
 
   @override
   List<Object> get props => [];
 }
 
-class CheckInEvent extends YourWeekMenuBlocEvent {
+class CheckInEvent extends WeekMenuBlocEvent {
   const CheckInEvent();
 
   @override

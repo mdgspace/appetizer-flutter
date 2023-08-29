@@ -1,6 +1,4 @@
-import 'package:appetizer/data/services/local/local_storage_service.dart';
 import 'package:appetizer/domain/models/user/oauth_user.dart';
-import 'package:appetizer/domain/models/user/user.dart';
 import 'package:appetizer/domain/repositories/user_repository.dart';
 import 'package:bloc/bloc.dart';
 
@@ -30,14 +28,14 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     on<LoginPressed>((event, emit) async {
       emit(Loading());
       try {
-        User user =
-            await userRepository.userLogin(event.enrollmentNo, event.password);
-        LocalStorageService localStorageService =
-            await LocalStorageService.getInstance();
-        localStorageService.currentUser = user;
-        localStorageService.token = user.token!;
-        localStorageService.isLoggedIn = true;
-        localStorageService.isFirstTimeLogin = true;
+        // User user =
+        //     await userRepository.userLogin(event.enrollmentNo, event.password);
+        // LocalStorageService localStorageService =
+        //     await LocalStorageService.getInstance();
+        // localStorageService.currentUser = user;
+        // localStorageService.token = user.token!;
+        // localStorageService.isLoggedIn = true;
+        // localStorageService.isFirstTimeLogin = true;
         // TODO: route to home screen
       } catch (e) {
         // TODO: show dialog box
@@ -91,20 +89,20 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       }
       emit(Loading());
       try {
-        OAuthUser authUser = await userRepository.oAuthComplete(
-          event.user,
-          event.password,
-        );
-        User user = await userRepository.userLogin(
-          authUser.studentData.enrNo.toString(),
-          event.password,
-        );
-        LocalStorageService localStorageService =
-            await LocalStorageService.getInstance();
-        localStorageService.currentUser = user;
-        localStorageService.token = user.token!;
-        localStorageService.isLoggedIn = true;
-        localStorageService.isFirstTimeLogin = true;
+        // OAuthUser authUser = await userRepository.oAuthComplete(
+        //   event.user,
+        //   event.password,
+        // );
+        // User user = await userRepository.userLogin(
+        //   authUser.studentData.enrNo.toString(),
+        //   event.password,
+        // );
+        // LocalStorageService localStorageService =
+        //     await LocalStorageService.getInstance();
+        // localStorageService.currentUser = user;
+        // localStorageService.token = user.token!;
+        // localStorageService.isLoggedIn = true;
+        // localStorageService.isFirstTimeLogin = true;
         // TODO : route to the menu screen and update relevant information about the logged in user
       } catch (e) {
         //TODO: show dialog box with relevant error message

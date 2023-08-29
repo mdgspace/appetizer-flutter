@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:appetizer/data/constants/constants.dart';
+import 'package:appetizer/data/services/local/local_storage_service.dart';
 import 'package:appetizer/domain/models/user/user.dart';
 import 'package:appetizer/domain/repositories/user_repository.dart';
 import 'package:equatable/equatable.dart';
@@ -19,16 +21,36 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     on<NavigateToLoginScreen>(_onNavigateToLogin);
   }
 
-  FutureOr<void> _onInitialize(Initialize event, Emitter<AppState> emit) {}
+  void _onInitialize(Initialize event, Emitter<AppState> emit) {
+    final isLoggedIn =
+        LocalStorageService.getValue<bool>(AppConstants.LOGGED_IN) ?? false;
+
+    if (!isLoggedIn) {
+      add(const NavigateToLoginScreen());
+      return;
+    }
+
+    add(const GetUser());
+  }
 
   FutureOr<void> _onGetUser(GetUser event, Emitter<AppState> emit) async {
-    User user = await repo.getCurrentUser();
-    emit(AppState(navigateTo: event.navigateTo, user: user));
+    try {
+      final User user = await repo.getCurrentUser();
+      emit(state.copyWith(user: user));
+      add(const NavigateToHomeScreen());
+    } catch (err) {
+      LocalStorageService.setValue(key: AppConstants.LOGGED_IN, value: false);
+      add(const NavigateToLoginScreen());
+    }
   }
 
   FutureOr<void> _onNavigateToHome(
-      NavigateToHomeScreen event, Emitter<AppState> emit) {}
+      NavigateToHomeScreen event, Emitter<AppState> emit) {
+    emit(state.copyWith(navigateTo: NavigateTo.showHomeScreen));
+  }
 
   FutureOr<void> _onNavigateToLogin(
-      NavigateToLoginScreen event, Emitter<AppState> emit) {}
+      NavigateToLoginScreen event, Emitter<AppState> emit) {
+    emit(state.copyWith(navigateTo: NavigateTo.showLoginScreen));
+  }
 }

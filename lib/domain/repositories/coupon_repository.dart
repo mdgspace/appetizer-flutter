@@ -3,7 +3,6 @@ import 'package:appetizer/data/services/remote/api_service.dart';
 import 'package:appetizer/domain/models/coupon/coupon.dart';
 import 'package:appetizer/domain/models/failure_model.dart';
 import 'package:appetizer/domain/models/menu/week_menu.dart';
-import 'package:appetizer/domain/models/user/user.dart';
 import 'package:flutter/foundation.dart';
 
 class CouponRepository {
@@ -36,9 +35,9 @@ class CouponRepository {
     }
   }
 
-  Future<List<Coupon>> getAllCoupon(User user) async {
+  Future<List<Coupon>> getAllCoupon() async {
     try {
-      return await _apiService.getAllCoupon(user.token!);
+      return await _apiService.getAllCoupon();
     } catch (e) {
       debugPrint(e.toString());
       throw Failure(AppConstants.GENERIC_FAILURE);

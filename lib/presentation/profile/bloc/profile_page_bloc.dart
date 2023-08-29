@@ -8,20 +8,16 @@ part 'profile_page_state.dart';
 
 class ProfilePageBloc extends Bloc<ProfilePageEvent, ProfilePageState> {
   final UserRepository repo;
-  ProfilePageBloc({
-    required this.repo,
-  }) : super(const ProfilePageInitialState()) {
-    on<ProfilePageFetchEvent>(_onFetch);
+  ProfilePageBloc({required this.repo})
+      : super(const ProfilePageInitialState()) {
+    on<FetchProfile>(_onFetch);
   }
 
-  void _onFetch(
-      ProfilePageFetchEvent event, Emitter<ProfilePageState> emit) async {
+  void _onFetch(FetchProfile event, Emitter<ProfilePageState> emit) async {
     // TODO: implement event handler
     User user = await repo.getCurrentUser();
     emit(
-      ProfilePageFetchedState(
-        user: user,
-      ),
+      ProfilePageFetchedState(user: user),
     );
   }
 }

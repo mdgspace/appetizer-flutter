@@ -1,7 +1,6 @@
 part of 'app_bloc.dart';
 
 enum NavigateTo {
-  inital,
   showLoginScreen,
   showHomeScreen,
 }
@@ -20,5 +19,6 @@ class AppState {
         navigateTo: navigateTo ?? this.navigateTo, user: user ?? this.user!);
   }
 
-  factory AppState.initial() => AppState(navigateTo: NavigateTo.inital);
+  factory AppState.initial() =>
+      AppState(navigateTo: NavigateTo.showLoginScreen);
 }

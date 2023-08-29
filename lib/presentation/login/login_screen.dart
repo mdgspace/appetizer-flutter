@@ -12,6 +12,16 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 @RoutePage()
+class LoginWrapper extends StatelessWidget {
+  const LoginWrapper({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const AutoRouter();
+  }
+}
+
+@RoutePage()
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 

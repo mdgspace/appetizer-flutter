@@ -1,3 +1,6 @@
+import 'package:appetizer/data/constants/constants.dart';
+import 'package:appetizer/data/core/router/intrinsic_router/intrinsic_router.gr.dart';
+import 'package:appetizer/data/services/local/local_storage_service.dart';
 import 'package:appetizer/data/services/remote/api_service.dart';
 import 'package:appetizer/domain/repositories/coupon_repository.dart';
 import 'package:appetizer/domain/repositories/feedback_repository.dart';
@@ -30,11 +33,22 @@ class _AppetizerAppState extends State<AppetizerApp> {
   @override
   void initState() {
     Future.delayed(
-      const Duration(seconds: 2),
+      const Duration(seconds: 1),
       () => FlutterNativeSplash.remove(),
     );
     apiService = _getApiService();
     super.initState();
+  }
+
+  RouterDelegate<Object> _getDelegate(AppState state) {
+    return AutoRouterDelegate.declarative(BaseApp.router, routes: (_) {
+      switch (state.navigateTo) {
+        case NavigateTo.showLoginScreen:
+          return [const LoginWrapper()];
+        case NavigateTo.showHomeScreen:
+          return [const HomeWrapper()];
+      }
+    });
   }
 
   @override
@@ -55,7 +69,8 @@ class _AppetizerAppState extends State<AppetizerApp> {
             create: (context) => UserRepository(apiService)),
       ],
       child: BlocProvider(
-        create: (context) => AppBloc(repo: context.read<UserRepository>()),
+        create: (context) => AppBloc(repo: context.read<UserRepository>())
+          ..add(const Initialize()),
         child: BlocBuilder<AppBloc, AppState>(
           builder: (context, state) {
             return MaterialApp.router(
@@ -63,7 +78,7 @@ class _AppetizerAppState extends State<AppetizerApp> {
               title: "Appetizer",
               locale: DevicePreview.locale(context),
               builder: DevicePreview.appBuilder,
-              routerDelegate: AutoRouterDelegate(BaseApp.router),
+              routerDelegate: _getDelegate(state),
               routeInformationParser: BaseApp.router.defaultRouteParser(),
               // TODO: add theme
             );
@@ -82,7 +97,11 @@ class _AppetizerAppState extends State<AppetizerApp> {
       )
         ..interceptors.addAll(
           [
-            AuthInterceptor(), // TODO: wirein get token method
+            AuthInterceptor(
+              getToken: () {
+                return LocalStorageService.getValue(AppConstants.AUTH_TOKEN);
+              },
+            ),
             Logging(),
           ],
         )

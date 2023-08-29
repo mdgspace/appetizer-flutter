@@ -1,10 +1,8 @@
-import 'package:appetizer/locator.dart';
+import 'package:appetizer/data/constants/constants.dart';
 import 'package:appetizer/data/services/local/local_storage_service.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
 class PushNotificationService {
-  final LocalStorageService _localStorageService =
-      locator<LocalStorageService>();
   final FirebaseMessaging _fcm = FirebaseMessaging.instance;
 
   Future<void> initialise() async {
@@ -21,7 +19,7 @@ class PushNotificationService {
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
       // save device token to local storage
       _fcm.onTokenRefresh.listen((token) {
-        _localStorageService.fcmToken = token;
+        LocalStorageService.setValue(key: AppConstants.FCM_TOKEN, value: token);
       });
 
       // allow notifications when app is in foreground

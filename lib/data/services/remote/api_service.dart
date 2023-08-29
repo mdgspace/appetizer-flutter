@@ -42,9 +42,7 @@ abstract class ApiService {
   );
 
   @GET(ApiEndpoints.allCoupons)
-  Future<List<Coupon>> getAllCoupon(
-    @Header("token") String token,
-  );
+  Future<List<Coupon>> getAllCoupon();
 
   // Feedback API
 
