@@ -1,5 +1,6 @@
 import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
 import 'package:appetizer/domain/repositories/user_repository.dart';
+import 'package:appetizer/presentation/components/no_data_found_container.dart';
 import 'package:appetizer/presentation/notifications/bloc/notification_page_bloc.dart';
 import 'package:appetizer/presentation/notifications/components/no_notification_widget.dart';
 import 'package:appetizer/presentation/notifications/components/notification_card.dart';
@@ -14,23 +15,6 @@ class NotificationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {},
-        ),
-        title: Text(
-          'Notification',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 24.toAutoScaledFont,
-            fontFamily: 'Noto Sans',
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-        backgroundColor: const Color(0xFFFFCB74),
-        toolbarHeight: 120.toAutoScaledHeight,
-      ),
       // TODO: implement Old/New notification bars and logic
       body: BlocProvider(
         create: (context) =>
@@ -41,11 +25,13 @@ class NotificationScreen extends StatelessWidget {
               context
                   .read<NotificationPageBloc>()
                   .add(const NotificationPageFetchEvent(notifications: []));
-              // TODO: place proper widget
-              return const Placeholder();
+              return const NoDataFoundContainer(
+                  title: 'Oops! Just a moment...');
             }
             if (state is NotificationPageFailedState) {
               // TODO: throw an error, or snackbar
+              return const NoDataFoundContainer(
+                  title: 'Something went wrong...');
             }
             if (state is NotificationPageFetchedState) {
               if (state.notifications.isEmpty) {
@@ -78,7 +64,7 @@ class NotificationScreen extends StatelessWidget {
                 ],
               );
             }
-            return const NoNotificationsWidget();
+            return const NoDataFoundContainer(title: 'Something went wrong !');
           },
         ),
       ),
