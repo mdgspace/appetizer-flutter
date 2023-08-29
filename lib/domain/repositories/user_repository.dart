@@ -37,7 +37,7 @@ class UserRepository {
 
   Future<User> getCurrentUser() async {
     try {
-      return await _apiService.getCurrentUser();
+      return _apiService.getCurrentUser();
     } catch (e) {
       debugPrint(e.toString());
       throw Failure(AppConstants.GENERIC_FAILURE);

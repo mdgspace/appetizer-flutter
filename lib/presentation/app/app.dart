@@ -17,7 +17,7 @@ import 'package:device_preview/device_preview.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
+// import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:sentry_dio/sentry_dio.dart';
 
 class AppetizerApp extends StatefulWidget {
@@ -32,10 +32,6 @@ class _AppetizerAppState extends State<AppetizerApp> {
 
   @override
   void initState() {
-    Future.delayed(
-      const Duration(seconds: 1),
-      () => FlutterNativeSplash.remove(),
-    );
     apiService = _getApiService();
     super.initState();
   }
@@ -47,6 +43,8 @@ class _AppetizerAppState extends State<AppetizerApp> {
           return [const LoginWrapper()];
         case NavigateTo.showHomeScreen:
           return [const HomeWrapper()];
+        default:
+          return [];
       }
     });
   }

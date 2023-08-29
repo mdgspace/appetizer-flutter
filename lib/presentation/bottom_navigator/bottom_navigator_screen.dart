@@ -49,21 +49,32 @@ class BottomNavigatorScreen extends StatelessWidget {
           ProfileRoute(),
         ],
         builder: (context, child) {
+          final tabRouter = AutoTabsRouter.of(context);
+
           return Scaffold(
+            backgroundColor: Colors.white,
             body: child,
             bottomNavigationBar: BottomNavigationBar(
+              key: UniqueKey(),
+              currentIndex: tabRouter.activeIndex,
+              onTap: (index) {
+                tabRouter.setActiveIndex(index);
+              },
               items: const [
                 BottomNavigationBarItem(
                   icon: Icon(Icons.wallet_outlined),
                   activeIcon: Icon(Icons.wallet),
+                  label: 'Rebate',
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.home_outlined),
                   activeIcon: Icon(Icons.home),
+                  label: 'Menu',
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.person_outline),
                   activeIcon: Icon(Icons.person),
+                  label: 'Profile',
                 ),
               ],
             ),

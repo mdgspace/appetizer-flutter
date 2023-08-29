@@ -7,7 +7,6 @@ import 'package:appetizer/presentation/profile/bloc/profile_page_bloc.dart';
 import 'package:appetizer/presentation/profile/components/profile_button.dart';
 import 'package:appetizer/presentation/profile/components/profile_card.dart';
 import 'package:appetizer/presentation/profile/components/profile_photo.dart';
-import 'package:appetizer/utils/app_extensions/app_extensions.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -49,7 +48,7 @@ class ProfileScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       ProfilePhoto(
-                        imageUri: state.user.imageUrl,
+                        imageUri: state.user.imageUrl ?? '',
                       ),
                       10.toVerticalSizedBox,
                       Text(
@@ -111,7 +110,7 @@ class ProfileScreen extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            // TODO: add bookamark button
+                            // TODO: add bookmark button
                             // ProfileIconButton(
                             //   title: 'Bookmark',
                             //   onPressed: () {},
@@ -120,9 +119,8 @@ class ProfileScreen extends StatelessWidget {
                             // 48.toHorizontalSizedBox,
                             ProfileIconButton(
                               title: 'Coupons',
-                              onPressed: () => BaseApp.router.navigateToPage(
-                                const CouponsRoute(),
-                              ),
+                              onPressed: () =>
+                                  context.router.push(const CouponsRoute()),
                               icon: Icons.bookmark_border_outlined,
                             ),
                           ],

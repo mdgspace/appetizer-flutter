@@ -44,62 +44,65 @@ class ProfileTextButton extends StatelessWidget {
 class ProfileIconButton extends StatelessWidget {
   const ProfileIconButton({
     required this.title,
-    required this.onPressed,
     required this.icon,
-    Key? key,
-  }) : super(key: key);
+    this.onPressed,
+    super.key,
+  });
 
   final String title;
-  final Function() onPressed;
+  final VoidCallback? onPressed;
   final IconData icon;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 121.toAutoScaledWidth,
-      height: 36.toAutoScaledHeight,
-      padding: EdgeInsets.only(
-          top: 4.toAutoScaledHeight,
-          left: 4.toAutoScaledWidth,
-          right: 8.toAutoScaledWidth,
-          bottom: 4.toAutoScaledHeight),
-      decoration: ShapeDecoration(
-        color: Colors.white,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
-        shadows: const [
-          BoxShadow(
-            color: Color(0x19000000),
-            blurRadius: 7,
-            offset: Offset(2, 2),
-            spreadRadius: 1,
-          )
-        ],
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SizedBox(
-            width: 20.toAutoScaledWidth,
-            height: 20.toAutoScaledHeight,
-            child: const Icon(
-              Icons.bookmark_border_outlined,
-              color: Color.fromARGB(255, 255, 203, 116),
+    return GestureDetector(
+      onTap: onPressed,
+      child: Container(
+        width: 121.toAutoScaledWidth,
+        height: 36.toAutoScaledHeight,
+        padding: EdgeInsets.only(
+            top: 4.toAutoScaledHeight,
+            left: 4.toAutoScaledWidth,
+            right: 8.toAutoScaledWidth,
+            bottom: 4.toAutoScaledHeight),
+        decoration: ShapeDecoration(
+          color: Colors.white,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
+          shadows: const [
+            BoxShadow(
+              color: Color(0x19000000),
+              blurRadius: 7,
+              offset: Offset(2, 2),
+              spreadRadius: 1,
+            )
+          ],
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              width: 20.toAutoScaledWidth,
+              height: 20.toAutoScaledHeight,
+              child: const Icon(
+                Icons.bookmark_border_outlined,
+                color: Color.fromARGB(255, 255, 203, 116),
+              ),
             ),
-          ),
-          10.toHorizontalSizedBox,
-          Text(
-            title,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: const Color(0xFF111111),
-              fontSize: 14.toAutoScaledFont,
-              fontFamily: 'Lato',
-              fontWeight: FontWeight.w500,
-              height: 1.43.toAutoScaledHeight,
+            10.toHorizontalSizedBox,
+            Text(
+              title,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: const Color(0xFF111111),
+                fontSize: 14.toAutoScaledFont,
+                fontFamily: 'Lato',
+                fontWeight: FontWeight.w500,
+                height: 1.43.toAutoScaledHeight,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

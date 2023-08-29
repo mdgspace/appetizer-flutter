@@ -44,10 +44,6 @@ class AppRoutesRegistry {
           ],
         ),
         CustomRoute(
-          path: AppPathsRegistry.home,
-          page: HomeRoute.page,
-        ),
-        CustomRoute(
           path: AppPathsRegistry.coupon,
           page: CouponsRoute.page,
         ),

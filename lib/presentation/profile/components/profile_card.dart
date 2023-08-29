@@ -50,8 +50,6 @@ class ProfileCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 293.toAutoScaledWidth,
-      height: 167.toAutoScaledHeight,
       padding: EdgeInsets.only(
         top: 20.toAutoScaledHeight,
         left: 20.toAutoScaledWidth,

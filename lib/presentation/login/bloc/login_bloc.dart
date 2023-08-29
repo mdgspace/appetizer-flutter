@@ -108,9 +108,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         //TODO: show dialog box with relevant error message
       }
     });
-    on<ForgotPasswordPressed>((event, emit) {
-      emit(ForgotPasswordState(emailID: event.emailId));
-    });
+    // on<ForgotPasswordPressed>((event, emit) {
+    //   emit(ForgotPasswordState(emailID: event.emailId));
+    // });
     on<SendPasswordResetInstructions>((event, emit) async {
       //TODO: complete logic
       emit(Loading());

@@ -16,31 +16,28 @@ class CouponsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocProvider(
-        create: (context) =>
-            CouponsPageBloc(repo: context.read<CouponRepository>()),
-        child: BlocBuilder<CouponsPageBloc, CouponsPageState>(
-          builder: (context, state) {
-            if (state is CouponsPageInitialState) {
-              context
-                  .read<CouponsPageBloc>()
-                  .add(const CouponsPageFetchEvent());
-              return const NoDataFoundContainer(
-                  title: 'Cannot find the user !');
-            }
-            if (state is CouponsPageFailedState) {
-              // TODO: add logic to handle fail
-              // context.read<CouponsPageBloc>().add(CouponsPageFetchEvent(
-              //     coupons: state.coupons,
-              //     user: context.read<AppState>().user!));
-              return const NoDataFoundContainer(
-                  title: 'Oops! Could not get your coupons');
-            }
-            if (state is CouponsPageFetchedState && state.coupons.isNotEmpty) {
-              return Column(
-                children: [
-                  const CouponBanner(),
-                  Expanded(
+      backgroundColor: Colors.white,
+      body: Column(
+        children: [
+          const CouponBanner(),
+          BlocProvider(
+            create: (context) =>
+                CouponsPageBloc(repo: context.read<CouponRepository>())
+                  ..add(const CouponsPageFetchEvent()),
+            child: BlocBuilder<CouponsPageBloc, CouponsPageState>(
+              builder: (context, state) {
+                if (state is CouponsPageInitialState) {
+                  return const NoDataFoundContainer(
+                      title: 'Cannot find the user !');
+                }
+                if (state is CouponsPageFailedState) {
+                  // TODO: add logic to handle fail
+                  return const NoDataFoundContainer(
+                      title: 'Oops! Could not get your coupons');
+                }
+                if (state is CouponsPageFetchedState &&
+                    state.coupons.isNotEmpty) {
+                  return Expanded(
                     child: ListView.builder(
                       itemBuilder: ((context, index) {
                         List<Coupon> couponsList = [];
@@ -61,18 +58,14 @@ class CouponsScreen extends StatelessWidget {
                         right: 32.toAutoScaledWidth,
                       ),
                     ),
-                  ),
-                ],
-              );
-            }
-            return const Column(
-              children: [
-                CouponBanner(),
-                NoDataFoundContainer(title: 'No coupons selected !'),
-              ],
-            );
-          },
-        ),
+                  );
+                }
+                return const NoDataFoundContainer(
+                    title: 'No coupons selected !');
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
