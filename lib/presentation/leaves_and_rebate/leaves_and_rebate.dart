@@ -2,12 +2,14 @@ import 'dart:math' as math;
 
 import 'package:appetizer/app_theme.dart';
 import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
+import 'package:appetizer/domain/models/transaction/paginated_yearly_rebate.dart';
 import 'package:appetizer/presentation/app/bloc/app_bloc.dart';
 import 'package:appetizer/presentation/leaves_and_rebate/bloc/leaves_and_rebate_bloc.dart';
 import 'package:appetizer/presentation/leaves_and_rebate/components/custom_divider.dart';
 import 'package:appetizer/presentation/leaves_and_rebate/components/leave_history.dart';
 import 'package:appetizer/presentation/components/app_banner.dart';
 import 'package:appetizer/presentation/components/round_edge_container.dart';
+import 'package:appetizer/presentation/leaves_and_rebate/components/monthly_rebates.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,8 +26,6 @@ class LeavesAndRebateScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<LeavesAndRebateBloc, LeavesAndRebateState>(
-      buildWhen: (previous, current) =>
-          previous.isCheckedOut != current.isCheckedOut,
       builder: (context, state) {
         return Column(
           children: [
@@ -49,7 +49,8 @@ class LeavesAndRebateScreen extends StatelessWidget {
                   child: CircularProgressIndicator(),
                 ),
               ),
-            ] else ...[
+            ],
+            if (!state.loading) ...[
               if (state.isCheckedOut) ...[
                 Padding(
                   padding: EdgeInsets.symmetric(
@@ -76,9 +77,16 @@ class LeavesAndRebateScreen extends StatelessWidget {
                 )
               ],
               40.toVerticalSizedBox,
-              // MonthlyRebates(
-              //     paginatedYearlyRebate: initialYearlyRebates,
-              //     currMonthIndex: DateTime.now().month - 1),
+              BlocSelector<LeavesAndRebateBloc, LeavesAndRebateState,
+                  PaginatedYearlyRebate>(
+                selector: (state) => state.initialPaginatedYearlyRebate!,
+                builder: (context, initialYearlyRebates) {
+                  return MonthlyRebates(
+                    paginatedYearlyRebate: initialYearlyRebates,
+                    currMonthIndex: DateTime.now().month - 1,
+                  );
+                },
+              ),
               24.toVerticalSizedBox,
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 40.toAutoScaledWidth),
@@ -120,6 +128,11 @@ class LeavesAndRebateScreen extends StatelessWidget {
               32.toVerticalSizedBox,
               if (!state.isCheckedOut)
                 GestureDetector(
+                  onTap: () {
+                    context
+                        .read<AppBloc>()
+                        .add(const ToggleCheckOutStatusEvent());
+                  },
                   child: const RoundEdgeTextOnlyContainer(text: "CHECK OUT"),
                 )
             ]

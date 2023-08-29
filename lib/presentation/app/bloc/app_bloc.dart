@@ -35,6 +35,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     bool finalCheckStatus = !state.user!.isCheckedOut
         ? await leaveRepository.checkin()
         : await leaveRepository.checkout();
+    print(finalCheckStatus);
     // if api call is unsuccessful then revert state and show snackbar
     if (finalCheckStatus != state.user!.isCheckedOut) {
       emit(state.copyWith(

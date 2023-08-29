@@ -7,11 +7,13 @@ class LeavesAndRebateState extends Equatable {
     required this.remainingLeaves,
     required this.loading,
     this.paginatedLeaves,
+    this.initialPaginatedYearlyRebate
   });
   final bool isCheckedOut;
   final int remainingLeaves;
   final int mealsSkipped;
   final PaginatedLeaves? paginatedLeaves;
+  final PaginatedYearlyRebate? initialPaginatedYearlyRebate;
   final bool loading;
 
   factory LeavesAndRebateState.initial() {
