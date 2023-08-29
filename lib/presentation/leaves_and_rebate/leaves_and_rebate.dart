@@ -1,5 +1,3 @@
-import 'dart:math' as math;
-
 import 'package:appetizer/app_theme.dart';
 import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
 import 'package:appetizer/domain/models/transaction/paginated_yearly_rebate.dart';
@@ -30,12 +28,10 @@ class LeavesAndRebateScreen extends StatelessWidget {
         return Column(
           children: [
             AppBanner(
-              height: 85.toAutoScaledHeight,
+              height: 109.toAutoScaledHeight,
               child: Padding(
                 padding: EdgeInsets.only(
                   left: 24.toAutoScaledWidth,
-                  top: math.max(32.toAutoScaledHeight,
-                      MediaQuery.of(context).padding.top),
                 ),
                 child: Text(
                   "Leaves & Rebates",

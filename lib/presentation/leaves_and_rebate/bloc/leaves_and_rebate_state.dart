@@ -7,7 +7,7 @@ class LeavesAndRebateState extends Equatable {
     required this.remainingLeaves,
     required this.loading,
     this.paginatedLeaves,
-    this.initialPaginatedYearlyRebate
+    this.initialPaginatedYearlyRebate,
   });
   final bool isCheckedOut;
   final int remainingLeaves;
