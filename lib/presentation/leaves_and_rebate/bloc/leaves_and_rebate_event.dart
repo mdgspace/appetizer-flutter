@@ -7,9 +7,7 @@ abstract class LeavesAndRebateEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class LeavesAndRebateToggleCheckOutStatusEvent extends LeavesAndRebateEvent {
-  const LeavesAndRebateToggleCheckOutStatusEvent();
-
-  @override
-  List<Object> get props => [];
+// Event to fetch data from remote
+class FetchLeavesAndRebates extends LeavesAndRebateEvent {
+  const FetchLeavesAndRebates();
 }

@@ -67,8 +67,10 @@ class _AppetizerAppState extends State<AppetizerApp> {
             create: (context) => UserRepository(apiService)),
       ],
       child: BlocProvider(
-        create: (context) => AppBloc(repo: context.read<UserRepository>())
-          ..add(const Initialize()),
+        create: (context) => AppBloc(
+          userRepository: context.read<UserRepository>(),
+          leaveRepository: context.read<LeaveRepository>(),
+        )..add(const Initialize()),
         child: BlocBuilder<AppBloc, AppState>(
           builder: (context, state) {
             return MaterialApp.router(
