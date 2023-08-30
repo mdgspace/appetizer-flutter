@@ -54,6 +54,9 @@ class AppConstants {
   static const UNREGISTERED_USER_API_STATUS = "Enrollment does not exists";
   static const TEMPORARY_USER_API_STATUS = "Temporary";
 
+  /// api error messages
+  static const MENU_NOT_UPLOADED = 'Menu not uploaded yet';
+
   // Storage Keys
   static const FCM_TOKEN = 'fcm_token';
   static const AUTH_TOKEN = 'auth_token';
