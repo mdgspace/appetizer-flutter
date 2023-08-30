@@ -5,6 +5,8 @@ abstract class WeekMenuBlocState extends Equatable {
 
   @override
   List<Object> get props => [];
+
+  factory WeekMenuBlocState.initial() => const WeekMenuBlocLoadingState();
 }
 
 class WeekMenuBlocDisplayState extends WeekMenuBlocState {
@@ -27,4 +29,13 @@ class WeekMenuBlocLoadingState extends WeekMenuBlocState {
 
   @override
   List<Object> get props => [];
+}
+
+class WeekMenuErrorState extends WeekMenuBlocState {
+  final String message;
+
+  const WeekMenuErrorState({required this.message});
+
+  @override
+  List<Object> get props => [message];
 }

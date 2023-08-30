@@ -2,6 +2,7 @@ import 'package:appetizer/data/core/router/intrinsic_router/intrinsic_router.gr.
 import 'package:appetizer/domain/repositories/leave_repository.dart';
 import 'package:appetizer/domain/repositories/menu_repository.dart';
 import 'package:appetizer/domain/repositories/user_repository.dart';
+import 'package:appetizer/presentation/app/bloc/app_bloc.dart';
 import 'package:appetizer/presentation/leaves_and_rebate/bloc/leaves_and_rebate_bloc.dart';
 import 'package:appetizer/presentation/profile/bloc/profile_page_bloc.dart';
 import 'package:appetizer/presentation/week_menu/bloc/week_menu_bloc.dart';
@@ -34,6 +35,7 @@ class BottomNavigatorScreen extends StatelessWidget {
           create: (context) => WeekMenuBlocBloc(
             menuRepository: context.read<MenuRepository>(),
             leaveRepository: context.read<LeaveRepository>(),
+            isCheckedOut: context.read<AppBloc>().state.user!.isCheckedOut,
           ),
         ),
         BlocProvider(

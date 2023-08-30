@@ -3,6 +3,7 @@ import 'package:appetizer/app_theme.dart';
 import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
 import 'package:appetizer/domain/models/menu/week_menu.dart';
 import 'package:appetizer/presentation/app/bloc/app_bloc.dart';
+import 'package:appetizer/presentation/components/no_data_found_container.dart';
 import 'package:appetizer/presentation/week_menu/bloc/week_menu_bloc.dart';
 import 'package:appetizer/presentation/week_menu/components/day_date_bar.dart';
 import 'package:appetizer/presentation/week_menu/components/yourMealDailyCardsCombined/your_meal_daily_cards_combined.dart';
@@ -65,6 +66,23 @@ class WeekMenuScreen extends StatelessWidget {
       //   return (previous != current);
       // },
       builder: (context, state) {
+        if (state is WeekMenuErrorState) {
+          return Column(
+            children: [
+              AppBanner(
+                height: 146.toAutoScaledHeight,
+                child: Padding(
+                  padding: EdgeInsets.only(left: 24.toAutoScaledWidth),
+                  child: Text(
+                    "Week Menu",
+                    style: AppTheme.headline1,
+                  ),
+                ),
+              ),
+              NoDataFoundContainer(title: state.message),
+            ],
+          );
+        }
         if (state is WeekMenuBlocDisplayState) {
           return Column(
             mainAxisSize: MainAxisSize.min,
@@ -100,6 +118,12 @@ class WeekMenuScreen extends StatelessWidget {
                   ),
                 ),
               ),
+              if (state is WeekMenuErrorState)
+                const Center(
+                  child: NoDataFoundContainer(
+                    title: 'Menu for this week has not been uploaded yet',
+                  ),
+                ),
               // DayDateBar(
               //   dates: dates,
               //   dateToMonthYear: dateToMonthYear,

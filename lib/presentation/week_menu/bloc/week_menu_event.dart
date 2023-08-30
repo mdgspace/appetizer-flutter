@@ -7,6 +7,10 @@ abstract class WeekMenuBlocEvent extends Equatable {
   List<Object> get props => [];
 }
 
+class FetchWeekMenuData extends WeekMenuBlocEvent {
+  const FetchWeekMenuData();
+}
+
 class DayChangeEvent extends WeekMenuBlocEvent {
   const DayChangeEvent({required this.newDayIndex});
   final int newDayIndex;
