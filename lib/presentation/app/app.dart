@@ -7,7 +7,7 @@ import 'package:appetizer/domain/repositories/feedback_repository.dart';
 import 'package:appetizer/domain/repositories/leave_repository.dart';
 import 'package:appetizer/domain/repositories/menu_repository.dart';
 import 'package:appetizer/domain/repositories/transaction_repositroy.dart';
-import 'package:appetizer/domain/repositories/user_repository.dart';
+import 'package:appetizer/domain/repositories/user/user_repository.dart';
 import 'package:appetizer/presentation/app/bloc/app_bloc.dart';
 import 'package:appetizer/utils/app_extensions/app_extensions.dart';
 import 'package:appetizer/utils/interceptors/auth_interceptor.dart';

@@ -1,5 +1,8 @@
+import 'package:appetizer/data/constants/constants.dart';
 import 'package:appetizer/data/core/router/intrinsic_router/intrinsic_router.gr.dart';
 import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
+import 'package:appetizer/data/services/local/local_storage_service.dart';
+import 'package:appetizer/presentation/app/bloc/app_bloc.dart';
 import 'package:appetizer/presentation/components/app_banner.dart';
 import 'package:appetizer/presentation/components/black_button.dart';
 import 'package:appetizer/presentation/components/loading_indicator.dart';
@@ -130,9 +133,12 @@ class ProfileScreen extends StatelessWidget {
                       BlackButton(
                         title: 'LOGOUT',
                         onTap: () {
-                          const snackBar =
-                              SnackBar(content: Text('Coming soon!'));
-                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                          // TODO: trigger logout api
+                          LocalStorageService.setValue(
+                              key: AppConstants.LOGGED_IN, value: false);
+                          context
+                              .read<AppBloc>()
+                              .add(const NavigateToLoginScreen());
                         },
                         width: 101,
                       ),
