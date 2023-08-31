@@ -22,3 +22,7 @@ class NavigateToHomeScreen extends AppEvent {
 class NavigateToLoginScreen extends AppEvent {
   const NavigateToLoginScreen();
 }
+
+class ToggleCheckOutStatusEvent extends AppEvent {
+  const ToggleCheckOutStatusEvent();
+}

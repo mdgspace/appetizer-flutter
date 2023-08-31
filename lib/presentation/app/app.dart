@@ -4,7 +4,7 @@ import 'package:appetizer/data/services/local/local_storage_service.dart';
 import 'package:appetizer/data/services/remote/api_service.dart';
 import 'package:appetizer/domain/repositories/coupon_repository.dart';
 import 'package:appetizer/domain/repositories/feedback_repository.dart';
-import 'package:appetizer/domain/repositories/leave_repository.dart';
+import 'package:appetizer/domain/repositories/leave/leave_repository.dart';
 import 'package:appetizer/domain/repositories/menu_repository.dart';
 import 'package:appetizer/domain/repositories/transaction_repositroy.dart';
 import 'package:appetizer/domain/repositories/user/user_repository.dart';
@@ -67,8 +67,10 @@ class _AppetizerAppState extends State<AppetizerApp> {
             create: (context) => UserRepository(apiService)),
       ],
       child: BlocProvider(
-        create: (context) => AppBloc(repo: context.read<UserRepository>())
-          ..add(const Initialize()),
+        create: (context) => AppBloc(
+          userRepository: context.read<UserRepository>(),
+          leaveRepository: context.read<LeaveRepository>(),
+        )..add(const Initialize()),
         child: BlocBuilder<AppBloc, AppState>(
           builder: (context, state) {
             return MaterialApp.router(

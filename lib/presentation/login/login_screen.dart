@@ -71,9 +71,7 @@ class LoginScreen extends StatelessWidget {
                       }
 
                       if (state is LoginSuccess) {
-                        context
-                            .read<AppBloc>()
-                            .add(const NavigateToHomeScreen());
+                        context.read<AppBloc>().add(const GetUser());
                       }
                     },
                     builder: (context, state) {
