@@ -1,6 +1,6 @@
 import 'package:appetizer/domain/models/failure_model.dart';
 import 'package:appetizer/domain/models/menu/week_menu.dart';
-import 'package:appetizer/domain/repositories/leave_repository.dart';
+import 'package:appetizer/domain/repositories/leave/leave_repository.dart';
 import 'package:appetizer/domain/repositories/menu_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';

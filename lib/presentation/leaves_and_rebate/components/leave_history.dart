@@ -38,45 +38,47 @@ class LeaveHistory extends StatelessWidget {
                   height: (11.0 / 8.0).toAutoScaledHeight)),
           trailing: const Icon(Icons.expand_more, color: AppTheme.grey2f),
           children: [
-            Container(
-              margin: EdgeInsets.only(left: 24.toAutoScaledWidth),
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      paginatedLeaves.results[0].startDatetime.year.toString(),
-                      style: AppTheme.headline2.copyWith(
-                          fontSize: 14.toAutoScaledFont,
-                          color: AppTheme.primary),
-                    ),
-                    10.toVerticalSizedBox,
-                    ...paginatedLeaves.results
-                        .map((leave) => Padding(
-                              padding: EdgeInsets.only(
-                                  bottom: 10.toAutoScaledHeight),
-                              child: Row(
-                                children: [
-                                  RichText(
-                                    text: TextSpan(
-                                        text: DateFormat('dd MMM -')
-                                            .format(leave.startDatetime),
-                                        style: AppTheme.bodyText1.copyWith(
-                                            height: 1.toAutoScaledHeight),
-                                        children: [
-                                          TextSpan(
-                                            text: leave.startMealType,
-                                            style: const TextStyle(
-                                                color: AppTheme.primary),
-                                          )
-                                        ]),
-                                  ),
-                                  // const Text("-"),
-                                ],
-                              ),
-                            ))
-                        .toList(),
-                  ]),
-            )
+            if (paginatedLeaves.results.isNotEmpty)
+              Container(
+                margin: EdgeInsets.only(left: 24.toAutoScaledWidth),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        paginatedLeaves.results[0].startDatetime.year
+                            .toString(),
+                        style: AppTheme.headline2.copyWith(
+                            fontSize: 14.toAutoScaledFont,
+                            color: AppTheme.primary),
+                      ),
+                      10.toVerticalSizedBox,
+                      ...paginatedLeaves.results
+                          .map((leave) => Padding(
+                                padding: EdgeInsets.only(
+                                    bottom: 10.toAutoScaledHeight),
+                                child: Row(
+                                  children: [
+                                    RichText(
+                                      text: TextSpan(
+                                          text: DateFormat('dd MMM -')
+                                              .format(leave.startDatetime),
+                                          style: AppTheme.bodyText1.copyWith(
+                                              height: 1.toAutoScaledHeight),
+                                          children: [
+                                            TextSpan(
+                                              text: leave.startMealType,
+                                              style: const TextStyle(
+                                                  color: AppTheme.primary),
+                                            )
+                                          ]),
+                                    ),
+                                    // const Text("-"),
+                                  ],
+                                ),
+                              ))
+                          .toList(),
+                    ]),
+              )
           ],
         ),
       ),

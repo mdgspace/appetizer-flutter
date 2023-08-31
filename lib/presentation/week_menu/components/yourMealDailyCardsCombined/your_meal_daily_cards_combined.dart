@@ -4,7 +4,7 @@
 import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
 import 'package:appetizer/domain/models/menu/week_menu.dart';
 import 'package:appetizer/domain/repositories/coupon_repository.dart';
-import 'package:appetizer/domain/repositories/leave_repository.dart';
+import 'package:appetizer/domain/repositories/leave/leave_repository.dart';
 import 'package:appetizer/presentation/week_menu/components/yourMealDailyCardsCombined/menu_card.dart';
 import 'package:appetizer/presentation/week_menu/components/yourMealDailyCardsCombined/bloc/your_meal_daily_cards_combined_bloc.dart';
 import 'package:flutter/material.dart';

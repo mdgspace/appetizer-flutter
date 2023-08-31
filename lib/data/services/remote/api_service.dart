@@ -10,7 +10,9 @@ import 'package:appetizer/domain/models/transaction/paginated_yearly_rebate.dart
 import 'package:appetizer/domain/models/user/notification.dart';
 import 'package:appetizer/domain/models/user/oauth_user.dart';
 import 'package:appetizer/domain/models/user/user.dart';
-import 'package:dio/dio.dart' hide Headers;
+import 'package:appetizer/domain/repositories/leave/leave_repository.dart';
+import 'package:appetizer/domain/repositories/user/user_repository.dart';
+import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 import 'dart:async';
 
@@ -74,7 +76,7 @@ abstract class ApiService {
   );
 
   @POST(ApiEndpoints.check)
-  Future<bool> check(
+  Future<CheckoutResponse> check(
     @Body() Map<String, dynamic> map,
   );
 
@@ -133,8 +135,8 @@ abstract class ApiService {
   // User API
 
   @POST(ApiEndpoints.status)
-  Future<String> status(
-    @Body() Map<String, dynamic> map,
+  Future<UserStatusResponse> status(
+    @Body() UserStatusRequest status,
   );
 
   @POST(ApiEndpoints.login)

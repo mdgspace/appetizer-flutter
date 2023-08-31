@@ -1,5 +1,5 @@
 import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
-import 'package:appetizer/domain/repositories/user_repository.dart';
+import 'package:appetizer/domain/repositories/user/user_repository.dart';
 import 'package:appetizer/presentation/components/no_data_found_container.dart';
 import 'package:appetizer/presentation/notifications/bloc/notification_page_bloc.dart';
 import 'package:appetizer/presentation/notifications/components/no_notification_widget.dart';
