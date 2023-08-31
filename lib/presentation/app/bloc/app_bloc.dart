@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:appetizer/data/constants/constants.dart';
 import 'package:appetizer/data/services/local/local_storage_service.dart';
 import 'package:appetizer/domain/models/user/user.dart';
-import 'package:appetizer/domain/repositories/user_repository.dart';
+import 'package:appetizer/domain/repositories/user/user_repository.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

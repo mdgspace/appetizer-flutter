@@ -1,5 +1,5 @@
 import 'package:appetizer/domain/models/user/notification.dart';
-import 'package:appetizer/domain/repositories/user_repository.dart';
+import 'package:appetizer/domain/repositories/user/user_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 

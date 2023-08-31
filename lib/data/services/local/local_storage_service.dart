@@ -21,7 +21,7 @@ class LocalStorageService {
 
   static T? getValue<T>(String key) {
     return Hive.isBoxOpen(AppConstants.localDb)
-        ? _localStorage.get(key) as T
+        ? _localStorage.get(key) as T?
         : null;
   }
 }
