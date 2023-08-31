@@ -1,5 +1,5 @@
 import 'package:appetizer/data/core/router/intrinsic_router/intrinsic_router.gr.dart';
-import 'package:appetizer/domain/repositories/leave_repository.dart';
+import 'package:appetizer/domain/repositories/leave/leave_repository.dart';
 import 'package:appetizer/domain/repositories/menu_repository.dart';
 import 'package:appetizer/domain/repositories/transaction_repositroy.dart';
 import 'package:appetizer/presentation/app/bloc/app_bloc.dart';
@@ -34,7 +34,6 @@ class BottomNavigatorScreen extends StatelessWidget {
           create: (context) => LeavesAndRebateBloc(
             leaveRepository: context.read<LeaveRepository>(),
             transactionRepository: context.read<TransactionRepository>(),
-            isCheckedOut: context.read<AppBloc>().state.user!.isCheckedOut,
           )..add(const FetchLeavesAndRebates()),
         ),
         BlocProvider<WeekMenuBlocBloc>(

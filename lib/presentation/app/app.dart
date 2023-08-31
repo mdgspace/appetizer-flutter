@@ -4,7 +4,7 @@ import 'package:appetizer/data/services/local/local_storage_service.dart';
 import 'package:appetizer/data/services/remote/api_service.dart';
 import 'package:appetizer/domain/repositories/coupon_repository.dart';
 import 'package:appetizer/domain/repositories/feedback_repository.dart';
-import 'package:appetizer/domain/repositories/leave_repository.dart';
+import 'package:appetizer/domain/repositories/leave/leave_repository.dart';
 import 'package:appetizer/domain/repositories/menu_repository.dart';
 import 'package:appetizer/domain/repositories/transaction_repositroy.dart';
 import 'package:appetizer/domain/repositories/user/user_repository.dart';

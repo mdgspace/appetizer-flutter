@@ -1,6 +1,5 @@
 import 'package:appetizer/app_theme.dart';
 import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
-import 'package:appetizer/domain/models/transaction/paginated_yearly_rebate.dart';
 import 'package:appetizer/presentation/app/bloc/app_bloc.dart';
 import 'package:appetizer/presentation/leaves_and_rebate/bloc/leaves_and_rebate_bloc.dart';
 import 'package:appetizer/presentation/leaves_and_rebate/components/custom_divider.dart';
@@ -16,11 +15,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class LeavesAndRebateScreen extends StatelessWidget {
   const LeavesAndRebateScreen({super.key});
 
-  // final bool isCheckedOut;
-  // final PaginatedYearlyRebate initialYearlyRebates;
-  // final PaginatedLeaves currYearLeaves;
-  // final int remainingLeaves, mealsSkipped;
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<LeavesAndRebateBloc, LeavesAndRebateState>(
@@ -28,15 +22,22 @@ class LeavesAndRebateScreen extends StatelessWidget {
         return Column(
           children: [
             AppBanner(
-              height: 109.toAutoScaledHeight,
-              child: Padding(
-                padding: EdgeInsets.only(
-                  left: 24.toAutoScaledWidth,
-                ),
-                child: Text(
-                  "Leaves & Rebates",
-                  style: AppTheme.headline1,
-                ),
+              height: 120.toAutoScaledHeight,
+              child: Row(
+                children: [
+                  SizedBox(
+                    width: 12.toAutoScaledWidth,
+                  ),
+                  Text(
+                    'Leaves & Rebates',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 24.toAutoScaledWidth,
+                      fontFamily: 'Noto Sans',
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ],
               ),
             ),
             if (state.loading) ...[
@@ -47,41 +48,45 @@ class LeavesAndRebateScreen extends StatelessWidget {
               ),
             ],
             if (!state.loading) ...[
-              if (state.isCheckedOut) ...[
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                    vertical: 14.toAutoScaledHeight,
-                  ),
-                  child: Text(
-                    "You are currently checked-out",
-                    style: AppTheme.bodyText1.copyWith(
-                        fontFamily: 'Noto Sans',
-                        fontSize: 14.toAutoScaledFont,
-                        color: AppTheme.customRed),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(bottom: 14.toAutoScaledHeight),
-                  child: GestureDetector(
-                    onTap: () {
-                      context
-                          .read<AppBloc>()
-                          .add(const ToggleCheckOutStatusEvent());
-                    },
-                    child: const RoundEdgeTextOnlyContainer(text: "CHECK IN"),
-                  ),
-                )
-              ],
-              40.toVerticalSizedBox,
-              BlocSelector<LeavesAndRebateBloc, LeavesAndRebateState,
-                  PaginatedYearlyRebate>(
-                selector: (state) => state.initialPaginatedYearlyRebate!,
-                builder: (context, initialYearlyRebates) {
-                  return MonthlyRebates(
-                    paginatedYearlyRebate: initialYearlyRebates,
-                    currMonthIndex: DateTime.now().month - 1,
+              BlocSelector<AppBloc, AppState, bool>(
+                selector: (appState) => appState.user!.isCheckedOut,
+                builder: (context, value) {
+                  if (!value) return const SizedBox();
+
+                  return Column(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                          vertical: 14.toAutoScaledHeight,
+                        ),
+                        child: Text(
+                          "You are currently checked-out",
+                          style: AppTheme.bodyText1.copyWith(
+                            fontFamily: 'Noto Sans',
+                            fontSize: 14.toAutoScaledFont,
+                            color: AppTheme.customRed,
+                          ),
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          context
+                              .read<AppBloc>()
+                              .add(const ToggleCheckOutStatusEvent());
+                        },
+                        child: const RoundEdgeTextOnlyContainer(
+                          text: "CHECK IN",
+                        ),
+                      ),
+                      10.toVerticalSizedBox,
+                    ],
                   );
                 },
+              ),
+              20.toVerticalSizedBox,
+              MonthlyRebates(
+                paginatedYearlyRebate: state.initialPaginatedYearlyRebate!,
+                currMonthIndex: DateTime.now().month - 1,
               ),
               24.toVerticalSizedBox,
               Padding(
@@ -122,15 +127,21 @@ class LeavesAndRebateScreen extends StatelessWidget {
               if (state.paginatedLeaves != null)
                 LeaveHistory(paginatedLeaves: state.paginatedLeaves!),
               32.toVerticalSizedBox,
-              if (!state.isCheckedOut)
-                GestureDetector(
-                  onTap: () {
-                    context
-                        .read<AppBloc>()
-                        .add(const ToggleCheckOutStatusEvent());
-                  },
-                  child: const RoundEdgeTextOnlyContainer(text: "CHECK OUT"),
-                )
+              BlocSelector<AppBloc, AppState, bool>(
+                selector: (appState) => appState.user!.isCheckedOut,
+                builder: (context, value) {
+                  if (value) return const SizedBox();
+
+                  return GestureDetector(
+                    onTap: () {
+                      context
+                          .read<AppBloc>()
+                          .add(const ToggleCheckOutStatusEvent());
+                    },
+                    child: const RoundEdgeTextOnlyContainer(text: "CHECK OUT"),
+                  );
+                },
+              ),
             ]
           ],
         );

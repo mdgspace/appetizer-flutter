@@ -7,12 +7,14 @@ import 'package:flutter/material.dart';
 import 'package:month_picker_dialog/month_picker_dialog.dart';
 
 class MonthlyRebates extends StatefulWidget {
-  const MonthlyRebates(
-      {super.key,
-      required this.paginatedYearlyRebate,
-      required this.currMonthIndex});
+  const MonthlyRebates({
+    required this.paginatedYearlyRebate,
+    required this.currMonthIndex,
+    super.key,
+  });
   final PaginatedYearlyRebate paginatedYearlyRebate;
   final int currMonthIndex; //1-indexed
+
   @override
   State<MonthlyRebates> createState() => _MonthlyRebatesState();
 }
@@ -69,8 +71,7 @@ class _MonthlyRebatesState extends State<MonthlyRebates> {
       width: 312.toAutoScaledWidth,
       offset: 2,
       child: Padding(
-        padding: EdgeInsets.fromLTRB(16.toAutoScaledWidth,
-            16.toAutoScaledHeight, 16.toAutoScaledWidth, 20.toAutoScaledHeight),
+        padding: EdgeInsets.all(16.toAutoScaledWidth),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -97,9 +98,10 @@ class _MonthlyRebatesState extends State<MonthlyRebates> {
                   child: GestureDetector(
                     onTap: () async {
                       DateTime? newDateTime = await showMonthPicker(
-                          context: context,
-                          initialDate: DateTime(year, _currMonthIndex!),
-                          lastDate: DateTime.now());
+                        context: context,
+                        initialDate: DateTime(year, _currMonthIndex!),
+                        lastDate: DateTime.now(),
+                      );
                       if (newDateTime != null &&
                           newDateTime.year == year &&
                           newDateTime.month != _currMonthIndex) {
