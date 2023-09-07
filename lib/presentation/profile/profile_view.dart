@@ -82,8 +82,10 @@ class ProfileScreen extends StatelessWidget {
                             ProfileTextButton(
                               title: 'Edit Profile',
                               onPressed: () {
-                                const snackBar =
-                                    SnackBar(content: Text('Coming soon!'));
+                                const snackBar = SnackBar(
+                                  content: Text('Coming soon!'),
+                                  duration: Duration(milliseconds: 500),
+                                );
                                 ScaffoldMessenger.of(context)
                                     .showSnackBar(snackBar);
                               },
@@ -92,8 +94,10 @@ class ProfileScreen extends StatelessWidget {
                             ProfileTextButton(
                               title: 'Reset Password',
                               onPressed: () {
-                                const snackBar =
-                                    SnackBar(content: Text('Coming soon!'));
+                                const snackBar = SnackBar(
+                                  content: Text('Coming soon!'),
+                                  duration: Duration(milliseconds: 500),
+                                );
                                 ScaffoldMessenger.of(context)
                                     .showSnackBar(snackBar);
                               },

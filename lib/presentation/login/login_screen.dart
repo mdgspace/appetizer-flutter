@@ -1,4 +1,5 @@
 import 'package:appetizer/data/constants/constants.dart';
+import 'package:appetizer/data/core/router/intrinsic_router/intrinsic_router.dart';
 import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
 import 'package:appetizer/presentation/app/bloc/app_bloc.dart';
 import 'package:appetizer/presentation/components/made_by_mdg.dart';
@@ -72,6 +73,8 @@ class LoginScreen extends StatelessWidget {
                       }
                       if (state is LoginSuccess) {
                         context.read<AppBloc>().add(const GetUser());
+                        // TODO: remove this and do proper rerouting (causes error)
+                        context.router.push(const WeekMenuRoute());
                       }
                       if (state is LoginInitial && state.error != null) {
                         ScaffoldMessenger.of(context).showSnackBar(

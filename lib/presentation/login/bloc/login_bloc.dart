@@ -83,6 +83,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       }
     } catch (e) {
       //TODO: show error dialog box
+      emit(const LoginInitial(error: AppConstants.GENERIC_FAILURE));
     }
   }
 
@@ -93,6 +94,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       // TODO: show dialog box that link has been sent
     } catch (e) {
       // TODO: show dialog box with error message
+      emit(const LoginInitial(error: AppConstants.GENERIC_FAILURE));
     }
   }
 
@@ -108,7 +110,12 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
   FutureOr<void> _onNextPressed(event, emit) async {
     emit(Loading());
-    bool isOldUser = await userRepository.userIsOldUser(event.enrollmentNo);
+    bool isOldUser = false;
+    try {
+      isOldUser = await userRepository.userIsOldUser(event.enrollmentNo);
+    } catch (e) {
+      emit(const LoginInitial(error: AppConstants.GENERIC_FAILURE));
+    }
     if (isOldUser) {
       emit(EnterPassword(enrollmentNo: event.enrollmentNo));
     } else {
@@ -127,6 +134,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       emit(const LoginSuccess());
     } catch (e) {
       // TODO: show dialog box
+      emit(const LoginInitial(error: 'Login Failed!'));
     }
   }
 }
