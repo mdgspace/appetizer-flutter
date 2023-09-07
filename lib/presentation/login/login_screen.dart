@@ -2,6 +2,7 @@ import 'package:appetizer/data/constants/constants.dart';
 import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
 import 'package:appetizer/presentation/app/bloc/app_bloc.dart';
 import 'package:appetizer/presentation/components/made_by_mdg.dart';
+import 'package:appetizer/presentation/login/components/channeli_button.dart';
 import 'package:appetizer/presentation/login/components/login_button.dart';
 import 'package:appetizer/presentation/login/bloc/login_bloc.dart';
 import 'package:auto_route/auto_route.dart';
@@ -262,6 +263,11 @@ class LoginScreen extends StatelessWidget {
                               },
                             ),
                           ),
+                          state is LoginInitial
+                              ? const Center(
+                                  child: ChanneliButton(),
+                                )
+                              : const SizedBox.shrink(),
                         ],
                       );
                     },
