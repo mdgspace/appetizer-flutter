@@ -11,6 +11,7 @@ import 'package:appetizer/presentation/week_menu/bloc/week_menu_bloc.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 @RoutePage()
 class HomeWrapper extends StatelessWidget {
@@ -79,20 +80,26 @@ class BottomNavigatorScreen extends StatelessWidget {
               onTap: (index) {
                 tabRouter.setActiveIndex(index);
               },
-              items: const [
+              items: [
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.wallet_outlined),
-                  activeIcon: Icon(Icons.wallet),
+                  icon: SvgPicture.asset(
+                      'assets/icons/bottom_navigator/rebate.svg'),
+                  activeIcon: SvgPicture.asset(
+                      'assets/icons/bottom_navigator/selected_rebate.svg'),
                   label: 'Rebate',
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.home_outlined),
-                  activeIcon: Icon(Icons.home),
+                  icon: SvgPicture.asset(
+                      'assets/icons/bottom_navigator/menu.svg'),
+                  activeIcon: SvgPicture.asset(
+                      'assets/icons/bottom_navigator/selected_menu.svg'),
                   label: 'Menu',
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.person_outline),
-                  activeIcon: Icon(Icons.person),
+                  icon: SvgPicture.asset(
+                      'assets/icons/bottom_navigator/profile.svg'),
+                  activeIcon: SvgPicture.asset(
+                      'assets/icons/bottom_navigator/selected_profile.svg'),
                   label: 'Profile',
                 ),
               ],
