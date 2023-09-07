@@ -23,7 +23,7 @@ class AppBanner extends StatelessWidget {
           )),
           child: Padding(
             padding: EdgeInsets.only(
-                top: math.max(32, MediaQuery.of(context).padding.top),
+                top: math.min(32, MediaQuery.of(context).padding.top),
                 bottom: 12),
             child: child,
           ),
