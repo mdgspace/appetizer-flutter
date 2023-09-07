@@ -1,8 +1,8 @@
-import 'package:appetizer/data/constants/constants.dart';
 import 'package:appetizer/data/core/router/intrinsic_router/intrinsic_router.dart';
 import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
 import 'package:appetizer/presentation/app/bloc/app_bloc.dart';
 import 'package:appetizer/presentation/components/made_by_mdg.dart';
+import 'package:appetizer/presentation/components/raise_query_button.dart';
 import 'package:appetizer/presentation/login/components/channeli_button.dart';
 import 'package:appetizer/presentation/login/components/login_button.dart';
 import 'package:appetizer/presentation/login/bloc/login_bloc.dart';
@@ -11,7 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 @RoutePage()
 class LoginWrapper extends StatelessWidget {
@@ -282,25 +281,7 @@ class LoginScreen extends StatelessWidget {
                     },
                   ),
                 ),
-                TextButton(
-                  onPressed: () async {
-                    final Uri url = Uri.parse(AppConstants.issueUrl);
-                    if (!await launchUrl(url)) {
-                      // TODO: show dialog box
-                    }
-                  },
-                  child: Text(
-                    'Raise a Query',
-                    style: GoogleFonts.inter(
-                      fontSize: 12.toAutoScaledFont,
-                      color: const Color(0xFF008BFF),
-                      fontWeight: FontWeight.w400,
-                      textStyle: const TextStyle(
-                        decoration: TextDecoration.underline,
-                      ),
-                    ),
-                  ),
-                ),
+                const RaiseQueryButton(),
               ],
             ),
           ),
