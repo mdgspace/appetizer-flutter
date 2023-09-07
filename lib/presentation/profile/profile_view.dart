@@ -3,16 +3,18 @@ import 'package:appetizer/data/core/router/intrinsic_router/intrinsic_router.gr.
 import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
 import 'package:appetizer/data/services/local/local_storage_service.dart';
 import 'package:appetizer/presentation/app/bloc/app_bloc.dart';
-import 'package:appetizer/presentation/components/app_banner.dart';
 import 'package:appetizer/presentation/components/black_button.dart';
 import 'package:appetizer/presentation/components/loading_indicator.dart';
+import 'package:appetizer/presentation/components/raise_query_button.dart';
 import 'package:appetizer/presentation/profile/bloc/profile_page_bloc.dart';
+import 'package:appetizer/presentation/profile/components/profile_banner.dart';
 import 'package:appetizer/presentation/profile/components/profile_button.dart';
 import 'package:appetizer/presentation/profile/components/profile_card.dart';
 import 'package:appetizer/presentation/profile/components/profile_photo.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 @RoutePage()
 class ProfileScreen extends StatelessWidget {
@@ -27,25 +29,7 @@ class ProfileScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                AppBanner(
-                  height: 120.toAutoScaledHeight,
-                  child: Row(
-                    children: [
-                      SizedBox(
-                        width: 12.toAutoScaledWidth,
-                      ),
-                      Text(
-                        'My Profile',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 24.toAutoScaledWidth,
-                          fontFamily: 'Noto Sans',
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                const ProfileBanner(),
                 Transform.translate(
                   offset: const Offset(0, -60),
                   child: Column(
@@ -56,10 +40,9 @@ class ProfileScreen extends StatelessWidget {
                       10.toVerticalSizedBox,
                       Text(
                         state.user.name,
-                        style: TextStyle(
+                        style: GoogleFonts.notoSans(
                           color: const Color(0xFF111111),
                           fontSize: 25.toAutoScaledFont,
-                          fontFamily: 'Noto Sans',
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -137,7 +120,6 @@ class ProfileScreen extends StatelessWidget {
                       BlackButton(
                         title: 'LOGOUT',
                         onTap: () {
-                          // TODO: trigger logout api
                           LocalStorageService.setValue(
                               key: AppConstants.LOGGED_IN, value: false);
                           context
@@ -147,28 +129,7 @@ class ProfileScreen extends StatelessWidget {
                         width: 101,
                       ),
                       SizedBox(height: 18.toAutoScaledHeight),
-                      TextButton(
-                        onPressed: () {
-                          const snackBar = SnackBar(
-                              content: Text('Contact us at mdg@iitr.ac.in'));
-                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                        },
-                        style: TextButton.styleFrom(
-                          padding: EdgeInsets.zero,
-                          minimumSize: Size.zero,
-                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                        ),
-                        child: Text(
-                          'Raise a Query',
-                          style: TextStyle(
-                            color: const Color(0xFF008BFF),
-                            fontSize: 12.toAutoScaledFont,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w400,
-                            decoration: TextDecoration.underline,
-                          ),
-                        ),
-                      ),
+                      const RaiseQueryButton(),
                     ],
                   ),
                 ),
@@ -177,8 +138,15 @@ class ProfileScreen extends StatelessWidget {
           );
         }
 
-        return const Center(
-          child: LoadingIndicator(),
+        return const Scaffold(
+          body: Column(
+            children: [
+              ProfileBanner(),
+              Center(
+                child: LoadingIndicator(),
+              ),
+            ],
+          ),
         );
       },
     );
