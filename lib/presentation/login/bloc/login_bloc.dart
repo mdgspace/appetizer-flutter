@@ -50,28 +50,25 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     }
     emit(Loading());
     try {
-      // OAuthUser authUser = await userRepository.oAuthComplete(
-      //   event.user,
-      //   event.password,
-      // );
-      // User user = await userRepository.userLogin(
-      //   authUser.studentData.enrNo.toString(),
-      //   event.password,
-      // );
-      // LocalStorageService localStorageService =
-      //     await LocalStorageService.getInstance();
-      // localStorageService.currentUser = user;
-      // localStorageService.token = user.token!;
-      // localStorageService.isLoggedIn = true;
-      // localStorageService.isFirstTimeLogin = true;
-      // TODO : route to the menu screen and update relevant information about the logged in user
+      OAuthUser authUser = await userRepository.oAuthComplete(
+        event.user,
+        event.password,
+      );
+      User user = await userRepository.userLogin(
+        authUser.studentData.enrNo.toString(),
+        event.password,
+      );
+      LocalStorageService.setValue(
+          key: AppConstants.AUTH_TOKEN, value: user.token);
+      LocalStorageService.setValue(key: AppConstants.LOGGED_IN, value: true);
+      // TODO: store fcm token
+      emit(const LoginSuccess());
     } catch (e) {
       //TODO: show dialog box with relevant error message
     }
   }
 
   FutureOr<void> _onNewUserSignUp(event, emit) async {
-    // verify user using code
     try {
       OAuthUser user = await userRepository.oAuthRedirect(event.code);
       if (user.isNew) {
@@ -115,15 +112,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     if (isOldUser) {
       emit(EnterPassword(enrollmentNo: event.enrollmentNo));
     } else {
-      // TODO: route to the oauthwebscreen and get code and go back in case of any error in oauthwebview screen
-      // verify user using oauthredirect
-      // below is the code to be uncommented later:
-      //try{
-      //  OAuthUser oAuthUser = await userRepository.oAuthRedirect(code);
-      //  emit(CreatePassword(event.enrollmentNo));
-      //} catch(e) {
-      //  //TODO: show dialog box with error code
-      //}
+      emit(const LoginInitial(error: 'Please sign-up using Channel-i'));
     }
   }
 
@@ -136,12 +125,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           key: AppConstants.AUTH_TOKEN, value: user.token);
       LocalStorageService.setValue(key: AppConstants.LOGGED_IN, value: true);
       emit(const LoginSuccess());
-
-      // LocalStorageService localStorageService =
-      //     await LocalStorageService.getInstance();
-      // localStorageService.currentUser = user;
-      // localStorageService.token = user.token!;
-      // localStorageService.isFirstTimeLogin = true;
     } catch (e) {
       // TODO: show dialog box
     }

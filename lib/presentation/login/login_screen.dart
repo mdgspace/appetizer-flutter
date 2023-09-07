@@ -70,9 +70,15 @@ class LoginScreen extends StatelessWidget {
                       if (state is EnterPassword) {
                         _controller.clear();
                       }
-
                       if (state is LoginSuccess) {
                         context.read<AppBloc>().add(const GetUser());
+                      }
+                      if (state is LoginInitial && state.error != null) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(state.error!),
+                          ),
+                        );
                       }
                     },
                     builder: (context, state) {
