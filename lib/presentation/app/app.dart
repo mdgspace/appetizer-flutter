@@ -17,6 +17,7 @@ import 'package:device_preview/device_preview.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 // import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:sentry_dio/sentry_dio.dart';
 
@@ -29,9 +30,11 @@ class AppetizerApp extends StatefulWidget {
 
 class _AppetizerAppState extends State<AppetizerApp> {
   late final ApiService apiService;
+  late bool isSplashActive;
 
   @override
   void initState() {
+    isSplashActive = true;
     apiService = _getApiService();
     super.initState();
   }
@@ -71,7 +74,13 @@ class _AppetizerAppState extends State<AppetizerApp> {
           userRepository: context.read<UserRepository>(),
           leaveRepository: context.read<LeaveRepository>(),
         )..add(const Initialize()),
-        child: BlocBuilder<AppBloc, AppState>(
+        child: BlocConsumer<AppBloc, AppState>(
+          listener: (context, state) {
+            if (isSplashActive) {
+              FlutterNativeSplash.remove();
+              isSplashActive = false;
+            }
+          },
           builder: (context, state) {
             return MaterialApp.router(
               debugShowCheckedModeBanner: false,

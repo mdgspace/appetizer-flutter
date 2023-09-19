@@ -13,12 +13,17 @@ class WeekMenuBlocDisplayState extends WeekMenuBlocState {
   const WeekMenuBlocDisplayState({
     required this.weekMenu,
     required this.currDayIndex,
-    required this.isCheckedOut,
   });
 
   final WeekMenu weekMenu;
   final int currDayIndex;
-  final bool isCheckedOut;
+
+  WeekMenuBlocDisplayState copyWith({WeekMenu? weekMenu, int? currDayIndex}) {
+    return WeekMenuBlocDisplayState(
+      weekMenu: weekMenu ?? this.weekMenu,
+      currDayIndex: currDayIndex ?? this.currDayIndex,
+    );
+  }
 
   @override
   List<Object> get props => [weekMenu, currDayIndex];

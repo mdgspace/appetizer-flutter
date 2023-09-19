@@ -1,7 +1,7 @@
 import 'package:appetizer/data/constants/constants.dart';
 import 'package:appetizer/data/services/remote/api_service.dart';
 import 'package:appetizer/domain/models/failure_model.dart';
-import 'package:appetizer/domain/models/menu/week_menu.dart';
+import 'package:appetizer/domain/models/menu/week_menu_tmp.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 
@@ -54,7 +54,7 @@ class MenuRepository {
 
   Future<WeekMenu> weekMenuByWeekId(int weekId) async {
     try {
-      late WeekMenu weekMenu;
+      WeekMenu? weekMenu;
       _apiService.weekMenuByWeekId(weekId).then((weekMenuObj) {
         weekMenu = weekMenuObj;
       }).catchError((obj) {
@@ -64,7 +64,7 @@ class MenuRepository {
         }
         throw Failure(AppConstants.GENERIC_FAILURE);
       });
-      return weekMenu;
+      return weekMenu!;
     } on Failure catch (e) {
       debugPrint(e.toString());
       rethrow;
@@ -73,17 +73,15 @@ class MenuRepository {
 
   Future<WeekMenu> currentWeekMenu() async {
     try {
-      late WeekMenu weekMenu;
-      _apiService.currentWeekMenu().then((weekMenuObj) {
-        weekMenu = weekMenuObj;
+      return _apiService.currentWeekMenu().then((weekMenu) {
+        return weekMenu;
       }).catchError((obj) {
         final res = (obj as DioException).response;
-        if (res!.statusCode != 404) {
+        if (res?.statusCode == 404) {
           throw Failure(AppConstants.MENU_NOT_UPLOADED);
         }
         throw Failure(AppConstants.GENERIC_FAILURE);
       });
-      return weekMenu;
     } on Failure catch (e) {
       debugPrint(e.toString());
       rethrow;

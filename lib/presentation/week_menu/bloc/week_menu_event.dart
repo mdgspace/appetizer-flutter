@@ -34,17 +34,3 @@ class PreviousWeekChangeEvent extends WeekMenuBlocEvent {
   @override
   List<Object> get props => [previousWeekId];
 }
-
-class CheckOutEvent extends WeekMenuBlocEvent {
-  const CheckOutEvent();
-
-  @override
-  List<Object> get props => [];
-}
-
-class CheckInEvent extends WeekMenuBlocEvent {
-  const CheckInEvent();
-
-  @override
-  List<Object> get props => [];
-}

@@ -23,7 +23,6 @@ dependencies:
   firebase_remote_config: ^4.2.4
   flutter_screenutil: ^5.7.0
   get: ^4.6.5
-  shared_preferences: ^2.2.0
   package_info_plus: ^4.1.0
   get_it: ^7.6.0
   sembast: ^3.5.0+1

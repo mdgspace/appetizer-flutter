@@ -2,7 +2,7 @@ import 'package:appetizer/data/constants/constants.dart';
 import 'package:appetizer/data/services/remote/api_service.dart';
 import 'package:appetizer/domain/models/failure_model.dart';
 import 'package:appetizer/domain/models/leaves/paginated_leaves.dart';
-import 'package:appetizer/domain/models/menu/week_menu.dart';
+import 'package:appetizer/domain/models/menu/week_menu_tmp.dart';
 import 'package:flutter/foundation.dart';
 import 'package:json_annotation/json_annotation.dart';
 

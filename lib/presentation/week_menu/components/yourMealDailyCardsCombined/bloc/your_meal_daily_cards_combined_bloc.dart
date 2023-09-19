@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:appetizer/domain/models/coupon/coupon.dart';
-import 'package:appetizer/domain/models/menu/week_menu.dart';
+import 'package:appetizer/domain/models/menu/week_menu_tmp.dart';
 import 'package:appetizer/domain/repositories/coupon_repository.dart';
 import 'package:appetizer/domain/repositories/leave/leave_repository.dart';
 import 'package:bloc/bloc.dart';

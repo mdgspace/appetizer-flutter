@@ -4,7 +4,7 @@ import 'package:appetizer/domain/models/coupon/coupon.dart';
 import 'package:appetizer/domain/models/feedback/appetizer_feedback.dart';
 import 'package:appetizer/domain/models/feedback/feedback_response.dart';
 import 'package:appetizer/domain/models/leaves/paginated_leaves.dart';
-import 'package:appetizer/domain/models/menu/week_menu.dart';
+import 'package:appetizer/domain/models/menu/week_menu_tmp.dart';
 import 'package:appetizer/domain/models/transaction/faq.dart';
 import 'package:appetizer/domain/models/transaction/paginated_yearly_rebate.dart';
 import 'package:appetizer/domain/models/user/notification.dart';

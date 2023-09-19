@@ -30,15 +30,6 @@ class AppConstants {
     "Saturday",
     "Sunday",
   ];
-  static const Map<String, String> dayToInitial = {
-    "Monday": "M",
-    "Tuesday": "T",
-    "Wednesday": "W",
-    "Thursday": "T",
-    "Friday": "F",
-    "Saturday": "S",
-    "Sunday": "S"
-  };
 
   // Local db
   static const String localDb = "appiLocalDb";
