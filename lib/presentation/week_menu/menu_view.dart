@@ -4,7 +4,6 @@ import 'package:appetizer/presentation/app/bloc/app_bloc.dart';
 import 'package:appetizer/presentation/components/no_data_found_container.dart';
 import 'package:appetizer/presentation/week_menu/bloc/week_menu_bloc.dart';
 import 'package:appetizer/presentation/week_menu/components/DayDateBar/day_date_bar.dart';
-import 'package:appetizer/presentation/week_menu/components/day_date_bar.dart';
 import 'package:appetizer/presentation/week_menu/components/yourMealDailyCardsCombined/your_meal_daily_cards_combined.dart';
 import 'package:appetizer/presentation/components/app_banner.dart';
 import 'package:appetizer/presentation/components/loading_indicator.dart';
@@ -24,7 +23,6 @@ class WeekMenuScreen extends StatelessWidget {
         if (state is WeekMenuBlocLoadingState) {
           return const Center(child: LoadingIndicator());
         }
-
         return Column(
           children: [
             AppBanner(

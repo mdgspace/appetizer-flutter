@@ -1,5 +1,6 @@
 import 'package:appetizer/app_theme.dart';
 import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
+import 'package:appetizer/presentation/week_menu/bloc/week_menu_bloc.dart';
 import 'package:appetizer/presentation/week_menu/components/DayDateBar/bloc/day_date_bar_bloc.dart';
 import 'package:appetizer/presentation/week_menu/components/title_bar.dart';
 import 'package:appetizer/utils/date_time_utils.dart';
@@ -148,9 +149,16 @@ class _DayDateBarPage extends StatelessWidget {
           else
             GestureDetector(
               onTap: () {
+                DateTime newDate = startDate.add(Duration(days: i));
                 context.read<DayDateBarBloc>().add(
                       DayDateBarChangedEvent(
-                        newDate: startDate.add(Duration(days: i)),
+                        newDate: newDate,
+                      ),
+                    );
+                context.read<WeekMenuBlocBloc>().add(
+                      DateChangeEvent(
+                        dayIndex: newDate.weekday,
+                        weekId: DateTimeUtils.getWeekNumber(newDate),
                       ),
                     );
               },
