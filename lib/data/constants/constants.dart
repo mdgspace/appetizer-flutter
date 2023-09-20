@@ -53,4 +53,9 @@ class AppConstants {
   static const REGISTERED_USER_API_STATUS = "Registered";
   static const UNREGISTERED_USER_API_STATUS = "Enrollment does not exists";
   static const TEMPORARY_USER_API_STATUS = "Temporary";
+
+  // Storage Keys
+  static const FCM_TOKEN = 'fcm_token';
+  static const AUTH_TOKEN = 'auth_token';
+  static const LOGGED_IN = 'logged_in';
 }

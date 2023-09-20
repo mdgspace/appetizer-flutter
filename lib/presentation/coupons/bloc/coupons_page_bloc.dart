@@ -15,23 +15,17 @@ class CouponsPageBloc extends Bloc<CouponsPageEvent, CouponsPageState> {
   }
 
   void _onCouponFetch(
-      CouponsPageFetchEvent event, Emitter<CouponsPageState> emit) {
-    // TODO: implement repository call
-    bool submissionSuccessful = true;
+      CouponsPageFetchEvent event, Emitter<CouponsPageState> emit) async {
     List<Coupon> coupons = [];
-    if (submissionSuccessful) {
+    try {
+      coupons = await repo.getAllCoupon();
       emit(
-        CouponsPageFetchedState(
-          coupons: coupons,
-        ),
+        CouponsPageFetchedState(coupons: coupons),
+      );
+    } catch (e) {
+      emit(
+        CouponsPageFailedState(coupons: coupons),
       );
     }
-    // else {
-    //   emit(
-    //     CouponsPageFailedState(
-    //       coupons: event.coupons,
-    //     ),
-    //   );
-    // }
   }
 }

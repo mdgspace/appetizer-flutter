@@ -34,4 +34,13 @@ class CouponRepository {
       throw Failure(AppConstants.GENERIC_FAILURE);
     }
   }
+
+  Future<List<Coupon>> getAllCoupon() async {
+    try {
+      return await _apiService.getAllCoupon();
+    } catch (e) {
+      debugPrint(e.toString());
+      throw Failure(AppConstants.GENERIC_FAILURE);
+    }
+  }
 }

@@ -1,5 +1,6 @@
 import 'package:appetizer/data/constants/api_endpoints.dart';
 import 'package:appetizer/domain/models/appetizer_version.dart';
+import 'package:appetizer/domain/models/coupon/coupon.dart';
 import 'package:appetizer/domain/models/feedback/appetizer_feedback.dart';
 import 'package:appetizer/domain/models/feedback/feedback_response.dart';
 import 'package:appetizer/domain/models/leaves/paginated_leaves.dart';
@@ -9,7 +10,9 @@ import 'package:appetizer/domain/models/transaction/paginated_yearly_rebate.dart
 import 'package:appetizer/domain/models/user/notification.dart';
 import 'package:appetizer/domain/models/user/oauth_user.dart';
 import 'package:appetizer/domain/models/user/user.dart';
-import 'package:dio/dio.dart' hide Headers;
+import 'package:appetizer/domain/repositories/leave/leave_repository.dart';
+import 'package:appetizer/domain/repositories/user/user_repository.dart';
+import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 import 'dart:async';
 
@@ -39,6 +42,9 @@ abstract class ApiService {
     @Path("couponId") String couponId,
     @Body() Map<String, dynamic> map,
   );
+
+  @GET(ApiEndpoints.allCoupons)
+  Future<List<Coupon>> getAllCoupon();
 
   // Feedback API
 
@@ -70,7 +76,7 @@ abstract class ApiService {
   );
 
   @POST(ApiEndpoints.check)
-  Future<bool> check(
+  Future<CheckoutResponse> check(
     @Body() Map<String, dynamic> map,
   );
 
@@ -129,8 +135,8 @@ abstract class ApiService {
   // User API
 
   @POST(ApiEndpoints.status)
-  Future<String> status(
-    @Body() Map<String, dynamic> map,
+  Future<UserStatusResponse> status(
+    @Body() UserStatusRequest status,
   );
 
   @POST(ApiEndpoints.login)

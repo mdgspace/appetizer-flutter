@@ -8,13 +8,16 @@ enum NavigateTo {
 
 class AppState {
   final NavigateTo navigateTo;
+  User? user;
 
-  AppState({required this.navigateTo});
+  AppState({required this.navigateTo, this.user});
 
   AppState copyWith({
     NavigateTo? navigateTo,
+    User? user,
   }) {
-    return AppState(navigateTo: navigateTo ?? this.navigateTo);
+    return AppState(
+        navigateTo: navigateTo ?? this.navigateTo, user: user ?? this.user);
   }
 
   factory AppState.initial() => AppState(navigateTo: NavigateTo.inital);

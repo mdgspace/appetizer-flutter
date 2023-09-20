@@ -1,7 +1,7 @@
 import 'package:appetizer/app_theme.dart';
 import 'package:appetizer/data/constants/constants.dart';
 import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
-import 'package:appetizer/presentation/week_menu/bloc/your_week_menu_bloc_bloc.dart';
+import 'package:appetizer/presentation/week_menu/bloc/week_menu_bloc.dart';
 import 'package:appetizer/presentation/week_menu/components/title_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -114,16 +114,18 @@ class _OtherDateWidget extends StatelessWidget {
 }
 
 class NewDayDateBar extends StatefulWidget {
-  const NewDayDateBar(
-      {super.key,
-      required this.dates,
-      required this.dateToMonthYear,
-      required this.currDate,
-      required this.blocObj});
+  const NewDayDateBar({
+    super.key,
+    required this.dates,
+    required this.dateToMonthYear,
+    required this.currDate,
+    required this.blocObj,
+  });
+
   final int currDate;
   final List<int> dates;
   final Map<int, String> dateToMonthYear;
-  final YourWeekMenuBlocBloc blocObj;
+  final WeekMenuBlocBloc blocObj;
 
   @override
   State<NewDayDateBar> createState() => _NewDayDateBarState();
@@ -168,7 +170,7 @@ class _NewDayDateBarState extends State<NewDayDateBar> {
                       currDate = dates![0];
                     });
                     context
-                        .read<YourWeekMenuBlocBloc>()
+                        .read<WeekMenuBlocBloc>()
                         .add(const DayChangeEvent(newDayIndex: 0));
                   },
                   child: currDate == dates![0]
@@ -194,7 +196,7 @@ class _NewDayDateBarState extends State<NewDayDateBar> {
                           currDate = dates![widgetDateOffset];
                         });
                         context
-                            .read<YourWeekMenuBlocBloc>()
+                            .read<WeekMenuBlocBloc>()
                             .add(DayChangeEvent(newDayIndex: widgetDateOffset));
                       },
                     ),

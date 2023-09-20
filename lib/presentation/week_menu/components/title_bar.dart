@@ -28,11 +28,13 @@ class TitleBar extends StatelessWidget {
                   thickness: 1.5,
                   color: AppTheme.white,
                 ),
-                Text(monthAndYear,
-                    style: AppTheme.headline1.copyWith(
-                      fontSize: 16.toAutoScaledFont,
-                      fontWeight: FontWeight.w600,
-                    )),
+                Text(
+                  monthAndYear,
+                  style: AppTheme.headline1.copyWith(
+                    fontSize: 16.toAutoScaledFont,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
                 6.toHorizontalSizedBox,
                 const Icon(
                   Icons.calendar_today_outlined,

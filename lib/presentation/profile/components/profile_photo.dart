@@ -15,11 +15,12 @@ class ProfilePhoto extends StatelessWidget {
       decoration: ShapeDecoration(
         color: Colors.white,
         shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(62.toAutoScaledWidth),
-            side: BorderSide(
-              color: const Color.fromARGB(255, 255, 255, 255),
-              width: 12.4.toAutoScaledWidth,
-            )),
+          borderRadius: BorderRadius.circular(62.toAutoScaledWidth),
+          side: BorderSide(
+            color: const Color.fromARGB(255, 255, 255, 255),
+            width: 12.4.toAutoScaledWidth,
+          ),
+        ),
       ),
       width: 124.toAutoScaledWidth,
       height: 124.toAutoScaledHeight,

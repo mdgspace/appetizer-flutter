@@ -1,6 +1,5 @@
 import 'package:appetizer/domain/amenity/analytics_service.dart';
 import 'package:appetizer/data/services/local/dialog_service.dart';
-import 'package:appetizer/data/services/local/local_storage_service.dart';
 import 'package:appetizer/data/services/local/package_info_service.dart';
 import 'package:appetizer/data/services/remote/push_notification_service.dart';
 import 'package:appetizer/data/services/remote/remote_config_service.dart';
@@ -15,9 +14,6 @@ Future<void> setupLocator() async {
 
   var remoteConfigService = await RemoteConfigService.getInstance();
   locator.registerSingleton<RemoteConfigService>(remoteConfigService);
-
-  var localStorageService = await LocalStorageService.getInstance();
-  locator.registerSingleton<LocalStorageService>(localStorageService);
 
   var packageInfoService = await PackageInfoService.getInstance();
   locator.registerSingleton<PackageInfoService>(packageInfoService);

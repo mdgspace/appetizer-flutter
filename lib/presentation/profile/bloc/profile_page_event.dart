@@ -7,8 +7,8 @@ abstract class ProfilePageEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class ProfilePageFetchEvent extends ProfilePageEvent {
-  const ProfilePageFetchEvent();
+class FetchProfile extends ProfilePageEvent {
+  const FetchProfile();
 
   @override
   List<Object?> get props => [];

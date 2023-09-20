@@ -26,6 +26,14 @@ class FeedbackPage extends StatelessWidget {
             FeedbackPageBloc(repo: context.read<FeedbackRepository>()),
         child: BlocBuilder<FeedbackPageBloc, FeedbackPageState>(
           builder: (context, state) {
+            if (!state.submitted) {
+              // TODO: navigate to menu page
+              // BaseApp.router.navigateToPage(
+              //   YourWeekMenuRoute(
+              //     weekMenu: const WeekMenu(),
+              //   ),
+              // );
+            }
             return Column(
               children: [
                 const FeedbackBanner(),

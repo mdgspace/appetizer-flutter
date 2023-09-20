@@ -4,6 +4,11 @@ import 'package:appetizer/domain/models/failure_model.dart';
 import 'package:appetizer/domain/models/leaves/paginated_leaves.dart';
 import 'package:appetizer/domain/models/menu/week_menu.dart';
 import 'package:flutter/foundation.dart';
+import 'package:json_annotation/json_annotation.dart';
+
+part 'requests.dart';
+part 'responses.dart';
+part 'leave_repository.g.dart';
 
 class LeaveRepository {
   final ApiService _apiService;
@@ -39,7 +44,8 @@ class LeaveRepository {
       'is_checked_out': true,
     };
     try {
-      return await _apiService.check(map);
+      final response = await _apiService.check(map);
+      return response.isCheckedOut;
     } catch (e) {
       debugPrint(e.toString());
       throw Failure(AppConstants.GENERIC_FAILURE);
@@ -51,7 +57,8 @@ class LeaveRepository {
       'is_checked_out': false,
     };
     try {
-      return await _apiService.check(map);
+      final response = await _apiService.check(map);
+      return response.isCheckedOut;
     } catch (e) {
       debugPrint(e.toString());
       throw Failure(AppConstants.GENERIC_FAILURE);

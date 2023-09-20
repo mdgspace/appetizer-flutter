@@ -5,6 +5,11 @@ import 'package:appetizer/domain/models/user/notification.dart';
 import 'package:appetizer/domain/models/user/oauth_user.dart';
 import 'package:appetizer/domain/models/user/user.dart';
 import 'package:flutter/foundation.dart';
+import 'package:json_annotation/json_annotation.dart';
+
+part 'requests.dart';
+part 'responses.dart';
+part 'user_repository.g.dart';
 
 class UserRepository {
   final ApiService _apiService;
@@ -15,7 +20,7 @@ class UserRepository {
 
   Future<User> userLogin(String username, String password) async {
     Map<String, dynamic> map = {
-      'username': username,
+      'enr': username,
       'password': password,
     };
     try {
@@ -37,7 +42,7 @@ class UserRepository {
 
   Future<User> getCurrentUser() async {
     try {
-      return await _apiService.getCurrentUser();
+      return _apiService.getCurrentUser();
     } catch (e) {
       debugPrint(e.toString());
       throw Failure(AppConstants.GENERIC_FAILURE);
@@ -126,7 +131,10 @@ class UserRepository {
 
   Future<bool> userIsOldUser(String enrollmentNo) async {
     try {
-      String status = await _apiService.status({"enr": enrollmentNo});
+      final enr = int.parse(enrollmentNo);
+      final response =
+          await _apiService.status(UserStatusRequest(enrollment: enr));
+      final String status = response.status;
       if (status == AppConstants.REGISTERED_USER_API_STATUS) {
         return true;
       } else if (status == AppConstants.TEMPORARY_USER_API_STATUS ||
