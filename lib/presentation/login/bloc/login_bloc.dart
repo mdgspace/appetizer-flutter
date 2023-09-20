@@ -12,7 +12,7 @@ part 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final UserRepository userRepository;
-  LoginBloc({required this.userRepository}) : super(LoginInitial()) {
+  LoginBloc({required this.userRepository}) : super(const LoginInitial()) {
     on<NextPressed>(_onNextPressed);
     on<LoginPressed>(_onLoginPressed);
     on<ShowPasswordPressed>(_onShowPasswordPressed);
