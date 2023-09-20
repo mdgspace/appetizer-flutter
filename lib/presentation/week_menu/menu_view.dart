@@ -3,6 +3,7 @@ import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
 import 'package:appetizer/presentation/app/bloc/app_bloc.dart';
 import 'package:appetizer/presentation/components/no_data_found_container.dart';
 import 'package:appetizer/presentation/week_menu/bloc/week_menu_bloc.dart';
+import 'package:appetizer/presentation/week_menu/components/DayDateBar/day_date_bar.dart';
 import 'package:appetizer/presentation/week_menu/components/day_date_bar.dart';
 import 'package:appetizer/presentation/week_menu/components/yourMealDailyCardsCombined/your_meal_daily_cards_combined.dart';
 import 'package:appetizer/presentation/components/app_banner.dart';
@@ -28,7 +29,7 @@ class WeekMenuScreen extends StatelessWidget {
           children: [
             AppBanner(
               height: 165.toAutoScaledHeight,
-              child: const NewDayDateBar(),
+              child: DayDateBar(),
             ),
             if (state is WeekMenuErrorState)
               NoDataFoundContainer(
