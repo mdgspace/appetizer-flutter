@@ -28,4 +28,14 @@ class DateTimeUtils {
         .add_jms()
         .format(DateTime.fromMillisecondsSinceEpoch(timeStamp));
   }
+
+  static DateTime getWeekStartDate(DateTime dateTime) {
+    return dateTime.subtract(Duration(days: dateTime.weekday - DateTime.monday));
+  }
+
+  static bool compareDate(DateTime date1, DateTime date2) {
+    return date1.year == date2.year &&
+        date1.month == date2.month &&
+        date1.day == date2.day;
+  }
 }
