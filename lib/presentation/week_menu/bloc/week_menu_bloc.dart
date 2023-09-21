@@ -72,14 +72,20 @@ class WeekMenuBlocBloc extends Bloc<WeekMenuBlocEvent, WeekMenuBlocState> {
 
   void _onDateChangeEvent(
       DateChangeEvent event, Emitter<WeekMenuBlocState> emit) async {
-    emit(const WeekMenuBlocLoadingState());
+    // emit(const WeekMenuBlocLoadingState());
+    print('[TEST] DateChangeEvent');
     try {
+      print('[TEST] 1');
       WeekMenu weekMenu = await menuRepository.weekMenuByWeekId(event.weekId);
+      // if (weekMenu == null) print('[TEST] weekMenu is null');
+      print('[TEST] 2');
       emit(WeekMenuBlocDisplayState(
         weekMenu: weekMenu,
         currDayIndex: event.dayIndex,
       ));
+      print('[TEST] 3');
     } on Failure catch (e) {
+      print('[TEST] 4');
       emit(WeekMenuErrorState(message: e.message));
     }
   }

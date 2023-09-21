@@ -14,17 +14,15 @@ class MenuRepository {
 
   Future<WeekMenu> weekMenuMultiMessing(String hostelCode, int id) async {
     try {
-      late WeekMenu weekMenu;
-      _apiService.weekMenuMultimessing(hostelCode, id).then((weekMenuObj) {
-        weekMenu = weekMenuObj;
-      }).catchError((obj) {
-        final res = (obj as DioException).response;
-        if (res!.statusCode != 404) {
-          throw Failure(AppConstants.MENU_NOT_UPLOADED);
-        }
-        throw Failure(AppConstants.GENERIC_FAILURE);
-      });
+      WeekMenu? weekMenu;
+      weekMenu = await _apiService.weekMenuMultimessing(hostelCode, id);
       return weekMenu;
+    } on DioException catch (e) {
+      if (e.response!.statusCode == 404) {
+        throw Failure(AppConstants.MENU_NOT_UPLOADED);
+      } else {
+        throw Failure(AppConstants.GENERIC_FAILURE);
+      }
     } on Failure catch (e) {
       debugPrint(e.toString());
       rethrow;
@@ -33,17 +31,15 @@ class MenuRepository {
 
   Future<WeekMenu> weekMenuForYourMeals(int weekId) async {
     try {
-      late WeekMenu weekMenu;
-      _apiService.weekMenuForYourMeals(weekId).then((weekMenuObj) {
-        weekMenu = weekMenuObj;
-      }).catchError((obj) {
-        final res = (obj as DioException).response;
-        if (res!.statusCode != 404) {
-          throw Failure(AppConstants.MENU_NOT_UPLOADED);
-        }
-        throw Failure(AppConstants.GENERIC_FAILURE);
-      });
+      WeekMenu? weekMenu;
+      weekMenu = await _apiService.weekMenuForYourMeals(weekId);
       return weekMenu;
+    } on DioException catch (e) {
+      if (e.response!.statusCode == 404) {
+        throw Failure(AppConstants.MENU_NOT_UPLOADED);
+      } else {
+        throw Failure(AppConstants.GENERIC_FAILURE);
+      }
     } on Failure catch (e) {
       debugPrint(e.toString());
       rethrow;
@@ -55,16 +51,14 @@ class MenuRepository {
   Future<WeekMenu> weekMenuByWeekId(int weekId) async {
     try {
       WeekMenu? weekMenu;
-      _apiService.weekMenuByWeekId(weekId).then((weekMenuObj) {
-        weekMenu = weekMenuObj;
-      }).catchError((obj) {
-        final res = (obj as DioException).response;
-        if (res!.statusCode != 404) {
-          throw Failure(AppConstants.MENU_NOT_UPLOADED);
-        }
+      weekMenu = await _apiService.weekMenuByWeekId(weekId);
+      return weekMenu;
+    } on DioException catch (e) {
+      if (e.response!.statusCode == 404) {
+        throw Failure(AppConstants.MENU_NOT_UPLOADED);
+      } else {
         throw Failure(AppConstants.GENERIC_FAILURE);
-      });
-      return weekMenu!;
+      }
     } on Failure catch (e) {
       debugPrint(e.toString());
       rethrow;
@@ -73,15 +67,15 @@ class MenuRepository {
 
   Future<WeekMenu> currentWeekMenu() async {
     try {
-      return _apiService.currentWeekMenu().then((weekMenu) {
-        return weekMenu;
-      }).catchError((obj) {
-        final res = (obj as DioException).response;
-        if (res?.statusCode == 404) {
-          throw Failure(AppConstants.MENU_NOT_UPLOADED);
-        }
+      WeekMenu? weekMenu;
+      weekMenu = await _apiService.currentWeekMenu();
+      return weekMenu;
+    } on DioException catch (e) {
+      if (e.response!.statusCode == 404) {
+        throw Failure(AppConstants.MENU_NOT_UPLOADED);
+      } else {
         throw Failure(AppConstants.GENERIC_FAILURE);
-      });
+      }
     } on Failure catch (e) {
       debugPrint(e.toString());
       rethrow;
@@ -90,17 +84,15 @@ class MenuRepository {
 
   Future<WeekMenu> dayMenu(int week, String dayOfWeek) async {
     try {
-      late WeekMenu weekMenu;
-      _apiService.dayMenu(week, dayOfWeek).then((weekMenuObj) {
-        weekMenu = weekMenuObj;
-      }).catchError((obj) {
-        final res = (obj as DioException).response;
-        if (res!.statusCode != 404) {
-          throw Failure(AppConstants.MENU_NOT_UPLOADED);
-        }
-        throw Failure(AppConstants.GENERIC_FAILURE);
-      });
+      WeekMenu? weekMenu;
+      weekMenu = await _apiService.dayMenu(week, dayOfWeek);
       return weekMenu;
+    } on DioException catch (e) {
+      if (e.response!.statusCode == 404) {
+        throw Failure(AppConstants.MENU_NOT_UPLOADED);
+      } else {
+        throw Failure(AppConstants.GENERIC_FAILURE);
+      }
     } on Failure catch (e) {
       debugPrint(e.toString());
       rethrow;

@@ -65,9 +65,11 @@ class WeekMenuScreen extends StatelessWidget {
                 },
               ),
               Expanded(
-                child: YourMealDailyCardsCombined(
-                    dayMenu: state.weekMenu.dayMenus[state.currDayIndex],
-                    dailyItems: state.weekMenu.dailyItems),
+                child: (state.weekMenu.dayMenus.length > state.currDayIndex)
+                    ? YourMealDailyCardsCombined(
+                        dayMenu: state.weekMenu.dayMenus[state.currDayIndex],
+                        dailyItems: state.weekMenu.dailyItems)
+                    : const SizedBox.shrink(),
               ),
             ]
           ],

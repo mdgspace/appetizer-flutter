@@ -156,10 +156,15 @@ class _DayDateBarPage extends StatelessWidget {
                       ),
                     );
                 context.read<WeekMenuBlocBloc>().add(
-                      DateChangeEvent(
-                        dayIndex: newDate.weekday,
-                        weekId: DateTimeUtils.getWeekNumber(newDate),
-                      ),
+                      (DateTimeUtils.getWeekNumber(newDate) !=
+                              DateTimeUtils.getWeekNumber(parentState.date))
+                          ? DateChangeEvent(
+                              dayIndex: newDate.weekday,
+                              weekId: DateTimeUtils.getWeekNumber(newDate),
+                            )
+                          : DayChangeEvent(
+                              newDayIndex: newDate.weekday - 1,
+                            ),
                     );
               },
               child: _OtherDateWidget(

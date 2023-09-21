@@ -10,6 +10,7 @@ import 'package:flutter_svg_provider/flutter_svg_provider.dart' as svg;
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fswitch_nullsafety/fswitch_nullsafety.dart';
 import 'package:intl/intl.dart';
+import 'dart:math';
 
 bool _isMealValidForCoupon(Meal meal) {
   for (MealItem item in meal.items) {
@@ -115,7 +116,7 @@ class MealCard extends StatelessWidget {
       dailyItemsParsed += '${item.name}, ';
     }
     dailyItemsParsed =
-        dailyItemsParsed.substring(0, dailyItemsParsed.length - 2);
+        dailyItemsParsed.substring(0, max(dailyItemsParsed.length - 2, 0));
     return ShadowContainer(
       offset: 2,
       width: 312.toAutoScaledWidth,
