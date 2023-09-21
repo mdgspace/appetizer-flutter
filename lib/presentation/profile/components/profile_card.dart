@@ -1,6 +1,7 @@
 import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
 import 'package:appetizer/domain/models/user/user.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class Fields extends StatelessWidget {
   const Fields({
@@ -15,22 +16,22 @@ class Fields extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.baseline,
+      textBaseline: TextBaseline.alphabetic,
       children: [
         Text(
           '$title ',
-          style: TextStyle(
+          style: GoogleFonts.lato(
             color: const Color(0xFF111111),
             fontSize: 16.toAutoScaledFont,
-            fontFamily: 'Lato',
-            fontWeight: FontWeight.w500,
+            fontWeight: FontWeight.w600,
           ),
         ),
         Text(
           data,
-          style: TextStyle(
+          style: GoogleFonts.inter(
             color: const Color(0xFF2E2E2E),
             fontSize: 16.toAutoScaledFont,
-            fontFamily: 'Inter',
             fontWeight: FontWeight.w400,
           ),
         ),

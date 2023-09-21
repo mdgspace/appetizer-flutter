@@ -12,7 +12,7 @@ part 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final UserRepository userRepository;
-  LoginBloc({required this.userRepository}) : super(LoginInitial()) {
+  LoginBloc({required this.userRepository}) : super(const LoginInitial()) {
     on<NextPressed>(_onNextPressed);
     on<LoginPressed>(_onLoginPressed);
     on<ShowPasswordPressed>(_onShowPasswordPressed);
@@ -50,28 +50,25 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     }
     emit(Loading());
     try {
-      // OAuthUser authUser = await userRepository.oAuthComplete(
-      //   event.user,
-      //   event.password,
-      // );
-      // User user = await userRepository.userLogin(
-      //   authUser.studentData.enrNo.toString(),
-      //   event.password,
-      // );
-      // LocalStorageService localStorageService =
-      //     await LocalStorageService.getInstance();
-      // localStorageService.currentUser = user;
-      // localStorageService.token = user.token!;
-      // localStorageService.isLoggedIn = true;
-      // localStorageService.isFirstTimeLogin = true;
-      // TODO : route to the menu screen and update relevant information about the logged in user
+      OAuthUser authUser = await userRepository.oAuthComplete(
+        event.user,
+        event.password,
+      );
+      User user = await userRepository.userLogin(
+        authUser.studentData.enrNo.toString(),
+        event.password,
+      );
+      LocalStorageService.setValue(
+          key: AppConstants.AUTH_TOKEN, value: user.token);
+      LocalStorageService.setValue(key: AppConstants.LOGGED_IN, value: true);
+      // TODO: store fcm token
+      emit(const LoginSuccess());
     } catch (e) {
       //TODO: show dialog box with relevant error message
     }
   }
 
   FutureOr<void> _onNewUserSignUp(event, emit) async {
-    // verify user using code
     try {
       OAuthUser user = await userRepository.oAuthRedirect(event.code);
       if (user.isNew) {
@@ -86,6 +83,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       }
     } catch (e) {
       //TODO: show error dialog box
+      emit(const LoginInitial(error: AppConstants.GENERIC_FAILURE));
     }
   }
 
@@ -96,6 +94,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       // TODO: show dialog box that link has been sent
     } catch (e) {
       // TODO: show dialog box with error message
+      emit(const LoginInitial(error: AppConstants.GENERIC_FAILURE));
     }
   }
 
@@ -111,19 +110,16 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
   FutureOr<void> _onNextPressed(event, emit) async {
     emit(Loading());
-    bool isOldUser = await userRepository.userIsOldUser(event.enrollmentNo);
+    bool isOldUser = false;
+    try {
+      isOldUser = await userRepository.userIsOldUser(event.enrollmentNo);
+    } catch (e) {
+      emit(const LoginInitial(error: AppConstants.GENERIC_FAILURE));
+    }
     if (isOldUser) {
       emit(EnterPassword(enrollmentNo: event.enrollmentNo));
     } else {
-      // TODO: route to the oauthwebscreen and get code and go back in case of any error in oauthwebview screen
-      // verify user using oauthredirect
-      // below is the code to be uncommented later:
-      //try{
-      //  OAuthUser oAuthUser = await userRepository.oAuthRedirect(code);
-      //  emit(CreatePassword(event.enrollmentNo));
-      //} catch(e) {
-      //  //TODO: show dialog box with error code
-      //}
+      emit(const LoginInitial(error: 'Please sign-up using Channel-i'));
     }
   }
 
@@ -136,14 +132,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           key: AppConstants.AUTH_TOKEN, value: user.token);
       LocalStorageService.setValue(key: AppConstants.LOGGED_IN, value: true);
       emit(const LoginSuccess());
-
-      // LocalStorageService localStorageService =
-      //     await LocalStorageService.getInstance();
-      // localStorageService.currentUser = user;
-      // localStorageService.token = user.token!;
-      // localStorageService.isFirstTimeLogin = true;
     } catch (e) {
       // TODO: show dialog box
+      emit(const LoginInitial(error: 'Login Failed!'));
     }
   }
 }
