@@ -30,7 +30,8 @@ class DateTimeUtils {
   }
 
   static DateTime getWeekStartDate(DateTime dateTime) {
-    return dateTime.subtract(Duration(days: dateTime.weekday - DateTime.monday));
+    return dateTime
+        .subtract(Duration(days: dateTime.weekday - DateTime.monday));
   }
 
   static bool compareDate(DateTime date1, DateTime date2) {
