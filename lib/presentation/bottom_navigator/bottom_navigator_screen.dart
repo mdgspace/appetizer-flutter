@@ -87,6 +87,8 @@ class BottomNavigatorScreen extends StatelessWidget {
               onTap: (index) {
                 tabRouter.setActiveIndex(index);
               },
+              showSelectedLabels: false,
+              showUnselectedLabels: false,
               items: [
                 BottomNavigationBarItem(
                   icon: SvgPicture.asset(

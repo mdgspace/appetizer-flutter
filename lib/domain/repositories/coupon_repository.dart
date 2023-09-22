@@ -12,7 +12,7 @@ class CouponRepository {
 
   Future<CouponStatus> applyForCoupon(Coupon coupon) async {
     Map<String, dynamic> map = {
-      'meal': coupon.meal,
+      'meal': coupon.mealId,
       'is_active': true,
     };
     try {
@@ -28,7 +28,7 @@ class CouponRepository {
       'is_active': false,
     };
     try {
-      return await _apiService.cancelCoupon(coupon.meal, map);
+      return await _apiService.cancelCoupon(coupon.mealId, map);
     } catch (e) {
       debugPrint(e.toString());
       throw Failure(AppConstants.GENERIC_FAILURE);

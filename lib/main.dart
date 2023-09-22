@@ -8,7 +8,6 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 Future<void> main() async {
-  // TODO: fix android 12 splash
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await LocalStorageService.init();
@@ -23,7 +22,7 @@ Future<void> main() async {
     },
     appRunner: () => runApp(
       DevicePreview(
-        enabled: !kReleaseMode,
+        enabled: kReleaseMode,
         builder: (context) => const AppetizerApp(),
       ),
     ),

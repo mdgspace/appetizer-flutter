@@ -4,7 +4,7 @@ description: A new Flutter project.
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 2.0.6+21
+version: 3.0.0+22
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
@@ -25,7 +25,6 @@ dependencies:
   get: ^4.6.5
   package_info_plus: ^4.1.0
   get_it: ^7.6.0
-  sembast: ^3.5.0+1
   intl: ^0.18.0
   path_provider: ^2.0.15
   bloc: ^8.1.2
@@ -53,11 +52,19 @@ dev_dependencies:
   json_serializable: ^6.7.1
   freezed: ^2.4.1
   retrofit_generator: ^7.0.8
+  flutter_launcher_icons: ^0.13.1
 
   flutter_test:
     sdk: flutter
 
   flutter_lints: ^2.0.0
+
+flutter_icons:
+  image_path_android: "assets/icons/logo_rounded.png"
+  image_path_ios: "assets/icons/logo_squared.png"
+  android: true
+  ios: true
+  remove_alpha_ios: true
 
 flutter_native_splash:
   color: "#FFCB74"
@@ -66,7 +73,7 @@ flutter_native_splash:
 
   android_12:
     color: "#FFCB74"
-    image: "assets/images/icons/splash_icon.png"
+    image: "assets/icons/logo_outlined.png"
 
 
 flutter:
@@ -77,6 +84,7 @@ flutter:
     - assets/images/
     - assets/images/meal_card/
     - assets/images/icons/
+    - assets/icons/
     - assets/icons/bottom_navigator/
   #   - images/a_dot_ham.jpeg
 

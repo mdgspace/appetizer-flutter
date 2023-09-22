@@ -5,6 +5,7 @@ import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
 import 'package:appetizer/domain/models/menu/week_menu_tmp.dart';
 import 'package:appetizer/domain/repositories/coupon_repository.dart';
 import 'package:appetizer/domain/repositories/leave/leave_repository.dart';
+import 'package:appetizer/presentation/app/bloc/app_bloc.dart';
 import 'package:appetizer/presentation/week_menu/components/yourMealDailyCardsCombined/menu_card.dart';
 import 'package:appetizer/presentation/week_menu/components/yourMealDailyCardsCombined/bloc/your_meal_daily_cards_combined_bloc.dart';
 import 'package:flutter/material.dart';
@@ -36,45 +37,56 @@ class YourMealDailyCardsCombined extends StatelessWidget {
         child: Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.start,
-            children: dayMenu.meals
-                .map(
-                  (meal) => Padding(
-                    padding: EdgeInsets.only(
-                      bottom: (meal == dayMenu.meals.last ? 0 : 24)
-                          .toAutoScaledHeight,
+            children: [
+              ...dayMenu.meals
+                  .map(
+                    (meal) => Padding(
+                      padding: EdgeInsets.only(
+                        bottom: 24.toAutoScaledHeight,
+                      ),
+                      child: BlocSelector<YourMealDailyCardsCombinedBloc,
+                          YourMealDailyCardsDisplayState, MealState>(
+                        selector: (state) {
+                          // TODO: replace with proer implementation
+                          int index = dayMenu.meals.indexOf(meal);
+                          if (index >= state.mealStates.length) {
+                            state.mealStates.add(MealState(
+                              mealId: meal.id,
+                              leaveAppliedAndApproved:
+                                  meal.leaveStatus.status == LeaveStatusEnum.A,
+                              couponApplied: meal.couponStatus.status ==
+                                  CouponStatusEnum.A,
+                            ));
+                          }
+                          return state.mealStates[index];
+                        },
+                        builder: (context, state) {
+                          return MealCard(
+                            dailyItems: meal.type == MealType.B
+                                ? dailyItems.breakfast
+                                : (meal.type == MealType.L
+                                    ? dailyItems.lunch
+                                    : (meal.type == MealType.D
+                                        ? dailyItems.dinner
+                                        : dailyItems.snack)),
+                            meal: meal,
+                          );
+                        },
+                      ),
                     ),
-                    child: BlocSelector<YourMealDailyCardsCombinedBloc,
-                        YourMealDailyCardsDisplayState, MealState>(
-                      selector: (state) {
-                        // TODO: replace with proer implementation
-                        int index = dayMenu.meals.indexOf(meal);
-                        if (index >= state.mealStates.length) {
-                          state.mealStates.add(MealState(
-                            mealId: meal.id,
-                            leaveAppliedAndApproved:
-                                meal.leaveStatus.status == LeaveStatusEnum.A,
-                            couponApplied:
-                                meal.couponStatus.status == CouponStatusEnum.A,
-                          ));
-                        }
-                        return state.mealStates[index];
-                      },
-                      builder: (context, state) {
-                        return MealCard(
-                          dailyItems: meal.type == MealType.B
-                              ? dailyItems.breakfast
-                              : (meal.type == MealType.L
-                                  ? dailyItems.lunch
-                                  : (meal.type == MealType.D
-                                      ? dailyItems.dinner
-                                      : dailyItems.snack)),
-                          meal: meal,
-                        );
-                      },
-                    ),
-                  ),
-                )
-                .toList()
+                  )
+                  .toList(),
+              BlocSelector<AppBloc, AppState, bool>(
+                selector: (state) => state.user!.isCheckedOut,
+                builder: (context, val) {
+                  if (!val) {
+                    return 20.toVerticalSizedBox;
+                  }
+
+                  return const SizedBox.shrink();
+                },
+              ),
+            ]
             // [
             //   (dayMenu.mealMap[MealType.B] != null
             //       ? Padding(

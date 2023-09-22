@@ -2,6 +2,7 @@ import 'package:appetizer/app_theme.dart';
 import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
 import 'package:appetizer/domain/models/coupon/coupon.dart';
 import 'package:appetizer/domain/models/menu/week_menu_tmp.dart';
+import 'package:appetizer/presentation/app/bloc/app_bloc.dart';
 import 'package:appetizer/presentation/week_menu/components/yourMealDailyCardsCombined/bloc/your_meal_daily_cards_combined_bloc.dart';
 import 'package:appetizer/presentation/components/shadow_container.dart';
 import 'package:flutter/material.dart';
@@ -105,7 +106,11 @@ class CouponDialogBox extends StatelessWidget {
 }
 
 class MealCard extends StatelessWidget {
-  const MealCard({super.key, required this.meal, required this.dailyItems});
+  const MealCard({
+    required this.meal,
+    required this.dailyItems,
+    super.key,
+  });
   final Meal meal;
   final List<MealItem> dailyItems;
 
@@ -119,14 +124,14 @@ class MealCard extends StatelessWidget {
         dailyItemsParsed.substring(0, max(dailyItemsParsed.length - 2, 0));
     return ShadowContainer(
       offset: 2,
-      width: 312.toAutoScaledWidth,
-      height: 168.toAutoScaledHeight,
+      width: 315.toAutoScaledWidth,
+      height: 170.toAutoScaledHeight,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
             width: 125.toAutoScaledWidth,
-            height: 168.toAutoScaledHeight,
+            height: 170.toAutoScaledHeight,
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: svg.Svg(
@@ -138,10 +143,10 @@ class MealCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                SizedBox(height: 15.toAutoScaledHeight),
+                15.toVerticalSizedBox,
                 Container(
                   height: 28.toAutoScaledHeight,
-                  padding: const EdgeInsets.only(left: 12),
+                  padding: 12.toLeftOnlyPadding,
                   child: Text(
                     meal.title,
                     style: AppTheme.headline1.copyWith(
@@ -159,7 +164,7 @@ class MealCard extends StatelessWidget {
                         color: AppTheme.grey2f),
                   ),
                 ),
-                SizedBox(height: 9.toAutoScaledHeight),
+                10.toVerticalSizedBox,
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -167,19 +172,24 @@ class MealCard extends StatelessWidget {
                       padding: EdgeInsets.only(left: 12.toAutoScaledWidth),
                       child: FittedBox(
                         fit: BoxFit.contain,
-                        child: FSwitch(
-                          enable: !meal.isLeaveToggleOutdated,
-                          open: meal.leaveStatus.status != LeaveStatusEnum.A,
-                          sliderColor: AppTheme.customWhite,
-                          openColor: AppTheme.black2e,
-                          height: 20.toAutoScaledHeight,
-                          width: 44.toAutoScaledWidth,
-                          onChanged: (value) async {
-                            context.read<YourMealDailyCardsCombinedBloc>().add(
-                                  ToggleMealLeaveEvent(
-                                    meal: meal,
-                                  ),
-                                );
+                        child: BlocSelector<AppBloc, AppState, bool>(
+                          selector: (state) => state.user!.isCheckedOut,
+                          builder: (context, isCheckout) {
+                            return FSwitch(
+                              enable:
+                                  !meal.isLeaveToggleOutdated && !isCheckout,
+                              open:
+                                  meal.leaveStatus.status != LeaveStatusEnum.A,
+                              sliderColor: AppTheme.customWhite,
+                              openColor: AppTheme.black2e,
+                              height: 20.toAutoScaledHeight,
+                              width: 44.toAutoScaledWidth,
+                              onChanged: (value) async {
+                                context
+                                    .read<YourMealDailyCardsCombinedBloc>()
+                                    .add(ToggleMealLeaveEvent(meal: meal));
+                              },
+                            );
                           },
                         ),
                       ),
@@ -215,8 +225,9 @@ class MealCard extends StatelessWidget {
                                                     CouponStatusEnum.A
                                                 ? meal.couponStatus.id!
                                                 : -1,
-                                            meal:
-                                                "${meal.title}, ${DateFormat("dd MMMM").format(meal.startDateTime)}",
+                                            mealId: meal.id,
+                                            mealType: meal.type.name,
+                                            mealDate: "",
                                           ),
                                           couponAppliedAlready:
                                               meal.couponStatus.status ==

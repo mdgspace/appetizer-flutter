@@ -122,6 +122,8 @@ class ProfileScreen extends StatelessWidget {
                         onTap: () {
                           LocalStorageService.setValue(
                               key: AppConstants.LOGGED_IN, value: false);
+                          LocalStorageService.setValue(
+                              key: AppConstants.AUTH_TOKEN, value: null);
                           context
                               .read<AppBloc>()
                               .add(const NavigateToLoginScreen());
