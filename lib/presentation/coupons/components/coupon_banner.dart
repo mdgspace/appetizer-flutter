@@ -10,7 +10,7 @@ class CouponBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppBanner(
-      height: 120.toAutoScaledHeight,
+      height: 140.toAutoScaledHeight,
       child: Row(
         children: [
           IconButton(
