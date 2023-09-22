@@ -23,7 +23,7 @@ class YourMealDailyCardsCombined extends StatelessWidget {
     for (Meal meal in dayMenu.meals) {
       initialMealStates.add(MealState(
           mealId: meal.id,
-          leaveAppliedAndApproved: meal.leaveStatus.status == LeaveStatusEnum.A,
+          leaveAppliedAndApproved: meal.leaveStatus.status == LeaveStatusEnum.P,
           couponApplied: meal.couponStatus.status == CouponStatusEnum.A));
     }
     return BlocProvider(
@@ -52,7 +52,7 @@ class YourMealDailyCardsCombined extends StatelessWidget {
                           state.mealStates.add(MealState(
                             mealId: meal.id,
                             leaveAppliedAndApproved:
-                                meal.leaveStatus.status == LeaveStatusEnum.A,
+                                meal.leaveStatus.status == LeaveStatusEnum.P,
                             couponApplied:
                                 meal.couponStatus.status == CouponStatusEnum.A,
                           ));
@@ -69,6 +69,9 @@ class YourMealDailyCardsCombined extends StatelessWidget {
                                       ? dailyItems.dinner
                                       : dailyItems.snack)),
                           meal: meal,
+                          leaveAppliedAndApproved:
+                              state.leaveAppliedAndApproved,
+                          couponApplied: state.couponApplied,
                         );
                       },
                     ),

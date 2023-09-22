@@ -105,8 +105,15 @@ class CouponDialogBox extends StatelessWidget {
 }
 
 class MealCard extends StatelessWidget {
-  const MealCard({super.key, required this.meal, required this.dailyItems});
+  const MealCard(
+      {super.key,
+      required this.meal,
+      required this.dailyItems,
+      required this.leaveAppliedAndApproved,
+      required this.couponApplied});
   final Meal meal;
+  final bool leaveAppliedAndApproved;
+  final bool couponApplied;
   final List<MealItem> dailyItems;
 
   @override
@@ -169,7 +176,7 @@ class MealCard extends StatelessWidget {
                         fit: BoxFit.contain,
                         child: FSwitch(
                           enable: !meal.isLeaveToggleOutdated,
-                          open: meal.leaveStatus.status != LeaveStatusEnum.A,
+                          open: !leaveAppliedAndApproved,
                           sliderColor: AppTheme.customWhite,
                           openColor: AppTheme.black2e,
                           height: 20.toAutoScaledHeight,
