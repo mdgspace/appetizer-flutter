@@ -1,7 +1,8 @@
 import 'package:appetizer/data/constants/constants.dart';
 import 'package:appetizer/data/services/remote/api_service.dart';
 import 'package:appetizer/domain/models/failure_model.dart';
-import 'package:appetizer/domain/models/menu/week_menu.dart';
+import 'package:appetizer/domain/models/menu/week_menu_tmp.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 
 class MenuRepository {
@@ -13,19 +14,35 @@ class MenuRepository {
 
   Future<WeekMenu> weekMenuMultiMessing(String hostelCode, int id) async {
     try {
-      return await _apiService.weekMenuMultimessing(hostelCode, id);
-    } catch (e) {
+      WeekMenu? weekMenu;
+      weekMenu = await _apiService.weekMenuMultimessing(hostelCode, id);
+      return weekMenu;
+    } on DioException catch (e) {
+      if (e.response!.statusCode == 404) {
+        throw Failure(AppConstants.MENU_NOT_UPLOADED);
+      } else {
+        throw Failure(AppConstants.GENERIC_FAILURE);
+      }
+    } on Failure catch (e) {
       debugPrint(e.toString());
-      throw Failure(AppConstants.GENERIC_FAILURE);
+      rethrow;
     }
   }
 
   Future<WeekMenu> weekMenuForYourMeals(int weekId) async {
     try {
-      return await _apiService.weekMenuForYourMeals(weekId);
-    } catch (e) {
+      WeekMenu? weekMenu;
+      weekMenu = await _apiService.weekMenuForYourMeals(weekId);
+      return weekMenu;
+    } on DioException catch (e) {
+      if (e.response!.statusCode == 404) {
+        throw Failure(AppConstants.MENU_NOT_UPLOADED);
+      } else {
+        throw Failure(AppConstants.GENERIC_FAILURE);
+      }
+    } on Failure catch (e) {
       debugPrint(e.toString());
-      throw Failure(AppConstants.GENERIC_FAILURE);
+      rethrow;
     }
   }
 
@@ -33,28 +50,52 @@ class MenuRepository {
 
   Future<WeekMenu> weekMenuByWeekId(int weekId) async {
     try {
-      return await _apiService.weekMenuByWeekId(weekId);
-    } catch (e) {
+      WeekMenu? weekMenu;
+      weekMenu = await _apiService.weekMenuByWeekId(weekId);
+      return weekMenu;
+    } on DioException catch (e) {
+      if (e.response!.statusCode == 404) {
+        throw Failure(AppConstants.MENU_NOT_UPLOADED);
+      } else {
+        throw Failure(AppConstants.GENERIC_FAILURE);
+      }
+    } on Failure catch (e) {
       debugPrint(e.toString());
-      throw Failure(AppConstants.GENERIC_FAILURE);
+      rethrow;
     }
   }
 
   Future<WeekMenu> currentWeekMenu() async {
     try {
-      return await _apiService.currentWeekMenu();
-    } catch (e) {
+      WeekMenu? weekMenu;
+      weekMenu = await _apiService.currentWeekMenu();
+      return weekMenu;
+    } on DioException catch (e) {
+      if (e.response!.statusCode == 404) {
+        throw Failure(AppConstants.MENU_NOT_UPLOADED);
+      } else {
+        throw Failure(AppConstants.GENERIC_FAILURE);
+      }
+    } on Failure catch (e) {
       debugPrint(e.toString());
-      throw Failure(AppConstants.GENERIC_FAILURE);
+      rethrow;
     }
   }
 
   Future<WeekMenu> dayMenu(int week, String dayOfWeek) async {
     try {
-      return await _apiService.dayMenu(week, dayOfWeek);
-    } catch (e) {
+      WeekMenu? weekMenu;
+      weekMenu = await _apiService.dayMenu(week, dayOfWeek);
+      return weekMenu;
+    } on DioException catch (e) {
+      if (e.response!.statusCode == 404) {
+        throw Failure(AppConstants.MENU_NOT_UPLOADED);
+      } else {
+        throw Failure(AppConstants.GENERIC_FAILURE);
+      }
+    } on Failure catch (e) {
       debugPrint(e.toString());
-      throw Failure(AppConstants.GENERIC_FAILURE);
+      rethrow;
     }
   }
 }

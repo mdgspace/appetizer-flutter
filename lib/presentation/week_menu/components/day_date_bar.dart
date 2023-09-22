@@ -1,5 +1,4 @@
 import 'package:appetizer/app_theme.dart';
-import 'package:appetizer/data/constants/constants.dart';
 import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
 import 'package:appetizer/presentation/week_menu/bloc/week_menu_bloc.dart';
 import 'package:appetizer/presentation/week_menu/components/title_bar.dart';
@@ -33,7 +32,7 @@ class _CurrDateWidget extends StatelessWidget {
           SizedBox(
             height: 14.toAutoScaledHeight,
             child: Text(
-              AppConstants.dayToInitial[day]!,
+              day[0],
               style: AppTheme.button.copyWith(height: 1.toAutoScaledHeight),
             ),
           ),
@@ -85,13 +84,12 @@ class _OtherDateWidget extends StatelessWidget {
           SizedBox(
             height: 14.toAutoScaledHeight,
             child: Text(
-              AppConstants.dayToInitial[day]!,
+              day[0],
               style: AppTheme.button.copyWith(height: 1.toAutoScaledHeight),
             ),
           ),
           2.toVerticalSizedBox,
           Container(
-            // padding: const EdgeInsets.symmetric(vertical: 5.5, horizontal: 6),
             decoration: ShapeDecoration(
               color: AppTheme.customWhite,
               shape: RoundedRectangleBorder(
@@ -114,28 +112,19 @@ class _OtherDateWidget extends StatelessWidget {
 }
 
 class NewDayDateBar extends StatefulWidget {
-  const NewDayDateBar({
-    super.key,
-    required this.dates,
-    required this.dateToMonthYear,
-    required this.currDate,
-    required this.blocObj,
-  });
-
-  final int currDate;
-  final List<int> dates;
-  final Map<int, String> dateToMonthYear;
-  final WeekMenuBlocBloc blocObj;
+  const NewDayDateBar({super.key});
 
   @override
   State<NewDayDateBar> createState() => _NewDayDateBarState();
 }
 
 class _NewDayDateBarState extends State<NewDayDateBar> {
-  int? currDate;
-  List<int>? dates;
+  late int currDate;
+  late DateTime currentDate;
+  late List<DateTime> dates;
   Map<int, String>? dateToMonthYear;
-  List<String>? dayNames = [
+
+  List<String> dayNames = [
     "Monday",
     "Tuesday",
     "Wednesday",
@@ -144,20 +133,39 @@ class _NewDayDateBarState extends State<NewDayDateBar> {
     "Saturday",
     "Sunday"
   ];
+
+  @override
+  void initState() {
+    currentDate = DateTime.now();
+    DateTime tmp = currentDate;
+    dates = List<DateTime>.filled(7, tmp);
+    for (var i = tmp.weekday - 1; i >= 1; i--) {
+      dates[i - 1] = tmp.subtract(Duration(days: (tmp.weekday - i)));
+    }
+    dates[tmp.weekday - 1] = tmp;
+    for (var i = tmp.weekday + 1; i >= 7; i++) {
+      dates[i - 1] = tmp.add(Duration(days: (i - tmp.weekday)));
+    }
+    super.initState();
+  }
+
+  bool isSameDay(DateTime d1, DateTime d2) {
+    return d1.day == d2.day && d1.month == d2.month && d1.year == d2.year;
+  }
+
   @override
   Widget build(BuildContext context) {
-    currDate = widget.currDate;
-    dates = widget.dates;
-    dateToMonthYear = widget.dateToMonthYear;
     return Column(
       children: [
-        (DateFormat("dd MMM'yy").format(DateTime.now()) ==
-                ("$currDate ${dateToMonthYear![currDate]!}"))
+        isSameDay(currentDate, DateTime.now())
             ? TitleBar(
-                monthAndYear: dateToMonthYear![currDate]!, dayName: "Today")
+                monthAndYear: DateFormat("MMM''yy").format(currentDate),
+                dayName: "Today")
             : TitleBar(
                 monthAndYear: "",
-                dayName: ("$currDate ${dateToMonthYear![currDate]!}")),
+                dayName: DateFormat("dd MMM''yy").format(currentDate),
+              ),
+        16.toVerticalSizedBox,
         Expanded(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -167,33 +175,33 @@ class _NewDayDateBarState extends State<NewDayDateBar> {
               GestureDetector(
                   onTap: () {
                     setState(() {
-                      currDate = dates![0];
+                      currentDate = dates[0];
                     });
                     context
                         .read<WeekMenuBlocBloc>()
                         .add(const DayChangeEvent(newDayIndex: 0));
                   },
-                  child: currDate == dates![0]
-                      ? _CurrDateWidget(date: dates![0], day: dayNames![0])
+                  child: isSameDay(currentDate, dates[0])
+                      ? _CurrDateWidget(date: dates[0].day, day: dayNames[0])
                       : _OtherDateWidget(
-                          date: dates![0], day: dayNames![0 % 7])),
+                          date: dates[0].day, day: dayNames[0 % 7])),
               for (int widgetDateOffset = 1;
                   widgetDateOffset < 7;
                   widgetDateOffset++)
                 Row(
                   children: [
-                    SizedBox(width: 15.toAutoScaledWidth),
+                    15.toHorizontalSizedBox,
                     GestureDetector(
-                      child: currDate == dates![widgetDateOffset]
+                      child: isSameDay(currentDate, dates[widgetDateOffset])
                           ? _CurrDateWidget(
-                              date: dates![widgetDateOffset],
-                              day: dayNames![widgetDateOffset])
+                              date: dates[widgetDateOffset].day,
+                              day: dayNames[widgetDateOffset])
                           : _OtherDateWidget(
-                              date: dates![widgetDateOffset],
-                              day: dayNames![widgetDateOffset]),
+                              date: dates[widgetDateOffset].day,
+                              day: dayNames[widgetDateOffset]),
                       onTap: () {
                         setState(() {
-                          currDate = dates![widgetDateOffset];
+                          currentDate = dates[widgetDateOffset];
                         });
                         context
                             .read<WeekMenuBlocBloc>()

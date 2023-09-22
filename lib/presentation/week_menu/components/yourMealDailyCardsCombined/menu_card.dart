@@ -1,7 +1,7 @@
 import 'package:appetizer/app_theme.dart';
 import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
 import 'package:appetizer/domain/models/coupon/coupon.dart';
-import 'package:appetizer/domain/models/menu/week_menu.dart';
+import 'package:appetizer/domain/models/menu/week_menu_tmp.dart';
 import 'package:appetizer/presentation/week_menu/components/yourMealDailyCardsCombined/bloc/your_meal_daily_cards_combined_bloc.dart';
 import 'package:appetizer/presentation/components/shadow_container.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +10,7 @@ import 'package:flutter_svg_provider/flutter_svg_provider.dart' as svg;
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fswitch_nullsafety/fswitch_nullsafety.dart';
 import 'package:intl/intl.dart';
+import 'dart:math';
 
 bool _isMealValidForCoupon(Meal meal) {
   for (MealItem item in meal.items) {
@@ -115,7 +116,7 @@ class MealCard extends StatelessWidget {
       dailyItemsParsed += '${item.name}, ';
     }
     dailyItemsParsed =
-        dailyItemsParsed.substring(0, dailyItemsParsed.length - 2);
+        dailyItemsParsed.substring(0, max(dailyItemsParsed.length - 2, 0));
     return ShadowContainer(
       offset: 2,
       width: 312.toAutoScaledWidth,
@@ -286,8 +287,8 @@ class MealCard extends StatelessWidget {
 }
 
 // TODO(nano): temp fix for the getters
-extension on Meal {
-  bool get isOutdated => false;
-  bool get isLeaveToggleOutdated => false;
-  bool get isCouponOutdated => false;
-}
+// extension on Meal {
+//   bool get isOutdated => false;
+//   bool get isLeaveToggleOutdated => false;
+//   bool get isCouponOutdated => false;
+// }

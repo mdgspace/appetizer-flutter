@@ -1,4 +1,5 @@
-import 'package:appetizer/domain/models/menu/week_menu.dart';
+import 'package:appetizer/domain/models/failure_model.dart';
+import 'package:appetizer/domain/models/menu/week_menu_tmp.dart';
 import 'package:appetizer/domain/repositories/leave/leave_repository.dart';
 import 'package:appetizer/domain/repositories/menu_repository.dart';
 import 'package:bloc/bloc.dart';
@@ -8,70 +9,96 @@ part 'week_menu_event.dart';
 part 'week_menu_state.dart';
 
 class WeekMenuBlocBloc extends Bloc<WeekMenuBlocEvent, WeekMenuBlocState> {
-  late WeekMenu weekMenu;
-  // final int currDayIndex;
-  // final bool isCheckedOut;
   final MenuRepository menuRepository;
   final LeaveRepository leaveRepository;
 
   WeekMenuBlocBloc({
-    // required this.weekMenu,
-    // required this.currDayIndex,
-    // required this.isCheckedOut,
     required this.leaveRepository,
     required this.menuRepository,
   }) : super(const WeekMenuBlocLoadingState()) {
-    on<NextWeekChangeEvent>(
-        (NextWeekChangeEvent event, Emitter<WeekMenuBlocState> emit) async {
-      emit(const WeekMenuBlocLoadingState());
-      WeekMenu nextWeekMenu =
-          await menuRepository.weekMenuByWeekId(event.nextWeekId);
-      emit(WeekMenuBlocDisplayState(
-          weekMenu: nextWeekMenu,
-          currDayIndex: 0,
-          isCheckedOut: (state as WeekMenuBlocDisplayState).isCheckedOut));
-    });
-    on<PreviousWeekChangeEvent>(
-        (PreviousWeekChangeEvent event, Emitter<WeekMenuBlocState> emit) async {
-      emit(const WeekMenuBlocLoadingState());
+    on<FetchWeekMenuData>(_onFetchWeekMenuData);
+    on<NextWeekChangeEvent>(_onNextWeekChangeEvent);
+    on<PreviousWeekChangeEvent>(_onPreviousWeekChangeEvent);
+    on<DayChangeEvent>(_onDayChangeEvent);
+    on<DateChangeEvent>(_onDateChangeEvent);
+  }
+
+  void _onDayChangeEvent(
+      DayChangeEvent event, Emitter<WeekMenuBlocState> emit) {
+    if (state is! WeekMenuBlocDisplayState) {
+      return;
+    }
+    int dayNumber = getDayNumber(
+        (state as WeekMenuBlocDisplayState).weekMenu, event.newDayIndex);
+    emit((state as WeekMenuBlocDisplayState)
+        .copyWith(currDayIndex: event.newDayIndex, dayNumber: dayNumber));
+  }
+
+  void _onPreviousWeekChangeEvent(
+      PreviousWeekChangeEvent event, Emitter<WeekMenuBlocState> emit) async {
+    emit(const WeekMenuBlocLoadingState());
+    try {
       WeekMenu previousWeekMenu =
           await menuRepository.weekMenuByWeekId(event.previousWeekId);
+      int dayNumber = getDayNumber(previousWeekMenu, 0);
       emit(WeekMenuBlocDisplayState(
-          weekMenu: previousWeekMenu,
-          currDayIndex: 0,
-          isCheckedOut: (state as WeekMenuBlocDisplayState).isCheckedOut));
-    });
-    on<DayChangeEvent>((DayChangeEvent event, Emitter<WeekMenuBlocState> emit) {
+          weekMenu: previousWeekMenu, currDayIndex: 0, dayNumber: dayNumber));
+    } on Failure catch (e) {
+      emit(WeekMenuErrorState(message: e.message));
+    }
+  }
+
+  void _onNextWeekChangeEvent(
+      NextWeekChangeEvent event, Emitter<WeekMenuBlocState> emit) async {
+    emit(const WeekMenuBlocLoadingState());
+    try {
+      WeekMenu nextWeekMenu =
+          await menuRepository.weekMenuByWeekId(event.nextWeekId);
+      int dayNumber = getDayNumber(nextWeekMenu, 0);
       emit(WeekMenuBlocDisplayState(
-          weekMenu: weekMenu,
-          currDayIndex: event.newDayIndex,
-          isCheckedOut: (state as WeekMenuBlocDisplayState).isCheckedOut));
-    });
-    on<CheckInEvent>(
-        (CheckInEvent event, Emitter<WeekMenuBlocState> emit) async {
-      emit(const WeekMenuBlocLoadingState());
-      try {
-        final bool status = await leaveRepository.checkin();
-        emit(WeekMenuBlocDisplayState(
-            weekMenu: (state as WeekMenuBlocDisplayState).weekMenu,
-            currDayIndex: (state as WeekMenuBlocDisplayState).currDayIndex,
-            isCheckedOut: status));
-      } catch (error) {
-        // TODO: show a dialog box for the error
+          weekMenu: nextWeekMenu, currDayIndex: 0, dayNumber: dayNumber));
+    } on Failure catch (e) {
+      emit(WeekMenuErrorState(message: e.message));
+    }
+  }
+
+  void _onFetchWeekMenuData(
+      FetchWeekMenuData event, Emitter<WeekMenuBlocState> emit) async {
+    try {
+      WeekMenu weekMenu = await menuRepository.currentWeekMenu();
+      int dayNumber = getDayNumber(weekMenu, DateTime.now().weekday % 7);
+      emit(WeekMenuBlocDisplayState(
+        weekMenu: weekMenu,
+        currDayIndex: DateTime.now().day % 7,
+        dayNumber: dayNumber,
+      ));
+    } on Failure catch (e) {
+      emit(WeekMenuErrorState(message: e.message));
+    }
+  }
+
+  void _onDateChangeEvent(
+      DateChangeEvent event, Emitter<WeekMenuBlocState> emit) async {
+    emit(const WeekMenuBlocLoadingState());
+    try {
+      WeekMenu weekMenu = await menuRepository.weekMenuByWeekId(event.weekId);
+      int dayNumber = getDayNumber(weekMenu, event.dayIndex);
+      emit(WeekMenuBlocDisplayState(
+        weekMenu: weekMenu,
+        currDayIndex: event.dayIndex,
+        dayNumber: dayNumber,
+      ));
+    } on Failure catch (e) {
+      emit(WeekMenuErrorState(message: e.message));
+    }
+  }
+
+  int getDayNumber(WeekMenu weekMenu, int dayIndex) {
+    for (int i = 0; i < weekMenu.dayMenus.length; i++) {
+      if (weekMenu.dayMenus[i].date.weekday == dayIndex + 1) {
+        return i;
       }
-    });
-    on<CheckOutEvent>(
-        (CheckOutEvent event, Emitter<WeekMenuBlocState> emit) async {
-      emit(const WeekMenuBlocLoadingState());
-      try {
-        final bool status = await leaveRepository.checkout();
-        emit(WeekMenuBlocDisplayState(
-            weekMenu: (state as WeekMenuBlocDisplayState).weekMenu,
-            currDayIndex: (state as WeekMenuBlocDisplayState).currDayIndex,
-            isCheckedOut: status));
-      } catch (error) {
-        // TODO: show a dialog box for the error
-      }
-    });
+    }
+    return -1;
   }
 }

@@ -30,15 +30,6 @@ class AppConstants {
     "Saturday",
     "Sunday",
   ];
-  static const Map<String, String> dayToInitial = {
-    "Monday": "M",
-    "Tuesday": "T",
-    "Wednesday": "W",
-    "Thursday": "T",
-    "Friday": "F",
-    "Saturday": "S",
-    "Sunday": "S"
-  };
 
   // Local db
   static const String localDb = "appiLocalDb";
@@ -53,6 +44,9 @@ class AppConstants {
   static const REGISTERED_USER_API_STATUS = "Registered";
   static const UNREGISTERED_USER_API_STATUS = "Enrollment does not exists";
   static const TEMPORARY_USER_API_STATUS = "Temporary";
+
+  /// api error messages
+  static const MENU_NOT_UPLOADED = 'Menu not uploaded yet';
 
   // Storage Keys
   static const FCM_TOKEN = 'fcm_token';

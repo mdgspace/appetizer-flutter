@@ -7,6 +7,10 @@ abstract class WeekMenuBlocEvent extends Equatable {
   List<Object> get props => [];
 }
 
+class FetchWeekMenuData extends WeekMenuBlocEvent {
+  const FetchWeekMenuData();
+}
+
 class DayChangeEvent extends WeekMenuBlocEvent {
   const DayChangeEvent({required this.newDayIndex});
   final int newDayIndex;
@@ -31,16 +35,15 @@ class PreviousWeekChangeEvent extends WeekMenuBlocEvent {
   List<Object> get props => [previousWeekId];
 }
 
-class CheckOutEvent extends WeekMenuBlocEvent {
-  const CheckOutEvent();
+class DateChangeEvent extends WeekMenuBlocEvent {
+  const DateChangeEvent({
+    required this.dayIndex,
+    required this.weekId,
+  });
+
+  final int dayIndex;
+  final int weekId;
 
   @override
-  List<Object> get props => [];
-}
-
-class CheckInEvent extends WeekMenuBlocEvent {
-  const CheckInEvent();
-
-  @override
-  List<Object> get props => [];
+  List<Object> get props => [dayIndex, weekId];
 }

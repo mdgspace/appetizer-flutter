@@ -2,8 +2,6 @@ import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 
-import 'dart:math' as math;
-
 class AppBanner extends StatelessWidget {
   const AppBanner({super.key, required this.height, required this.child});
   final double height;
@@ -21,11 +19,11 @@ class AppBanner extends StatelessWidget {
             image: Svg('assets/images/banner.svg'), //path of image
             fit: BoxFit.fitWidth,
           )),
-          child: Padding(
-            padding: EdgeInsets.only(
-                top: math.min(32, MediaQuery.of(context).padding.top),
-                bottom: 12),
-            child: child,
+          child: SafeArea(
+            child: Padding(
+              padding: 20.toVerticalPadding,
+              child: child,
+            ),
           ),
         ),
         Transform.translate(

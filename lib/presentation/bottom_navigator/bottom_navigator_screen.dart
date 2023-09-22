@@ -1,8 +1,8 @@
 import 'package:appetizer/data/core/router/intrinsic_router/intrinsic_router.gr.dart';
 import 'package:appetizer/domain/repositories/leave/leave_repository.dart';
 import 'package:appetizer/domain/repositories/menu_repository.dart';
-import 'package:appetizer/domain/repositories/transaction_repositroy.dart';
 import 'package:appetizer/presentation/app/bloc/app_bloc.dart';
+import 'package:appetizer/domain/repositories/transaction_repositroy.dart';
 import 'package:appetizer/presentation/components/round_edge_container.dart';
 import 'package:appetizer/domain/repositories/user/user_repository.dart';
 import 'package:appetizer/presentation/leaves_and_rebate/bloc/leaves_and_rebate_bloc.dart';
@@ -41,7 +41,7 @@ class BottomNavigatorScreen extends StatelessWidget {
           create: (context) => WeekMenuBlocBloc(
             menuRepository: context.read<MenuRepository>(),
             leaveRepository: context.read<LeaveRepository>(),
-          ),
+          )..add(const FetchWeekMenuData()),
         ),
         BlocProvider(
           create: (context) =>
@@ -61,17 +61,24 @@ class BottomNavigatorScreen extends StatelessWidget {
           return Scaffold(
             backgroundColor: Colors.white,
             body: child,
-            floatingActionButton: (tabRouter.activeIndex == 1 &&
-                    !context.read<AppBloc>().state.user!.isCheckedOut)
-                ? GestureDetector(
+            floatingActionButton: Visibility(
+              visible: tabRouter.activeIndex == 1,
+              child: BlocSelector<AppBloc, AppState, bool>(
+                selector: (appState) => appState.user!.isCheckedOut,
+                builder: (context, isCheckedOut) {
+                  if (isCheckedOut) return const SizedBox();
+
+                  return GestureDetector(
                     onTap: () {
                       context
                           .read<AppBloc>()
                           .add(const ToggleCheckOutStatusEvent());
                     },
-                    child: const RoundEdgeTextOnlyContainer(text: "CHECK IN"),
-                  )
-                : null,
+                    child: const RoundEdgeTextOnlyContainer(text: "CHECK OUT"),
+                  );
+                },
+              ),
+            ),
             floatingActionButtonLocation:
                 FloatingActionButtonLocation.centerFloat,
             bottomNavigationBar: BottomNavigationBar(
