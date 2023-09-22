@@ -86,6 +86,7 @@ flutter:
     - assets/images/icons/
     - assets/icons/
     - assets/icons/bottom_navigator/
+    - shorebird.yaml
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

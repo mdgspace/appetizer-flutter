@@ -22,7 +22,7 @@ Future<void> main() async {
     },
     appRunner: () => runApp(
       DevicePreview(
-        enabled: kReleaseMode,
+        enabled: !kReleaseMode,
         builder: (context) => const AppetizerApp(),
       ),
     ),
