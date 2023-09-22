@@ -20,7 +20,8 @@ class WeekMenuBlocDisplayState extends WeekMenuBlocState {
   final int currDayIndex;
   final int dayNumber;
 
-  WeekMenuBlocDisplayState copyWith({WeekMenu? weekMenu, int? currDayIndex, int? dayNumber}) {
+  WeekMenuBlocDisplayState copyWith(
+      {WeekMenu? weekMenu, int? currDayIndex, int? dayNumber}) {
     return WeekMenuBlocDisplayState(
       weekMenu: weekMenu ?? this.weekMenu,
       currDayIndex: currDayIndex ?? this.currDayIndex,
