@@ -13,20 +13,23 @@ class WeekMenuBlocDisplayState extends WeekMenuBlocState {
   const WeekMenuBlocDisplayState({
     required this.weekMenu,
     required this.currDayIndex,
+    required this.dayNumber,
   });
 
   final WeekMenu weekMenu;
   final int currDayIndex;
+  final int dayNumber;
 
-  WeekMenuBlocDisplayState copyWith({WeekMenu? weekMenu, int? currDayIndex}) {
+  WeekMenuBlocDisplayState copyWith({WeekMenu? weekMenu, int? currDayIndex, int? dayNumber}) {
     return WeekMenuBlocDisplayState(
       weekMenu: weekMenu ?? this.weekMenu,
       currDayIndex: currDayIndex ?? this.currDayIndex,
+      dayNumber: dayNumber ?? this.dayNumber,
     );
   }
 
   @override
-  List<Object> get props => [weekMenu, currDayIndex];
+  List<Object> get props => [weekMenu, currDayIndex, dayNumber];
 }
 
 class WeekMenuBlocLoadingState extends WeekMenuBlocState {

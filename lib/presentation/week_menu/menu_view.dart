@@ -20,9 +20,6 @@ class WeekMenuScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<WeekMenuBlocBloc, WeekMenuBlocState>(
       builder: (context, state) {
-        if (state is WeekMenuBlocLoadingState) {
-          return const Center(child: LoadingIndicator());
-        }
         return Column(
           children: [
             AppBanner(
@@ -32,6 +29,12 @@ class WeekMenuScreen extends StatelessWidget {
             if (state is WeekMenuErrorState)
               NoDataFoundContainer(
                 title: state.message,
+              ),
+            if (state is WeekMenuBlocLoadingState)
+              const Expanded(
+                child: Center(
+                  child: LoadingIndicator(),
+                ),
               ),
             if (state is WeekMenuBlocDisplayState) ...[
               BlocSelector<AppBloc, AppState, bool>(
@@ -65,11 +68,11 @@ class WeekMenuScreen extends StatelessWidget {
                 },
               ),
               Expanded(
-                child: (state.weekMenu.dayMenus.length > state.currDayIndex)
+                child: (state.dayNumber != -1)
                     ? YourMealDailyCardsCombined(
-                        dayMenu: state.weekMenu.dayMenus[state.currDayIndex],
+                        dayMenu: state.weekMenu.dayMenus[state.dayNumber],
                         dailyItems: state.weekMenu.dailyItems)
-                    : const SizedBox.shrink(),
+                    : const NoDataFoundContainer(title: 'Menu not available'),
               ),
             ]
           ],

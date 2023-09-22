@@ -159,7 +159,7 @@ class _DayDateBarPage extends StatelessWidget {
                       (DateTimeUtils.getWeekNumber(newDate) !=
                               DateTimeUtils.getWeekNumber(parentState.date))
                           ? DateChangeEvent(
-                              dayIndex: newDate.weekday,
+                              dayIndex: newDate.weekday - 1,
                               weekId: DateTimeUtils.getWeekNumber(newDate),
                             )
                           : DayChangeEvent(

@@ -45,8 +45,20 @@ class YourMealDailyCardsCombined extends StatelessWidget {
                     ),
                     child: BlocSelector<YourMealDailyCardsCombinedBloc,
                         YourMealDailyCardsDisplayState, MealState>(
-                      selector: (state) =>
-                          state.mealStates[dayMenu.meals.indexOf(meal)],
+                      selector: (state) {
+                        // TODO: replace with proer implementation
+                        int index = dayMenu.meals.indexOf(meal);
+                        if (index >= state.mealStates.length) {
+                          state.mealStates.add(MealState(
+                            mealId: meal.id,
+                            leaveAppliedAndApproved:
+                                meal.leaveStatus.status == LeaveStatusEnum.A,
+                            couponApplied:
+                                meal.couponStatus.status == CouponStatusEnum.A,
+                          ));
+                        }
+                        return state.mealStates[index];
+                      },
                       builder: (context, state) {
                         return MealCard(
                           dailyItems: meal.type == MealType.B
