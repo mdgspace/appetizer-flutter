@@ -1,0 +1,19 @@
+The Appetizer app brings the best of mess experience to your Android and iPhone devices with real-time notifications, display of mess menu and a feature which let’s you skip any meal which you are not excited about.
+
+WHY USE Appetizer:
+- Legible display of Mess Menu you'll love.
+- Quickly swipe between days and week View of mess menu.
+- Check-in/Check-out whenever you go leave/enter the campus.
+- One-button Check-Out feature to leave mess in sequence
+- Not excited about the meal leave it and get rebate
+- A self-sustained system for feedback and suggestions
+- Help the administration improve the quality of food by sending feedbacks.
+- Send attachments with your feedbacks
+- Read the responses given by the administration for your feedback
+
+We're always excited to hear from you! In case you encounter any technical problem, fill the form at https://mess.iitr.ac.in/issues.
+
+If you have feedback, questions, or concerns, come chat with us: 
+http://mdg.iitr.ac.in/chat
+
+Note: Appetizer is currently functional for the students of IIT Roorkee

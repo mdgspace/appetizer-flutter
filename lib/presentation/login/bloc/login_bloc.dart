@@ -74,12 +74,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       if (user.isNew) {
         emit(CreatePassword(enrollmentNo: user.studentData.enrNo.toString()));
       } else {
-        //TODO: show dialog box that user is already registered
-        emit(
-          EnterPassword(
-            enrollmentNo: user.studentData.enrNo.toString(),
-          ),
-        );
+        LocalStorageService.setValue(
+            key: AppConstants.AUTH_TOKEN, value: user.token);
+        LocalStorageService.setValue(key: AppConstants.LOGGED_IN, value: true);
+        emit(const LoginSuccess());
       }
     } catch (e) {
       //TODO: show error dialog box

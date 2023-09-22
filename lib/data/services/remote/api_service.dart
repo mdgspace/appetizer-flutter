@@ -39,7 +39,7 @@ abstract class ApiService {
 
   @PATCH(ApiEndpoints.couponWithId)
   Future<CouponStatus> cancelCoupon(
-    @Path("couponId") String couponId,
+    @Path("couponId") int couponId,
     @Body() Map<String, dynamic> map,
   );
 

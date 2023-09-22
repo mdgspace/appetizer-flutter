@@ -1,13 +1,11 @@
+import 'package:appetizer/app_theme.dart';
 import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
 import 'package:appetizer/domain/models/coupon/coupon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class CouponCard extends StatelessWidget {
-  const CouponCard({
-    required this.coupon,
-    Key? key,
-  }) : super(key: key);
+  const CouponCard({required this.coupon, super.key});
 
   final Coupon coupon;
 
@@ -44,13 +42,21 @@ class CouponCard extends StatelessWidget {
                   bottomRight: Radius.circular(12.toAutoScaledWidth),
                 ),
               ),
+              shadows: [
+                BoxShadow(
+                  color: AppTheme.shadowColor,
+                  blurRadius: 12.toAutoScaledWidth,
+                  offset: const Offset(2, 2),
+                  spreadRadius: 1.toAutoScaledWidth,
+                )
+              ],
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  coupon.id.toString(),
+                  "CPN${coupon.id}",
                   textAlign: TextAlign.left,
                   style: TextStyle(
                     color: const Color(0xFF111111),
@@ -61,7 +67,7 @@ class CouponCard extends StatelessWidget {
                 ),
                 6.toVerticalSizedBox,
                 Text(
-                  coupon.meal,
+                  coupon.mealType,
                   style: TextStyle(
                     color: const Color(0xFF2E2E2E),
                     fontSize: 10.toAutoScaledFont,
@@ -69,6 +75,7 @@ class CouponCard extends StatelessWidget {
                     fontWeight: FontWeight.w400,
                   ),
                 ),
+                6.toVerticalSizedBox,
               ],
             ),
           )
