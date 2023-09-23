@@ -78,6 +78,7 @@ class LoginScreen extends StatelessWidget {
                             content: Text(state.error!),
                           ),
                         );
+                        _controller.clear();
                       }
                     },
                     builder: (context, state) {
