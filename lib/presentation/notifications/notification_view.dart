@@ -3,6 +3,7 @@ import 'package:appetizer/domain/repositories/user/user_repository.dart';
 import 'package:appetizer/presentation/components/no_data_found_container.dart';
 import 'package:appetizer/presentation/notifications/bloc/notification_page_bloc.dart';
 import 'package:appetizer/presentation/notifications/components/no_notification_widget.dart';
+import 'package:appetizer/presentation/notifications/components/notification_banner.dart';
 import 'package:appetizer/presentation/notifications/components/notification_card.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
@@ -15,25 +16,7 @@ class NotificationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            // TODO: navigate to where
-          },
-        ),
-        title: Text(
-          'Notification',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 24.toAutoScaledFont,
-            fontFamily: 'Noto Sans',
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-        backgroundColor: const Color(0xFFFFCB74),
-        toolbarHeight: 120.toAutoScaledHeight,
-      ),
+      // TODO: implement Old/New notification bars and logic
       body: BlocProvider(
         create: (context) =>
             NotificationPageBloc(repo: context.read<UserRepository>()),
@@ -47,6 +30,7 @@ class NotificationScreen extends StatelessWidget {
                   title: 'Oops! Just a moment...');
             }
             if (state is NotificationPageFailedState) {
+              // TODO: throw an error, or snackbar
               return const NoDataFoundContainer(
                   title: 'Something went wrong...');
             }
@@ -56,6 +40,7 @@ class NotificationScreen extends StatelessWidget {
               }
               return Column(
                 children: [
+                  const NotificationBanner(),
                   Container(
                     height: 656.toAutoScaledHeight,
                     padding: EdgeInsets.only(
