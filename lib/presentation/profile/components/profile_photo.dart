@@ -1,3 +1,4 @@
+import 'package:appetizer/app_theme.dart';
 import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
 import 'package:flutter/material.dart';
 
@@ -24,13 +25,17 @@ class ProfilePhoto extends StatelessWidget {
       ),
       width: 124.toAutoScaledWidth,
       height: 124.toAutoScaledHeight,
-      child: const CircleAvatar(
-        backgroundColor: Color.fromARGB(255, 255, 255, 255),
-        // TODO: make profile photo as svg
-        foregroundImage: AssetImage(
-          'assets/images/profile_photo.png',
-        ),
+      child: Icon(
+        Icons.person_rounded,
+        size: 100.toAutoScaledWidth,
+        color: AppTheme.primary,
       ),
+      // child: const CircleAvatar(
+      //   backgroundColor: Color.fromARGB(255, 255, 255, 255),
+      //   foregroundImage: AssetImage(
+      //     'assets/images/profile_photo.png',
+      //   ),
+      // ),
     );
   }
 }
