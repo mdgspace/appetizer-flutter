@@ -22,7 +22,7 @@ class LeavesAndRebateScreen extends StatelessWidget {
         return Column(
           children: [
             AppBanner(
-              height: 120.toAutoScaledHeight,
+              height: 140.toAutoScaledHeight,
               child: Row(
                 children: [
                   SizedBox(

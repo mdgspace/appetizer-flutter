@@ -5,6 +5,7 @@ import 'package:appetizer/domain/models/menu/week_menu_tmp.dart';
 import 'package:appetizer/presentation/app/bloc/app_bloc.dart';
 import 'package:appetizer/presentation/week_menu/components/yourMealDailyCardsCombined/bloc/your_meal_daily_cards_combined_bloc.dart';
 import 'package:appetizer/presentation/components/shadow_container.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart' as svg;
@@ -47,12 +48,15 @@ class FeedbackAndCouponWidget extends StatelessWidget {
             if (coupon && taken) ...[
               SvgPicture.asset('assets/icons/coupon_taken_tick.svg')
             ],
-            Text(coupon ? "COUPON" : "Give Feedback",
-                style: AppTheme.button.copyWith(
-                    height: 1.toAutoScaledHeight,
-                    fontSize: 11.toAutoScaledFont,
-                    fontWeight: FontWeight.w600,
-                    color: AppTheme.black11))
+            Text(
+              coupon ? "COUPON" : "Give Feedback",
+              style: AppTheme.button.copyWith(
+                height: 1.toAutoScaledHeight,
+                fontSize: 11.toAutoScaledFont,
+                fontWeight: FontWeight.w600,
+                color: AppTheme.black11,
+              ),
+            )
           ],
         ),
       ),
@@ -62,10 +66,11 @@ class FeedbackAndCouponWidget extends StatelessWidget {
 
 void showCouponDialog(String text, BuildContext context) {
   showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return Expanded(child: CouponDialogBox(text: text));
-      });
+    context: context,
+    builder: (BuildContext context) {
+      return Expanded(child: CouponDialogBox(text: text));
+    },
+  );
 }
 
 class CouponDialogBox extends StatelessWidget {
@@ -81,23 +86,30 @@ class CouponDialogBox extends StatelessWidget {
         decoration: ShapeDecoration(
           color: Colors.amber,
           shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10.toAutoScaledWidth)),
+            borderRadius: BorderRadius.circular(10.toAutoScaledWidth),
+          ),
         ),
         child: Stack(
           children: [
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 60.toAutoScaledWidth),
               child: Center(
-                  child: Text(text,
-                      style: AppTheme.headline3.copyWith(
-                          fontSize: 17.toAutoScaledFont,
-                          fontWeight: FontWeight.w400))),
+                child: Text(
+                  text,
+                  style: AppTheme.headline3.copyWith(
+                    fontSize: 17.toAutoScaledFont,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+              ),
             ),
             Positioned(
-                right: 0,
-                child: GestureDetector(
-                    onTap: () => Navigator.of(context).pop(),
-                    child: const Icon(Icons.close)))
+              right: 0,
+              child: GestureDetector(
+                onTap: context.router.pop,
+                child: const Icon(Icons.close),
+              ),
+            )
           ],
         ),
       ),
@@ -137,6 +149,7 @@ class MealCard extends StatelessWidget {
                 image: svg.Svg(
                   'assets/images/meal_card/${meal.title}.svg',
                 ),
+                fit: BoxFit.fill,
               ),
             ),
             child: Column(
@@ -150,7 +163,9 @@ class MealCard extends StatelessWidget {
                   child: Text(
                     meal.title,
                     style: AppTheme.headline1.copyWith(
-                        fontSize: 20.toAutoScaledFont, color: AppTheme.black11),
+                      fontSize: 20.toAutoScaledFont,
+                      color: AppTheme.black11,
+                    ),
                   ),
                 ),
                 Container(
@@ -159,9 +174,10 @@ class MealCard extends StatelessWidget {
                   child: Text(
                     '${DateFormat.jm().format(meal.startTime)} - ${DateFormat.jm().format(meal.endTime)}',
                     style: AppTheme.headline3.copyWith(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 12.toAutoScaledFont,
-                        color: AppTheme.grey2f),
+                      fontWeight: FontWeight.w600,
+                      fontSize: 12.toAutoScaledFont,
+                      color: AppTheme.grey2f,
+                    ),
                   ),
                 ),
                 10.toVerticalSizedBox,

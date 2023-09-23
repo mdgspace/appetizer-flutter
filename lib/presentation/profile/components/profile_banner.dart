@@ -9,7 +9,7 @@ class ProfileBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppBanner(
-      height: 144.toAutoScaledHeight,
+      height: 140.toAutoScaledHeight,
       child: Row(
         children: [
           SizedBox(
