@@ -81,7 +81,7 @@ class LoginScreen extends StatelessWidget {
                     builder: (context, state) {
                       if (state is Loading) {
                         _controller.clear();
-                      
+
                         return const Center(child: CircularProgressIndicator());
                       }
                       if (state is CreatePassword) {
