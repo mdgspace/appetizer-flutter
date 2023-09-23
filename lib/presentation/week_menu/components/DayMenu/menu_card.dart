@@ -42,7 +42,9 @@ class FeedbackAndCouponWidget extends StatelessWidget {
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
         ),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: (coupon && taken)
+              ? MainAxisAlignment.spaceBetween
+              : MainAxisAlignment.center,
           children: [
             if (coupon && taken) ...[
               SvgPicture.asset('assets/icons/coupon_taken_tick.svg')
