@@ -25,12 +25,15 @@ class YourMealDailyCardsCombinedBloc extends Bloc<
         Emitter<YourMealDailyCardsDisplayState> emit) async {
       late CouponStatus newCouponStatus;
       late String text;
+      print('[TEST] coupon ${event.coupon.id} and meal ${event.mealId}');
       if (event.couponAppliedAlready) {
+        print('[TEST] coupon already applied');
         newCouponStatus = await couponRepository.cancelCoupon(event.coupon);
         text = "Coupon no. ${event.coupon.id} has been deselected";
       } else {
-        newCouponStatus = await couponRepository.applyForCoupon(event.coupon);
-        text = "Coupon no. ${event.coupon.id} has been claimed successfully";
+        print('[TEST] coupon not applied');
+        newCouponStatus =  await couponRepository.applyForCoupon(event.mealId);
+        text = "Coupon no. ${event.mealId} has been claimed successfully";
       }
       List<MealState> oldState = state.mealStates;
       List<MealState> newStates = [];

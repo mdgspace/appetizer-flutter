@@ -19,13 +19,12 @@ class YourMealDailyCardsCombined extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('[TEST] built your daily combined');
     List<MealState> initialMealStates = [];
     for (Meal meal in dayMenu.meals) {
       initialMealStates.add(MealState(
           mealId: meal.id,
           leaveAppliedAndApproved: meal.leaveStatus.status == LeaveStatusEnum.P,
-          couponApplied: meal.couponStatus.status == CouponStatusEnum.A));
+          couponApplied: meal.couponStatus.status == CouponStatusEnum.N));
     }
     return BlocProvider(
       create: (_) {
@@ -57,10 +56,16 @@ class YourMealDailyCardsCombined extends StatelessWidget {
                             leaveAppliedAndApproved:
                                 meal.leaveStatus.status == LeaveStatusEnum.P,
                             couponApplied:
-                                meal.couponStatus.status == CouponStatusEnum.A,
+                                meal.couponStatus.status == CouponStatusEnum.N,
                           ));
                         }
-                        state.mealStates[index] = MealState(mealId: meal.id, leaveAppliedAndApproved: meal.leaveStatus.status == LeaveStatusEnum.P, couponApplied: meal.couponStatus.status == CouponStatusEnum.A);
+                        state.mealStates[index] = MealState(
+                          mealId: meal.id,
+                          leaveAppliedAndApproved:
+                              meal.leaveStatus.status == LeaveStatusEnum.P,
+                          couponApplied:
+                              meal.couponStatus.status == CouponStatusEnum.N,
+                        );
                         return state.mealStates[index];
                       },
                       builder: (context, state) {
