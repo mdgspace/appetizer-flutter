@@ -24,9 +24,8 @@ class _MonthlyRebatesState extends State<MonthlyRebates> {
   PaginatedYearlyRebate? paginatedYearlyRebate;
   final Map<String, num> _monthlyRebateMap = {};
   String? _currMonthName;
-  num _totalRebate = 0;
+  late num _totalRebate;
   late int year;
-  // final TransactionApi _transactionApi = locator<TransactionApi>();
 
   // @override
   // void initState() {
@@ -57,6 +56,7 @@ class _MonthlyRebatesState extends State<MonthlyRebates> {
   ];
   @override
   Widget build(BuildContext context) {
+    _totalRebate = 0;
     _currMonthIndex ??= widget.currMonthIndex;
     _currMonthName = _monthList[_currMonthIndex!];
     paginatedYearlyRebate ??= widget.paginatedYearlyRebate;
@@ -113,6 +113,7 @@ class _MonthlyRebatesState extends State<MonthlyRebates> {
                         initialDate: DateTime(year, _currMonthIndex!),
                         lastDate: DateTime.now(),
                       );
+                      // TODO: rebates for prev year are blocked
                       if (newDateTime != null &&
                           newDateTime.year == year &&
                           newDateTime.month != _currMonthIndex) {
@@ -140,10 +141,14 @@ class _MonthlyRebatesState extends State<MonthlyRebates> {
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(_monthList[_currMonthIndex!].substring(0, 3),
-                            style: AppTheme.bodyText1.copyWith(height: 1)),
-                        const Icon(Icons.keyboard_arrow_down,
-                            color: AppTheme.blackPrimary)
+                        Text(
+                          _monthList[_currMonthIndex!].substring(0, 3),
+                          style: AppTheme.bodyText1.copyWith(height: 1),
+                        ),
+                        const Icon(
+                          Icons.keyboard_arrow_down,
+                          color: AppTheme.blackPrimary,
+                        )
                       ],
                     ),
                   ),
@@ -156,14 +161,20 @@ class _MonthlyRebatesState extends State<MonthlyRebates> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Rebates",
-                      style: AppTheme.headline2.copyWith(
-                          color: AppTheme.primary,
-                          fontSize: 14.toAutoScaledFont)),
-                  Text("- Rs. ${_monthlyRebateMap[_currMonthName] ?? 0}",
-                      style: AppTheme.headline2.copyWith(
-                          color: AppTheme.primary,
-                          fontSize: 14.toAutoScaledFont))
+                  Text(
+                    "Rebates",
+                    style: AppTheme.headline2.copyWith(
+                      color: AppTheme.primary,
+                      fontSize: 14.toAutoScaledFont,
+                    ),
+                  ),
+                  Text(
+                    "- Rs. ${_monthlyRebateMap[_currMonthName] ?? 0}",
+                    style: AppTheme.headline2.copyWith(
+                      color: AppTheme.primary,
+                      fontSize: 14.toAutoScaledFont,
+                    ),
+                  )
                 ],
               ),
             ),
@@ -175,12 +186,20 @@ class _MonthlyRebatesState extends State<MonthlyRebates> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Total rebates till now",
-                      style: AppTheme.bodyText1
-                          .copyWith(height: 1, color: AppTheme.grey2e)),
-                  Text("- Rs $_totalRebate",
-                      style: AppTheme.bodyText1
-                          .copyWith(height: 1, color: AppTheme.grey2e))
+                  Text(
+                    "Total rebates till now",
+                    style: AppTheme.bodyText1.copyWith(
+                      height: 1,
+                      color: AppTheme.grey2e,
+                    ),
+                  ),
+                  Text(
+                    "- Rs $_totalRebate",
+                    style: AppTheme.bodyText1.copyWith(
+                      height: 1,
+                      color: AppTheme.grey2e,
+                    ),
+                  )
                 ],
               ),
             )
