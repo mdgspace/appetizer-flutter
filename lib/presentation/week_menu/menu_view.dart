@@ -69,7 +69,7 @@ class WeekMenuScreen extends StatelessWidget {
               ),
               Expanded(
                 child: (state.dayNumber != -1)
-                    ? DayMenu(parentState: state)
+                    ? DayMenuWidget(parentState: state)
                     : const NoDataFoundContainer(title: 'Menu not available'),
               ),
             ]

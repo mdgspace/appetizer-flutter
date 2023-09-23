@@ -160,8 +160,6 @@ class WeekMenuBlocBloc extends Bloc<WeekMenuBlocEvent, WeekMenuBlocState> {
           newCouponStatus = event.coupon;
         }
       }
-      print(
-          '[TEST] newCouponStatus: ${newCouponStatus.status} and meal ${event.mealId}');
       WeekMenu weekMenu = (state as WeekMenuBlocDisplayState).weekMenu;
       int dayNumber = (state as WeekMenuBlocDisplayState).dayNumber;
       for (Meal meal in weekMenu.dayMenus[dayNumber].meals) {

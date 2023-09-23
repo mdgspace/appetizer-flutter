@@ -10,7 +10,7 @@ abstract class WeekMenuBlocState extends Equatable {
 }
 
 class WeekMenuBlocDisplayState extends WeekMenuBlocState {
-  // TODO: remove th variable jugaad, it is used to force rebuild the DayMenu widget
+  // TODO: remove th variable jugaad, it is used to force rebuild the DayMenuWidget
   const WeekMenuBlocDisplayState({
     required this.weekMenu,
     required this.currDayIndex,

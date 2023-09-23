@@ -1,14 +1,13 @@
 import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
-import 'package:appetizer/domain/models/menu/week_menu.dart';
 import 'package:appetizer/presentation/app/bloc/app_bloc.dart';
 import 'package:appetizer/presentation/week_menu/bloc/week_menu_bloc.dart';
-import 'package:appetizer/domain/models/menu/week_menu_tmp.dart' as tmp;
+import 'package:appetizer/domain/models/menu/week_menu_tmp.dart';
 import 'package:appetizer/presentation/week_menu/components/DayMenu/menu_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class DayMenu extends StatelessWidget {
-  const DayMenu({
+class DayMenuWidget extends StatelessWidget {
+  const DayMenuWidget({
     required this.parentState,
     Key? key,
   }) : super(key: key);
@@ -17,8 +16,8 @@ class DayMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    tmp.DayMenu dayMenu = parentState.weekMenu.dayMenus[parentState.dayNumber];
-    tmp.DailyItems dailyItems = parentState.weekMenu.dailyItems;
+    DayMenu dayMenu = parentState.weekMenu.dayMenus[parentState.dayNumber];
+    DailyItems dailyItems = parentState.weekMenu.dailyItems;
     return SingleChildScrollView(
       child: Column(
         mainAxisSize: MainAxisSize.min,
