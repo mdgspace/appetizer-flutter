@@ -71,10 +71,10 @@ class WeekMenuBlocBloc extends Bloc<WeekMenuBlocEvent, WeekMenuBlocState> {
       FetchWeekMenuData event, Emitter<WeekMenuBlocState> emit) async {
     try {
       WeekMenu weekMenu = await menuRepository.currentWeekMenu();
-      int dayNumber = getDayNumber(weekMenu, DateTime.now().weekday % 7);
+      int dayNumber = getDayNumber(weekMenu, DateTime.now().weekday - 1);
       emit(WeekMenuBlocDisplayState(
         weekMenu: weekMenu,
-        currDayIndex: DateTime.now().day % 7,
+        currDayIndex: DateTime.now().day - 1,
         dayNumber: dayNumber,
       ));
     } on Failure catch (e) {
@@ -134,7 +134,6 @@ class WeekMenuBlocBloc extends Bloc<WeekMenuBlocEvent, WeekMenuBlocState> {
       MealCouponEvent event, Emitter<WeekMenuBlocState> emit) async {
     try {
       late CouponStatus newCouponStatus;
-      print('[TEST] ${event.coupon.status}');
       if (event.coupon.status == CouponStatusEnum.A) {
         try {
           newCouponStatus = await couponRepository.cancelCoupon(event.coupon);
@@ -143,14 +142,11 @@ class WeekMenuBlocBloc extends Bloc<WeekMenuBlocEvent, WeekMenuBlocState> {
         }
       } else {
         try {
-          // print('[TEST] apply for coupon');
           newCouponStatus = await couponRepository.applyForCoupon(event.mealId);
           newCouponStatus.status = (newCouponStatus.id != null)
               ? CouponStatusEnum.A
               : CouponStatusEnum.N;
-          // print('[TEST] applied for coupon and got ${newCouponStatus.status}');
         } catch (e) {
-          // print('[TEST] error in apply for coupon');
           newCouponStatus = event.coupon;
         }
       }
@@ -170,9 +166,8 @@ class WeekMenuBlocBloc extends Bloc<WeekMenuBlocEvent, WeekMenuBlocState> {
   }
 
   int getDayNumber(WeekMenu weekMenu, int dayIndex) {
-    dayIndex = (dayIndex == 0) ? 7 : dayIndex;
     for (int i = 0; i < weekMenu.dayMenus.length; i++) {
-      if (weekMenu.dayMenus[i].date.weekday == dayIndex) {
+      if (weekMenu.dayMenus[i].date.weekday == dayIndex + 1) {
         return i;
       }
     }

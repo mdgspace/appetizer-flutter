@@ -49,6 +49,7 @@ class FeedbackAndCouponWidget extends StatelessWidget {
             ],
             Text(
               coupon ? "COUPON" : "Give Feedback",
+              textAlign: TextAlign.center,
               style: AppTheme.button.copyWith(
                 height: 1.toAutoScaledHeight,
                 fontSize: 11.toAutoScaledFont,
@@ -249,9 +250,10 @@ class MealCard extends StatelessWidget {
                                 }
                               },
                               child: FeedbackAndCouponWidget(
-                                  taken: meal.couponStatus.status ==
-                                      CouponStatusEnum.A,
-                                  coupon: true),
+                                taken: meal.couponStatus.status ==
+                                    CouponStatusEnum.A,
+                                coupon: true,
+                              ),
                             )
                           : const SizedBox.shrink()),
                 ],
