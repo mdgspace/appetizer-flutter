@@ -6,7 +6,7 @@ class ApiEndpoints {
   static const String checkVersion =
       '/panel/version/expire/{platform}/{versionNumber}';
 
-  static const String coupon = '/api/coupon';
+  static const String coupon = '/api/coupon/';
   static const String couponWithId = '/api/coupon/{couponId}';
   static const String allCoupons = '/api/coupon/all';
 

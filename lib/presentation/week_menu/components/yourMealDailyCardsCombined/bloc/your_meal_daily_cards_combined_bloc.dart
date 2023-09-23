@@ -28,7 +28,7 @@ class YourMealDailyCardsCombinedBloc extends Bloc<
         newCouponStatus = await couponRepository.cancelCoupon(event.coupon);
         text = "Coupon no. ${event.coupon.id} has been deselected";
       } else {
-        newCouponStatus = await couponRepository.applyForCoupon(event.coupon);
+        newCouponStatus = await couponRepository.applyForCoupon(event.mealId);
         text = "Coupon no. ${event.coupon.id} has been claimed successfully";
       }
       List<MealState> oldState = state.mealStates;
