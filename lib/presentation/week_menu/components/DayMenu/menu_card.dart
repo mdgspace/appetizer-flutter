@@ -1,9 +1,8 @@
 import 'package:appetizer/app_theme.dart';
 import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
-import 'package:appetizer/domain/models/coupon/coupon.dart';
 import 'package:appetizer/domain/models/menu/week_menu_tmp.dart';
 import 'package:appetizer/presentation/app/bloc/app_bloc.dart';
-import 'package:appetizer/presentation/week_menu/components/yourMealDailyCardsCombined/bloc/your_meal_daily_cards_combined_bloc.dart';
+import 'package:appetizer/presentation/week_menu/bloc/week_menu_bloc.dart';
 import 'package:appetizer/presentation/components/shadow_container.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
@@ -195,15 +194,17 @@ class MealCard extends StatelessWidget {
                               enable:
                                   !meal.isLeaveToggleOutdated && !isCheckout,
                               open:
-                                  meal.leaveStatus.status != LeaveStatusEnum.A,
+                                  meal.leaveStatus.status != LeaveStatusEnum.P,
                               sliderColor: AppTheme.customWhite,
                               openColor: AppTheme.black2e,
                               height: 20.toAutoScaledHeight,
                               width: 44.toAutoScaledWidth,
                               onChanged: (value) async {
                                 context
-                                    .read<YourMealDailyCardsCombinedBloc>()
-                                    .add(ToggleMealLeaveEvent(meal: meal));
+                                    .read<WeekMenuBlocBloc>()
+                                    .add(MealLeaveEvent(
+                                      meal: meal,
+                                    ));
                               },
                             );
                           },
@@ -234,21 +235,11 @@ class MealCard extends StatelessWidget {
                                 if (!meal.isCouponOutdated) {
                                   // TODO: show dialog box and then add toggle event
                                   context
-                                      .read<YourMealDailyCardsCombinedBloc>()
-                                      .add(ToggleMealCouponEvent(
-                                          coupon: Coupon(
-                                            id: meal.couponStatus.status ==
-                                                    CouponStatusEnum.A
-                                                ? meal.couponStatus.id!
-                                                : -1,
-                                            mealId: meal.id,
-                                            mealType: meal.type.name,
-                                            mealDate: "",
-                                          ),
-                                          couponAppliedAlready:
-                                              meal.couponStatus.status ==
-                                                  CouponStatusEnum.A,
-                                          mealId: meal.id));
+                                      .read<WeekMenuBlocBloc>()
+                                      .add(MealCouponEvent(
+                                        coupon: meal.couponStatus,
+                                        mealId: meal.id,
+                                      ));
                                 } else if (meal.couponStatus.status ==
                                     CouponStatusEnum.A) {
                                   showCouponDialog(

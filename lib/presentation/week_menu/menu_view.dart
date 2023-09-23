@@ -4,7 +4,7 @@ import 'package:appetizer/presentation/app/bloc/app_bloc.dart';
 import 'package:appetizer/presentation/components/no_data_found_container.dart';
 import 'package:appetizer/presentation/week_menu/bloc/week_menu_bloc.dart';
 import 'package:appetizer/presentation/week_menu/components/DayDateBar/day_date_bar.dart';
-import 'package:appetizer/presentation/week_menu/components/yourMealDailyCardsCombined/your_meal_daily_cards_combined.dart';
+import 'package:appetizer/presentation/week_menu/components/DayMenu/day_menu.dart';
 import 'package:appetizer/presentation/components/app_banner.dart';
 import 'package:appetizer/presentation/components/loading_indicator.dart';
 import 'package:appetizer/presentation/components/round_edge_container.dart';
@@ -69,9 +69,7 @@ class WeekMenuScreen extends StatelessWidget {
               ),
               Expanded(
                 child: (state.dayNumber != -1)
-                    ? YourMealDailyCardsCombined(
-                        dayMenu: state.weekMenu.dayMenus[state.dayNumber],
-                        dailyItems: state.weekMenu.dailyItems)
+                    ? DayMenu(parentState: state)
                     : const NoDataFoundContainer(title: 'Menu not available'),
               ),
             ]

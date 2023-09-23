@@ -38,7 +38,7 @@ class _CurrDateWidget extends StatelessWidget {
               style: AppTheme.button.copyWith(height: 1.toAutoScaledHeight),
             ),
           ),
-          SizedBox(height: 2.toAutoScaledHeight),
+          SizedBox(height: 1.toAutoScaledHeight),
           Container(
             decoration: ShapeDecoration(
               color: AppTheme.customWhite,
@@ -90,7 +90,7 @@ class _OtherDateWidget extends StatelessWidget {
               style: AppTheme.button.copyWith(height: 1.toAutoScaledHeight),
             ),
           ),
-          2.toVerticalSizedBox,
+          1.toVerticalSizedBox,
           Container(
             decoration: ShapeDecoration(
               color: AppTheme.customWhite,
