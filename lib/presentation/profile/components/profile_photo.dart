@@ -1,6 +1,8 @@
 import 'package:appetizer/app_theme.dart';
 import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
+import 'package:appetizer/presentation/app/bloc/app_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProfilePhoto extends StatelessWidget {
   const ProfilePhoto({
@@ -25,10 +27,19 @@ class ProfilePhoto extends StatelessWidget {
       ),
       width: 124.toAutoScaledWidth,
       height: 124.toAutoScaledHeight,
-      child: Icon(
-        Icons.person_rounded,
-        size: 100.toAutoScaledWidth,
-        color: AppTheme.primary,
+      child: Container(
+        decoration: BoxDecoration(
+          color: AppTheme.primary.withOpacity(0.5),
+          shape: BoxShape.circle,
+        ),
+        child: Center(
+          child: Text(
+            context.read<AppBloc>().userName[0],
+            style: TextStyle(
+              fontSize: 60.toAutoScaledFont,
+            ),
+          ),
+        ),
       ),
       // child: const CircleAvatar(
       //   backgroundColor: Color.fromARGB(255, 255, 255, 255),
