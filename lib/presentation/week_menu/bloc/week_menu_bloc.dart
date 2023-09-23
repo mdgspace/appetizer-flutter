@@ -47,7 +47,11 @@ class WeekMenuBlocBloc extends Bloc<WeekMenuBlocEvent, WeekMenuBlocState> {
           await menuRepository.weekMenuByWeekId(event.previousWeekId);
       int dayNumber = getDayNumber(previousWeekMenu, 0);
       emit(WeekMenuBlocDisplayState(
-          weekMenu: previousWeekMenu, currDayIndex: 0, dayNumber: dayNumber));
+        weekMenu: previousWeekMenu,
+        currDayIndex: 0,
+        dayNumber: dayNumber,
+        jugaad: false,
+      ));
     } on Failure catch (e) {
       emit(WeekMenuErrorState(message: e.message));
     }
@@ -61,7 +65,11 @@ class WeekMenuBlocBloc extends Bloc<WeekMenuBlocEvent, WeekMenuBlocState> {
           await menuRepository.weekMenuByWeekId(event.nextWeekId);
       int dayNumber = getDayNumber(nextWeekMenu, 0);
       emit(WeekMenuBlocDisplayState(
-          weekMenu: nextWeekMenu, currDayIndex: 0, dayNumber: dayNumber));
+        weekMenu: nextWeekMenu,
+        currDayIndex: 0,
+        dayNumber: dayNumber,
+        jugaad: false,
+      ));
     } on Failure catch (e) {
       emit(WeekMenuErrorState(message: e.message));
     }
@@ -76,6 +84,7 @@ class WeekMenuBlocBloc extends Bloc<WeekMenuBlocEvent, WeekMenuBlocState> {
         weekMenu: weekMenu,
         currDayIndex: DateTime.now().day - 1,
         dayNumber: dayNumber,
+        jugaad: false,
       ));
     } on Failure catch (e) {
       emit(WeekMenuErrorState(message: e.message));
@@ -92,6 +101,7 @@ class WeekMenuBlocBloc extends Bloc<WeekMenuBlocEvent, WeekMenuBlocState> {
         weekMenu: weekMenu,
         currDayIndex: event.dayIndex,
         dayNumber: dayNumber,
+        jugaad: false,
       ));
     } on Failure catch (e) {
       emit(WeekMenuErrorState(message: e.message));
