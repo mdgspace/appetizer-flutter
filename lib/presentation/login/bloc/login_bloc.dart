@@ -86,14 +86,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   }
 
   FutureOr<void> _onForgotPasswordPressed(event, emit) async {
+    print('[TEST] ForgotPasswordPressed');
     emit(Loading());
-    try {
-      await userRepository.sendResetPasswordLink(event.emailId);
-      // TODO: show dialog box that link has been sent
-    } catch (e) {
-      // TODO: show dialog box with error message
-      emit(const LoginInitial(error: AppConstants.GENERIC_FAILURE));
-    }
+    emit(ForgotPasswordState());
   }
 
   FutureOr<void> _onShowPasswordPressed(event, emit) {
