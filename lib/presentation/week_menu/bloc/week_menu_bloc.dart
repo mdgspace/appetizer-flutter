@@ -129,9 +129,13 @@ class WeekMenuBlocBloc extends Bloc<WeekMenuBlocEvent, WeekMenuBlocState> {
       }
       WeekMenu weekMenu = (state as WeekMenuBlocDisplayState).weekMenu;
       int dayNumber = (state as WeekMenuBlocDisplayState).dayNumber;
-      for (Meal meal in weekMenu.dayMenus[dayNumber].meals) {
+      int length = weekMenu.dayMenus[dayNumber].meals.length;
+      for (int index = 0; index < length; index++) {
+        final meal = weekMenu.dayMenus[dayNumber].meals[index];
         if (meal.id == event.meal.id) {
-          meal.leaveStatus = LeaveStatus(status: newLeaveStatus);
+          weekMenu.dayMenus[dayNumber].meals[index] = meal.copyWith(
+            leaveStatus: LeaveStatus(status: newLeaveStatus),
+          );
         }
       }
       emit((state as WeekMenuBlocDisplayState).copyWith(weekMenu: weekMenu));

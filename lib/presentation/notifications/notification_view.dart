@@ -1,3 +1,4 @@
+import 'package:appetizer/app_theme.dart';
 import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
 import 'package:appetizer/domain/repositories/user/user_repository.dart';
 import 'package:appetizer/presentation/components/no_data_found_container.dart';
@@ -16,6 +17,7 @@ class NotificationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppTheme.white,
       // TODO: implement Old/New notification bars and logic
       body: BlocProvider(
         create: (context) =>

@@ -8,7 +8,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart' as svg;
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fswitch_nullsafety/fswitch_nullsafety.dart';
 import 'package:intl/intl.dart';
 import 'dart:math';
@@ -46,11 +45,11 @@ class FeedbackAndCouponWidget extends StatelessWidget {
               ? MainAxisAlignment.spaceBetween
               : MainAxisAlignment.center,
           children: [
-            if (coupon && taken) ...[
-              SvgPicture.asset('assets/icons/coupon_taken_tick.svg')
-            ],
+            // if (coupon && taken) ...[
+            //   SvgPicture.asset('assets/icons/coupon_taken_tick.svg')
+            // ],
             Text(
-              coupon ? "COUPON" : "Give Feedback",
+              coupon ? "COUPON ${taken ? 'TAKEN' : ''}" : "Give Feedback",
               textAlign: TextAlign.center,
               style: AppTheme.button.copyWith(
                 height: 1.toAutoScaledHeight,
@@ -269,7 +268,22 @@ class MealCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: 18.toAutoScaledHeight),
-              for (var item in meal.items) Text("  \u2022 ${item.name}"),
+              Container(
+                constraints: BoxConstraints.tightFor(
+                  height: 100.toAutoScaledWidth,
+                  width: 180.toAutoScaledWidth,
+                ),
+                padding: EdgeInsets.only(left: 10.toAutoScaledWidth),
+                child: ListView.builder(
+                  itemCount: meal.items.length,
+                  shrinkWrap: true,
+                  padding: EdgeInsets.zero,
+                  itemBuilder: (context, index) {
+                    final item = meal.items[index];
+                    return Text("\u2022 ${item.name}");
+                  },
+                ),
+              ),
               const Spacer(),
               Container(
                 margin: EdgeInsets.symmetric(

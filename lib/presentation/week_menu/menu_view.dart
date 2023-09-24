@@ -23,7 +23,7 @@ class WeekMenuScreen extends StatelessWidget {
         return Column(
           children: [
             AppBanner(
-              height: 175.toAutoScaledHeight,
+              height: 178.toAutoScaledHeight,
               child: SafeArea(child: DayDateBar()),
             ),
             if (state is WeekMenuErrorState)

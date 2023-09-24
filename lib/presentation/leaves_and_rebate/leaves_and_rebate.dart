@@ -96,27 +96,39 @@ class LeavesAndRebateScreen extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        Text("Remaining Leaves : ",
-                            style: AppTheme.subtitle1.copyWith(
-                                fontSize: 14.toAutoScaledFont,
-                                color: AppTheme.black2e)),
-                        Text(state.remainingLeaves.toString(),
-                            style: AppTheme.headline2.copyWith(
-                                fontSize: 14.toAutoScaledFont,
-                                color: AppTheme.primary))
+                        Text(
+                          "Remaining Leaves : ",
+                          style: AppTheme.subtitle1.copyWith(
+                            fontSize: 14.toAutoScaledFont,
+                            color: AppTheme.black2e,
+                          ),
+                        ),
+                        Text(
+                          state.remainingLeaves.toString(),
+                          style: AppTheme.headline2.copyWith(
+                            fontSize: 14.toAutoScaledFont,
+                            color: AppTheme.primary,
+                          ),
+                        )
                       ],
                     ),
                     12.toVerticalSizedBox,
                     Row(
                       children: [
-                        Text("Meals Skipped : ",
-                            style: AppTheme.subtitle1.copyWith(
-                                fontSize: 14.toAutoScaledFont,
-                                color: AppTheme.black2e)),
-                        Text(state.mealsSkipped.toString(),
-                            style: AppTheme.headline2.copyWith(
-                                fontSize: 14.toAutoScaledFont,
-                                color: AppTheme.primary))
+                        Text(
+                          "Meals Skipped : ",
+                          style: AppTheme.subtitle1.copyWith(
+                            fontSize: 14.toAutoScaledFont,
+                            color: AppTheme.black2e,
+                          ),
+                        ),
+                        Text(
+                          state.mealsSkipped.toString(),
+                          style: AppTheme.headline2.copyWith(
+                            fontSize: 14.toAutoScaledFont,
+                            color: AppTheme.primary,
+                          ),
+                        )
                       ],
                     ),
                     20.toVerticalSizedBox,

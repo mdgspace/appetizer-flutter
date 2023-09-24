@@ -4,15 +4,15 @@ import 'package:flutter/material.dart';
 
 class ShadowContainer extends StatelessWidget {
   const ShadowContainer({
-    super.key,
     required this.child,
-    required this.height,
-    required this.width,
     required this.offset,
-    // required this.padding
+    this.height,
+    this.width,
+    super.key,
   });
-  final double height, width, offset;
-  // final EdgeInsetsGeometry padding;
+
+  final double? height, width;
+  final double offset;
   final Widget child;
 
   @override
@@ -20,7 +20,6 @@ class ShadowContainer extends StatelessWidget {
     return Container(
       height: height,
       width: width,
-      // padding: padding,
       decoration: ShapeDecoration(
         color: Colors.white,
         shape: RoundedRectangleBorder(
