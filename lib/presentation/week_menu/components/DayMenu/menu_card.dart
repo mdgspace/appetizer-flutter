@@ -255,6 +255,14 @@ class MealCard extends StatelessWidget {
                                     "Coupon no: ${meal.couponStatus.id!}",
                                     context,
                                   );
+                                } else {
+                                  const snackBar = SnackBar(
+                                    content: Text(
+                                      "Time's up, coupon applications closed",
+                                    ),
+                                  );
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(snackBar);
                                 }
                               },
                               child: FeedbackAndCouponWidget(
