@@ -1,6 +1,7 @@
 import 'package:appetizer/app_theme.dart';
 import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
 import 'package:appetizer/domain/models/coupon/coupon.dart';
+import 'package:appetizer/utils/date_time_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -25,7 +26,7 @@ class CouponCard extends StatelessWidget {
             child: SvgPicture.asset('assets/images/coupon.svg'),
           ),
           Container(
-            width: 101.toAutoScaledWidth,
+            width: 110.toAutoScaledWidth,
             padding: EdgeInsets.only(
               top: 12.toAutoScaledHeight,
               left: 8.toAutoScaledWidth,
@@ -67,7 +68,7 @@ class CouponCard extends StatelessWidget {
                 ),
                 6.toVerticalSizedBox,
                 Text(
-                  coupon.mealType,
+                  "${coupon.mealType}, ${DateTimeUtils.getFormattedDate(coupon.mealDate)}",
                   style: TextStyle(
                     color: const Color(0xFF2E2E2E),
                     fontSize: 10.toAutoScaledFont,

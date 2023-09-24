@@ -1,14 +1,17 @@
+import 'package:appetizer/app_theme.dart';
 import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
 import 'package:appetizer/domain/repositories/feedback_repository.dart';
 import 'package:appetizer/presentation/components/black_button.dart';
 import 'package:appetizer/presentation/feedback/bloc/feedback_page_bloc.dart';
 import 'package:appetizer/presentation/feedback/components/FeedbackTile/feedback_tile.dart';
 import 'package:appetizer/presentation/feedback/components/feedback_banner.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class FeedbackPage extends StatelessWidget {
-  FeedbackPage({super.key});
+@RoutePage()
+class FeedbackScreen extends StatelessWidget {
+  FeedbackScreen({super.key});
   final TextEditingController textController = TextEditingController();
   static const List<String> feedbackHeadings = [
     "Ambience",
@@ -21,31 +24,23 @@ class FeedbackPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppTheme.white,
       body: BlocProvider(
         create: (context) =>
             FeedbackPageBloc(repo: context.read<FeedbackRepository>()),
         child: BlocBuilder<FeedbackPageBloc, FeedbackPageState>(
           builder: (context, state) {
-            if (!state.submitted) {
-              // TODO: navigate to menu page
-              // BaseApp.router.navigateToPage(
-              //   YourWeekMenuRoute(
-              //     weekMenu: const WeekMenu(),
-              //   ),
-              // );
-            }
             return Column(
               children: [
                 const FeedbackBanner(),
                 // TODO: fix the top edge of SCSV where top elements get hidden
                 Expanded(
                   child: SingleChildScrollView(
-                    padding: const EdgeInsets.only(left: 24, right: 26),
+                    padding: 24.toHorizontalPadding,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        9.toVerticalSizedBox,
                         Text(
                           'Kindly provide us with your feedback to improve your mess experienWeekly Menuce.',
                           style: TextStyle(
@@ -66,7 +61,7 @@ class FeedbackPage extends StatelessWidget {
                               index: ind,
                             ),
                           );
-                        }),
+                        }, growable: false),
                         2.toVerticalSizedBox,
                         Text(
                           'If any other feeback, please describe below',
@@ -107,10 +102,11 @@ class FeedbackPage extends StatelessWidget {
                         Align(
                           alignment: Alignment.bottomRight,
                           child: BlackIconButton(
-                            onTap: () => context.read<FeedbackPageBloc>().add(
-                                FeedbackPageSubmitEvent(
-                                    rating: state.rating,
-                                    description: state.description)),
+                            onTap: context.router.pop,
+                            // onTap: () => context.read<FeedbackPageBloc>().add(
+                            //     FeedbackPageSubmitEvent(
+                            //         rating: state.rating,
+                            //         description: state.description)),
                             title: "SUBMIT",
                             width: 102,
                             icon: Icons.keyboard_double_arrow_right_sharp,

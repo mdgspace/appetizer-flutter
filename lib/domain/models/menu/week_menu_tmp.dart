@@ -223,7 +223,7 @@ class Meal {
         hostelName: json['hostel_name'],
         secretCode: json['secret_code'],
         isOutdated:
-            !DateTimeUtils.getDateTimeFromDateAndTime(date, json['start_time'])
+            !DateTimeUtils.getDateTimeFromDateAndTime(date, json['end_time'])
                 .isAfter(DateTime.now()),
         isLeaveToggleOutdated:
             !DateTimeUtils.getDateTimeFromDateAndTime(date, json['start_time'])

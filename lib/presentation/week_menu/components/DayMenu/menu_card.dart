@@ -1,4 +1,5 @@
 import 'package:appetizer/app_theme.dart';
+import 'package:appetizer/data/core/router/intrinsic_router/intrinsic_router.gr.dart';
 import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
 import 'package:appetizer/domain/models/menu/week_menu_tmp.dart';
 import 'package:appetizer/presentation/app/bloc/app_bloc.dart';
@@ -40,26 +41,38 @@ class FeedbackAndCouponWidget extends StatelessWidget {
           color: AppTheme.white,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
         ),
-        child: Row(
-          mainAxisAlignment: (coupon && taken)
-              ? MainAxisAlignment.spaceBetween
-              : MainAxisAlignment.center,
-          children: [
-            // if (coupon && taken) ...[
-            //   SvgPicture.asset('assets/icons/coupon_taken_tick.svg')
-            // ],
-            Text(
-              coupon ? "COUPON ${taken ? 'TAKEN' : ''}" : "Give Feedback",
-              textAlign: TextAlign.center,
-              style: AppTheme.button.copyWith(
-                height: 1.toAutoScaledHeight,
-                fontSize: 11.toAutoScaledFont,
-                fontWeight: FontWeight.w600,
-                color: AppTheme.black11,
-              ),
-            )
-          ],
+        child: Center(
+          child: Text(
+            coupon ? "COUPON ${taken ? 'TAKEN' : ''}" : "Give Feedback",
+            textAlign: TextAlign.center,
+            style: AppTheme.button.copyWith(
+              height: 1.toAutoScaledHeight,
+              fontSize: 11.toAutoScaledFont,
+              fontWeight: FontWeight.w600,
+              color: AppTheme.black11,
+            ),
+          ),
         ),
+        // child: Row(
+        //   mainAxisAlignment: (coupon && taken)
+        //       ? MainAxisAlignment.spaceBetween
+        //       : MainAxisAlignment.center,
+        //   children: [
+        //     if (coupon && taken) ...[
+        //       SvgPicture.asset('assets/icons/coupon_taken_tick.svg')
+        //     ],
+        //     Text(
+        //       coupon ? "COUPON" : "Give Feedback",
+        //       textAlign: TextAlign.center,
+        //       style: AppTheme.button.copyWith(
+        //         height: 1.toAutoScaledHeight,
+        //         fontSize: 11.toAutoScaledFont,
+        //         fontWeight: FontWeight.w600,
+        //         color: AppTheme.black11,
+        //       ),
+        //     ),
+        //   ],
+        // ),
       ),
     );
   }
@@ -69,7 +82,7 @@ void showCouponDialog(String text, BuildContext context) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
-      return Expanded(child: CouponDialogBox(text: text));
+      return CouponDialogBox(text: text);
     },
   );
 }
@@ -80,39 +93,33 @@ class CouponDialogBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      content: Container(
-        width: 310.toAutoScaledWidth,
-        height: 83.toAutoScaledHeight,
-        decoration: ShapeDecoration(
-          color: Colors.amber,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10.toAutoScaledWidth),
-          ),
-        ),
-        child: Stack(
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 60.toAutoScaledWidth),
-              child: Center(
-                child: Text(
-                  text,
-                  style: AppTheme.headline3.copyWith(
-                    fontSize: 17.toAutoScaledFont,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
+    return Dialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.toAutoScaledWidth),
+      ),
+      backgroundColor: const Color(0xFFFFCB74),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Align(
+            alignment: Alignment.topRight,
+            child: GestureDetector(
+              onTap: context.router.pop,
+              child: const Padding(
+                padding: EdgeInsets.all(2.0),
+                child: Icon(Icons.close),
               ),
             ),
-            Positioned(
-              right: 0,
-              child: GestureDetector(
-                onTap: context.router.pop,
-                child: const Icon(Icons.close),
-              ),
-            )
-          ],
-        ),
+          ),
+          Text(
+            text,
+            style: AppTheme.headline3.copyWith(
+              fontSize: 17.toAutoScaledFont,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          20.toVerticalSizedBox,
+        ],
       ),
     );
   }
@@ -220,7 +227,7 @@ class MealCard extends StatelessWidget {
                   meal.isOutdated
                       ? GestureDetector(
                           onTap: () {
-                            //TODO: lead to feedback page
+                            context.router.navigate(FeedbackRoute());
                           },
                           child: const FeedbackAndCouponWidget(
                               taken: false, coupon: false),
@@ -248,6 +255,14 @@ class MealCard extends StatelessWidget {
                                     "Coupon no: ${meal.couponStatus.id!}",
                                     context,
                                   );
+                                } else {
+                                  const snackBar = SnackBar(
+                                    content: Text(
+                                      "Time's up, coupon applications closed",
+                                    ),
+                                  );
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(snackBar);
                                 }
                               },
                               child: FeedbackAndCouponWidget(

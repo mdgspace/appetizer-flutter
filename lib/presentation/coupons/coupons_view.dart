@@ -1,6 +1,7 @@
 import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
 import 'package:appetizer/domain/models/coupon/coupon.dart';
 import 'package:appetizer/domain/repositories/coupon_repository.dart';
+import 'package:appetizer/presentation/components/loading_indicator.dart';
 import 'package:appetizer/presentation/components/no_data_found_container.dart';
 import 'package:appetizer/presentation/coupons/bloc/coupons_page_bloc.dart';
 import 'package:appetizer/presentation/coupons/components/coupon_banner.dart';
@@ -27,8 +28,8 @@ class CouponsScreen extends StatelessWidget {
             child: BlocBuilder<CouponsPageBloc, CouponsPageState>(
               builder: (context, state) {
                 if (state is CouponsPageInitialState) {
-                  return const NoDataFoundContainer(
-                      title: 'Cannot find the user !');
+                  return const Expanded(
+                      child: Center(child: LoadingIndicator()));
                 }
                 if (state is CouponsPageFailedState) {
                   // TODO: add logic to handle fail
@@ -61,7 +62,7 @@ class CouponsScreen extends StatelessWidget {
                   );
                 }
                 return const NoDataFoundContainer(
-                    title: 'No coupons selected !');
+                    title: 'No coupons selected!');
               },
             ),
           ),
