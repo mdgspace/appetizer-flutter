@@ -61,7 +61,7 @@ abstract class ApiService {
   // Leave API
 
   @GET(ApiEndpoints.remainingLeaves)
-  Future<int> remainingLeaves();
+  Future remainingLeaves();
 
   @GET(ApiEndpoints.getLeaves)
   Future<PaginatedLeaves> getLeaves(

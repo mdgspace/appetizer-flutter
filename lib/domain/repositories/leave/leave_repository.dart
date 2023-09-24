@@ -18,9 +18,11 @@ class LeaveRepository {
 
   Future<int> remainingLeaves() async {
     try {
-      return await _apiService.remainingLeaves();
+      final response = await _apiService.remainingLeaves();
+      return response["count"]!;
     } catch (e) {
       // TODO: Handle error
+      debugPrint(e.toString());
       return 0;
     }
   }
