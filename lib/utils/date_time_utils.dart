@@ -29,9 +29,18 @@ class DateTimeUtils {
         .format(DateTime.fromMillisecondsSinceEpoch(timeStamp));
   }
 
+  static String dateTimeWithoutSeconds(int timeStamp) {
+    return DateFormat('yyyy-MM-dd')
+        .format(DateTime.fromMillisecondsSinceEpoch(timeStamp));
+  }
+
   static DateTime getWeekStartDate(DateTime dateTime) {
     return dateTime
         .subtract(Duration(days: dateTime.weekday - DateTime.monday));
+  }
+
+  static String getFormattedDate(String yMd) {
+    return DateFormat.MMMd().format(DateTime.parse(yMd));
   }
 
   static bool compareDate(DateTime date1, DateTime date2) {

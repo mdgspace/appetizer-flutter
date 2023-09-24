@@ -41,9 +41,10 @@ class FeedbackAndCouponWidget extends StatelessWidget {
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
         ),
         child: Row(
-          mainAxisAlignment: (coupon && taken)
-              ? MainAxisAlignment.spaceBetween
-              : MainAxisAlignment.center,
+          // mainAxisAlignment: (coupon && taken)
+          //     ? MainAxisAlignment.spaceBetween
+          //     : MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             // if (coupon && taken) ...[
             //   SvgPicture.asset('assets/icons/coupon_taken_tick.svg')
@@ -53,7 +54,7 @@ class FeedbackAndCouponWidget extends StatelessWidget {
               textAlign: TextAlign.center,
               style: AppTheme.button.copyWith(
                 height: 1.toAutoScaledHeight,
-                fontSize: 11.toAutoScaledFont,
+                fontSize: taken ? 9.toAutoScaledFont : 11.toAutoScaledFont,
                 fontWeight: FontWeight.w600,
                 color: AppTheme.black11,
               ),

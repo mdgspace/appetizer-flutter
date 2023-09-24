@@ -1,4 +1,5 @@
 import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
+import 'package:appetizer/utils/date_time_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:appetizer/domain/models/user/notification.dart' as notification;
 
@@ -12,6 +13,7 @@ class NotificationCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String date = DateTimeUtils.dateTimeWithoutSeconds(data.dateCreated);
     return Container(
       height: 127.toAutoScaledHeight,
       width: 312.toAutoScaledWidth,
@@ -56,7 +58,7 @@ class NotificationCard extends StatelessWidget {
               ),
               Expanded(
                 child: Text(
-                  '${data.dateCreated}',
+                  date,
                   style: TextStyle(
                     color: const Color(0xFF2E2E2E),
                     fontSize: 10.toAutoScaledFont,

@@ -59,10 +59,11 @@ class NotificationScreen extends StatelessWidget {
                   Container(
                     height: 656.toAutoScaledHeight,
                     padding: EdgeInsets.only(
-                        left: 24.toAutoScaledWidth,
-                        right: 25.toAutoScaledWidth,
-                        top: 32.toAutoScaledHeight),
+                      left: 24.toAutoScaledWidth,
+                      right: 25.toAutoScaledWidth,
+                    ),
                     child: ListView.builder(
+                      padding: EdgeInsets.zero,
                       itemCount: state.notifications.length,
                       itemBuilder: (context, index) {
                         return Column(
