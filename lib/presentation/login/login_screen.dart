@@ -66,9 +66,6 @@ class LoginScreen extends StatelessWidget {
                       EdgeInsets.symmetric(horizontal: 25.toAutoScaledWidth),
                   child: BlocConsumer<LoginBloc, LoginState>(
                     listener: (context, state) {
-                      if (state is EnterPassword) {
-                        _controller.clear();
-                      }
                       if (state is LoginSuccess) {
                         context.read<AppBloc>().add(const GetUser());
                       }
@@ -78,10 +75,13 @@ class LoginScreen extends StatelessWidget {
                             content: Text(state.error!),
                           ),
                         );
+                        _controller.clear();
                       }
                     },
                     builder: (context, state) {
                       if (state is Loading) {
+                        _controller.clear();
+
                         return const Center(child: CircularProgressIndicator());
                       }
                       if (state is CreatePassword) {
