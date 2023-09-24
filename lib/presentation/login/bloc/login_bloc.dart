@@ -86,9 +86,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   }
 
   FutureOr<void> _onForgotPasswordPressed(event, emit) async {
-    print('[TEST] ForgotPasswordPressed');
     emit(Loading());
-    emit(ForgotPasswordState());
+    emit(const ForgotPasswordState());
   }
 
   FutureOr<void> _onShowPasswordPressed(event, emit) {
