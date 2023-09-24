@@ -40,7 +40,7 @@ class DateTimeUtils {
   }
 
   static String getFormattedDate(String yMd) {
-    return DateFormat.MMMd().format(DateTime.parse(yMd));
+    return DateFormat("d MMM''yy").format(DateTime.parse(yMd));
   }
 
   static bool compareDate(DateTime date1, DateTime date2) {

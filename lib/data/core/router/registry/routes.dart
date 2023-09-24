@@ -51,6 +51,10 @@ class AppRoutesRegistry {
           path: AppPathsRegistry.notification,
           page: NotificationRoute.page,
         ),
+        CustomRoute(
+          path: AppPathsRegistry.feedback,
+          page: FeedbackRoute.page,
+        ),
       ],
     ),
   ];

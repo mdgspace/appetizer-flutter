@@ -26,7 +26,7 @@ class CouponCard extends StatelessWidget {
             child: SvgPicture.asset('assets/images/coupon.svg'),
           ),
           Container(
-            width: 101.toAutoScaledWidth,
+            width: 110.toAutoScaledWidth,
             padding: EdgeInsets.only(
               top: 12.toAutoScaledHeight,
               left: 8.toAutoScaledWidth,
