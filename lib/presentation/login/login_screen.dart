@@ -1,5 +1,6 @@
 import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
 import 'package:appetizer/presentation/app/bloc/app_bloc.dart';
+import 'package:appetizer/presentation/components/loading_indicator.dart';
 import 'package:appetizer/presentation/components/made_by_mdg.dart';
 import 'package:appetizer/presentation/components/raise_query_button.dart';
 import 'package:appetizer/presentation/login/components/channeli_button.dart';
@@ -66,9 +67,6 @@ class LoginScreen extends StatelessWidget {
                       EdgeInsets.symmetric(horizontal: 25.toAutoScaledWidth),
                   child: BlocConsumer<LoginBloc, LoginState>(
                     listener: (context, state) {
-                      if (state is EnterPassword) {
-                        _controller.clear();
-                      }
                       if (state is LoginSuccess) {
                         context.read<AppBloc>().add(const GetUser());
                       }
@@ -78,11 +76,13 @@ class LoginScreen extends StatelessWidget {
                             content: Text(state.error!),
                           ),
                         );
+                        _controller.clear();
                       }
                     },
                     builder: (context, state) {
                       if (state is Loading) {
-                        return const Center(child: CircularProgressIndicator());
+                        _controller.clear();
+                        return const Center(child: LoadingIndicator());
                       }
                       if (state is CreatePassword) {
                         return Column(
@@ -232,7 +232,12 @@ class LoginScreen extends StatelessWidget {
                                       ),
                                       if (state is! ForgotPasswordState)
                                         TextButton(
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            // TODO: send to fogot password screen
+                                            context
+                                                .read<LoginBloc>()
+                                                .add(ForgotPasswordPressed());
+                                          },
                                           child: Text(
                                             'Forgot Password?',
                                             style: GoogleFonts.lato(
@@ -261,7 +266,7 @@ class LoginScreen extends StatelessWidget {
                                     : state is ForgotPasswordState
                                         ? context.read<LoginBloc>().add(
                                             SendPasswordResetInstructions(
-                                                emailId: state.emailID))
+                                                emailId: _controller.text))
                                         : context
                                             .read<LoginBloc>()
                                             .add(NextPressed(_controller.text));

@@ -1,15 +1,13 @@
 import 'package:appetizer/app_theme.dart';
 import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
-import 'package:appetizer/domain/models/coupon/coupon.dart';
 import 'package:appetizer/domain/models/menu/week_menu_tmp.dart';
 import 'package:appetizer/presentation/app/bloc/app_bloc.dart';
-import 'package:appetizer/presentation/week_menu/components/yourMealDailyCardsCombined/bloc/your_meal_daily_cards_combined_bloc.dart';
+import 'package:appetizer/presentation/week_menu/bloc/week_menu_bloc.dart';
 import 'package:appetizer/presentation/components/shadow_container.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart' as svg;
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fswitch_nullsafety/fswitch_nullsafety.dart';
 import 'package:intl/intl.dart';
 import 'dart:math';
@@ -43,13 +41,16 @@ class FeedbackAndCouponWidget extends StatelessWidget {
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
         ),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: (coupon && taken)
+              ? MainAxisAlignment.spaceBetween
+              : MainAxisAlignment.center,
           children: [
-            if (coupon && taken) ...[
-              SvgPicture.asset('assets/icons/coupon_taken_tick.svg')
-            ],
+            // if (coupon && taken) ...[
+            //   SvgPicture.asset('assets/icons/coupon_taken_tick.svg')
+            // ],
             Text(
-              coupon ? "COUPON" : "Give Feedback",
+              coupon ? "COUPON ${taken ? 'TAKEN' : ''}" : "Give Feedback",
+              textAlign: TextAlign.center,
               style: AppTheme.button.copyWith(
                 height: 1.toAutoScaledHeight,
                 fontSize: 11.toAutoScaledFont,
@@ -195,15 +196,17 @@ class MealCard extends StatelessWidget {
                               enable:
                                   !meal.isLeaveToggleOutdated && !isCheckout,
                               open:
-                                  meal.leaveStatus.status != LeaveStatusEnum.A,
+                                  meal.leaveStatus.status != LeaveStatusEnum.P,
                               sliderColor: AppTheme.customWhite,
                               openColor: AppTheme.black2e,
                               height: 20.toAutoScaledHeight,
                               width: 44.toAutoScaledWidth,
                               onChanged: (value) async {
                                 context
-                                    .read<YourMealDailyCardsCombinedBloc>()
-                                    .add(ToggleMealLeaveEvent(meal: meal));
+                                    .read<WeekMenuBlocBloc>()
+                                    .add(MealLeaveEvent(
+                                      meal: meal,
+                                    ));
                               },
                             );
                           },
@@ -234,21 +237,11 @@ class MealCard extends StatelessWidget {
                                 if (!meal.isCouponOutdated) {
                                   // TODO: show dialog box and then add toggle event
                                   context
-                                      .read<YourMealDailyCardsCombinedBloc>()
-                                      .add(ToggleMealCouponEvent(
-                                          coupon: Coupon(
-                                            id: meal.couponStatus.status ==
-                                                    CouponStatusEnum.A
-                                                ? meal.couponStatus.id!
-                                                : -1,
-                                            mealId: meal.id,
-                                            mealType: meal.type.name,
-                                            mealDate: "",
-                                          ),
-                                          couponAppliedAlready:
-                                              meal.couponStatus.status ==
-                                                  CouponStatusEnum.A,
-                                          mealId: meal.id));
+                                      .read<WeekMenuBlocBloc>()
+                                      .add(MealCouponEvent(
+                                        coupon: meal.couponStatus,
+                                        mealId: meal.id,
+                                      ));
                                 } else if (meal.couponStatus.status ==
                                     CouponStatusEnum.A) {
                                   showCouponDialog(
@@ -258,9 +251,10 @@ class MealCard extends StatelessWidget {
                                 }
                               },
                               child: FeedbackAndCouponWidget(
-                                  taken: meal.couponStatus.status ==
-                                      CouponStatusEnum.A,
-                                  coupon: true),
+                                taken: meal.couponStatus.status ==
+                                    CouponStatusEnum.A,
+                                coupon: true,
+                              ),
                             )
                           : const SizedBox.shrink()),
                 ],
@@ -274,7 +268,22 @@ class MealCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: 18.toAutoScaledHeight),
-              for (var item in meal.items) Text("  \u2022 ${item.name}"),
+              Container(
+                constraints: BoxConstraints.tightFor(
+                  height: 100.toAutoScaledWidth,
+                  width: 180.toAutoScaledWidth,
+                ),
+                padding: EdgeInsets.only(left: 10.toAutoScaledWidth),
+                child: ListView.builder(
+                  itemCount: meal.items.length,
+                  shrinkWrap: true,
+                  padding: EdgeInsets.zero,
+                  itemBuilder: (context, index) {
+                    final item = meal.items[index];
+                    return Text("\u2022 ${item.name}");
+                  },
+                ),
+              ),
               const Spacer(),
               Container(
                 margin: EdgeInsets.symmetric(

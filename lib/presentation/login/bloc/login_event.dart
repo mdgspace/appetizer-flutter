@@ -20,10 +20,7 @@ class SendPasswordResetInstructions extends LoginEvent {
   SendPasswordResetInstructions({required this.emailId});
 }
 
-class ForgotPasswordPressed extends LoginEvent {
-  final String emailId;
-  ForgotPasswordPressed({required this.emailId});
-}
+class ForgotPasswordPressed extends LoginEvent {}
 
 class CreatedPasswordNewUser extends LoginEvent {
   final OAuthUser user;

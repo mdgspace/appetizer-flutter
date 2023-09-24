@@ -43,11 +43,10 @@ class EnterPassword extends LoginState {
 }
 
 class ForgotPasswordState extends LoginState {
-  const ForgotPasswordState({required this.emailID});
-  final String emailID;
+  const ForgotPasswordState();
 
   @override
-  List<Object?> get props => [emailID];
+  List<Object?> get props => [];
 }
 
 class LoginSuccess extends LoginState {

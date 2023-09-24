@@ -1,5 +1,7 @@
 import 'package:appetizer/app_theme.dart';
+import 'package:appetizer/data/core/router/intrinsic_router/intrinsic_router.gr.dart';
 import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -43,7 +45,10 @@ class TitleBar extends StatelessWidget {
               ],
             ),
           ),
-          SvgPicture.asset('assets/images/icons/Bell.svg'),
+          GestureDetector(
+            onTap: () => context.router.push(const NotificationRoute()),
+            child: SvgPicture.asset('assets/images/icons/Bell.svg'),
+          ),
         ],
       ),
     );

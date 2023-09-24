@@ -10,15 +10,18 @@ abstract class WeekMenuBlocState extends Equatable {
 }
 
 class WeekMenuBlocDisplayState extends WeekMenuBlocState {
+  // TODO: remove th variable jugaad, it is used to force rebuild the DayMenuWidget
   const WeekMenuBlocDisplayState({
     required this.weekMenu,
     required this.currDayIndex,
     required this.dayNumber,
+    required this.jugaad,
   });
 
   final WeekMenu weekMenu;
   final int currDayIndex;
   final int dayNumber;
+  final bool jugaad;
 
   WeekMenuBlocDisplayState copyWith(
       {WeekMenu? weekMenu, int? currDayIndex, int? dayNumber}) {
@@ -26,11 +29,12 @@ class WeekMenuBlocDisplayState extends WeekMenuBlocState {
       weekMenu: weekMenu ?? this.weekMenu,
       currDayIndex: currDayIndex ?? this.currDayIndex,
       dayNumber: dayNumber ?? this.dayNumber,
+      jugaad: !jugaad,
     );
   }
 
   @override
-  List<Object> get props => [weekMenu, currDayIndex, dayNumber];
+  List<Object> get props => [weekMenu, currDayIndex, dayNumber, jugaad];
 }
 
 class WeekMenuBlocLoadingState extends WeekMenuBlocState {

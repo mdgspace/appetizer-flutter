@@ -47,3 +47,27 @@ class DateChangeEvent extends WeekMenuBlocEvent {
   @override
   List<Object> get props => [dayIndex, weekId];
 }
+
+class MealCouponEvent extends WeekMenuBlocEvent {
+  const MealCouponEvent({
+    required this.coupon,
+    required this.mealId,
+  });
+
+  final CouponStatus coupon;
+  final int mealId;
+
+  @override
+  List<Object> get props => [coupon, mealId];
+}
+
+class MealLeaveEvent extends WeekMenuBlocEvent {
+  const MealLeaveEvent({
+    required this.meal,
+  });
+
+  final Meal meal;
+
+  @override
+  List<Object> get props => [meal];
+}

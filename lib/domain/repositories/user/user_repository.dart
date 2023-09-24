@@ -122,7 +122,13 @@ class UserRepository {
 
   Future<List<Notification>> getNotifications() async {
     try {
-      return await _apiService.getNotifications();
+      // TODO: test with some notification data
+      final response = await _apiService.getNotifications();
+      List<Notification> notifications = [];
+      for (var notification in response["results"]) {
+        notifications.add(Notification.fromJson(notification));
+      }
+      return notifications;
     } catch (e) {
       debugPrint(e.toString());
       throw Failure(AppConstants.GENERIC_FAILURE);

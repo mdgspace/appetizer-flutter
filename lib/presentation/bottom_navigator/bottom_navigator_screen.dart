@@ -1,4 +1,5 @@
 import 'package:appetizer/data/core/router/intrinsic_router/intrinsic_router.gr.dart';
+import 'package:appetizer/domain/repositories/coupon_repository.dart';
 import 'package:appetizer/domain/repositories/leave/leave_repository.dart';
 import 'package:appetizer/domain/repositories/menu_repository.dart';
 import 'package:appetizer/presentation/app/bloc/app_bloc.dart';
@@ -41,6 +42,7 @@ class BottomNavigatorScreen extends StatelessWidget {
           create: (context) => WeekMenuBlocBloc(
             menuRepository: context.read<MenuRepository>(),
             leaveRepository: context.read<LeaveRepository>(),
+            couponRepository: context.read<CouponRepository>(),
           )..add(const FetchWeekMenuData()),
         ),
         BlocProvider(
