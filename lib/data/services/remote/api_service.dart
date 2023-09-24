@@ -7,7 +7,6 @@ import 'package:appetizer/domain/models/leaves/paginated_leaves.dart';
 import 'package:appetizer/domain/models/menu/week_menu_tmp.dart';
 import 'package:appetizer/domain/models/transaction/faq.dart';
 import 'package:appetizer/domain/models/transaction/paginated_yearly_rebate.dart';
-import 'package:appetizer/domain/models/user/notification.dart';
 import 'package:appetizer/domain/models/user/oauth_user.dart';
 import 'package:appetizer/domain/models/user/user.dart';
 import 'package:appetizer/domain/repositories/leave/leave_repository.dart';
@@ -181,5 +180,5 @@ abstract class ApiService {
   );
 
   @GET(ApiEndpoints.notifications)
-  Future<List<Notification>> getNotifications();
+  Future getNotifications();
 }

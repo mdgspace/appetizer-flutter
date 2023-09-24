@@ -26,17 +26,30 @@ class NotificationScreen extends StatelessWidget {
               context
                   .read<NotificationPageBloc>()
                   .add(const NotificationPageFetchEvent(notifications: []));
-              return const NoDataFoundContainer(
-                  title: 'Oops! Just a moment...');
+              return const Column(
+                children: [
+                  NotificationBanner(),
+                  NoDataFoundContainer(title: 'Oops! Just a moment...'),
+                ],
+              );
             }
             if (state is NotificationPageFailedState) {
               // TODO: throw an error, or snackbar
-              return const NoDataFoundContainer(
-                  title: 'Something went wrong...');
+              return const Column(
+                children: [
+                  NotificationBanner(),
+                  NoDataFoundContainer(title: 'Something went wrong...'),
+                ],
+              );
             }
             if (state is NotificationPageFetchedState) {
               if (state.notifications.isEmpty) {
-                return const NoNotificationsWidget();
+                return const Column(
+                  children: [
+                    NotificationBanner(),
+                    NoNotificationsWidget(),
+                  ],
+                );
               }
               return Column(
                 children: [

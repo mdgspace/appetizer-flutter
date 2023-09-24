@@ -25,7 +25,7 @@ class DayMenuWidget extends StatelessWidget {
         children: [
           ...dayMenu.meals
               .map(
-                // Write logic for ordering meals in order of breakfast, lunch, dinner, snack
+                // TODO: Write logic for ordering meals in order of breakfast, lunch, dinner, snack
                 (meal) => Padding(
                   padding: EdgeInsets.only(
                     bottom: 24.toAutoScaledHeight,

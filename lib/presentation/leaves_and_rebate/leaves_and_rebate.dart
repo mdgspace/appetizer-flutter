@@ -1,6 +1,7 @@
 import 'package:appetizer/app_theme.dart';
 import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
 import 'package:appetizer/presentation/app/bloc/app_bloc.dart';
+import 'package:appetizer/presentation/components/loading_indicator.dart';
 import 'package:appetizer/presentation/leaves_and_rebate/bloc/leaves_and_rebate_bloc.dart';
 import 'package:appetizer/presentation/leaves_and_rebate/components/custom_divider.dart';
 import 'package:appetizer/presentation/leaves_and_rebate/components/leave_history.dart';
@@ -43,7 +44,7 @@ class LeavesAndRebateScreen extends StatelessWidget {
             if (state.loading) ...[
               const Expanded(
                 child: Center(
-                  child: CircularProgressIndicator(),
+                  child: LoadingIndicator(),
                 ),
               ),
             ],
