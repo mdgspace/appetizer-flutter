@@ -35,7 +35,6 @@ class BlackButton extends StatelessWidget {
             fontSize: 12.toAutoScaledFont,
             fontFamily: 'Lato',
             fontWeight: FontWeight.w700,
-            height: 1.50.toAutoScaledHeight,
           ),
         ),
       ),
@@ -60,7 +59,7 @@ class BlackIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 34,
+      height: 34.toAutoScaledHeight,
       width: width,
       decoration: ShapeDecoration(
         color: Colors.black,
@@ -81,18 +80,17 @@ class BlackIconButton extends StatelessWidget {
             Text(
               title,
               textAlign: TextAlign.left,
-              style: const TextStyle(
-                color: Color(0xFFF6F6F6),
-                fontSize: 12,
+              style: TextStyle(
+                color: const Color(0xFFF6F6F6),
+                fontSize: 12.toAutoScaledFont,
                 fontFamily: 'Lato',
                 fontWeight: FontWeight.w700,
-                height: 1.50,
               ),
             ),
             12.toVerticalSizedBox,
             Container(
-              height: 14,
-              width: 14,
+              height: 14.toAutoScaledWidth,
+              width: 14.toAutoScaledWidth,
               alignment: Alignment.centerRight,
               child: SvgPicture.asset('assets/images/icons/submit_icon.svg'),
             ),

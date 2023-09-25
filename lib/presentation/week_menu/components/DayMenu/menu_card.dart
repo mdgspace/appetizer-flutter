@@ -8,6 +8,7 @@ import 'package:appetizer/presentation/components/shadow_container.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart' as svg;
 import 'package:fswitch_nullsafety/fswitch_nullsafety.dart';
 import 'package:intl/intl.dart';
@@ -41,38 +42,24 @@ class FeedbackAndCouponWidget extends StatelessWidget {
           color: AppTheme.white,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
         ),
-        child: Center(
-          child: Text(
-            coupon ? "COUPON ${taken ? 'TAKEN' : ''}" : "Give Feedback",
-            textAlign: TextAlign.center,
-            style: AppTheme.button.copyWith(
-              height: 1.toAutoScaledHeight,
-              fontSize: 11.toAutoScaledFont,
-              fontWeight: FontWeight.w600,
-              color: AppTheme.black11,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            if (coupon && taken) ...[
+              SvgPicture.asset('assets/icons/coupon_taken_tick.svg'),
+              4.toHorizontalSizedBox,
+            ],
+            Text(
+              coupon ? "COUPON" : "Give Feedback",
+              textAlign: TextAlign.center,
+              style: AppTheme.button.copyWith(
+                fontSize: 11.toAutoScaledFont,
+                fontWeight: FontWeight.w600,
+                color: AppTheme.black11,
+              ),
             ),
-          ),
+          ],
         ),
-        // child: Row(
-        //   mainAxisAlignment: (coupon && taken)
-        //       ? MainAxisAlignment.spaceBetween
-        //       : MainAxisAlignment.center,
-        //   children: [
-        //     if (coupon && taken) ...[
-        //       SvgPicture.asset('assets/icons/coupon_taken_tick.svg')
-        //     ],
-        //     Text(
-        //       coupon ? "COUPON" : "Give Feedback",
-        //       textAlign: TextAlign.center,
-        //       style: AppTheme.button.copyWith(
-        //         height: 1.toAutoScaledHeight,
-        //         fontSize: 11.toAutoScaledFont,
-        //         fontWeight: FontWeight.w600,
-        //         color: AppTheme.black11,
-        //       ),
-        //     ),
-        //   ],
-        // ),
       ),
     );
   }
@@ -284,9 +271,9 @@ class MealCard extends StatelessWidget {
             children: [
               SizedBox(height: 18.toAutoScaledHeight),
               Container(
-                constraints: BoxConstraints.tightFor(
-                  height: 100.toAutoScaledWidth,
-                  width: 180.toAutoScaledWidth,
+                constraints: BoxConstraints(
+                  maxHeight: 100.toAutoScaledHeight,
+                  maxWidth: 180.toAutoScaledWidth,
                 ),
                 padding: EdgeInsets.only(left: 10.toAutoScaledWidth),
                 child: ListView.builder(
@@ -323,7 +310,9 @@ class MealCard extends StatelessWidget {
                         color: const Color(0xFFB51111)),
                     children: [
                       TextSpan(
-                          text: dailyItemsParsed, style: AppTheme.bodyText2)
+                        text: dailyItemsParsed,
+                        style: AppTheme.bodyText2,
+                      )
                     ],
                   ),
                 ),

@@ -2,12 +2,14 @@ import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
 import 'package:flutter/material.dart';
 
 class ProfileTextButton extends StatelessWidget {
-  const ProfileTextButton(
-      {required this.title, required this.onPressed, Key? key})
-      : super(key: key);
+  const ProfileTextButton({
+    required this.title,
+    required this.onPressed,
+    super.key,
+  });
 
   final String title;
-  final Function() onPressed;
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +19,9 @@ class ProfileTextButton extends StatelessWidget {
         width: 115.toAutoScaledWidth,
         height: 32.toAutoScaledHeight,
         padding: EdgeInsets.symmetric(
-            horizontal: 26.toAutoScaledWidth, vertical: 6.toAutoScaledHeight),
+          horizontal: 26.toAutoScaledWidth,
+          vertical: 6.toAutoScaledHeight,
+        ),
         decoration: ShapeDecoration(
           color: Colors.white,
           shape: RoundedRectangleBorder(
@@ -25,15 +29,16 @@ class ProfileTextButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(6.toAutoScaledWidth),
           ),
         ),
-        child: Text(
-          title,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: const Color(0xFF111111),
-            fontSize: 13.toAutoScaledFont,
-            fontFamily: 'Lato',
-            fontWeight: FontWeight.w400,
-            height: 1.54.toAutoScaledHeight,
+        child: Center(
+          child: Text(
+            title,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: const Color(0xFF111111),
+              fontSize: 13.toAutoScaledFont,
+              fontFamily: 'Lato',
+              fontWeight: FontWeight.w400,
+            ),
           ),
         ),
       ),
@@ -81,13 +86,10 @@ class ProfileIconButton extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(
-              width: 20.toAutoScaledWidth,
-              height: 20.toAutoScaledHeight,
-              child: const Icon(
-                Icons.bookmark_border_outlined,
-                color: Color.fromARGB(255, 255, 203, 116),
-              ),
+            Icon(
+              Icons.bookmark_border_outlined,
+              color: const Color.fromARGB(255, 255, 203, 116),
+              size: 15.toAutoScaledWidth,
             ),
             10.toHorizontalSizedBox,
             Text(
@@ -98,7 +100,6 @@ class ProfileIconButton extends StatelessWidget {
                 fontSize: 14.toAutoScaledFont,
                 fontFamily: 'Lato',
                 fontWeight: FontWeight.w500,
-                height: 1.43.toAutoScaledHeight,
               ),
             ),
           ],

@@ -1,48 +1,49 @@
+import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
 import 'package:flutter/material.dart';
 
 class AppTheme {
   // Text Styles
-  static TextStyle headline1 = const TextStyle(
-    color: Color(0xFFF6F6F6),
-    fontSize: 24,
+  static TextStyle headline1 = TextStyle(
+    color: const Color(0xFFF6F6F6),
+    fontSize: 24.toAutoScaledFont,
     fontFamily: 'NotoSans',
     fontWeight: FontWeight.w700,
   );
-  static TextStyle headline2 = const TextStyle(
-    color: Color(0xFF1E1E1E),
-    fontSize: 12,
+  static TextStyle headline2 = TextStyle(
+    color: const Color(0xFF1E1E1E),
+    fontSize: 12.toAutoScaledFont,
     fontFamily: 'Lato',
     fontWeight: FontWeight.w700,
   );
-  static TextStyle headline3 = const TextStyle(
-    color: Color(0xFF111111),
-    fontSize: 18,
+  static TextStyle headline3 = TextStyle(
+    color: const Color(0xFF111111),
+    fontSize: 18.toAutoScaledFont,
     fontFamily: 'Noto Sans',
     fontWeight: FontWeight.w500,
   );
-  static TextStyle subtitle1 = const TextStyle(
+  static TextStyle subtitle1 = TextStyle(
     color: Colors.white,
-    fontSize: 20,
+    fontSize: 20.toAutoScaledFont,
     fontFamily: 'Lato',
     fontWeight: FontWeight.w600,
   );
-  static TextStyle bodyText1 = const TextStyle(
-    color: Color(0xFF2E2E2E),
-    fontSize: 12,
+  static TextStyle bodyText1 = TextStyle(
+    color: const Color(0xFF2E2E2E),
+    fontSize: 12.toAutoScaledFont,
     fontFamily: 'Lato',
     fontWeight: FontWeight.w400,
     height: 1.32,
   );
-  static TextStyle bodyText2 = const TextStyle(
-    color: Color(0xFF2E2E2E),
-    fontSize: 10,
+  static TextStyle bodyText2 = TextStyle(
+    color: const Color(0xFF2E2E2E),
+    fontSize: 10.toAutoScaledFont,
     fontFamily: 'Lato',
     fontWeight: FontWeight.w400,
     height: 1.09,
   );
-  static TextStyle button = const TextStyle(
-    color: Color(0xFFF6F6F6),
-    fontSize: 12,
+  static TextStyle button = TextStyle(
+    color: const Color(0xFFF6F6F6),
+    fontSize: 12.toAutoScaledFont,
     fontFamily: 'Lato',
     fontWeight: FontWeight.w700,
     height: 1.50,

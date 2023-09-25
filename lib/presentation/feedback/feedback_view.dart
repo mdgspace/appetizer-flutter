@@ -108,7 +108,7 @@ class FeedbackScreen extends StatelessWidget {
                             //         rating: state.rating,
                             //         description: state.description)),
                             title: "SUBMIT",
-                            width: 102,
+                            width: 102.toAutoScaledWidth,
                             icon: Icons.keyboard_double_arrow_right_sharp,
                           ),
                         ),

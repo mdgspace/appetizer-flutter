@@ -131,7 +131,7 @@ class ProfileScreen extends StatelessWidget {
                                   .read<AppBloc>()
                                   .add(const NavigateToLoginScreen());
                             },
-                            width: 101,
+                            width: 101.toAutoScaledWidth,
                           ),
                           SizedBox(height: 18.toAutoScaledHeight),
                           const RaiseQueryButton(),

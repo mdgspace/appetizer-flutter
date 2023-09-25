@@ -67,7 +67,6 @@ class _MonthlyRebatesState extends State<MonthlyRebates> {
     _monthlyRebateMap["All"] = _totalRebate;
     year = DateTime.now().year;
     return ShadowContainer(
-      height: 134.toAutoScaledHeight,
       width: 312.toAutoScaledWidth,
       offset: 2,
       child: Padding(

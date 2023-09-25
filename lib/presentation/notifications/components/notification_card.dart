@@ -15,7 +15,6 @@ class NotificationCard extends StatelessWidget {
   Widget build(BuildContext context) {
     String date = DateTimeUtils.dateTimeWithoutSeconds(data.dateCreated);
     return Container(
-      height: 127.toAutoScaledHeight,
       width: 312.toAutoScaledWidth,
       padding: EdgeInsets.only(
         top: 15.toAutoScaledHeight,
