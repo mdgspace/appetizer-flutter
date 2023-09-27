@@ -18,7 +18,8 @@ class SetPassword extends LoginEvent {
   final String confirmPassword;
   final String enrollmentNo;
   final OAuthUser user;
-  SetPassword(this.password, this.confirmPassword, this.enrollmentNo, this.user);
+  SetPassword(
+      this.password, this.confirmPassword, this.enrollmentNo, this.user);
 }
 
 class ShowPasswordPressed extends LoginEvent {}
