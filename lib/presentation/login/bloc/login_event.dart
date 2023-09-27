@@ -13,7 +13,24 @@ class LoginPressed extends LoginEvent {
   LoginPressed(this.password, this.enrollmentNo);
 }
 
+class SetPassword extends LoginEvent {
+  final String password;
+  final String confirmPassword;
+  final String enrollmentNo;
+  final OAuthUser user;
+  SetPassword(this.password, this.confirmPassword, this.enrollmentNo, this.user);
+}
+
 class ShowPasswordPressed extends LoginEvent {}
+
+class ToggleObscureCreatePassword extends LoginEvent {
+  final bool showPassword;
+  final bool showConfirmPassword;
+  ToggleObscureCreatePassword({
+    required this.showPassword,
+    required this.showConfirmPassword,
+  });
+}
 
 class SendPasswordResetInstructions extends LoginEvent {
   final String emailId;

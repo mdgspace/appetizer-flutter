@@ -23,6 +23,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     //   emit(ForgotPasswordState(emailID: event.emailId));
     // });
     on<SendPasswordResetInstructions>(_onSendPasswordResetInstructions);
+    on<ToggleObscureCreatePassword>(_onToggleObscureCreatePassword);
+    on<SetPassword>(_onSetPassword);
   }
 
   FutureOr<void> _onSendPasswordResetInstructions(event, emit) async {
@@ -72,7 +74,14 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     try {
       OAuthUser user = await userRepository.oAuthRedirect(event.code);
       if (user.isNew) {
-        emit(CreatePassword(enrollmentNo: user.studentData.enrNo.toString()));
+        emit(
+          CreatePassword(
+            enrollmentNo: user.studentData.enrNo.toString(),
+            user: user,
+            showPassword: false,
+            showConfirmPassword: false,
+          ),
+        );
       } else {
         LocalStorageService.setValue(
             key: AppConstants.AUTH_TOKEN, value: user.token);
@@ -127,6 +136,55 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     } catch (e) {
       // TODO: show dialog box
       emit(const LoginInitial(error: 'Login Failed!'));
+    }
+  }
+
+  FutureOr<void> _onToggleObscureCreatePassword(event, emit) {
+    emit((state as CreatePassword).copyWith(
+      showPassword: event.showPassword,
+      showConfirmPassword: event.showConfirmPassword,
+    ));
+  }
+
+  FutureOr<void> _onSetPassword(event, emit) async {
+    if (event.password.length < 8) {
+      emit(Loading());
+      emit(
+        CreatePassword(
+          enrollmentNo: event.enrollmentNo,
+          user: event.user,
+          showPassword: false,
+          showConfirmPassword: false,
+          error: 'Password must be at least 8 characters long',
+        ),
+      );
+    }
+    if (event.password != event.confirmPassword) {
+      emit(Loading());
+      emit(
+        CreatePassword(
+          enrollmentNo: event.enrollmentNo,
+          user: event.user,
+          showPassword: false,
+          showConfirmPassword: false,
+          error: 'Passwords do not match',
+        ),
+      );
+    }
+    if (event.enrollmentNo != event.user.studentData.enrNo.toString()) {
+      emit(const LoginInitial(error: AppConstants.GENERIC_FAILURE));
+    }
+    emit(Loading());
+    try {
+      await userRepository.oAuthComplete(event.user, event.password);
+      final User user =
+          await userRepository.userLogin(event.enrollmentNo, event.password);
+      LocalStorageService.setValue(
+          key: AppConstants.AUTH_TOKEN, value: user.token);
+      LocalStorageService.setValue(key: AppConstants.LOGGED_IN, value: true);
+      emit(const LoginSuccess());
+    } catch (e) {
+      emit(const LoginInitial(error: AppConstants.GENERIC_FAILURE));
     }
   }
 }

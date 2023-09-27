@@ -33,6 +33,7 @@ class NoOverScroll extends ScrollBehavior {
 @RoutePage()
 class LoginScreen extends StatelessWidget {
   final TextEditingController _controller = TextEditingController();
+  final TextEditingController _controller2 = TextEditingController();
 
   LoginScreen({super.key});
   @override
@@ -77,11 +78,13 @@ class LoginScreen extends StatelessWidget {
                           ),
                         );
                         _controller.clear();
+                        _controller2.clear();
                       }
                     },
                     builder: (context, state) {
                       if (state is Loading) {
                         _controller.clear();
+                        _controller2.clear();
                         return const Center(child: LoadingIndicator());
                       }
                       if (state is CreatePassword) {
@@ -99,6 +102,7 @@ class LoginScreen extends StatelessWidget {
                             20.toVerticalSizedBox,
                             TextField(
                               controller: _controller,
+                              obscureText: !state.showPassword,
                               decoration: InputDecoration(
                                 hintText: 'Create Password',
                                 hintStyle: GoogleFonts.lato(
@@ -112,14 +116,30 @@ class LoginScreen extends StatelessWidget {
                                           .withOpacity(0.25)),
                                   borderRadius: BorderRadius.circular(5),
                                 ),
+                                suffixIcon: IconButton(
+                                  onPressed: () {
+                                    BlocProvider.of<LoginBloc>(context).add(
+                                      ToggleObscureCreatePassword(
+                                        showPassword: !state.showPassword,
+                                        showConfirmPassword:
+                                            state.showConfirmPassword,
+                                      ),
+                                    );
+                                  },
+                                  icon: state.showPassword
+                                      ? const Icon(Icons.visibility,
+                                          color: Color(0xFF757575))
+                                      : const Icon(Icons.visibility_off,
+                                          color: Color(0xFF757575)),
+                                ),
                                 contentPadding: EdgeInsets.symmetric(
                                     horizontal: 20.toAutoScaledWidth),
                               ),
                             ),
                             10.toVerticalSizedBox,
                             TextField(
-                              controller: _controller,
-                              obscureText: true,
+                              controller: _controller2,
+                              obscureText: !state.showConfirmPassword,
                               decoration: InputDecoration(
                                 hintText: 'Confirm Password',
                                 hintStyle: GoogleFonts.lato(
@@ -132,6 +152,22 @@ class LoginScreen extends StatelessWidget {
                                       color: const Color(0xFF111111)
                                           .withOpacity(0.25)),
                                   borderRadius: BorderRadius.circular(5),
+                                ),
+                                suffixIcon: IconButton(
+                                  onPressed: () {
+                                    BlocProvider.of<LoginBloc>(context).add(
+                                      ToggleObscureCreatePassword(
+                                        showPassword: state.showPassword,
+                                        showConfirmPassword:
+                                            !state.showConfirmPassword,
+                                      ),
+                                    );
+                                  },
+                                  icon: state.showConfirmPassword
+                                      ? const Icon(Icons.visibility,
+                                          color: Color(0xFF757575))
+                                      : const Icon(Icons.visibility_off,
+                                          color: Color(0xFF757575)),
                                 ),
                                 contentPadding:
                                     const EdgeInsets.symmetric(horizontal: 20),
@@ -153,8 +189,12 @@ class LoginScreen extends StatelessWidget {
                                 text: 'Login',
                                 onPressed: () {
                                   context.read<LoginBloc>().add(
-                                        LoginPressed(_controller.text,
-                                            state.enrollmentNo),
+                                        SetPassword(
+                                          _controller.text,
+                                          _controller2.text,
+                                          state.enrollmentNo,
+                                          state.user,
+                                        ),
                                       );
                                 },
                               ),
