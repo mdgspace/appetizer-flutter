@@ -158,6 +158,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           error: 'Password must be at least 8 characters long',
         ),
       );
+      return;
     }
     if (event.password != event.confirmPassword) {
       emit(Loading());
@@ -170,9 +171,11 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           error: 'Passwords do not match',
         ),
       );
+      return;
     }
     if (event.enrollmentNo != event.user.studentData.enrNo.toString()) {
       emit(const LoginInitial(error: AppConstants.GENERIC_FAILURE));
+      return;
     }
     emit(Loading());
     try {
