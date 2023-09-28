@@ -71,3 +71,7 @@ class MealLeaveEvent extends WeekMenuBlocEvent {
   @override
   List<Object> get props => [meal];
 }
+
+class CheckoutEvent extends WeekMenuBlocEvent {
+  const CheckoutEvent();
+}
