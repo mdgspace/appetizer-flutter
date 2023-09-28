@@ -6,7 +6,7 @@ class EnvironmentConfig {
 
   static const String OAUTH_CLIENT_ID = String.fromEnvironment(
     'OAUTH_CLIENT_ID',
-    defaultValue: 'llxgDXXczxfhSj5VTe4yMucMv2LtpZNFeaEfMhvc',
+    defaultValue: 'kcqsgVWUfdXoys4AaeWQtvKuxMyPUNwEbcZw0By5',
   );
 
   static const String OAUTH_REDIRECT_URI = String.fromEnvironment(

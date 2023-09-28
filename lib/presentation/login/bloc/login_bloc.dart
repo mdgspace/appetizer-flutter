@@ -71,6 +71,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   }
 
   FutureOr<void> _onNewUserSignUp(event, emit) async {
+    emit(Loading());
     try {
       OAuthUser user = await userRepository.oAuthRedirect(event.code);
       if (user.isNew) {

@@ -82,7 +82,7 @@ class LoginScreen extends StatelessWidget {
                       }
                     },
                     builder: (context, state) {
-                      if (state is Loading) {
+                      if (state is Loading || state is LoginSuccess) {
                         _controller.clear();
                         _controller2.clear();
                         return const Center(child: LoadingIndicator());
