@@ -112,6 +112,67 @@ class CouponDialogBox extends StatelessWidget {
   }
 }
 
+class FeedbackOrCouponButton extends StatelessWidget {
+  const FeedbackOrCouponButton({
+    required this.meal,
+    super.key,
+  });
+  final Meal meal;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocSelector<AppBloc, AppState, bool>(
+      selector: (state) => state.user!.isCheckedOut,
+      builder: (context, isCheckout) {
+        if (meal.isOutdated) {
+          return GestureDetector(
+            onTap: () {
+              context.router.navigate(FeedbackRoute());
+            },
+            child: const FeedbackAndCouponWidget(taken: false, coupon: false),
+          );
+        } else if (isCheckout || meal.leaveStatus.status == LeaveStatusEnum.P) {
+          return const SizedBox.shrink();
+        } else if (_isMealValidForCoupon(meal)) {
+          return GestureDetector(
+            onLongPress: () {
+              if (meal.couponStatus.status == CouponStatusEnum.A) {
+                // TODO: show dialog box
+              }
+            },
+            onTap: () {
+              if (!meal.isCouponOutdated) {
+                // TODO: show dialog box and then add toggle event
+                context.read<WeekMenuBlocBloc>().add(MealCouponEvent(
+                      coupon: meal.couponStatus,
+                      mealId: meal.id,
+                    ));
+              } else if (meal.couponStatus.status == CouponStatusEnum.A) {
+                showCouponDialog(
+                  "Coupon no: ${meal.couponStatus.id!}",
+                  context,
+                );
+              } else {
+                const snackBar = SnackBar(
+                  content: Text(
+                    "Time's up, coupon applications closed",
+                  ),
+                );
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+              }
+            },
+            child: FeedbackAndCouponWidget(
+              taken: meal.couponStatus.status == CouponStatusEnum.A,
+              coupon: true,
+            ),
+          );
+        }
+        return const SizedBox.shrink();
+      },
+    );
+  }
+}
+
 class MealCard extends StatelessWidget {
   const MealCard({
     required this.meal,
@@ -210,56 +271,7 @@ class MealCard extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height: 45.toAutoScaledHeight),
-                ...[
-                  meal.isOutdated
-                      ? GestureDetector(
-                          onTap: () {
-                            context.router.navigate(FeedbackRoute());
-                          },
-                          child: const FeedbackAndCouponWidget(
-                              taken: false, coupon: false),
-                        )
-                      : (_isMealValidForCoupon(meal)
-                          ? GestureDetector(
-                              onLongPress: () {
-                                if (meal.couponStatus.status ==
-                                    CouponStatusEnum.A) {
-                                  // TODO: show dialog box
-                                }
-                              },
-                              onTap: () {
-                                if (!meal.isCouponOutdated) {
-                                  // TODO: show dialog box and then add toggle event
-                                  context
-                                      .read<WeekMenuBlocBloc>()
-                                      .add(MealCouponEvent(
-                                        coupon: meal.couponStatus,
-                                        mealId: meal.id,
-                                      ));
-                                } else if (meal.couponStatus.status ==
-                                    CouponStatusEnum.A) {
-                                  showCouponDialog(
-                                    "Coupon no: ${meal.couponStatus.id!}",
-                                    context,
-                                  );
-                                } else {
-                                  const snackBar = SnackBar(
-                                    content: Text(
-                                      "Time's up, coupon applications closed",
-                                    ),
-                                  );
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(snackBar);
-                                }
-                              },
-                              child: FeedbackAndCouponWidget(
-                                taken: meal.couponStatus.status ==
-                                    CouponStatusEnum.A,
-                                coupon: true,
-                              ),
-                            )
-                          : const SizedBox.shrink()),
-                ],
+                FeedbackOrCouponButton(meal: meal),
                 SizedBox(height: 10.toAutoScaledHeight)
               ],
             ),
