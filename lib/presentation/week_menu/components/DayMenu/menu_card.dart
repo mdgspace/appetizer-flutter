@@ -12,6 +12,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart' as svg;
 import 'package:fswitch_nullsafety/fswitch_nullsafety.dart';
 import 'package:intl/intl.dart';
+import 'package:appetizer/utils/recase.dart';
 import 'dart:math';
 
 bool _isMealValidForCoupon(Meal meal) {
@@ -186,7 +187,7 @@ class MealCard extends StatelessWidget {
   Widget build(BuildContext context) {
     String dailyItemsParsed = '';
     for (MealItem item in dailyItems) {
-      dailyItemsParsed += '${item.name}, ';
+      dailyItemsParsed += '${item.name.titleCase}, ';
     }
     dailyItemsParsed =
         dailyItemsParsed.substring(0, max(dailyItemsParsed.length - 2, 0));
@@ -217,7 +218,7 @@ class MealCard extends StatelessWidget {
                   height: 28.toAutoScaledHeight,
                   padding: 12.toLeftOnlyPadding,
                   child: Text(
-                    meal.title,
+                    meal.title.titleCase,
                     style: AppTheme.headline1.copyWith(
                       fontSize: 20.toAutoScaledFont,
                       color: AppTheme.black11,
@@ -294,7 +295,7 @@ class MealCard extends StatelessWidget {
                   padding: EdgeInsets.zero,
                   itemBuilder: (context, index) {
                     final item = meal.items[index];
-                    return Text("\u2022 ${item.name}");
+                    return Text("\u2022 ${item.name.titleCase}");
                   },
                 ),
               ),
