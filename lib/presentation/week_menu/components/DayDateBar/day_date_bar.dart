@@ -181,7 +181,9 @@ class _DayDateBarPage extends StatelessWidget {
 class DayDateBar extends StatelessWidget {
   DayDateBar({Key? key}) : super(key: key);
 
-  final PageController _pageController = PageController(initialPage: 3);
+  static int initialPage = 11;
+  final PageController _pageController =
+      PageController(initialPage: initialPage);
 
   @override
   Widget build(BuildContext context) {
@@ -206,8 +208,8 @@ class DayDateBar extends StatelessWidget {
                   itemBuilder: (context, index) {
                     return _DayDateBarPage(
                       parentState: state,
-                      startDate: DateTimeUtils.getWeekStartDate(
-                          DateTime.now().add(Duration(days: (index - 3) * 7))),
+                      startDate: DateTimeUtils.getWeekStartDate(DateTime.now()
+                          .add(Duration(days: (index - initialPage) * 7))),
                     );
                   },
                   controller: _pageController,
