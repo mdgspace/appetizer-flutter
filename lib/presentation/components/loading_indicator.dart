@@ -6,7 +6,10 @@ class LoadingIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const CircularProgressIndicator(
-        valueColor: AlwaysStoppedAnimation<Color>(AppTheme.primary));
+    return const Padding(
+      padding: EdgeInsets.all(12.0),
+      child: CircularProgressIndicator(
+          valueColor: AlwaysStoppedAnimation<Color>(AppTheme.primary)),
+    );
   }
 }

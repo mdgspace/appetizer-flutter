@@ -26,6 +26,7 @@ class WeekMenuBlocBloc extends Bloc<WeekMenuBlocEvent, WeekMenuBlocState> {
     on<DateChangeEvent>(_onDateChangeEvent);
     on<MealLeaveEvent>(_onMealLeaveEvent);
     on<MealCouponEvent>(_onMealCouponEvent);
+    on<CheckoutEvent>(_onCheckout);
   }
 
   void _onDayChangeEvent(
@@ -111,20 +112,24 @@ class WeekMenuBlocBloc extends Bloc<WeekMenuBlocEvent, WeekMenuBlocState> {
   _onMealLeaveEvent(
       MealLeaveEvent event, Emitter<WeekMenuBlocState> emit) async {
     try {
-      late LeaveStatusEnum newLeaveStatus;
+      late LeaveStatusEnum newLeaveStatus = event.meal.leaveStatus.status;
+      late CouponStatus newCouponStatus = event.meal.couponStatus;
       if (event.meal.leaveStatus.status == LeaveStatusEnum.P) {
         try {
           await leaveRepository.cancelLeave(event.meal);
           newLeaveStatus = LeaveStatusEnum.N;
         } catch (e) {
-          newLeaveStatus = LeaveStatusEnum.P;
+          emit((state as WeekMenuBlocDisplayState)
+              .copyWith(error: 'Something went wrong!'));
         }
       } else {
         try {
           await leaveRepository.applyLeave(event.meal);
           newLeaveStatus = LeaveStatusEnum.P;
+          newCouponStatus = CouponStatus(status: CouponStatusEnum.N);
         } catch (e) {
-          newLeaveStatus = LeaveStatusEnum.N;
+          emit((state as WeekMenuBlocDisplayState)
+              .copyWith(error: 'Something went wrong!'));
         }
       }
       WeekMenu weekMenu = (state as WeekMenuBlocDisplayState).weekMenu;
@@ -135,6 +140,7 @@ class WeekMenuBlocBloc extends Bloc<WeekMenuBlocEvent, WeekMenuBlocState> {
         if (meal.id == event.meal.id) {
           weekMenu.dayMenus[dayNumber].meals[index] = meal.copyWith(
             leaveStatus: LeaveStatus(status: newLeaveStatus),
+            couponStatus: newCouponStatus,
           );
         }
       }
@@ -175,6 +181,21 @@ class WeekMenuBlocBloc extends Bloc<WeekMenuBlocEvent, WeekMenuBlocState> {
     } on Failure catch (e) {
       emit(WeekMenuErrorState(message: e.message));
     }
+  }
+
+  void _onCheckout(event, Emitter<WeekMenuBlocState> emit) {
+    if (state is WeekMenuBlocDisplayState) {
+      WeekMenu weekMenu = (state as WeekMenuBlocDisplayState).weekMenu;
+      for (DayMenu menu in weekMenu.dayMenus) {
+        for (Meal meal in menu.meals) {
+          if (!meal.isLeaveToggleOutdated) {
+            meal.couponStatus = CouponStatus(status: CouponStatusEnum.N);
+          }
+        }
+      }
+      emit((state as WeekMenuBlocDisplayState).copyWith(weekMenu: weekMenu));
+    }
+    emit(state);
   }
 
   int getDayNumber(WeekMenu weekMenu, int dayIndex) {
