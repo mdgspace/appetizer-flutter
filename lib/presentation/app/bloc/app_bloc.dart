@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:appetizer/data/constants/constants.dart';
 import 'package:appetizer/data/services/local/local_storage_service.dart';
 import 'package:appetizer/domain/models/user/user.dart';
