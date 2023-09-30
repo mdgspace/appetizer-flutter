@@ -34,6 +34,11 @@ class AuthInterceptor extends Interceptor {
     if (err.response?.statusCode == 401) {
       LocalStorageService.setValue(key: AppConstants.LOGGED_IN, value: false);
       LocalStorageService.setValue(key: AppConstants.AUTH_TOKEN, value: null);
+      if (BaseApp.currentContext != null) {
+        const snackBar =
+            SnackBar(content: Text('User is inactive or unauthorized!'));
+        ScaffoldMessenger.of(BaseApp.currentContext!).showSnackBar(snackBar);
+      }
       BaseApp.currentContext
           ?.read<AppBloc>()
           .add(const NavigateToLoginScreen());
