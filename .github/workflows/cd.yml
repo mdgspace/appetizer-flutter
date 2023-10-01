@@ -71,13 +71,21 @@ jobs:
       - run: echo "${FIREBASE_APP_ID}" | base64 --decode > ios/firebase_app_id_file.json
 
       # Build appbundle.
-      - name: 'Build dev appbundle'
+      - name: 'Build dev appbundle for android'
         if: "contains(github.event.release.tag_name, 'internal')"
-        run: flutter build appbundle --dart-define=SENTRY_DSN=${SENTRY_DSN}
+        run: shorebird release android -- --dart-define=SENTRY_DSN=${SENTRY_DSN}
 
-      - name: 'Build prod appbundle'
+      - name: 'Build dev appbundle for iOS'
+        if: "contains(github.event.release.tag_name, 'internal')"
+        run: shorebird release ios-alpha -- --dart-define=SENTRY_DSN=${SENTRY_DSN}
+
+      - name: 'Build prod appbundle for android'
         if: "!contains(github.event.release.tag_name, 'internal')"
-        run: flutter build appbundle --dart-define=SENTRY_DSN=${SENTRY_DSN} --dart-define=BASE_URL=${PROD_BASE_URL} --dart-define=OAUTH_REDIRECT_URI=${PROD_BASE_URL}/oauth/
+        run: shorebird release android -- --dart-define=SENTRY_DSN=${SENTRY_DSN} --dart-define=BASE_URL=${PROD_BASE_URL} --dart-define=OAUTH_REDIRECT_URI=${PROD_BASE_URL}/oauth/
+      
+      - name: 'Build prod appbundle for iOS'
+        if: "!contains(github.event.release.tag_name, 'internal')"
+        run: shorebird release ios-alpha -- --dart-define=SENTRY_DSN=${SENTRY_DSN} --dart-define=BASE_URL=${PROD_BASE_URL} --dart-define=OAUTH_REDIRECT_URI=${PROD_BASE_URL}/oauth/
 
       # Run fastlane internal
       - uses: maierj/fastlane-action@v1.4.0
