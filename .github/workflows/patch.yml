@@ -26,10 +26,6 @@ jobs:
             # Setup Shorebird environment for Code Push.
             - uses: shorebirdtech/setup-shorebird@v0
                 
-            - name: 🚀 Shorebird Patch
-              run: shorebird patch android
-              env:
-                SHOREBIRD_TOKEN: ${{ secrets.SHOREBIRD_TOKEN }}
             # Get flutter dependencies.
             - run: flutter pub get
       
@@ -47,4 +43,13 @@ jobs:
       
             # Build apk.
             - run: flutter build apk
+
+            # Adds patch release
+            - run: shorebird patch android
+              env:
+                SHOREBIRD_TOKEN: ${{ secrets.SHOREBIRD_TOKEN }}
+
+            - run: shorebird patch ios-alpha
+              env:
+                SHOREBIRD_TOKEN: ${{ secrets.SHOREBIRD_TOKEN }}
       
