@@ -3,9 +3,9 @@
 A new Flutter project for mess management.
 
 ## Screenshots
-![appetizer1](https://github.com/mdgspace/appetizer-flutter/assets/125895535/9871a663-d349-4f44-b6b0-fc5ed49c96a3 = 360x732.5)
-![appetizer2](https://github.com/mdgspace/appetizer-flutter/assets/125895535/46c96910-2107-4634-b672-68df2060b5c8 = 360x732.5)
-![appetizer 3 ](https://github.com/mdgspace/appetizer-flutter/assets/125895535/3f3ff461-94e1-4d14-bbe0-034408657ae6 = 360x732.5)
+![appetizer1](https://github.com/mdgspace/appetizer-flutter/assets/125895535/9871a663-d349-4f44-b6b0-fc5ed49c96a3)
+![appetizer2](https://github.com/mdgspace/appetizer-flutter/assets/125895535/46c96910-2107-4634-b672-68df2060b5c8)
+![appetizer 3 ](https://github.com/mdgspace/appetizer-flutter/assets/125895535/3f3ff461-94e1-4d14-bbe0-034408657ae6)
 
 
 ## Getting Started
