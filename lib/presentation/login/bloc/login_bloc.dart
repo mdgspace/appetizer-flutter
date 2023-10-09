@@ -19,25 +19,19 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     on<ForgotPasswordPressed>(_onForgotPasswordPressed);
     on<NewUserSignUp>(_onNewUserSignUp);
     on<CreatedPasswordNewUser>(_onCreatePasswordNewUser);
-    // on<ForgotPasswordPressed>((event, emit) {
-    //   emit(ForgotPasswordState(emailID: event.emailId));
-    // });
     on<SendPasswordResetInstructions>(_onSendPasswordResetInstructions);
     on<ToggleObscureCreatePassword>(_onToggleObscureCreatePassword);
     on<SetPassword>(_onSetPassword);
   }
 
   FutureOr<void> _onSendPasswordResetInstructions(event, emit) async {
-    //TODO: complete logic
     emit(Loading());
     try {
       await userRepository.sendResetPasswordLink(event.emailId);
-      //TODO: show dialog box that instructions have been sent
-      //TODO: route (if needed)
+      emit(const LoginInitial(error: "Reset Link sent to email!"));
     } catch (e) {
-      // TODO: show dialog box with error
+      emit(const LoginInitial(error: AppConstants.GENERIC_FAILURE));
     }
-    // for reference, see forgot_password_viewmodel.dart on master branch
   }
 
   FutureOr<void> _onCreatePasswordNewUser(event, emit) async {
