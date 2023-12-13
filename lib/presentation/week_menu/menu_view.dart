@@ -15,6 +15,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 @RoutePage()
 class WeekMenuScreen extends StatelessWidget {
   const WeekMenuScreen({super.key});
+  final _controller = PageController();
 
   @override
   Widget build(BuildContext context) {
@@ -68,9 +69,20 @@ class WeekMenuScreen extends StatelessWidget {
                 },
               ),
               Expanded(
-                child: (state.dayNumber != -1)
-                    ? DayMenuWidget(parentState: state)
-                    : const NoDataFoundContainer(title: 'Menu not available'),
+                child: PageView(
+                  scrollDirection: Axis.horizontal,
+                  controller: _controller,
+                  onPageChanged: (int index) {
+                  setState(() {
+                  pageChanged = index;
+                  DayDateBar._pageController.jumpToPage(index);
+                  });
+                  },
+                  children: [(state.dayNumber != -1)
+                  ? DayMenuWidget(parentState: state)
+                  : const NoDataFoundContainer(title: 'Menu not available'),
+                  ],
+                ),
               ),
             ]
           ],

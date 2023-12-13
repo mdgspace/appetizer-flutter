@@ -118,6 +118,9 @@ class _DayDateBarPage extends StatelessWidget {
     required this.startDate,
     required this.parentState,
   });
+  _DayDatePage({Key? key}) : super(key: key);
+
+  final PageController _pageController = PageController(initialPage: 3);
 
   final DateTime startDate;
   final DayDateBarState parentState;
@@ -182,7 +185,7 @@ class DayDateBar extends StatelessWidget {
   DayDateBar({Key? key}) : super(key: key);
 
   final PageController _pageController = PageController(initialPage: 3);
-
+  
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -220,3 +223,6 @@ class DayDateBar extends StatelessWidget {
     );
   }
 }
+
+
+// make two events --> one for day and date 
