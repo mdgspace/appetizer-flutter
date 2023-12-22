@@ -57,27 +57,45 @@ class ProfileScreen extends StatelessWidget {
                             child: ProfileCard(data: state.user),
                           ),
                           Container(
-                            padding: EdgeInsets.only(
-                                top: 24.toAutoScaledHeight,
-                                bottom: 24.toAutoScaledHeight),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
+                            padding: EdgeInsets.symmetric(
+                                vertical: 24.toAutoScaledHeight,),
+                            child: Column(
                               children: [
-                                ProfileTextButton(
-                                  title: 'Edit Profile',
-                                  onPressed: () {
-                                    const snackBar = SnackBar(
-                                      content: Text('Coming soon!'),
-                                      duration: Duration(milliseconds: 500),
-                                    );
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(snackBar);
-                                  },
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    ProfileTextButton(
+                                      title: 'Edit Profile',
+                                      onPressed: () {
+                                        const snackBar = SnackBar(
+                                          content: Text('Coming soon!'),
+                                          duration: Duration(milliseconds: 500),
+                                        );
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(snackBar);
+                                      },
+                                      horizontalPadding: 26,
+                                      width: 115,
+                                    ),
+                                    ProfileTextButton(
+                                      title: 'Reset Password',
+                                      onPressed: () {
+                                        const snackBar = SnackBar(
+                                          content: Text('Coming soon!'),
+                                          duration: Duration(milliseconds: 500),
+                                        );
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(snackBar);
+                                      },
+                                      horizontalPadding: 10,
+                                      width: 115,
+                                    ),
+                                  ],
                                 ),
-                                10.toHorizontalSizedBox,
+                                10.toVerticalSizedBox,
                                 ProfileTextButton(
-                                  title: 'Reset Password',
+                                  title: 'Request for Hostel Change',
                                   onPressed: () {
                                     const snackBar = SnackBar(
                                       content: Text('Coming soon!'),
@@ -86,6 +104,8 @@ class ProfileScreen extends StatelessWidget {
                                     ScaffoldMessenger.of(context)
                                         .showSnackBar(snackBar);
                                   },
+                                  horizontalPadding: 50,
+                                  width: 248,
                                 ),
                               ],
                             ),
