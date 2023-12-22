@@ -79,12 +79,7 @@ class ProfileScreen extends StatelessWidget {
                                 ProfileTextButton(
                                   title: 'Reset Password',
                                   onPressed: () {
-                                    const snackBar = SnackBar(
-                                      content: Text('Coming soon!'),
-                                      duration: Duration(milliseconds: 500),
-                                    );
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(snackBar);
+                                    context.router.push(ResetPasswordRoute());
                                   },
                                 ),
                               ],
