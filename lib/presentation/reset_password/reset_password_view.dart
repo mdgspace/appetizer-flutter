@@ -24,10 +24,7 @@ class ResetPasswordScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         body: BlocConsumer<ResetPasswordBloc, ResetPasswordState>(
           listener: (context, state) {
-            if (state is ResetPasswordInitial && state.error != null) {
-              _confirmPasswordController.clear();
-              _newPasswordController.clear();
-              _oldPasswordController.clear();
+            if (state is ResetPassword && state.error != null) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text(state.error!),
@@ -44,7 +41,7 @@ class ResetPasswordScreen extends StatelessWidget {
             }
           },
           builder: (context, state) {
-            if (state is ResetPasswordInitial) {
+            if (state is ResetPassword) {
               return Column(
                 children: [
                   const ResetPasswordBanner(),
@@ -65,7 +62,7 @@ class ResetPasswordScreen extends StatelessWidget {
                           20.toVerticalSizedBox,
                           TextField(
                             controller: _oldPasswordController,
-                            obscureText: true,
+                            obscureText: !state.showOldPassword,
                             decoration: InputDecoration(
                               hintText: 'Old Password',
                               hintStyle: GoogleFonts.lato(
@@ -81,6 +78,23 @@ class ResetPasswordScreen extends StatelessWidget {
                               ),
                               contentPadding: EdgeInsets.symmetric(
                                   horizontal: 20.toAutoScaledWidth),
+                              suffixIcon: IconButton(
+                                onPressed: () {
+                                  BlocProvider.of<ResetPasswordBloc>(context)
+                                      .add(
+                                    ToggleObscureResetPassword(
+                                        showOldPassword: !state.showOldPassword,
+                                        showNewPassword: state.showNewPassword,
+                                        showConfirmPassword:
+                                            state.showConfirmPassword),
+                                  );
+                                },
+                                icon: state.showOldPassword
+                                    ? const Icon(Icons.visibility,
+                                        color: Color(0xFF757575))
+                                    : const Icon(Icons.visibility_off,
+                                        color: Color(0xFF757575)),
+                              ),
                             ),
                           ),
                           20.toVerticalSizedBox,
@@ -94,7 +108,7 @@ class ResetPasswordScreen extends StatelessWidget {
                           20.toVerticalSizedBox,
                           TextField(
                             controller: _newPasswordController,
-                            obscureText: true,
+                            obscureText: !state.showNewPassword,
                             decoration: InputDecoration(
                               hintText: 'New Password',
                               hintStyle: GoogleFonts.lato(
@@ -110,6 +124,23 @@ class ResetPasswordScreen extends StatelessWidget {
                               ),
                               contentPadding: EdgeInsets.symmetric(
                                   horizontal: 20.toAutoScaledWidth),
+                              suffixIcon: IconButton(
+                                onPressed: () {
+                                  BlocProvider.of<ResetPasswordBloc>(context)
+                                      .add(
+                                    ToggleObscureResetPassword(
+                                        showNewPassword: !state.showNewPassword,
+                                        showOldPassword: state.showOldPassword,
+                                        showConfirmPassword:
+                                            state.showConfirmPassword),
+                                  );
+                                },
+                                icon: state.showNewPassword
+                                    ? const Icon(Icons.visibility,
+                                        color: Color(0xFF757575))
+                                    : const Icon(Icons.visibility_off,
+                                        color: Color(0xFF757575)),
+                              ),
                             ),
                           ),
                           20.toVerticalSizedBox,
@@ -123,7 +154,7 @@ class ResetPasswordScreen extends StatelessWidget {
                           20.toVerticalSizedBox,
                           TextField(
                             controller: _confirmPasswordController,
-                            obscureText: true,
+                            obscureText: !state.showConfirmPassword,
                             decoration: InputDecoration(
                               hintText: 'Confirm Password',
                               hintStyle: GoogleFonts.lato(
@@ -139,6 +170,23 @@ class ResetPasswordScreen extends StatelessWidget {
                               ),
                               contentPadding: EdgeInsets.symmetric(
                                   horizontal: 20.toAutoScaledWidth),
+                              suffixIcon: IconButton(
+                                onPressed: () {
+                                  BlocProvider.of<ResetPasswordBloc>(context)
+                                      .add(
+                                    ToggleObscureResetPassword(
+                                        showConfirmPassword:
+                                            !state.showConfirmPassword,
+                                        showOldPassword: state.showOldPassword,
+                                        showNewPassword: state.showNewPassword),
+                                  );
+                                },
+                                icon: state.showConfirmPassword
+                                    ? const Icon(Icons.visibility,
+                                        color: Color(0xFF757575))
+                                    : const Icon(Icons.visibility_off,
+                                        color: Color(0xFF757575)),
+                              ),
                             ),
                           ),
                           20.toVerticalSizedBox,
@@ -151,6 +199,7 @@ class ResetPasswordScreen extends StatelessWidget {
                                         _oldPasswordController.text,
                                         _newPasswordController.text,
                                         _confirmPasswordController.text));
+                                
                               },
                             ),
                           ),

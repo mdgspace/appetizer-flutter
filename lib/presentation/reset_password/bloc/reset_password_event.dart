@@ -20,3 +20,5 @@ class ToggleObscureResetPassword extends ResetPasswordEvent {
     required this.showConfirmPassword,
   });
 }
+
+

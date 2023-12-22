@@ -11,7 +11,11 @@ part 'reset_password_state.dart';
 class ResetPasswordBloc extends Bloc<ResetPasswordEvent, ResetPasswordState> {
   final UserRepository userRepository;
   ResetPasswordBloc({required this.userRepository})
-      : super(const ResetPasswordInitial()) {
+      : super(const ResetPassword(
+          showOldPassword: false,
+          showNewPassword: false,
+          showConfirmPassword: false,
+        )) {
     on<ResetPasswordPressed>(_onResetPasswordPressed);
     on<ToggleObscureResetPassword>(_onToggleObscureResetPassword);
   }
@@ -19,18 +23,36 @@ class ResetPasswordBloc extends Bloc<ResetPasswordEvent, ResetPasswordState> {
   FutureOr<void> _onResetPasswordPressed(event, emit) async {
     if (event.newPassword.length < 8) {
       emit(
-        const ResetPasswordInitial(
+        ResetPassword(
           error: 'Password must be at least 8 characters long',
+          showOldPassword: (state as ResetPassword).showOldPassword,
+          showNewPassword: (state as ResetPassword).showNewPassword,
+          showConfirmPassword: (state as ResetPassword).showConfirmPassword,
         ),
       );
+      emit(ResetPassword(
+        error: null,
+        showOldPassword: (state as ResetPassword).showOldPassword,
+        showNewPassword: (state as ResetPassword).showNewPassword,
+        showConfirmPassword: (state as ResetPassword).showConfirmPassword,
+      ));
       return;
     }
     if (event.newPassword != event.confirmPassword) {
       emit(
-        const ResetPasswordInitial(
+        ResetPassword(
           error: 'Passwords do not match',
+          showOldPassword: (state as ResetPassword).showOldPassword,
+          showNewPassword: (state as ResetPassword).showNewPassword,
+          showConfirmPassword: (state as ResetPassword).showConfirmPassword,
         ),
       );
+      emit(ResetPassword(
+        error: null,
+        showOldPassword: (state as ResetPassword).showOldPassword,
+        showNewPassword: (state as ResetPassword).showNewPassword,
+        showConfirmPassword: (state as ResetPassword).showConfirmPassword,
+      ));
       return;
     }
     emit(Loading());
@@ -41,7 +63,12 @@ class ResetPasswordBloc extends Bloc<ResetPasswordEvent, ResetPasswordState> {
       );
       emit(const ResetPasswordSuccess());
     } catch (e) {
-      emit(const ResetPasswordInitial(error: AppConstants.GENERIC_FAILURE));
+      emit(const ResetPassword(
+        error: AppConstants.GENERIC_FAILURE,
+        showOldPassword: false,
+        showNewPassword: false,
+        showConfirmPassword: false,
+      ));
     }
   }
 

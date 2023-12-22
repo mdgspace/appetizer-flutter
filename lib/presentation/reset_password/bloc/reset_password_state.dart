@@ -7,14 +7,6 @@ abstract class ResetPasswordState extends Equatable {
   List<Object?> get props => [];
 }
 
-class ResetPasswordInitial extends ResetPasswordState {
-  const ResetPasswordInitial({this.error});
-
-  final String? error;
-
-  @override
-  List<Object?> get props => [error];
-}
 
 class Loading extends ResetPasswordState {}
 
@@ -24,21 +16,24 @@ class ResetPasswordSuccess extends ResetPasswordState {
 
 class ResetPassword extends ResetPasswordState {
   const ResetPassword({
+    this.error,
     required this.showOldPassword,
     required this.showNewPassword,
     required this.showConfirmPassword,
   });
-
+  final String? error;
   final bool showOldPassword;
   final bool showNewPassword;
   final bool showConfirmPassword;
 
   ResetPassword copyWith({
+    String? error,
     bool? showOldPassword,
     bool? showNewPassword,
     bool? showConfirmPassword,
   }) {
     return ResetPassword(
+      error: error ?? this.error,
       showOldPassword: showOldPassword ?? this.showOldPassword,
       showNewPassword: showNewPassword ?? this.showNewPassword,
       showConfirmPassword: showConfirmPassword ?? this.showConfirmPassword,
@@ -47,5 +42,5 @@ class ResetPassword extends ResetPasswordState {
 
   @override
   List<Object?> get props =>
-      [showOldPassword, showNewPassword, showConfirmPassword];
+      [error, showOldPassword, showNewPassword, showConfirmPassword];
 }
