@@ -97,12 +97,8 @@ class ProfileScreen extends StatelessWidget {
                                 ProfileTextButton(
                                   title: 'Request for Hostel Change',
                                   onPressed: () {
-                                    const snackBar = SnackBar(
-                                      content: Text('Coming soon!'),
-                                      duration: Duration(milliseconds: 500),
-                                    );
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(snackBar);
+                                    context.router.push(
+                                        const HostelChangeRoute());
                                   },
                                   horizontalPadding: 50,
                                   width: 248,

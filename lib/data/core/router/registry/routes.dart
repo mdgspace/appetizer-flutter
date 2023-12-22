@@ -55,6 +55,10 @@ class AppRoutesRegistry {
           path: AppPathsRegistry.feedback,
           page: FeedbackRoute.page,
         ),
+        CustomRoute(
+          path: AppPathsRegistry.hostelChange,
+          page: HostelChangeRoute.page,
+        ),
       ],
     ),
   ];
