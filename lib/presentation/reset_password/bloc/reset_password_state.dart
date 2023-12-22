@@ -7,7 +7,6 @@ abstract class ResetPasswordState extends Equatable {
   List<Object?> get props => [];
 }
 
-
 class Loading extends ResetPasswordState {}
 
 class ResetPasswordSuccess extends ResetPasswordState {
