@@ -1,3 +1,4 @@
+import 'package:appetizer/data/core/router/intrinsic_router/intrinsic_router.gr.dart';
 import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
 import 'package:appetizer/domain/repositories/user/user_repository.dart';
 import 'package:appetizer/presentation/components/black_button.dart';
@@ -61,7 +62,7 @@ class HostelChangeScreen extends StatelessWidget {
                         backgroundColor: Colors.green,
                       ),
                     );
-                    context.router.pop();
+                    context.router.replace(const ProfileRoute());
                   }
                   if (state is HostelChangeInitial && state.error != null) {
                     ScaffoldMessenger.of(context).showSnackBar(

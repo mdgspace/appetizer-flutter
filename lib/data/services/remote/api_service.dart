@@ -189,4 +189,7 @@ abstract class ApiService {
 
   @GET(ApiEndpoints.hostelChange)
   Future getHostelChangeStatus();
+
+  @DELETE(ApiEndpoints.hostelChange)
+  Future deleteChangeHostel();
 }

@@ -157,7 +157,7 @@ class UserRepository {
 
   Future<void> postChangeHostel(String hostelCode) async {
     Map<String, dynamic> map = {
-      'new_hostel_id': hostelCode,
+      'new_hostel_code': hostelCode,
     };
     try {
       return await _apiService.postChangeHostel(map);
@@ -170,6 +170,15 @@ class UserRepository {
   Future<dynamic> getHostelChangeStatus() async {
     try {
       return await _apiService.getHostelChangeStatus();
+    } catch (e) {
+      debugPrint(e.toString());
+      throw Failure(AppConstants.GENERIC_FAILURE);
+    }
+  }
+
+  Future<dynamic> deleteChangeHostel() async {
+    try {
+      return await _apiService.deleteChangeHostel();
     } catch (e) {
       debugPrint(e.toString());
       throw Failure(AppConstants.GENERIC_FAILURE);

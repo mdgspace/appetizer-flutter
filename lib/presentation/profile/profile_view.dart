@@ -29,13 +29,15 @@ class ProfileScreen extends StatelessWidget {
           BlocBuilder<ProfilePageBloc, ProfilePageState>(
             builder: (context, state) {
               if (state is ProfilePageFetchedState) {
-                String hostelChangeStatus =
-                    state.hostelChangeStatus['is_approved_by_supervisor'] ==
-                                null ||
-                            state
-                                .hostelChangeStatus['is_approved_by_supervisor']
-                        ? 'Approved by Supervisor'
-                        : 'Pending';
+                String hostelChangeStatus = '';
+                if (state.hostelChangeStatus['is_approved_by_supervisor'] !=
+                    null) {
+                  hostelChangeStatus =
+                      state.hostelChangeStatus['is_approved_by_supervisor']
+                          ? 'Approved by Supervisor'
+                          : 'Pending';
+                }
+
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -102,53 +104,89 @@ class ProfileScreen extends StatelessWidget {
                                   ],
                                 ),
                                 10.toVerticalSizedBox,
-                                if (state.hostelChangeStatus['details'] !=
+                                if (state.hostelChangeStatus['detail'] !=
                                         null ||
                                     (state.hostelChangeStatus[
-                                        'is_approved_by_admin']))
+                                                'is_approved_by_admin'] !=
+                                            null &&
+                                        state.hostelChangeStatus[
+                                            'is_approved_by_admin']))
                                   ProfileTextButton(
                                     title: 'Request for Hostel Change',
                                     onPressed: () {
-                                      context.router.push(HostelChangeRoute());
+                                      context.router
+                                          .replace(HostelChangeRoute());
                                     },
                                     horizontalPadding: 50,
                                     width: 248,
                                   ),
-                                if (state.hostelChangeStatus['details'] == null)
-                                  Container(
-                                    width: 248.toAutoScaledWidth,
-                                    padding: EdgeInsets.symmetric(
-                                      vertical: 6.toAutoScaledHeight,
-                                      horizontal: 22.toAutoScaledWidth,
+                                if (state.hostelChangeStatus['detail'] == null)
+                                  TextButton(
+                                    onPressed: () => {
+                                      showDialog(
+                                          context: context,
+                                          builder: (ctx) => AlertDialog(
+                                                title: const Text(
+                                                    'Cancel Hostel Change Request'),
+                                                content: const Text(
+                                                  'You have already requested for a hostel change. Do you want to cancel it?',
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                                actions: [
+                                                  TextButton(
+                                                    onPressed: () {
+                                                      context
+                                                          .read<
+                                                              ProfilePageBloc>()
+                                                          .add(
+                                                              const DeleteHostelChangeRequest());
+                                                      Navigator.pop(ctx);
+                                                    },
+                                                    child: const Text('Delete'),
+                                                  ),
+                                                  TextButton(
+                                                    onPressed: () =>
+                                                        Navigator.pop(ctx),
+                                                    child: const Text('Cancel'),
+                                                  )
+                                                ],
+                                              ))
+                                    },
+                                    child: Container(
+                                      width: 248.toAutoScaledWidth,
+                                      padding: EdgeInsets.symmetric(
+                                        vertical: 6.toAutoScaledHeight,
+                                        horizontal: 22.toAutoScaledWidth,
+                                      ),
+                                      color: const Color(0xFFF6F6F6),
+                                      child: Column(children: [
+                                        Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: Text(
+                                            "Requested for hostel change to ${state.hostelChangeStatus['new_hostel']}",
+                                            style: TextStyle(
+                                              color: const Color(0xFF111111),
+                                              fontSize: 13.toAutoScaledFont,
+                                              fontFamily: 'Lato',
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                          ),
+                                        ),
+                                        Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: Text(
+                                            "Status: $hostelChangeStatus",
+                                            textAlign: TextAlign.justify,
+                                            style: TextStyle(
+                                              color: const Color(0xFF2F2F2F),
+                                              fontSize: 12.toAutoScaledFont,
+                                              fontFamily: 'Lato',
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                          ),
+                                        ),
+                                      ]),
                                     ),
-                                    color: const Color(0xFFF6F6F6),
-                                    child: Column(children: [
-                                      Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(
-                                          "Requested for hostel change to ${state.hostelChangeStatus['new_hostel']}",
-                                          style: TextStyle(
-                                            color: const Color(0xFF111111),
-                                            fontSize: 13.toAutoScaledFont,
-                                            fontFamily: 'Lato',
-                                            fontWeight: FontWeight.w400,
-                                          ),
-                                        ),
-                                      ),
-                                      Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(
-                                          "Status: $hostelChangeStatus",
-                                          textAlign: TextAlign.justify,
-                                          style: TextStyle(
-                                            color: const Color(0xFF2F2F2F),
-                                            fontSize: 12.toAutoScaledFont,
-                                            fontFamily: 'Lato',
-                                            fontWeight: FontWeight.w400,
-                                          ),
-                                        ),
-                                      ),
-                                    ]),
                                   )
                               ],
                             ),
