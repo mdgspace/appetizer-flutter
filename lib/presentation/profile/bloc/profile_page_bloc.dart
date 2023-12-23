@@ -16,8 +16,10 @@ class ProfilePageBloc extends Bloc<ProfilePageEvent, ProfilePageState> {
   void _onFetch(FetchProfile event, Emitter<ProfilePageState> emit) async {
     // TODO: implement event handler
     User user = await repo.getCurrentUser();
+    dynamic hostelChangeStatus = await repo.getHostelChangeStatus();
     emit(
-      ProfilePageFetchedState(user: user),
+      ProfilePageFetchedState(
+          user: user, hostelChangeStatus: hostelChangeStatus),
     );
   }
 }

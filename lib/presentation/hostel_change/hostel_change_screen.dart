@@ -11,11 +11,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 @RoutePage()
 class HostelChangeScreen extends StatelessWidget {
-  const HostelChangeScreen({super.key});
+  final TextEditingController _searchController = TextEditingController();
+  HostelChangeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController _searchController = TextEditingController();
     Map<String, String> hostelMap = {
       'ANK': 'A.N. Khosla House',
       'AW': 'Azad Wing',
@@ -71,9 +71,6 @@ class HostelChangeScreen extends StatelessWidget {
                       ),
                     );
                   }
-                  if (state is HostelQueryChanged) {
-                    print("UMMMMM " + state.query);
-                  }
                 },
                 builder: (BuildContext context, HostelChangeState state) {
                   if (state is Loading) {
@@ -128,7 +125,6 @@ class HostelChangeScreen extends StatelessWidget {
                                     BlocProvider.of<HostelChangeBloc>(context)
                                         .add(HostelSearchQueryChanged(
                                             query: value));
-                                    print(state);
                                   },
                                   decoration: InputDecoration(
                                       filled: true,
@@ -230,8 +226,11 @@ class HostelChangeScreen extends StatelessWidget {
                                 BlackButton(
                                   title: 'Submit',
                                   onTap: () {
-                                    int index = hostelMap.values.toList().indexOf(_searchController.text);
-                                    String hostelId = hostelMap.keys.elementAt(index);
+                                    int index = hostelMap.values
+                                        .toList()
+                                        .indexOf(_searchController.text);
+                                    String hostelId =
+                                        hostelMap.keys.elementAt(index);
                                     context.read<HostelChangeBloc>().add(
                                         HostelChangePressed(hostel: hostelId));
                                   },

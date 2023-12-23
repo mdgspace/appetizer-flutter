@@ -16,11 +16,13 @@ class ProfilePageInitialState extends ProfilePageState {
 
 class ProfilePageFetchedState extends ProfilePageState {
   const ProfilePageFetchedState({
+    required this.hostelChangeStatus,
     required this.user,
   });
 
   final User user;
+  final dynamic hostelChangeStatus;
 
   @override
-  List<Object> get props => [user];
+  List<Object> get props => [user, hostelChangeStatus];
 }

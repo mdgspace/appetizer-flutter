@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:appetizer/data/constants/constants.dart';
-import 'package:appetizer/domain/models/user/user.dart';
 import 'package:appetizer/domain/repositories/user/user_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -19,9 +18,6 @@ class HostelChangeBloc extends Bloc<HostelChangeEvent, HostelChangeState> {
   FutureOr<void> _onHostelChangePressed(
       HostelChangePressed event, Emitter<HostelChangeState> emit) async {
     emit(Loading());
-    User user = await repo.getCurrentUser();
-    int enrollmentNo = user.enrNo;
-    print(enrollmentNo);
     String hostel = event.hostel;
     try {
       await repo.postChangeHostel(hostel);
@@ -33,7 +29,7 @@ class HostelChangeBloc extends Bloc<HostelChangeEvent, HostelChangeState> {
 
   FutureOr<void> _onHostelSearchQueryChanged(
       HostelSearchQueryChanged event, Emitter<HostelChangeState> emit) async {
-    if (event.query == "" ) {
+    if (event.query == "") {
       emit(const HostelChangeInitial());
     } else {
       emit(Loading());

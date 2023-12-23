@@ -166,4 +166,13 @@ class UserRepository {
       throw Failure(AppConstants.GENERIC_FAILURE);
     }
   }
+
+  Future<dynamic> getHostelChangeStatus() async {
+    try {
+      return await _apiService.getHostelChangeStatus();
+    } catch (e) {
+      debugPrint(e.toString());
+      throw Failure(AppConstants.GENERIC_FAILURE);
+    }
+  }
 }

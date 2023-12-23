@@ -186,4 +186,7 @@ abstract class ApiService {
   Future<void> postChangeHostel(
     @Body() Map<String, dynamic> map,
   );
+
+  @GET(ApiEndpoints.hostelChange)
+  Future getHostelChangeStatus();
 }
