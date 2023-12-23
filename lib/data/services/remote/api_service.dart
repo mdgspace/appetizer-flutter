@@ -181,4 +181,9 @@ abstract class ApiService {
 
   @GET(ApiEndpoints.notifications)
   Future getNotifications();
+
+  @POST(ApiEndpoints.hostelChange)
+  Future<void> postChangeHostel(
+    @Body() Map<String, dynamic> map,
+  );
 }
