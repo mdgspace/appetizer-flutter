@@ -28,11 +28,20 @@ class LeaveRepository {
   }
 
   Future<PaginatedLeaves> getLeaves(int year, int month) async {
+
     try {
-      if (month == 0) return await _apiService.getLeavesForYear(year);
-      return await _apiService.getLeaves(year, month);
+      dynamic response;
+      if (month == 0) {
+        response = await _apiService.getLeavesForYear(year);
+      }else{
+
+      response = await _apiService.getLeaves(year, month);
+      }
+      print('response: $response');
+      return response;
     } catch (e) {
       // TODO: Handle error
+      print('error: $e');
       return const PaginatedLeaves(
         count: 0,
         hasNext: false,
