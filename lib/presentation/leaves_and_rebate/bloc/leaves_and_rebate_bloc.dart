@@ -30,7 +30,7 @@ class LeavesAndRebateBloc
     int remainingLeaves = await leaveRepository.remainingLeaves();
     PaginatedYearlyRebate initialYearlyRebates =
         await transactionRepository.getYearlyRebates(
-            DateTime(DateTime.now().year, DateTime.now().month - 1).year);       
+            DateTime(DateTime.now().year, DateTime.now().month - 1).year);
     emit(LeavesAndRebateState(
       remainingLeaves: remainingLeaves,
       mealsSkipped: maxLeaves - remainingLeaves,

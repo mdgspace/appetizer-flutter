@@ -28,14 +28,12 @@ class LeaveRepository {
   }
 
   Future<PaginatedLeaves> getLeaves(int year, int month) async {
-
     try {
       dynamic response;
       if (month == 0) {
         response = await _apiService.getLeavesForYear(year);
-      }else{
-
-      response = await _apiService.getLeaves(year, month);
+      } else {
+        response = await _apiService.getLeaves(year, month);
       }
       print('response: $response');
       return response;

@@ -204,8 +204,9 @@ class MealCard extends StatelessWidget {
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: svg.Svg(
-                  meal.type == MealType.S ? 'assets/images/meal_card/Lunch.svg':
-                  'assets/images/meal_card/${meal.title}.svg',
+                  meal.type == MealType.S
+                      ? 'assets/images/meal_card/Lunch.svg'
+                      : 'assets/images/meal_card/${meal.title}.svg',
                 ),
                 fit: BoxFit.fill,
               ),

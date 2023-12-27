@@ -11,14 +11,11 @@ class LeaveHistory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-
     //TODO: wrap with Shadow Container
     return ShadowContainer(
       width: 312.toAutoScaledWidth,
       offset: 2,
       child: ExpansionTile(
-
         expandedCrossAxisAlignment: CrossAxisAlignment.start,
         backgroundColor: AppTheme.white,
         title: const SizedBox.shrink(),
@@ -38,7 +35,9 @@ class LeaveHistory extends StatelessWidget {
                   children: [
                     Text(
                       // convert int to datetime
-                      DateTime.fromMillisecondsSinceEpoch(paginatedLeaves.results[0].startDatetime).year
+                      DateTime.fromMillisecondsSinceEpoch(
+                              paginatedLeaves.results[0].startDatetime)
+                          .year
                           .toString(),
                       style: AppTheme.headline2.copyWith(
                           fontSize: 14.toAutoScaledFont,
@@ -50,34 +49,37 @@ class LeaveHistory extends StatelessWidget {
                         padding: EdgeInsets.zero,
                         children: [
                           ...paginatedLeaves.results
-                        .map((leave) => Padding(
-                              padding: EdgeInsets.only(
-                                  bottom: 10.toAutoScaledHeight),
-                              child: Row(
-                                children: [
-                                  RichText(
-                                    text: TextSpan(
-                                        text: DateFormat('dd MMM -')
-                                            .format(DateTime.fromMillisecondsSinceEpoch(leave.startDatetime)),
-                                        style: AppTheme.bodyText1.copyWith(
-                                            height: 1.toAutoScaledHeight),
-                                        children: [
-                                          TextSpan(
-                                            text: leave.startMealType,
-                                            style: const TextStyle(
-                                                color: AppTheme.primary),
-                                          )
-                                        ]),
-                                  ),
-                                  // const Text("-"),
-                                ],
-                              ),
-                            ))
-                        .toList(),
+                              .map((leave) => Padding(
+                                    padding: EdgeInsets.only(
+                                        bottom: 10.toAutoScaledHeight),
+                                    child: Row(
+                                      children: [
+                                        RichText(
+                                          text: TextSpan(
+                                              text: DateFormat('dd MMM -')
+                                                  .format(DateTime
+                                                      .fromMillisecondsSinceEpoch(
+                                                          leave.startDatetime)),
+                                              style: AppTheme.bodyText1
+                                                  .copyWith(
+                                                      height:
+                                                          1.toAutoScaledHeight),
+                                              children: [
+                                                TextSpan(
+                                                  text: leave.startMealType,
+                                                  style: const TextStyle(
+                                                      color: AppTheme.primary),
+                                                )
+                                              ]),
+                                        ),
+                                        // const Text("-"),
+                                      ],
+                                    ),
+                                  ))
+                              .toList(),
                         ],
                       ),
                     ),
-                    
                   ]),
             )
         ],
