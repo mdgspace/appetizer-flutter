@@ -35,11 +35,9 @@ class LeaveRepository {
       } else {
         response = await _apiService.getLeaves(year, month);
       }
-      print('response: $response');
       return response;
     } catch (e) {
       // TODO: Handle error
-      print('error: $e');
       return const PaginatedLeaves(
         count: 0,
         hasNext: false,
