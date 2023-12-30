@@ -7,11 +7,11 @@ class Leave with _$Leave {
   @JsonSerializable(fieldRename: FieldRename.snake)
   const factory Leave({
     required int id,
-    required DateTime dateCreated,
+    required int dateCreated,
     required String startMealType,
     required String endMealType,
-    required DateTime startDatetime,
-    required DateTime endDatetime,
+    required int startDatetime,
+    required int endDatetime,
     required int mealCount,
     required String status,
   }) = _Leave;

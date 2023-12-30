@@ -204,7 +204,9 @@ class MealCard extends StatelessWidget {
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: svg.Svg(
-                  'assets/images/meal_card/${meal.title}.svg',
+                  meal.type == MealType.S
+                      ? 'assets/images/meal_card/Lunch.svg'
+                      : 'assets/images/meal_card/${meal.title}.svg',
                 ),
                 fit: BoxFit.fill,
               ),
@@ -283,20 +285,22 @@ class MealCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: 18.toAutoScaledHeight),
-              Container(
-                constraints: BoxConstraints(
-                  maxHeight: 100.toAutoScaledHeight,
-                  maxWidth: 180.toAutoScaledWidth,
-                ),
-                padding: EdgeInsets.only(left: 10.toAutoScaledWidth),
-                child: ListView.builder(
-                  itemCount: meal.items.length,
-                  shrinkWrap: true,
-                  padding: EdgeInsets.zero,
-                  itemBuilder: (context, index) {
-                    final item = meal.items[index];
-                    return Text("\u2022 ${item.name.titleCase}");
-                  },
+              SingleChildScrollView(
+                child: Container(
+                  constraints: BoxConstraints(
+                    maxHeight: 100.toAutoScaledHeight,
+                    maxWidth: 180.toAutoScaledWidth,
+                  ),
+                  padding: EdgeInsets.only(left: 10.toAutoScaledWidth),
+                  child: ListView.builder(
+                    itemCount: meal.items.length,
+                    shrinkWrap: true,
+                    padding: EdgeInsets.zero,
+                    itemBuilder: (context, index) {
+                      final item = meal.items[index];
+                      return Text("\u2022 ${item.name.titleCase}");
+                    },
+                  ),
                 ),
               ),
               const Spacer(),
