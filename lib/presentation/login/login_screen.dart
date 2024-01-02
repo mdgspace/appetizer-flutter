@@ -1,11 +1,13 @@
 import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
 import 'package:appetizer/presentation/app/bloc/app_bloc.dart';
+import 'package:appetizer/presentation/components/app_textfield.dart';
 import 'package:appetizer/presentation/components/loading_indicator.dart';
 import 'package:appetizer/presentation/components/made_by_mdg.dart';
 import 'package:appetizer/presentation/components/raise_query_button.dart';
 import 'package:appetizer/presentation/login/components/channeli_button.dart';
 import 'package:appetizer/presentation/login/components/login_button.dart';
 import 'package:appetizer/presentation/login/bloc/login_bloc.dart';
+import 'package:appetizer/presentation/login/components/login_textfield.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -100,79 +102,35 @@ class LoginScreen extends StatelessWidget {
                               ),
                             ),
                             20.toVerticalSizedBox,
-                            TextField(
-                              controller: _controller,
-                              obscureText: !state.showPassword,
-                              decoration: InputDecoration(
+                            AppTextField(
+                                controller: _controller,
                                 hintText: 'Create Password',
-                                hintStyle: GoogleFonts.lato(
-                                  fontSize: 12,
-                                  color: const Color(0xFF111111),
-                                  fontWeight: FontWeight.w600,
-                                ),
-                                border: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: const Color(0xFF111111)
-                                          .withOpacity(0.25)),
-                                  borderRadius: BorderRadius.circular(5),
-                                ),
-                                suffixIcon: IconButton(
-                                  onPressed: () {
-                                    BlocProvider.of<LoginBloc>(context).add(
-                                      ToggleObscureCreatePassword(
-                                        showPassword: !state.showPassword,
-                                        showConfirmPassword:
-                                            state.showConfirmPassword,
-                                      ),
-                                    );
-                                  },
-                                  icon: state.showPassword
-                                      ? const Icon(Icons.visibility,
-                                          color: Color(0xFF757575))
-                                      : const Icon(Icons.visibility_off,
-                                          color: Color(0xFF757575)),
-                                ),
-                                contentPadding: EdgeInsets.symmetric(
-                                    horizontal: 20.toAutoScaledWidth),
-                              ),
-                            ),
+                                obscureText: !state.showPassword,
+                                suffixIconOnPressed: () {
+                                  BlocProvider.of<LoginBloc>(context).add(
+                                    ToggleObscureCreatePassword(
+                                      showPassword: !state.showPassword,
+                                      showConfirmPassword:
+                                          state.showConfirmPassword,
+                                    ),
+                                  );
+                                },
+                                showSuffixIcon: state.showPassword),
                             10.toVerticalSizedBox,
-                            TextField(
-                              controller: _controller2,
-                              obscureText: !state.showConfirmPassword,
-                              decoration: InputDecoration(
+                            AppTextField(
+                                controller: _controller2,
                                 hintText: 'Confirm Password',
-                                hintStyle: GoogleFonts.lato(
-                                  fontSize: 12.toAutoScaledFont,
-                                  color: const Color(0xFF111111),
-                                  fontWeight: FontWeight.w600,
-                                ),
-                                border: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: const Color(0xFF111111)
-                                          .withOpacity(0.25)),
-                                  borderRadius: BorderRadius.circular(5),
-                                ),
-                                suffixIcon: IconButton(
-                                  onPressed: () {
-                                    BlocProvider.of<LoginBloc>(context).add(
-                                      ToggleObscureCreatePassword(
-                                        showPassword: state.showPassword,
-                                        showConfirmPassword:
-                                            !state.showConfirmPassword,
-                                      ),
-                                    );
-                                  },
-                                  icon: state.showConfirmPassword
-                                      ? const Icon(Icons.visibility,
-                                          color: Color(0xFF757575))
-                                      : const Icon(Icons.visibility_off,
-                                          color: Color(0xFF757575)),
-                                ),
-                                contentPadding:
-                                    const EdgeInsets.symmetric(horizontal: 20),
-                              ),
-                            ),
+                                obscureText: !state.showConfirmPassword,
+                                suffixIconOnPressed: () {
+                                  BlocProvider.of<LoginBloc>(context).add(
+                                    ToggleObscureCreatePassword(
+                                      showPassword: state.showPassword,
+                                      showConfirmPassword:
+                                          !state.showConfirmPassword,
+                                    ),
+                                  );
+                                },
+                                showSuffixIcon: state.showConfirmPassword),
                             SizedBox(
                               height: 30.toAutoScaledHeight,
                               child: Text(
@@ -216,44 +174,29 @@ class LoginScreen extends StatelessWidget {
                             ),
                           ),
                           20.toVerticalSizedBox,
-                          TextField(
+                          LoginTextField(
                             controller: _controller,
                             obscureText: state is EnterPassword
                                 ? !state.showPassword
                                 : false,
-                            decoration: InputDecoration(
-                              hintText: state is EnterPassword
-                                  ? "Password"
-                                  : state is ForgotPasswordState
-                                      ? "Email id"
-                                      : 'Enrollment No.',
-                              hintStyle: GoogleFonts.lato(
-                                fontSize: 12.toAutoScaledFont,
-                                color: const Color(0xFF111111),
-                                fontWeight: FontWeight.w600,
-                              ),
-                              suffixIcon: state is EnterPassword
-                                  ? IconButton(
-                                      onPressed: () {
-                                        BlocProvider.of<LoginBloc>(context).add(
-                                          ShowPasswordPressed(),
-                                        );
-                                      },
-                                      icon: state.showPassword
-                                          ? const Icon(Icons.visibility,
-                                              color: Color(0xFF757575))
-                                          : const Icon(Icons.visibility_off,
-                                              color: Color(0xFF757575)))
-                                  : null,
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: const Color(0xFF111111)
-                                        .withOpacity(0.25)),
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              contentPadding: EdgeInsets.symmetric(
-                                  horizontal: 20.toAutoScaledWidth),
-                            ),
+                            hintText: state is EnterPassword
+                                ? "Password"
+                                : state is ForgotPasswordState
+                                    ? "Email id"
+                                    : 'Enrollment No.',
+                            suffixIcon: state is EnterPassword
+                                ? IconButton(
+                                    onPressed: () {
+                                      BlocProvider.of<LoginBloc>(context).add(
+                                        ShowPasswordPressed(),
+                                      );
+                                    },
+                                    icon: state.showPassword
+                                        ? const Icon(Icons.visibility,
+                                            color: Color(0xFF757575))
+                                        : const Icon(Icons.visibility_off,
+                                            color: Color(0xFF757575)))
+                                : null,
                           ),
                           state is EnterPassword
                               ? SizedBox(

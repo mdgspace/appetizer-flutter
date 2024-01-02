@@ -1,4 +1,5 @@
 import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
+import 'package:appetizer/presentation/components/app_textfield.dart';
 import 'package:appetizer/presentation/components/loading_indicator.dart';
 import 'package:appetizer/presentation/login/components/login_button.dart';
 import 'package:appetizer/presentation/reset_password/bloc/reset_password_bloc.dart';
@@ -60,43 +61,20 @@ class ResetPasswordScreen extends StatelessWidget {
                             ),
                           ),
                           20.toVerticalSizedBox,
-                          TextField(
-                            controller: _oldPasswordController,
-                            obscureText: !state.showOldPassword,
-                            decoration: InputDecoration(
+                          AppTextField(
+                              controller: _oldPasswordController,
                               hintText: 'Old Password',
-                              hintStyle: GoogleFonts.lato(
-                                fontSize: 12.toAutoScaledFont,
-                                color: const Color(0xFF111111),
-                                fontWeight: FontWeight.w600,
-                              ),
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: const Color(0xFF111111)
-                                        .withOpacity(0.25)),
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              contentPadding: EdgeInsets.symmetric(
-                                  horizontal: 20.toAutoScaledWidth),
-                              suffixIcon: IconButton(
-                                onPressed: () {
-                                  BlocProvider.of<ResetPasswordBloc>(context)
-                                      .add(
-                                    ToggleObscureResetPassword(
-                                        showOldPassword: !state.showOldPassword,
-                                        showNewPassword: state.showNewPassword,
-                                        showConfirmPassword:
-                                            state.showConfirmPassword),
-                                  );
-                                },
-                                icon: state.showOldPassword
-                                    ? const Icon(Icons.visibility,
-                                        color: Color(0xFF757575))
-                                    : const Icon(Icons.visibility_off,
-                                        color: Color(0xFF757575)),
-                              ),
-                            ),
-                          ),
+                              obscureText: !state.showOldPassword,
+                              suffixIconOnPressed: () {
+                                BlocProvider.of<ResetPasswordBloc>(context).add(
+                                  ToggleObscureResetPassword(
+                                      showOldPassword: !state.showOldPassword,
+                                      showNewPassword: state.showNewPassword,
+                                      showConfirmPassword:
+                                          state.showConfirmPassword),
+                                );
+                              },
+                              showSuffixIcon: state.showOldPassword),
                           20.toVerticalSizedBox,
                           Text(
                             'Enter your new password',
@@ -106,43 +84,20 @@ class ResetPasswordScreen extends StatelessWidget {
                             ),
                           ),
                           20.toVerticalSizedBox,
-                          TextField(
-                            controller: _newPasswordController,
-                            obscureText: !state.showNewPassword,
-                            decoration: InputDecoration(
+                          AppTextField(
+                              controller: _newPasswordController,
                               hintText: 'New Password',
-                              hintStyle: GoogleFonts.lato(
-                                fontSize: 12.toAutoScaledFont,
-                                color: const Color(0xFF111111),
-                                fontWeight: FontWeight.w600,
-                              ),
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: const Color(0xFF111111)
-                                        .withOpacity(0.25)),
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              contentPadding: EdgeInsets.symmetric(
-                                  horizontal: 20.toAutoScaledWidth),
-                              suffixIcon: IconButton(
-                                onPressed: () {
-                                  BlocProvider.of<ResetPasswordBloc>(context)
-                                      .add(
-                                    ToggleObscureResetPassword(
-                                        showNewPassword: !state.showNewPassword,
-                                        showOldPassword: state.showOldPassword,
-                                        showConfirmPassword:
-                                            state.showConfirmPassword),
-                                  );
-                                },
-                                icon: state.showNewPassword
-                                    ? const Icon(Icons.visibility,
-                                        color: Color(0xFF757575))
-                                    : const Icon(Icons.visibility_off,
-                                        color: Color(0xFF757575)),
-                              ),
-                            ),
-                          ),
+                              obscureText: !state.showNewPassword,
+                              suffixIconOnPressed: () {
+                                BlocProvider.of<ResetPasswordBloc>(context).add(
+                                  ToggleObscureResetPassword(
+                                      showNewPassword: !state.showNewPassword,
+                                      showOldPassword: state.showOldPassword,
+                                      showConfirmPassword:
+                                          state.showConfirmPassword),
+                                );
+                              },
+                              showSuffixIcon: state.showNewPassword),
                           20.toVerticalSizedBox,
                           Text(
                             'Confirm your new password',
@@ -152,43 +107,20 @@ class ResetPasswordScreen extends StatelessWidget {
                             ),
                           ),
                           20.toVerticalSizedBox,
-                          TextField(
-                            controller: _confirmPasswordController,
-                            obscureText: !state.showConfirmPassword,
-                            decoration: InputDecoration(
+                          AppTextField(
+                              controller: _confirmPasswordController,
                               hintText: 'Confirm Password',
-                              hintStyle: GoogleFonts.lato(
-                                fontSize: 12.toAutoScaledFont,
-                                color: const Color(0xFF111111),
-                                fontWeight: FontWeight.w600,
-                              ),
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: const Color(0xFF111111)
-                                        .withOpacity(0.25)),
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              contentPadding: EdgeInsets.symmetric(
-                                  horizontal: 20.toAutoScaledWidth),
-                              suffixIcon: IconButton(
-                                onPressed: () {
-                                  BlocProvider.of<ResetPasswordBloc>(context)
-                                      .add(
-                                    ToggleObscureResetPassword(
-                                        showConfirmPassword:
-                                            !state.showConfirmPassword,
-                                        showOldPassword: state.showOldPassword,
-                                        showNewPassword: state.showNewPassword),
-                                  );
-                                },
-                                icon: state.showConfirmPassword
-                                    ? const Icon(Icons.visibility,
-                                        color: Color(0xFF757575))
-                                    : const Icon(Icons.visibility_off,
-                                        color: Color(0xFF757575)),
-                              ),
-                            ),
-                          ),
+                              obscureText: !state.showConfirmPassword,
+                              suffixIconOnPressed: () {
+                                BlocProvider.of<ResetPasswordBloc>(context).add(
+                                  ToggleObscureResetPassword(
+                                      showConfirmPassword:
+                                          !state.showConfirmPassword,
+                                      showOldPassword: state.showOldPassword,
+                                      showNewPassword: state.showNewPassword),
+                                );
+                              },
+                              showSuffixIcon: state.showConfirmPassword),
                           20.toVerticalSizedBox,
                           Center(
                             child: LoginButton(
