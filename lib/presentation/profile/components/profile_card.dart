@@ -7,8 +7,8 @@ class Fields extends StatelessWidget {
   const Fields({
     required this.title,
     required this.data,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final String title;
   final String data;
@@ -41,10 +41,7 @@ class Fields extends StatelessWidget {
 }
 
 class ProfileCard extends StatelessWidget {
-  const ProfileCard({
-    required this.data,
-    Key? key,
-  }) : super(key: key);
+  const ProfileCard({required this.data, super.key});
 
   final User data;
 

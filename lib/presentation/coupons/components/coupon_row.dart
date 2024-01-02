@@ -4,10 +4,7 @@ import 'package:appetizer/presentation/coupons/components/coupon_card.dart';
 import 'package:flutter/material.dart';
 
 class CouponRow extends StatelessWidget {
-  const CouponRow({
-    required this.coupons,
-    Key? key,
-  }) : super(key: key);
+  const CouponRow({required this.coupons, super.key});
 
   final List<Coupon> coupons;
 

@@ -179,7 +179,7 @@ class _DayDateBarPage extends StatelessWidget {
 }
 
 class DayDateBar extends StatelessWidget {
-  DayDateBar({Key? key}) : super(key: key);
+  DayDateBar({super.key});
 
   static int initialPage = 11;
   final PageController _pageController =

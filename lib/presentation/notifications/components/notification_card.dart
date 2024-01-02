@@ -4,10 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:appetizer/domain/models/user/notification.dart' as notification;
 
 class NotificationCard extends StatelessWidget {
-  const NotificationCard({
-    required this.data,
-    Key? key,
-  }) : super(key: key);
+  const NotificationCard({required this.data, super.key});
 
   final notification.Notification data;
 
