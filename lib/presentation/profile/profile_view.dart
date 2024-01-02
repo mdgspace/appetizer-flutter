@@ -29,7 +29,6 @@ class ProfileScreen extends StatelessWidget {
           BlocBuilder<ProfilePageBloc, ProfilePageState>(
             builder: (context, state) {
               if (state is ProfilePageFetchedState) {
-
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -98,16 +97,14 @@ class ProfileScreen extends StatelessWidget {
                                 10.toVerticalSizedBox,
                                 if (state.hostelChangeStatus['detail'] !=
                                         null ||
-                                    (state.hostelChangeStatus[
-                                                'is_approved'] !=
+                                    (state.hostelChangeStatus['is_approved'] !=
                                             null &&
-                                        state.hostelChangeStatus[
-                                            'is_approved']))
+                                        state
+                                            .hostelChangeStatus['is_approved']))
                                   ProfileTextButton(
                                     title: 'Request for Hostel Change',
                                     onPressed: () {
-                                      context.router
-                                          .push(HostelChangeRoute());
+                                      context.router.push(HostelChangeRoute());
                                     },
                                     horizontalPadding: 50,
                                     width: 248,

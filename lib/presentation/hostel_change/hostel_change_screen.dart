@@ -59,7 +59,8 @@ class HostelChangeScreen extends StatelessWidget {
                       backgroundColor: Colors.green,
                     ),
                   );
-                  context.router.pushAndPopUntil(const ProfileRoute(), predicate: ModalRoute.withName(ProfileRoute.name));
+                  context.router.pushAndPopUntil(const ProfileRoute(),
+                      predicate: ModalRoute.withName(ProfileRoute.name));
                 }
                 if (state is HostelChangeInitial && state.error != null) {
                   ScaffoldMessenger.of(context).showSnackBar(
