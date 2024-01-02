@@ -19,8 +19,18 @@ class HostelChangeBloc extends Bloc<HostelChangeEvent, HostelChangeState> {
       HostelChangePressed event, Emitter<HostelChangeState> emit) async {
     emit(Loading());
     String hostel = event.hostel;
+    String roomNo = event.roomNo;
+    if (hostel == "") {
+      emit(const HostelChangeInitial(error: "Please select a hostel"));
+      return;
+    }
+    if (roomNo == "") {
+      emit(const HostelChangeInitial(error: "Please enter a room number"));
+      if (hostel != "") emit(HostelQueryChanged(query: hostel));
+      return;
+    }
     try {
-      await repo.postChangeHostel(hostel);
+      await repo.postChangeHostel(hostel, roomNo);
       emit(HostelChangeSuccess());
     } catch (e) {
       emit(const HostelChangeInitial(error: AppConstants.GENERIC_FAILURE));

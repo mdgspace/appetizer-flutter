@@ -29,14 +29,6 @@ class ProfileScreen extends StatelessWidget {
           BlocBuilder<ProfilePageBloc, ProfilePageState>(
             builder: (context, state) {
               if (state is ProfilePageFetchedState) {
-                String hostelChangeStatus = '';
-                if (state.hostelChangeStatus['is_approved_by_supervisor'] !=
-                    null) {
-                  hostelChangeStatus =
-                      state.hostelChangeStatus['is_approved_by_supervisor']
-                          ? 'Approved by Supervisor'
-                          : 'Pending';
-                }
 
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -107,15 +99,15 @@ class ProfileScreen extends StatelessWidget {
                                 if (state.hostelChangeStatus['detail'] !=
                                         null ||
                                     (state.hostelChangeStatus[
-                                                'is_approved_by_admin'] !=
+                                                'is_approved'] !=
                                             null &&
                                         state.hostelChangeStatus[
-                                            'is_approved_by_admin']))
+                                            'is_approved']))
                                   ProfileTextButton(
                                     title: 'Request for Hostel Change',
                                     onPressed: () {
                                       context.router
-                                          .replace(HostelChangeRoute());
+                                          .push(HostelChangeRoute());
                                     },
                                     horizontalPadding: 50,
                                     width: 248,
@@ -163,7 +155,7 @@ class ProfileScreen extends StatelessWidget {
                                         Align(
                                           alignment: Alignment.centerLeft,
                                           child: Text(
-                                            "Requested for hostel change to ${state.hostelChangeStatus['new_hostel']}",
+                                            "Requested for hostel change to ${state.hostelChangeStatus['hostel_code']}",
                                             style: TextStyle(
                                               color: const Color(0xFF111111),
                                               fontSize: 13.toAutoScaledFont,
@@ -175,7 +167,20 @@ class ProfileScreen extends StatelessWidget {
                                         Align(
                                           alignment: Alignment.centerLeft,
                                           child: Text(
-                                            "Status: $hostelChangeStatus",
+                                            "New Room No: ${state.hostelChangeStatus['new_room_no']}",
+                                            textAlign: TextAlign.justify,
+                                            style: TextStyle(
+                                              color: const Color(0xFF2F2F2F),
+                                              fontSize: 12.toAutoScaledFont,
+                                              fontFamily: 'Lato',
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                          ),
+                                        ),
+                                        Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: Text(
+                                            "Status: Pending",
                                             textAlign: TextAlign.justify,
                                             style: TextStyle(
                                               color: const Color(0xFF2F2F2F),

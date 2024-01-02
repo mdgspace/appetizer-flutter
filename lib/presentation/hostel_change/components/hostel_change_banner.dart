@@ -1,5 +1,4 @@
 import 'package:appetizer/app_theme.dart';
-import 'package:appetizer/data/core/router/intrinsic_router/intrinsic_router.gr.dart';
 import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
 import 'package:appetizer/presentation/components/app_banner.dart';
 import 'package:auto_route/auto_route.dart';
@@ -15,7 +14,7 @@ class HostelChangeBanner extends StatelessWidget {
       child: Row(
         children: [
           IconButton(
-            onPressed: () => context.router.replace(const ProfileRoute()),
+            onPressed: () => context.router.pop(),
             icon: const Icon(
               Icons.arrow_back,
               color: Colors.white,

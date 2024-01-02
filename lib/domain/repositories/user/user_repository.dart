@@ -155,9 +155,10 @@ class UserRepository {
     }
   }
 
-  Future<void> postChangeHostel(String hostelCode) async {
+  Future<void> postChangeHostel(String hostelCode, String roomNo) async {
     Map<String, dynamic> map = {
       'new_hostel_code': hostelCode,
+      'new_room_no': roomNo
     };
     try {
       return await _apiService.postChangeHostel(map);

@@ -4,8 +4,10 @@ abstract class HostelChangeEvent {}
 
 class HostelChangePressed extends HostelChangeEvent {
   final String hostel;
+  final String roomNo;
   HostelChangePressed({
     required this.hostel,
+    required this.roomNo,
   });
 }
 
