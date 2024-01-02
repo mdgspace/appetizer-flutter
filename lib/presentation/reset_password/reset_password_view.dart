@@ -2,7 +2,7 @@ import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
 import 'package:appetizer/presentation/components/loading_indicator.dart';
 import 'package:appetizer/presentation/login/components/login_button.dart';
 import 'package:appetizer/presentation/reset_password/bloc/reset_password_bloc.dart';
-import 'package:appetizer/presentation/reset_password/components/ResetPasswordTile/reset_password_banner.dart';
+import 'package:appetizer/presentation/reset_password/components/reset_password_banner.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
