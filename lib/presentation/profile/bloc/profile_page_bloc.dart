@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:appetizer/domain/models/hostel_change_request/hostel_change_request.dart';
 import 'package:appetizer/domain/models/user/user.dart';
 import 'package:appetizer/domain/repositories/user/user_repository.dart';
 import 'package:bloc/bloc.dart';
@@ -20,15 +21,27 @@ class ProfilePageBloc extends Bloc<ProfilePageEvent, ProfilePageState> {
     // TODO: implement event handler
     User user = await repo.getCurrentUser();
     try {
-      dynamic hostelChangeStatus = await repo.getHostelChangeStatus();
+      HostelChangeRequest hostelChangeStatus =
+          await repo.getHostelChangeStatus();
       emit(
         ProfilePageFetchedState(
-            user: user, hostelChangeStatus: hostelChangeStatus),
+          user: user,
+          hostelChangeStatus: hostelChangeStatus,
+        ),
       );
     } catch (e) {
       emit(
         ProfilePageFetchedState(
-            user: user, hostelChangeStatus: const {'detail': 'No Request'}),
+          user: user,
+          hostelChangeStatus: const HostelChangeRequest(
+              user: 0,
+              id: 0,
+              hostelCode: "",
+              newRoomNo: "",
+              timestamp: "",
+              newHostel: 0,
+              isApproved: null),
+        ),
       );
     }
   }
@@ -37,10 +50,19 @@ class ProfilePageBloc extends Bloc<ProfilePageEvent, ProfilePageState> {
       DeleteHostelChangeRequest event, Emitter<ProfilePageState> emit) async {
     emit(const ProfilePageInitialState());
     User user = await repo.getCurrentUser();
-    dynamic hostelChangeStatus = await repo.deleteChangeHostel();
+    await repo.deleteChangeHostel();
     emit(
       ProfilePageFetchedState(
-          user: user, hostelChangeStatus: hostelChangeStatus),
+        user: user,
+        hostelChangeStatus: const HostelChangeRequest(
+            user: 0,
+            id: 0,
+            hostelCode: "",
+            newRoomNo: "",
+            timestamp: "",
+            newHostel: 0,
+            isApproved: null),
+      ),
     );
   }
 }

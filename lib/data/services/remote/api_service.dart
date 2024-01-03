@@ -3,6 +3,7 @@ import 'package:appetizer/domain/models/appetizer_version.dart';
 import 'package:appetizer/domain/models/coupon/coupon.dart';
 import 'package:appetizer/domain/models/feedback/appetizer_feedback.dart';
 import 'package:appetizer/domain/models/feedback/feedback_response.dart';
+import 'package:appetizer/domain/models/hostel_change_request/hostel_change_request.dart';
 import 'package:appetizer/domain/models/leaves/paginated_leaves.dart';
 import 'package:appetizer/domain/models/menu/week_menu_tmp.dart';
 import 'package:appetizer/domain/models/transaction/faq.dart';
@@ -188,7 +189,7 @@ abstract class ApiService {
   );
 
   @GET(ApiEndpoints.hostelChange)
-  Future getHostelChangeStatus();
+  Future<HostelChangeRequest> getHostelChangeStatus();
 
   @DELETE(ApiEndpoints.hostelChange)
   Future deleteChangeHostel();

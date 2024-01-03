@@ -95,12 +95,7 @@ class ProfileScreen extends StatelessWidget {
                                   ],
                                 ),
                                 10.toVerticalSizedBox,
-                                if (state.hostelChangeStatus['detail'] !=
-                                        null ||
-                                    (state.hostelChangeStatus['is_approved'] !=
-                                            null &&
-                                        state
-                                            .hostelChangeStatus['is_approved']))
+                                if (state.hostelChangeStatus.isApproved == null)
                                   ProfileTextButton(
                                     title: 'Request for Hostel Change',
                                     onPressed: () {
@@ -109,7 +104,7 @@ class ProfileScreen extends StatelessWidget {
                                     horizontalPadding: 50,
                                     width: 248,
                                   ),
-                                if (state.hostelChangeStatus['detail'] == null)
+                                if (state.hostelChangeStatus.isApproved != null)
                                   TextButton(
                                     onPressed: () => {
                                       showDialog(
@@ -152,7 +147,7 @@ class ProfileScreen extends StatelessWidget {
                                         Align(
                                           alignment: Alignment.centerLeft,
                                           child: Text(
-                                            "Requested for hostel change to ${state.hostelChangeStatus['hostel_code']}",
+                                            "Requested for hostel change to ${state.hostelChangeStatus.hostelCode}",
                                             style: TextStyle(
                                               color: const Color(0xFF111111),
                                               fontSize: 13.toAutoScaledFont,
@@ -164,7 +159,7 @@ class ProfileScreen extends StatelessWidget {
                                         Align(
                                           alignment: Alignment.centerLeft,
                                           child: Text(
-                                            "New Room No: ${state.hostelChangeStatus['new_room_no']}",
+                                            "New Room No: ${state.hostelChangeStatus.newRoomNo}",
                                             textAlign: TextAlign.justify,
                                             style: TextStyle(
                                               color: const Color(0xFF2F2F2F),
@@ -244,7 +239,6 @@ class ProfileScreen extends StatelessWidget {
                   ],
                 );
               }
-
               return SizedBox(
                 height: 200.toAutoScaledHeight,
                 child: const Align(
