@@ -118,13 +118,13 @@ class LoginScreen extends StatelessWidget {
                                 ),
                                 suffixIcon: IconButton(
                                   onPressed: () {
-                                    BlocProvider.of<LoginBloc>(context).add(
-                                      ToggleObscureCreatePassword(
-                                        showPassword: !state.showPassword,
-                                        showConfirmPassword:
-                                            state.showConfirmPassword,
-                                      ),
-                                    );
+                                    context.read<LoginBloc>().add(
+                                          ToggleObscureCreatePassword(
+                                            showPassword: !state.showPassword,
+                                            showConfirmPassword:
+                                                state.showConfirmPassword,
+                                          ),
+                                        );
                                   },
                                   icon: state.showPassword
                                       ? const Icon(Icons.visibility,
@@ -155,13 +155,13 @@ class LoginScreen extends StatelessWidget {
                                 ),
                                 suffixIcon: IconButton(
                                   onPressed: () {
-                                    BlocProvider.of<LoginBloc>(context).add(
-                                      ToggleObscureCreatePassword(
-                                        showPassword: state.showPassword,
-                                        showConfirmPassword:
-                                            !state.showConfirmPassword,
-                                      ),
-                                    );
+                                    context.read<LoginBloc>().add(
+                                          ToggleObscureCreatePassword(
+                                            showPassword: state.showPassword,
+                                            showConfirmPassword:
+                                                !state.showConfirmPassword,
+                                          ),
+                                        );
                                   },
                                   icon: state.showConfirmPassword
                                       ? const Icon(Icons.visibility,
@@ -235,9 +235,9 @@ class LoginScreen extends StatelessWidget {
                               suffixIcon: state is EnterPassword
                                   ? IconButton(
                                       onPressed: () {
-                                        BlocProvider.of<LoginBloc>(context).add(
-                                          ShowPasswordPressed(),
-                                        );
+                                        context.read<LoginBloc>().add(
+                                              ShowPasswordPressed(),
+                                            );
                                       },
                                       icon: state.showPassword
                                           ? const Icon(Icons.visibility,

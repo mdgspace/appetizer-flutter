@@ -121,9 +121,8 @@ class HostelChangeScreen extends StatelessWidget {
                               TextField(
                                 controller: _searchController,
                                 onChanged: (value) {
-                                  BlocProvider.of<HostelChangeBloc>(context)
-                                      .add(HostelSearchQueryChanged(
-                                          query: value));
+                                  context.read<HostelChangeBloc>().add(
+                                      HostelSearchQueryChanged(query: value));
                                 },
                                 decoration: InputDecoration(
                                     filled: true,
@@ -167,9 +166,8 @@ class HostelChangeScreen extends StatelessWidget {
                                       onTap: () {
                                         _searchController.text =
                                             hostelMap.values.elementAt(index);
-                                        BlocProvider.of<HostelChangeBloc>(
-                                                context)
-                                            .add(HostelSearchQueryChanged(
+                                        context.read<HostelChangeBloc>().add(
+                                            HostelSearchQueryChanged(
                                                 query: hostelMap.values
                                                     .elementAt(index)));
                                       },
@@ -206,8 +204,8 @@ class HostelChangeScreen extends StatelessWidget {
                                             _searchController.text = hostelMap
                                                 .values
                                                 .elementAt(index);
-                                            BlocProvider.of<HostelChangeBloc>(
-                                                    context)
+                                            context
+                                                .read<HostelChangeBloc>()
                                                 .add(HostelSearchQueryChanged(
                                                     query: hostelMap.values
                                                         .elementAt(index)));
