@@ -59,6 +59,14 @@ class WeekMenuScreen extends StatelessWidget {
                           context
                               .read<AppBloc>()
                               .add(const ToggleCheckOutStatusEvent());
+                          final bool isCheckout =
+                              context.read<AppBloc>().state.user!.isCheckedOut;
+                          // Triggers when clicked on check-in button to avoid false triggers on failed checkouts
+                          if (isCheckout) {
+                            context
+                                .read<WeekMenuBlocBloc>()
+                                .add(const CheckoutEvent());
+                          }
                         },
                         child:
                             const RoundEdgeTextOnlyContainer(text: "CHECK IN"),

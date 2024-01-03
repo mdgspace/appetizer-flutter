@@ -12,6 +12,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart' as svg;
 import 'package:fswitch_nullsafety/fswitch_nullsafety.dart';
 import 'package:intl/intl.dart';
+import 'package:appetizer/utils/recase.dart';
 import 'dart:math';
 
 bool _isMealValidForCoupon(Meal meal) {
@@ -112,6 +113,67 @@ class CouponDialogBox extends StatelessWidget {
   }
 }
 
+class FeedbackOrCouponButton extends StatelessWidget {
+  const FeedbackOrCouponButton({
+    required this.meal,
+    super.key,
+  });
+  final Meal meal;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocSelector<AppBloc, AppState, bool>(
+      selector: (state) => state.user!.isCheckedOut,
+      builder: (context, isCheckout) {
+        if (meal.isOutdated) {
+          return GestureDetector(
+            onTap: () {
+              context.router.navigate(FeedbackRoute());
+            },
+            child: const FeedbackAndCouponWidget(taken: false, coupon: false),
+          );
+        } else if (isCheckout || meal.leaveStatus.status == LeaveStatusEnum.P) {
+          return const SizedBox.shrink();
+        } else if (_isMealValidForCoupon(meal)) {
+          return GestureDetector(
+            onLongPress: () {
+              if (meal.couponStatus.status == CouponStatusEnum.A) {
+                // TODO: show dialog box
+              }
+            },
+            onTap: () {
+              if (!meal.isCouponOutdated) {
+                // TODO: show dialog box and then add toggle event
+                context.read<WeekMenuBlocBloc>().add(MealCouponEvent(
+                      coupon: meal.couponStatus,
+                      mealId: meal.id,
+                    ));
+              } else if (meal.couponStatus.status == CouponStatusEnum.A) {
+                showCouponDialog(
+                  "Coupon no: ${meal.couponStatus.id!}",
+                  context,
+                );
+              } else {
+                const snackBar = SnackBar(
+                  content: Text(
+                    "Time's up, coupon applications closed",
+                  ),
+                );
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+              }
+            },
+            child: FeedbackAndCouponWidget(
+              taken: meal.couponStatus.status == CouponStatusEnum.A,
+              coupon: true,
+            ),
+          );
+        }
+        return const SizedBox.shrink();
+      },
+    );
+  }
+}
+
 class MealCard extends StatelessWidget {
   const MealCard({
     required this.meal,
@@ -125,7 +187,7 @@ class MealCard extends StatelessWidget {
   Widget build(BuildContext context) {
     String dailyItemsParsed = '';
     for (MealItem item in dailyItems) {
-      dailyItemsParsed += '${item.name}, ';
+      dailyItemsParsed += '${item.name.titleCase}, ';
     }
     dailyItemsParsed =
         dailyItemsParsed.substring(0, max(dailyItemsParsed.length - 2, 0));
@@ -156,7 +218,7 @@ class MealCard extends StatelessWidget {
                   height: 28.toAutoScaledHeight,
                   padding: 12.toLeftOnlyPadding,
                   child: Text(
-                    meal.title,
+                    meal.title.titleCase,
                     style: AppTheme.headline1.copyWith(
                       fontSize: 20.toAutoScaledFont,
                       color: AppTheme.black11,
@@ -210,56 +272,7 @@ class MealCard extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height: 45.toAutoScaledHeight),
-                ...[
-                  meal.isOutdated
-                      ? GestureDetector(
-                          onTap: () {
-                            context.router.navigate(FeedbackRoute());
-                          },
-                          child: const FeedbackAndCouponWidget(
-                              taken: false, coupon: false),
-                        )
-                      : (_isMealValidForCoupon(meal)
-                          ? GestureDetector(
-                              onLongPress: () {
-                                if (meal.couponStatus.status ==
-                                    CouponStatusEnum.A) {
-                                  // TODO: show dialog box
-                                }
-                              },
-                              onTap: () {
-                                if (!meal.isCouponOutdated) {
-                                  // TODO: show dialog box and then add toggle event
-                                  context
-                                      .read<WeekMenuBlocBloc>()
-                                      .add(MealCouponEvent(
-                                        coupon: meal.couponStatus,
-                                        mealId: meal.id,
-                                      ));
-                                } else if (meal.couponStatus.status ==
-                                    CouponStatusEnum.A) {
-                                  showCouponDialog(
-                                    "Coupon no: ${meal.couponStatus.id!}",
-                                    context,
-                                  );
-                                } else {
-                                  const snackBar = SnackBar(
-                                    content: Text(
-                                      "Time's up, coupon applications closed",
-                                    ),
-                                  );
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(snackBar);
-                                }
-                              },
-                              child: FeedbackAndCouponWidget(
-                                taken: meal.couponStatus.status ==
-                                    CouponStatusEnum.A,
-                                coupon: true,
-                              ),
-                            )
-                          : const SizedBox.shrink()),
-                ],
+                FeedbackOrCouponButton(meal: meal),
                 SizedBox(height: 10.toAutoScaledHeight)
               ],
             ),
@@ -282,7 +295,7 @@ class MealCard extends StatelessWidget {
                   padding: EdgeInsets.zero,
                   itemBuilder: (context, index) {
                     final item = meal.items[index];
-                    return Text("\u2022 ${item.name}");
+                    return Text("\u2022 ${item.name.titleCase}");
                   },
                 ),
               ),
