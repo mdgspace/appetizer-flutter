@@ -1,5 +1,6 @@
 import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
 import 'package:appetizer/presentation/app/bloc/app_bloc.dart';
+import 'package:appetizer/presentation/components/app_formfield.dart';
 import 'package:appetizer/presentation/components/app_textfield.dart';
 import 'package:appetizer/presentation/components/loading_indicator.dart';
 import 'package:appetizer/presentation/components/made_by_mdg.dart';
@@ -7,7 +8,6 @@ import 'package:appetizer/presentation/components/raise_query_button.dart';
 import 'package:appetizer/presentation/login/components/channeli_button.dart';
 import 'package:appetizer/presentation/login/components/login_button.dart';
 import 'package:appetizer/presentation/login/bloc/login_bloc.dart';
-import 'package:appetizer/presentation/login/components/login_textfield.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -94,19 +94,12 @@ class LoginScreen extends StatelessWidget {
                           mainAxisSize: MainAxisSize.min,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              'Set Password',
-                              style: GoogleFonts.notoSans(
-                                fontSize: 18.toAutoScaledFont,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            20.toVerticalSizedBox,
-                            AppTextField(
-                                controller: _controller,
-                                hintText: 'Create Password',
-                                obscureText: !state.showPassword,
-                                suffixIconOnPressed: () {
+                            AppFormField(
+                              controller: _controller,
+                              hintText: 'Create Password',
+                              obscureText: !state.showPassword,
+                              suffix: IconButton(
+                                onPressed: () {
                                   BlocProvider.of<LoginBloc>(context).add(
                                     ToggleObscureCreatePassword(
                                       showPassword: !state.showPassword,
@@ -115,13 +108,21 @@ class LoginScreen extends StatelessWidget {
                                     ),
                                   );
                                 },
-                                showSuffixIcon: state.showPassword),
+                                icon: state.showPassword
+                                    ? const Icon(Icons.visibility,
+                                        color: Color(0xFF757575))
+                                    : const Icon(Icons.visibility_off,
+                                        color: Color(0xFF757575)),
+                              ),
+                              title: 'Set Password',
+                            ),
                             10.toVerticalSizedBox,
                             AppTextField(
-                                controller: _controller2,
-                                hintText: 'Confirm Password',
-                                obscureText: !state.showConfirmPassword,
-                                suffixIconOnPressed: () {
+                              controller: _controller2,
+                              hintText: 'Confirm Password',
+                              obscureText: !state.showConfirmPassword,
+                              suffix: IconButton(
+                                onPressed: () {
                                   BlocProvider.of<LoginBloc>(context).add(
                                     ToggleObscureCreatePassword(
                                       showPassword: state.showPassword,
@@ -130,7 +131,13 @@ class LoginScreen extends StatelessWidget {
                                     ),
                                   );
                                 },
-                                showSuffixIcon: state.showConfirmPassword),
+                                icon: state.showConfirmPassword
+                                    ? const Icon(Icons.visibility,
+                                        color: Color(0xFF757575))
+                                    : const Icon(Icons.visibility_off,
+                                        color: Color(0xFF757575)),
+                              ),
+                            ),
                             SizedBox(
                               height: 30.toAutoScaledHeight,
                               child: Text(
@@ -164,27 +171,20 @@ class LoginScreen extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            state is ForgotPasswordState
-                                ? 'Forgot Password'
-                                : 'Login/SignUp',
-                            style: GoogleFonts.notoSans(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          20.toVerticalSizedBox,
-                          LoginTextField(
-                            controller: _controller,
-                            obscureText: state is EnterPassword
-                                ? !state.showPassword
-                                : false,
+                          AppFormField(
                             hintText: state is EnterPassword
                                 ? "Password"
                                 : state is ForgotPasswordState
                                     ? "Email id"
                                     : 'Enrollment No.',
-                            suffixIcon: state is EnterPassword
+                            title: state is ForgotPasswordState
+                                ? 'Forgot Password'
+                                : 'Login/SignUp',
+                            controller: _controller,
+                            obscureText: state is EnterPassword
+                                ? !state.showPassword
+                                : false,
+                            suffix: state is EnterPassword
                                 ? IconButton(
                                     onPressed: () {
                                       BlocProvider.of<LoginBloc>(context).add(
@@ -196,7 +196,7 @@ class LoginScreen extends StatelessWidget {
                                             color: Color(0xFF757575))
                                         : const Icon(Icons.visibility_off,
                                             color: Color(0xFF757575)))
-                                : null,
+                                : const SizedBox(),
                           ),
                           state is EnterPassword
                               ? SizedBox(

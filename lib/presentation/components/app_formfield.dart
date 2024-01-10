@@ -1,9 +1,10 @@
 import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
+import 'package:appetizer/presentation/components/app_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class AppTextField extends StatelessWidget {
-  const AppTextField({
+class AppFormField extends StatelessWidget {
+  const AppFormField({
     Key? key,
     required this.hintText,
     this.controller,
@@ -11,8 +12,10 @@ class AppTextField extends StatelessWidget {
     this.obscureText,
     this.suffix,
     this.border,
+    required this.title,
     this.maxLength,
     this.maxLines,
+    this.titleStyle,
   })  : assert(
           obscureText == null || suffix != null,
           'Suffix should be provided if obscureText is provided',
@@ -29,34 +32,38 @@ class AppTextField extends StatelessWidget {
   final bool? obscureText;
   final Widget? suffix;
   final InputBorder? border;
+  final String title;
   final int? maxLength;
   final int? maxLines;
+  final TextStyle? titleStyle;
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      controller: controller,
-      onChanged: onChanged,
-      obscureText: obscureText ?? false,
-      decoration: InputDecoration(
-          hintText: hintText,
-          hintStyle: GoogleFonts.lato(
-            fontSize: 12.toAutoScaledFont,
-            color: const Color(0xFF111111),
-            fontWeight: FontWeight.w600,
-          ),
-          border: border ??
-              OutlineInputBorder(
-                borderSide: BorderSide(
-                    color: const Color(0xFF111111).withOpacity(0.25)),
-                borderRadius: BorderRadius.circular(5),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          title,
+          style: titleStyle ??
+              GoogleFonts.notoSans(
+                fontSize: 18.toAutoScaledFont,
+                fontWeight: FontWeight.w600,
               ),
-          contentPadding: EdgeInsets.symmetric(
-              horizontal: 20.toAutoScaledWidth,
-              vertical: 15.toAutoScaledHeight),
-          suffixIcon: suffix),
-      maxLength: maxLength,
-      maxLines: maxLines ?? 1,
+        ),
+        SizedBox(
+          height: title == "Description" ? 0 : 20.toAutoScaledHeight,
+        ),
+        AppTextField(
+          controller: controller,
+          onChanged: onChanged,
+          obscureText: obscureText,
+          hintText: hintText,
+          suffix: suffix,
+          border: border,
+          maxLength: maxLength,
+          maxLines: maxLines,
+        ),
+      ],
     );
   }
 }
