@@ -6,9 +6,7 @@ class NoNotificationsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-      padding: EdgeInsets.only(top: 282.toAutoScaledHeight),
+    return Align(
       child: Text(
         'No new notifications !',
         style: TextStyle(

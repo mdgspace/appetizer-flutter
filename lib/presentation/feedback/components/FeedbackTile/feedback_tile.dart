@@ -10,8 +10,8 @@ class FeedbackTile extends StatelessWidget {
     required this.title,
     required this.parentState,
     required this.index,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final String title;
   final FeedbackPageState parentState;

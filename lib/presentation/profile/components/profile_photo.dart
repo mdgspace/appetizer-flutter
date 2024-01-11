@@ -5,10 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProfilePhoto extends StatelessWidget {
-  const ProfilePhoto({
-    required this.imageUri,
-    Key? key,
-  }) : super(key: key);
+  const ProfilePhoto({required this.imageUri, super.key});
 
   final String imageUri;
 

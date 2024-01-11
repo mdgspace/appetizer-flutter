@@ -7,8 +7,8 @@ class BlackButton extends StatelessWidget {
     required this.title,
     required this.onTap,
     required this.width,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final VoidCallback onTap;
   final String title;
@@ -48,8 +48,8 @@ class BlackIconButton extends StatelessWidget {
     required this.onTap,
     required this.width,
     required this.icon,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final VoidCallback onTap;
   final String title;

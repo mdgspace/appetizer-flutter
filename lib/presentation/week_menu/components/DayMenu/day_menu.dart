@@ -7,10 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DayMenuWidget extends StatelessWidget {
-  const DayMenuWidget({
-    required this.parentState,
-    Key? key,
-  }) : super(key: key);
+  const DayMenuWidget({required this.parentState, super.key});
 
   final WeekMenuBlocDisplayState parentState;
 
@@ -23,26 +20,24 @@ class DayMenuWidget extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          ...dayMenu.meals
-              .map(
-                // TODO: Write logic for ordering meals in order of breakfast, lunch, dinner, snack
-                (meal) => Padding(
-                  padding: EdgeInsets.only(
-                    bottom: 24.toAutoScaledHeight,
-                  ),
-                  child: MealCard(
-                    dailyItems: meal.type == MealType.B
-                        ? dailyItems.breakfast
-                        : (meal.type == MealType.L
-                            ? dailyItems.lunch
-                            : (meal.type == MealType.D
-                                ? dailyItems.dinner
-                                : dailyItems.snack)),
-                    meal: meal,
-                  ),
-                ),
-              )
-              .toList(),
+          ...dayMenu.meals.map(
+            // TODO: Write logic for ordering meals in order of breakfast, lunch, dinner, snack
+            (meal) => Padding(
+              padding: EdgeInsets.only(
+                bottom: 24.toAutoScaledHeight,
+              ),
+              child: MealCard(
+                dailyItems: meal.type == MealType.B
+                    ? dailyItems.breakfast
+                    : (meal.type == MealType.L
+                        ? dailyItems.lunch
+                        : (meal.type == MealType.D
+                            ? dailyItems.dinner
+                            : dailyItems.snack)),
+                meal: meal,
+              ),
+            ),
+          ),
           BlocSelector<AppBloc, AppState, bool>(
             selector: (state) => state.user!.isCheckedOut,
             builder: (context, val) {

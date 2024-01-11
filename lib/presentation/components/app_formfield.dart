@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 class AppFormField extends StatelessWidget {
   const AppFormField({
-    Key? key,
+    super.key,
     required this.hintText,
     this.controller,
     this.onChanged,
@@ -23,8 +23,7 @@ class AppFormField extends StatelessWidget {
         assert(
           controller != null || onChanged != null,
           'Either controller or onChanged should be provided',
-        ),
-        super(key: key);
+        );
 
   final String hintText;
   final TextEditingController? controller;

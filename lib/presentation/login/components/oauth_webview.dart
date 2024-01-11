@@ -6,7 +6,7 @@ import 'package:auto_route/auto_route.dart';
 @RoutePage<String>()
 class OAuthWebScreen extends StatelessWidget {
   static const id = 'oauth_view';
-  OAuthWebScreen({Key? key}) : super(key: key);
+  OAuthWebScreen({super.key});
   final ValueNotifier<int> _loadingState = ValueNotifier(1);
 
   @override
@@ -21,12 +21,12 @@ class OAuthWebScreen extends StatelessWidget {
               children: [
                 InAppWebView(
                   initialUrlRequest: URLRequest(
-                    url: Uri.parse(AppConstants.omniportSignUpURL),
-                  ),
-                  initialOptions: InAppWebViewGroupOptions(
-                    crossPlatform: InAppWebViewOptions(
-                      useShouldOverrideUrlLoading: true,
+                    url: WebUri.uri(
+                      Uri.parse(AppConstants.omniportSignUpURL),
                     ),
+                  ),
+                  initialSettings: InAppWebViewSettings(
+                    useShouldOverrideUrlLoading: true,
                   ),
                   onLoadStop: (_, uri) {
                     _loadingState.value = 0;
