@@ -1,8 +1,7 @@
 class EnvironmentConfig {
   static const String BASE_URL = String.fromEnvironment(
     'BASE_URL',
-    defaultValue:
-        'https://appetizer.onrender.com',
+    defaultValue: 'https://appetizer.onrender.com',
   );
 
   static const String OAUTH_CLIENT_ID = String.fromEnvironment(
