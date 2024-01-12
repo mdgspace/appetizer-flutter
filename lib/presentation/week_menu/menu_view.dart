@@ -3,6 +3,7 @@ import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
 import 'package:appetizer/presentation/app/bloc/app_bloc.dart';
 import 'package:appetizer/presentation/components/no_data_found_container.dart';
 import 'package:appetizer/presentation/week_menu/bloc/week_menu_bloc.dart';
+import 'package:appetizer/presentation/week_menu/components/DayDateBar/bloc/day_date_bar_bloc.dart';
 import 'package:appetizer/presentation/week_menu/components/DayDateBar/day_date_bar.dart';
 import 'package:appetizer/presentation/week_menu/components/DayMenu/day_menu.dart';
 import 'package:appetizer/presentation/components/app_banner.dart';
@@ -14,7 +15,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 @RoutePage()
 class WeekMenuScreen extends StatelessWidget {
-  const WeekMenuScreen({super.key});
+  const WeekMenuScreen({Key? key}) : super(key: key);
+
   final _controller = PageController();
 
   @override
@@ -56,20 +58,13 @@ class WeekMenuScreen extends StatelessWidget {
                       14.toVerticalSizedBox,
                       GestureDetector(
                         onTap: () {
-                          context
-                              .read<AppBloc>()
-                              .add(const ToggleCheckOutStatusEvent());
-                          final bool isCheckout =
-                              context.read<AppBloc>().state.user!.isCheckedOut;
-                          // Triggers when clicked on check-in button to avoid false triggers on failed checkouts
+                          context.read<AppBloc>().add(const ToggleCheckOutStatusEvent());
+                          final isCheckout = context.read<AppBloc>().state.user!.isCheckedOut;
                           if (isCheckout) {
-                            context
-                                .read<WeekMenuBlocBloc>()
-                                .add(const CheckoutEvent());
+                            context.read<WeekMenuBlocBloc>().add(const CheckoutEvent());
                           }
                         },
-                        child:
-                            const RoundEdgeTextOnlyContainer(text: "CHECK IN"),
+                        child: const RoundEdgeTextOnlyContainer(text: "CHECK IN"),
                       ),
                       14.toVerticalSizedBox,
                     ],
@@ -80,19 +75,19 @@ class WeekMenuScreen extends StatelessWidget {
                 child: PageView(
                   scrollDirection: Axis.horizontal,
                   controller: _controller,
-                  onPageChanged: (int index) {
-                  setState(() {
-                  pageChanged = index;
-                  DayDateBar._pageController.jumpToPage(index);
-                  });
+                  onPageChanged: (index) {
+                    context.read<DayDateBarChangedEvent>().add(PageChangedEvent(index));
+
                   },
-                  children: [(state.dayNumber != -1)
-                  ? DayMenuWidget(parentState: state)
-                  : const NoDataFoundContainer(title: 'Menu not available'),
+                  children: [
+                    if (state.dayNumber != -1)
+                      DayMenuWidget(parentState: state)
+                    else
+                      const NoDataFoundContainer(title: 'Menu not available'),
                   ],
                 ),
               ),
-            ]
+            ],
           ],
         );
       },

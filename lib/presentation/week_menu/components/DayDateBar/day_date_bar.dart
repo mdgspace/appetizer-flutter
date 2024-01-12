@@ -224,5 +224,4 @@ class DayDateBar extends StatelessWidget {
   }
 }
 
-
-// make two events --> one for day and date 
+ 
