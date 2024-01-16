@@ -1,6 +1,7 @@
 import 'package:appetizer/app_theme.dart';
 import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
 import 'package:appetizer/domain/repositories/feedback_repository.dart';
+import 'package:appetizer/presentation/components/app_formfield.dart';
 import 'package:appetizer/presentation/components/black_button.dart';
 import 'package:appetizer/presentation/feedback/bloc/feedback_page_bloc.dart';
 import 'package:appetizer/presentation/feedback/components/FeedbackTile/feedback_tile.dart';
@@ -72,29 +73,26 @@ class FeedbackScreen extends StatelessWidget {
                             fontWeight: FontWeight.w400,
                           ),
                         ),
-                        Text(
-                          'Description',
-                          style: TextStyle(
+                        AppFormField(
+                          hintText: "",
+                          title: "Description",
+                          controller: textController,
+                          titleStyle: TextStyle(
                             color: Colors.black.withOpacity(0.5400000214576721),
                             fontSize: 12.toAutoScaledFont,
                             fontFamily: 'Open Sans',
                             fontWeight: FontWeight.w400,
                           ),
-                        ),
-                        TextField(
-                          controller: textController,
                           onChanged: (value) => context
                               .read<FeedbackPageBloc>()
                               .add(FeedbackPageDescriptionChangedEvent(
                                   description: value)),
                           maxLength: 200,
                           maxLines: 5,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                width: 0.5.toAutoScaledWidth,
-                                color: const Color.fromARGB(37, 0, 0, 0),
-                              ),
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              width: 0.5.toAutoScaledWidth,
+                              color: const Color.fromARGB(37, 0, 0, 0),
                             ),
                           ),
                         ),
