@@ -45,6 +45,7 @@ dependencies:
   url_launcher: ^6.1.12
   flutter_inappwebview: ^6.0.0
   flutter_native_splash: ^2.3.2
+  mixpanel_flutter: ^2.2.0
 
 dev_dependencies:
   auto_route_generator: ^7.1.2

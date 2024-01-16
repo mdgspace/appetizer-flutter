@@ -15,4 +15,6 @@ class EnvironmentConfig {
   );
 
   static const String SENTRY_DSN = String.fromEnvironment('SENTRY_DSN');
+  static const String MIXPANEL_PROJECT_KEY =
+      String.fromEnvironment('MIXPANEL_PROJECT_KEY');
 }
