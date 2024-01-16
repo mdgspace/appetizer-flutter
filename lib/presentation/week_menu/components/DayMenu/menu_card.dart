@@ -37,7 +37,7 @@ class FeedbackAndCouponWidget extends StatelessWidget {
     return Center(
       child: Container(
         height: 24.toAutoScaledHeight,
-        width: 88.toAutoScaledWidth,
+        width: 90.toAutoScaledWidth,
         padding: EdgeInsets.symmetric(horizontal: 8.toAutoScaledWidth),
         decoration: ShapeDecoration(
           color: AppTheme.white,

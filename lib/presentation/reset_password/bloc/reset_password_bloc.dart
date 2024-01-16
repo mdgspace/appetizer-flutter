@@ -19,34 +19,40 @@ class ResetPasswordBloc extends Bloc<ResetPasswordEvent, ResetPasswordState> {
     on<ResetPasswordPressed>(_onResetPasswordPressed);
     on<ToggleObscureResetPassword>(_onToggleObscureResetPassword);
   }
-
-  FutureOr<void> _onResetPasswordPressed(event, emit) async {
-    if (event.newPassword.length < 8) {
+  FutureOr<void> _onResetPasswordPressed(
+      ResetPasswordPressed event, Emitter<ResetPasswordState> emit) async {
+    bool isValidated = true;
+    if (event.oldPassword.isEmpty ||
+        event.newPassword.isEmpty ||
+        event.confirmPassword.isEmpty) {
       emit(
-        ResetPassword(
+        (state as ResetPassword).copyWith(
+          error: 'All fields are required',
+        ),
+      );
+      isValidated = false;
+    } else if (event.newPassword.length < 8) {
+      emit(
+        (state as ResetPassword).copyWith(
           error: 'Password must be at least 8 characters long',
-          showOldPassword: (state as ResetPassword).showOldPassword,
-          showNewPassword: (state as ResetPassword).showNewPassword,
-          showConfirmPassword: (state as ResetPassword).showConfirmPassword,
         ),
       );
-      emit(ResetPassword(
-        error: null,
-        showOldPassword: (state as ResetPassword).showOldPassword,
-        showNewPassword: (state as ResetPassword).showNewPassword,
-        showConfirmPassword: (state as ResetPassword).showConfirmPassword,
-      ));
-      return;
-    }
-    if (event.newPassword != event.confirmPassword) {
+      isValidated = false;
+    } else if (event.newPassword != event.confirmPassword) {
       emit(
-        ResetPassword(
-          error: 'Passwords do not match',
-          showOldPassword: (state as ResetPassword).showOldPassword,
-          showNewPassword: (state as ResetPassword).showNewPassword,
-          showConfirmPassword: (state as ResetPassword).showConfirmPassword,
+        (state as ResetPassword).copyWith(error: 'Passwords do not match'),
+      );
+      isValidated = false;
+    } else if (event.oldPassword == event.newPassword) {
+      emit(
+        (state as ResetPassword).copyWith(
+          error: 'New password cannot be same as old password',
         ),
       );
+      isValidated = false;
+    }
+
+    if (!isValidated) {
       emit(ResetPassword(
         error: null,
         showOldPassword: (state as ResetPassword).showOldPassword,
@@ -55,6 +61,7 @@ class ResetPasswordBloc extends Bloc<ResetPasswordEvent, ResetPasswordState> {
       ));
       return;
     }
+
     emit(Loading());
     try {
       await userRepository.changePassword(
@@ -69,10 +76,12 @@ class ResetPasswordBloc extends Bloc<ResetPasswordEvent, ResetPasswordState> {
         showNewPassword: false,
         showConfirmPassword: false,
       ));
+      emit((state as ResetPassword).copyWith(error: null));
     }
   }
 
-  FutureOr<void> _onToggleObscureResetPassword(event, emit) async {
+  FutureOr<void> _onToggleObscureResetPassword(ToggleObscureResetPassword event,
+      Emitter<ResetPasswordState> emit) async {
     emit(
       (state as ResetPassword).copyWith(
         showOldPassword: event.showOldPassword,
