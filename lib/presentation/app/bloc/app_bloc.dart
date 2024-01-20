@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:appetizer/data/constants/constants.dart';
 import 'package:appetizer/data/services/local/local_storage_service.dart';
+import 'package:appetizer/domain/amenity/mixpanel_service.dart';
 import 'package:appetizer/domain/models/user/user.dart';
 import 'package:appetizer/domain/repositories/leave/leave_repository.dart';
 import 'package:appetizer/domain/repositories/user/user_repository.dart';
@@ -70,6 +71,8 @@ class AppBloc extends Bloc<AppEvent, AppState> {
 
   FutureOr<void> _onNavigateToHome(
       NavigateToHomeScreen event, Emitter<AppState> emit) {
+    assert(state.user != null);
+    MixpanelManager.instance?.identify(state.user!.enrNo.toString());
     emit(state.copyWith(navigateTo: NavigateTo.showHomeScreen));
   }
 
