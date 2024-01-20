@@ -3,6 +3,7 @@ import 'package:appetizer/data/core/router/intrinsic_router/intrinsic_router.gr.
 import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
 import 'package:appetizer/domain/models/menu/week_menu_tmp.dart';
 import 'package:appetizer/presentation/app/bloc/app_bloc.dart';
+import 'package:appetizer/presentation/leaves_and_rebate/bloc/leaves_and_rebate_bloc.dart';
 import 'package:appetizer/presentation/week_menu/bloc/week_menu_bloc.dart';
 import 'package:appetizer/presentation/components/shadow_container.dart';
 import 'package:auto_route/auto_route.dart';
@@ -10,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart' as svg;
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:fswitch_nullsafety/fswitch_nullsafety.dart';
 import 'package:intl/intl.dart';
 import 'package:appetizer/utils/recase.dart';
@@ -180,11 +182,15 @@ class MealCard extends StatelessWidget {
     required this.dailyItems,
     super.key,
   });
+
   final Meal meal;
   final List<MealItem> dailyItems;
 
   @override
   Widget build(BuildContext context) {
+    return BlocBuilder<LeavesAndRebateBloc,LeavesAndRebateState>(
+      bloc: context.read<LeavesAndRebateBloc>(),
+      builder: (context,state){
     String dailyItemsParsed = '';
     for (MealItem item in dailyItems) {
       dailyItemsParsed += '${item.name.titleCase}, ';
@@ -250,7 +256,7 @@ class MealCard extends StatelessWidget {
                           builder: (context, isCheckout) {
                             return FSwitch(
                               enable:
-                                  !meal.isLeaveToggleOutdated && !isCheckout,
+                                  !meal.isLeaveToggleOutdated && !isCheckout && (state.remainingLeaves.toString()!=0.toString()),
                               open:
                                   meal.leaveStatus.status != LeaveStatusEnum.P,
                               sliderColor: AppTheme.customWhite,
@@ -258,6 +264,17 @@ class MealCard extends StatelessWidget {
                               height: 20.toAutoScaledHeight,
                               width: 44.toAutoScaledWidth,
                               onChanged: (value) async {
+                                if (state.remainingLeaves.toString() == '0') {
+                                  Fluttertoast.showToast(
+                                    msg: 'No remaining leaves!',
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.CENTER,
+                                    backgroundColor: Colors.red,
+                                    textColor: Colors.white,
+                                    fontSize: 16.0,
+                                  );
+                                  return;
+                                }
                                 context
                                     .read<WeekMenuBlocBloc>()
                                     .add(MealLeaveEvent(
@@ -265,6 +282,7 @@ class MealCard extends StatelessWidget {
                                     ));
                               },
                             );
+                       
                           },
                         ),
                       ),
@@ -336,7 +354,9 @@ class MealCard extends StatelessWidget {
         ],
       ),
     );
-  }
+    }
+  );
+ }
 }
 
 // TODO(nano): temp fix for the getters
