@@ -5,21 +5,25 @@ class ProfileTextButton extends StatelessWidget {
   const ProfileTextButton({
     required this.title,
     required this.onPressed,
+    required this.horizontalPadding,
+    required this.width,
     super.key,
   });
 
   final String title;
   final VoidCallback onPressed;
+  final int horizontalPadding;
+  final int width;
 
   @override
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: onPressed,
       child: Container(
-        width: 115.toAutoScaledWidth,
+        width: width.toAutoScaledWidth,
         height: 32.toAutoScaledHeight,
         padding: EdgeInsets.symmetric(
-          horizontal: 26.toAutoScaledWidth,
+          horizontal: horizontalPadding.toAutoScaledWidth,
           vertical: 6.toAutoScaledHeight,
         ),
         decoration: ShapeDecoration(
