@@ -19,72 +19,51 @@ class NotificationScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppTheme.white,
       // TODO: implement Old/New notification bars and logic
-      body: BlocProvider(
-        create: (context) =>
-            NotificationPageBloc(repo: context.read<UserRepository>()),
-        child: BlocBuilder<NotificationPageBloc, NotificationPageState>(
-          builder: (context, state) {
-            if (state is NotificationPageInitialState) {
-              context
-                  .read<NotificationPageBloc>()
-                  .add(const NotificationPageFetchEvent(notifications: []));
-              return const Column(
-                children: [
-                  NotificationBanner(),
-                  NoDataFoundContainer(title: 'Oops! Just a moment...'),
-                ],
-              );
-            }
-            if (state is NotificationPageFailedState) {
-              // TODO: throw an error, or snackbar
-              return const Column(
-                children: [
-                  NotificationBanner(),
-                  NoDataFoundContainer(title: 'Something went wrong...'),
-                ],
-              );
-            }
-            if (state is NotificationPageFetchedState) {
-              if (state.notifications.isEmpty) {
-                return const Column(
-                  children: [
-                    NotificationBanner(),
-                    NoNotificationsWidget(),
-                  ],
-                );
-              }
-              return Column(
-                children: [
-                  const NotificationBanner(),
-                  Container(
-                    height: 656.toAutoScaledHeight,
-                    padding: EdgeInsets.only(
-                      left: 24.toAutoScaledWidth,
-                      right: 25.toAutoScaledWidth,
-                    ),
-                    child: ListView.builder(
-                      padding: EdgeInsets.zero,
-                      itemCount: state.notifications.length,
-                      itemBuilder: (context, index) {
-                        return Column(
-                          children: [
-                            NotificationCard(
-                              data: state.notifications[index],
-                            ),
-                            index < state.notifications.length
-                                ? 16.toVerticalSizedBox
-                                : const SizedBox.shrink(),
-                          ],
-                        );
-                      },
-                    ),
-                  ),
-                ],
-              );
-            }
-            return const NoDataFoundContainer(title: 'Something went wrong !');
-          },
-        ),
+      body: Column(
+        children: [
+          const NotificationBanner(),
+          Expanded(
+            child: BlocProvider(
+              create: (context) =>
+                  NotificationPageBloc(repo: context.read<UserRepository>()),
+              child: BlocBuilder<NotificationPageBloc, NotificationPageState>(
+                builder: (context, state) {
+                  if (state is NotificationPageInitialState) {
+                    context.read<NotificationPageBloc>().add(
+                        const NotificationPageFetchEvent(notifications: []));
+                    return const NoDataFoundContainer(
+                        title: 'Oops! Just a moment...');
+                  }
+                  if (state is NotificationPageFailedState) {
+                    // TODO: throw an error, or snackbar
+                    return const NoDataFoundContainer(
+                        title: 'Something went wrong...');
+                  }
+                  if (state is NotificationPageFetchedState) {
+                    return Visibility(
+                      visible: state.notifications.isNotEmpty,
+                      replacement: const NoNotificationsWidget(),
+                      child: ListView.separated(
+                        padding: 24.toHorizontalPadding,
+                        shrinkWrap: true,
+                        itemCount: state.notifications.length,
+                        separatorBuilder: (context, index) =>
+                            16.toVerticalSizedBox,
+                        itemBuilder: (context, index) {
+                          return NotificationCard(
+                            data: state.notifications[index],
+                          );
+                        },
+                      ),
+                    );
+                  }
+                  return const NoDataFoundContainer(
+                      title: 'Something went wrong !');
+                },
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

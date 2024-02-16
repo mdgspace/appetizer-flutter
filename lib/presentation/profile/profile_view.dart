@@ -59,6 +59,7 @@ class ProfileScreen extends StatelessWidget {
                           Container(
                             padding: EdgeInsets.symmetric(
                               vertical: 24.toAutoScaledHeight,
+                              // horizontal: 43.toAutoScaledWidth,
                             ),
                             child: Column(
                               children: [
@@ -76,18 +77,15 @@ class ProfileScreen extends StatelessWidget {
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(snackBar);
                                       },
-                                      horizontalPadding: 26,
+                                      horizontalPadding: 10,
                                       width: 115,
                                     ),
+                                    // 5.toHorizontalSizedBox,
                                     ProfileTextButton(
                                       title: 'Reset Password',
                                       onPressed: () {
-                                        const snackBar = SnackBar(
-                                          content: Text('Coming soon!'),
-                                          duration: Duration(milliseconds: 500),
-                                        );
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(snackBar);
+                                        context.router
+                                            .push(ResetPasswordRoute());
                                       },
                                       horizontalPadding: 10,
                                       width: 115,
