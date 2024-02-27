@@ -61,5 +61,15 @@ class AppRoutesRegistry {
         ),
       ],
     ),
+    CustomRoute(
+        path: AppPathsRegistry.noInternetWrapper,
+        page: NoInternetWrapper.page,
+        children: [
+          CustomRoute(
+            initial: true,
+            path: AppPathsRegistry.noInternetConnection,
+            page: NoInternetRoute.page,
+          ),
+        ]),
   ];
 }

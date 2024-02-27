@@ -25,6 +25,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     on<GetUser>(_onGetUser);
     on<NavigateToHomeScreen>(_onNavigateToHome);
     on<NavigateToLoginScreen>(_onNavigateToLogin);
+    on<NavigateToNoInternetScreen>(_onNavigateToNoInternetScreen);
     on<ToggleCheckOutStatusEvent>(_onToggleCheckOutStatus);
   }
 
@@ -64,8 +65,12 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       emit(state.copyWith(user: user));
       add(const NavigateToHomeScreen());
     } catch (err) {
-      LocalStorageService.setValue(key: AppConstants.LOGGED_IN, value: false);
-      add(const NavigateToLoginScreen());
+      if (LocalStorageService.getValue<bool>(AppConstants.LOGGED_IN) ?? false) {
+        add(const NavigateToNoInternetScreen());
+      } else {
+        LocalStorageService.setValue(key: AppConstants.LOGGED_IN, value: false);
+        add(const NavigateToLoginScreen());
+      }
     }
   }
 
@@ -79,6 +84,11 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   FutureOr<void> _onNavigateToLogin(
       NavigateToLoginScreen event, Emitter<AppState> emit) {
     emit(state.copyWith(navigateTo: NavigateTo.showLoginScreen));
+  }
+
+  FutureOr<void> _onNavigateToNoInternetScreen(
+      NavigateToNoInternetScreen event, Emitter<AppState> emit) {
+    emit(state.copyWith(navigateTo: NavigateTo.showNoInternetScreen));
   }
 
   String get userName => _user?.name ?? 'A';

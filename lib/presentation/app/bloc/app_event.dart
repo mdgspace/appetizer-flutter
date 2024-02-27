@@ -23,6 +23,10 @@ class NavigateToLoginScreen extends AppEvent {
   const NavigateToLoginScreen();
 }
 
+class NavigateToNoInternetScreen extends AppEvent {
+  const NavigateToNoInternetScreen();
+}
+
 class ToggleCheckOutStatusEvent extends AppEvent {
   const ToggleCheckOutStatusEvent();
 }
