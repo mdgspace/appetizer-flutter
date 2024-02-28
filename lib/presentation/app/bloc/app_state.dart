@@ -4,6 +4,7 @@ enum NavigateTo {
   inital,
   showLoginScreen,
   showHomeScreen,
+  showNoInternetScreen,
 }
 
 class AppState {
