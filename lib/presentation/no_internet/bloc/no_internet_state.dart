@@ -7,3 +7,14 @@ class NoInternetState extends Equatable {
   List<Object> get props => [];
 }
 
+class NoInternetInitial extends NoInternetState {
+  const NoInternetInitial();
+}
+
+class Loading extends NoInternetState {
+  const Loading();
+}
+
+class ReloadSuccess extends NoInternetState {
+  const ReloadSuccess();
+}

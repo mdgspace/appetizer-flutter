@@ -1,7 +1,7 @@
 class EnvironmentConfig {
   static const String BASE_URL = String.fromEnvironment(
     'BASE_URL',
-    defaultValue: 'https://faf1-103-37-201-177.ngrok-free.app',
+    defaultValue: 'https://appetizer.onrender.com',
   );
 
   static const String OAUTH_CLIENT_ID = String.fromEnvironment(
