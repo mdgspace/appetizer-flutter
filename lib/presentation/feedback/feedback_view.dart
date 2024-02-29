@@ -31,29 +31,8 @@ class FeedbackScreen extends StatelessWidget {
       body: BlocProvider(
         create: (context) =>
             FeedbackPageBloc(repo: context.read<FeedbackRepository>()),
-        child: BlocBuilder<FeedbackPageBloc, FeedbackPageState>(
+        child: BlocConsumer<FeedbackPageBloc, FeedbackPageState>(
           builder: (context, state) {
-            if (state.error) {
-              Fluttertoast.showToast(
-                  msg: "Unable to submit feedback!",
-                  toastLength: Toast.LENGTH_SHORT,
-                  gravity: ToastGravity.BOTTOM,
-                  timeInSecForIosWeb: 1,
-                  textColor: Colors.white,
-                  backgroundColor: AppTheme.red,
-                  fontSize: 16.0);
-            }
-            if (state.submitted) {
-              Fluttertoast.showToast(
-                  msg: "Feedback submitted successfully!",
-                  toastLength: Toast.LENGTH_SHORT,
-                  gravity: ToastGravity.BOTTOM,
-                  timeInSecForIosWeb: 1,
-                  textColor: Colors.white,
-                  backgroundColor: AppTheme.green,
-                  fontSize: 12.toAutoScaledFont);
-              context.router.pop();
-            }
             return Column(
               children: [
                 const FeedbackBanner(),
@@ -124,6 +103,30 @@ class FeedbackScreen extends StatelessWidget {
                           alignment: Alignment.bottomRight,
                           child: BlackIconButton(
                             onTap: () {
+                              for (var rating in state.rating) {
+                                if (rating == 0) {
+                                  Fluttertoast.showToast(
+                                      msg: "Please rate all the categories!",
+                                      toastLength: Toast.LENGTH_SHORT,
+                                      gravity: ToastGravity.BOTTOM,
+                                      timeInSecForIosWeb: 1,
+                                      textColor: Colors.white,
+                                      backgroundColor: AppTheme.red,
+                                      fontSize: 12.toAutoScaledFont);
+                                  return;
+                                }
+                              }
+                              if (state.description.trim().isEmpty) {
+                                Fluttertoast.showToast(
+                                    msg: "Please describe your Feedback!",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.BOTTOM,
+                                    timeInSecForIosWeb: 1,
+                                    textColor: Colors.white,
+                                    backgroundColor: AppTheme.red,
+                                    fontSize: 12.toAutoScaledFont);
+                                return;
+                              }
                               context.read<FeedbackPageBloc>().add(
                                   FeedbackPageSubmitEvent(
                                       mealId: mealId,
@@ -142,6 +145,29 @@ class FeedbackScreen extends StatelessWidget {
                 )
               ],
             );
+          },
+          listener: (BuildContext context, FeedbackPageState state) {
+            if (state.submitted) {
+              Fluttertoast.showToast(
+                  msg: "Feedback submitted successfully!",
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.BOTTOM,
+                  timeInSecForIosWeb: 1,
+                  textColor: Colors.white,
+                  backgroundColor: AppTheme.green,
+                  fontSize: 12.toAutoScaledFont);
+              context.router.pop();
+            }
+            if (state.error) {
+              Fluttertoast.showToast(
+                  msg: "Unable to submit feedback!",
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.BOTTOM,
+                  timeInSecForIosWeb: 1,
+                  textColor: Colors.white,
+                  backgroundColor: AppTheme.red,
+                  fontSize: 16.0);
+            }
           },
         ),
       ),
