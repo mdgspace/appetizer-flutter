@@ -12,8 +12,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 @RoutePage()
 class FeedbackScreen extends StatelessWidget {
-  FeedbackScreen({super.key});
+  FeedbackScreen({required this.mealId, super.key});
   final TextEditingController textController = TextEditingController();
+  final int mealId;
   static const List<String> feedbackHeadings = [
     "Ambience",
     "Hygiene and Cleanliness",
@@ -100,11 +101,15 @@ class FeedbackScreen extends StatelessWidget {
                         Align(
                           alignment: Alignment.bottomRight,
                           child: BlackIconButton(
-                            onTap: context.router.pop,
-                            // onTap: () => context.read<FeedbackPageBloc>().add(
-                            //     FeedbackPageSubmitEvent(
-                            //         rating: state.rating,
-                            //         description: state.description)),
+                            // onTap: context.router.pop,
+                            onTap: () {
+                              context.read<FeedbackPageBloc>().add(
+                                  FeedbackPageSubmitEvent(
+                                      mealId: mealId,
+                                      rating: state.rating,
+                                      description: state.description));
+                              context.router.pop();
+                            },
                             title: "SUBMIT",
                             width: 102.toAutoScaledWidth,
                             icon: Icons.keyboard_double_arrow_right_sharp,

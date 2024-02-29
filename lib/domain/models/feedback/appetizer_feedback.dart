@@ -5,7 +5,6 @@ part 'appetizer_feedback.g.dart';
 @JsonSerializable(fieldRename: FieldRename.snake)
 class AppetizerFeedback {
   int id;
-  String type;
   String title;
   String message;
   int timestamp;
@@ -13,10 +12,10 @@ class AppetizerFeedback {
   dynamic imageUrl;
   int dateIssue;
   dynamic response;
+  List<Map<String, dynamic>> ratings;
 
   AppetizerFeedback({
     required this.id,
-    required this.type,
     required this.title,
     required this.message,
     required this.timestamp,
@@ -24,6 +23,7 @@ class AppetizerFeedback {
     required this.imageUrl,
     required this.dateIssue,
     required this.response,
+    required this.ratings,
   });
 
   factory AppetizerFeedback.fromJson(Map<String, dynamic> json) =>

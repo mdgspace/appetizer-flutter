@@ -30,10 +30,12 @@ class FeedbackRepository {
 
   Future<AppetizerFeedback> newFeedback(AppetizerFeedback feedback) async {
     Map<String, dynamic> map = {
-      'type': feedback.type,
       'title': feedback.title,
       'message': feedback.message,
       'date_issue': feedback.dateIssue,
+      'meal_id': feedback.mealId,
+      'ratings': feedback.ratings,
+      'image_url': feedback.imageUrl,
     };
     try {
       return await _apiService.newFeedback(map);

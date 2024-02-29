@@ -11,12 +11,14 @@ class FeedbackPageSubmitEvent extends FeedbackPageEvent {
   const FeedbackPageSubmitEvent({
     required this.rating,
     required this.description,
+    required this.mealId,
   });
   final List<int> rating;
   final String description;
+  final int mealId;
 
   @override
-  List<Object> get props => [rating, description];
+  List<Object> get props => [rating, description, mealId];
 }
 
 class FeedbackPageDescriptionChangedEvent extends FeedbackPageEvent {
