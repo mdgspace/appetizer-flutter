@@ -82,7 +82,7 @@ class FeedbackPageBloc extends Bloc<FeedbackPageEvent, FeedbackPageState> {
           rating: state.rating,
           description: event.description,
           submitted: state.submitted,
-          error: state.error,
+          error: false,
           mealId: state.mealId,
         ),
       );

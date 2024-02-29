@@ -9,6 +9,7 @@ import 'package:appetizer/presentation/feedback/components/feedback_banner.dart'
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 @RoutePage()
 class FeedbackScreen extends StatelessWidget {
@@ -32,6 +33,27 @@ class FeedbackScreen extends StatelessWidget {
             FeedbackPageBloc(repo: context.read<FeedbackRepository>()),
         child: BlocBuilder<FeedbackPageBloc, FeedbackPageState>(
           builder: (context, state) {
+            if (state.error) {
+              Fluttertoast.showToast(
+                  msg: "Unable to submit feedback!",
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.BOTTOM,
+                  timeInSecForIosWeb: 1,
+                  textColor: Colors.white,
+                  backgroundColor: AppTheme.red,
+                  fontSize: 16.0);
+            }
+            if (state.submitted) {
+              Fluttertoast.showToast(
+                  msg: "Feedback submitted successfully!",
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.BOTTOM,
+                  timeInSecForIosWeb: 1,
+                  textColor: Colors.white,
+                  backgroundColor: AppTheme.green,
+                  fontSize: 12.toAutoScaledFont);
+              context.router.pop();
+            }
             return Column(
               children: [
                 const FeedbackBanner(),
@@ -101,14 +123,12 @@ class FeedbackScreen extends StatelessWidget {
                         Align(
                           alignment: Alignment.bottomRight,
                           child: BlackIconButton(
-                            // onTap: context.router.pop,
                             onTap: () {
                               context.read<FeedbackPageBloc>().add(
                                   FeedbackPageSubmitEvent(
                                       mealId: mealId,
                                       rating: state.rating,
                                       description: state.description));
-                              context.router.pop();
                             },
                             title: "SUBMIT",
                             width: 102.toAutoScaledWidth,
