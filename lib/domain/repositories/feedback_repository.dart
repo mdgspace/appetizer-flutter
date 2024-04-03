@@ -28,17 +28,16 @@ class FeedbackRepository {
     }
   }
 
-  Future<AppetizerFeedback> newFeedback(AppetizerFeedback feedback) async {
+  Future<void> newFeedback(AppetizerFeedback feedback) async {
     Map<String, dynamic> map = {
       'title': feedback.title,
       'message': feedback.message,
-      'date_issue': feedback.dateIssue,
       'meal_id': feedback.mealId,
       'ratings': feedback.ratings,
-      'image_url': feedback.imageUrl,
+      // 'image_url': feedback.imageUrl,
     };
     try {
-      return await _apiService.newFeedback(map);
+      await _apiService.newFeedback(map);
     } catch (e) {
       debugPrint(e.toString());
       throw Failure(AppConstants.GENERIC_FAILURE);

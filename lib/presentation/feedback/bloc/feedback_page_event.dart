@@ -13,7 +13,7 @@ class FeedbackPageSubmitEvent extends FeedbackPageEvent {
     required this.description,
     required this.mealId,
   });
-  final List<int> rating;
+  final int rating;
   final String description;
   final int mealId;
 

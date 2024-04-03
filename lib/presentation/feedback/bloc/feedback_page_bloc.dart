@@ -20,22 +20,12 @@ class FeedbackPageBloc extends Bloc<FeedbackPageEvent, FeedbackPageState> {
   void _onSubmit(
       FeedbackPageSubmitEvent event, Emitter<FeedbackPageState> emit) async {
     try {
-      List<Map<String, dynamic>> ratings = [
-        {"type": "am", "stars": event.rating[0]},
-        {"type": "hc", "stars": event.rating[1]},
-        {"type": "wm", "stars": event.rating[2]},
-        {"type": "ws", "stars": event.rating[3]},
-        {"type": "dn", "stars": event.rating[4]}
-      ];
+      int ratings = event.rating;
       AppetizerFeedback feedback = AppetizerFeedback(
-        id: 0,
         title: 'Feedback',
         message: event.description,
-        timestamp: DateTime.now().millisecondsSinceEpoch,
         mealId: event.mealId,
-        imageUrl: null,
-        dateIssue: DateTime.now().millisecondsSinceEpoch,
-        response: null,
+        // imageUrl: null,
         ratings: ratings,
       );
       await repo.newFeedback(feedback);

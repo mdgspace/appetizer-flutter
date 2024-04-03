@@ -11,13 +11,13 @@ class FeedbackPageState extends Equatable {
   });
 
   FeedbackPageState.initial()
-      : rating = [0, 0, 0, 0, 0],
+      : rating = 0,
         description = '',
         mealId = 0,
         submitted = false,
         error = false;
 
-  List<int> rating;
+  int rating;
   final String description;
   final int mealId;
   final bool submitted;

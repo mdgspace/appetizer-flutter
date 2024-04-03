@@ -9,13 +9,11 @@ class FeedbackTile extends StatelessWidget {
   const FeedbackTile({
     required this.title,
     required this.parentState,
-    required this.index,
     super.key,
   });
 
   final String title;
   final FeedbackPageState parentState;
-  final int index;
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +42,7 @@ class FeedbackTile extends StatelessWidget {
                     onPressed: () {
                       context.read<FeedbackTileBloc>().add(
                           FeedbackRatingChangedEvent(newRating: index + 1));
-                      parentState.rating[this.index] = index + 1;
+                      parentState.rating = index + 1;
                     },
                     icon: index < state.rating
                         ? SvgPicture.asset('assets/images/filledStar.svg')

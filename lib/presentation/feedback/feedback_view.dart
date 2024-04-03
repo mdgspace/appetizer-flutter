@@ -17,11 +17,7 @@ class FeedbackScreen extends StatelessWidget {
   final TextEditingController textController = TextEditingController();
   final int mealId;
   static const List<String> feedbackHeadings = [
-    "Ambience",
-    "Hygiene and Cleanliness",
-    "Weekly Menu",
-    "Worker and Services",
-    "Diet and Nutrition",
+    "Your Feedback",
   ];
 
   @override
@@ -54,17 +50,14 @@ class FeedbackScreen extends StatelessWidget {
                           ),
                         ),
                         6.toVerticalSizedBox,
-                        ...List.generate(feedbackHeadings.length, (ind) {
-                          return Padding(
-                            padding: EdgeInsets.symmetric(
-                                vertical: 2.toAutoScaledHeight),
-                            child: FeedbackTile(
-                              parentState: state,
-                              title: feedbackHeadings[ind],
-                              index: ind,
-                            ),
-                          );
-                        }, growable: false),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 2.toAutoScaledHeight),
+                          child: FeedbackTile(
+                            parentState: state,
+                            title: "Your Feedback",
+                          ),
+                        ),
                         2.toVerticalSizedBox,
                         Text(
                           'If any other feeback, please describe below',
@@ -103,19 +96,18 @@ class FeedbackScreen extends StatelessWidget {
                           alignment: Alignment.bottomRight,
                           child: BlackIconButton(
                             onTap: () {
-                              for (var rating in state.rating) {
-                                if (rating == 0) {
-                                  Fluttertoast.showToast(
-                                      msg: "Please rate all the categories!",
-                                      toastLength: Toast.LENGTH_SHORT,
-                                      gravity: ToastGravity.BOTTOM,
-                                      timeInSecForIosWeb: 1,
-                                      textColor: Colors.white,
-                                      backgroundColor: AppTheme.red,
-                                      fontSize: 12.toAutoScaledFont);
-                                  return;
-                                }
+                              if (state.rating == 0) {
+                                Fluttertoast.showToast(
+                                    msg: "Please rate before submitting!",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.BOTTOM,
+                                    timeInSecForIosWeb: 1,
+                                    textColor: Colors.white,
+                                    backgroundColor: AppTheme.red,
+                                    fontSize: 12.toAutoScaledFont);
+                                return;
                               }
+
                               if (state.description.trim().isEmpty) {
                                 Fluttertoast.showToast(
                                     msg: "Please describe your Feedback!",
@@ -160,7 +152,7 @@ class FeedbackScreen extends StatelessWidget {
             }
             if (state.error) {
               Fluttertoast.showToast(
-                  msg: "Unable to submit feedback!",
+                  msg: state.description,
                   toastLength: Toast.LENGTH_SHORT,
                   gravity: ToastGravity.BOTTOM,
                   timeInSecForIosWeb: 1,
