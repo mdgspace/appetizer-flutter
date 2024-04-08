@@ -46,6 +46,8 @@ class _AppetizerAppState extends State<AppetizerApp> {
           return [const LoginWrapper()];
         case NavigateTo.showHomeScreen:
           return [const HomeWrapper()];
+        case NavigateTo.showNoInternetScreen:
+          return [const NoInternetWrapper()];
         default:
           return [];
       }
