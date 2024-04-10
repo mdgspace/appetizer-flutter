@@ -40,7 +40,7 @@ class ProfilePageBloc extends Bloc<ProfilePageEvent, ProfilePageState> {
               newRoomNo: "",
               timestamp: "",
               newHostel: 0,
-              isApproved: null),
+              isApprovedByAdmin: null),
         ),
       );
     }
@@ -61,7 +61,7 @@ class ProfilePageBloc extends Bloc<ProfilePageEvent, ProfilePageState> {
             newRoomNo: "",
             timestamp: "",
             newHostel: 0,
-            isApproved: null),
+            isApprovedByAdmin: null),
       ),
     );
   }

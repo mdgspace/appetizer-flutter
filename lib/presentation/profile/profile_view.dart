@@ -93,7 +93,7 @@ class ProfileScreen extends StatelessWidget {
                                   ],
                                 ),
                                 10.toVerticalSizedBox,
-                                if (state.hostelChangeStatus.isApproved == null)
+                                if (state.hostelChangeStatus.isApprovedByAdmin == null)
                                   ProfileTextButton(
                                     title: 'Request for Hostel Change',
                                     onPressed: () {
@@ -102,7 +102,7 @@ class ProfileScreen extends StatelessWidget {
                                     horizontalPadding: 50,
                                     width: 248,
                                   ),
-                                if (state.hostelChangeStatus.isApproved != null)
+                                if (state.hostelChangeStatus.isApprovedByAdmin != null)
                                   TextButton(
                                     onPressed: () => {
                                       showDialog(
@@ -170,7 +170,7 @@ class ProfileScreen extends StatelessWidget {
                                         Align(
                                           alignment: Alignment.centerLeft,
                                           child: Text(
-                                            "Status: Pending",
+                                            "Status: ${state.hostelChangeStatus.isApprovedByAdmin! ? 'Approved by Admin' : 'Pending'}",
                                             textAlign: TextAlign.justify,
                                             style: TextStyle(
                                               color: const Color(0xFF2F2F2F),

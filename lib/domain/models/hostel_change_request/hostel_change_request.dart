@@ -11,7 +11,7 @@ class HostelChangeRequest with _$HostelChangeRequest {
       required int id,
       required String hostelCode,
       required String newRoomNo,
-      bool? isApproved,
+      bool? isApprovedByAdmin,
       required String timestamp,
       required int newHostel}) = _HostelChangeRequest;
 
