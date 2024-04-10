@@ -50,19 +50,35 @@ class ProfilePageBloc extends Bloc<ProfilePageEvent, ProfilePageState> {
       DeleteHostelChangeRequest event, Emitter<ProfilePageState> emit) async {
     emit(const ProfilePageInitialState());
     User user = await repo.getCurrentUser();
-    await repo.deleteChangeHostel();
-    emit(
-      ProfilePageFetchedState(
-        user: user,
-        hostelChangeStatus: const HostelChangeRequest(
-            user: 0,
-            id: 0,
-            hostelCode: "",
-            newRoomNo: "",
-            timestamp: "",
-            newHostel: 0,
-            isApprovedByAdmin: null),
-      ),
-    );
+    try {
+      await repo.deleteChangeHostel();
+      emit(
+        ProfilePageFetchedState(
+          user: user,
+          hostelChangeStatus: const HostelChangeRequest(
+              user: 0,
+              id: 0,
+              hostelCode: "",
+              newRoomNo: "",
+              timestamp: "",
+              newHostel: 0,
+              isApprovedByAdmin: null),
+        ),
+      );
+    } catch (e) {
+      emit(
+        ProfilePageFetchedState(
+          user: user,
+          hostelChangeStatus: const HostelChangeRequest(
+              user: 0,
+              id: 0,
+              hostelCode: "",
+              newRoomNo: "",
+              timestamp: "",
+              newHostel: 0,
+              isApprovedByAdmin: null),
+        ),
+      );
+    }
   }
 }

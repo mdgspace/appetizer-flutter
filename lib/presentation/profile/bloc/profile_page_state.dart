@@ -21,7 +21,7 @@ class ProfilePageFetchedState extends ProfilePageState {
   });
 
   final User user;
-  final dynamic hostelChangeStatus;
+  final HostelChangeRequest hostelChangeStatus;
 
   @override
   List<Object> get props => [user, hostelChangeStatus];
