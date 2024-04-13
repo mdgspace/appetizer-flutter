@@ -49,19 +49,6 @@ class FeedbackPageBloc extends Bloc<FeedbackPageEvent, FeedbackPageState> {
         ),
       );
     }
-
-    // bool submissionSuccessful = true;
-    // if (submissionSuccessful) {}
-    // else {
-    //   emit(
-    //     FeedbackPageState(
-    //       rating: event.rating,
-    //       description: event.description,
-    //       submitted: false,
-    //       error: true,
-    //     ),
-    //   );
-    // }
   }
 
   void _onDescriptionChange(FeedbackPageDescriptionChangedEvent event,
