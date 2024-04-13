@@ -59,6 +59,10 @@ class AppRoutesRegistry {
           path: AppPathsRegistry.resetPassword,
           page: ResetPasswordRoute.page,
         ),
+        CustomRoute(
+          path: AppPathsRegistry.hostelChange,
+          page: HostelChangeRoute.page,
+        ),
       ],
     ),
     CustomRoute(

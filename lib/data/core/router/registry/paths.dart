@@ -16,6 +16,7 @@ class AppPathsRegistry {
   static const String weekMenu = 'weekMenu';
   static const String leavesAndRebate = 'leavesAndRebate';
   static const String feedback = 'feedback';
+  static const String hostelChange = 'hostelChange';
   static const String resetPassword = 'resetPassword';
 
   static const String noInternetWrapper = '/noInternetWrapper';

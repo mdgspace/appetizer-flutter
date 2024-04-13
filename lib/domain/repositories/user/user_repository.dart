@@ -154,4 +154,35 @@ class UserRepository {
       throw Failure(AppConstants.GENERIC_FAILURE);
     }
   }
+
+  Future<void> postChangeHostel(String hostelCode, String roomNo) async {
+    Map<String, dynamic> map = {
+      'new_hostel_code': hostelCode,
+      'new_room_no': roomNo
+    };
+    try {
+      return await _apiService.postChangeHostel(map);
+    } catch (e) {
+      debugPrint(e.toString());
+      throw Failure(AppConstants.GENERIC_FAILURE);
+    }
+  }
+
+  Future<dynamic> getHostelChangeStatus() async {
+    try {
+      return await _apiService.getHostelChangeStatus();
+    } catch (e) {
+      debugPrint(e.toString());
+      throw Failure(AppConstants.GENERIC_FAILURE);
+    }
+  }
+
+  Future<dynamic> deleteChangeHostel() async {
+    try {
+      return await _apiService.deleteChangeHostel();
+    } catch (e) {
+      debugPrint(e.toString());
+      throw Failure(AppConstants.GENERIC_FAILURE);
+    }
+  }
 }

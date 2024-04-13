@@ -13,3 +13,10 @@ class FetchProfile extends ProfilePageEvent {
   @override
   List<Object?> get props => [];
 }
+
+class DeleteHostelChangeRequest extends ProfilePageEvent {
+  const DeleteHostelChangeRequest();
+
+  @override
+  List<Object?> get props => [];
+}

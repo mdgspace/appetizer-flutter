@@ -40,4 +40,5 @@ class ApiEndpoints {
   static const String oAuthRedirect = '/api/user/oauth/omniport/redirect/';
   static const String oAuthComplete = '/api/user/oauth/complete/';
   static const String notifications = '/api/user/message/list/';
+  static const String hostelChange = '/api/user/hostel-change/';
 }

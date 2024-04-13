@@ -57,31 +57,136 @@ class ProfileScreen extends StatelessWidget {
                             child: ProfileCard(data: state.user),
                           ),
                           Container(
-                            padding: EdgeInsets.only(
-                                top: 24.toAutoScaledHeight,
-                                bottom: 24.toAutoScaledHeight),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
+                            padding: EdgeInsets.symmetric(
+                              vertical: 24.toAutoScaledHeight,
+                              // horizontal: 43.toAutoScaledWidth,
+                            ),
+                            child: Column(
                               children: [
-                                ProfileTextButton(
-                                  title: 'Edit Profile',
-                                  onPressed: () {
-                                    const snackBar = SnackBar(
-                                      content: Text('Coming soon!'),
-                                      duration: Duration(milliseconds: 500),
-                                    );
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(snackBar);
-                                  },
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    ProfileTextButton(
+                                      title: 'Edit Profile',
+                                      onPressed: () {
+                                        const snackBar = SnackBar(
+                                          content: Text('Coming soon!'),
+                                          duration: Duration(milliseconds: 500),
+                                        );
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(snackBar);
+                                      },
+                                      horizontalPadding: 10,
+                                      width: 115,
+                                    ),
+                                    // 5.toHorizontalSizedBox,
+                                    ProfileTextButton(
+                                      title: 'Reset Password',
+                                      onPressed: () {
+                                        context.router
+                                            .push(ResetPasswordRoute());
+                                      },
+                                      horizontalPadding: 10,
+                                      width: 115,
+                                    ),
+                                  ],
                                 ),
-                                10.toHorizontalSizedBox,
-                                ProfileTextButton(
-                                  title: 'Reset Password',
-                                  onPressed: () {
-                                    context.router.push(ResetPasswordRoute());
-                                  },
-                                ),
+                                10.toVerticalSizedBox,
+                                if (state
+                                        .hostelChangeStatus.isApprovedByAdmin ==
+                                    null)
+                                  ProfileTextButton(
+                                    title: 'Request for Hostel Change',
+                                    onPressed: () {
+                                      context.router.push(HostelChangeRoute());
+                                    },
+                                    horizontalPadding: 50,
+                                    width: 248,
+                                  ),
+                                if (state
+                                        .hostelChangeStatus.isApprovedByAdmin !=
+                                    null)
+                                  TextButton(
+                                    onPressed: () => {
+                                      showDialog(
+                                          context: context,
+                                          builder: (ctx) => AlertDialog(
+                                                title: const Text(
+                                                    'Cancel Hostel Change Request'),
+                                                content: const Text(
+                                                  'You have already requested for a hostel change. Do you want to cancel it?',
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                                actions: [
+                                                  TextButton(
+                                                    onPressed: () {
+                                                      context
+                                                          .read<
+                                                              ProfilePageBloc>()
+                                                          .add(
+                                                              const DeleteHostelChangeRequest());
+                                                      ctx.router.pop();
+                                                    },
+                                                    child: const Text('Delete'),
+                                                  ),
+                                                  TextButton(
+                                                    onPressed: () =>
+                                                        ctx.router.pop(),
+                                                    child: const Text('Cancel'),
+                                                  )
+                                                ],
+                                              ))
+                                    },
+                                    child: Container(
+                                      width: 248.toAutoScaledWidth,
+                                      padding: EdgeInsets.symmetric(
+                                        vertical: 6.toAutoScaledHeight,
+                                        horizontal: 22.toAutoScaledWidth,
+                                      ),
+                                      color: const Color(0xFFF6F6F6),
+                                      child: Column(children: [
+                                        Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: Text(
+                                            "Requested for hostel change to ${state.hostelChangeStatus.hostelCode}",
+                                            style: TextStyle(
+                                              color: const Color(0xFF111111),
+                                              fontSize: 13.toAutoScaledFont,
+                                              fontFamily: 'Lato',
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                          ),
+                                        ),
+                                        Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: Text(
+                                            "New Room No: ${state.hostelChangeStatus.newRoomNo}",
+                                            textAlign: TextAlign.justify,
+                                            style: TextStyle(
+                                              color: const Color(0xFF2F2F2F),
+                                              fontSize: 12.toAutoScaledFont,
+                                              fontFamily: 'Lato',
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                          ),
+                                        ),
+                                        Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: Text(
+                                            "Status: ${state.hostelChangeStatus.isApprovedByAdmin! ? 'Approved by Admin' : 'Pending'}",
+                                            textAlign: TextAlign.justify,
+                                            style: TextStyle(
+                                              color: const Color(0xFF2F2F2F),
+                                              fontSize: 12.toAutoScaledFont,
+                                              fontFamily: 'Lato',
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                          ),
+                                        ),
+                                      ]),
+                                    ),
+                                  )
                               ],
                             ),
                           ),
@@ -136,7 +241,6 @@ class ProfileScreen extends StatelessWidget {
                   ],
                 );
               }
-
               return SizedBox(
                 height: 200.toAutoScaledHeight,
                 child: const Align(
