@@ -18,4 +18,7 @@ class AppPathsRegistry {
   static const String feedback = 'feedback';
   static const String hostelChange = 'hostelChange';
   static const String resetPassword = 'resetPassword';
+
+  static const String noInternetWrapper = '/noInternetWrapper';
+  static const String noInternetConnection = 'noInternetConnection';
 }
