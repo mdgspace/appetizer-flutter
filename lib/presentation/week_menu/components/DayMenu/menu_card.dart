@@ -128,7 +128,7 @@ class FeedbackOrCouponButton extends StatelessWidget {
         if (meal.isOutdated) {
           return GestureDetector(
             onTap: () {
-              context.router.navigate(FeedbackRoute());
+              context.router.navigate(FeedbackRoute(mealId: meal.id));
             },
             child: const FeedbackAndCouponWidget(taken: false, coupon: false),
           );

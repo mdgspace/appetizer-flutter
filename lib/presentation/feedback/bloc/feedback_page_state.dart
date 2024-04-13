@@ -1,24 +1,28 @@
 part of 'feedback_page_bloc.dart';
 
+// ignore: must_be_immutable
 class FeedbackPageState extends Equatable {
-  const FeedbackPageState({
+  FeedbackPageState({
     required this.rating,
     required this.description,
+    required this.mealId,
     required this.submitted,
     required this.error,
   });
 
-  const FeedbackPageState.initial()
-      : rating = const [0, 0, 0, 0, 0],
+  FeedbackPageState.initial()
+      : rating = 0,
         description = '',
+        mealId = 0,
         submitted = false,
         error = false;
 
-  final List<int> rating;
+  int rating;
   final String description;
+  final int mealId;
   final bool submitted;
   final bool error;
 
   @override
-  List<Object> get props => [rating, description, error];
+  List<Object> get props => [rating, description, mealId, error];
 }

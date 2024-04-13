@@ -55,7 +55,7 @@ abstract class ApiService {
   Future<List<FeedbackResponse>> responseOfFeedbacks();
 
   @POST(ApiEndpoints.newFeedback)
-  Future<AppetizerFeedback> newFeedback(
+  Future<void> newFeedback(
     @Body() Map<String, dynamic> map,
   );
 
