@@ -9,17 +9,15 @@ import 'package:appetizer/presentation/feedback/components/feedback_banner.dart'
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 @RoutePage()
 class FeedbackScreen extends StatelessWidget {
-  FeedbackScreen({super.key});
+  FeedbackScreen({required this.mealId, super.key});
   final TextEditingController textController = TextEditingController();
+  final int mealId;
   static const List<String> feedbackHeadings = [
-    "Ambience",
-    "Hygiene and Cleanliness",
-    "Weekly Menu",
-    "Worker and Services",
-    "Diet and Nutrition",
+    "Your Feedback",
   ];
 
   @override
@@ -29,7 +27,7 @@ class FeedbackScreen extends StatelessWidget {
       body: BlocProvider(
         create: (context) =>
             FeedbackPageBloc(repo: context.read<FeedbackRepository>()),
-        child: BlocBuilder<FeedbackPageBloc, FeedbackPageState>(
+        child: BlocConsumer<FeedbackPageBloc, FeedbackPageState>(
           builder: (context, state) {
             return Column(
               children: [
@@ -52,17 +50,14 @@ class FeedbackScreen extends StatelessWidget {
                           ),
                         ),
                         6.toVerticalSizedBox,
-                        ...List.generate(feedbackHeadings.length, (ind) {
-                          return Padding(
-                            padding: EdgeInsets.symmetric(
-                                vertical: 2.toAutoScaledHeight),
-                            child: FeedbackTile(
-                              parentState: state,
-                              title: feedbackHeadings[ind],
-                              index: ind,
-                            ),
-                          );
-                        }, growable: false),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 2.toAutoScaledHeight),
+                          child: FeedbackTile(
+                            parentState: state,
+                            title: "Your Feedback",
+                          ),
+                        ),
                         2.toVerticalSizedBox,
                         Text(
                           'If any other feeback, please describe below',
@@ -100,11 +95,36 @@ class FeedbackScreen extends StatelessWidget {
                         Align(
                           alignment: Alignment.bottomRight,
                           child: BlackIconButton(
-                            onTap: context.router.pop,
-                            // onTap: () => context.read<FeedbackPageBloc>().add(
-                            //     FeedbackPageSubmitEvent(
-                            //         rating: state.rating,
-                            //         description: state.description)),
+                            onTap: () {
+                              if (state.rating == 0) {
+                                Fluttertoast.showToast(
+                                    msg: "Please rate before submitting!",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.BOTTOM,
+                                    timeInSecForIosWeb: 1,
+                                    textColor: Colors.white,
+                                    backgroundColor: AppTheme.red,
+                                    fontSize: 12.toAutoScaledFont);
+                                return;
+                              }
+
+                              if (state.description.trim().isEmpty) {
+                                Fluttertoast.showToast(
+                                    msg: "Please describe your Feedback!",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.BOTTOM,
+                                    timeInSecForIosWeb: 1,
+                                    textColor: Colors.white,
+                                    backgroundColor: AppTheme.red,
+                                    fontSize: 12.toAutoScaledFont);
+                                return;
+                              }
+                              context.read<FeedbackPageBloc>().add(
+                                  FeedbackPageSubmitEvent(
+                                      mealId: mealId,
+                                      rating: state.rating,
+                                      description: state.description));
+                            },
                             title: "SUBMIT",
                             width: 102.toAutoScaledWidth,
                             icon: Icons.keyboard_double_arrow_right_sharp,
@@ -117,6 +137,29 @@ class FeedbackScreen extends StatelessWidget {
                 )
               ],
             );
+          },
+          listener: (BuildContext context, FeedbackPageState state) {
+            if (state.submitted) {
+              Fluttertoast.showToast(
+                  msg: "Feedback submitted successfully!",
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.BOTTOM,
+                  timeInSecForIosWeb: 1,
+                  textColor: Colors.white,
+                  backgroundColor: AppTheme.green,
+                  fontSize: 12.toAutoScaledFont);
+              context.router.pop();
+            }
+            if (state.error) {
+              Fluttertoast.showToast(
+                  msg: state.description,
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.BOTTOM,
+                  timeInSecForIosWeb: 1,
+                  textColor: Colors.white,
+                  backgroundColor: AppTheme.red,
+                  fontSize: 16.0);
+            }
           },
         ),
       ),
