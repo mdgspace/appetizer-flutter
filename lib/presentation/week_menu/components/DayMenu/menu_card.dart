@@ -142,24 +142,16 @@ class FeedbackOrCouponButton extends StatelessWidget {
               }
             },
             onTap: () {
-              if (!meal.isCouponOutdated) {
-                // TODO: show dialog box and then add toggle event
-                context.read<WeekMenuBlocBloc>().add(MealCouponEvent(
-                      coupon: meal.couponStatus,
-                      mealId: meal.id,
-                    ));
-              } else if (meal.couponStatus.status == CouponStatusEnum.A) {
+              if (meal.couponStatus.status == CouponStatusEnum.A) {
                 showCouponDialog(
                   "Coupon no: ${meal.couponStatus.id!}",
                   context,
                 );
               } else {
-                const snackBar = SnackBar(
-                  content: Text(
-                    "Time's up, coupon applications closed",
-                  ),
-                );
-                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                context.read<WeekMenuBlocBloc>().add(MealCouponEvent(
+                      coupon: meal.couponStatus,
+                      mealId: meal.id,
+                    ));
               }
             },
             child: FeedbackAndCouponWidget(

@@ -175,6 +175,10 @@ class WeekMenuBlocBloc extends Bloc<WeekMenuBlocEvent, WeekMenuBlocState> {
       for (Meal meal in weekMenu.dayMenus[dayNumber].meals) {
         if (meal.id == event.mealId) {
           meal.couponStatus = newCouponStatus;
+          if (meal.couponStatus.status == CouponStatusEnum.N) {
+            emit((state as WeekMenuBlocDisplayState)
+                .copyWith(error: "Time's up, coupon applications closed!"));
+          }
         }
       }
       emit((state as WeekMenuBlocDisplayState).copyWith(weekMenu: weekMenu));
