@@ -18,7 +18,7 @@ class WeekMenuScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<WeekMenuBlocBloc, WeekMenuBlocState>(
+    return BlocConsumer<WeekMenuBlocBloc, WeekMenuBlocState>(
       builder: (context, state) {
         return Column(
           children: [
@@ -83,6 +83,16 @@ class WeekMenuScreen extends StatelessWidget {
             ]
           ],
         );
+      },
+      listener: (BuildContext context, WeekMenuBlocState state) {
+        if (state is WeekMenuBlocDisplayState && state.error.isNotEmpty) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(state.error),
+              backgroundColor: AppTheme.customRed,
+            ),
+          );
+        }
       },
     );
   }

@@ -182,7 +182,6 @@ class Meal {
   String? secretCode;
   bool isOutdated;
   bool isLeaveToggleOutdated;
-  bool isCouponOutdated;
   DateTime startDateTime;
   DateTime endDateTime;
 
@@ -201,7 +200,6 @@ class Meal {
     this.secretCode,
     required this.isOutdated,
     required this.isLeaveToggleOutdated,
-    required this.isCouponOutdated,
     required this.startDateTime,
     required this.endDateTime,
     required this.couponStatus,
@@ -228,10 +226,6 @@ class Meal {
         isLeaveToggleOutdated:
             !DateTimeUtils.getDateTimeFromDateAndTime(date, json['start_time'])
                 .subtract(outdatedTime)
-                .isAfter(DateTime.now()),
-        isCouponOutdated:
-            !DateTimeUtils.getDateTimeFromDateAndTime(date, json['start_time'])
-                .subtract(outdatedTime * 2)
                 .isAfter(DateTime.now()),
         startDateTime:
             DateTimeUtils.getDateTimeFromDateAndTime(date, json['start_time']),
@@ -291,7 +285,6 @@ class Meal {
       isLeaveToggleOutdated:
           isLeaveToggleOutdated ?? this.isLeaveToggleOutdated,
       isOutdated: isOutdated ?? this.isOutdated,
-      isCouponOutdated: isCouponOutdated ?? this.isCouponOutdated,
       startDateTime: startDateTime ?? this.startDateTime,
       endDateTime: endDateTime ?? this.endDateTime,
     );
