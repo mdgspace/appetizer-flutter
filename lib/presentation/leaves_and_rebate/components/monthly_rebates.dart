@@ -98,9 +98,15 @@ class _MonthlyRebatesState extends State<MonthlyRebates> {
                     onTap: () async {
                       DateTime? newDateTime = await showMonthPicker(
                         context: context,
-                        headerColor: AppTheme.primary,
-                        selectedMonthBackgroundColor: AppTheme.primary,
-                        unselectedMonthTextColor: AppTheme.primary,
+                        monthPickerDialogSettings: const MonthPickerDialogSettings(
+                          headerSettings: PickerHeaderSettings(
+                            headerBackgroundColor: AppTheme.primary
+                          ),
+                          buttonsSettings: PickerButtonsSettings(
+                            selectedMonthBackgroundColor: AppTheme.primary,
+                            unselectedMonthsTextColor: AppTheme.primary,
+                          ),
+                        ),
                         confirmWidget: const Text(
                           'OK',
                           style: TextStyle(color: AppTheme.primary),
