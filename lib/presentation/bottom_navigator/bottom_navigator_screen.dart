@@ -63,6 +63,7 @@ class BottomNavigatorScreen extends StatelessWidget {
             body: child,
             bottomNavigationBar: BottomNavigationBar(
               key: UniqueKey(),
+              backgroundColor: Colors.white,
               currentIndex: tabRouter.activeIndex,
               onTap: (index) {
                 tabRouter.setActiveIndex(index);
