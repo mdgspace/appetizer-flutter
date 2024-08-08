@@ -29,7 +29,7 @@ NOTE: Appetizer is currently functional for the students of IIT Roorkee.
 This section is intended for organizational administrators who wish to use this tool. For comprehensive installation guidelines, please refer to this [documentation](./docs/admin/installation.md).
  
 ## License
-This project is licensed under the MIT License - see the [AGPL v3](./LICENSE.md) file for details.
+This project is licensed - see the [AGPL v3](./LICENSE.md) file for details.
  
 ## Contributing
 We welcome pull requests. If you're considering significant changes, please initiate a discussion by opening an issue first. A detailed description of the directory structure is available in this [documentation](./docs/admin/directory_structure.md).
