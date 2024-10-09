@@ -8,7 +8,7 @@ env:
   GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
   FIREBASE_OPTIONS: ${{ secrets.FIREBASE_OPTIONS }}
   FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
-  PROD_BASE_URL: ${{ secrets.PROD_BASE_URL }}
+  PROD_BASE_URL: ${{ secrets.BASE_URL }}
   SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
   FASTLANE_SUPPLY_JSON_KEY: ${{ secrets.FASTLANE_SUPPLY_JSON_KEY }}
   RELEASE_KEYSTORE: ${{ secrets.RELEASE_KEYSTORE }}
@@ -39,7 +39,7 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: "stable"
-          flutter-version: 3.19.0
+          flutter-version: 3.24.x
 
       # Get flutter dependencies.
       - run: flutter pub get
@@ -78,7 +78,7 @@ jobs:
 
       - name: 'Build prod appbundle'
         if: "!contains(github.event.release.tag_name, 'internal')"
-        run: flutter build appbundle --dart-define=SENTRY_DSN=${SENTRY_DSN} --dart-define=BASE_URL=${PROD_BASE_URL} --dart-define=OAUTH_REDIRECT_URI=${PROD_BASE_URL}/oauth/
+        run: flutter build appbundle --dart-define=SENTRY_DSN=${SENTRY_DSN} --dart-define=BASE_URL=${PROD_BASE_URL} --dart-define=OAUTH_REDIRECT_URI=${PROD_BASE_URL}/api/user/oauth/redirect/
 
       # Run fastlane internal
       - uses: maierj/fastlane-action@v1.4.0

@@ -41,7 +41,7 @@ class ResetPasswordScreen extends StatelessWidget {
                       content: Text('Password reset successfully!'),
                       backgroundColor: Colors.green,
                     ));
-                    context.router.pop();
+                    context.router.maybePop();
                   }
                 },
                 builder: (context, state) {
