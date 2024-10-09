@@ -126,13 +126,13 @@ class ProfileScreen extends StatelessWidget {
                                                               ProfilePageBloc>()
                                                           .add(
                                                               const DeleteHostelChangeRequest());
-                                                      ctx.router.pop();
+                                                      ctx.router.maybePop();
                                                     },
                                                     child: const Text('Delete'),
                                                   ),
                                                   TextButton(
                                                     onPressed: () =>
-                                                        ctx.router.pop(),
+                                                        ctx.router.maybePop(),
                                                     child: const Text('Cancel'),
                                                   )
                                                 ],
