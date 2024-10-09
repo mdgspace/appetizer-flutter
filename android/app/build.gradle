@@ -53,7 +53,7 @@ android {
     defaultConfig {
         applicationId "in.ac.iitr.mdg.appetizer"
         minSdkVersion 21
-        targetSdkVersion flutter.targetSdkVersion
+        targetSdkVersion 34
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
