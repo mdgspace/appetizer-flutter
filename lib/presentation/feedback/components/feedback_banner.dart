@@ -14,7 +14,7 @@ class FeedbackBanner extends StatelessWidget {
       child: Row(
         children: [
           IconButton(
-            onPressed: context.router.pop,
+            onPressed: context.router.maybePop,
             icon: const Icon(
               Icons.arrow_back,
               color: Colors.white,

@@ -34,7 +34,7 @@ class OAuthWebScreen extends StatelessWidget {
                   onUpdateVisitedHistory: (_, uri, __) {
                     if (uri != null) {
                       if (uri.toString().contains('https://channeli.in/feed')) {
-                        context.router.pop();
+                        context.router.maybePop();
                         //TODO: show dialog box
                         // SnackBarUtils.showDark('Error', 'Permission Denied!');
                       }
@@ -49,7 +49,7 @@ class OAuthWebScreen extends StatelessWidget {
                     var params = url.split('?').last.split('&');
                     if (params.first.contains('code')) {
                       var code = params.first.split('=').last;
-                      context.router.pop(code);
+                      context.router.maybePop(code);
                     }
 
                     return NavigationActionPolicy.CANCEL;

@@ -148,7 +148,7 @@ class FeedbackScreen extends StatelessWidget {
                   textColor: Colors.white,
                   backgroundColor: AppTheme.green,
                   fontSize: 12.toAutoScaledFont);
-              context.router.pop();
+              context.router.maybePop();
             }
             if (state.error) {
               Fluttertoast.showToast(

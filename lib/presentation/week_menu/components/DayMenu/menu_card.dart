@@ -92,7 +92,7 @@ class CouponDialogBox extends StatelessWidget {
           Align(
             alignment: Alignment.topRight,
             child: GestureDetector(
-              onTap: context.router.pop,
+              onTap: context.router.maybePop,
               child: const Padding(
                 padding: EdgeInsets.all(2.0),
                 child: Icon(Icons.close),
