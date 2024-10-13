@@ -76,9 +76,12 @@ jobs:
         if: "contains(github.event.release.tag_name, 'internal')"
         run: flutter build appbundle --dart-define=SENTRY_DSN=${SENTRY_DSN}
 
+      - run: echo "${PROD_BASE_URL}"
+      
       - name: 'Build prod appbundle'
         if: "!contains(github.event.release.tag_name, 'internal')"
-        run: flutter build appbundle --dart-define=SENTRY_DSN=${SENTRY_DSN} --dart-define=BASE_URL=${PROD_BASE_URL} --dart-define=OAUTH_REDIRECT_URI=${PROD_BASE_URL}/api/user/oauth/redirect/
+        run: flutter build appbundle --dart-define=SENTRY_DSN=${SENTRY_DSN} --dart-define=BASE_URL=${PROD_BASE_URL} --dart-define=OAUTH_REDIRECT_URI=${PROD_BASE_URL}/api/user/oauth/redirect/ 
+
 
       # Run fastlane internal
       - uses: maierj/fastlane-action@v1.4.0
