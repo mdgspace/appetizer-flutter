@@ -990,26 +990,26 @@ packages:
     dependency: transitive
     description:
       name: sentry
-      sha256: "57514bc72d441ffdc463f498d6886aa586a2494fa467a1eb9d649c28010d7ee3"
+      sha256: "576ad83415102ba2060142a6701611abc6e67a55af1d7ab339cedd3ba1b0f84c"
       url: "https://pub.dev"
     source: hosted
-    version: "7.20.2"
+    version: "8.12.0"
   sentry_dio:
     dependency: "direct main"
     description:
       name: sentry_dio
-      sha256: aa7b9cebe479f143a0e302127d73d4086ef11ccfe21f0f4aa75e1139839402b9
+      sha256: fd5dcef32e6920730110ae66267e32bcc1d1f64ce18ba68ff54f0e6779a787f4
       url: "https://pub.dev"
     source: hosted
-    version: "7.20.2"
+    version: "8.12.0"
   sentry_flutter:
     dependency: "direct main"
     description:
       name: sentry_flutter
-      sha256: "9723d58470ca43a360681ddd26abb71ca7b815f706bc8d3747afd054cf639ded"
+      sha256: dc3761e8659839cc67a18432d9f12e5531affb7ff68e196dbb56846909b5dfdc
       url: "https://pub.dev"
     source: hosted
-    version: "7.20.2"
+    version: "8.12.0"
   shared_preferences:
     dependency: transitive
     description:

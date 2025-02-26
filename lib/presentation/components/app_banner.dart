@@ -12,7 +12,7 @@ class AppBanner extends StatelessWidget {
     return Column(
       children: [
         Container(
-          height: height + 12.toAutoScaledHeight,
+          height: height + 22.toAutoScaledHeight,
           width: double.maxFinite,
           decoration: const BoxDecoration(
               image: DecorationImage(

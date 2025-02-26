@@ -1,157 +1,172 @@
 PODS:
-  - Firebase/Analytics (10.12.0):
+  - Firebase/Analytics (10.22.0):
     - Firebase/Core
-  - Firebase/Core (10.12.0):
+  - Firebase/Core (10.22.0):
     - Firebase/CoreOnly
-    - FirebaseAnalytics (~> 10.12.0)
-  - Firebase/CoreOnly (10.12.0):
-    - FirebaseCore (= 10.12.0)
-  - Firebase/Messaging (10.12.0):
+    - FirebaseAnalytics (~> 10.22.0)
+  - Firebase/CoreOnly (10.22.0):
+    - FirebaseCore (= 10.22.0)
+  - Firebase/Messaging (10.22.0):
     - Firebase/CoreOnly
-    - FirebaseMessaging (~> 10.12.0)
-  - Firebase/RemoteConfig (10.12.0):
+    - FirebaseMessaging (~> 10.22.0)
+  - Firebase/RemoteConfig (10.22.0):
     - Firebase/CoreOnly
-    - FirebaseRemoteConfig (~> 10.12.0)
-  - firebase_analytics (10.4.5):
-    - Firebase/Analytics (= 10.12.0)
+    - FirebaseRemoteConfig (~> 10.22.0)
+  - firebase_analytics (10.8.9):
+    - Firebase/Analytics (= 10.22.0)
     - firebase_core
     - Flutter
-  - firebase_core (2.15.1):
-    - Firebase/CoreOnly (= 10.12.0)
+  - firebase_core (2.27.0):
+    - Firebase/CoreOnly (= 10.22.0)
     - Flutter
-  - firebase_messaging (14.6.7):
-    - Firebase/Messaging (= 10.12.0)
+  - firebase_messaging (14.7.19):
+    - Firebase/Messaging (= 10.22.0)
     - firebase_core
     - Flutter
-  - firebase_remote_config (4.2.5):
-    - Firebase/RemoteConfig (= 10.12.0)
+  - firebase_remote_config (4.3.17):
+    - Firebase/RemoteConfig (= 10.22.0)
     - firebase_core
     - Flutter
-  - FirebaseABTesting (10.15.0):
+  - FirebaseABTesting (10.29.0):
     - FirebaseCore (~> 10.0)
-  - FirebaseAnalytics (10.12.0):
-    - FirebaseAnalytics/AdIdSupport (= 10.12.0)
+  - FirebaseAnalytics (10.22.0):
+    - FirebaseAnalytics/AdIdSupport (= 10.22.0)
     - FirebaseCore (~> 10.0)
     - FirebaseInstallations (~> 10.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.11)
     - GoogleUtilities/MethodSwizzler (~> 7.11)
     - GoogleUtilities/Network (~> 7.11)
     - "GoogleUtilities/NSData+zlib (~> 7.11)"
-    - nanopb (< 2.30910.0, >= 2.30908.0)
-  - FirebaseAnalytics/AdIdSupport (10.12.0):
+    - nanopb (< 2.30911.0, >= 2.30908.0)
+  - FirebaseAnalytics/AdIdSupport (10.22.0):
     - FirebaseCore (~> 10.0)
     - FirebaseInstallations (~> 10.0)
-    - GoogleAppMeasurement (= 10.12.0)
+    - GoogleAppMeasurement (= 10.22.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.11)
     - GoogleUtilities/MethodSwizzler (~> 7.11)
     - GoogleUtilities/Network (~> 7.11)
     - "GoogleUtilities/NSData+zlib (~> 7.11)"
-    - nanopb (< 2.30910.0, >= 2.30908.0)
-  - FirebaseCore (10.12.0):
+    - nanopb (< 2.30911.0, >= 2.30908.0)
+  - FirebaseCore (10.22.0):
     - FirebaseCoreInternal (~> 10.0)
-    - GoogleUtilities/Environment (~> 7.8)
-    - GoogleUtilities/Logger (~> 7.8)
-  - FirebaseCoreInternal (10.15.0):
+    - GoogleUtilities/Environment (~> 7.12)
+    - GoogleUtilities/Logger (~> 7.12)
+  - FirebaseCoreInternal (10.29.0):
     - "GoogleUtilities/NSData+zlib (~> 7.8)"
-  - FirebaseInstallations (10.15.0):
+  - FirebaseInstallations (10.29.0):
     - FirebaseCore (~> 10.0)
     - GoogleUtilities/Environment (~> 7.8)
     - GoogleUtilities/UserDefaults (~> 7.8)
     - PromisesObjC (~> 2.1)
-  - FirebaseMessaging (10.12.0):
+  - FirebaseMessaging (10.22.0):
     - FirebaseCore (~> 10.0)
     - FirebaseInstallations (~> 10.0)
-    - GoogleDataTransport (~> 9.2)
+    - GoogleDataTransport (~> 9.3)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.8)
     - GoogleUtilities/Environment (~> 7.8)
     - GoogleUtilities/Reachability (~> 7.8)
     - GoogleUtilities/UserDefaults (~> 7.8)
-    - nanopb (< 2.30910.0, >= 2.30908.0)
-  - FirebaseRemoteConfig (10.12.0):
+    - nanopb (< 2.30911.0, >= 2.30908.0)
+  - FirebaseRemoteConfig (10.22.0):
     - FirebaseABTesting (~> 10.0)
     - FirebaseCore (~> 10.0)
     - FirebaseInstallations (~> 10.0)
+    - FirebaseSharedSwift (~> 10.0)
     - GoogleUtilities/Environment (~> 7.8)
     - "GoogleUtilities/NSData+zlib (~> 7.8)"
+  - FirebaseSharedSwift (10.29.0)
   - Flutter (1.0.0)
-  - flutter_inappwebview (0.0.1):
+  - flutter_inappwebview_ios (0.0.1):
     - Flutter
-    - flutter_inappwebview/Core (= 0.0.1)
-    - OrderedSet (~> 5.0)
-  - flutter_inappwebview/Core (0.0.1):
+    - flutter_inappwebview_ios/Core (= 0.0.1)
+    - OrderedSet (~> 6.0.3)
+  - flutter_inappwebview_ios/Core (0.0.1):
     - Flutter
-    - OrderedSet (~> 5.0)
+    - OrderedSet (~> 6.0.3)
   - flutter_native_splash (0.0.1):
     - Flutter
   - fluttertoast (0.0.2):
     - Flutter
     - Toast
-  - GoogleAppMeasurement (10.12.0):
-    - GoogleAppMeasurement/AdIdSupport (= 10.12.0)
+  - GoogleAppMeasurement (10.22.0):
+    - GoogleAppMeasurement/AdIdSupport (= 10.22.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.11)
     - GoogleUtilities/MethodSwizzler (~> 7.11)
     - GoogleUtilities/Network (~> 7.11)
     - "GoogleUtilities/NSData+zlib (~> 7.11)"
-    - nanopb (< 2.30910.0, >= 2.30908.0)
-  - GoogleAppMeasurement/AdIdSupport (10.12.0):
-    - GoogleAppMeasurement/WithoutAdIdSupport (= 10.12.0)
+    - nanopb (< 2.30911.0, >= 2.30908.0)
+  - GoogleAppMeasurement/AdIdSupport (10.22.0):
+    - GoogleAppMeasurement/WithoutAdIdSupport (= 10.22.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.11)
     - GoogleUtilities/MethodSwizzler (~> 7.11)
     - GoogleUtilities/Network (~> 7.11)
     - "GoogleUtilities/NSData+zlib (~> 7.11)"
-    - nanopb (< 2.30910.0, >= 2.30908.0)
-  - GoogleAppMeasurement/WithoutAdIdSupport (10.12.0):
+    - nanopb (< 2.30911.0, >= 2.30908.0)
+  - GoogleAppMeasurement/WithoutAdIdSupport (10.22.0):
     - GoogleUtilities/AppDelegateSwizzler (~> 7.11)
     - GoogleUtilities/MethodSwizzler (~> 7.11)
     - GoogleUtilities/Network (~> 7.11)
     - "GoogleUtilities/NSData+zlib (~> 7.11)"
-    - nanopb (< 2.30910.0, >= 2.30908.0)
-  - GoogleDataTransport (9.2.5):
+    - nanopb (< 2.30911.0, >= 2.30908.0)
+  - GoogleDataTransport (9.4.1):
     - GoogleUtilities/Environment (~> 7.7)
-    - nanopb (< 2.30910.0, >= 2.30908.0)
+    - nanopb (< 2.30911.0, >= 2.30908.0)
     - PromisesObjC (< 3.0, >= 1.2)
-  - GoogleUtilities/AppDelegateSwizzler (7.11.5):
+  - GoogleUtilities/AppDelegateSwizzler (7.13.3):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
     - GoogleUtilities/Network
-  - GoogleUtilities/Environment (7.11.5):
+    - GoogleUtilities/Privacy
+  - GoogleUtilities/Environment (7.13.3):
+    - GoogleUtilities/Privacy
     - PromisesObjC (< 3.0, >= 1.2)
-  - GoogleUtilities/Logger (7.11.5):
+  - GoogleUtilities/Logger (7.13.3):
     - GoogleUtilities/Environment
-  - GoogleUtilities/MethodSwizzler (7.11.5):
+    - GoogleUtilities/Privacy
+  - GoogleUtilities/MethodSwizzler (7.13.3):
     - GoogleUtilities/Logger
-  - GoogleUtilities/Network (7.11.5):
+    - GoogleUtilities/Privacy
+  - GoogleUtilities/Network (7.13.3):
     - GoogleUtilities/Logger
     - "GoogleUtilities/NSData+zlib"
+    - GoogleUtilities/Privacy
     - GoogleUtilities/Reachability
-  - "GoogleUtilities/NSData+zlib (7.11.5)"
-  - GoogleUtilities/Reachability (7.11.5):
+  - "GoogleUtilities/NSData+zlib (7.13.3)":
+    - GoogleUtilities/Privacy
+  - GoogleUtilities/Privacy (7.13.3)
+  - GoogleUtilities/Reachability (7.13.3):
     - GoogleUtilities/Logger
-  - GoogleUtilities/UserDefaults (7.11.5):
+    - GoogleUtilities/Privacy
+  - GoogleUtilities/UserDefaults (7.13.3):
     - GoogleUtilities/Logger
-  - nanopb (2.30909.0):
-    - nanopb/decode (= 2.30909.0)
-    - nanopb/encode (= 2.30909.0)
-  - nanopb/decode (2.30909.0)
-  - nanopb/encode (2.30909.0)
-  - OrderedSet (5.0.0)
+    - GoogleUtilities/Privacy
+  - Mixpanel-swift (4.3.0):
+    - Mixpanel-swift/Complete (= 4.3.0)
+  - Mixpanel-swift/Complete (4.3.0)
+  - mixpanel_flutter (2.3.3):
+    - Flutter
+    - Mixpanel-swift (= 4.3.0)
+  - nanopb (2.30910.0):
+    - nanopb/decode (= 2.30910.0)
+    - nanopb/encode (= 2.30910.0)
+  - nanopb/decode (2.30910.0)
+  - nanopb/encode (2.30910.0)
+  - OrderedSet (6.0.3)
   - package_info_plus (0.4.5):
     - Flutter
   - path_provider_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
-  - PromisesObjC (2.3.1)
-  - Sentry/HybridSDK (8.9.1):
-    - SentryPrivate (= 8.9.1)
-  - sentry_flutter (0.0.1):
+  - PromisesObjC (2.4.0)
+  - Sentry/HybridSDK (8.42.0)
+  - sentry_flutter (8.12.0):
     - Flutter
     - FlutterMacOS
-    - Sentry/HybridSDK (= 8.9.1)
-  - SentryPrivate (8.9.1)
+    - Sentry/HybridSDK (= 8.42.0)
   - shared_preferences_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
-  - Toast (4.0.0)
+  - Toast (4.1.1)
   - url_launcher_ios (0.0.1):
     - Flutter
 
@@ -161,9 +176,10 @@ DEPENDENCIES:
   - firebase_messaging (from `.symlinks/plugins/firebase_messaging/ios`)
   - firebase_remote_config (from `.symlinks/plugins/firebase_remote_config/ios`)
   - Flutter (from `Flutter`)
-  - flutter_inappwebview (from `.symlinks/plugins/flutter_inappwebview/ios`)
+  - flutter_inappwebview_ios (from `.symlinks/plugins/flutter_inappwebview_ios/ios`)
   - flutter_native_splash (from `.symlinks/plugins/flutter_native_splash/ios`)
   - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
+  - mixpanel_flutter (from `.symlinks/plugins/mixpanel_flutter/ios`)
   - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - sentry_flutter (from `.symlinks/plugins/sentry_flutter/ios`)
@@ -180,14 +196,15 @@ SPEC REPOS:
     - FirebaseInstallations
     - FirebaseMessaging
     - FirebaseRemoteConfig
+    - FirebaseSharedSwift
     - GoogleAppMeasurement
     - GoogleDataTransport
     - GoogleUtilities
+    - Mixpanel-swift
     - nanopb
     - OrderedSet
     - PromisesObjC
     - Sentry
-    - SentryPrivate
     - Toast
 
 EXTERNAL SOURCES:
@@ -201,12 +218,14 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/firebase_remote_config/ios"
   Flutter:
     :path: Flutter
-  flutter_inappwebview:
-    :path: ".symlinks/plugins/flutter_inappwebview/ios"
+  flutter_inappwebview_ios:
+    :path: ".symlinks/plugins/flutter_inappwebview_ios/ios"
   flutter_native_splash:
     :path: ".symlinks/plugins/flutter_native_splash/ios"
   fluttertoast:
     :path: ".symlinks/plugins/fluttertoast/ios"
+  mixpanel_flutter:
+    :path: ".symlinks/plugins/mixpanel_flutter/ios"
   package_info_plus:
     :path: ".symlinks/plugins/package_info_plus/ios"
   path_provider_foundation:
@@ -219,37 +238,39 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/url_launcher_ios/ios"
 
 SPEC CHECKSUMS:
-  Firebase: 07150e75d142fb9399f6777fa56a187b17f833a0
-  firebase_analytics: 3bdcd8b68b7b8ccf28bbcdcfb994309f6232f873
-  firebase_core: 4a3246a02f828a01c74a2c26427037786d90f17f
-  firebase_messaging: 0b4f7997f491343b90d9300af54fe55c72135833
-  firebase_remote_config: 7a8dac1be55303b927ddda80c882f329c6de6b80
-  FirebaseABTesting: 7fa3bca17f79ac433301d20d5cd33401f7738dca
-  FirebaseAnalytics: 0270389efbe3022b54ec4588862dabec3477ee98
-  FirebaseCore: f86a1394906b97ac445ae49c92552a9425831bed
-  FirebaseCoreInternal: 2f4bee5ed00301b5e56da0849268797a2dd31fb4
-  FirebaseInstallations: cae95cab0f965ce05b805189de1d4c70b11c76fb
-  FirebaseMessaging: bb2c4f6422a753038fe137d90ae7c1af57251316
-  FirebaseRemoteConfig: bc7f260e6596956fafbb532443c19bd3c30f5258
-  Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
-  flutter_inappwebview: bfd58618f49dc62f2676de690fc6dcda1d6c3721
-  flutter_native_splash: 52501b97d1c0a5f898d687f1646226c1f93c56ef
-  fluttertoast: fafc4fa4d01a6a9e4f772ecd190ffa525e9e2d9c
-  GoogleAppMeasurement: 2d800fab85e7848b1e66a6f8ce5bca06c5aad892
-  GoogleDataTransport: 54dee9d48d14580407f8f5fbf2f496e92437a2f2
-  GoogleUtilities: 13e2c67ede716b8741c7989e26893d151b2b2084
-  nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
-  OrderedSet: aaeb196f7fef5a9edf55d89760da9176ad40b93c
-  package_info_plus: fd030dabf36271f146f1f3beacd48f564b0f17f7
-  path_provider_foundation: 29f094ae23ebbca9d3d0cec13889cd9060c0e943
-  PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
-  Sentry: e3203780941722a1fcfee99e351de14244c7f806
-  sentry_flutter: 8f0ffd53088e6a4d50c095852c5cad9e4405025c
-  SentryPrivate: 5e3683390f66611fc7c6215e27645873adb55d13
-  shared_preferences_foundation: 5b919d13b803cadd15ed2dc053125c68730e5126
-  Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
-  url_launcher_ios: 08a3dfac5fb39e8759aeb0abbd5d9480f30fc8b4
+  Firebase: 797fd7297b7e1be954432743a0b3f90038e45a71
+  firebase_analytics: 70651a3039e73e5878dd5bb832ac9154c30b5bb5
+  firebase_core: 2a80983e98480c7f02ff001358621c8d7f1ff8f0
+  firebase_messaging: 879b396d2be7aa1eaf044d50d2407d24c971b934
+  firebase_remote_config: 72d913f342a8c0c775a892e575309f482b1a4530
+  FirebaseABTesting: d87f56707159bae64e269757a6e963d490f2eebe
+  FirebaseAnalytics: 8d0ff929c63b7f72260f332b86ccf569776b75d3
+  FirebaseCore: 0326ec9b05fbed8f8716cddbf0e36894a13837f7
+  FirebaseCoreInternal: df84dd300b561c27d5571684f389bf60b0a5c934
+  FirebaseInstallations: 913cf60d0400ebd5d6b63a28b290372ab44590dd
+  FirebaseMessaging: 9f71037fd9db3376a4caa54e5a3949d1027b4b6e
+  FirebaseRemoteConfig: e1b992a94d3674dddbcaf5d0d31a0312156ceb1c
+  FirebaseSharedSwift: 20530f495084b8d840f78a100d8c5ee613375f6e
+  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  flutter_inappwebview_ios: b89ba3482b96fb25e00c967aae065701b66e9b99
+  flutter_native_splash: 35ddbc7228eafcb3969dcc5f1fbbe27c1145a4f0
+  fluttertoast: eaafdac812d1d69931004e881c87a8643b1c9111
+  GoogleAppMeasurement: ccefe3eac9b0aa27f96066809fb1a7fe4b462626
+  GoogleDataTransport: 6c09b596d841063d76d4288cc2d2f42cc36e1e2a
+  GoogleUtilities: ea963c370a38a8069cc5f7ba4ca849a60b6d7d15
+  Mixpanel-swift: 2192b9a24cf41b870749e4e0e10fbc9822bb2b4a
+  mixpanel_flutter: d84097a22c87f32fbe1c7f4991c8c357f18016c1
+  nanopb: 438bc412db1928dac798aa6fd75726007be04262
+  OrderedSet: e539b66b644ff081c73a262d24ad552a69be3a94
+  package_info_plus: 566e1b7a2f3900e4b0020914ad3fc051dcc95596
+  path_provider_foundation: 080d55be775b7414fd5a5ef3ac137b97b097e564
+  PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
+  Sentry: 38ed8bf38eab5812787274bf591e528074c19e02
+  sentry_flutter: a72ca0eb6e78335db7c4ddcddd1b9f6c8ed5b764
+  shared_preferences_foundation: 9e1978ff2562383bd5676f64ec4e9aa8fa06a6f7
+  Toast: 1f5ea13423a1e6674c4abdac5be53587ae481c4e
+  url_launcher_ios: 694010445543906933d732453a59da0a173ae33d
 
-PODFILE CHECKSUM: 70d9d25280d0dd177a5f637cdb0f0b0b12c6a189
+PODFILE CHECKSUM: 7be2f5f74864d463a8ad433546ed1de7e0f29aef
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.16.2
