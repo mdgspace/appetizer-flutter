@@ -23,12 +23,12 @@ dependencies:
   firebase_remote_config: ^4.2.4
   flutter_screenutil: ^5.7.0
   get: ^4.6.5
-  package_info_plus: ^5.0.1
+  package_info_plus: ^9.0.0
   get_it: ^7.6.0
-  intl: ^0.19.0
+  intl: ^0.20.2
   path_provider: ^2.0.15
   bloc: ^8.1.2
-  fluttertoast: ^8.2.2
+  fluttertoast: ^9.0.0
   fswitch_nullsafety: ^2.0.2
   flutter_svg: ^2.0.7
   google_fonts: ^6.1.0
