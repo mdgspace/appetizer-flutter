@@ -73,7 +73,8 @@ class FeedbackScreen extends StatelessWidget {
                           title: "Description",
                           controller: textController,
                           titleStyle: TextStyle(
-                            color: Colors.black.withOpacity(0.5400000214576721),
+                            color: Colors.black
+                                .withValues(alpha: 0.5400000214576721),
                             fontSize: 12.toAutoScaledFont,
                             fontFamily: 'Open Sans',
                             fontWeight: FontWeight.w400,

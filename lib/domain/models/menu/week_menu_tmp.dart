@@ -300,8 +300,8 @@ class Meal {
         return 'Snacks';
       case MealType.D:
         return 'Dinner';
-      default:
-        return 'Meal';
+      // default:
+      //   return 'Meal';
     }
   }
 }

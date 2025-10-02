@@ -244,7 +244,7 @@ class HostelChangeScreen extends StatelessWidget {
                                   border: OutlineInputBorder(
                                     borderSide: BorderSide(
                                         color: const Color(0xFF111111)
-                                            .withOpacity(0.25)),
+                                            .withValues(alpha: 0.25)),
                                     borderRadius: BorderRadius.circular(5),
                                   ),
                                   contentPadding: EdgeInsets.symmetric(

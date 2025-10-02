@@ -26,7 +26,7 @@ class ProfilePhoto extends StatelessWidget {
       height: 124.toAutoScaledHeight,
       child: Container(
         decoration: BoxDecoration(
-          color: AppTheme.primary.withOpacity(0.5),
+          color: AppTheme.primary.withValues(alpha: 0.5),
           shape: BoxShape.circle,
         ),
         child: Center(

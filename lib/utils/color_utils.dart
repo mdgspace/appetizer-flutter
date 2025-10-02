@@ -20,8 +20,8 @@ class ColorUtils {
       case LeaveStatusEnum.U:
         return AppTheme.blue;
 
-      default:
-        return AppTheme.white;
+      // default:
+      //   return AppTheme.white;
     }
   }
 
@@ -43,8 +43,8 @@ class ColorUtils {
       case SwitchStatusEnum.U:
         return AppTheme.grey;
 
-      default:
-        return Colors.transparent;
+      // default:
+      //   return Colors.transparent;
     }
   }
 }

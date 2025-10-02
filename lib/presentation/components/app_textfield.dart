@@ -47,7 +47,7 @@ class AppTextField extends StatelessWidget {
           border: border ??
               OutlineInputBorder(
                 borderSide: BorderSide(
-                    color: const Color(0xFF111111).withOpacity(0.25)),
+                    color: const Color(0xFF111111).withValues(alpha: 0.25)),
                 borderRadius: BorderRadius.circular(5),
               ),
           contentPadding: EdgeInsets.symmetric(
