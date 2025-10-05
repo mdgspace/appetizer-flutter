@@ -110,7 +110,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     try {
       isOldUser = await userRepository.userIsOldUser(event.enrollmentNo);
     } catch (e) {
-      emit(const LoginInitial(error: AppConstants.GENERIC_FAILURE));
+      emit(const LoginInitial(error: AppConstants.USER_NOT_REGISTERED));
     }
     if (isOldUser) {
       emit(EnterPassword(enrollmentNo: event.enrollmentNo));

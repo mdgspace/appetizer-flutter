@@ -4,6 +4,8 @@ import 'package:appetizer/domain/models/transaction/paginated_yearly_rebate.dart
 import 'package:appetizer/presentation/leaves_and_rebate/components/custom_divider.dart';
 import 'package:appetizer/presentation/components/shadow_container.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:appetizer/domain/repositories/transaction_repositroy.dart';
 import 'package:month_picker_dialog/month_picker_dialog.dart';
 
 class MonthlyRebates extends StatefulWidget {
@@ -39,6 +41,26 @@ class _MonthlyRebatesState extends State<MonthlyRebates> {
   //   super.initState();
   // }
 
+  @override
+  void initState() {
+    super.initState();
+    year = DateTime.now().year;
+    _currMonthIndex = widget.currMonthIndex;
+    paginatedYearlyRebate = widget.paginatedYearlyRebate;
+  }
+
+  void _rebuildMonthlyMap() {
+    _totalRebate = 0;
+    _monthlyRebateMap.clear();
+    if (paginatedYearlyRebate != null) {
+      for (YearlyRebate yr in paginatedYearlyRebate!.results) {
+        _monthlyRebateMap[_monthList[yr.monthId]] = yr.rebate;
+        _totalRebate += yr.rebate;
+      }
+    }
+    _monthlyRebateMap["All"] = _totalRebate;
+  }
+
   final _monthList = [
     'All',
     'January',
@@ -56,16 +78,10 @@ class _MonthlyRebatesState extends State<MonthlyRebates> {
   ];
   @override
   Widget build(BuildContext context) {
-    _totalRebate = 0;
     _currMonthIndex ??= widget.currMonthIndex;
     _currMonthName = _monthList[_currMonthIndex!];
     paginatedYearlyRebate ??= widget.paginatedYearlyRebate;
-    for (YearlyRebate yr in paginatedYearlyRebate!.results) {
-      _monthlyRebateMap[_monthList[yr.monthId]] = yr.rebate;
-      _totalRebate += yr.rebate;
-    }
-    _monthlyRebateMap["All"] = _totalRebate;
-    year = DateTime.now().year;
+    _rebuildMonthlyMap();
     return ShadowContainer(
       width: 312.toAutoScaledWidth,
       offset: 2,
@@ -112,10 +128,17 @@ class _MonthlyRebatesState extends State<MonthlyRebates> {
                         initialDate: DateTime(year, _currMonthIndex!),
                         lastDate: DateTime.now(),
                       );
-                      // TODO: rebates for prev year are blocked
-                      if (newDateTime != null &&
-                          newDateTime.year == year &&
-                          newDateTime.month != _currMonthIndex) {
+                      if (newDateTime == null) return;
+                      if (newDateTime.year != year) {
+                        final repo = context.read<TransactionRepository>();
+                        final data = await repo.getYearlyRebates(newDateTime.year);
+                        setState(() {
+                          year = newDateTime.year;
+                          paginatedYearlyRebate = data;
+                          _currMonthIndex = newDateTime.month;
+                          _rebuildMonthlyMap();
+                        });
+                      } else if (newDateTime.month != _currMonthIndex) {
                         setState(() {
                           _currMonthIndex = newDateTime.month;
                         });
