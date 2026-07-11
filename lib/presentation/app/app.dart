@@ -1,4 +1,5 @@
 import 'package:appetizer/data/constants/constants.dart';
+import 'package:appetizer/data/constants/api_endpoints.dart';
 import 'package:appetizer/data/core/router/intrinsic_router/intrinsic_router.gr.dart';
 import 'package:appetizer/data/services/local/local_storage_service.dart';
 import 'package:appetizer/data/services/remote/api_service.dart';
@@ -117,6 +118,7 @@ class _AppetizerAppState extends State<AppetizerApp> {
           ],
         )
         ..addSentry(),
+      baseUrl: ApiEndpoints.baseUrl,
     );
   }
 }
