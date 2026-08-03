@@ -203,18 +203,12 @@ class ProfileScreen extends StatelessWidget {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                // TODO: add bookmark button
-                                // ProfileIconButton(
-                                //   title: 'Bookmark',
-                                //   onPressed: () {},
-                                //   icon: Icons.bookmark_border_outlined,
-                                // ),
-                                // 48.toHorizontalSizedBox,
+                                // Bookmark meals is not implemented in the app yet.
                                 ProfileIconButton(
                                   title: 'Coupons',
                                   onPressed: () =>
                                       context.router.push(const CouponsRoute()),
-                                  icon: Icons.bookmark_border_outlined,
+                                  icon: Icons.confirmation_number_outlined,
                                 ),
                               ],
                             ),

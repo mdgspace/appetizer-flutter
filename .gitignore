@@ -71,3 +71,4 @@ android/supply_json_key.json
 ios/firebase_app_id_file.json
 .vscode
 scripts/
+dist/

@@ -80,10 +80,11 @@ class WeekMenuBlocBloc extends Bloc<WeekMenuBlocEvent, WeekMenuBlocState> {
       FetchWeekMenuData event, Emitter<WeekMenuBlocState> emit) async {
     try {
       WeekMenu weekMenu = await menuRepository.currentWeekMenu();
-      int dayNumber = getDayNumber(weekMenu, DateTime.now().weekday - 1);
+      final weekdayIndex = DateTime.now().weekday - 1;
+      int dayNumber = getDayNumber(weekMenu, weekdayIndex);
       emit(WeekMenuBlocDisplayState(
         weekMenu: weekMenu,
-        currDayIndex: DateTime.now().day - 1,
+        currDayIndex: weekdayIndex,
         dayNumber: dayNumber,
         jugaad: false,
       ));
@@ -176,8 +177,10 @@ class WeekMenuBlocBloc extends Bloc<WeekMenuBlocEvent, WeekMenuBlocState> {
         if (meal.id == event.mealId) {
           meal.couponStatus = newCouponStatus;
           if (meal.couponStatus.status == CouponStatusEnum.N) {
-            emit((state as WeekMenuBlocDisplayState)
-                .copyWith(error: "Time's up, coupon applications closed!"));
+            emit((state as WeekMenuBlocDisplayState).copyWith(
+              error:
+                  "Coupon closed — apply at least 24 hours before meal start.",
+            ));
           }
         }
       }
