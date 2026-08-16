@@ -63,34 +63,13 @@ class ProfileScreen extends StatelessWidget {
                             ),
                             child: Column(
                               children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    ProfileTextButton(
-                                      title: 'Edit Profile',
-                                      onPressed: () {
-                                        const snackBar = SnackBar(
-                                          content: Text('Coming soon!'),
-                                          duration: Duration(milliseconds: 500),
-                                        );
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(snackBar);
-                                      },
-                                      horizontalPadding: 10,
-                                      width: 115,
-                                    ),
-                                    // 5.toHorizontalSizedBox,
-                                    ProfileTextButton(
-                                      title: 'Reset Password',
-                                      onPressed: () {
-                                        context.router
-                                            .push(ResetPasswordRoute());
-                                      },
-                                      horizontalPadding: 10,
-                                      width: 115,
-                                    ),
-                                  ],
+                                ProfileTextButton(
+                                  title: 'Reset Password',
+                                  onPressed: () {
+                                    context.router.push(ResetPasswordRoute());
+                                  },
+                                  horizontalPadding: 10,
+                                  width: 115,
                                 ),
                                 10.toVerticalSizedBox,
                                 if (state
@@ -203,7 +182,6 @@ class ProfileScreen extends StatelessWidget {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                // Bookmark meals is not implemented in the app yet.
                                 ProfileIconButton(
                                   title: 'Coupons',
                                   onPressed: () =>

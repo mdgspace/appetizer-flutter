@@ -11,6 +11,10 @@ class AppConstants {
   static const String USER_NOT_FOUND = 'No User Found';
   static const String USER_NOT_REGISTERED =
       'You are not registered. Kindly contact MDG Space.';
+  static const String USER_SIGN_UP_CHANNEL_I =
+      'Please sign-up using Channel-i';
+  static const String INSTITUTE_DIRECTORY_UNAVAILABLE =
+      'Institute directory unavailable. Please try again.';
 
   /// MENU CONSTANTS
   static const String MENU_NOT_FOUND = 'No Menu Found';
