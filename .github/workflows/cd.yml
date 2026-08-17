@@ -24,6 +24,8 @@ jobs:
     steps:
       # Setup Java environment in order to build the Android app.
       - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GH_PAT }}
       - uses: actions/setup-java@v3
         with:
           distribution: "temurin"
@@ -75,13 +77,10 @@ jobs:
       - name: 'Build dev appbundle'
         if: "contains(github.event.release.tag_name, 'internal')"
         run: flutter build appbundle --dart-define=SENTRY_DSN=${SENTRY_DSN}
-
-      - run: echo "${PROD_BASE_URL}"
       
       - name: 'Build prod appbundle'
         if: "!contains(github.event.release.tag_name, 'internal')"
         run: flutter build appbundle --dart-define=SENTRY_DSN=${SENTRY_DSN} --dart-define=BASE_URL=${PROD_BASE_URL} --dart-define=OAUTH_REDIRECT_URI=${PROD_BASE_URL}/api/user/oauth/redirect/ 
-
 
       # Run fastlane internal
       - uses: maierj/fastlane-action@v1.4.0
