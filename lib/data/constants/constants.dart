@@ -10,7 +10,11 @@ class AppConstants {
       'You are not authorized to fetch this User';
   static const String USER_NOT_FOUND = 'No User Found';
   static const String USER_NOT_REGISTERED =
-      'You are not registered. Kindly contact MDGSpace.';
+      'You are not registered. Kindly contact MDG Space.';
+  static const String USER_SIGN_UP_CHANNEL_I =
+      'Please sign-up using Channel-i';
+  static const String INSTITUTE_DIRECTORY_UNAVAILABLE =
+      'Institute directory unavailable. Please try again.';
 
   /// MENU CONSTANTS
   static const String MENU_NOT_FOUND = 'No Menu Found';
@@ -48,7 +52,8 @@ class AppConstants {
   static const TEMPORARY_USER_API_STATUS = "Temporary";
 
   /// api error messages
-  static const MENU_NOT_UPLOADED = 'Menu not uploaded yet.\nKindly contact your mess secretary.';
+  static const MENU_NOT_UPLOADED =
+      'Menu not uploaded yet.\nKindly contact your mess secretary.';
 
   // Storage Keys
   static const FCM_TOKEN = 'fcm_token';

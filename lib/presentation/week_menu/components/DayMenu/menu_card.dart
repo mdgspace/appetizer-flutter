@@ -34,33 +34,32 @@ class FeedbackAndCouponWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        height: 24.toAutoScaledHeight,
-        width: 90.toAutoScaledWidth,
-        padding: EdgeInsets.symmetric(horizontal: 8.toAutoScaledWidth),
-        decoration: ShapeDecoration(
-          color: AppTheme.white,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            if (coupon && taken) ...[
-              SvgPicture.asset('assets/icons/coupon_taken_tick.svg'),
-              4.toHorizontalSizedBox,
-            ],
-            Text(
-              coupon ? "COUPON" : "Give Feedback",
-              textAlign: TextAlign.center,
-              style: AppTheme.button.copyWith(
-                fontSize: 11.toAutoScaledFont,
-                fontWeight: FontWeight.w600,
-                color: AppTheme.black11,
-              ),
-            ),
+    return Container(
+      height: 24.toAutoScaledHeight,
+      constraints: BoxConstraints(minWidth: 90.toAutoScaledWidth),
+      padding: EdgeInsets.symmetric(horizontal: 8.toAutoScaledWidth),
+      decoration: ShapeDecoration(
+        color: AppTheme.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          if (coupon && taken) ...[
+            SvgPicture.asset('assets/icons/coupon_taken_tick.svg'),
+            4.toHorizontalSizedBox,
           ],
-        ),
+          Text(
+            coupon ? "COUPON" : "Give Feedback",
+            textAlign: TextAlign.center,
+            style: AppTheme.button.copyWith(
+              fontSize: 11.toAutoScaledFont,
+              fontWeight: FontWeight.w600,
+              color: AppTheme.black11,
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -99,11 +98,15 @@ class CouponDialogBox extends StatelessWidget {
               ),
             ),
           ),
-          Text(
-            text,
-            style: AppTheme.headline3.copyWith(
-              fontSize: 17.toAutoScaledFont,
-              fontWeight: FontWeight.w600,
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.toAutoScaledWidth),
+            child: Text(
+              text,
+              textAlign: TextAlign.center,
+              style: AppTheme.headline3.copyWith(
+                fontSize: 17.toAutoScaledFont,
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ),
           20.toVerticalSizedBox,
@@ -136,11 +139,6 @@ class FeedbackOrCouponButton extends StatelessWidget {
           return const SizedBox.shrink();
         } else if (_isMealValidForCoupon(meal)) {
           return GestureDetector(
-            onLongPress: () {
-              if (meal.couponStatus.status == CouponStatusEnum.A) {
-                // TODO: show dialog box
-              }
-            },
             onTap: () {
               if (meal.couponStatus.status == CouponStatusEnum.A) {
                 showCouponDialog(
@@ -183,157 +181,123 @@ class MealCard extends StatelessWidget {
     }
     dailyItemsParsed =
         dailyItemsParsed.substring(0, max(dailyItemsParsed.length - 2, 0));
+
     return ShadowContainer(
       offset: 2,
       width: 315.toAutoScaledWidth,
-      height: 170.toAutoScaledHeight,
+      height: 180.toAutoScaledHeight,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
             width: 125.toAutoScaledWidth,
-            height: 170.toAutoScaledHeight,
+            height: 180.toAutoScaledHeight,
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: svg.Svg(
                   'assets/images/meal_card/${meal.title}.svg',
                 ),
-                fit: BoxFit.fill,
+                fit: BoxFit.cover,
               ),
+            ),
+            padding: EdgeInsets.fromLTRB(
+              10.toAutoScaledWidth,
+              12.toAutoScaledHeight,
+              8.toAutoScaledWidth,
+              8.toAutoScaledHeight,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                15.toVerticalSizedBox,
-                Container(
-                  height: 28.toAutoScaledHeight,
-                  padding: 12.toLeftOnlyPadding,
-                  child: Text(
-                    meal.title.titleCase,
-                    style: AppTheme.headline1.copyWith(
-                      fontSize: 20.toAutoScaledFont,
-                      color: AppTheme.black11,
-                    ),
+                Text(
+                  meal.title.titleCase,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTheme.headline1.copyWith(
+                    fontSize: 18.toAutoScaledFont,
+                    color: AppTheme.black11,
                   ),
                 ),
-                Container(
-                  height: 17.toAutoScaledHeight,
-                  padding: EdgeInsets.only(left: 12.toAutoScaledWidth),
-                  child: Text(
-                    '${DateFormat.jm().format(meal.startTime)} - ${DateFormat.jm().format(meal.endTime)}',
-                    style: AppTheme.headline3.copyWith(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 12.toAutoScaledFont,
-                      color: AppTheme.grey2f,
-                    ),
+                2.toVerticalSizedBox,
+                Text(
+                  '${DateFormat.jm().format(meal.startTime)} - ${DateFormat.jm().format(meal.endTime)}',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTheme.headline3.copyWith(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 11.toAutoScaledFont,
+                    color: AppTheme.grey2f,
                   ),
                 ),
-                10.toVerticalSizedBox,
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Container(
-                      padding: EdgeInsets.only(left: 12.toAutoScaledWidth),
-                      child: FittedBox(
-                        fit: BoxFit.contain,
-                        child: BlocSelector<AppBloc, AppState, bool>(
-                          selector: (state) => state.user!.isCheckedOut,
-                          builder: (context, isCheckout) {
-                            return FSwitch(
-                              enable:
-                                  !meal.isLeaveToggleOutdated && !isCheckout,
-                              open:
-                                  meal.leaveStatus.status != LeaveStatusEnum.P,
-                              sliderColor: AppTheme.customWhite,
-                              openColor: AppTheme.black2e,
-                              height: 20.toAutoScaledHeight,
-                              width: 44.toAutoScaledWidth,
-                              onChanged: (value) async {
-                                context
-                                    .read<WeekMenuBlocBloc>()
-                                    .add(MealLeaveEvent(
-                                      meal: meal,
-                                    ));
-                              },
-                            );
-                          },
-                        ),
-                      ),
-                    ),
-                  ],
+                8.toVerticalSizedBox,
+                BlocSelector<AppBloc, AppState, bool>(
+                  selector: (state) => state.user!.isCheckedOut,
+                  builder: (context, isCheckout) {
+                    return FSwitch(
+                      enable: !meal.isLeaveToggleOutdated && !isCheckout,
+                      open: meal.leaveStatus.status != LeaveStatusEnum.P,
+                      sliderColor: AppTheme.customWhite,
+                      openColor: AppTheme.black2e,
+                      height: 20.toAutoScaledHeight,
+                      width: 44.toAutoScaledWidth,
+                      onChanged: (value) async {
+                        context.read<WeekMenuBlocBloc>().add(MealLeaveEvent(
+                              meal: meal,
+                            ));
+                      },
+                    );
+                  },
                 ),
-                SizedBox(height: 45.toAutoScaledHeight),
+                const Spacer(),
                 FeedbackOrCouponButton(meal: meal),
-                SizedBox(height: 10.toAutoScaledHeight)
               ],
             ),
           ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            mainAxisSize: MainAxisSize.max,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: 18.toAutoScaledHeight),
-              Container(
-                constraints: BoxConstraints(
-                  maxHeight: 100.toAutoScaledHeight,
-                  maxWidth: 180.toAutoScaledWidth,
-                ),
-                padding: EdgeInsets.only(left: 10.toAutoScaledWidth),
-                child: ListView.builder(
-                  itemCount: meal.items.length,
-                  shrinkWrap: true,
-                  padding: EdgeInsets.zero,
-                  itemBuilder: (context, index) {
-                    final item = meal.items[index];
-                    return Text("\u2022 ${item.name.titleCase}");
-                  },
-                ),
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.fromLTRB(
+                10.toAutoScaledWidth,
+                14.toAutoScaledHeight,
+                12.toAutoScaledWidth,
+                12.toAutoScaledHeight,
               ),
-              const Spacer(),
-              Container(
-                margin: EdgeInsets.symmetric(
-                  horizontal: 22.toAutoScaledWidth,
-                ),
-                height: 0.5,
-                width: 145,
-                color: AppTheme.rulerColor,
-              ),
-              SizedBox(height: 8.toAutoScaledHeight),
-              Container(
-                width: 187.toAutoScaledWidth,
-                padding: EdgeInsets.only(
-                  left: 12.toAutoScaledWidth,
-                  right: 19.toAutoScaledWidth,
-                ),
-                child: RichText(
-                  text: TextSpan(
-                    text: 'Daily Items: ',
-                    style: AppTheme.bodyText2.copyWith(
-                        fontWeight: FontWeight.w600,
-                        color: const Color(0xFFB51111)),
-                    children: [
-                      TextSpan(
-                        text: dailyItemsParsed,
-                        style: AppTheme.bodyText2,
-                      )
-                    ],
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: meal.items.length,
+                      padding: EdgeInsets.zero,
+                      physics: const BouncingScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        final item = meal.items[index];
+                        return Text(
+                          "\u2022 ${item.name.titleCase}",
+                          style: AppTheme.bodyText2,
+                        );
+                      },
+                    ),
                   ),
-                ),
+                  Divider(
+                    height: 12.toAutoScaledHeight,
+                    thickness: 0.5,
+                    color: AppTheme.rulerColor,
+                  ),
+                  Text(
+                    'Daily Items: $dailyItemsParsed',
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTheme.bodyText2.copyWith(
+                      fontWeight: FontWeight.w600,
+                      color: const Color(0xFFB51111),
+                    ),
+                  ),
+                ],
               ),
-              SizedBox(height: 17.toAutoScaledHeight)
-            ],
-          )
+            ),
+          ),
         ],
       ),
     );
   }
 }
-
-// TODO(nano): temp fix for the getters
-// extension on Meal {
-//   bool get isOutdated => false;
-//   bool get isLeaveToggleOutdated => false;
-//   bool get isCouponOutdated => false;
-// }

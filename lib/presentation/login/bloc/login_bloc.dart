@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:appetizer/data/constants/constants.dart';
 import 'package:appetizer/data/services/local/local_storage_service.dart';
+import 'package:appetizer/domain/models/failure_model.dart';
 import 'package:appetizer/domain/models/user/oauth_user.dart';
 import 'package:appetizer/domain/models/user/user.dart';
 import 'package:appetizer/domain/repositories/user/user_repository.dart';
@@ -60,7 +61,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       // TODO: store fcm token
       emit(const LoginSuccess());
     } catch (e) {
-      //TODO: show dialog box with relevant error message
+      emit(LoginInitial(
+        error: e is Failure ? e.message : AppConstants.GENERIC_FAILURE,
+      ));
     }
   }
 
@@ -84,8 +87,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         emit(const LoginSuccess());
       }
     } catch (e) {
-      //TODO: show error dialog box
-      emit(const LoginInitial(error: AppConstants.GENERIC_FAILURE));
+      emit(LoginInitial(
+        error: e is Failure ? e.message : AppConstants.GENERIC_FAILURE,
+      ));
     }
   }
 
@@ -110,12 +114,15 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     try {
       isOldUser = await userRepository.userIsOldUser(event.enrollmentNo);
     } catch (e) {
-      emit(const LoginInitial(error: AppConstants.USER_NOT_REGISTERED));
+      emit(LoginInitial(
+        error: e is Failure ? e.message : AppConstants.USER_NOT_REGISTERED,
+      ));
+      return;
     }
     if (isOldUser) {
       emit(EnterPassword(enrollmentNo: event.enrollmentNo));
     } else {
-      emit(const LoginInitial(error: 'Please sign-up using Channel-i'));
+      emit(const LoginInitial(error: AppConstants.USER_SIGN_UP_CHANNEL_I));
     }
   }
 
@@ -129,8 +136,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       LocalStorageService.setValue(key: AppConstants.LOGGED_IN, value: true);
       emit(const LoginSuccess());
     } catch (e) {
-      // TODO: show dialog box
-      emit(const LoginInitial(error: 'Login Failed!'));
+      emit(EnterPassword(
+        enrollmentNo: event.enrollmentNo,
+        error: e is Failure ? e.message : 'Login Failed!',
+      ));
     }
   }
 
@@ -182,7 +191,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       LocalStorageService.setValue(key: AppConstants.LOGGED_IN, value: true);
       emit(const LoginSuccess());
     } catch (e) {
-      emit(const LoginInitial(error: AppConstants.GENERIC_FAILURE));
+      emit(LoginInitial(
+        error: e is Failure ? e.message : AppConstants.GENERIC_FAILURE,
+      ));
     }
   }
 }

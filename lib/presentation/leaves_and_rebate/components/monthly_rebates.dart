@@ -1,11 +1,11 @@
 import 'package:appetizer/app_theme.dart';
 import 'package:appetizer/data/core/theme/dimensional/dimensional.dart';
 import 'package:appetizer/domain/models/transaction/paginated_yearly_rebate.dart';
+import 'package:appetizer/domain/repositories/transaction_repositroy.dart';
 import 'package:appetizer/presentation/leaves_and_rebate/components/custom_divider.dart';
 import 'package:appetizer/presentation/components/shadow_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:appetizer/domain/repositories/transaction_repositroy.dart';
 import 'package:month_picker_dialog/month_picker_dialog.dart';
 
 class MonthlyRebates extends StatefulWidget {
@@ -29,17 +29,25 @@ class _MonthlyRebatesState extends State<MonthlyRebates> {
   late num _totalRebate;
   late int year;
 
-  // @override
-  // void initState() {
-  //   _currMonthIndex = widget.currMonthIndex;
-  //   _currMonthName = _monthList[_currMonthIndex];
-  //   for (YearlyRebate yr in widget.paginatedYearlyRebate.results) {
-  //     _monthlyRebateMap[_monthList[yr.monthId]] = yr.rebate;
-  //     _totalRebate += yr.rebate;
-  //   }
-  //   _monthlyRebateMap["All"] = _totalRebate;
-  //   super.initState();
-  // }
+  @override
+  void initState() {
+    super.initState();
+    year = DateTime.now().year;
+    _currMonthIndex = widget.currMonthIndex;
+    paginatedYearlyRebate = widget.paginatedYearlyRebate;
+  }
+
+  void _rebuildMonthlyMap() {
+    _totalRebate = 0;
+    _monthlyRebateMap.clear();
+    if (paginatedYearlyRebate != null) {
+      for (YearlyRebate yr in paginatedYearlyRebate!.results) {
+        _monthlyRebateMap[_monthList[yr.monthId]] = yr.rebate;
+        _totalRebate += yr.rebate;
+      }
+    }
+    _monthlyRebateMap["All"] = _totalRebate;
+  }
 
   @override
   void initState() {
@@ -76,6 +84,7 @@ class _MonthlyRebatesState extends State<MonthlyRebates> {
     'November',
     'December'
   ];
+
   @override
   Widget build(BuildContext context) {
     _currMonthIndex ??= widget.currMonthIndex;
@@ -112,11 +121,12 @@ class _MonthlyRebatesState extends State<MonthlyRebates> {
                   ),
                   child: GestureDetector(
                     onTap: () async {
+                      final selectedMonthIndex =
+                          (_currMonthIndex == null || _currMonthIndex! < 1)
+                              ? DateTime.now().month
+                              : _currMonthIndex!;
                       DateTime? newDateTime = await showMonthPicker(
                         context: context,
-                        // headerColor: AppTheme.primary,
-                        // selectedMonthStyle: TextStyle(color: AppTheme.primary),
-                        // unselectedMonthTextColor: AppTheme.primary,
                         confirmWidget: const Text(
                           'OK',
                           style: TextStyle(color: AppTheme.primary),
@@ -125,39 +135,38 @@ class _MonthlyRebatesState extends State<MonthlyRebates> {
                           'Cancel',
                           style: TextStyle(color: AppTheme.primary),
                         ),
-                        initialDate: DateTime(year, _currMonthIndex!),
+                        initialDate: DateTime(year, selectedMonthIndex),
                         lastDate: DateTime.now(),
                       );
                       if (newDateTime == null) return;
+                      if (!context.mounted) return;
                       if (newDateTime.year != year) {
-                        final repo = context.read<TransactionRepository>();
-                        final data = await repo.getYearlyRebates(newDateTime.year);
-                        setState(() {
-                          year = newDateTime.year;
-                          paginatedYearlyRebate = data;
-                          _currMonthIndex = newDateTime.month;
-                          _rebuildMonthlyMap();
-                        });
+                        try {
+                          final repo = context.read<TransactionRepository>();
+                          final data =
+                              await repo.getYearlyRebates(newDateTime.year);
+                          if (!context.mounted) return;
+                          setState(() {
+                            year = newDateTime.year;
+                            paginatedYearlyRebate = data;
+                            _currMonthIndex = newDateTime.month;
+                            _rebuildMonthlyMap();
+                          });
+                        } catch (_) {
+                          if (!context.mounted) return;
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text(
+                                'Unable to load rebates for selected year',
+                              ),
+                            ),
+                          );
+                        }
                       } else if (newDateTime.month != _currMonthIndex) {
                         setState(() {
                           _currMonthIndex = newDateTime.month;
                         });
                       }
-                      // if (newDateTime != null && newDateTime.year != year) {
-                      //   setState(() async {
-                      //     year = newDateTime.year;
-                      //     _currMonthIndex = newDateTime.month;
-                      //     PaginatedYearlyRebate paginatedYearlyRebate =
-                      //         await _transactionApi.getYearlyRebate(year);
-                      //     _totalRebate = 0;
-                      //     for (YearlyRebate yr
-                      //         in paginatedYearlyRebate.results) {
-                      //       _monthlyRebateMap[_monthList[yr.monthId]] = yr.rebate;
-                      //       _totalRebate += yr.rebate;
-                      //     }
-                      //     _monthlyRebateMap["All"] = _totalRebate;
-                      //   });
-                      // }
                     },
                     child: Row(
                       mainAxisSize: MainAxisSize.min,

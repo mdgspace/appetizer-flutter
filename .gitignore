@@ -59,3 +59,16 @@ app.*.map.json
 
 # Firebase
 lib/firebase_options.dart
+
+# Local secrets / env (do not commit)
+.env
+.env.local
+dart_defines.json
+android/app/google-services.json
+android/key.properties
+android/app/key.jks
+android/supply_json_key.json
+ios/firebase_app_id_file.json
+.vscode
+scripts/
+dist/

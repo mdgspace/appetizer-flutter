@@ -13,7 +13,7 @@ class User with _$User {
     String? roomNo,
     required int enrNo,
     required String name,
-    required String contactNo,
+    String? contactNo,
     String? branch,
     required dynamic imageUrl,
     @Default(false) bool isCheckedOut,
