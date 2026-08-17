@@ -41,8 +41,6 @@ class HostelChangeScreen extends StatelessWidget {
       'VKJ': 'Vikash Kunj',
       'DVG': 'Development Government',
       'DVP': 'Development Private',
-      'HB': 'Himalaya Bhawan',
-      'UNS': 'Unassigned',
     };
     return Scaffold(
         body: SingleChildScrollView(

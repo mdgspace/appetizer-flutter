@@ -27,7 +27,6 @@ class NoDataFoundContainer extends StatelessWidget {
         ),
         Text(
           title,
-          textAlign: TextAlign.center,
           style: TextStyle(
             color: const Color(0xFF111111),
             fontSize: 18.toAutoScaledFont,

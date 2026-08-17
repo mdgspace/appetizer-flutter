@@ -87,7 +87,7 @@ class LeavesAndRebateScreen extends StatelessWidget {
               20.toVerticalSizedBox,
               MonthlyRebates(
                 paginatedYearlyRebate: state.initialPaginatedYearlyRebate!,
-                currMonthIndex: DateTime.now().month,
+                currMonthIndex: DateTime.now().month - 1,
               ),
               24.toVerticalSizedBox,
               Padding(

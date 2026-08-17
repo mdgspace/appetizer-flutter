@@ -18,8 +18,6 @@ class StringUtils {
     'Vigyan Kunj': 'VK',
     'Development Government': 'DVG',
     'Development Private': 'DVP',
-    'Himalaya Bhawan': 'HB',
-    'Unassigned': 'UNS',
   };
 
   static String hostelCodeToName(String code) {
