@@ -91,7 +91,7 @@ class ProfileIconButton extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
-              icon,
+              Icons.bookmark_border_outlined,
               color: const Color.fromARGB(255, 255, 203, 116),
               size: 15.toAutoScaledWidth,
             ),

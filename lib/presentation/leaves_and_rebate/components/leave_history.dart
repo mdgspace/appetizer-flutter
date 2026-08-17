@@ -29,7 +29,6 @@ class LeaveHistory extends StatelessWidget {
       ),
       child: SingleChildScrollView(
         child: ExpansionTile(
-          initiallyExpanded: true,
           expandedCrossAxisAlignment: CrossAxisAlignment.start,
           backgroundColor: AppTheme.white,
           title: const SizedBox.shrink(),
@@ -43,18 +42,7 @@ class LeaveHistory extends StatelessWidget {
           ),
           trailing: const Icon(Icons.expand_more, color: AppTheme.grey2f),
           children: [
-            if (paginatedLeaves.results.isEmpty)
-              Padding(
-                padding: EdgeInsets.only(
-                  left: 24.toAutoScaledWidth,
-                  bottom: 12.toAutoScaledHeight,
-                ),
-                child: Text(
-                  'No leaves yet',
-                  style: AppTheme.bodyText1.copyWith(color: AppTheme.grey2f),
-                ),
-              )
-            else
+            if (paginatedLeaves.results.isNotEmpty)
               Container(
                 margin: EdgeInsets.only(left: 24.toAutoScaledWidth),
                 child: Column(
@@ -87,6 +75,7 @@ class LeaveHistory extends StatelessWidget {
                                 ],
                               ),
                             ),
+                            // const Text("-"),
                           ],
                         ),
                       ),
