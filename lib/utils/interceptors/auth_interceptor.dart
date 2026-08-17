@@ -42,8 +42,9 @@ class AuthInterceptor extends Interceptor {
       BaseApp.currentContext
           ?.read<AppBloc>()
           .add(const NavigateToLoginScreen());
-    } else {
-      handler.next(err);
     }
+    // Always complete the interceptor chain — omitting this hangs Futures
+    // (e.g. splash stuck while GetUser awaits /api/user/me/).
+    handler.next(err);
   }
 }

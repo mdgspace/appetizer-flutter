@@ -4,6 +4,7 @@ import 'package:appetizer/domain/models/failure_model.dart';
 import 'package:appetizer/domain/models/user/notification.dart';
 import 'package:appetizer/domain/models/user/oauth_user.dart';
 import 'package:appetizer/domain/models/user/user.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -143,12 +144,25 @@ class UserRepository {
       final String status = response.status;
       if (status == AppConstants.REGISTERED_USER_API_STATUS) {
         return true;
-      } else if (status == AppConstants.TEMPORARY_USER_API_STATUS ||
-          status == AppConstants.UNREGISTERED_USER_API_STATUS) {
+      } else if (status == AppConstants.TEMPORARY_USER_API_STATUS) {
         return false;
       } else {
         throw Failure(AppConstants.GENERIC_FAILURE);
       }
+    } on Failure {
+      rethrow;
+    } on FormatException {
+      throw Failure(AppConstants.GENERIC_FAILURE);
+    } on DioException catch (e) {
+      final code = e.response?.statusCode;
+      if (code == 404) {
+        throw Failure(AppConstants.USER_NOT_REGISTERED);
+      }
+      if (code == 503) {
+        throw Failure(AppConstants.INSTITUTE_DIRECTORY_UNAVAILABLE);
+      }
+      debugPrint(e.toString());
+      throw Failure(AppConstants.GENERIC_FAILURE);
     } catch (e) {
       debugPrint(e.toString());
       throw Failure(AppConstants.GENERIC_FAILURE);
