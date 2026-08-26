@@ -1,0 +1,49 @@
+name: Build Standalone APK
+
+# This allows you to manually trigger the workflow from the GitHub Actions UI
+on:
+  workflow_dispatch:
+
+env:
+  GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
+  FIREBASE_OPTIONS: ${{ secrets.FIREBASE_OPTIONS }}
+  PROD_BASE_URL: ${{ secrets.BASE_URL }}
+  SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+  RELEASE_KEYSTORE: ${{ secrets.RELEASE_KEYSTORE }}
+  RELEASE_KEYSTORE_PROPERTIES: ${{ secrets.RELEASE_KEYSTORE_PROPERTIES }}
+
+jobs:
+  build-apk:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-java@v3
+        with:
+          distribution: "temurin"
+          java-version: "17.x"
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+          flutter-version: 3.35.x
+
+      - run: flutter pub get
+      - run: dart run build_runner build -d
+
+      # Save necessary configuration and signing files
+      - run: echo "${FIREBASE_OPTIONS}" | base64 --decode > lib/firebase_options.dart
+      - run: echo "${GOOGLE_SERVICES_JSON}" | base64 --decode > android/app/google-services.json
+      - run: echo "${RELEASE_KEYSTORE_PROPERTIES}" | base64 --decode > android/key.properties
+      - run: echo "${RELEASE_KEYSTORE}" | base64 --decode > android/app/key.jks
+
+      # Build the APK with production variables
+      - name: 'Build prod APK'
+        run: flutter build apk --release --dart-define=SENTRY_DSN=${SENTRY_DSN} --dart-define=BASE_URL=${PROD_BASE_URL} --dart-define=OAUTH_REDIRECT_URI=${PROD_BASE_URL}/api/user/oauth/redirect/ 
+
+      # Upload the APK to GitHub Artifacts
+      - name: 'Upload APK Artifact'
+        uses: actions/upload-artifact@v4
+        with:
+          name: manual-production-apk
+          path: build/app/outputs/flutter-apk/app-release.apk
